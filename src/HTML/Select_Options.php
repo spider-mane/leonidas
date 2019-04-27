@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * @package Backalley-Core
+ */
+
+namespace Backalley\Html;
+
 class Select_Options
 {
 	/**

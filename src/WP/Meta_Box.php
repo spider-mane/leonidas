@@ -1,12 +1,12 @@
 <?php
 
 /**
- *
+ * @package Backalley-Core
  */
 
-// namespace Backalley\Api;
+namespace Backalley\WP;
 
-class Backalley_Meta_Box
+class Meta_Box
 {
     public $args = [];
     public $labels = [];

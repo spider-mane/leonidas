@@ -1,12 +1,12 @@
 <?php
 
 /**
- * description here
+ * @package Backalley-Core
  */
 
-// namespace Backalley\Api;
+namespace Backalley\WP;
 
-class Backalley_Post_Type
+class Post_Type
 {
     public $args;
     public $labels;

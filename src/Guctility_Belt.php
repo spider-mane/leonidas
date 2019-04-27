@@ -74,7 +74,11 @@ class Guctility_Belt
         return ['object_id' => $object_id, 'object_parent' => $object_parent];
     }
 
-    function sort_terms_hierarchicaly(array &$terms, array &$into, $parent_id = 0)
+    /**
+     * Borrowed from get name later,
+     * needs to be modified to handle wider variety of objects
+     */
+    public static function sort_terms_hierarchicaly(array &$terms, array &$into, $parent_id = 0)
     {
         foreach ($terms as $index => $term) {
             if ($term->parent == $parent_id) {

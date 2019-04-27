@@ -1,14 +1,12 @@
 <?php
 
 /**
- * Register Taxonomies, Yuh!
- * Separate functions to set up taxonomies for each CPT
+ * @package Backalley-Core
  */
 
+namespace Backalley\WP;
 
-// namespace Backalley\Api;
-
-class Backalley_Taxonomy
+class Taxonomy
 {
     public function __construct($taxonomy, $args)
     {

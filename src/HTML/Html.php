@@ -1,10 +1,12 @@
 <?php
 
 /**
- * 
+ * @package Backalley-Core
  */
 
-class HTML_Element
+namespace Backalley\Html;
+
+class Html
 {
     public $element_array = [
         // 'root' => [

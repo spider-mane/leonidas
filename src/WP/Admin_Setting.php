@@ -1,13 +1,12 @@
 <?php
 
 /**
- * @package Backalley
+ * @package Backalley-Core
  */
 
+namespace Backalley\WP;
 
-// namespace Backalley\Api;
-
-final class Backalley_Admin_Settings
+final class Admin_Setting
 {
     public $admin_pages = [];
 
@@ -122,7 +121,7 @@ final class Backalley_Admin_Settings
         $subpage = [
             'parent_slug' => isset($admin_page['menu_slug']) ? $admin_page['menu_slug'] : null,
             'page_title' => isset($admin_page['page_title']) ? $admin_page['page_title'] : null,
-            'menu_title' => $title ?: (isset($admin_page['menu_title']) ? $admin_page['menu_title'] : null),
+            'menu_title' => $title ? : (isset($admin_page['menu_title']) ? $admin_page['menu_title'] : null),
             'capability' => isset($admin_page['capability']) ? $admin_page['capability'] : null,
             'menu_slug' => isset($admin_page['menu_slug']) ? $admin_page['menu_slug'] : null,
             'callback' => isset($admin_page['callback']) ? $admin_page['callback'] : null,

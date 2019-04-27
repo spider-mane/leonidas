@@ -1,10 +1,12 @@
 <?php
 
 /**
- * 
+ * @package Backalley-Core
  */
 
-class Element_Constructor extends HTML_Element
+namespace Backalley\Html;
+
+class Element_Constructor extends Html
 {
     /**
      * 

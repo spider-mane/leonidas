@@ -1,6 +1,12 @@
 <?php
 
-class Backalley_Post
+/**
+ * @package Backalley-Core
+ */
+
+namespace Backalley\WP;
+
+class Post
 {
     public static function save_fields(array $fields)
     {

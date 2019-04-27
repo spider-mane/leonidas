@@ -1,10 +1,12 @@
 <?php
 
 /**
- * Under Construction
+ * @package Backalley-Core
  */
 
-class Backalley_Term_Option
+namespace Backalley\WP;
+
+class Term_Option
 {
     public $args;
     public $form_field_callback;
