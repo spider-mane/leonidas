@@ -5,9 +5,9 @@ class Select_Options
 	/**
 	 * 
 	 */
-	public static function us_states()
+	public static function us_states($territories = false, $armed_forces = false)
 	{
-		return [
+		$states = [
 			'AL' => 'Alabama',
 			'AK' => 'Alaska',
 			'AZ' => 'Arizona',
@@ -60,5 +60,22 @@ class Select_Options
 			'WI' => 'Wisconsin',
 			'WY' => 'Wyoming',
 		];
+
+		$territories = [
+			"AS" => "American Samoa",
+			"GU" => "Guam",
+			"MP" => "Northern Mariana Islands",
+			"PR" => "Puerto Rico",
+			"UM" => "United States Minor Outlying Islands",
+			"VI" => "Virgin Islands",
+		];
+
+		$armed_forces = [
+			"AA" => "Armed Forces Americas",
+			"AP" => "Armed Forces Pacific",
+			"AE" => "Armed Forces Others",
+		];
+
+		return $states;
 	}
 }

@@ -36,10 +36,10 @@ class Backalley extends Base
         wp_enqueue_script('jquery');
 
         # backalley scripts
-        wp_enqueue_script('backalley-core-admin-script', BackAlley::$url . 'assets/js/backalley-admin.js', null, time(), true);
+        wp_enqueue_script('backalley-core-admin-script', Self::$admin_url . 'assets/js/backalley-admin.js', null, time(), true);
     
         # backalley styles
-        wp_enqueue_style('backalley-core-styles', BackAlley::$url . 'assets/css/backalley-admin-styles.css', null, time());
+        wp_enqueue_style('backalley-core-styles', Self::$admin_url . 'assets/css/backalley-admin-styles.css', null, time());
     }
 
     /**

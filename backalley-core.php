@@ -4,12 +4,11 @@
  * @package Backalley-Core
  */
 
-
-
 class Base
 {
     public static $path;
     public static $url;
+    public static $admin_url;
     public static $admin_templates;
     public static $timber_locations;
 
@@ -17,6 +16,8 @@ class Base
     {
         Self::$path = __DIR__;
         Self::$url = plugin_dir_url(__FILE__);
+
+        Self::$admin_url = Self::$url . "public/admin";
         Self::$admin_templates = Self::$path . "/public/admin/templates";
 
         // Self::$p = plugin_dir_path(__FILE__);
@@ -29,7 +30,6 @@ class Base
         ];
     }
 }
-
 
 
 #Composer Autoload
