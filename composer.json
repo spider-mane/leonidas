@@ -1,0 +1,26 @@
+{
+  "name": "Backalley",
+
+  "description": "something or whatever",
+
+  "authors": [{
+    "name": "Chris Williams",
+    "email": "laserbeamvocalist@gmail.com"
+  }],
+
+  "require": {
+    "php": ">=7.0.0",
+    "php-console/php-console": "^3.1",
+    "composer/installers": "v1.0.12",
+    "timber/timber": "^1.9",
+    "respect/validation": "^1.1",
+    "myclabs/deep-copy": "^1.8",
+    "jbzoo/utils": "^2.3"
+  },
+
+  "autoload": {
+    "psr-4": {
+      "Backalley\\": "inc/"
+    }
+  }
+}

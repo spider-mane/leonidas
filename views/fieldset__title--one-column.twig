@@ -1,0 +1,25 @@
+{% from "macros/render_fieldset.twig" import render_fieldset %}
+{% from "macros/define_form_element.twig" import define_form_element %}
+
+
+<div class="backalley-wrap">
+
+    <fieldset>
+        <h3>{{ fieldset_title }}</h3>
+
+        {% for field in fields %}
+
+            <div class="row">
+                <div class="col-2">
+                    <label for="{{ field.id }}">{{ field.title }}</label>
+                </div>
+                <div class="col">
+                    {{ define_form_element(field) }}
+                </div>
+            </div>
+
+        {% endfor %}
+
+    </fieldset>
+
+</div>

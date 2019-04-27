@@ -1,0 +1,39 @@
+{% import _self as self %}
+
+
+{{ self.define_render_input(input) }}
+
+
+{% macro define_render_input(input) %}
+
+    {% if input.input_type == 'text' %}
+
+        <input type="text" id="{{ input.id }}" name="{{ input.name }}" value="{{ input.value }}" class="{{ input.classes }}" {{input.boolean_attributes}}>
+
+    {% elseif input.input_type == 'email' %}
+
+        <input type="email" id="{{ input.id }}" name="{{ input.name }}" value="{{ input.value }}" class="{{ input.classes }}" data-ba-validate="{{ input.data.validate }}" {{input.boolean_attributes}}>
+
+    {% elseif input.input_type == 'phone' %}
+
+        <input type="phone" id="{{ input.id }}" name="{{ input.name }}" value="{{ input.value }}" class="{{ input.classes }}" data-ba-validate="{{ input.data.validate }}" {{input.boolean_attributes}}>
+
+    {% elseif input.input_type == 'password' %}
+
+        <input type="password" id="{{ input.id }}" name="{{ input.name }}" value="{{ input.value }}" class="{{ input.classes }}" data-ba-validate="{{ input.data.validate }}" {{input.boolean_attributes}}>
+
+    {% elseif input.input_type == 'hidden' %}
+
+        <input type="hidden" id="{{ input.id }}" name="{{ input.name }}" value="{{ input.value }}" class="{{ input.classes }}" data-ba-validate="{{ input.data.validate }}" {{input.boolean_attributes}}>
+
+    {% elseif input.input_type == 'checkbox' %}
+
+        <input type="checkbox" id="{{ input.id }}" name="{{ input.name }}" value="{{ input.value }}" class="{{ input.classes }}" data-ba-validate="{{ input.data.validate }}" {{input.boolean_attributes}}>
+
+    {% elseif input.input_type == 'url' %}
+
+        <input type="url" id="{{ input.id }}" name="{{ input.name }}" value="{{ input.value }}" class="{{ input.classes }}" data-ba-validate="{{ input.data.validate }}" {{input.boolean_attributes}}>
+
+    {% endif %}
+
+{% endmacro define_render_input %}

@@ -1,0 +1,15 @@
+# Editor/ IDE
+.idea
+.project
+*.code-workspace
+
+# NPM
+node_modules/
+
+# Composer
+vendor/
+composer.lock
+composer.phar
+
+# Something
+.DS_Store

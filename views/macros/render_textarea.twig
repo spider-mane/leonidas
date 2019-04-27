@@ -1,0 +1,11 @@
+{% import _self as self %}
+
+
+{{ self.render_textarea(textarea) }}
+
+
+{% macro render_textarea(element) %}
+
+    <textarea name="{{ element.name }}" id="{{ element.id }}" class="{{ element.classes }}">{{ element.value }}</textarea>
+
+{% endmacro render_textarea %}
