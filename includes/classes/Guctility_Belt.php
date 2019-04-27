@@ -39,7 +39,7 @@ class Guctility_Belt
     /**
      * 
      */
-    public static function sort_objects_by_meta(array $objects, string $object_type, string $meta_key)
+    public static function sort_objects_by_meta(array $objects, string $object_type, string $metter_key)
     {
         $order_array = [];
 
@@ -48,7 +48,7 @@ class Guctility_Belt
         $object_id = $properties['object_id'];
 
         foreach ($objects as $object) {
-            $order_array[$object->$object_id] = (int)get_metadata($object_type, $object->$object_id, $meta_key, true);
+            $order_array[$object->$object_id] = (int)get_metadata($object_type, $object->$object_id, $metter_key, true);
         }
 
         return Guctility_Belt::sort_objects_array($objects, $order_array, $object_id);
