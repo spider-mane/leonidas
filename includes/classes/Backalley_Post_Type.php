@@ -8,11 +8,22 @@
 
 class Backalley_Post_Type
 {
+    public $args;
+    public $labels;
+    public $rewrite;
+    public $post_type;
+    public $base_options;
+    public $backalley_options;
+
+
     final public function __construct($post_type, $args)
     {
+        $this->post_type = $post_type;
+        $this->args = $args;
+
         $this->register_post_types($post_type, $args);
 
-        // do_action('backalley/register_post_type', $something);
+        do_action('backalley/register_post_type', $this->post_type, $this->args);
     }
 
     final public function register_post_types($post_type, $args)
