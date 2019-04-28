@@ -1,10 +1,10 @@
 <?php
 
 /**
- *
+ * @package Backalley-Core
  */
 
-// namespace Backalley;
+namespace Backalley;
 
 use Timber\Timber;
 

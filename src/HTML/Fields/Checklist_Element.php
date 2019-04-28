@@ -1,8 +1,10 @@
 <?php
 
 /**
- * 
+ * @package Backalley-Core
  */
+
+namespace Backalley\Html\Fields;
 
 class Checklist_Element extends HTML_Element
 {

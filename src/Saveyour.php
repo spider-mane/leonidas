@@ -1,6 +1,12 @@
 <?php
 
-class Data_Saver
+/**
+ * @package Backalley-Core
+ */
+
+namespace Backalley;
+
+class Saveyour
 {
     public $instructions;
     public $sanitize_instructions;

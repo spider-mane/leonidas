@@ -38,9 +38,7 @@ if (file_exists(dirname(__FILE__) . '/vendor/autoload.php')) {
 }
 
 
-#Functions
-require_once 'includes/functions/functions.php';
-require_once 'includes/functions/lists.php';
+
 
 #Classes
 // require_once "includes/classes/Guctility_Belt.php";

@@ -1,10 +1,12 @@
 <?php
 
 /**
- * 
+ * @package Backalley-Core
  */
 
-class Taxonomy_As_Data_Structure
+namespace Backalley;
+
+class Structural_Taxonomy
 {
     public $taxonomy;
     public $roles;

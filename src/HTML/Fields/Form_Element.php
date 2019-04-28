@@ -1,10 +1,10 @@
 <?php
 
 /**
- *
+ * @package Backalley-Core
  */
 
-// namespace Backalley\Form;
+namespace Backalley\Html\Fields;
 
 final class Form_Element extends HTML_Element
 {
