@@ -6,9 +6,8 @@
 
 namespace Backalley;
 
-class Backalley extends \Backalley_Base
+class Backalley extends \Backalley_Core_Base
 {
-
     public static $api_keys;
     public static $meta_key_prefix;
 
