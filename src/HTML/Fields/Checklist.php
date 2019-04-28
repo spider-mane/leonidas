@@ -6,7 +6,7 @@
 
 namespace Backalley\Html\Fields;
 
-class Checklist_Element extends HTML_Element
+class Checklist extends \Backalley\Html\Html
 {
     public $args;
     public $element_array;

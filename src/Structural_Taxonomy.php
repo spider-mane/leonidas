@@ -47,7 +47,7 @@ class Structural_Taxonomy
      */
     public function init_option()
     {
-        new Backalley_Term_Option([
+        new WP\Term_Option([
             'taxonomy' => $this->taxonomy,
             'display' => [$this, 'term_form_field'],
             'save' => [$this, 'update_term_roles']

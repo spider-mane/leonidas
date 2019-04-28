@@ -4,7 +4,7 @@
  * @package Backalley-Core
  */
 
-class Base
+class Backalley_Base
 {
     public static $path;
     public static $url;
@@ -36,25 +36,3 @@ class Base
 if (file_exists(dirname(__FILE__) . '/vendor/autoload.php')) {
     require_once dirname(__FILE__) . '/vendor/autoload.php';
 }
-
-
-
-
-#Classes
-// require_once "includes/classes/Guctility_Belt.php";
-
-// require_once 'includes/classes/Backalley_Post_Type.php';
-// require_once 'includes/classes/Backalley_Taxonomy.php';
-// require_once 'includes/classes/Backalley_Meta_Box.php';
-// require_once 'includes/classes/Backalley_Term_Option.php';
-// require_once "includes/classes/Backalley_Admin_Settings.php";
-
-// require_once "includes/classes/HTML_Element.php";
-// require_once "includes/classes/HTML_Element2.php";
-// require_once "includes/classes/Form_Element.php";
-// require_once "includes/classes/WP_Form_Field.php";
-// require_once "includes/classes/Checklist_Element.php";
-
-// require_once 'includes/classes/Structural_Taxonomy.php';
-// require_once "includes/classes/Conceptual_Post_Type_Core.php";
-// require_once "includes/classes/Backalley_Conceptual_Post_Type.php";

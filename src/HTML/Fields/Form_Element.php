@@ -6,7 +6,7 @@
 
 namespace Backalley\Html\Fields;
 
-final class Form_Element extends HTML_Element
+final class Form_Element extends \Backalley\Html\Html
 {
     public $type;
 
@@ -117,7 +117,7 @@ final class Form_Element extends HTML_Element
      */
     public function checklist($element)
     {
-        $checklist = new Checklist_Element($element);
+        $checklist = new Checklist($element);
         $this->html = $checklist->html;
     }
 

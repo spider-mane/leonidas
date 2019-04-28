@@ -6,6 +6,9 @@
 
 namespace Backalley\WP;
 
+use Backalley\Structural_Taxonomy;
+
+
 class Taxonomy
 {
     public function __construct($taxonomy, $args)
@@ -44,7 +47,7 @@ class Taxonomy
         }
 
         if (isset($structure)) {
-            new Taxonomy_As_Data_Structure($this->taxonomy, $structure);
+            new Structural_Taxonomy($this->taxonomy, $structure);
         }
     }
 

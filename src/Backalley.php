@@ -6,7 +6,7 @@
 
 namespace Backalley;
 
-class Backalley extends Base
+class Backalley extends \Backalley_Base
 {
 
     public static $api_keys;
@@ -30,7 +30,7 @@ class Backalley extends Base
     /**
      * 
      */
-    public function enqueue()
+    public static function enqueue()
     {
         # wp included libraries
         wp_enqueue_script('jquery');
@@ -45,7 +45,7 @@ class Backalley extends Base
     /**
      * 
      */
-    public function config_twig($twig)
+    public static function config_twig($twig)
     {
         return $twig;
     }

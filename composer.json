@@ -1,7 +1,7 @@
 {
-  "name": "Backalley",
+  "name": "Backalley Core",
 
-  "description": "something or whatever",
+  "description": "Wordpress Admin Framework",
 
   "authors": [{
     "name": "Chris Williams",
@@ -20,7 +20,7 @@
 
   "autoload": {
     "psr-4": {
-      "Backalley\\": "includes/classes"
+      "Backalley\\": "src/"
     }
   }
 }
