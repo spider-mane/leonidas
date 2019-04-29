@@ -213,14 +213,14 @@ class Guctility_Belt
     /**
      * Send Request to google to geocode given address
      */
-    public static function request_google_geocode(string $address, string $api_key)
+    public static function google_geocode(string $address, string $api_key)
     {
         if (empty($address)) {
             return '';
         }
 
         $address_url_formatted = urlencode($address);
-        $url = 'https://maps.googleapis.com/maps/api/geocode/json?address=' . $address_url_formatted . '&key=' . $api_key;
+        $url = "https://maps.googleapis.com/maps/api/geocode/json?address={$address_url_formatted}&key={$api_key}";
         $resp_json = file_get_contents($url);
         $resp = json_decode($resp_json, true);
 

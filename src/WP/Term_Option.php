@@ -6,6 +6,9 @@
 
 namespace Backalley\WP;
 
+use Backalley\Html\Html;
+use Backalley\Html\Fields\Form_Element;
+
 class Term_Option
 {
     public $args;
@@ -67,7 +70,7 @@ class Term_Option
             ]
         ];
 
-        $form_field = new HTML_Element($form_field);
+        $form_field = new Html($form_field);
 
         echo $form_field->html;
     }
@@ -117,7 +120,7 @@ class Term_Option
             ]
         ];
 
-        $form_field = new HTML_Element($form_field);
+        $form_field = new Html($form_field);
 
         echo $form_field->html;
     }

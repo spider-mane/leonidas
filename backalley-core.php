@@ -15,9 +15,9 @@ class Backalley_Core_Base
 
     public static function load()
     {
-        Self::$base = plugin_basename(__FILE__);
         Self::$path = __DIR__;
         Self::$url = plugin_dir_url(__FILE__);
+        Self::$base = plugin_basename(__FILE__);
 
         Self::$admin_url = Self::$url . "public/admin";
         Self::$admin_templates = Self::$path . "/public/admin/templates";

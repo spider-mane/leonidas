@@ -35,9 +35,6 @@ class Structural_Taxonomy
 
         $this->set_roles_data();
         $this->init_option();
-        // new Backalley_Term_Option($this->taxonomy, [$this, 'term_form_field']);
-
-        // add_filter("backalley/{$this->taxonomy->name}_form_fields", [$this, 'term_form_field'], null, 2);
 
         // add_action('set_object_terms', [$this, 'enforce_stuctural_integrity'], null, 3);
     }
@@ -80,7 +77,7 @@ class Structural_Taxonomy
             'description' => "I'll think of it later",
             'field' => $field
         ];
-        var_dump($field['selected']);
+
         return $form_field;
     }
 
