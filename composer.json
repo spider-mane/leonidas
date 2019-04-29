@@ -18,6 +18,8 @@
     "jbzoo/utils": "^2.3"
   },
 
+  "minimum-stability": "stable",
+
   "autoload": {
     "psr-4": {
       "Backalley\\": "src/"
