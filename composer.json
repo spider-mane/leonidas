@@ -21,6 +21,7 @@
   "autoload": {
     "psr-4": {
       "Backalley\\": "src/"
-    }
+    },
+    "files": ["backalley-core.php"]
   }
 }
