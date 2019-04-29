@@ -74,7 +74,7 @@ class Structural_Taxonomy
 
         $form_field = [
             'label' => 'Hierarchy Role',
-            'description' => "I'll think of it later",
+            'description' => "Define a purpose for this term within the hierarcy",
             'field' => $field
         ];
 
