@@ -8,66 +8,44 @@ namespace Backalley\Html;
 
 class Html
 {
-    public $element_array = [
-        // 'root' => [
-            // ...properties
-            // 'child' => [
-                // ...properties
-                // 'decendant'[
-                    // ...properties
-                    // ...decendants...
-                // ]
-            // ]
-        // ]
-    ];
-
     public $html;
-
     public $charset;
-
-    public $self_closing_tags = [
-        'area',
-        'base',
-        'br',
-        'col',
-        'embed',
-        'hr',
-        'img',
-        'input',
-        'link',
-        'meta',
-        'param',
-        'source',
-        'track',
-        'wbr',
-    ];
-
-    public $whitespace_sensitive_tags = [
-        'textarea',
-    ];
+    public $element_array;
 
     /**
      * 
      */
-    public function __construct($element_array, $charset = null)
+    public function __construct($element_array = [], $charset = null)
+    {
+        $this->set_element_array($element_array);
+        $this->set_charset($charset);
+        $this->set_html($this->element_array);
+    }
+
+    /**
+     * 
+     */
+    public function set_charset($charset)
+    {
+        $this->charset = $charset ?? 'UTF-8';
+    }
+
+    /**
+     * 
+     */
+    public function set_element_array($element_array)
     {
         $this->element_array = $element_array;
+    }
 
+    /**
+     * 
+     */
+    public function set_html()
+    {
         $this->html = $this->construct_element($this->element_array);
     }
 
-    /**
-     * 
-     */
-    public function set_charset()
-    {
-        // code here
-    }
-
-    public function set_element($element)
-    {
-        $this->element = $element;
-    }
 
     /**
      * starting point of the process of creating the data structure necessary
@@ -104,7 +82,6 @@ class Html
          * have element array parsed to ensure proper format
          */
         if (!$parsed) {
-            $element_array = $this->parse_element_array($element_array);
             $element_cache = $element_array;
             $marked_up = [];
             $closed_out = [];
@@ -123,8 +100,8 @@ class Html
                 continue;
             }
 
-            $open = $this->opening_tag($definition['tag'], $definition['attributes'] ?? '');
-            $close = $this->closing_tag($definition['tag']);
+            $open = $this->open($definition['tag'], $definition['attributes'] ?? '');
+            $close = $this->close($definition['tag']);
 
             $el_str .= $open;
 
@@ -260,144 +237,9 @@ class Html
     }
 
     /**
-     * Reconstructs an array that meets the specifications of the HTML_Element API into one that is parsable by $this->construct_element()
-     * 
-     * @param array $element_array
-     */
-    public function parse_element_array($element_array)
-    {
-        foreach ($element_array as $element) {
-            if (is_string($element)) {
-                continue;
-            }
-
-            if (!array_key_exists('tag', $element)) {
-                $parse = true;
-                break;
-            }
-        }
-
-        if (!isset($parse)) {
-            return $element_array;
-        }
-
-        foreach ($element_array as $current_element => $definition) { // begin $element_array loop
-            if (!array_key_exists('children', $definition)) {
-                continue;
-            }
-
-            $element_array[$current_element]['children'] = is_array($definition['children']) ? $definition['children'] : [$definition['children']];
-            $children = $element_array[$current_element]['children'];
-
-            // loop through array of $current_element children
-            foreach ($children as $blueprint_node) {
-
-                // don't iterate through children that already exist in proper linear context
-                if (array_key_exists('tag', $element_array[$blueprint_node])) {
-                    continue;
-                }
-
-                // begin loop through each item in the blueprint node array
-                foreach ($element_array[$blueprint_node] as $child_blueprint => $node_map) {
-                    if (!array_key_exists('instances', $node_map)) {
-                        throw new Error('you know you fucked up right?');
-                    }
-
-
-                    // convert children attribute to array if it exists and is
-                    // not already an array
-                    if (array_key_exists('children', $node_map)) {
-                        $node_map['children'] = is_array($node_map['children']) ? $node_map['children'] : [$node_map['children']];
-                    }
-
-                    
-                    // loop through array of instances and convert them to the a
-                    // structure parsable into html markup using values from $node_map
-                    foreach ($node_map['instances'] as $instance => $children_definition) {
-                        
-                        // get children specified in blueprint
-                        $instance_children = $node_map['children'] ?? [];
-
-                        // create the element definition
-                        $new_child = [
-                            'tag' => $node_map['tag'],
-                            'content' => $children_definition['content'] ?? '',
-                            'attributes' => $children_definition['attributes'] ?? null,
-                        ];
-
-                        /**
-                         * new elements are to be namespaced begining with the
-                         * root name followed by the blueprint node name and
-                         * ending with the its index in the instances array
-                         * 
-                         * as a result children can be predicted as the name
-                         * will be the same save for the blueprint node name
-                         */
-                        foreach ($instance_children as $instance_child_blueprint) {
-                            $new_child['children'][] = "{$blueprint_node}-{$instance_child_blueprint}-{$instance}";
-                        }
-
-                        // create an array of new children to add top level
-                        // elements to the 'children' property of $current_element
-                        $lost_children["{$blueprint_node}-{$child_blueprint}-{$instance}"] = $new_child;
-
-                        // insert new child into root level of $element_array
-                        $element_array["{$blueprint_node}-{$child_blueprint}-{$instance}"] = $new_child;
-                    }
-
-                } // end loop through each item in the blueprint node array
-
-
-                /**
-                 * for every new element created, check to see if it is
-                 * referenced as a child of any of the other new elements
-                 * 
-                 * if it is not listed as a child of any other new element,
-                 * append it by key to $current_element['children']
-                 * 
-                 * note: $real child is only declared in order to have
-                 * access to the key $pointer
-                 */
-                foreach ($lost_children as $pointer => $genetics) {
-
-                    // look for parent amongst siblings
-                    foreach ($lost_children as $maybe_child => $family_values) {
-                        if (array_key_exists('children', $family_values)) {
-
-                            // move to the next iteration if the element is referenced as a child of any other element
-                            if (in_array($pointer, $family_values['children'])) {
-                                continue;
-                            }
-
-                            // add any new elements that make it this far to $current_element['children'] only if
-                            // they have not already been added (because it will add them again!)
-                            // die(var_dump($element_array[$current_element]['children']));
-
-                            if (!in_array($maybe_child, $element_array[$current_element]['children'])) {
-                                $element_array[$current_element]['children'][] = $maybe_child;
-                            }
-                        }
-                    }
-                }
-
-                // remove blueprint node name from $current_element['children']
-                $blueprint_node_index = array_search($blueprint_node, $element_array[$current_element]['children']);
-                unset($element_array[$current_element]['children'][$blueprint_node_index]);
-
-                // remove blueprint from element_arry
-                unset($element_array[$blueprint_node]);
-
-            } // end $current_element['children'] loop
-
-        } // end $element_array loop
-
-        return $this->parse_element_array($element_array);
-    }
-
-    /**
      * 
      */
-    public function opening_tag(string $tag, $attributes, $indent = 0, $new_line = false)
+    public function open(string $tag, $attributes, $indent = 0, $new_line = false)
     {
         if (!is_string($attributes) && is_array($attributes)) {
             $attributes = $this->parse_attributes($attributes);
@@ -405,10 +247,10 @@ class Html
 
         $attributes = !empty($attributes) ? " {$attributes}" : '';
 
-        $slash = in_array($tag, $this->self_closing_tags) ? ' /' : '';
+        $slash = in_array($tag, Tag_Sage::$self_closing) ? ' /' : '';
 
         if ($new_line === true) {
-            $new_line = !in_array($this->whitespace_sensitive_tags) ? "\n" : '';
+            $new_line = !in_array(Tag_Sage::$whitespace_sensitive) ? "\n" : '';
         } else {
             $new_line = '';
         }
@@ -419,11 +261,11 @@ class Html
     /**
      * 
      */
-    public function closing_tag($tag)
+    public function close($tag)
     {
-        // return !in_array($tag, $this->self_closing_tags) ? "</{$tag}>" : '';
+        // return !in_array($tag, Tag_Sage::$self_closing) ? "</{$tag}>" : '';
 
-        if (in_array($tag, $this->self_closing_tags)) {
+        if (in_array($tag, Tag_Sage::$self_closing)) {
             return '';
         }
 

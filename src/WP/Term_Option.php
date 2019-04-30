@@ -7,7 +7,7 @@
 namespace Backalley\WP;
 
 use Backalley\Html\Html;
-use Backalley\Html\Fields\Form_Element;
+use Backalley\Fields\Form_Element;
 
 class Term_Option
 {

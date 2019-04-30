@@ -4,19 +4,18 @@
  * @package Backalley-Core
  */
 
-namespace Backalley\Html\Fields;
+namespace Backalley\Fields;
 
-class Checklist extends \Backalley\Html\Html
+class Checklist extends \Backalley\Html\Element_Constructor
 {
     public $args;
-    public $element_array;
 
     /**
      * 
      */
-    public function __construct($args)
+    public function __construct($args, $charset = null)
     {
-        $this->args = $args;
+        $this->set_args();
 
         $this->init_element_array();
         $this->populate_static_element_attributes();
@@ -24,9 +23,20 @@ class Checklist extends \Backalley\Html\Html
         $this->define_clear_control();
         $this->populate_instances();
 
-        $this->html = $this->construct_element($this->element_array);
+        parent::__construct($this->element_array, $charset);
     }
 
+    /**
+     * 
+     */
+    public function set_args($args)
+    {
+        $this->args = $args;
+    }
+
+    /**
+     * 
+     */
     public function init_element_array()
     {
         $this->element_array = [

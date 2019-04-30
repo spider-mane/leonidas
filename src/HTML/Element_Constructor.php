@@ -11,6 +11,14 @@ class Element_Constructor extends Html
     /**
      * 
      */
+    public function set_element_array($element_array)
+    {
+        $this->element_array = $this->parse_element_array($element_array);
+    }
+
+    /**
+     * 
+     */
     public function populate_static_element_attributes()
     {
         foreach ($this->element_array as $element => &$values) {
@@ -30,6 +38,10 @@ class Element_Constructor extends Html
     public function parse_element_array($element_array)
     {
         foreach ($element_array as $element) {
+            if (is_string($element)) {
+                continue;
+            }
+
             if (!array_key_exists('tag', $element)) {
                 $parse = true;
                 break;

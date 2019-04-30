@@ -4,11 +4,11 @@
  * @package Backalley-Core
  */
 
-namespace Backalley\Html\Fields;
+namespace Backalley\Fields;
 
 final class Form_Element extends \Backalley\Html\Html
 {
-    public $type;
+    public $element;
 
     /**
      *
@@ -36,7 +36,7 @@ final class Form_Element extends \Backalley\Html\Html
         $tag = $element['form_element'];
         $attributes = $element['attributes'];
 
-        $this->html = $this->opening_tag($tag, $attributes);
+        $this->html = $this->open($tag, $attributes);
     }
 
     /**
@@ -51,7 +51,7 @@ final class Form_Element extends \Backalley\Html\Html
         $selected = $element['selected'] ?? '';
         $attributes = $element['attributes'] ?? [];
 
-        $html .= $this->opening_tag($tag, $attributes);
+        $html .= $this->open($tag, $attributes);
 
         foreach ($options as $value => $option) {
             $option_attr = ['value' => $value];
@@ -60,12 +60,12 @@ final class Form_Element extends \Backalley\Html\Html
                 $option_attr['selected'] = true;
             }
 
-            $html .= $this->opening_tag('option', $option_attr);
+            $html .= $this->open('option', $option_attr);
             $html .= $option;
-            $html .= $this->closing_tag('option');
+            $html .= $this->close('option');
         }
 
-        $html .= $this->closing_tag($tag);
+        $html .= $this->close($tag);
 
         $this->html = $html;
     }
@@ -81,9 +81,9 @@ final class Form_Element extends \Backalley\Html\Html
         $content = $element['content'];
         $attributes = $element['attributes'];
 
-        $html .= $this->opening_tag($tag, $attributes);
+        $html .= $this->open($tag, $attributes);
         $html .= $content;
-        $html .= $this->closing_tag($tag);
+        $html .= $this->close($tag);
 
         $this->html = $html;
     }
@@ -99,7 +99,7 @@ final class Form_Element extends \Backalley\Html\Html
         $attributes = $element['attributes'];
         $fields = $element['fields'];
 
-        $html .= $this->opening_tag($tag, $attributes);
+        $html .= $this->open($tag, $attributes);
 
         foreach ($fields as $field) {
             $field = new Form_Element($field);
@@ -107,7 +107,7 @@ final class Form_Element extends \Backalley\Html\Html
             $html .= $field->html;
         }
 
-        $html .= $this->closing_tag($tag);
+        $html .= $this->close($tag);
 
         $this->html = $html;
     }

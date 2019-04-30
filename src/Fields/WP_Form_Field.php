@@ -4,7 +4,7 @@
  * @package Backalley-Core
  */
 
-namespace Backalley\Html\Fields;
+namespace Backalley\Fields;
 
 use Timber\Timber;
 
