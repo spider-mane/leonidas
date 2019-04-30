@@ -83,7 +83,9 @@ class Tag_Sage
      */
     public static function is_it($query, $value)
     {
-        return in_array($value, Self::$$query) ? true : false;
+        $answer = in_array($value, Self::$$query) ? true : false;
+
+        return $answer;
     }
 
     /**

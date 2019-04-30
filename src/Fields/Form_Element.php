@@ -2,9 +2,14 @@
 
 /**
  * @package Backalley-Core
+ * 
+ * Simple factory to generate field
  */
 
 namespace Backalley\Fields;
+
+use Backalley\Html\Tag_Sage;
+
 
 final class Form_Element extends \Backalley\Html\Html
 {
@@ -13,19 +18,35 @@ final class Form_Element extends \Backalley\Html\Html
     /**
      *
      */
-    public function __construct($element = null, $element_array = null)
+    public function __construct($element = null, $charset = null)
     {
         $this->parse_args($element);
+        $this->set_charset($charset);
     }
 
     /**
      * 
      */
-    public function parse_args($element, $element_data = null)// : array
+    public function parse_args($element)// : array
     {
         $this->form_element = $element['form_element'];
 
-        $this->{$this->form_element}($element);
+        switch (Tag_Sage::is_it('standard_form_element', $this->form_element)) {
+
+            case false:
+                // convert argument to FQN
+                $field = ucwords(str_replace('_', ' ', $this->form_element));
+                $field = __NAMESPACE__ . '\\' . str_replace(' ', '_', $field);
+
+                $field = new $field($element);
+                $this->html = $field->html;
+                break;
+
+            case true:
+                $field = $this->form_element;
+                $this->$field($element);
+                break;
+        }
     }
 
     /**
@@ -33,10 +54,22 @@ final class Form_Element extends \Backalley\Html\Html
      */
     public function input($element)
     {
-        $tag = $element['form_element'];
-        $attributes = $element['attributes'];
+        $type = $element['attributes']['type'];
 
-        $this->html = $this->open($tag, $attributes);
+        if (Tag_Sage::is_it('standard_input_type', $type)) {
+
+            $tag = $element['form_element'];
+            $attributes = $element['attributes'];
+
+            $this->html = $this->open($tag, $attributes);
+
+        } else {
+            $input = ucwords(str_replace('_', ' ', $type));
+            $input = __NAMESPACE__ . '\\' . str_replace(' ', '_', $input);
+
+            $input = new $input($element);
+            $this->html = $input->html;
+        }
     }
 
     /**
@@ -110,41 +143,5 @@ final class Form_Element extends \Backalley\Html\Html
         $html .= $this->close($tag);
 
         $this->html = $html;
-    }
-
-    /**
-     *
-     */
-    public function checklist($element)
-    {
-        $checklist = new Checklist($element);
-        $this->html = $checklist->html;
-    }
-
-    /**
-     * 
-     */
-    public function radiolist($element)
-    {
-        // $radiolist = new Radiolist_Element($element);
-        // $this->html = $radiolist->html;
-    }
-
-    /**
-     * 
-     */
-    public function wp_terms_checklist($element)
-    {
-        // $terms_checklist = new Terms_Checklist_Element($element);
-        // $this->html = $terms_checklist->html;
-    }
-
-    /**
-     * 
-     */
-    public function wp_terms_radiolist($element)
-    {
-        // $terms_radiolist = new Terms_Radiolist_Element($element);
-        // $this->html = $terms_radiolist->html;
     }
 }
