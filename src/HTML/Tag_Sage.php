@@ -5,9 +5,9 @@ namespace Backalley\Html;
 class Tag_Sage
 {
     /**
-     * 
+     * Array of self closing tags
      */
-    public static $self_closing = [
+    protected static $self_closing = [
         'area',
         'base',
         'br',
@@ -25,27 +25,75 @@ class Tag_Sage
     ];
 
     /**
-     * 
+     * Array of whitespace sensitice tags
      */
-    public static $whitespace_sensitive = [
+    protected static $whitespace_sensitive = [
         'textarea',
+    ];
+
+    /**
+     * Array of standard HTML5 form elements
+     */
+    protected static $standard_form_element = [
+        'button',
+        'datalist',
+        'fieldset',
+        'input',
+        'keygen',
+        'label',
+        'legend',
+        'meter',
+        'optgroup',
+        'option',
+        'progress',
+        'select',
+        'textarea',
+    ];
+
+    /**
+     * Array of standard HTML5 input types
+     */
+    protected static $standard_input_type = [
+        'button',
+        'checkbox',
+        'color',
+        'date',
+        'datetime-local',
+        'email',
+        'file',
+        'hidden',
+        'image',
+        'month',
+        'number',
+        'password',
+        'radio',
+        'range',
+        'reset',
+        'search',
+        'submit',
+        'tel',
+        'text',
+        'time',
+        'url',
+        'week',
     ];
 
     /**
      * 
      */
-    public static $form_elements = [
-        'input',
-        'textarea',
-        'select',
-        'fieldset',
-    ];
+    public static function is_it($query, $value)
+    {
+        return in_array($value, Self::$$query) ? true : false;
+    }
 
-    public static $input_types = [
-        'text',
-        'email',
-        'phone',
-        'checkbox',
-        'radio',
-    ];
+    /**
+     * To be called on load if browser info has been requested. 
+     * Used to modify property arrays based on browser info.
+     * 
+     * @param string $browser current browser
+     */
+    public static function ponder($browser)
+    {
+        // code here
+    }
 }

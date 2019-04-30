@@ -15,7 +15,7 @@ class Checklist extends \Backalley\Html\Element_Constructor
      */
     public function __construct($args, $charset = null)
     {
-        $this->set_args();
+        $this->set_args($args);
 
         $this->init_element_array();
         $this->populate_static_element_attributes();

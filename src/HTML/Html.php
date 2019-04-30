@@ -247,10 +247,10 @@ class Html
 
         $attributes = !empty($attributes) ? " {$attributes}" : '';
 
-        $slash = in_array($tag, Tag_Sage::$self_closing) ? ' /' : '';
+        $slash = Tag_Sage::is_it('self_closing', $tag) ? ' /' : '';
 
         if ($new_line === true) {
-            $new_line = !in_array(Tag_Sage::$whitespace_sensitive) ? "\n" : '';
+            $new_line = !Tag_Sage::is_it('whitespace_sensitive', $tag) ? "\n" : '';
         } else {
             $new_line = '';
         }
@@ -265,7 +265,7 @@ class Html
     {
         // return !in_array($tag, Tag_Sage::$self_closing) ? "</{$tag}>" : '';
 
-        if (in_array($tag, Tag_Sage::$self_closing)) {
+        if (Tag_Sage::is_it('self_closing', $tag)) {
             return '';
         }
 
