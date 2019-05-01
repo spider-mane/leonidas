@@ -59,7 +59,8 @@ final class Form_Element extends \Backalley\Html\Html
         if (Tag_Sage::is_it('standard_input_type', $type)) {
 
             $tag = $element['form_element'];
-            $attributes = $element['attributes'];
+            $attributes = &$element['attributes'];
+            $attributes['type'] = $type;
 
             $this->html = $this->open($tag, $attributes);
 
