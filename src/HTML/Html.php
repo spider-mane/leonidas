@@ -72,26 +72,24 @@ class Html
         // store array provided at initial function call
         static $element_cache;
 
-        // store array of elements that have been processes
+        // store array of elements that have been processed
         static $marked_up;
 
-        static $redundant;
-
-        //
         if (!$re_call) {
+            // set the element cache and the element to be looped through
             $element_cache = $element_array = $element_array ?? $this->element_array;
             $marked_up = [];
-            $redundant = 0;
         }
+
 
         // loop through $element_array
         foreach ($element_array as $current_element => $definition) {
 
             if (in_array($current_element, $marked_up)) {
-                $redundant++;
                 continue;
             }
 
+            // add strings elements to the element string as they may already exist as markup
             if (is_string($definition)) {
                 $el_str .= $definition;
                 $marked_up[] = $current_element;
@@ -104,7 +102,7 @@ class Html
                 $el_str .= $definition['content'];
             }
 
-            // store children in array to be individually passed as argument in recursion
+            // store children in array to be passed as argument in recursive call
             if (!empty($definition['children'])) {
 
                 foreach ($definition['children'] as $child) {
@@ -123,7 +121,6 @@ class Html
         if (!$re_call) {
             $marked_up = null;
             $element_cache = null;
-            // var_dump($redundant);
         }
 
         return $el_str;
