@@ -67,7 +67,7 @@ class Html
      * element's structure is required as an intermidiary between the construct_element()
      * and parse_attributes() methods
      */
-    public function construct_element($element_array = null, &$el_str = '', &$closing_tags = [], $parsed = false)
+    public function construct_element($element_array = null, &$el_str = '', $re_call = false)
     {
         // store array provided at initial function call
         static $element_cache;
@@ -75,22 +75,20 @@ class Html
         // store array of elements that have been processes
         static $marked_up;
 
-        //
-        static $closed_out;
+        static $redundant;
 
-        /**
-         * have element array parsed to ensure proper format
-         */
-        if (!$parsed) {
-            $element_cache = $element_array ?? $this->element_array;
+        //
+        if (!$re_call) {
+            $element_cache = $element_array = $element_array ?? $this->element_array;
             $marked_up = [];
-            $closed_out = [];
+            $redundant = 0;
         }
 
         // loop through $element_array
-        foreach (!$parsed ? $element_cache : $element_array as $current_element => $definition) {
+        foreach ($element_array as $current_element => $definition) {
 
             if (in_array($current_element, $marked_up)) {
+                $redundant++;
                 continue;
             }
 
@@ -100,70 +98,32 @@ class Html
                 continue;
             }
 
-            $open = $this->open($definition['tag'], $definition['attributes'] ?? '');
-            $close = $this->close($definition['tag']);
-
-            $el_str .= $open;
+            $el_str .= $this->open($definition['tag'], $definition['attributes'] ?? '');
 
             if (array_key_exists('content', $definition)) {
                 $el_str .= $definition['content'];
             }
 
-            $closing_tags[$current_element] = $close;
-
-
-            // close out elements without children
-            if (empty($definition['children']) && !in_array($current_element, $closed_out)) {
-                $el_str .= $close;
-                $closed_out[] = $current_element;
-            }
-
-            $marked_up[] = $current_element;
             // store children in array to be individually passed as argument in recursion
             if (!empty($definition['children'])) {
 
                 foreach ($definition['children'] as $child) {
-                    $next_element[$child] = $element_cache[$child];
+                    $children[$child] = $element_cache[$child];
                 }
 
-                break;
+                $this->construct_element($children, $el_str, true);
             }
+
+            $el_str .= $this->close($definition['tag']);
+
+            $marked_up[] = $current_element;
         }
-        
-
-        // recursively parse nested children
-        if (isset($next_element)) {
-
-            foreach ($next_element as $key => $next_up) {
-
-                if (!in_array($key, $marked_up)) {
-                    $thats_meta[$key] = $next_up;
-                    $this->construct_element($thats_meta, $el_str, $closing_tags, true);
-                }
-            }
-        }
-
-        // insert closing tag for parent level elements
-        // even outside of loop context, $current_element will be any element with children
-        if (!in_array($current_element, $closed_out) && !is_string($definition)) {
-            $el_str .= $close;
-            $closed_out[] = $current_element;
-        }
-
-
-        // recursively call function until all elements have been parsed
-        if (!$parsed && count($element_cache) !== count($marked_up)) {
-            $this->construct_element($element_array, $el_str, $closing_tags, true);
-        }
-
-        // if (count($element_array) > 0) {
-        //     $this->construct_element($element_array, $el_str, $closing_tags, true);
-        // }
 
         // set all static variables to null if in initial call stack
-        if (!$parsed) {
+        if (!$re_call) {
             $marked_up = null;
             $element_cache = null;
+            // var_dump($redundant);
         }
 
         return $el_str;
