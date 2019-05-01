@@ -43,7 +43,7 @@ class Html
      */
     public function set_html()
     {
-        $this->html = $this->construct_element($this->element_array);
+        $this->html = $this->construct_element();
     }
 
 
@@ -67,7 +67,7 @@ class Html
      * element's structure is required as an intermidiary between the construct_element()
      * and parse_attributes() methods
      */
-    public function construct_element($element_array, &$el_str = '', &$closing_tags = [], $parsed = false)
+    public function construct_element($element_array = null, &$el_str = '', &$closing_tags = [], $parsed = false)
     {
         // store array provided at initial function call
         static $element_cache;
@@ -82,13 +82,13 @@ class Html
          * have element array parsed to ensure proper format
          */
         if (!$parsed) {
-            $element_cache = $element_array;
+            $element_cache = $element_array ?? $this->element_array;
             $marked_up = [];
             $closed_out = [];
         }
 
         // loop through $element_array
-        foreach ($element_array as $current_element => $definition) {
+        foreach (!$parsed ? $element_cache : $element_array as $current_element => $definition) {
 
             if (in_array($current_element, $marked_up)) {
                 continue;
@@ -239,7 +239,7 @@ class Html
     /**
      * 
      */
-    public function open(string $tag, $attributes, $indent = 0, $new_line = false)
+    public function open(string $tag, $attributes = null, $indent = 0, $new_line = false)
     {
         if (!is_string($attributes) && is_array($attributes)) {
             $attributes = $this->parse_attributes($attributes);
@@ -261,7 +261,7 @@ class Html
     /**
      * 
      */
-    public function close($tag)
+    public function close(string $tag)
     {
         // return !in_array($tag, Tag_Sage::$self_closing) ? "</{$tag}>" : '';
 
@@ -280,5 +280,20 @@ class Html
     public function add_new_line()
     {
         // code here
+    }
+
+    /**
+     * 
+     */
+    public static function script($code)
+    {
+        $tag = '';
+        $attributes = [];
+
+        $script = new Html;
+
+        $tag .= $script->open('script', $attributes);
+        $tag .= $code;
+        $tag .= $script->close('script');
     }
 }

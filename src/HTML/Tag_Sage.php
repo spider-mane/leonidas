@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * @package Backalley Core
+ * 
+ * Helper class to determine whether or not a tag meets a certain criteria
+ */
+
 namespace Backalley\Html;
 
 class Tag_Sage
@@ -86,6 +92,26 @@ class Tag_Sage
         $answer = in_array($value, Self::$$query) ? true : false;
 
         return $answer;
+    }
+
+    /**
+     * 
+     */
+    public static function what_are($these)
+    {
+        switch ($these) {
+            case 'self_closing_tags':
+                return Self::$self_closing;
+
+            case 'whitespace_sensitive_tags':
+                return Self::$whitespace_sensitive;
+
+            case 'standard_form_elements':
+                return Self::$standard_form_element;
+
+            case 'standard_input_types':
+                return Self::$standard_input_type;
+        }
     }
 
     /**

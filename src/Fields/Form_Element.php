@@ -27,7 +27,7 @@ final class Form_Element extends \Backalley\Html\Html
     /**
      * 
      */
-    public function parse_args($element)// : array
+    public function parse_args($element)
     {
         $this->form_element = $element['form_element'];
 
@@ -54,7 +54,7 @@ final class Form_Element extends \Backalley\Html\Html
      */
     public function input($element)
     {
-        $type = $element['attributes']['type'];
+        $type = $element['type'] ?? $element['attributes']['type'] ?? 'text';
 
         if (Tag_Sage::is_it('standard_input_type', $type)) {
 
