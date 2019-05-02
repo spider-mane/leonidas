@@ -34,12 +34,7 @@ final class Form_Element extends \Backalley\Html\Html
         switch (Tag_Sage::is_it('standard_form_element', $this->form_element)) {
 
             case false:
-                // convert argument to FQN
-                $field = ucwords(str_replace('_', ' ', $this->form_element));
-                $field = __NAMESPACE__ . '\\' . str_replace(' ', '_', $field);
-
-                $field = new $field($element);
-                $this->html = $field->html;
+                $this->custom_field($element);
                 break;
 
             case true:
@@ -144,5 +139,28 @@ final class Form_Element extends \Backalley\Html\Html
         $html .= $this->close($tag);
 
         $this->html = $html;
+    }
+
+    /**
+     * 
+     */
+    public static function new_fields($fields)
+    {
+        foreach ($fields as $field) {
+            return new Form_Element($field);
+        }
+    }
+
+    /**
+     * Instantiate custom field if $form_element is nor a standard HTML5 form field
+     */
+    private function custom_field($element)
+    {
+        // convert argument to FQN
+        $field = ucwords(str_replace('_', ' ', $this->form_element));
+        $field = __NAMESPACE__ . '\\' . str_replace(' ', '_', $field);
+
+        $field = new $field($element);
+        $this->html = $field->html;
     }
 }
