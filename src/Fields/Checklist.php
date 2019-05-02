@@ -6,7 +6,7 @@
 
 namespace Backalley\Fields;
 
-class Checklist extends \Backalley\Html\Element_Constructor
+class Checklist extends \Backalley\Html\Element_Constructor implements FieldInterface
 {
     public $args;
 
