@@ -7,7 +7,7 @@
 namespace Backalley\WP;
 
 use Backalley\Html\Html;
-use Backalley\Fields\Form_Element;
+use Backalley\Fields\FormField;
 
 class Term_Option
 {
@@ -35,7 +35,7 @@ class Term_Option
     {
         $form_field = call_user_func($this->form_field_callback, $taxonomy, null);
 
-        $this->field = new Form_Element($form_field['field']);
+        $this->field = new FormField($form_field['field']);
     }
 
     /**
@@ -46,7 +46,7 @@ class Term_Option
         $form_field = call_user_func($this->form_field_callback, $taxonomy, null);
         $form_field = apply_filters("backalley/{$this->taxonomy->name}_form_fields", $form_field, $taxonomy, null);
 
-        $field = new Form_Element($form_field['field']);
+        $field = new FormField($form_field['field']);
 
         $form_field = [
             'container' => [
@@ -83,7 +83,7 @@ class Term_Option
         $form_field = call_user_func($this->form_field_callback, $taxonomy, $term);
         $form_field = apply_filters("backalley/{$this->taxonomy->name}_form_fields", $form_field, $taxonomy, $term);
 
-        $field = new Form_Element($form_field['field']);
+        $field = new FormField($form_field['field']);
 
         $form_field = [
             'row' => [

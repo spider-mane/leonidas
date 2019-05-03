@@ -11,7 +11,7 @@ namespace Backalley\Fields;
 use Backalley\Html\Tag_Sage;
 
 
-final class Form_Element extends \Backalley\Html\Html
+final class FormField extends \Backalley\Html\Html
 {
     public $args;
 
@@ -30,14 +30,15 @@ final class Form_Element extends \Backalley\Html\Html
     public function parse_args($args)
     {
         $this->form_element = $args['form_element'];
+        $method = $this->form_element;
+        $class = $this->arg_to_class();
 
-        switch (Tag_Sage::is_it('standard_form_element', $this->form_element)) {
-
-            case false:
-                $this->custom_field($args);
+        switch (true) {
+            case class_exists($class):
+                $this->custom_field($class, $args);
                 break;
 
-            case true:
+            case Tag_Sage::is_it('standard_form_element', $this->form_element) && method_exists($this, $method):
                 $field = $this->form_element;
                 $this->$field($args);
                 break;
@@ -131,7 +132,7 @@ final class Form_Element extends \Backalley\Html\Html
         $html .= $this->open($tag, $attributes);
 
         foreach ($fields as $field) {
-            $field = new Form_Element($field);
+            $field = new FormField($field);
 
             $html .= $field->html;
         }
@@ -147,20 +148,27 @@ final class Form_Element extends \Backalley\Html\Html
     public static function new_fields($fields)
     {
         foreach ($fields as $field) {
-            return new Form_Element($field);
+            return new FormField($field);
         }
+    }
+
+    /**
+     * Convert form_field to FQN
+     */
+    public function arg_to_class()
+    {
+        $class = ucwords(str_replace('_', ' ', $this->form_element));
+        $class = __NAMESPACE__ . '\\' . str_replace(' ', '_', $class);
+
+        return $class;
     }
 
     /**
      * Instantiate custom field if $form_element is nor a standard HTML5 form field
      */
-    private function custom_field($args)
+    private function custom_field($class, $args)
     {
-        // convert argument to FQN
-        $field = ucwords(str_replace('_', ' ', $this->form_element));
-        $field = __NAMESPACE__ . '\\' . str_replace(' ', '_', $field);
-
-        $field = new $field($args);
+        $field = new $class($args);
         $this->html = $field->html;
     }
 }

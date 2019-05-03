@@ -33,7 +33,7 @@ class Taxonomy
     {
         $this->taxonomy = $taxonomy;
 
-        // return $this;
+        return $this;
     }
 
     /**
@@ -44,7 +44,7 @@ class Taxonomy
         unset($args['backalley_custom_args']);
         $this->base_args = $args;
 
-        // return $this;
+        return $this;
     }
 
     /**

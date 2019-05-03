@@ -7,7 +7,7 @@
 namespace Backalley;
 
 use Timber\Timber;
-use Backalley\Fields\Form_Element;
+use Backalley\Fields\FormField;
 
 abstract class Backalley_Conceptual_Post_Type extends Conceptual_Post_Type_Core
 {
@@ -50,7 +50,7 @@ abstract class Backalley_Conceptual_Post_Type extends Conceptual_Post_Type_Core
         foreach (($fieldset['fields']) as $field => &$definition) {
             $attributes = $definition['attributes'] ?? [];
 
-            $html = new Form_Element($definition);
+            $html = new FormField($definition);
 
             $definition = [
                 'title' => $definition['title'] ?? '',

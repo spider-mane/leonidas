@@ -30,7 +30,7 @@ trait CustomTaxonomyArgFactoryTrait
             $hook_tag = "backalley/register_taxonomy/custom_args/{$name}";
             $method = "handle_{$name}_arg";
 
-            $class = apply_filters($hook_tag, $class);
+            $class = apply_filters($hook_tag, $class, $arg);
 
             switch (true) {
                 case class_exists($class) && in_array($this->interface, class_implements($class)):

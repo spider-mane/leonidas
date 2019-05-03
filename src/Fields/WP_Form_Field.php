@@ -15,7 +15,7 @@ class WP_Form_Field
     public function __construct($args)
     {
         // $this->args = $element_array;
-        $field = new Form_Element($args['field']);
+        $field = new FormField($args['field']);
 
         $form_field = [
             'field_id' => $args['field']['attributes']['id'],
@@ -79,7 +79,7 @@ class WP_Form_Field
      */
     public function instantiate_field()
     {
-        $field = new Form_Element($this->args['field']);
+        $field = new FormField($this->args['field']);
 
         $this->element_array['field'] = $field->html;
     }
