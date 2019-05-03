@@ -7,14 +7,14 @@
 namespace Backalley\WP;
 
 
-class Taxonomy extends CustomTaxonomyArgFactory
+class Taxonomy
 {
     public $post_types;
     public $base_args;
     public $taxonomy;
-    public $custom_args;
     public $taxonomy_object;
 
+    use \Backalley\WP\Taxonomy\Args\CustomTaxonomyArgFactoryTrait;
 
     public function __construct($taxonomy, $args, $post_types = null)
     {
@@ -33,6 +33,7 @@ class Taxonomy extends CustomTaxonomyArgFactory
     {
         $this->taxonomy = $taxonomy;
 
+        // return $this;
     }
 
     /**
@@ -40,8 +41,10 @@ class Taxonomy extends CustomTaxonomyArgFactory
      */
     public function set_base_args($args)
     {
-        unset($args['backalley_args']);
+        unset($args['backalley_custom_args']);
         $this->base_args = $args;
+
+        // return $this;
     }
 
     /**
@@ -49,7 +52,9 @@ class Taxonomy extends CustomTaxonomyArgFactory
      */
     public function set_custom_args($custom_args)
     {
-        $this->custom_args = $custom_args['backalley_args'];
+        $this->custom_args = $custom_args['backalley_custom_args'];
+
+        return $this;
     }
 
     /**
@@ -57,7 +62,11 @@ class Taxonomy extends CustomTaxonomyArgFactory
      */
     public function set_post_types($post_types = null)
     {
-        $this->post_types = $post_types ?? $this->custom_args['post_types'] ?? null;
+        $post_types = $post_types ?? $this->custom_args['post_types'] ?? null;
+
+        $this->post_types = is_array($post_types) ? $post_types : [$post_types];
+
+        return $this;
     }
 
     /**
@@ -67,12 +76,14 @@ class Taxonomy extends CustomTaxonomyArgFactory
     {
         register_taxonomy($this->taxonomy, $this->post_types, $this->base_args);
         $this->taxonomy_object = get_taxonomy($this->taxonomy);
+
+        return $this;
     }
 
     /**
      * pair taxonomy to provided post types
      */
-    public function post_types($arg)
+    public function handle_post_types_arg($arg)
     {
         $post_types = is_array($this->post_types) ? $this->post_types : [$this->post_types];
 
@@ -82,9 +93,9 @@ class Taxonomy extends CustomTaxonomyArgFactory
     }
 
     /**
-     * 
+     * Disables the default feature "checked on top" of the default hierarchical terms meta box
      */
-    public function maintain_mb_hierarchy($arg)
+    public function handle_maintain_mb_hierarchy_arg($arg)
     {
         if ($arg !== true) {
             return;
@@ -102,7 +113,7 @@ class Taxonomy extends CustomTaxonomyArgFactory
     }
 
     /**
-     * 
+     * Register an array of taxonomies
      */
     public static function bulk_registration($taxonomies)
     {

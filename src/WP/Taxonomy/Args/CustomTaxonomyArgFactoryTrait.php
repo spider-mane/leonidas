@@ -1,6 +1,6 @@
 <?php
 
-namespace Backalley\WP;
+namespace Backalley\WP\Taxonomy\Args;
 
 /**
  * @package Backalley Core
@@ -13,9 +13,10 @@ namespace Backalley\WP;
  * called to process it
  */
 
-abstract class CustomTaxonomyArgFactory
+trait CustomTaxonomyArgFactoryTrait
 {
     public $custom_args = [];
+    public $interface = __NAMESPACE__ . '\\CustomTaxonomyArgInterface';
 
 
     public function custom_args()
@@ -27,19 +28,21 @@ abstract class CustomTaxonomyArgFactory
 
             $class = $this::arg_to_class($name);
             $hook_tag = "backalley/register_taxonomy/custom_args/{$name}";
-            $method = "";
+            $method = "handle_{$name}_arg";
+
+            $class = apply_filters($hook_tag, $class);
 
             switch (true) {
-                case class_exists($class):
-                    new $class($this->taxonomy_object, $arg);
+                case class_exists($class) && in_array($this->interface, class_implements($class)):
+                    $class::pass($this->taxonomy_object, $arg);
                     break;
 
                 case isset($wp_filter[$hook_tag]):
                     do_action($hook_tag, $this->taxonomy_object, $arg);
                     break;
 
-                case method_exists($this, $name):
-                    $this->$name($arg);
+                case method_exists($this, $method):
+                    $this->$method($arg);
                     break;
             }
         }
@@ -50,10 +53,12 @@ abstract class CustomTaxonomyArgFactory
      */
     public static function arg_to_class($arg)
     {
-        $class = str_replace('_', ' ', $arg);
-        $class = ucwords($arg);
-        $class = str_replace(' ', '', $class);
-        $class = "Backalley\\{$class}TaxonomyArg";
+        $bridge = str_replace('_', ' ', $arg);
+
+        $bridge = ucwords($bridge);
+        $bridge = str_replace(' ', '', $bridge);
+
+        $class = __NAMESPACE__ . "\\{$bridge}TaxonomyArg";
 
         return $class;
     }

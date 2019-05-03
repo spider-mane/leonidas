@@ -186,13 +186,6 @@ class Structural_Taxonomy
     }
 }
 
-// class_alias('Backalley\\Structural_Taxonomy', 'Backalley\\StructuralTaxonomyArg');
-
-// die(var_dump('ass'));
-
-
-
-
 
     // /**
     //  * 
