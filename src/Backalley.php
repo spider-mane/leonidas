@@ -21,6 +21,8 @@ class Backalley extends \Backalley_Core_Base
         Self::$api_keys = $args['api_keys'] ?? [];
         Self::$meta_key_prefix = $args['meta_key_prefix'] ?? '';
 
+        Self::alias_classes();
+
         add_action('admin_enqueue_scripts', [__class__, 'enqueue']);
 
         add_filter('timber/twig', [__class__, 'config_twig']);
@@ -47,5 +49,19 @@ class Backalley extends \Backalley_Core_Base
     public static function config_twig($twig)
     {
         return $twig;
+    }
+
+    /**
+     * 
+     */
+    public static function alias_classes()
+    {
+        $aliases = [
+            'Backalley\\Structural_Taxonomy' => 'Backalley\\StructuralTaxonomyArg',
+        ];
+
+        foreach ($aliases as $class => $alias) {
+            class_alias($class, $alias);
+        }
     }
 }
