@@ -21,7 +21,7 @@ class Backalley extends \Backalley_Core_Base
         Self::$api_keys = $args['api_keys'] ?? [];
         Self::$meta_key_prefix = $args['meta_key_prefix'] ?? '';
 
-        Self::alias_classes();
+        // Self::alias_classes();
 
         add_action('admin_enqueue_scripts', [__class__, 'enqueue']);
 
