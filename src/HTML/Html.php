@@ -204,10 +204,10 @@ class Html
 
         $attributes = !empty($attributes) ? " {$attributes}" : '';
 
-        $slash = Tag_Sage::is_it('self_closing', $tag) ? ' /' : '';
+        $slash = TagSage::is_it('self_closing', $tag) ? ' /' : '';
 
         if ($new_line === true) {
-            $new_line = !Tag_Sage::is_it('whitespace_sensitive', $tag) ? "\n" : '';
+            $new_line = !TagSage::is_it('whitespace_sensitive', $tag) ? "\n" : '';
         } else {
             $new_line = '';
         }
@@ -220,9 +220,9 @@ class Html
      */
     public function close(string $tag)
     {
-        // return !in_array($tag, Tag_Sage::$self_closing) ? "</{$tag}>" : '';
+        // return !in_array($tag, TagSage::$self_closing) ? "</{$tag}>" : '';
 
-        if (Tag_Sage::is_it('self_closing', $tag)) {
+        if (TagSage::is_it('self_closing', $tag)) {
             return '';
         }
 

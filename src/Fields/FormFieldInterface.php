@@ -2,7 +2,7 @@
 
 namespace Backalley\Fields;
 
-interface FieldInterface
+interface FormFieldInterface
 {
     public function set_html();
 }

@@ -6,7 +6,7 @@
 
 namespace Backalley\Html;
 
-class Select_Options
+class SelectOptions
 {
 	/**
 	 * 

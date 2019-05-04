@@ -4,7 +4,7 @@
  * @package Backalley-Core
  */
 
-class Backalley_Core_Base
+class BackalleyCoreBase
 {
     public static $url;
     public static $path;

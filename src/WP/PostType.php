@@ -7,7 +7,7 @@
 namespace Backalley\WP;
 
 
-final class Post_Type
+final class PostType
 {
     public $args;
     public $labels;

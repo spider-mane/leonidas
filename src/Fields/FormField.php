@@ -8,7 +8,7 @@
 
 namespace Backalley\Fields;
 
-use Backalley\Html\Tag_Sage;
+use Backalley\Html\TagSage;
 
 
 final class FormField extends \Backalley\Html\Html
@@ -38,7 +38,7 @@ final class FormField extends \Backalley\Html\Html
                 $this->custom_field($class, $args);
                 break;
 
-            case Tag_Sage::is_it('standard_form_element', $this->form_element) && method_exists($this, $method):
+            case TagSage::is_it('standard_form_element', $this->form_element) && method_exists($this, $method):
                 $field = $this->form_element;
                 $this->$field($args);
                 break;
@@ -52,7 +52,7 @@ final class FormField extends \Backalley\Html\Html
     {
         $type = $args['type'] ?? $args['attributes']['type'] ?? 'text';
 
-        if (Tag_Sage::is_it('standard_input_type', $type)) {
+        if (TagSage::is_it('standard_input_type', $type)) {
 
             $tag = $args['form_element'];
             $attributes = &$args['attributes'];

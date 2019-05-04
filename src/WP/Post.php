@@ -11,7 +11,7 @@ class Post
     public static function save_fields(array $fields)
     {
         foreach ($fields as $field => $instructions) {
-            $results[$field] = new Data_Saver($field);
+            $results[$field] = new Saveyour($field);
 
         }
     }

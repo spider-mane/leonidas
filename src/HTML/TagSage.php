@@ -8,7 +8,7 @@
 
 namespace Backalley\Html;
 
-class Tag_Sage
+class TagSage
 {
     /**
      * Array of self closing tags

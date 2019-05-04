@@ -8,7 +8,7 @@ namespace Backalley\Fields;
 
 use Timber\Timber;
 
-class WP_Form_Field
+class WpFormField
 {
     public $args;
 

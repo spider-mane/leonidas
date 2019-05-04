@@ -9,7 +9,7 @@ namespace Backalley\WP;
 use Backalley\Html\Html;
 use Backalley\Fields\FormField;
 
-class Term_Option
+class TermCustomField
 {
     public $args;
     public $form_field_callback;

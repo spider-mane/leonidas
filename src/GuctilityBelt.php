@@ -6,7 +6,7 @@
 
 namespace Backalley;
 
-class Guctility_Belt
+class GuctilityBelt
 {
     /**
      * 

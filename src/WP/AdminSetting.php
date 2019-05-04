@@ -6,7 +6,7 @@
 
 namespace Backalley\WP;
 
-final class Admin_Setting
+final class AdminSetting
 {
     public $admin_pages = [];
 

@@ -6,7 +6,7 @@
 
 namespace Backalley\Html;
 
-class Element_Constructor extends Html
+class ElementConstructor extends Html
 {
     /**
      * 

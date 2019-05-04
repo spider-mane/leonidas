@@ -8,7 +8,7 @@ namespace Backalley;
 
 use Timber\Timber;
 
-abstract class Conceptual_Post_Type_Core
+abstract class ConceptualPostTypeCore
 {
     protected static $post_var = 'backalley_post_type_data';
 

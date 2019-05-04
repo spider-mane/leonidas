@@ -6,7 +6,7 @@
 
 namespace Backalley\WP;
 
-class Meta_Box
+class MetaBox
 {
     public $args = [];
     public $labels = [];

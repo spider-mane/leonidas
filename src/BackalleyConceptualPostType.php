@@ -9,7 +9,7 @@ namespace Backalley;
 use Timber\Timber;
 use Backalley\Fields\FormField;
 
-abstract class Backalley_Conceptual_Post_Type extends Conceptual_Post_Type_Core
+abstract class BackalleyConceptualPostType extends ConceptualPostTypeCore
 {
     protected static $post_var = '';
 
