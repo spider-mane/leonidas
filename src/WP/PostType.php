@@ -9,48 +9,49 @@ namespace Backalley\WP;
 
 final class PostType
 {
-    public $args;
-    public $labels;
-    public $rewrite;
     public $post_type;
-    public $base_options;
-    public $backalley_options;
+    public $base_args;
+    public $post_type_object;
 
     private static $registered = [];
 
-    const WP_ARGS = ['base', 'labels', 'rewrite'];
+    use PostType\Args\CustomArgFactoryTrait;
 
     final public function __construct($post_type, $args)
     {
-        $this->post_type = $post_type;
-        $this->args = $args;
-
-        // $this->set_base();
-        // $this->set_labels();
-        // $this->set_rewrite();
-
+        $this->set_post_type($post_type);
+        $this->set_base_args($args);
+        $this->set_custom_args($args);
         $this->register_post_type();
-        // $this->post_type_factory();
 
-        do_action('backalley/register_post_type', $this->post_type, $this->args);
+        if (!empty($this->custom_args)) {
+            $this->custom_arg_factory();
+        }
     }
 
     /**
      * 
      */
-    final public function set_base()
+    public function set_post_type(string $post_type)
     {
-        $this->base = $args['base'];
-
-        foreach ($this->base as $base_feature => $arg) {
-            $this->post_type[$base_feature] = $arg;
-        }
+        $this->post_type = $post_type;
     }
 
-    final public function set_rewrite()
+    /**
+     * 
+     */
+    public function set_base_args($args)
     {
-        $this->rewrite = $args['rewrite'] ?? [];
-        $this->post_type['rewrite'] = $this->rewrite;
+        unset($args['backalley_custom_args']);
+        $this->base_args = $args;
+    }
+
+    /**
+     * 
+     */
+    public function set_custom_args($args)
+    {
+        $this->custom_args = $args['backalley_custom_args'] ?? null;
     }
 
     /**
@@ -58,8 +59,7 @@ final class PostType
      */
     final public function set_labels()
     {
-        $this->labels = $args['labels'];
-        $this->post_type['labels'] = $this->labels;
+
     }
 
     /**
@@ -67,40 +67,10 @@ final class PostType
      */
     final public function register_post_type()
     {
-        register_post_type($this->post_type, $this->args, 0);
+        register_post_type($this->post_type, $this->base_args, 0);
+        $this->post_type_object = get_post_type_object($this->post_type);
     }
 
-    /**
-     * 
-     */
-    private function post_type_factory()
-    {
-        foreach ($this->args as $option => $args) {
-            if (in_array(WP_ARGS)) {
-                continue;
-            }
-
-            $class = $this->arg_to_class($option);
-            $class = apply_filters("backalley/new/{$class}", $class);
-
-            if (class_exists($class))
-                new $class($args);
-        }
-    }
-
-    /**
-     * 
-     */
-    private function arg_to_class($arg)
-    {
-        $class = str_replace('_options', '', $arg);
-        $class = str_replace('_', ' ', $arg);
-        $class = uc_words($arg);
-        $class = str_replace(' ', '', $args);
-        $class = "Backalley\\{$class}PostTypeArg";
-
-        return $class;
-    }
 
     /**
      * 
@@ -116,5 +86,15 @@ final class PostType
     public static function unregistered()
     {
 
+    }
+
+    /**
+     * 
+     */
+    public static function bulk_registration($post_types = [])
+    {
+        foreach ($post_types as $post_type => $args) {
+            new PostType($post_type, $args);
+        }
     }
 }

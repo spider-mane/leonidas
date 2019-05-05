@@ -14,7 +14,7 @@ class Taxonomy
     public $taxonomy;
     public $taxonomy_object;
 
-    use \Backalley\WP\Taxonomy\Args\CustomTaxonomyArgFactoryTrait;
+    use Taxonomy\Args\CustomTaxonomyArgFactoryTrait;
 
     public function __construct($taxonomy, $args, $post_types = null)
     {
@@ -23,7 +23,10 @@ class Taxonomy
         $this->set_custom_args($args);
         $this->set_post_types($post_types);
         $this->register_taxonomy();
-        $this->custom_args();
+
+        if (!empty($this->custom_args)) {
+            $this->custom_arg_factory();
+        }
     }
 
     /**
@@ -52,7 +55,7 @@ class Taxonomy
      */
     public function set_custom_args($custom_args)
     {
-        $this->custom_args = $custom_args['backalley_custom_args'];
+        $this->custom_args = $custom_args['backalley_custom_args'] ?? null;
 
         return $this;
     }

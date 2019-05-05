@@ -19,7 +19,7 @@ trait CustomTaxonomyArgFactoryTrait
     public $interface = __NAMESPACE__ . '\\CustomTaxonomyArgInterface';
 
 
-    public function custom_args()
+    public function custom_arg_factory()
     {
         global $wp_filter;
 
@@ -27,21 +27,25 @@ trait CustomTaxonomyArgFactoryTrait
         foreach ($this->custom_args as $name => $arg) {
 
             $class = $this::arg_to_class($name);
-            $hook_tag = "backalley/register_taxonomy/custom_args/{$name}";
+            $hook_tag = "backalley/taxonomy/register/args/{$name}";
             $method = "handle_{$name}_arg";
 
-            $class = apply_filters($hook_tag, $class, $arg);
+            $class = apply_filters("{$hook_tag}/interface", $class, $arg);
 
             switch (true) {
-                case class_exists($class) && in_array($this->interface, class_implements($class)):
-                    $class::pass($this->taxonomy_object, $arg);
-                    break;
-
                 case isset($wp_filter[$hook_tag]):
+
                     do_action($hook_tag, $this->taxonomy_object, $arg);
                     break;
 
+                case class_exists($class) && in_array($this->interface, class_implements($class)):
+
+                    $class::pass($this->taxonomy_object, $arg);
+                    add_action('wp_loaded', [$class, 'run']);
+                    break;
+
                 case method_exists($this, $method):
+
                     $this->$method($arg);
                     break;
             }

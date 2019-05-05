@@ -20,7 +20,7 @@ trait CustomArgFactoryTrait
     public $interface = __NAMESPACE__ . '\\CustomArgInterface';
 
 
-    public function custom_args()
+    public function custom_arg_factory()
     {
         global $wp_filter;
 
@@ -28,21 +28,25 @@ trait CustomArgFactoryTrait
         foreach ($this->custom_args as $name => $arg) {
 
             $class = $this::arg_to_class($name);
-            $hook_tag = "backalley/register_post_type/custom_args/{$name}";
+            $hook_tag = "backalley/post_type/register/args/{$name}";
             $method = "handle_{$name}_arg";
 
-            $class = apply_filters($hook_tag, $class, $arg);
+            $class = apply_filters("{$hook_tag}/interface", $class, $arg);
 
             switch (true) {
                 case isset($wp_filter[$hook_tag]):
-                    do_action($hook_tag, $this->taxonomy_object, $arg);
+
+                    do_action($hook_tag, $this->post_type_object, $arg);
                     break;
 
                 case class_exists($class) && in_array($this->interface, class_implements($class)):
-                    $class::pass($this->taxonomy_object, $arg);
+
+                    $class::pass($this->post_type_object, $arg);
+                    add_action($class::$hook ?? 'wp_loaded', [$class, 'run']);
                     break;
 
                 case method_exists($this, $method):
+
                     $this->$method($arg);
                     break;
 

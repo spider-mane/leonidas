@@ -21,7 +21,7 @@ class Backalley extends \BackalleyCoreBase
         Self::$api_keys = $args['api_keys'] ?? [];
         Self::$meta_key_prefix = $args['meta_key_prefix'] ?? '';
 
-        // Self::alias_classes();
+        Self::alias_classes();
 
         add_action('admin_enqueue_scripts', [__class__, 'enqueue']);
 
@@ -57,7 +57,9 @@ class Backalley extends \BackalleyCoreBase
     public static function alias_classes()
     {
         $aliases = [
-            'Backalley\\Structural_Taxonomy' => 'Backalley\\StructuralTaxonomyArg',
+            "Backalley\\WP\\PostType" => "Backalley_Post_Type",
+            "Backalley\\WP\\Taxonomy" => "Backalley_Taxonomy",
+            "Backalley\\WP\\MetaBox" => "Backalley_Meta_Box",
         ];
 
         foreach ($aliases as $class => $alias) {
