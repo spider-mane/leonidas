@@ -11,7 +11,7 @@ namespace Backalley\Fields;
 use Backalley\Html\TagSage;
 
 
-final class FormField extends \Backalley\Html\Html
+final class FormField extends \Backalley\Html\HtmlConstructor
 {
     public $args;
 

@@ -6,20 +6,22 @@
 
 namespace Backalley\Html;
 
-class Html
+class HtmlConstructor
 {
     public $html;
     public $charset;
-    public $element_array;
+    public $html_map;
+    public $html_2d_map;
+    public $current_element;
 
     /**
      * 
      */
-    public function __construct($element_array = [], $charset = null)
+    public function __construct(array $html_map = [], string $charset = null)
     {
-        $this->set_element_array($element_array);
+        $this->set_html_map($html_map);
         $this->set_charset($charset);
-        $this->set_html($this->element_array);
+        $this->set_html();
     }
 
     /**
@@ -28,14 +30,18 @@ class Html
     public function set_charset($charset)
     {
         $this->charset = $charset ?? 'UTF-8';
+
+        return $this;
     }
 
     /**
      * 
      */
-    public function set_element_array($element_array)
+    public function set_html_map($html_map)
     {
-        $this->element_array = $element_array;
+        $this->html_map = $html_map;
+
+        return $this;
     }
 
     /**
@@ -43,95 +49,71 @@ class Html
      */
     public function set_html()
     {
-        $this->html = $this->construct_element();
+        $this->html = $this->construct_html();
+
+        return $this;
     }
 
-
     /**
-     * starting point of the process of creating the data structure necessary
-     * rendering the element. the primary purpose of this method is to provide
-     * an api to abstract out the need to explicitly set attrubutes needed for
-     * any front end functionality. regardless of whether or not any such api is
-     * required or provided, use this method to call parse_attributes()
-     */
-    // abstract function parse_args($element);// : array;
-
-    /**
-     * this method shoud recieve a formatted data structure parse it recursively
-     * based on whether or not the current array element has a key labed
-     * 'children' with a non empty value. If the condition is true, it should
-     * store the closing tag in an array. Any element that does not meet said
-     * condition for recursive parsing must automaticcaly 
+     * genterates an html string from 
      * 
-     * a custom defined method that anticipates and accordingly establishes the
-     * element's structure is required as an intermidiary between the construct_element()
-     * and parse_attributes() methods
+     * @param array $html_map
+     * @param bool $recall
+     * 
+     * @return string
      */
-    public function construct_element($element_array = null, &$el_str = '', $re_call = false)
+    private function construct_html($map = null, $recall = false)
     {
-        // store array provided at initial function call
-        static $element_cache;
-
-        // store array of elements that have been processed
+        $html = '';
         static $marked_up;
 
-        if (!$re_call) {
-            // set the element cache and the element to be looped through
-            $element_cache = $element_array = $element_array ?? $this->element_array;
+        if (!$recall) {
             $marked_up = [];
         }
 
-
-        // loop through $element_array
-        foreach ($element_array as $current_element => $definition) {
+        foreach ($map ?? $this->html_map as $current_element => $definition) {
 
             if (in_array($current_element, $marked_up)) {
                 continue;
             }
 
-            // add strings elements to the element string as they may already exist as markup
+            // add values already existing as strings to $html as they may already exist as markup
             if (is_string($definition)) {
-                $el_str .= $definition;
+                $html .= $definition;
                 $marked_up[] = $current_element;
                 continue;
             }
 
-            $el_str .= $this->open($definition['tag'], $definition['attributes'] ?? '');
+            $html .= $this->open($definition['tag'], $definition['attributes'] ?? '');
+            $html .= $definition['content'] ?? '';
 
-            if (array_key_exists('content', $definition)) {
-                $el_str .= $definition['content'];
-            }
-
-            // store children in array to be passed as argument in recursive call
-            if (!empty($definition['children'])) {
-
-                foreach ($definition['children'] as $child) {
-                    $children[$child] = $element_cache[$child];
+            // store children in array to be passed as $html_map argument in recursive call
+            if (!empty($children = $definition['children'] ?? null)) {
+                foreach ($children as $child) {
+                    $child_map[$child] = $this->html_map[$child];
                 }
 
-                $this->construct_element($children, $el_str, true);
+                $html .= $this->construct_html($child_map, true);
             }
 
-            $el_str .= $this->close($definition['tag']);
-
+            $html .= $this->close($definition['tag']);
             $marked_up[] = $current_element;
         }
 
-        // set all static variables to null if in initial call stack
-        if (!$re_call) {
+        // reset static variables if in initial call stack
+        if (!$recall) {
             $marked_up = null;
-            $element_cache = null;
         }
 
-        return $el_str;
+        return $html;
     }
 
     /**
      * 
      */
-    public function construct_element_with_map($order, $element_array, &$el_str = '')
+    public function construct_html_2d($order, $html_map, &$el_str = '')
     {
-        // code here
+        //
     }
 
     /**
@@ -247,7 +229,7 @@ class Html
         $tag = '';
         $attributes = [];
 
-        $script = new Html;
+        $script = new HtmlConstructor;
 
         $tag .= $script->open('script', $attributes);
         $tag .= $code;

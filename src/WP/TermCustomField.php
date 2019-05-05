@@ -6,8 +6,8 @@
 
 namespace Backalley\WP;
 
-use Backalley\Html\Html;
 use Backalley\Fields\FormField;
+use Backalley\Html\HtmlConstructor;
 
 class TermCustomField
 {
@@ -70,7 +70,7 @@ class TermCustomField
             ]
         ];
 
-        $form_field = new Html($form_field);
+        $form_field = new HtmlConstructor($form_field);
 
         echo $form_field->html;
     }
@@ -120,7 +120,7 @@ class TermCustomField
             ]
         ];
 
-        $form_field = new Html($form_field);
+        $form_field = new HtmlConstructor($form_field);
 
         echo $form_field->html;
     }

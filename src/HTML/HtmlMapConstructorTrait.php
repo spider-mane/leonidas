@@ -6,38 +6,26 @@
 
 namespace Backalley\Html;
 
-class ElementConstructor extends Html
+trait HtmlMapConstructorTrait
 {
     /**
      * 
      */
-    public function set_element_array($element_array)
+    public function set_html_map($html_map)
     {
-        $this->element_array = $this->parse_element_array($element_array);
+        $this->html_map = $this->parse_html_map($html_map);
+
+        return $this;
     }
 
     /**
+     * Reconstructs a raw html_map into one parsable by $this->construct_html()
      * 
+     * @param array $html_map
      */
-    public function populate_static_element_attributes()
+    public function parse_html_map($html_map)
     {
-        foreach ($this->element_array as $element => &$values) {
-
-            if (isset($this->args[$element]['attributes'])) {
-                // $values['attributes'] = $this->args[$element]['attributes'];
-                $values['attributes'] = $this->parse_attributes($this->args[$element]['attributes']);
-            }
-        }
-    }
-
-    /**
-     * Reconstructs an array that meets the specifications of the HTML_Element API into one that is parsable by $this->construct_element()
-     * 
-     * @param array $element_array
-     */
-    public function parse_element_array($element_array)
-    {
-        foreach ($element_array as $element) {
+        foreach ($html_map as $element) {
             if (is_string($element)) {
                 continue;
             }
@@ -49,27 +37,27 @@ class ElementConstructor extends Html
         }
 
         if (!isset($parse)) {
-            return $element_array;
+            return $html_map;
         }
 
-        foreach ($element_array as $current_element => $definition) { // begin $element_array loop
+        foreach ($html_map as $current_element => $definition) { // begin $html_map loop
             if (!array_key_exists('children', $definition)) {
                 continue;
             }
 
-            $element_array[$current_element]['children'] = is_array($definition['children']) ? $definition['children'] : [$definition['children']];
-            $children = $element_array[$current_element]['children'];
+            $html_map[$current_element]['children'] = is_array($definition['children']) ? $definition['children'] : [$definition['children']];
+            $children = $html_map[$current_element]['children'];
 
             // loop through array of $current_element children
             foreach ($children as $blueprint_node) {
 
                 // don't iterate through children that already exist in proper linear context
-                if (array_key_exists('tag', $element_array[$blueprint_node])) {
+                if (array_key_exists('tag', $html_map[$blueprint_node])) {
                     continue;
                 }
 
                 // begin loop through each item in the blueprint node array
-                foreach ($element_array[$blueprint_node] as $child_blueprint => $node_map) {
+                foreach ($html_map[$blueprint_node] as $child_blueprint => $node_map) {
                     if (!array_key_exists('instances', $node_map)) {
                         throw new Error('you know you fucked up right?');
                     }
@@ -112,8 +100,8 @@ class ElementConstructor extends Html
                         // elements to the 'children' property of $current_element
                         $lost_children["{$blueprint_node}-{$child_blueprint}-{$instance}"] = $new_child;
 
-                        // insert new child into root level of $element_array
-                        $element_array["{$blueprint_node}-{$child_blueprint}-{$instance}"] = $new_child;
+                        // insert new child into root level of $html_map
+                        $html_map["{$blueprint_node}-{$child_blueprint}-{$instance}"] = $new_child;
                     }
 
                 } // end loop through each item in the blueprint node array
@@ -142,26 +130,26 @@ class ElementConstructor extends Html
 
                             // add any new elements that make it this far to $current_element['children'] only if
                             // they have not already been added (because it will add them again!)
-                            // die(var_dump($element_array[$current_element]['children']));
+                            // die(var_dump($html_map[$current_element]['children']));
 
-                            if (!in_array($maybe_child, $element_array[$current_element]['children'])) {
-                                $element_array[$current_element]['children'][] = $maybe_child;
+                            if (!in_array($maybe_child, $html_map[$current_element]['children'])) {
+                                $html_map[$current_element]['children'][] = $maybe_child;
                             }
                         }
                     }
                 }
 
                 // remove blueprint node name from $current_element['children']
-                $blueprint_node_index = array_search($blueprint_node, $element_array[$current_element]['children']);
-                unset($element_array[$current_element]['children'][$blueprint_node_index]);
+                $blueprint_node_index = array_search($blueprint_node, $html_map[$current_element]['children']);
+                unset($html_map[$current_element]['children'][$blueprint_node_index]);
 
                 // remove blueprint from element_arry
-                unset($element_array[$blueprint_node]);
+                unset($html_map[$blueprint_node]);
 
             } // end $current_element['children'] loop
 
-        } // end $element_array loop
+        } // end $html_map loop
 
-        return $this->parse_element_array($element_array);
+        return $this->parse_html_map($html_map);
     }
 }

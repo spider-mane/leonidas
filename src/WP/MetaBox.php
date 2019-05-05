@@ -70,13 +70,23 @@ class MetaBox
             $i--;
             $render = "render_{$fieldset}_fieldset";
 
-            Backalley_Restaurant_Location::$render($post);
+            Fieldset::$render($post);
 
             echo '<br>';
 
             if ($i > 0) {
                 echo '<hr>';
             }
+        }
+    }
+
+    /**
+     * 
+     */
+    public static function bulk_add($meta_boxes)
+    {
+        foreach ($meta_boxes as $meta_box) {
+            new MetaBox($meta_box);
         }
     }
 }

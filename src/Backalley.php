@@ -24,7 +24,6 @@ class Backalley extends \BackalleyCoreBase
         Self::alias_classes();
 
         add_action('admin_enqueue_scripts', [__class__, 'enqueue']);
-
         add_filter('timber/twig', [__class__, 'config_twig']);
     }
 

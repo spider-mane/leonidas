@@ -6,9 +6,14 @@
 
 namespace Backalley\Fields;
 
-class Checklist extends \Backalley\Html\ElementConstructor implements FormFieldInterface
+use Backalley\Html\HtmlConstructor;
+
+
+class Checklist extends HtmlConstructor implements FormFieldInterface
 {
     public $args;
+
+    use \Backalley\Html\HtmlMapConstructorTrait;
 
     /**
      * 
@@ -17,13 +22,13 @@ class Checklist extends \Backalley\Html\ElementConstructor implements FormFieldI
     {
         $this->set_args($args);
 
-        $this->init_element_array();
+        $this->init_html_map();
         $this->populate_static_element_attributes();
         $this->define_toggle_control();
         $this->define_clear_control();
         $this->populate_instances();
 
-        parent::__construct($this->element_array, $charset);
+        parent::__construct($this->html_map, $charset);
     }
 
     /**
@@ -37,9 +42,9 @@ class Checklist extends \Backalley\Html\ElementConstructor implements FormFieldI
     /**
      * 
      */
-    public function init_element_array()
+    public function init_html_map()
     {
-        $this->element_array = [
+        $this->html_map = [
             'container' => [
                 'tag' => 'div',
                 'children' => 'ul'
@@ -82,7 +87,7 @@ class Checklist extends \Backalley\Html\ElementConstructor implements FormFieldI
      */
     public function populate_static_element_attributes()
     {
-        foreach ($this->element_array as $element => &$values) {
+        foreach ($this->html_map as $element => &$values) {
 
             if (isset($this->args[$element]['attributes'])) {
                 // $values['attributes'] = $this->args[$element]['attributes'];
@@ -97,13 +102,13 @@ class Checklist extends \Backalley\Html\ElementConstructor implements FormFieldI
     public function define_clear_control()
     {
         if (!isset($this->args['clear_control'])) {
-            unset($this->element_array['clear_control']);
+            unset($this->html_map['clear_control']);
 
-            $clear_control = array_search('clear_control', $this->element_array['ul']['children']);
-            unset($this->element_array['ul']['children'][$clear_control]);
+            $clear_control = array_search('clear_control', $this->html_map['ul']['children']);
+            unset($this->html_map['ul']['children'][$clear_control]);
 
         } else {
-            $this->element_array['clear_control']['attributes']['name'] = $this->args['clear_control'];
+            $this->html_map['clear_control']['attributes']['name'] = $this->args['clear_control'];
         }
     }
 
@@ -113,15 +118,15 @@ class Checklist extends \Backalley\Html\ElementConstructor implements FormFieldI
     public function define_toggle_control()
     {
         if (!isset($this->args['toggle']) || isset($this->args['toggle']) && $this->args['toggle'] === false) {
-            unset($this->element_array['items']['toggle']);
+            unset($this->html_map['items']['toggle']);
 
-            $toggle = array_search('toggle', $this->element_array['items']['li']['children']);
-            unset($this->element_array['items']['li']['children'][$toggle]);
+            $toggle = array_search('toggle', $this->html_map['items']['li']['children']);
+            unset($this->html_map['items']['li']['children'][$toggle]);
 
         } else {
             foreach ($this->args['items'] as $item) {
 
-                $toggle_instances = &$this->element_array['items']['toggle']['instances'];
+                $toggle_instances = &$this->html_map['items']['toggle']['instances'];
 
                 $toggle_instances[] = [
                     'attributes' => [
@@ -141,9 +146,9 @@ class Checklist extends \Backalley\Html\ElementConstructor implements FormFieldI
     {
         foreach ($this->args['items'] as $item) {
 
-            $checkbox_instances = &$this->element_array['items']['checkbox']['instances'];
-            $li_instances = &$this->element_array['items']['li']['instances'];
-            $label_instances = &$this->element_array['items']['label']['instances'];
+            $checkbox_instances = &$this->html_map['items']['checkbox']['instances'];
+            $li_instances = &$this->html_map['items']['li']['instances'];
+            $label_instances = &$this->html_map['items']['label']['instances'];
 
             if (!isset($item['attributes']['type'])) {
 
