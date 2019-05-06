@@ -126,6 +126,19 @@ class Saveyour
     /**
      * 
      */
+    public static function pass_judgement($instructions, $data)
+    {
+        $judgement = new Saveyour;
+        $judgement->flock = $data;
+        $judgement->scriptures = $instructions;
+        $judgement->validate()->sanitize();
+
+        return $judgement;
+    }
+
+    /**
+     * 
+     */
     public function create_hook()
     {
 
