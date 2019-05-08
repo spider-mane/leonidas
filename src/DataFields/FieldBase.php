@@ -46,7 +46,10 @@ abstract class FieldBase
     /**
      * 
      */
-    abstract public function __construct($args);
+    public function __construct($args)
+    {
+        //
+    }
 
     /**
      * 
