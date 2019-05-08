@@ -6,7 +6,7 @@
  * Simple factory to generate field
  */
 
-namespace Backalley\Fields;
+namespace Backalley\FormFields;
 
 use Backalley\Html\TagSage;
 

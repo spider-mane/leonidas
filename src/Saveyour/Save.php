@@ -33,15 +33,17 @@ class Save
 
         switch (true) {
             case is_null($value) || empty($value):
-                delete_metadata($type, $object_id, $meta_key);
+                $result = delete_metadata($type, $object_id, $meta_key);
                 break;
 
             case empty($old_data):
-                add_metadata($type, $object_id, $meta_key, $value, true);
+                $result = add_metadata($type, $object_id, $meta_key, $value, true);
                 break;
 
             default:
-                update_metadata($type, $object_id, $meta_key, $value, $old_data);
+                $result = update_metadata($type, $object_id, $meta_key, $value, $old_data);
         }
+
+        return ['updated' => ($old_data !== $value), 'success' => $result];
     }
 }

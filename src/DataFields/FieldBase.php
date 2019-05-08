@@ -1,21 +1,62 @@
 <?php
 
-/**
- * @package Backalley-Core
- */
-
-namespace Backalley;
+namespace Backalley\DataFields;
 
 use Timber\Timber;
+use Backalley\Backalley;
 use Backalley\FormFields\FormField;
 
-abstract class BackalleyConceptualPostType extends ConceptualPostTypeCore
+abstract class FieldBase
 {
-    protected static $post_var = '';
+    /**
+     * name
+     * 
+     * @var string
+     */
+    public $name;
 
-    protected static $fieldsets = [];
+    /**
+     * title
+     * 
+     * @var string
+     */
+    public $title;
 
-    protected static $datasets = [];
+    /**
+     * id
+     * 
+     * @var string
+     */
+    public $id;
+
+    /**
+     * id_prefix
+     * 
+     * @var string
+     */
+    public $id_prefix;
+
+    /**
+     * meta_prefix
+     * 
+     * @var string
+     */
+    public $meta_prefix;
+
+    /**
+     * 
+     */
+    abstract public function __construct($args);
+
+    /**
+     * 
+     */
+    abstract public function render($post);
+
+    /**
+     * 
+     */
+    abstract public function save($post_id, $post, $update, $fieldset = null, $raw_data = null);
 
     /**
      *

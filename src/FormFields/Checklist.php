@@ -4,7 +4,7 @@
  * @package Backalley-Core
  */
 
-namespace Backalley\Fields;
+namespace Backalley\FormFields;
 
 use Backalley\Html\HtmlConstructor;
 

@@ -39,9 +39,11 @@ class Saveyour
     public $sinners = [];
 
     /**
+     * Array of sanitized values and the results of saving
      * 
+     * @var array
      */
-
+    public $revelations = [];
 
     /**
      * 
@@ -53,17 +55,16 @@ class Saveyour
                 $this->saints[] = $field;
             }
 
-            $validation = $instructions['check'];
+            $validation = $instructions['check'] ?? null;
 
-            switch (v::$validation()->validate($this->flock[$field])) {
+            switch (!isset($validation) || v::$validation()->validate($this->flock[$field])) {
                 case true:
-                    // die(var_dump('yes'));
                     $this->saints[] = $field;
                     break;
 
                 case false:
-                    // die(var_dump('no'));
                     $this->sinners[] = $field;
+                    break;
             }
         }
 
@@ -76,9 +77,11 @@ class Saveyour
     public function sanitize()
     {
         foreach ($this->saints as $field) {
-            $sanitizer = "sanitize_{$this->scriptures[$field]['filter']}" ?? "sanitize_text_field";
+            $sanitizer = $this->scriptures[$field]['filter'] ?? "sanitize_text_field";
 
-            $this->flock[$field] = $sanitizer($this->flock[$field]);
+            $this->revelations[$field]['value'] = $this->flock[$field] = $sanitizer($this->flock[$field]);
+
+
         }
 
         return $this;
@@ -96,8 +99,13 @@ class Saveyour
             $db_field = $this->scriptures[$field]['save'];
             $data = $this->flock[$field];
 
-            Saveyour\Save::$method($db_row, $db_field, $data);
+            $result = Saveyour\Save::$method($db_row, $db_field, $data);
+
+            $this->revelations[$field]['updated'] = $result['updated'];
+            $this->revelations[$field]['success'] = $result['success'];
         }
+        // die(var_dump($this->salvation));
+
         // exit;
         return $this;
     }
