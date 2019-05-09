@@ -2,6 +2,9 @@
 
 namespace Backalley\WP\Taxonomy\Args;
 
+use Backalley\GuctilityBelt;
+
+
 /**
  * @package Backalley Core
  * 
@@ -26,7 +29,7 @@ trait CustomTaxonomyArgFactoryTrait
 
         foreach ($this->custom_args as $name => $arg) {
 
-            $class = $this::arg_to_class($name);
+            $class = GuctilityBelt::arg_to_class($name, "%sTaxonomyArg", __NAMESPACE__);
             $hook_tag = "backalley/taxonomy/register/args/{$name}";
             $method = "handle_{$name}_arg";
 
@@ -50,20 +53,5 @@ trait CustomTaxonomyArgFactoryTrait
                     break;
             }
         }
-    }
-
-    /**
-     * Convert custom argument to class format
-     */
-    public static function arg_to_class($arg)
-    {
-        $bridge = str_replace('_', ' ', $arg);
-
-        $bridge = ucwords($bridge);
-        $bridge = str_replace(' ', '', $bridge);
-
-        $class = __NAMESPACE__ . "\\{$bridge}TaxonomyArg";
-
-        return $class;
     }
 }

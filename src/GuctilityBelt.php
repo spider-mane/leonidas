@@ -9,6 +9,21 @@ namespace Backalley;
 class GuctilityBelt
 {
     /**
+     * Convert custom argument to an FQN
+     */
+    public static function arg_to_class($arg, $class_format = '', $namespace = '')
+    {
+        $bridge = str_replace('_', ' ', $arg);
+
+        $bridge = ucwords($bridge);
+        $bridge = str_replace(' ', '', $bridge);
+
+        $class = $namespace . "\\" . sprintf($class_format, $bridge);
+
+        return $class;
+    }
+
+    /**
      * 
      */
     public static function sort_objects_array(array $objects_array, array $order_array, string $order_key)

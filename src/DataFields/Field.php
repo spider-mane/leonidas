@@ -2,6 +2,8 @@
 
 namespace Backalley\DataFields;
 
+use Backalley\GuctilityBelt;
+
 
 /**
  * 
@@ -14,13 +16,24 @@ abstract class Field
     public static $post_vars = [];
 
     /**
-     * Instantiate and return requested field by parsing 
+     * Instantiate and return requested field 
      */
-    public static function generate($args)
+    public static function create($args)
     {
-        $field = Self::arg_to_class($args['field']);
+        $field = GuctilityBelt::arg_to_class($args['field'], "%sField", __NAMESPACE__);
 
         return new $field($args);
+    }
+
+    /**
+     * Instantiate and return array of fields
+     */
+    public static function bulk_creation($fields)
+    {
+        foreach ($fields as $field => $args) {
+            $fields[$field] = Self::generate($args);
+        }
+        return $fields;
     }
 
     /**
@@ -64,41 +77,5 @@ abstract class Field
 
             do_action("backalley/save/{$post->post_type}/{$field->name}", $post_id, $post, $update);
         }
-    }
-
-    /**
-     * Convert custom argument to class format
-     */
-    public static function arg_to_class($arg, $class_format = '')
-    {
-        $bridge = str_replace('_', ' ', $arg);
-
-        $bridge = ucwords($bridge);
-        $bridge = str_replace(' ', '', $bridge);
-
-        $class = __NAMESPACE__ . "\\{$bridge}Field";
-
-        return $class;
-    }
-
-    public function api_example()
-    {
-        $fields = [
-            'address' => [
-                'field' => 'address_fieldset'
-            ],
-            'contact_info' => [
-                'field' => 'fieldset',
-                'fields' => [
-                    'phone' => [
-                        'label' => 'Phone',
-                        'type' => 'phone',
-                        'name' => 'contact_info__phone',
-                        'id' => 'backalley--contact-info--phone',
-                        'invalid' => 'Aye you better fix this'
-                    ]
-                ]
-            ]
-        ];
     }
 }

@@ -9,11 +9,13 @@
 namespace Backalley\FormFields;
 
 use Backalley\Html\TagSage;
+use Backalley\GuctilityBelt;
 
 
 final class FormField extends \Backalley\Html\HtmlConstructor
 {
     public $args;
+    public $form_element;
 
     /**
      *
@@ -31,7 +33,7 @@ final class FormField extends \Backalley\Html\HtmlConstructor
     {
         $this->form_element = $args['form_element'];
         $method = $this->form_element;
-        $class = $this->arg_to_class();
+        $class = GuctilityBelt::arg_to_class($this->form_element, "%s", __NAMESPACE__);
 
         switch (true) {
             case class_exists($class):
@@ -150,17 +152,6 @@ final class FormField extends \Backalley\Html\HtmlConstructor
         foreach ($fields as $field) {
             return new FormField($field);
         }
-    }
-
-    /**
-     * Convert form_field to FQN
-     */
-    public function arg_to_class()
-    {
-        $class = ucwords(str_replace('_', ' ', $this->form_element));
-        $class = __NAMESPACE__ . '\\' . str_replace(' ', '_', $class);
-
-        return $class;
     }
 
     /**

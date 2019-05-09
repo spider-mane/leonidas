@@ -184,7 +184,7 @@ class MetaBox
     public function set_fields($fields)
     {
         foreach ($fields ?? [] as $field => $args) {
-            $this->fields[$field] = Field::generate($args);
+            $this->fields[$field] = Field::create($args);
         }
         return $this;
     }
@@ -214,7 +214,7 @@ class MetaBox
      */
     public function render_meta_box($post, $meta_box)
     {
-        Field::render_all($post, $this->fields);
+        Field::render_all($post, $this->fields ?? []);
     }
 
     /**
@@ -222,19 +222,18 @@ class MetaBox
      */
     public function save_data($post_id, $post, $update)
     {
-        Field::save_all($post_id, $post, $update, $this->fields);
+        Field::save_all($post_id, $post, $update, $this->fields ?? []);
     }
 
     /**
-     * 
+     * Instantiate multiple MetaBoxes
      */
     public static function bulk_add($meta_boxes)
     {
         foreach ($meta_boxes as $name => $meta_box) {
-            $meta_box = new MetaBox($meta_box);
-            $mb_objects[$name] = $meta_box;
+            $meta_boxes[$name] = new MetaBox($meta_box);
         }
 
-        return $mb_objects;
+        return $meta_boxes;
     }
 }

@@ -6,7 +6,7 @@
 
 namespace Backalley\WP;
 
-use Backalley\Fields\FormField;
+use Backalley\FormFields\FormField;
 use Backalley\Html\HtmlConstructor;
 
 class TermCustomField

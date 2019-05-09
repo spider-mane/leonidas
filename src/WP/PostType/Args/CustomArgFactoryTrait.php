@@ -2,6 +2,9 @@
 
 namespace Backalley\WP\PostType\Args;
 
+use Backalley\GuctilityBelt;
+
+
 /**
  * @package Backalley Core
  * 
@@ -27,7 +30,7 @@ trait CustomArgFactoryTrait
 
         foreach ($this->custom_args as $name => $arg) {
 
-            $class = $this::arg_to_class($name);
+            $class = GuctilityBelt::arg_to_class($name, "%sPostTypeArg", __NAMESPACE__);
             $hook_tag = "backalley/post_type/register/args/{$name}";
             $method = "handle_{$name}_arg";
 
@@ -54,20 +57,5 @@ trait CustomArgFactoryTrait
                     throw new \Error("I don't know what you mean. Your Argument is invalid.");
             }
         }
-    }
-
-    /**
-     * Convert custom argument to class format
-     */
-    public static function arg_to_class($arg, $class_format = '')
-    {
-        $bridge = str_replace('_', ' ', $arg);
-
-        $bridge = ucwords($bridge);
-        $bridge = str_replace(' ', '', $bridge);
-
-        $class = __NAMESPACE__ . "\\{$bridge}PostTypeArg";
-
-        return $class;
     }
 }
