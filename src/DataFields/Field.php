@@ -48,10 +48,6 @@ abstract class Field
      */
     public static function save_all($post_id, $post, $update, array $fields)
     {
-        foreach ($fields as $field) {
-            $raw_data[$field['name']] = $_POST[$field['name']] ?? null;
-        }
-
         /**
          * call the function that is designated to handle processing each variable within the main post variable for the
          * metabox or post type. This establishes an implicit whitelist as only post variables that  correspond to a
@@ -59,16 +55,14 @@ abstract class Field
          * 
          * find a way to add more security layers to implicit whitelisting
          */
-        foreach ($raw_data as $fieldset => $value) {
-            $save_fieldset = "save_{$fieldset}";
-            // var_dump($fieldset);
+        foreach ($fields as $field) {
+            $raw_data = $_POST[$field->name] ?? null;
 
-            if (is_callable(['static', $save_fieldset])) {
-                // var_dump($fieldset);
-                static::$save_fieldset($post_id, $post, $update, $fieldset, $raw_data[$fieldset]);
+            if (isset($raw_data)) {
+                $field->save($post_id, $post, $update, null, $raw_data);
             }
 
-            do_action("backalley/save/{$post->post_type}/{$fieldset}", $post_id, $post, $update);
+            do_action("backalley/save/{$post->post_type}/{$field->name}", $post_id, $post, $update);
         }
     }
 

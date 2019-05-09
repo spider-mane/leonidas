@@ -103,7 +103,8 @@ class HoursFieldsetField extends FieldBase
      */
     public function save($post_id, $post, $update, $fieldset = null, $raw_data = null)
     {
-        $prefix = BackAlley::$meta_key_prefix;
+        $validate_cb = apply_filters("backalley/validate/location/hours", "sanitize_text_field");
+        $sanitize_cb = apply_filters("backalley/sanitize/location/hours", "sanitize_text_field");
 
         foreach ($raw_data as $day => $hours) {
             $day = sanitize_text_field($day);
@@ -111,7 +112,7 @@ class HoursFieldsetField extends FieldBase
             foreach ($hours as $hour => $time) {
                 $hour = sanitize_text_field($hour);
 
-                $meta_key = $prefix . "{$post->post_type}_hours__{$day}_{$hour}";
+                $meta_key = $this->meta_prefix . "{$post->post_type}_hours__{$day}_{$hour}";
 
                 $sanitized_data = filter_var(
                     $time,

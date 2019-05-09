@@ -120,9 +120,7 @@ class PostRelationshipChecklistField extends FieldBase
      */
     public function save($post_id, $post, $update, $fieldset = null, $raw_data = null)
     {
-        $shadow_taxonomy = Self::$menu_item_relationship[0];
-
-        $menu_items = filter_var(
+        $related_posts = filter_var(
             $raw_data,
             FILTER_CALLBACK,
             ['options' => 'sanitize_text_field']
@@ -130,15 +128,15 @@ class PostRelationshipChecklistField extends FieldBase
 
         $post_as_term = strval($post_id);
 
-        foreach ($menu_items as $menu_item => $selected) {
+        foreach ($related_posts as $related_post => $selected) {
             if ($selected) {
                 /* 
                  * do not under any circunstances modify 4th argument. it must be set to true 
                  * in order to prevent completely rewriting terms of menu item
                  */
-                wp_set_object_terms($menu_item, $post_as_term, $shadow_taxonomy, true);
+                wp_set_object_terms($related_post, $post_as_term, $this->connection, true);
             } elseif (!$selected) {
-                wp_remove_object_terms($menu_item, $post_as_term, $shadow_taxonomy);
+                wp_remove_object_terms($related_post, $post_as_term, $this->connection);
             }
         }
     }

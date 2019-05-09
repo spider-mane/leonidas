@@ -56,11 +56,39 @@ class AttributeTaxonomyFieldsetField extends FieldBase
     public $meta_key_format;
 
     /**
-     * attributes
+     * attribute_taxonomy
      * 
      * @var string
      */
-    public $attributes;
+    public $attribute_taxonomy;
+
+    /**
+     * filter
+     * 
+     * @var string
+     */
+    public $filter;
+
+    /**
+     * validation
+     * 
+     * @var string
+     */
+    public $validation;
+
+    /**
+     * input_type
+     * 
+     * @var string
+     */
+    public $input_type;
+
+    /**
+     * terms_title
+     * 
+     * @var string
+     */
+    public $terms_title;
 
     /**
      * 
