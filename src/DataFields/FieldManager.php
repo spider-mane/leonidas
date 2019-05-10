@@ -32,7 +32,7 @@ abstract class FieldManager
     {
         foreach ($fields as $field => $args) {
             $args['name'] = $args['name'] ?? $field;
-            $fields[$field] = Self::generate($args);
+            $fields[$field] = Self::create($args);
         }
         return $fields;
     }

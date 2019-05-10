@@ -3,9 +3,10 @@
 namespace Backalley\DataFields;
 
 use Timber\Timber;
+use Backalley\Saveyour;
 use Backalley\Backalley;
-use Backalley\FormFields\FormField;
 use Backalley\GuctilityBelt;
+use Backalley\FormFields\FormField;
 
 abstract class FieldBase
 {
@@ -14,21 +15,21 @@ abstract class FieldBase
      * 
      * @var string
      */
-    public $name = '';
+    public $name;
 
     /**
      * title
      * 
      * @var string
      */
-    public $title = '';
+    public $title;
 
     /**
      * id
      * 
      * @var string
      */
-    public $id = '';
+    public $id;
 
     /**
      * attributes
@@ -42,7 +43,7 @@ abstract class FieldBase
      * 
      * @var string
      */
-    public $id_prefix = '';
+    public $id_prefix;
 
     /**
      * width
@@ -56,14 +57,14 @@ abstract class FieldBase
      * 
      * @var string
      */
-    public $meta_key = '';
+    public $meta_key;
 
     /**
      * meta_prefix
      * 
      * @var string
      */
-    public $meta_prefix = '';
+    public $meta_prefix;
 
     /**
      * filter
@@ -77,7 +78,7 @@ abstract class FieldBase
      * 
      * @var string
      */
-    public $validation = '';
+    public $validation;
 
     /**
      * 
@@ -106,20 +107,17 @@ abstract class FieldBase
      */
     public function save($post_id, $post, $update, $fieldset = null, $raw_data = null)
     {
-        $meta_key = "{$this->meta_prefix}{$post->post_type}_{$this->meta_key}";
-        $old_value = get_post_meta($post_id, $meta_key, true);
-
-        $directions = [
-            ''
+        $instructions = [
+            $this->name => [
+                'filter' => !empty($this->filter) ? $this->filter : 'sanitize_text_field',
+                'check' => !empty($this->validation) ? $this->validation : null,
+                'type' => 'post_meta',
+                'item' => $post_id,
+                'save' => "{$this->meta_prefix}{$post->post_type}_{$this->meta_key}"
+            ]
         ];
 
-        $filter = $this->filter;
-
-        $new_value = $filter($raw_data);
-
-        if ($new_value !== $old_value) {
-            update_post_meta($post->ID, $meta_key, $new_value);
-        }
+        $results = Saveyour::judge($instructions, $raw_data);
     }
 
     /**

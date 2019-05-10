@@ -33,13 +33,6 @@ class ReviewFieldsetField extends FieldBase
     public $id = 'backalley--review--fieldset';
 
     /**
-     * subnames
-     * 
-     * @var array
-     */
-    public $subfields = [];
-
-    /**
      * id_prefix
      * 
      * @var string
@@ -47,21 +40,18 @@ class ReviewFieldsetField extends FieldBase
     public $id_prefix = 'backalley--review--';
 
     /**
-     * this->meta_prefix
+     * subnames
      * 
-     * @var string
+     * @var array
      */
-    public $meta_prefix;
+    public $fields = [];
 
     /**
      * 
      */
     public function __construct($args)
     {
-        $this->name = $args['name'] ?? $this->name;
-        $this->title = $args['title'] ?? $this->title;
-        $this->id_prefix = $args['id_prefix'] ?? $this->id_prefix;
-        $this->meta_prefix = $args['meta_prefix'] ?? Backalley::$meta_key_prefix;
+        parent::__construct($args);
     }
 
     /**

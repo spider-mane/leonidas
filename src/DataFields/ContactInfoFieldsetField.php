@@ -33,13 +33,6 @@ class ContactInfoFieldsetField extends FieldBase
     public $id = 'backalley--contact_info--fieldset';
 
     /**
-     * subnames
-     * 
-     * @var array
-     */
-    public $subnames = [];
-
-    /**
      * id_prefix
      * 
      * @var string
@@ -47,11 +40,11 @@ class ContactInfoFieldsetField extends FieldBase
     public $id_prefix = 'backalley--contact_info--';
 
     /**
-     * meta_prefix
+     * subnames
      * 
-     * @var string
+     * @var array
      */
-    public $meta_prefix;
+    public $fields = [];
 
     /**
      * 

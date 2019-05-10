@@ -14,41 +14,6 @@ use Backalley\Html\SelectOptions;
 class AttributeTaxonomyFieldsetField extends FieldBase
 {
     /**
-     * name
-     * 
-     * @var string
-     */
-    public $name;
-
-    /**
-     * id
-     * 
-     * @var string
-     */
-    public $id;
-
-    /**
-     * subnames
-     * 
-     * @var array
-     */
-    public $subnames = [];
-
-    /**
-     * id_prefix
-     * 
-     * @var string
-     */
-    public $id_prefix;
-
-    /**
-     * meta_prefix
-     * 
-     * @var string
-     */
-    public $meta_prefix;
-
-    /**
      * meta_key_format
      * 
      * @var string
@@ -63,20 +28,6 @@ class AttributeTaxonomyFieldsetField extends FieldBase
     public $attribute_taxonomy;
 
     /**
-     * filter
-     * 
-     * @var string
-     */
-    public $filter;
-
-    /**
-     * validation
-     * 
-     * @var string
-     */
-    public $validation;
-
-    /**
      * input_type
      * 
      * @var string
@@ -89,6 +40,13 @@ class AttributeTaxonomyFieldsetField extends FieldBase
      * @var string
      */
     public $terms_title;
+
+    /**
+     * subnames
+     * 
+     * @var array
+     */
+    public $fields = [];
 
     /**
      * 

@@ -14,28 +14,28 @@ class PostRelationshipChecklistField extends FieldBase
     /**
      * relatable_post_type
      * 
-     * @var array
+     * @var string
      */
-    public $relatable_post_type = [];
+    public $relatable_post_type;
 
     /**
      * related_post_type
      * 
-     * @var array
+     * @var string
      */
-    public $related_post_type = [];
+    public $related_post_type;
 
     /**
      * connection
      * 
-     * @var array
+     * @var string
      */
-    public $connection = [];
+    public $connection;
 
     /**
      * current_context
      * 
-     * @var array
+     * @var string
      */
     public $context;
 

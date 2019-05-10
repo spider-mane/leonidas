@@ -183,10 +183,7 @@ class MetaBox
      */
     public function set_fields($fields)
     {
-        foreach ($fields ?? [] as $field => $args) {
-            $args['name'] = $args['name'] ?? $field;
-            $this->fields[$field] = FieldManager::create($args);
-        }
+        $this->fields = FieldManager::bulk_creation($fields);
         return $this;
     }
 

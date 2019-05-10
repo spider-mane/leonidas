@@ -124,7 +124,7 @@ class Saveyour
     public static function judge($instructions, $data)
     {
         $judgement = new Saveyour;
-        $judgement->flock = $data;
+        $judgement->flock = is_array($data) ? $data : [array_keys($instructions)[0] => $data];
         $judgement->scriptures = $instructions;
         $judgement->validate()->sanitize()->save();
 
@@ -142,14 +142,6 @@ class Saveyour
         $judgement->validate()->sanitize();
 
         return $judgement;
-    }
-
-    /**
-     * 
-     */
-    public function create_hook()
-    {
-
     }
 
     /**
