@@ -5,6 +5,7 @@ namespace Backalley\DataFields;
 use Timber\Timber;
 use Backalley\Backalley;
 use Backalley\FormFields\FormField;
+use Backalley\GuctilityBelt;
 
 abstract class FieldBase
 {
@@ -13,42 +14,86 @@ abstract class FieldBase
      * 
      * @var string
      */
-    public $name;
+    public $name = '';
 
     /**
      * title
      * 
      * @var string
      */
-    public $title;
+    public $title = '';
 
     /**
      * id
      * 
      * @var string
      */
-    public $id;
+    public $id = '';
+
+    /**
+     * attributes
+     * 
+     * @var string
+     */
+    public $attributes = [];
 
     /**
      * id_prefix
      * 
      * @var string
      */
-    public $id_prefix;
+    public $id_prefix = '';
+
+    /**
+     * width
+     * 
+     * @var string
+     */
+    public $width = 'large-text';
+
+    /**
+     * meta_key
+     * 
+     * @var string
+     */
+    public $meta_key = '';
 
     /**
      * meta_prefix
      * 
      * @var string
      */
-    public $meta_prefix;
+    public $meta_prefix = '';
+
+    /**
+     * filter
+     * 
+     * @var string
+     */
+    public $filter = 'sanitize_text_field';
+
+    /**
+     * validation
+     * 
+     * @var string
+     */
+    public $validation = '';
 
     /**
      * 
      */
     public function __construct($args)
     {
-        //
+        $this->name = $args['name'] ?? $this->name;
+        $this->title = $args['title'] ?? $this->title;
+        $this->width = $args['width'] ?? $this->width;
+        $this->filter = $args['sanitize'] ?? $this->filter;
+        $this->meta_key = $args['meta_key'] ?? $args['name'];
+        $this->id_prefix = $args['id_prefix'] ?? $this->id_prefix;
+        $this->validation = $args['validate'] ?? $this->validation;
+        $this->attributes = $args['attributes'] ?? $this->attributes;
+        $this->id = $args['id'] ?? "{$this->id_prefix}{$this->name}";
+        $this->meta_prefix = $args['meta_prefix'] ?? Backalley::$meta_key_prefix;
     }
 
     /**
@@ -59,7 +104,23 @@ abstract class FieldBase
     /**
      * 
      */
-    abstract public function save($post_id, $post, $update, $fieldset = null, $raw_data = null);
+    public function save($post_id, $post, $update, $fieldset = null, $raw_data = null)
+    {
+        $meta_key = "{$this->meta_prefix}{$post->post_type}_{$this->meta_key}";
+        $old_value = get_post_meta($post_id, $meta_key, true);
+
+        $directions = [
+            ''
+        ];
+
+        $filter = $this->filter;
+
+        $new_value = $filter($raw_data);
+
+        if ($new_value !== $old_value) {
+            update_post_meta($post->ID, $meta_key, $new_value);
+        }
+    }
 
     /**
      *
@@ -85,7 +146,7 @@ abstract class FieldBase
      */
     public static function generate_fieldset($fieldset, $columns = 1, $action = 'render', $title = true)
     {
-        $fieldset['fields'] = Self::one_versus_many($fieldset['fields']);
+        $fieldset['fields'] = GuctilityBelt::one_versus_many('form_element', $fieldset['fields']);
 
         if (count($fieldset['fields']) === 1) {
             $columns = 3;
@@ -109,16 +170,5 @@ abstract class FieldBase
         }
 
         Self::timber_render_fieldset($fieldset, $columns, $action, $title);
-    }
-
-    /**
-     * 
-     */
-    protected static function one_versus_many($fields)
-    {
-        if (array_key_exists('form_element', $fields)) {
-            return [$fields];
-        }
-        return $fields;
     }
 }

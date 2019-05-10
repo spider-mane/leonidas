@@ -8,7 +8,7 @@ use Backalley\GuctilityBelt;
 /**
  * 
  */
-abstract class Field
+abstract class FieldManager
 {
     /**
      * list of post variables
@@ -31,6 +31,7 @@ abstract class Field
     public static function bulk_creation($fields)
     {
         foreach ($fields as $field => $args) {
+            $args['name'] = $args['name'] ?? $field;
             $fields[$field] = Self::generate($args);
         }
         return $fields;

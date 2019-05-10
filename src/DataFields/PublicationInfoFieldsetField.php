@@ -16,21 +16,21 @@ class PublicationInfoFieldsetField extends FieldBase
      * 
      * @var string
      */
-    public $name = 'review';
+    public $name = 'publication_info';
 
     /**
      * title
      * 
      * @var string
      */
-    public $title = 'Review';
+    public $title = 'Publication Info';
 
     /**
      * id
      * 
      * @var string
      */
-    public $id = 'backalley--review--fieldset';
+    public $id = 'backalley--publication_info--fieldset';
 
     /**
      * subnames
@@ -44,7 +44,7 @@ class PublicationInfoFieldsetField extends FieldBase
      * 
      * @var string
      */
-    public $id_prefix = 'backalley--review--';
+    public $id_prefix = 'backalley--publication_info--';
 
     /**
      * this->meta_prefix

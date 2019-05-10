@@ -26,6 +26,17 @@ class GuctilityBelt
     /**
      * 
      */
+    public static function one_versus_many($key, $fields)
+    {
+        if (array_key_exists($key, $fields)) {
+            return [$fields];
+        }
+        return $fields;
+    }
+
+    /**
+     * 
+     */
     public static function sort_objects_array(array $objects_array, array $order_array, string $order_key)
     {
         usort($objects_array, function ($a, $b) use ($order_array, $order_key) {

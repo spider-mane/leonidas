@@ -95,15 +95,10 @@ class AttributeTaxonomyFieldsetField extends FieldBase
      */
     public function __construct($args)
     {
-        $this->name = $args['name'] ?? $this->name;
-        $this->id_prefix = $args['id_prefix'] ?? $this->id_prefix;
-        $this->title = $args['title'] ?? null;
+        parent::__construct($args);
         $this->attribute_taxonomy = $args['attribute_taxonomy'];
         $this->terms_title = $args['terms_title'] ?? null;
-        $this->filter = $args['sanitize'];
         $this->input_type = $args['input_type'];
-        $this->validation = $args['validate'];
-        $this->meta_prefix = $args['meta_prefix'] ?? Backalley::$meta_key_prefix;
         $this->meta_key_format = $args['meta_key_format'];
     }
 

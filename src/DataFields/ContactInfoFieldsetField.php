@@ -58,10 +58,7 @@ class ContactInfoFieldsetField extends FieldBase
      */
     public function __construct($args)
     {
-        $this->name = $args['name'] ?? $this->name;
-        $this->title = $args['title'] ?? $this->title;
-        $this->id_prefix = $args['id_prefix'] ?? $this->id_prefix;
-        $this->meta_prefix = $args['meta_prefix'] ?? Backalley::$meta_key_prefix;
+        parent::__construct($args);
     }
 
     /**
