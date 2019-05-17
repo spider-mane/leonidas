@@ -63,10 +63,6 @@ abstract class FieldManager
     public static function save_all($post_id, $post, $update, array $fields)
     {
         /**
-         * call the function that is designated to handle processing each variable within the main post variable for the
-         * metabox or post type. This establishes an implicit whitelist as only post variables that  correspond to a
-         * save_{$variable} method will be processed
-         * 
          * find a way to add more security layers to implicit whitelisting
          */
         foreach ($fields as $field) {

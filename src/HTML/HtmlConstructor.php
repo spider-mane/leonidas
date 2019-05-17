@@ -21,6 +21,7 @@ class HtmlConstructor
     {
         $this->set_html_map($html_map);
         $this->set_charset($charset);
+        // $this->parse_args();
         $this->set_html();
     }
 
@@ -44,6 +45,14 @@ class HtmlConstructor
         return $this;
     }
 
+    // /**
+    //  * 
+    //  */
+    // public function parse_args()
+    // {
+    //     return;
+    // }
+
     /**
      * 
      */
@@ -62,7 +71,7 @@ class HtmlConstructor
      * 
      * @return string
      */
-    private function construct_html($map = null, $recall = false)
+    public function construct_html($map = null, $recall = false)
     {
         $html = '';
         static $marked_up;

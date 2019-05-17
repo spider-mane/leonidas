@@ -124,12 +124,25 @@ class Saveyour
     public static function judge($instructions, $data)
     {
         $judgement = new Saveyour;
-        $judgement->flock = is_array($data) ? $data : [array_keys($instructions)[0] => $data];
-        $judgement->scriptures = $instructions;
+        $judgement->flock = is_array($data) ? $data : [$data];
+        $judgement->scriptures = is_array($data) ? $instructions : [$instructions];
         $judgement->validate()->sanitize()->save();
 
         return $judgement;
     }
+
+    // /**
+    //  * 
+    //  */
+    // public static function judge_this($instructions, $data)
+    // {
+    //     $judgement = new Saveyour;
+    //     $judgement->flock = [$data];
+    //     $judgement->scriptures = [$instructions];
+    //     $judgement->validate()->sanitize()->save();
+
+    //     return $judgement;
+    // }
 
     /**
      * 

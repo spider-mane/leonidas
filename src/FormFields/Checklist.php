@@ -13,22 +13,113 @@ class Checklist extends HtmlConstructor implements FormFieldInterface
 {
     public $args;
 
-    use \Backalley\Html\HtmlMapConstructorTrait;
+    // use \Backalley\Html\HtmlMapConstructorTrait;
 
     /**
      * 
      */
-    public function __construct($args, $charset = null)
+    // public function __construct($args, $charset = null)
+    // {
+    //     $this->set_args($args);
+
+    //     $this->init_html_map();
+    //     $this->populate_static_element_attributes();
+    //     $this->define_toggle_control();
+    //     $this->define_clear_control();
+    //     $this->populate_instances();
+    //     $this->construct_html($args);
+
+    //     parent::__construct($this->html_map, $charset);
+    // }
+
+    public function construct_html($map = null, $recall = false)
     {
-        $this->set_args($args);
+        $this->parse_arguments();
+        $html = '';
 
-        $this->init_html_map();
-        $this->populate_static_element_attributes();
-        $this->define_toggle_control();
-        $this->define_clear_control();
-        $this->populate_instances();
+        $container = $this->html_map['container'] ?? [];
+        $ul = $this->html_map['ul'] ?? [];
+        $items = $this->html_map['items'] ?? [];
+        $clear_control = $this->html_map['clear_control'] ?? null;
 
-        parent::__construct($this->html_map, $charset);
+        $html .= $this->open('div', $container['attributes'] ?? null);
+        $html .= $this->open('ul', $ul['attributes'] ?? null);
+        $html .= isset($clear_control) ? $this->open('input', $clear_control['attributes'] ?? null) : '';
+
+        foreach ($items as $item) {
+            $li = $item['li'] ?? null;
+            $label = $item['label'] ?? null;
+            $toggle = $item['toggle'] ?? null;
+
+            // opening tag for list item
+            $html .= $this->open('li', $li['attributes'] ?? null);
+
+            // toggle control and item 
+            $html .= isset($toggle) ? $this->open('input', $toggle['attributes'] ?? null) : '';
+            $html .= $this->open('input', $item['attributes'] ?? null);
+
+            // create label
+            $html .= $this->open('label', $label['attributes'] ?? null);
+            $html .= $label['content'] ?? '';
+            $html .= $this->close('label');
+
+            // close li
+            $html .= $this->close('li');
+        }
+
+        $html .= $this->close('ul');
+        $html .= $this->close('div');
+
+        return $html;
+    }
+
+    /**
+     * 
+     */
+    public function parse_arguments()
+    {
+        foreach ($this->html_map['items'] as &$item) {
+            $item['attributes']['type'] = 'checkbox';
+        }
+
+        $this->set_toggle();
+        $this->set_clear_control();
+    }
+
+    /**
+     * 
+     */
+    public function set_toggle()
+    {
+        $toggle = $this->html_map['toggle'] ?? null;
+
+        if (isset($toggle)) {
+            foreach ($this->html_map['items'] as &$item) {
+                $item['toggle']['attributes'] = [
+                    'type' => 'hidden',
+                    'name' => $item['attributes']['name'],
+                    'value' => $toggle,
+                ];
+            }
+        }
+    }
+
+    /**
+     * 
+     */
+    public function set_clear_control()
+    {
+        $clearControl = &$this->html_map['clear_control'] ?? null;
+
+        if (isset($clearControl)) {
+            $clearControl = [
+                'attributes' => [
+                    'type' => 'hidden',
+                    'name' => $clearControl[0],
+                    'value' => $clearControl[1],
+                ]
+            ];
+        }
     }
 
     /**

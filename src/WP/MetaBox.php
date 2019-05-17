@@ -1,14 +1,14 @@
 <?php
 
-/**
- * @package Backalley-Core
- */
-
 namespace Backalley\WP;
 
 use Backalley\DataFields\FieldManager;
 
-class MetaBox
+
+/**
+ * @package Backalley-Core
+ */
+class MetaBox implements MetaBox\PostMetaFieldInterface
 {
     /**
      * id
@@ -71,7 +71,9 @@ class MetaBox
      * 
      * @var
      */
-    public $fields;
+    public $post_meta_fields = [];
+
+    use MetaBox\PostMetaFieldManagerTrait;
 
     /**
      * 
@@ -84,13 +86,15 @@ class MetaBox
             'screen',
             'context',
             'priority',
-            'fields',
+            // 'fields',
         ];
 
         foreach ($simple_args as $arg) {
             $method = "set_{$arg}";
             $this->$method($metabox[$arg] ?? null);
         }
+
+        $this->set_post_meta_fields($metabox['fields']);
 
         $field_based_args = [
             'callback',
@@ -100,7 +104,7 @@ class MetaBox
 
         foreach ($field_based_args as $arg) {
             $method = "set_{$arg}";
-            $this->$method(!empty($this->fields) ? null : $metabox[$arg] ?? null);
+            $this->$method(!empty($this->post_meta_fields) ? null : $metabox[$arg] ?? null);
         }
 
         $this->hook();
@@ -129,7 +133,8 @@ class MetaBox
      */
     public function set_callback($callback)
     {
-        $this->callback = $callback ?? [$this, 'render_meta_box'];
+        // $this->callback = $callback ?? [$this, 'render_meta_box'];
+        $this->callback = $callback ?? [$this, 'render_post_meta_fields'];
         return $this;
     }
 
@@ -174,18 +179,19 @@ class MetaBox
      */
     public function set_save_cb($save_cb)
     {
-        $this->save_cb = $save_cb ?? [$this, 'save_data'];
+        // $this->save_cb = $save_cb ?? [$this, 'save_data'];
+        $this->save_cb = $save_cb ?? [$this, 'save_post_meta_fields'];
         return $this;
     }
 
     /**
      * 
      */
-    public function set_fields($fields)
-    {
-        $this->fields = FieldManager::bulk_creation($fields);
-        return $this;
-    }
+    // public function set_fields($fields)
+    // {
+    //     $this->fields = FieldManager::bulk_creation($fields);
+    //     return $this;
+    // }
 
     /**
      * 
@@ -210,18 +216,20 @@ class MetaBox
     /**
      * Render meta box using $fields property
      */
-    public function render_meta_box($post, $meta_box)
-    {
-        FieldManager::render_all($post, $this->fields ?? []);
-    }
+    // public function render_meta_box($post, $meta_box)
+    // {
+    //     FieldManager::render_all($post, $this->fields ?? []);
+    //     // $this->render_fields($post);
+    // }
 
     /**
      * Callback to save metabox data
      */
-    public function save_data($post_id, $post, $update)
-    {
-        FieldManager::save_all($post_id, $post, $update, $this->fields ?? []);
-    }
+    // public function save_data($post_id, $post, $update)
+    // {
+    //     FieldManager::save_all($post_id, $post, $update, $this->fields ?? []);
+    //     // $this->save_data($post_id, $post, $update)
+    // }
 
     /**
      * Instantiate multiple MetaBoxes

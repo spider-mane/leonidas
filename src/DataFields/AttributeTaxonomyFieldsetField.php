@@ -10,6 +10,7 @@ use Backalley\Saveyour;
 use Backalley\Backalley;
 use Backalley\GuctilityBelt;
 use Backalley\Html\SelectOptions;
+use Backalley\WP\MetaBox\PostMetaBoxFieldBaseTrait;
 
 class AttributeTaxonomyFieldsetField extends FieldBase
 {
@@ -47,6 +48,8 @@ class AttributeTaxonomyFieldsetField extends FieldBase
      * @var array
      */
     public $fields = [];
+
+    use PostMetaBoxFieldBaseTrait;
 
     /**
      * 
@@ -106,6 +109,17 @@ class AttributeTaxonomyFieldsetField extends FieldBase
                     ]
                 ]
             ];
+
+            $fields[] = [
+                'form_element' => 'input',
+                'type' => 'hidden',
+                'attributes' => [
+                    'name' => "tax_input[{$this->attribute_taxonomy}][]",
+                    'value' => $slug,
+                    'id' => "ba--tax-input--$slug"
+                ]
+
+            ];
         }
 
         // // create templape for js dom manipulation
@@ -135,27 +149,33 @@ class AttributeTaxonomyFieldsetField extends FieldBase
         //     ]
         // ];
 
+        $list_items = [];
+
         // populate available attributes checklist items
         foreach ($all_available_attributes as $attribute) {
 
             $slug = $attribute->slug;
             $title = $attribute->name;
 
+            if (in_array($attribute, $associated_attributes)) {
+                continue;
+            }
+
             $list_items[] = [
                 'attributes' => [
-                    'type' => !in_array($attribute, $associated_attributes) ? 'checkbox' : 'hidden',
+                    'type' => 'checkbox',
                     'name' => "tax_input[{$this->attribute_taxonomy}][]",
                     'id' => $this->id_prefix . $slug,
                     'value' => $slug,
                 ],
                 'label' => [
-                    'content' => !in_array($attribute, $associated_attributes) ? $title : '',
+                    'content' => $title,
                 ]
             ];
         }
 
         // available attributes field
-        if (!empty($all_available_attributes)) {
+        if (!empty($all_available_attributes) && !empty($list_items)) {
             $fields[$this->attribute_taxonomy] = [
                 'title' => $this->terms_title,
                 'form_element' => 'checklist',
@@ -183,13 +203,13 @@ class AttributeTaxonomyFieldsetField extends FieldBase
             'fields' => $fields
         ];
 
-        Self::generate_fieldset($fieldset, 3);
+        Self::metabox_fieldset_template($fieldset, 3);
     }
 
     /**
      *
      */
-    public function save($post_id, $post, $update, $fieldset = null, $raw_data = null)
+    public function save($post_id, $post, $update)
     {
         // terms will have been processed by this point, so even if a new attribute was added via post.php, it will be present
         $selected_attributes = wp_get_post_terms($post_id, $this->attribute_taxonomy);
@@ -201,7 +221,7 @@ class AttributeTaxonomyFieldsetField extends FieldBase
 
         // sanitize data
         $new_attributes = filter_var_array(
-            $raw_data ?? [],
+            $_POST[$this->name] ?? [],
             FILTER_SANITIZE_URL
         );
 

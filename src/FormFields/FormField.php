@@ -10,12 +10,35 @@ namespace Backalley\FormFields;
 
 use Backalley\Html\TagSage;
 use Backalley\GuctilityBelt;
+use Backalley\Html\HtmlConstructor;
 
 
-final class FormField extends \Backalley\Html\HtmlConstructor
+final class FormField extends HtmlConstructor
 {
+    /**
+     * 
+     */
     public $args;
+
+    /**
+     * 
+     */
     public $form_element;
+
+    /**
+     * value
+     */
+    public $value;
+
+    /**
+     * options
+     */
+    public $options;
+
+    /**
+     * selected
+     */
+    public $selected;
 
     /**
      *
@@ -155,11 +178,19 @@ final class FormField extends \Backalley\Html\HtmlConstructor
     }
 
     /**
-     * Instantiate custom field if $form_element is nor a standard HTML5 form field
+     * Instantiate custom field if $form_element is not a standard HTML5 form field
      */
     private function custom_field($class, $args)
     {
         $field = new $class($args);
         $this->html = $field->html;
+    }
+
+    /**
+     * 
+     */
+    public static function create($field)
+    {
+
     }
 }

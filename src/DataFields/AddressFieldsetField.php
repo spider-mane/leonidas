@@ -10,6 +10,7 @@ use Backalley\Saveyour;
 use Backalley\Backalley;
 use Backalley\GuctilityBelt;
 use Backalley\Html\SelectOptions;
+use Backalley\WP\MetaBox\PostMetaBoxFieldBaseTrait;
 
 class AddressFieldsetField extends FieldBase
 {
@@ -47,6 +48,8 @@ class AddressFieldsetField extends FieldBase
      * @var string
      */
     public $meta_prefix;
+
+    use PostMetaBoxFieldBaseTrait;
 
     /**
      * 
@@ -114,13 +117,13 @@ class AddressFieldsetField extends FieldBase
             'fields' => $fields
         ];
 
-        Self::generate_fieldset($fieldset, 3);
+        Self::metabox_fieldset_template($fieldset, 3);
     }
 
     /**
      *
      */
-    public function save($post_id, $post, $update, $fieldset = null, $raw_data = null)
+    public function save($post_id, $post, $update)
     {
         $updated = false;
         $post_type = $post->post_type;
@@ -140,7 +143,7 @@ class AddressFieldsetField extends FieldBase
             $rules['save'] = $meta_prefix . "{$post->post_type}_address__{$field}";
         }
 
-        $results = Saveyour::judge($instructions, $raw_data);
+        $results = Saveyour::judge($instructions, $_POST[$this->name]);
 
         // Save fully formatted address and geo coordinates retrieved from google
         foreach ($results->revelations as $revelations) {

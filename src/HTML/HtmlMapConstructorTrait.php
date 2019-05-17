@@ -117,7 +117,7 @@ trait HtmlMapConstructorTrait
                  * note: $real child is only declared in order to have
                  * access to the key $pointer
                  */
-                foreach ($lost_children as $pointer => $genetics) {
+                foreach ($lost_children ?? [] as $pointer => $genetics) {
 
                     // look for parent amongst siblings
                     foreach ($lost_children as $maybe_child => $family_values) {

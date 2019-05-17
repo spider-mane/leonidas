@@ -4,6 +4,7 @@ namespace Backalley\DataFields;
 
 use Backalley\Saveyour;
 use Backalley\Backalley;
+use Backalley\WP\MetaBox\PostMetaBoxFieldBaseTrait;
 
 
 /**
@@ -45,6 +46,8 @@ class ReviewFieldsetField extends FieldBase
      * @var array
      */
     public $fields = [];
+
+    use PostMetaBoxFieldBaseTrait;
 
     /**
      * 
@@ -115,13 +118,13 @@ class ReviewFieldsetField extends FieldBase
             'fields' => $fields,
         ];
 
-        Self::generate_fieldset($fieldset, 3);
+        Self::metabox_fieldset_template($fieldset, 3);
     }
 
     /**
      * 
      */
-    public function save($post_id, $post, $update, $fieldset = null, $raw_data = null)
+    public function save($post_id, $post, $update)
     {
         $sanitized_data = [
             'subtitle' => [
@@ -146,7 +149,7 @@ class ReviewFieldsetField extends FieldBase
             $args['options'] = apply_filters("backalley/sanitize/press_review/{$field}", $args['options']);
         }
 
-        $sanitized_data = filter_var_array($raw_data, $sanitized_data);
+        $sanitized_data = filter_var_array($_POST[$this->name], $sanitized_data);
 
         foreach ($sanitized_data as $field => $new_data) {
             $meta_key = "{$this->meta_prefix}{$post->post_type}_{$field}";

@@ -7,6 +7,7 @@
 namespace Backalley\DataFields;
 
 use Backalley\Backalley;
+use Backalley\WP\MetaBox\PostMetaBoxFieldBaseTrait;
 
 
 class PostRelationshipChecklistField extends FieldBase
@@ -38,6 +39,8 @@ class PostRelationshipChecklistField extends FieldBase
      * @var string
      */
     public $context;
+
+    use PostMetaBoxFieldBaseTrait;
 
     /**
      * 
@@ -78,8 +81,8 @@ class PostRelationshipChecklistField extends FieldBase
 
             $list_items[] = [
                 'attributes' => [
-                    'name' => $name,
                     'id' => $this->id_prefix . $item->post_name,
+                    'name' => $name,
                     'checked' => $checked,
                     'value' => $value,
                 ],
@@ -93,7 +96,8 @@ class PostRelationshipChecklistField extends FieldBase
         $checklist = [
             'title' => $this->title,
             'form_element' => 'checklist',
-            'toggle' => true,
+            'clear_control' => $this->context === 'related' ? ["tax_input[{$this->connection}][]", '0'] : null,
+            'toggle' => $this->context === 'relatable' ? '0' : null,
             'container' => [
                 'attributes' => [
                     'id' => $this->id ?? '',
@@ -111,16 +115,16 @@ class PostRelationshipChecklistField extends FieldBase
             'fields' => $checklist
         ];
 
-        Self::generate_fieldset($fieldset, 3);
+        Self::metabox_fieldset_template($fieldset, 3);
     }
 
     /**
      * 
      */
-    public function save($post_id, $post, $update, $fieldset = null, $raw_data = null)
+    public function save($post_id, $post, $update)
     {
         $related_posts = filter_var(
-            $raw_data,
+            $_POST[$this->name],
             FILTER_CALLBACK,
             ['options' => $this->filter]
         );

@@ -4,6 +4,7 @@ namespace Backalley\DataFields;
 
 use Backalley\Saveyour;
 use Backalley\Backalley;
+use Backalley\WP\MetaBox\PostMetaBoxFieldBaseTrait;
 
 
 /**
@@ -45,6 +46,8 @@ class ContactInfoFieldsetField extends FieldBase
      * @var array
      */
     public $fields = [];
+
+    use PostMetaBoxFieldBaseTrait;
 
     /**
      * 
@@ -94,13 +97,13 @@ class ContactInfoFieldsetField extends FieldBase
             'fields' => $fields
         ];
 
-        Self::generate_fieldset($fieldset, 3);
+        Self::metabox_fieldset_template($fieldset, 3);
     }
 
     /**
      *
      */
-    public function save($post_id, $post, $update, $fieldset = null, $raw_data = null)
+    public function save($post_id, $post, $update)
     {
         $instructions = [
             'phone' => [
@@ -126,6 +129,6 @@ class ContactInfoFieldsetField extends FieldBase
             ],
         ];
 
-        $results = Saveyour::judge($instructions, $raw_data);
+        $results = Saveyour::judge($instructions, $_POST[$this->name]);
     }
 }

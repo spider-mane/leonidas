@@ -4,6 +4,7 @@ namespace Backalley\DataFields;
 
 use Backalley\Saveyour;
 use Backalley\Backalley;
+use Backalley\WP\MetaBox\PostMetaBoxFieldBaseTrait;
 
 
 /**
@@ -46,6 +47,8 @@ class HoursFieldsetField extends FieldBase
      */
     public $fields = [];
 
+    use PostMetaBoxFieldBaseTrait;
+
     /**
      * 
      */
@@ -83,6 +86,7 @@ class HoursFieldsetField extends FieldBase
             }
         }
 
+
         $fieldset['days'] = $days;
 
         Self::timber_render_fieldset($fieldset, 2);
@@ -91,12 +95,12 @@ class HoursFieldsetField extends FieldBase
     /**
      * 
      */
-    public function save($post_id, $post, $update, $fieldset = null, $raw_data = null)
+    public function save($post_id, $post, $update)
     {
         $validate_cb = apply_filters("backalley/validate/location/hours", "sanitize_text_field");
         $sanitize_cb = apply_filters("backalley/sanitize/location/hours", "sanitize_text_field");
 
-        foreach ($raw_data as $day => $hours) {
+        foreach ($_POST[$this->name] as $day => $hours) {
             $day = sanitize_text_field($day);
 
             foreach ($hours as $hour => $time) {

@@ -3,6 +3,8 @@
 namespace Backalley\DataFields;
 
 use Backalley\Backalley;
+use Backalley\WP\Term\TermFieldBaseTrait;
+use Backalley\WP\MetaBox\PostMetaBoxFieldBaseTrait;
 
 
 /**
@@ -10,13 +12,22 @@ use Backalley\Backalley;
  */
 class InputField extends FieldBase
 {
-
     /**
      * type
      * 
      * @var string
      */
     public $type = 'text';
+
+    /**
+     * placeholder
+     * 
+     * @var string
+     */
+    public $placeholder;
+
+    // use TermFieldBaseTrait;
+    // use PostMetaBoxFieldBaseTrait;
 
     /**
      * 
@@ -34,6 +45,7 @@ class InputField extends FieldBase
     {
         $input = [
             'title' => $this->title,
+            'description' => $this->description,
             'form_element' => 'input',
             'attributes' => array_merge($this->attributes, [
                 'id' => $this->id,
@@ -51,6 +63,45 @@ class InputField extends FieldBase
             'fields' => $input
         ];
 
-        Self::generate_fieldset($fieldset, 3);
+        Self::metabox_fieldset_template($fieldset, 3);
+    }
+
+    /**
+     * 
+     */
+    public function render_add_term_form_field($taxonomy)
+    {
+        $input = [
+            'title' => $this->title,
+            'description' => $this->description,
+            'form_element' => 'input',
+            'attributes' => array_merge($this->attributes, [
+                'id' => $this->id,
+                'name' => $this->name,
+                'type' => $this->type,
+            ])
+        ];
+
+        Self::add_term_form_field_template($select);
+    }
+
+    /**
+     * 
+     */
+    public function render_edit_term_form_field($term, $taxonomy)
+    {
+        $input = [
+            'title' => $this->title,
+            'description' => $this->description,
+            'form_element' => 'input',
+            'attributes' => array_merge($this->attributes, [
+                'id' => $this->id,
+                'name' => $this->name,
+                'type' => $this->type,
+                'value' => $this->value ?? get_term_meta($term->term_id, $this->meta_prefix . $this->meta_key, true),
+            ])
+        ];
+
+        Self::edit_term_form_field_template($select);
     }
 }

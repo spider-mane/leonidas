@@ -11,11 +11,32 @@ use Backalley\FormFields\FormField;
 abstract class FieldBase
 {
     /**
+     * form_field
+     * 
+     * @var string
+     */
+    public $form_field;
+
+    /**
      * name
      * 
      * @var string
      */
     public $name;
+
+    /**
+     * context
+     * 
+     * @var string
+     */
+    public $context = '';
+
+    /**
+     * manager
+     * 
+     * @var string
+     */
+    public $manager;
 
     /**
      * title
@@ -30,6 +51,27 @@ abstract class FieldBase
      * @var string
      */
     public $id;
+
+    /**
+     * classlist
+     * 
+     * @var string
+     */
+    public $classlist = [];
+
+    /**
+     * dataset
+     * 
+     * @var string
+     */
+    public $dataset = [];
+
+    /**
+     * description
+     * 
+     * @var string
+     */
+    public $description;
 
     /**
      * attributes
@@ -50,7 +92,7 @@ abstract class FieldBase
      * 
      * @var string
      */
-    public $width = 'large-text';
+    public $width;
 
     /**
      * meta_key
@@ -67,6 +109,13 @@ abstract class FieldBase
     public $meta_prefix;
 
     /**
+     * meta_box_template
+     * 
+     * @var string
+     */
+    public $meta_box_template;
+
+    /**
      * filter
      * 
      * @var string
@@ -81,92 +130,142 @@ abstract class FieldBase
     public $validation;
 
     /**
+     * validation_messages
+     * 
+     * @var string
+     */
+    public $validation_errors;
+
+    /**
+     * display_cb
+     * 
+     * @var string
+     */
+    public $display_cb;
+
+    /**
+     * save_cb
+     * 
+     * @var string
+     */
+    public $save_cb;
+
+    /**
+     * get_data_cb
+     * 
+     * @var string
+     */
+    public $get_data_cb;
+
+    /**
+     * save_data_cb
+     * 
+     * @var string
+     */
+    public $save_data_cb;
+
+    /**
      * 
      */
     public function __construct($args)
     {
-        $this->name = $args['name'] ?? $this->name;
-        $this->title = $args['title'] ?? $this->title;
-        $this->width = $args['width'] ?? $this->width;
-        $this->filter = $args['sanitize'] ?? $this->filter;
-        $this->meta_key = $args['meta_key'] ?? $args['name'];
-        $this->id_prefix = $args['id_prefix'] ?? $this->id_prefix;
-        $this->validation = $args['validate'] ?? $this->validation;
-        $this->attributes = $args['attributes'] ?? $this->attributes;
-        $this->id = $args['id'] ?? "{$this->id_prefix}{$this->name}";
-        $this->meta_prefix = $args['meta_prefix'] ?? Backalley::$meta_key_prefix;
-    }
+        $this->set_manager($args['context']);
 
-    /**
-     * 
-     */
-    abstract public function render($post);
-
-    /**
-     * 
-     */
-    public function save($post_id, $post, $update, $fieldset = null, $raw_data = null)
-    {
-        $instructions = [
-            $this->name => [
-                'filter' => !empty($this->filter) ? $this->filter : 'sanitize_text_field',
-                'check' => !empty($this->validation) ? $this->validation : null,
-                'type' => 'post_meta',
-                'item' => $post_id,
-                'save' => "{$this->meta_prefix}{$post->post_type}_{$this->meta_key}"
-            ]
+        $simple_args = [
+            'name',
+            'title',
+            'width',
+            'filter',
+            'context',
+            'id_prefix',
+            'attributes',
+            'form_field',
+            'validation',
+            'description',
+            'get_data_cb',
+            'save_data_cb',
+            'validation_errors',
         ];
 
-        $results = Saveyour::judge($instructions, $raw_data);
+        foreach ($simple_args as $arg) {
+            $this->$arg = $args[$arg] ?? $this->manager->$arg ?? $this->$arg;
+        }
+
+        $array_args = [
+            'dataset',
+            'classlist',
+        ];
+
+        foreach ($array_args as $property) {
+            $this->$property = array_merge($args[$property] ?? [], $this->$property);
+        }
+
+        $methods = [
+            'save',
+            'render',
+        ];
+
+        foreach ($methods as $method) {
+            $property = "{$method}_cb";
+            $this->$property = $args[$property] ?? [$this, $method];
+        }
+
+        // $args parameter aliases
+        $this->filter = $args['sanitize'] ?? $this->filter;
+        $this->validation = $args['validate'] ?? $this->validation;
+
+        // $args parameters that are potentially dependent on other properties
+        $this->meta_key = $args['meta_key'] ?? $this->name;
+        $this->id = $args['id'] ?? "{$this->id_prefix}{$this->name}";
+        $this->meta_prefix = $args['meta_prefix'] ?? Backalley::$meta_key_prefix;
+
+        $this->attributes = [
+            'id' => $this->id,
+            'name' => $this->name,
+            'class' => array_merge($args['attributes']['class'] ?? [], $this->classlist),
+            'data' => $this->dataset,
+        ];
     }
 
-    /**
-     *
-     */
-    public static function timber_render_fieldset($content, $columns = 1, $action = 'render', $title = true)
+    public function __call($name, $arguments)
     {
-        Timber::$locations = Backalley::$timber_locations;
-
-        switch ($columns) {
-            case 2:
-                Timber::$action('fieldset__title--two-column.twig', $content);
-                break;
-            case 3:
-                Timber::$action('fieldset__title--one-column2.twig', $content);
-                break;
-            default:
-                Timber::$action('fieldset__title--one-column.twig', $content);
+        if (method_exists($this->manager, $name)) {
+            return $this->manager->$name(...$arguments);
         }
+    }
+
+    public static function __callStatic($name, $arguments)
+    {
+        if (method_exists($this->manager, $name)) {
+            return $this->manager->$name(...$arguments);
+        }
+    }
+
+    public function __toString()
+    {
+        return $this->form_field;
+    }
+
+    public function set_manager($context)
+    {
+        $manager = GuctilityBelt::arg_to_class($context, "%sFieldManager", "Backalley\\DataFields\\Managers");
+
+        $this->manager = new $manager($this);
+
+        return $this;
     }
 
     /**
      * 
      */
-    public static function generate_fieldset($fieldset, $columns = 1, $action = 'render', $title = true)
+    public function get_data($object)
     {
-        $fieldset['fields'] = GuctilityBelt::one_versus_many('form_element', $fieldset['fields']);
-
-        if (count($fieldset['fields']) === 1) {
-            $columns = 3;
+        if (!empty($callback = $this->get_data_cb)) {
+            return $callback($object, $this);
         }
 
-        foreach (($fieldset['fields']) as $field => &$definition) {
-            $attributes = $definition['attributes'] ?? [];
-
-            $html = new FormField($definition);
-
-            $definition = [
-                'title' => $definition['title'] ?? '',
-                'id' => $attributes['id'] ?? '',
-                'field' => $html->html,
-                'hidden' => $definition['hidden'] ?? null,
-                'submit_button' => $definition['submit_button'] ?? null,
-                'wp_submit_button' => $definition['wp_submit_button'] ?? null
-            ];
-
-            unset($definition);
-        }
-
-        Self::timber_render_fieldset($fieldset, $columns, $action, $title);
+        return $this->manager->get_data($object);
     }
+
+    // public abstract function set_html():
 }

@@ -7,10 +7,10 @@ interface PostMetaBoxFieldInterface
     /**
      * 
      */
-    public function renderForPostMetaBox($post);
+    public function renderPostMetaBoxField($post);
 
     /**
      * 
      */
-    public function saveForPostMetaBox($post_id, $post, $update);
+    public function savePostMetaBoxField($post_id, $post, $update);
 }

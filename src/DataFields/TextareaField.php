@@ -3,6 +3,7 @@
 namespace Backalley\DataFields;
 
 use Backalley\Backalley;
+use Backalley\WP\MetaBox\PostMetaBoxFieldBaseTrait;
 
 
 /**
@@ -16,6 +17,13 @@ class TextareaField extends FieldBase
      * @var string
      */
     public $filter = 'sanitize_textarea_field';
+
+    /**
+     * content
+     * 
+     * @var string
+     */
+    public $content;
 
     /**
      * 
@@ -40,6 +48,6 @@ class TextareaField extends FieldBase
             'fields' => $textarea
         ];
 
-        Self::generate_fieldset($fieldset, 3);
+        Self::metabox_fieldset_template($fieldset, 3);
     }
 }
