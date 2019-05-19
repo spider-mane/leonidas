@@ -91,12 +91,10 @@ class PostMetaBoxFieldManager
         foreach (($fieldset['fields']) as $field => &$definition) {
             $attributes = $definition['attributes'] ?? [];
 
-            $html = new FormField($definition);
-
             $definition = [
                 'title' => $definition['title'] ?? '',
                 'id' => $attributes['id'] ?? '',
-                'field' => $html->html,
+                'field' => new FormField($definition),
                 'hidden' => $definition['hidden'] ?? null,
                 'submit_button' => $definition['submit_button'] ?? null,
                 'wp_submit_button' => $definition['wp_submit_button'] ?? null

@@ -33,7 +33,7 @@ class TextareaField extends FieldBase
         $textarea = [
             'title' => $this->title,
             'form_element' => 'textarea',
-            'content' => get_post_meta($post->ID, $this->meta_prefix . "{$post->post_type}_{$this->meta_key}", true),
+            'content' => $this->get_data($post),
             'attributes' => array_merge($this->attributes, [
                 'id' => $this->id,
                 'name' => $this->name,

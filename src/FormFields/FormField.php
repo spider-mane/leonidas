@@ -13,7 +13,7 @@ use Backalley\GuctilityBelt;
 use Backalley\Html\HtmlConstructor;
 
 
-final class FormField extends HtmlConstructor
+class FormField extends HtmlConstructor
 {
     /**
      * 
@@ -52,6 +52,24 @@ final class FormField extends HtmlConstructor
     /**
      * 
      */
+    public function __call($field, $arguments)
+    {
+        $field = GuctilityBelt::arg_to_class($field, "%s", __NAMESPACE__);
+
+        return new $field($args);
+    }
+
+    /**
+     * 
+     */
+    public function __toString()
+    {
+        return $this->html;
+    }
+
+    /**
+     * 
+     */
     public function parse_args($args)
     {
         $this->form_element = $args['form_element'];
@@ -63,9 +81,8 @@ final class FormField extends HtmlConstructor
                 $this->custom_field($class, $args);
                 break;
 
-            case TagSage::is_it('standard_form_element', $this->form_element) && method_exists($this, $method):
-                $field = $this->form_element;
-                $this->$field($args);
+            case method_exists($this, $method):
+                $this->$method($args);
                 break;
         }
     }
@@ -183,7 +200,7 @@ final class FormField extends HtmlConstructor
     private function custom_field($class, $args)
     {
         $field = new $class($args);
-        $this->html = $field->html;
+        $this->html = strval($field);
     }
 
     /**

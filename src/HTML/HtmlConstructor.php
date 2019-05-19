@@ -21,8 +21,15 @@ class HtmlConstructor
     {
         $this->set_html_map($html_map);
         $this->set_charset($charset);
-        // $this->parse_args();
-        $this->set_html();
+        // $this->set_html();
+    }
+
+    /**
+     * 
+     */
+    public function __toString()
+    {
+        return $this->construct_html();
     }
 
     /**
@@ -44,14 +51,6 @@ class HtmlConstructor
 
         return $this;
     }
-
-    // /**
-    //  * 
-    //  */
-    // public function parse_args()
-    // {
-    //     return;
-    // }
 
     /**
      * 

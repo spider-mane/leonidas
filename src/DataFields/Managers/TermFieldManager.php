@@ -56,7 +56,7 @@ class TermFieldManager
      */
     public static function add_term_form_field_template($field)
     {
-        $form_field = new FormField($field);
+        // $form_field = new FormField($field);
 
         $form_field = new HtmlConstructor([
             'container' => [
@@ -73,14 +73,14 @@ class TermFieldManager
                     'for' => $field['attributes']['id'] ?? ''
                 ],
             ],
-            'field' => $form_field->html,
+            'field' => (string)new FormField($field),
             'description' => [
                 'tag' => 'p',
                 'content' => $field['description'] ?? '',
             ]
         ]);
 
-        echo $form_field->html;
+        echo $form_field;
     }
 
     /**
@@ -88,8 +88,6 @@ class TermFieldManager
      */
     public static function edit_term_form_field_template($field)
     {
-        $form_field = new FormField($field);
-
         $form_field = new HtmlConstructor([
             'row' => [
                 'tag' => 'tr',
@@ -115,7 +113,7 @@ class TermFieldManager
                 'attributes' => [],
                 'children' => ['field', 'description']
             ],
-            'field' => $form_field->html,
+            'field' => (string)new FormField($field),
             'description' => [
                 'tag' => 'p',
                 'content' => $field['description'] ?? '',
@@ -125,7 +123,7 @@ class TermFieldManager
             ]
         ]);
 
-        echo $form_field->html;
+        echo $form_field;
     }
 
     /**

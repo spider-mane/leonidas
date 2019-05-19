@@ -40,7 +40,7 @@ class PostRelationshipChecklistField extends FieldBase
      */
     public $context;
 
-    use PostMetaBoxFieldBaseTrait;
+    // use PostMetaBoxFieldBaseTrait;
 
     /**
      * 
@@ -66,8 +66,6 @@ class PostRelationshipChecklistField extends FieldBase
             'orderby' => 'name'
         ]);
 
-        $list_items = [];
-
         foreach ($items as $item) {
             if ($this->context === 'relatable') {
                 $name = $this->name . "[{$item->ID}]";
@@ -86,7 +84,6 @@ class PostRelationshipChecklistField extends FieldBase
                     'checked' => $checked,
                     'value' => $value,
                 ],
-
                 'label' => [
                     'content' => $item->post_title,
                 ],
