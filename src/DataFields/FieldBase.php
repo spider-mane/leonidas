@@ -219,12 +219,12 @@ abstract class FieldBase
         $this->id = $args['id'] ?? "{$this->id_prefix}{$this->name}";
         $this->meta_prefix = $args['meta_prefix'] ?? Backalley::$meta_key_prefix;
 
-        $this->attributes = [
+        $this->attributes = array_merge($this->attributes, [
             'id' => $this->id,
             'name' => $this->name,
-            'class' => array_merge($args['attributes']['class'] ?? [], $this->classlist),
-            'data' => $this->dataset,
-        ];
+            'class' => array_merge($this->attributes['class'] ?? [], $this->classlist),
+            'data' => array_merge($this->attributes['data'] ?? [], $this->dataset),
+        ]);
     }
 
     public function __call($name, $arguments)

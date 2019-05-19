@@ -48,10 +48,8 @@ class InputField extends FieldBase
             'description' => $this->description,
             'form_element' => 'input',
             'attributes' => array_merge($this->attributes, [
-                'id' => $this->id,
-                'name' => $this->name,
+                'value' => $this->get_data($post),
                 'type' => $this->type,
-                'value' => get_post_meta($post->ID, $this->meta_prefix . "{$post->post_type}_{$this->meta_key}", true),
                 'class' => array_merge($this->attributes['class'] ?? [], [
                     $this->width
                 ]),
