@@ -30,7 +30,7 @@ trait HtmlMapConstructorTrait
                 continue;
             }
 
-            if (!array_key_exists('tag', $element)) {
+            if (!isset($element['tag'])) {
                 $parse = true;
                 break;
             }
@@ -41,7 +41,7 @@ trait HtmlMapConstructorTrait
         }
 
         foreach ($html_map as $current_element => $definition) { // begin $html_map loop
-            if (!array_key_exists('children', $definition)) {
+            if (!isset($definition['children'])) {
                 continue;
             }
 
@@ -52,20 +52,20 @@ trait HtmlMapConstructorTrait
             foreach ($children as $blueprint_node) {
 
                 // don't iterate through children that already exist in proper linear context
-                if (array_key_exists('tag', $html_map[$blueprint_node])) {
+                if (isset($html_map[$blueprint_node]['tag'])) {
                     continue;
                 }
 
                 // begin loop through each item in the blueprint node array
                 foreach ($html_map[$blueprint_node] as $child_blueprint => $node_map) {
-                    if (!array_key_exists('instances', $node_map)) {
+                    if (!isset($node_map['instances'])) {
                         throw new Error('you know you fucked up right?');
                     }
 
 
                     // convert children attribute to array if it exists and is
                     // not already an array
-                    if (array_key_exists('children', $node_map)) {
+                    if (isset($node_map['children'])) {
                         $node_map['children'] = is_array($node_map['children']) ? $node_map['children'] : [$node_map['children']];
                     }
 
@@ -121,7 +121,7 @@ trait HtmlMapConstructorTrait
 
                     // look for parent amongst siblings
                     foreach ($lost_children as $maybe_child => $family_values) {
-                        if (array_key_exists('children', $family_values)) {
+                        if (isset($family_values['children'])) {
 
                             // move to the next iteration if the element is referenced as a child of any other element
                             if (in_array($pointer, $family_values['children'])) {

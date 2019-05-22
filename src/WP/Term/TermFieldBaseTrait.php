@@ -4,7 +4,7 @@ namespace Backalley\WP\Term;
 
 use Backalley\DataFields\FieldBase;
 use Backalley\FormFields\FormField;
-use Backalley\Html\HtmlConstructor;
+use Backalley\Html\Html;
 
 
 trait TermFieldBaseTrait
@@ -28,9 +28,7 @@ trait TermFieldBaseTrait
      */
     public static function add_term_form_field_template($field)
     {
-        $form_field = new FormField($field);
-
-        $form_field = new HtmlConstructor([
+        $form_field = new Html([
             'container' => [
                 'tag' => 'div',
                 'attributes' => [
@@ -45,7 +43,7 @@ trait TermFieldBaseTrait
                     'for' => $field['attributes']['id'] ?? ''
                 ],
             ],
-            'field' => $form_field->html,
+            'field' => FormField::create($field),
             'description' => [
                 'tag' => 'p',
                 'content' => $field['description'] ?? '',
@@ -60,9 +58,7 @@ trait TermFieldBaseTrait
      */
     public static function edit_term_form_field_template($field)
     {
-        $form_field = new FormField($field);
-
-        $form_field = new HtmlConstructor([
+        $form_field = new Html([
             'row' => [
                 'tag' => 'tr',
                 'attributes' => [
@@ -87,7 +83,7 @@ trait TermFieldBaseTrait
                 'attributes' => [],
                 'children' => ['field', 'description']
             ],
-            'field' => $form_field->html,
+            'field' => FormField::create($field),
             'description' => [
                 'tag' => 'p',
                 'content' => $field['description'] ?? '',

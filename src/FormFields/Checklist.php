@@ -10,7 +10,7 @@ use Backalley\Html\HtmlConstructor;
 use Backalley\FormFields\MultiValueTrait;
 
 
-class Checklist extends HtmlConstructor implements FormFieldInterface
+class Checklist extends FormField implements FormFieldInterface
 {
     /**
      * 
@@ -22,6 +22,41 @@ class Checklist extends HtmlConstructor implements FormFieldInterface
      */
     public $clear;
 
+    /**
+     * 
+     */
+    public $items = [];
+
+    /**
+     * 
+     */
+    public $ul = [];
+
+    /**
+     * 
+     */
+    public $container = [];
+
+    /**
+     * 
+     */
+    public $clear_control;
+
+    /**
+     * 
+     */
+    public $toggle_control;
+
+    /**
+     * 
+     */
+    public $selected_attribute = 'checked';
+
+    /**
+     * 
+     */
+    public static $item_text = 'label';
+
     // use MultiValueTrait;
 
     /**
@@ -29,19 +64,13 @@ class Checklist extends HtmlConstructor implements FormFieldInterface
      */
     public function __toString()
     {
-        $this->parse_arguments();
         $html = '';
 
-        $container = $this->html_map['container'] ?? [];
-        $ul = $this->html_map['ul'] ?? [];
-        $items = $this->html_map['items'] ?? [];
-        $clear_control = $this->html_map['clear_control'] ?? null;
+        $html .= $this->open('div', $this->container['attributes'] ?? null);
+        $html .= isset($this->clear_control) ? $this->open('input', $this->clear_control['attributes']) : '';
+        $html .= $this->open('ul', $this->ul['attributes'] ?? null);
 
-        $html .= $this->open('div', $container['attributes'] ?? null);
-        $html .= $this->open('ul', $ul['attributes'] ?? null);
-        $html .= isset($clear_control) ? $this->open('input', $clear_control['attributes'] ?? null) : '';
-
-        foreach ($items as $item) {
+        foreach ($this->items as $item) {
             $li = $item['li'] ?? null;
             $label = $item['label'] ?? null;
             $toggle = $item['toggle'] ?? null;
@@ -71,19 +100,38 @@ class Checklist extends HtmlConstructor implements FormFieldInterface
     /**
      * 
      */
-    public function parse_arguments()
+    public function parse_args($args)
     {
+        $this->container = $args['container'] ?? $this->container;
+        $this->ul = $args['ul'] ?? $this->ul;
+        $this->items = $args['items'];
+
+        if (isset($args['clear_control'])) {
+            $this->set_clear_control(...$args['clear_control']);
+        }
+
+        if (isset($args['toggle'])) {
+            $this->set_toggle_control($args['toggle']);
+        }
+
         $this->define_items_type();
-        $this->define_toggle();
-        $this->define_clear_control();
+        $this->define_items_toggle();
     }
 
     /**
      * 
      */
-    public function set_clear_control($clear_control)
+    public function set_clear_control(string $name, string $value)
     {
-        $this->clear_control = $clear_control;
+        $this->clear_control = [
+            'attributes' => [
+                'type' => 'hidden',
+                'name' => $name,
+                'value' => $value,
+            ]
+        ];
+
+        return $this;
     }
 
     /**
@@ -99,7 +147,7 @@ class Checklist extends HtmlConstructor implements FormFieldInterface
      */
     public function define_items_type()
     {
-        foreach ($this->html_map['items'] as &$item) {
+        foreach ($this->items as &$item) {
             $item['attributes']['type'] = 'checkbox';
         }
     }
@@ -107,16 +155,14 @@ class Checklist extends HtmlConstructor implements FormFieldInterface
     /**
      * 
      */
-    public function define_toggle()
+    public function define_items_toggle()
     {
-        $toggle = $this->html_map['toggle'] ?? null;
-
-        if (isset($toggle)) {
-            foreach ($this->html_map['items'] as &$item) {
+        if (isset($this->toggle_control)) {
+            foreach ($this->items as &$item) {
                 $item['toggle']['attributes'] = [
                     'type' => 'hidden',
                     'name' => $item['attributes']['name'],
-                    'value' => $toggle,
+                    'value' => $this->toggle_control,
                 ];
             }
         }
@@ -125,18 +171,8 @@ class Checklist extends HtmlConstructor implements FormFieldInterface
     /**
      * 
      */
-    public function define_clear_control()
+    public static function create($args)
     {
-        $clearControl = &$this->html_map['clear_control'] ?? null;
-
-        if (isset($clearControl)) {
-            $clearControl = [
-                'attributes' => [
-                    'type' => 'hidden',
-                    'name' => $clearControl[0],
-                    'value' => $clearControl[1],
-                ]
-            ];
-        }
+        return new Checklist($args);
     }
 } 

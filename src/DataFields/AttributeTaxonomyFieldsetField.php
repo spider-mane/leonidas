@@ -163,7 +163,6 @@ class AttributeTaxonomyFieldsetField extends FieldBase
 
             $list_items[] = [
                 'attributes' => [
-                    'type' => 'checkbox',
                     'name' => "tax_input[{$this->attribute_taxonomy}][]",
                     'id' => $this->id_prefix . $slug,
                     'value' => $slug,

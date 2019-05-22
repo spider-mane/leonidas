@@ -4,7 +4,7 @@ namespace Backalley\DataFields\Managers;
 
 use Backalley\DataFields\FieldBase;
 use Backalley\FormFields\FormField;
-use Backalley\Html\HtmlConstructor;
+use Backalley\Html\Html;
 
 
 class TermFieldManager
@@ -56,9 +56,7 @@ class TermFieldManager
      */
     public static function add_term_form_field_template($field)
     {
-        // $form_field = new FormField($field);
-
-        $form_field = new HtmlConstructor([
+        $form_field = new Html([
             'container' => [
                 'tag' => 'div',
                 'attributes' => [
@@ -73,7 +71,7 @@ class TermFieldManager
                     'for' => $field['attributes']['id'] ?? ''
                 ],
             ],
-            'field' => (string)new FormField($field),
+            'field' => FormField::create($field),
             'description' => [
                 'tag' => 'p',
                 'content' => $field['description'] ?? '',
@@ -88,7 +86,7 @@ class TermFieldManager
      */
     public static function edit_term_form_field_template($field)
     {
-        $form_field = new HtmlConstructor([
+        $form_field = new Html([
             'row' => [
                 'tag' => 'tr',
                 'attributes' => [
@@ -113,7 +111,7 @@ class TermFieldManager
                 'attributes' => [],
                 'children' => ['field', 'description']
             ],
-            'field' => (string)new FormField($field),
+            'field' => FormField::create($field),
             'description' => [
                 'tag' => 'p',
                 'content' => $field['description'] ?? '',

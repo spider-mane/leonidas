@@ -93,7 +93,6 @@ class PostRelationshipChecklistField extends FieldBase
         $checklist = [
             'title' => $this->title,
             'form_element' => 'checklist',
-            'clear_control' => $this->context === 'related' ? ["tax_input[{$this->connection}][]", '0'] : null,
             'toggle' => $this->context === 'relatable' ? '0' : null,
             'container' => [
                 'attributes' => [
@@ -104,6 +103,7 @@ class PostRelationshipChecklistField extends FieldBase
             'ul' => [
                 'attributes' => []
             ],
+            'clear_control' => $this->context === 'relatable' ? null : ["tax_input[{$this->connection}][]", '0'],
             'items' => $list_items,
         ];
 

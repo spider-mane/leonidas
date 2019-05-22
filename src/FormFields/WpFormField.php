@@ -15,7 +15,7 @@ class WpFormField
     public function __construct($args)
     {
         // $this->args = $element_array;
-        $field = new FormField($args['field']);
+        $field = FormField::create($args['field']);
 
         $form_field = [
             'field_id' => $args['field']['attributes']['id'],
@@ -79,7 +79,7 @@ class WpFormField
      */
     public function instantiate_field()
     {
-        $field = new FormField($this->args['field']);
+        $field = FormField::create($this->args['field']);
 
         $this->element_array['field'] = $field->html;
     }

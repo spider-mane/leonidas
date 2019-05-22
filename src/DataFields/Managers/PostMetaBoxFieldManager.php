@@ -94,7 +94,7 @@ class PostMetaBoxFieldManager
             $definition = [
                 'title' => $definition['title'] ?? '',
                 'id' => $attributes['id'] ?? '',
-                'field' => new FormField($definition),
+                'field' => FormField::create($definition),
                 'hidden' => $definition['hidden'] ?? null,
                 'submit_button' => $definition['submit_button'] ?? null,
                 'wp_submit_button' => $definition['wp_submit_button'] ?? null
