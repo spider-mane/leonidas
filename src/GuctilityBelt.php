@@ -247,8 +247,8 @@ class GuctilityBelt
 
         $address_url_formatted = urlencode($address);
         $url = "https://maps.googleapis.com/maps/api/geocode/json?address={$address_url_formatted}&key={$api_key}";
-        $resp_json = file_get_contents($url);
-        $resp = json_decode($resp_json, true);
+        $resp = file_get_contents($url);
+        $resp = json_decode($resp, true);
 
         if ($resp['status'] === 'OK') {
             $coord = isset($resp['results'][0]['geometry']['location']) ? $resp['results'][0]['geometry']['location'] : null;

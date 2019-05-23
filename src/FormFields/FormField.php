@@ -38,7 +38,7 @@ abstract class FormField extends HtmlConstructor
         $field = GuctilityBelt::arg_to_class($field, "%s", __NAMESPACE__);
 
         if (class_exists($field)) {
-            return new $field($args);
+            return new $field(...$args);
         }
     }
 

@@ -6,7 +6,7 @@ use Backalley\Html\TagSage;
 use Backalley\GuctilityBelt;
 
 
-class Input extends FormField
+class Input extends FormField implements FormFieldInterface
 {
     /**
      * 

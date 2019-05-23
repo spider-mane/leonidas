@@ -2,7 +2,7 @@
 
 namespace Backalley\FormFields;
 
-class Textarea extends FormField
+class Textarea extends FormField implements FormFieldInterface
 {
     /**
      * 

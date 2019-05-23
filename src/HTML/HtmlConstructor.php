@@ -133,12 +133,18 @@ abstract class HtmlConstructor
         return "</{$tag}>";
     }
 
-    public static function indent_tag($tag, $level)
+    /**
+     * 
+     */
+    public static function indent($tag, $level)
     {
         // code here
     }
 
-    public static function add_new_line()
+    /**
+     * 
+     */
+    public static function new_line()
     {
         // code here
     }

@@ -5,7 +5,7 @@ namespace Backalley\FormFields;
 /**
  * 
  */
-class Select extends FormField
+class Select extends FormField implements FormFieldInterface
 {
     /**
      * 

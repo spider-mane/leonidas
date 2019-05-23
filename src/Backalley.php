@@ -57,9 +57,9 @@ class Backalley extends \BackalleyCoreBase
     {
         $aliases = [
             "Respect\\Validation\\Validator" => "Backalley\\Validator",
-            "Backalley\\WP\\PostType" => "Backalley_Post_Type",
-            "Backalley\\WP\\Taxonomy" => "Backalley_Taxonomy",
-            "Backalley\\WP\\MetaBox" => "Backalley_Meta_Box",
+            "Backalley\\WordPress\\PostType" => "Backalley_Post_Type",
+            "Backalley\\WordPress\\Taxonomy" => "Backalley_Taxonomy",
+            "Backalley\\WordPress\\MetaBox" => "Backalley_Meta_Box",
         ];
 
         foreach ($aliases as $class => $alias) {
