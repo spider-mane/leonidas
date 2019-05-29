@@ -7,15 +7,10 @@ interface FormFieldInterface
     /**
      * 
      */
-    public function create($args);
+    public static function create($args) : FormFieldInterface;
 
     /**
      * 
      */
-    public function parse_args($args);
-
-    /**
-     * 
-     */
-    public function toString();
+    public function __toString();
 }

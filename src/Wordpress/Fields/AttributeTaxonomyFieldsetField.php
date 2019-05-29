@@ -178,10 +178,8 @@ class AttributeTaxonomyFieldsetField extends FieldBase
             $fields[$this->attribute_taxonomy] = [
                 'title' => $this->terms_title,
                 'form_element' => 'checklist',
-                'container' => [
-                    'attributes' => [
-                        'class' => 'thing'
-                    ]
+                'attributes' => [
+                    'class' => 'thing'
                 ],
                 'items' => $list_items ?? [],
             ];

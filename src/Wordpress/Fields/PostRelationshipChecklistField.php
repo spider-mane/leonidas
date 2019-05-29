@@ -95,13 +95,11 @@ class PostRelationshipChecklistField extends FieldBase
         $checklist = [
             'title' => $this->title,
             'form_element' => 'checklist',
-            'toggle' => $this->context === 'relatable' ? '0' : null,
-            'container' => [
-                'attributes' => [
-                    'id' => $this->id ?? '',
-                    'class' => 'thing'
-                ]
+            'attributes' => [
+                'id' => $this->id ?? '',
+                'class' => 'thing'
             ],
+            'toggle' => $this->context === 'relatable' ? '0' : null,
             'ul' => [
                 'attributes' => []
             ],

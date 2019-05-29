@@ -6,7 +6,7 @@ use Backalley\Html\TagSage;
 use Backalley\GuctilityBelt;
 
 
-class Input extends FormField implements FormFieldInterface
+class Input extends AbstractField implements FormFieldInterface
 {
     /**
      * 
@@ -42,27 +42,27 @@ class Input extends FormField implements FormFieldInterface
      */
     public function parse_args($args)
     {
-        $this->attributes = $args['attributes'] ?? $this->attributes;
         $this->type = $args['type'] ?? $this->attributes['type'] ?? $this->type;
         $this->name = $args['name'] ?? $this->attributes['name'] ?? $this->name;
         $this->value = $args['value'] ?? $this->attributes['value'] ?? $this->value;
+
+        return $this;
     }
 
     /**
      * 
      */
-    public static function create($args)
+    public static function create($args) : FormFieldInterface
     {
         $type = $args['type'] ?? $args['attributes']['type'] ?? 'text';
 
         if (TagSage::is_it('standard_input_type', $type)) {
-            return new Input($args);
+            return new static($args);
 
         } else {
             $type = GuctilityBelt::arg_to_class($type, '%s', __NAMESPACE__);
 
             return $type::create($args);
         }
-
     }
 }

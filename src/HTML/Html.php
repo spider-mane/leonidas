@@ -38,7 +38,12 @@ class Html extends HtmlConstructor
     }
 
     /**
-     * genterates an html string from 
+     * genterates an html string from array of element definitions
+     * 
+     * 'tag' => string
+     * 'attributes' => array || string
+     * 'content' => string
+     * 'children' => array
      * 
      * @param array $html_map
      * @param bool $recall

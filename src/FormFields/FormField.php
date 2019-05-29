@@ -3,37 +3,20 @@
 /**
  * @package Backalley-Core
  * 
- * Simple factory to generate field
+ * Factory class to create field
  */
 
 namespace Backalley\FormFields;
 
-use Backalley\Html\TagSage;
 use Backalley\GuctilityBelt;
-use Backalley\Html\HtmlConstructor;
-use function Respect\Validation\Rules\class_exists;
 
 
-abstract class FormField extends HtmlConstructor
+class FormField
 {
     /**
      * 
      */
-    public $attributes = [];
-
-    /**
-     *
-     */
-    final public function __construct($args = null, $charset = null)
-    {
-        parent::__construct($args, $charset);
-        $this->parse_args($args);
-    }
-
-    /**
-     * 
-     */
-    public static function __callStatic($field, $args)
+    public static function __callStatic($field, $args) : FormFieldInterface
     {
         $field = GuctilityBelt::arg_to_class($field, "%s", __NAMESPACE__);
 
@@ -45,7 +28,7 @@ abstract class FormField extends HtmlConstructor
     /**
      * 
      */
-    public static function create($args)
+    public static function create($args) : FormFieldInterface
     {
         $field = GuctilityBelt::arg_to_class($args['form_element'], '%s', __NAMESPACE__);
 

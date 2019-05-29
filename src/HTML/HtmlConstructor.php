@@ -1,19 +1,22 @@
 <?php
 
+namespace Backalley\Html;
+
+
 /**
  * @package Backalley-Core
  */
-
-namespace Backalley\Html;
-
 abstract class HtmlConstructor
 {
+    /**
+     * 
+     */
     public $charset;
 
     /**
      * 
      */
-    public function __construct(array $html_map = [], string $charset = null)
+    public function __construct(array $args = [], string $charset = null)
     {
         $this->set_charset($charset);
     }
@@ -36,7 +39,7 @@ abstract class HtmlConstructor
     /**
      * 
      */
-    public static function parse_attributes($attributes_array, &$attr_str = '')
+    protected static function parse_attributes($attributes_array, &$attr_str = '')
     {
         // static $attr_str = '';
 
@@ -47,13 +50,14 @@ abstract class HtmlConstructor
                 $attr_str .= " {$attr}={$val}";
                 continue;
             }
-
-            if ($val === true) { // boolean attribute
+            
+            // boolean attribute
+            if ($val === true) { 
                 $attr_str .= " {$attr}=\"{$attr}\"";
                 continue;
             }
 
-            if (is_int($attr)) { // boolean attribute
+            if (is_int($attr)) { 
                 $attr_str .= " {$val}=\"{$val}\"";
                 continue;
             }
@@ -136,7 +140,7 @@ abstract class HtmlConstructor
     /**
      * 
      */
-    public static function indent($tag, $level)
+    protected static function indent($tag, $level)
     {
         // code here
     }
@@ -144,7 +148,7 @@ abstract class HtmlConstructor
     /**
      * 
      */
-    public static function new_line()
+    protected static function new_line()
     {
         // code here
     }

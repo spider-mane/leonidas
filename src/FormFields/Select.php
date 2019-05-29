@@ -5,7 +5,7 @@ namespace Backalley\FormFields;
 /**
  * 
  */
-class Select extends FormField implements FormFieldInterface
+class Select extends AbstractField implements FormFieldInterface
 {
     /**
      * 
@@ -50,7 +50,6 @@ class Select extends FormField implements FormFieldInterface
     {
         $this->options = $args['options'];
         $this->selected = $args['selected'];
-        $this->attributes = $args['attributes'];
 
         return $this;
     }
@@ -58,10 +57,10 @@ class Select extends FormField implements FormFieldInterface
     /**
      * 
      */
-    public static function create($args)
+    public static function create($args) : FormFieldInterface
     {
         $multiple = $args['multiple'] ?? false;
 
-        return new Select($args);
+        return new static($args);
     }
 }

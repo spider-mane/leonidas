@@ -2,7 +2,7 @@
 
 namespace Backalley\FormFields;
 
-class Textarea extends FormField implements FormFieldInterface
+class Textarea extends AbstractField implements FormFieldInterface
 {
     /**
      * 
@@ -10,10 +10,10 @@ class Textarea extends FormField implements FormFieldInterface
     public $content = '';
 
     /**
-     * 
+     * __toString
+     *
+     * @return string
      */
-    public $attributes = [];
-
     public function __toString()
     {
         $html = '';
@@ -31,14 +31,7 @@ class Textarea extends FormField implements FormFieldInterface
     public function parse_args($args)
     {
         $this->content = $args['content'] ?? $this->content;
-        $this->attributes = $args['attributes'] ?? $this->attributes;
-    }
 
-    /**
-     * 
-     */
-    public static function create($args)
-    {
-        return new Textarea($args);
+        return $this;
     }
 }

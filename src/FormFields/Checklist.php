@@ -10,8 +10,13 @@ use Backalley\Html\HtmlConstructor;
 use Backalley\FormFields\MultiValueTrait;
 
 
-class Checklist extends FormField implements FormFieldInterface
+class Checklist extends InputList implements FormFieldInterface
 {
+    /**
+     * {@inheritDoc}
+     */
+    public $input_type = 'checkbox';
+
     /**
      * 
      */
@@ -21,21 +26,6 @@ class Checklist extends FormField implements FormFieldInterface
      * 
      */
     public $clear;
-
-    /**
-     * 
-     */
-    public $items = [];
-
-    /**
-     * 
-     */
-    public $ul = [];
-
-    /**
-     * 
-     */
-    public $container = [];
 
     /**
      * 
@@ -66,7 +56,7 @@ class Checklist extends FormField implements FormFieldInterface
     {
         $html = '';
 
-        $html .= $this->open('div', $this->container['attributes'] ?? null);
+        $html .= $this->open('div', $this->attributes ?? null);
         $html .= isset($this->clear_control) ? $this->open('input', $this->clear_control['attributes']) : '';
         $html .= $this->open('ul', $this->ul['attributes'] ?? null);
 
@@ -100,11 +90,9 @@ class Checklist extends FormField implements FormFieldInterface
     /**
      * 
      */
-    public function parse_args($args)
+    protected function parse_args($args)
     {
-        $this->container = $args['container'] ?? $this->container;
-        $this->ul = $args['ul'] ?? $this->ul;
-        $this->items = $args['items'];
+        parent::parse_args($args);
 
         if (isset($args['clear_control'])) {
             $this->set_clear_control(...$args['clear_control']);
@@ -112,10 +100,8 @@ class Checklist extends FormField implements FormFieldInterface
 
         if (isset($args['toggle'])) {
             $this->set_toggle_control($args['toggle']);
+            $this->define_items_toggle();
         }
-
-        $this->define_items_type();
-        $this->define_items_toggle();
     }
 
     /**
@@ -145,17 +131,7 @@ class Checklist extends FormField implements FormFieldInterface
     /**
      * 
      */
-    public function define_items_type()
-    {
-        foreach ($this->items as &$item) {
-            $item['attributes']['type'] = 'checkbox';
-        }
-    }
-
-    /**
-     * 
-     */
-    public function define_items_toggle()
+    protected function define_items_toggle()
     {
         if (isset($this->toggle_control)) {
             foreach ($this->items as &$item) {
@@ -166,13 +142,5 @@ class Checklist extends FormField implements FormFieldInterface
                 ];
             }
         }
-    }
-
-    /**
-     * 
-     */
-    public static function create($args)
-    {
-        return new Checklist($args);
     }
 } 
