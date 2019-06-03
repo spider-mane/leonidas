@@ -17,7 +17,7 @@ abstract class AbstractField extends HtmlConstructor implements FormFieldInterfa
      */
     final public function __construct($args = null, $charset = null)
     {
-        parent::__construct($args, $charset);
+        parent::__construct($charset);
 
         $this->set_attributes($args['attributes'] ?? null);
         $this->parse_args($args);

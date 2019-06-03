@@ -31,36 +31,63 @@ class Element extends HtmlConstructor
      *
      * @var array
      */
-    public $children = [];
+    protected $children = [];
+
+    /**
+     * map
+     * 
+     * @var array
+     */
+    protected static $map = [];
 
     /**
      *
      */
-    public function __construct($args = null, $charset = null)
+    protected function __construct(array $element, string $charset = null)
     {
-        parent::__construct($args, $charset);
+        parent::__construct($charset);
 
-        $this->set_tag($args['tag'] ?? null);
-        $this->set_attributes($args['attributes'] ?? null);
-        $this->set_content($args['content'] ?? null);
+        $properties = ['tag', 'attributes', 'content', 'children'];
 
-        foreach ($args['children'] as $child) {
-
+        foreach ($properties as $property) {
+            if (isset($element[$property])) {
+                $setter = "set_{$property}";
+                $this->$setter($element[$property]);
+            }
         }
     }
 
-    public static function create($element, $recall = false)
+    /**
+     * 
+     */
+    public static function create(array $element, string $charset = null)
     {
-        static $cache;
+        self::$map = $element;
 
-        if (!$recall) {
-            $cache = $element;
+        $element = new static(self::$map['root'], $charset);
+
+        self::$map = [];
+
+        return $element;
+    }
+
+    /**
+     * 
+     */
+    public function __toString()
+    {
+        $element = '';
+
+        $element .= $this->open($this->tag, $this->attributes);
+        $element .= $this->content;
+
+        foreach ($this->children as $child) {
+            $element .= $child;
         }
 
-        foreach ($element[$children] as $child) {
-            $children[$child] = $cache[$child];
-            static::create($children, true);
-        }
+        $element .= $this->close($this->tag);
+
+        return $element;
     }
 
     /**
@@ -106,7 +133,7 @@ class Element extends HtmlConstructor
      */
     public function set_attributes(array $attributes)
     {
-        $this->attributes = $attributes ?? $this->attributes;
+        $this->attributes = $attributes;
 
         return $this;
     }
@@ -136,28 +163,11 @@ class Element extends HtmlConstructor
     }
 
     /**
-     * 
-     */
-    public function __toString()
-    {
-        $element = '';
-
-        $element .= $this->open($this->tag, $this->attributes);
-        $element .= $this->content;
-
-        foreach ($this->childern as $child) {
-            $element .= $child;
-        }
-
-        $element .= $this->close($this->tag);
-    }
-
-    /**
      * Get children
      *
      * @return  array
      */
-    public function getChildren()
+    public function get_chilren()
     {
         return $this->children;
     }
@@ -169,39 +179,22 @@ class Element extends HtmlConstructor
      *
      * @return  self
      */
-    public function setChildren(array $children = [])
+    public function set_children(array $children)
     {
-        $this::initialize_children($children);
+        foreach ($children as $child) {
+            $this->insert_child(self::$map[$child] ?? $child);
+        }
+
+        return $this;
     }
 
     /**
      * 
      */
-    protected static function initialize_children($children, $recall = false)
+    public function insert_child($child)
     {
-        // static $cache;
+        $this->children[] = is_array($child) ? new static($child, $this->charset) : $child;
 
-        // if (!$recall) {
-        //     $cache = $children;
-        // }
-
-        // foreach ($children as $child => $definition) {
-        //     $element['tag'] = $definition['tag'] ?? null;
-        //     $element['attributes'] = $definition['attributes'] ?? null;
-        //     $element['content'] = $definition['content'] ?? null;
-
-        //     $this->children[] = new static($element);
-
-        //     foreach ($definition['children'] ?? [] as $grandchild) {
-        //         $element['children'][$grandchild] = $cache['children'][$grandchild];
-        //     }
-
-        //     static::initialize_children($element['children'], true);
-        // }
-        
-
-        // if (!$recall) {
-        //     $cache = null;
-        // }
+        return $this;
     }
 }

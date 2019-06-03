@@ -4,7 +4,7 @@ namespace Backalley\WordPress\Term;
 
 use Backalley\FormFields\FormField;
 use Backalley\Html\HtmlConstructor;
-use Backalley\WordPress\WordPress\FieldManager;
+use Backalley\WordPress\Fields\FieldManager;
 
 
 /**

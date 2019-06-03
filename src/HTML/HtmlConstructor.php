@@ -11,14 +11,16 @@ abstract class HtmlConstructor
     /**
      * 
      */
-    public $charset;
+    public $charset = 'UTF-8';
 
     /**
      * 
      */
-    public function __construct(array $args = [], string $charset = null)
+    public function __construct(string $charset = null)
     {
-        $this->set_charset($charset);
+        if (null !== $charset) {
+            $this->set_charset($charset);
+        }
     }
 
     /**
@@ -31,7 +33,7 @@ abstract class HtmlConstructor
      */
     public function set_charset($charset)
     {
-        $this->charset = $charset ?? 'UTF-8';
+        $this->charset = $charset;
 
         return $this;
     }
@@ -52,12 +54,12 @@ abstract class HtmlConstructor
             }
             
             // boolean attribute
-            if ($val === true) { 
+            if ($val === true) {
                 $attr_str .= " {$attr}=\"{$attr}\"";
                 continue;
             }
 
-            if (is_int($attr)) { 
+            if (is_int($attr)) {
                 $attr_str .= " {$val}=\"{$val}\"";
                 continue;
             }

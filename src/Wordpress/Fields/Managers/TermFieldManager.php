@@ -2,9 +2,10 @@
 
 namespace Backalley\WordPress\Fields\Managers;
 
+use Backalley\Html\Html;
+use Backalley\Html\Element;
 use Backalley\DataFields\FieldBase;
 use Backalley\FormFields\FormField;
-use Backalley\Html\Html;
 
 
 class TermFieldManager
@@ -56,8 +57,8 @@ class TermFieldManager
      */
     public static function add_term_form_field_template($field)
     {
-        $form_field = new Html([
-            'container' => [
+        $field = Element::create([
+            'root' => [
                 'tag' => 'div',
                 'attributes' => [
                     'class' => 'form-field',
@@ -78,7 +79,7 @@ class TermFieldManager
             ]
         ]);
 
-        echo $form_field;
+        echo $field;
     }
 
     /**
@@ -86,8 +87,8 @@ class TermFieldManager
      */
     public static function edit_term_form_field_template($field)
     {
-        $form_field = new Html([
-            'row' => [
+        $field = Element::create([
+            'root' => [
                 'tag' => 'tr',
                 'attributes' => [
                     'class' => ['form-field']
@@ -121,7 +122,7 @@ class TermFieldManager
             ]
         ]);
 
-        echo $form_field;
+        echo $field;
     }
 
     /**

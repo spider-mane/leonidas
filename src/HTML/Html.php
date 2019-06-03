@@ -14,7 +14,7 @@ class Html extends HtmlConstructor
      */
     public function __construct(array $html_map = [], string $charset = null)
     {
-        parent::__construct($html_map, $charset);
+        parent::__construct($charset);
         $this->set_html_map($html_map);
 
     }
