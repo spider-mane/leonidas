@@ -10,8 +10,20 @@ use Backalley\FormFields\FormField;
 
 class PostMetaBoxFieldManager
 {
+    /**
+     * 
+     */
     public $field;
+
+    /**
+     * 
+     */
     public $width = 'large-text';
+
+    /**
+     * 
+     */
+    public $taxonomy;
 
     /**
      * 
@@ -25,6 +37,22 @@ class PostMetaBoxFieldManager
      * 
      */
     public function get_data($post)
+    {
+        return !isset($this->taxonomy) ? $this->get_post_meta($post) : $this->get_post_terms($post);
+    }
+
+    /**
+     * 
+     */
+    public function get_post_terms($post)
+    {
+        return wp_get_post_terms($post->ID, $this->taxonomy);
+    }
+
+    /**
+     * 
+     */
+    public function get_post_meta($post)
     {
         return get_post_meta($post->ID, $this->field->meta_prefix . "{$post->post_type}_{$this->field->meta_key}", true);
     }
