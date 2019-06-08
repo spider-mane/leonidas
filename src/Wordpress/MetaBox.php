@@ -6,7 +6,7 @@ namespace Backalley\WordPress;
 /**
  * @package Backalley-Core
  */
-class MetaBox implements MetaBox\PostMetaFieldInterface
+class MetaBox extends ApiBase implements MetaBox\PostMetaFieldInterface
 {
     /**
      * id
@@ -232,10 +232,10 @@ class MetaBox implements MetaBox\PostMetaFieldInterface
     /**
      * Instantiate multiple MetaBoxes
      */
-    public static function bulk_add(array $meta_boxes) : array
+    public static function create(array $meta_boxes) : array
     {
         foreach ($meta_boxes as $name => $meta_box) {
-            $meta_boxes[$name] = new MetaBox($meta_box);
+            $meta_boxes[$name] = new static($meta_box);
         }
 
         return $meta_boxes;

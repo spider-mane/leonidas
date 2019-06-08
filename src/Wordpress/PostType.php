@@ -7,7 +7,7 @@
 namespace Backalley\WordPress;
 
 
-final class PostType
+class PostType extends ApiBase
 {
     public $post_type;
     public $base_args;
@@ -91,10 +91,12 @@ final class PostType
     /**
      * 
      */
-    public static function bulk_registration($post_types = [])
+    public static function create($post_types = [])
     {
         foreach ($post_types as $post_type => $args) {
-            new PostType($post_type, $args);
+            $post_types[$post_type] = new static($post_type, $args);
         }
+
+        return $post_types;
     }
 }

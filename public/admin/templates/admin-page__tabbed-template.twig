@@ -1,0 +1,15 @@
+<div class="wrap">
+    <h1>{{ title }}</h1>
+    {% settings_errors(); %}
+
+    <form action="options.php" method="post">
+
+        {% for tab in tabs %}
+            {% settings_fields() %}
+            {% do_settings_sections() %}
+            {% submit_button() %}
+        {% endfor %}
+
+    </form>
+
+</div>

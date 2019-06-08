@@ -7,7 +7,7 @@
 namespace Backalley\WordPress;
 
 
-class Taxonomy
+class Taxonomy extends ApiBase
 {
     public $post_types;
     public $base_args;
@@ -118,10 +118,12 @@ class Taxonomy
     /**
      * Register an array of taxonomies
      */
-    public static function bulk_registration($taxonomies)
+    public static function create($taxonomies)
     {
         foreach ($taxonomies as $taxonomy => $args) {
-            $taxonomy = new Taxonomy($taxonomy, $args, $args['post_types'] ?? null);
+            $taxonomies[$taxonomy] = new static($taxonomy, $args, $args['post_types'] ?? null);
         }
+
+        return $taxonomies;
     }
 }

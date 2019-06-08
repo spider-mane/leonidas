@@ -1,0 +1,25 @@
+<div class="wrap">
+    <h1>{{ title }}</h1>
+
+    {{ settings_errors() }}
+
+    <form action="options.php" method="post">
+
+        {% if tabs is not empty %}
+
+            {% for tab in tabs %}
+                {{ settings_fields(fields) }}
+                {{ do_settings_sections(sections) }}
+                {{ submit_button() }}
+            {% endfor %}
+
+        {% else %}
+
+            {{ settings_fields(fields) }}
+            {{ do_settings_sections(sections) }}
+            {{ submit_button() }}
+
+        {% endif %}
+
+    </form>
+</div>

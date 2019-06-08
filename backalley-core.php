@@ -1,5 +1,7 @@
 <?php
 
+use Timber\Timber;
+
 /**
  * @package Backalley-Core
  */
@@ -26,6 +28,8 @@ class BackalleyCoreBase
             Self::$admin_templates,
             Self::$admin_templates . '/macros',
         ];
+
+        Timber::$locations = Self::$timber_locations;
     }
 }
 
