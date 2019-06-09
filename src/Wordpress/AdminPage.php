@@ -1,79 +1,99 @@
 <?php
 
+namespace Backalley\WordPress;
+
+use Timber\Timber;
+use Backalley\WordPress\AdminPage\SettingsSection;
+
+
 /**
  * @package Backalley-Core
  */
-
-namespace Backalley\Wordpress;
-
-use Timber\Timber;
-use Backalley\Backalley;
-
-
 class AdminPage extends ApiBase
 {
     /**
-     * settings
+     * page_title
      * 
-     * @var array
+     * @var string
      */
     public $page_title = '';
 
     /**
-     * settings
+     * menu_title
      * 
-     * @var array
+     * @var string
      */
     public $menu_title = '';
 
     /**
-     * settings
+     * menu_slug
      * 
-     * @var array
-     */
-    public $capability;
-
-    /**
-     * settings
-     * 
-     * @var array
+     * @var string
      */
     public $menu_slug;
 
     /**
-     * settings
+     * capability
      * 
-     * @var array
+     * @var string
+     */
+    public $capability;
+
+    /**
+     * function
+     * 
+     * @var callback
      */
     public $function;
 
     /**
-     * settings
+     * icon
      * 
-     * @var array
+     * @var string
      */
     public $icon;
 
     /**
-     * settings
+     * position
      * 
-     * @var array
+     * @var int
      */
     public $position;
 
     /**
-     * settings
+     * parent_slug
      * 
-     * @var array
+     * @var string
      */
     public $parent_slug;
 
     /**
-     * show in menu
+     * description
+     * 
+     * @var string
+     */
+    public $description;
+
+    /**
+     * show_in_menu
      * 
      * @var bool
      */
     public $show_in_menu = true;
+
+    /**
+     * layout
+     * 
+     * @var string
+     */
+    public $layout = 'wp_basic';
+
+    /**
+     * tabs
+     * 
+     * @var array
+     */
+    public $tabs = [];
 
     /**
      * settings
@@ -90,28 +110,34 @@ class AdminPage extends ApiBase
     public $sections = [];
 
     /**
-     * settings
+     * field_groups
      * 
      * @var array
      */
-    public $tabs = [];
+    public $field_groups = [];
 
+    /**
+     * 
+     */
     public function __construct($args)
     {
-        foreach ($args as $property => $value) {
-            $setter = "set_{$property}";
-
-            if (method_exists($this, $setter)) {
-                $this->$setter($value);
-
-            } elseif (property_exists($this, $property)) {
-                $this->$property = $value;
-            }
-        }
+        parent::__construct($args);
 
         $this->set_dynamic_defaults();
 
         add_action('admin_menu', [$this, 'add_page']);
+    }
+
+    /**
+     * 
+     */
+    public static function create($pages)
+    {
+        foreach ($pages as $index => $args) {
+            $pages[$index] = new static($args);
+        }
+
+        return $pages;
     }
 
     /**
@@ -135,7 +161,7 @@ class AdminPage extends ApiBase
     /**
      * Get settings
      *
-     * @return  array
+     * @return  string
      */
     public function get_page_title()
     {
@@ -145,7 +171,7 @@ class AdminPage extends ApiBase
     /**
      * Set settings
      *
-     * @param   array  $page_title  settings
+     * @param   string  $page_title  settings
      *
      * @return  self
      */
@@ -157,9 +183,9 @@ class AdminPage extends ApiBase
     }
 
     /**
-     * Get settings
+     * Get menu_title
      *
-     * @return  array
+     * @return  string
      */
     public function get_menu_title()
     {
@@ -169,7 +195,7 @@ class AdminPage extends ApiBase
     /**
      * Set settings
      *
-     * @param   array  $menu_title  settings
+     * @param   string  $menu_title  settings
      *
      * @return  self
      */
@@ -181,7 +207,7 @@ class AdminPage extends ApiBase
     }
 
     /**
-     * Get settings
+     * Get capability
      *
      * @return  array
      */
@@ -191,9 +217,9 @@ class AdminPage extends ApiBase
     }
 
     /**
-     * Set settings
+     * Set capability
      *
-     * @param   array  $capability  settings
+     * @param   array  $capability  capability
      *
      * @return  self
      */
@@ -205,9 +231,9 @@ class AdminPage extends ApiBase
     }
 
     /**
-     * Get settings
+     * Get menu_slug
      *
-     * @return  array
+     * @return  string
      */
     public function get_menu_slug()
     {
@@ -215,9 +241,9 @@ class AdminPage extends ApiBase
     }
 
     /**
-     * Set settings
+     * Set menu_slug
      *
-     * @param   array  $menu_slug  settings
+     * @param   string  $menu_slug  menu_slug
      *
      * @return  self
      */
@@ -229,7 +255,7 @@ class AdminPage extends ApiBase
     }
 
     /**
-     * Get settings
+     * Get function
      *
      * @return  array
      */
@@ -239,13 +265,13 @@ class AdminPage extends ApiBase
     }
 
     /**
-     * Set settings
+     * Set function
      *
-     * @param   array  $function  settings
+     * @param   callback  $function  function
      *
      * @return  self
      */
-    public function set_function($function)
+    public function set_function(callback $function)
     {
         $this->function = $function;
 
@@ -253,9 +279,9 @@ class AdminPage extends ApiBase
     }
 
     /**
-     * Get settings
+     * Get position
      *
-     * @return  array
+     * @return int
      */
     public function get_position()
     {
@@ -263,9 +289,9 @@ class AdminPage extends ApiBase
     }
 
     /**
-     * Set settings
+     * Set position
      *
-     * @param   array  $position  settings
+     * @param int  $position  position
      *
      * @return  self
      */
@@ -277,9 +303,9 @@ class AdminPage extends ApiBase
     }
 
     /**
-     * Get settings
+     * Get parent_slug
      *
-     * @return  array
+     * @return  string
      */
     public function get_parent_slug()
     {
@@ -287,15 +313,54 @@ class AdminPage extends ApiBase
     }
 
     /**
-     * Set settings
+     * Set parent_slug
      *
-     * @param   array  $parent_slug  settings
+     * @param   string  $parent_slug  parent_slug
      *
      * @return  self
      */
     public function set_parent_slug(string $parent_slug)
     {
         $this->parent_slug = $parent_slug;
+
+        return $this;
+    }
+
+    /**
+     * Get settings
+     *
+     * @return  array
+     */
+    public function get_settings()
+    {
+        return $this->settings;
+    }
+
+    /**
+     * Set settings
+     *
+     * @param   array  $settings  settings
+     *
+     * @return  self
+     */
+    public function set_settings(array $settings)
+    {
+        foreach ($settings as $index => $setting) {
+            $this->push_setting($setting);
+        }
+
+        return $this;
+    }
+
+    /**
+     * 
+     */
+    public function push_setting($setting)
+    {
+        $setting = new AdminSetting($setting);
+        $setting->set_page($this->menu_slug);
+
+        $this->settings[] = $setting;
 
         return $this;
     }
@@ -313,21 +378,34 @@ class AdminPage extends ApiBase
     /**
      * Set sections
      *
-     * @param   array  $sections  sections
+     * @param   array  $sections
      *
      * @return  self
      */
     public function set_sections(array $sections)
     {
         foreach ($sections as $section) {
-            $this->sections[] = new SettingsSection($section);
+            $this->push_section($section);
         }
 
         return $this;
     }
 
     /**
-     * Get settings
+     * 
+     */
+    public function push_section($section, $key = null)
+    {
+        $section = new SettingsSection($section);
+        $section->set_page($this->menu_slug);
+
+        $this->sections[] = $section;
+
+        return $this;
+    }
+
+    /**
+     * Get tabs
      *
      * @return  array
      */
@@ -337,9 +415,9 @@ class AdminPage extends ApiBase
     }
 
     /**
-     * Set settings
+     * Set tabs
      *
-     * @param   array  $tabs  settings
+     * @param   array  $tabs
      *
      * @return  self
      */
@@ -351,14 +429,50 @@ class AdminPage extends ApiBase
     }
 
     /**
+     * Get field_groups
+     *
+     * @return  array
+     */
+    public function get_field_groups()
+    {
+        return $this->field_groups;
+    }
+
+    /**
+     * Set field_groups
+     *
+     * @param   mixed  $field_groups  fields
+     *
+     * @return  self
+     */
+    public function set_field_groups($field_groups)
+    {
+        foreach (is_array($field_groups) ? $field_groups : [$field_groups] as $field) {
+            $this->add_field_group($field);
+        }
+
+        return $this;
+    }
+
+    /**
+     * 
+     */
+    public function add_field_group($field_group)
+    {
+        $this->field_groups[] = $field_group;
+
+        return $this;
+    }
+
+    /**
      * 
      */
     public function add_page()
     {
         if (isset($this->parent_slug)) {
-            $this->add_submenu_page()->fix_page_assets('submenu_page');
+            $this->add_submenu_page()->fix_page_assets('submenu');
         } else {
-            $this->add_menu_page()->fix_page_assets('menu_page');
+            $this->add_menu_page()->fix_page_assets('menu');
         }
 
         return $this;
@@ -422,10 +536,10 @@ class AdminPage extends ApiBase
     /**
      * 
      */
-    protected function fix_page_assets($menu_context)
+    protected function fix_page_assets($level)
     {
         if (false === $this->show_in_menu) {
-            $remove_page = "remove_{$menu_context}";
+            $remove_page = "remove_{$level}_page";
             $this->$remove_page();
         }
     }
@@ -438,22 +552,23 @@ class AdminPage extends ApiBase
         $templateData = [
             'title' => $this->page_title,
             'tabs' => $this->tabs,
-            'sections' => $this->sections,
-            'fields' => $this->fields,
+            'page' => $this->menu_slug,
+            'layout' => $this->layout,
+            'description' => $this->description,
+            'field_groups' => $this->field_groups,
         ];
 
-        Timber::render('admin-page__default-template.twig', $templateData);
+        Timber::render('admin-page-template.twig', $templateData);
     }
 
     /**
      * 
      */
-    public static function create($pages)
+    public static function layout($layout)
     {
-        foreach ($pages as $index => $args) {
-            $pages[$index] = new static($args);
-        }
+        $data = [];
+        $layout = "{$layout}.twig";
 
-        return $pages;
+        Timber::render($layout, $data);
     }
 }

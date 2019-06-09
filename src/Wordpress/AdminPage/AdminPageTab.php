@@ -1,6 +1,6 @@
 <?php
 
-namespace Backalley\Wordpress\Admin;
+namespace Backalley\Wordpress\AdminPage;
 
 
 /**

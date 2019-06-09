@@ -83,7 +83,6 @@ class Backalley extends \BackalleyCoreBase
     public static function custom_twig_functions($twig)
     {
         $functions = [
-            'wp_submit_button' => 'submit_button',
             'submit_button' => 'submit_button',
             'settings_fields' => 'settings_fields',
             'do_settings_sections' => 'do_settings_sections',

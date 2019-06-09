@@ -5,6 +5,8 @@
 
     <form action="options.php" method="post">
 
+        <p>{{ description }}</p>
+
         {% if tabs is not empty %}
 
             {% for tab in tabs %}
@@ -15,8 +17,11 @@
 
         {% else %}
 
-            {{ settings_fields(fields) }}
-            {{ do_settings_sections(sections) }}
+            {% for field_group in field_groups %}
+                {{ settings_fields(field_group) }}
+            {% endfor %}
+
+            {{ do_settings_sections(page) }}
             {{ submit_button() }}
 
         {% endif %}
