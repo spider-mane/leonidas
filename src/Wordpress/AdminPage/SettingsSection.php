@@ -25,9 +25,9 @@ class SettingsSection extends ApiBase
     public $title;
 
     /**
-     * callback
+     * callable
      * 
-     * @var callback
+     * @var callable
      */
     public $callback;
 
@@ -46,9 +46,9 @@ class SettingsSection extends ApiBase
     public $description;
 
     /**
-     * fields
+     * settings
      * 
-     * @var string
+     * @var array
      */
     public $settings;
 
@@ -59,9 +59,9 @@ class SettingsSection extends ApiBase
     {
         parent::__construct($args);
 
-        if (!isset($this->callback)) {
-            $this->set_callback([$this, 'render']);
-        }
+        // if (!isset($this->callback)) {
+        //     $this->set_callback([$this, 'render']);
+        // }
 
         add_action('admin_init', [$this, 'add_settings_section']);
     }
@@ -139,9 +139,9 @@ class SettingsSection extends ApiBase
     /**
      * Set callback
      *
-     * @param   callback  $callback  callback
+     * @param callable  $callback
      *
-     * @return  self
+     * @return self
      */
     public function set_callback(callable $callback)
     {
@@ -243,13 +243,26 @@ class SettingsSection extends ApiBase
      */
     public function add_settings_section()
     {
-        add_settings_section($this->id, $this->title, $this->callback, $this->page);
+        add_settings_section($this->id, $this->title, [$this, 'render'], $this->page);
     }
 
     /**
      * 
      */
     public function render()
+    {
+        if (!isset($this->callback)) {
+            $this->render_default();
+
+        } else {
+            call_user_func($this->callback, $this);
+        }
+    }
+
+    /**
+     * 
+     */
+    public function render_default()
     {
         echo $this->description;
     }

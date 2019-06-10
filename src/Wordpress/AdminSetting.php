@@ -2,8 +2,7 @@
 
 namespace Backalley\Wordpress;
 
-use Backalley\Html\Html;
-
+use Backalley\FormFields\Input;
 
 
 /**
@@ -132,7 +131,7 @@ class AdminSetting extends ApiBase
 
         // $this->set_dynamic_defaults();
 
-        add_action('admin_init', [$this, 'register_setting']);
+        add_action('admin_init', [$this, 'create_setting']);
     }
 
     /**
@@ -152,10 +151,7 @@ class AdminSetting extends ApiBase
      */
     protected function set_dynamic_defaults()
     {
-        $defaults = [
-            'sanitize_callback' => [$this, 'sanitize'],
-            // 'display_callback' => [$this, 'render']
-        ];
+        $defaults = [];
 
         foreach ($defaults as $property => $default) {
             if (!isset($this->$property)) {
@@ -553,14 +549,14 @@ class AdminSetting extends ApiBase
     /**
      * 
      */
-    public function register_setting()
+    public function create_setting()
     {
         $args = [
-            $this->type,
-            $this->description,
-            [$this, 'sanitize'],
-            $this->show_in_rest,
-            $this->default,
+            'type' => $this->type,
+            'description' => $this->description,
+            'sanitize_callback' => [$this, 'sanitize'],
+            'show_in_rest' => $this->show_in_rest,
+            'default' => $this->default,
         ];
         register_setting($this->option_group, $this->option_name, $args);
 
@@ -571,7 +567,7 @@ class AdminSetting extends ApiBase
     /**
      * 
      */
-    public function unregister_setting()
+    public function remove_setting()
     {
         //
     }
@@ -582,16 +578,31 @@ class AdminSetting extends ApiBase
     public function render($args)
     {
         if (isset($this->field)) {
-            return $this->field->render();
+            $this->field->render();
 
         } elseif (isset($this->display_callback)) {
             $callback = $this->display_callback;
             $callback($this, $args);
 
         } else {
-            $value = get_option($this->option_name);
-            echo "<input type=\"text\" id=\"{$this->id}\" name=\"{$this->option_name}\" class=\"regular-text\" value=\"{$value}\">";
+            $this->render_default($args);
         }
+    }
+
+    /**
+     * 
+     */
+    protected function render_default($args)
+    {
+        echo new Input([
+            'value' => get_option($this->option_name),
+            'name' => $this->option_name,
+            'type' => 'text',
+            'attributes' => [
+                'id' => $this->id,
+                'class' => 'regular-text',
+            ]
+        ]);
     }
 
     /**
@@ -604,9 +615,20 @@ class AdminSetting extends ApiBase
 
         } elseif (isset($this->sanitize_callback)) {
             $callback = $this->sanitize_callback;
-            $value = $callback($this, $value);
+            $value = $callback($value, $this);
+
+        } else {
+            $value = $this->sanitize_default($value);
         }
 
         return $value;
+    }
+
+    /**
+     * 
+     */
+    protected function sanitize_default($value)
+    {
+        return sanitize_text_field($value);
     }
 }

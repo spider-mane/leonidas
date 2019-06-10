@@ -5,7 +5,9 @@
 
     <form action="options.php" method="post">
 
-        <p>{{ description }}</p>
+        {% if description is not empty %}
+            <p>{{ description }}</p>
+        {% endif %}
 
         {% if tabs is not empty %}
 

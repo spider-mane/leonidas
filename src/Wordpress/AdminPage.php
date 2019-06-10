@@ -123,7 +123,7 @@ class AdminPage extends ApiBase
     {
         parent::__construct($args);
 
-        $this->set_dynamic_defaults();
+        // $this->set_dynamic_defaults();
 
         add_action('admin_menu', [$this, 'add_page']);
     }
@@ -489,7 +489,7 @@ class AdminPage extends ApiBase
             $this->menu_title,
             $this->capability,
             $this->menu_slug,
-            $this->function
+            [$this, 'render']
         );
 
         return $this;
@@ -505,7 +505,7 @@ class AdminPage extends ApiBase
             $this->menu_title,
             $this->capability,
             $this->menu_slug,
-            $this->function,
+            [$this, 'render'],
             $this->icon,
             $this->position
         );
@@ -547,7 +547,21 @@ class AdminPage extends ApiBase
     /**
      * 
      */
-    public function render()
+    public function render($args)
+    {
+        if (!isset($this->function)) {
+            $this->render_default($this);
+
+        } else {
+            $callback = $this->function;
+            $callback($this, $args);
+        }
+    }
+
+    /**
+     * 
+     */
+    public function render_default()
     {
         $templateData = [
             'title' => $this->page_title,
