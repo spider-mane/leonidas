@@ -1,6 +1,9 @@
 <?php
 
-namespace Backalley\Wordpress\Admin;
+namespace Backalley\Wordpress;
+
+use Backalley\Html\Html;
+
 
 
 /**
@@ -39,7 +42,7 @@ class AdminSetting extends ApiBase
     /**
      * sanitize_callback
      * 
-     * @var callback
+     * @var callable
      */
     public $sanitize_callback;
 
@@ -81,7 +84,7 @@ class AdminSetting extends ApiBase
     /**
      * display_callback
      * 
-     * @var string
+     * @var callable
      */
     public $display_callback;
 
@@ -100,11 +103,11 @@ class AdminSetting extends ApiBase
     public $section;
 
     /**
-     * callback_args
+     * display_args
      * 
      * @var string
      */
-    public $callback_args;
+    public $display_args = [];
 
     /**
      * tab
@@ -127,6 +130,8 @@ class AdminSetting extends ApiBase
     {
         parent::__construct($args);
 
+        // $this->set_dynamic_defaults();
+
         add_action('admin_init', [$this, 'register_setting']);
     }
 
@@ -140,6 +145,25 @@ class AdminSetting extends ApiBase
         }
 
         return $settings;
+    }
+
+    /**
+     * 
+     */
+    protected function set_dynamic_defaults()
+    {
+        $defaults = [
+            'sanitize_callback' => [$this, 'sanitize'],
+            // 'display_callback' => [$this, 'render']
+        ];
+
+        foreach ($defaults as $property => $default) {
+            if (!isset($this->$property)) {
+                $this->$property = $default;
+            }
+        }
+
+        return $this;
     }
 
     /**
@@ -251,11 +275,11 @@ class AdminSetting extends ApiBase
     /**
      * Set sanitize_callback
      *
-     * @param   callback  $sanitize_callback  sanitize_callback
+     * @param   callable  $sanitize_callback
      *
      * @return  self
      */
-    public function set_sanitize_callback($sanitize_callback)
+    public function set_sanitize_callback(callable $sanitize_callback)
     {
         $this->sanitize_callback = $sanitize_callback;
 
@@ -419,11 +443,11 @@ class AdminSetting extends ApiBase
     /**
      * Set display_callback
      *
-     * @param   string  $display_callback  display_callback
+     * @param callable $display_callback
      *
-     * @return  self
+     * @return self
      */
-    public function set_display_callback(string $display_callback)
+    public function set_display_callback(callable $display_callback)
     {
         $this->display_callback = $display_callback;
 
@@ -479,25 +503,25 @@ class AdminSetting extends ApiBase
     }
 
     /**
-     * Get callback_args
+     * Get display_args
      *
      * @return  string
      */
-    public function get_callback_args()
+    public function get_display_args()
     {
-        return $this->callback_args;
+        return $this->display_args;
     }
 
     /**
-     * Set callback_args
+     * Set display_args
      *
-     * @param   string  $callback_args  callback_args
+     * @param   array  $display_args  display_args
      *
      * @return  self
      */
-    public function set_callback_args(string $callback_args)
+    public function set_display_args(array $display_args)
     {
-        $this->callback_args = $callback_args;
+        $this->display_args = $display_args;
 
         return $this;
     }
@@ -534,14 +558,14 @@ class AdminSetting extends ApiBase
         $args = [
             $this->type,
             $this->description,
-            $this->sanitize_callback,
+            [$this, 'sanitize'],
             $this->show_in_rest,
             $this->default,
         ];
-
         register_setting($this->option_group, $this->option_name, $args);
 
-        add_settings_field($this->id, $this->title, $this->display_callback, $this->page, $this->section, $this->callback_args);
+        $args = ['label_for' => $this->id] + $this->display_args;
+        add_settings_field($this->id, $this->title, [$this, 'render'], $this->page, $this->section, $args);
     }
 
     /**
@@ -550,5 +574,39 @@ class AdminSetting extends ApiBase
     public function unregister_setting()
     {
         //
+    }
+
+    /**
+     * 
+     */
+    public function render($args)
+    {
+        if (isset($this->field)) {
+            return $this->field->render();
+
+        } elseif (isset($this->display_callback)) {
+            $callback = $this->display_callback;
+            $callback($this, $args);
+
+        } else {
+            $value = get_option($this->option_name);
+            echo "<input type=\"text\" id=\"{$this->id}\" name=\"{$this->option_name}\" class=\"regular-text\" value=\"{$value}\">";
+        }
+    }
+
+    /**
+     * 
+     */
+    public function sanitize($value)
+    {
+        if (isset($this->field)) {
+            $value = $this->field->save('false');
+
+        } elseif (isset($this->sanitize_callback)) {
+            $callback = $this->sanitize_callback;
+            $value = $callback($this, $value);
+        }
+
+        return $value;
     }
 }
