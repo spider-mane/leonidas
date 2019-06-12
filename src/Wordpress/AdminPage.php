@@ -396,8 +396,7 @@ class AdminPage extends ApiBase
      */
     public function push_section($section, $key = null)
     {
-        $section = new SettingsSection($section);
-        $section->set_page($this->menu_slug);
+        $section = new SettingsSection(['page' => $this->menu_slug] + $section);
 
         $this->sections[] = $section;
 

@@ -2,6 +2,7 @@
 
 namespace Backalley\Wordpress;
 
+use Backalley\Html\Html;
 use Backalley\FormFields\Input;
 
 
@@ -551,17 +552,25 @@ class AdminSetting extends ApiBase
      */
     public function create_setting()
     {
-        $args = [
-            'type' => $this->type,
-            'description' => $this->description,
-            'sanitize_callback' => [$this, 'sanitize'],
-            'show_in_rest' => $this->show_in_rest,
-            'default' => $this->default,
-        ];
-        register_setting($this->option_group, $this->option_name, $args);
+        // create setting that corresponds to an option
+        if (isset($this->option_name, $this->option_group)) {
+            $args = [
+                'type' => $this->type,
+                'description' => $this->description,
+                'sanitize_callback' => [$this, 'sanitize'],
+                'show_in_rest' => $this->show_in_rest,
+                'default' => $this->default,
+            ];
 
-        $args = ['label_for' => $this->id] + $this->display_args;
-        add_settings_field($this->id, $this->title, [$this, 'render'], $this->page, $this->section, $args);
+            register_setting($this->option_group, $this->option_name, $args);
+        }
+
+        // create setting field
+        if (isset($this->id, $this->title, $this->page)) {
+            $args = ['label_for' => $this->id] + $this->display_args;
+
+            add_settings_field($this->id, $this->title, [$this, 'render'], $this->page, $this->section, $args);
+        }
     }
 
     /**
@@ -577,12 +586,12 @@ class AdminSetting extends ApiBase
      */
     public function render($args)
     {
-        if (isset($this->field)) {
-            $this->field->render();
-
-        } elseif (isset($this->display_callback)) {
+        if (isset($this->display_callback)) {
             $callback = $this->display_callback;
             $callback($this, $args);
+
+        } elseif (isset($this->field)) {
+            $this->field->render();
 
         } else {
             $this->render_default($args);
@@ -603,25 +612,30 @@ class AdminSetting extends ApiBase
                 'class' => 'regular-text',
             ]
         ]);
+
+        if (isset($this->description)) {
+            $args['description_attr']['class'][] = 'description';
+            echo Html::open('p', $args['description_attr']) . $this->description . Html::close('p');
+        }
     }
 
     /**
      * 
      */
-    public function sanitize($value)
+    public function sanitize($input)
     {
-        if (isset($this->field)) {
-            $value = $this->field->save('false');
-
-        } elseif (isset($this->sanitize_callback)) {
+        if (isset($this->sanitize_callback)) {
             $callback = $this->sanitize_callback;
-            $value = $callback($value, $this);
+            $input = $callback($input, $this);
+
+        } elseif (isset($this->field)) {
+            $input = $this->field->save('false');
 
         } else {
-            $value = $this->sanitize_default($value);
+            $input = $this->sanitize_default($input);
         }
 
-        return $value;
+        return $input;
     }
 
     /**

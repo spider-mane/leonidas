@@ -2,8 +2,9 @@
 
 namespace Backalley\WordPress\AdminPage;
 
+use Backalley\Html\Html;
 use Backalley\WordPress\ApiBase;
-use Backalley\Wordpress\Admin\AdminSetting;
+use Backalley\Wordpress\AdminSetting;
 
 /**
  * 
@@ -58,10 +59,6 @@ class SettingsSection extends ApiBase
     public function __construct($args)
     {
         parent::__construct($args);
-
-        // if (!isset($this->callback)) {
-        //     $this->set_callback([$this, 'render']);
-        // }
 
         add_action('admin_init', [$this, 'add_settings_section']);
     }
@@ -199,9 +196,9 @@ class SettingsSection extends ApiBase
     }
 
     /**
-     * Get fields
+     * Get settings
      *
-     * @return  string
+     * @return  array
      */
     public function get_settings()
     {
@@ -209,18 +206,17 @@ class SettingsSection extends ApiBase
     }
 
     /**
-     * Set fields
+     * Set settings
      *
-     * @param   string  $settings  fields
+     * @param   array  $settings 
      *
      * @return  self
      */
-    public function set_settings(string $settings)
+    public function set_settings(array $settings)
     {
         foreach ($settings as $key => $setting) {
             $this->push_setting($setting);
         }
-        $this->settings = $settings;
 
         return $this;
     }
@@ -232,6 +228,7 @@ class SettingsSection extends ApiBase
     {
         $setting = new AdminSetting($setting);
         $setting->section = $this->id;
+        $setting->page = $this->page;
 
         $this->settings[] = $setting;
 
@@ -255,7 +252,8 @@ class SettingsSection extends ApiBase
             $this->render_default();
 
         } else {
-            call_user_func($this->callback, $this);
+            $callback = $this->callback;
+            $callback($this);
         }
     }
 
@@ -264,6 +262,6 @@ class SettingsSection extends ApiBase
      */
     public function render_default()
     {
-        echo $this->description;
+        echo Html::open('p') . $this->description . Html::close('p');
     }
 }
