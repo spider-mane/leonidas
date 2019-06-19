@@ -18,11 +18,24 @@ use Backalley\GuctilityBelt;
 
 trait CustomArgFactoryTrait
 {
+    /**
+     * 
+     */
     public $custom_args = [];
+
+    /**
+     * 
+     */
     public $object_type = '';
+
+    /**
+     * 
+     */
     public $interface = __NAMESPACE__ . '\\CustomArgInterface';
 
-
+    /**
+     * 
+     */
     public function custom_arg_factory()
     {
         global $wp_filter;

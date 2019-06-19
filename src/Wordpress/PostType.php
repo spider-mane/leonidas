@@ -9,10 +9,24 @@ namespace Backalley\WordPress;
 
 class PostType extends ApiBase
 {
+    /**
+     * 
+     */
     public $post_type;
+
+    /**
+     * 
+     */
     public $base_args;
+
+    /**
+     * 
+     */
     public $post_type_object;
 
+    /**
+     * 
+     */
     private static $registered = [];
 
     use PostType\Args\CustomArgFactoryTrait;
@@ -57,9 +71,13 @@ class PostType extends ApiBase
     /**
      * 
      */
-    final public function set_labels()
+    public function set_labels($value, $label = null)
     {
-
+        if ($label) {
+            $this->labels[$label] = $value;
+        } else {
+            $this->labels = (array)$value;
+        }
     }
 
     /**
@@ -94,9 +112,65 @@ class PostType extends ApiBase
     public static function create($post_types = [])
     {
         foreach ($post_types as $post_type => $args) {
+
+            if (isset($args['labels'])) {
+                $args['labels'] = static::build_labels($args);
+            }
+
             $post_types[$post_type] = new static($post_type, $args);
         }
 
         return $post_types;
+    }
+
+    /**
+     * 
+     */
+    protected static function build_labels($args)
+    {
+        $plural = $args['labels']['name'] ?? $args['label'];
+        $single = $args['labels']['singular_name'] ?? $plural;
+
+        $default_labels = static::create_labels($single, $plural);
+
+        return $args['labels'] + $default_labels;
+    }
+
+    /**
+     * 
+     */
+    public static function create_labels(string $single, string $plural)
+    {
+        $single_lower = strtolower($single);
+        $plural_lower = strtolower($plural);
+
+        $labels = [
+            'name' => $plural,
+            'singular_name' => $single,
+            'add_new_item' => "Add New {$single}",
+            'edit_item' => "Edit {$single}",
+            'new_item' => "New {$single}",
+            'view_item' => "View {$single}",
+            'view_items' => "View {$plural}",
+            'search_items' => "Search {$plural}",
+            'not_found' => "No {$plural_lower} found",
+            'not_found_in_trash' => "No {$plural_lower} found in Trash",
+            'parent_item_colon' => "Parent {$single}:",
+            'all_items' => "All {$plural}",
+            'archives' => "{$single} Archives",
+            'attributes' => "{$single} Attributes",
+            'insert_into_item' => "Insert into {$single_lower}",
+            'uploaded_to_this_item' => "Uploaded to this {$single_lower}",
+            'filter_items_list' => "Filter {$plural_lower} list",
+            'items_list_navigation' => "{$plural} list navigation",
+            'items_list' => "{$plural} list",
+            'item_published' => "{$single} published",
+            'item_published_privately' => "{$single} published privately",
+            'item_reverted_to_draft' => "{$single} reverted to draft",
+            'item_scheduled' => "{$single} scheduled",
+            'item_updated' => "{$single} updated",
+        ];
+
+        return $labels;
     }
 }

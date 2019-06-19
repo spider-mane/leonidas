@@ -121,9 +121,61 @@ class Taxonomy extends ApiBase
     public static function create($taxonomies)
     {
         foreach ($taxonomies as $taxonomy => $args) {
+
+            if (isset($args['labels'])) {
+                $args['labels'] = static::build_labels($args);
+            }
+
             $taxonomies[$taxonomy] = new static($taxonomy, $args, $args['post_types'] ?? null);
         }
 
         return $taxonomies;
+    }
+
+    /**
+     * 
+     */
+    protected static function build_labels($args)
+    {
+        $plural = $args['labels']['name'] ?? $args['label'];
+        $single = $args['labels']['singular_name'] ?? $plural;
+
+        $default_labels = static::create_labels($single, $plural);
+
+        return $args['labels'] + $default_labels;
+    }
+
+    /**
+     * 
+     */
+    public static function create_labels(string $single, string $plural)
+    {
+        // $single_lower = strtolower($single);
+        $plural_lower = strtolower($plural);
+
+        $labels = [
+            'name' => $plural,
+            'singular_name' => $single,
+            'search_items' => "Search {$plural}",
+            'popular_items' => "Popular {$plural}",
+            'all_items' => "All {$plural}",
+            'parent_item' => "Parent {$single}",
+            'parent_item_colon' => "Parent {$single}:",
+            'edit_item' => "Edit {$single}",
+            'view_item' => "View {$single}",
+            'update_item' => "Update {$plural}",
+            'add_new_item' => "Add New {$single}",
+            'new_item_name' => "New {$single} Name",
+            'separate_items_with_commas' => "Separate {$plural_lower} with commas",
+            'add_or_remove_items' => "Add or remove {$plural_lower}",
+            'choose_from_most_used' => "Choose from the most used {$plural_lower}",
+            'not_found' => "No {$plural_lower} found",
+            'no_terms' => "No {$plural_lower}",
+            'items_list_navigation' => "{$plural} list navigation",
+            'items_list' => "{$plural} list",
+            'back_to_items' => "&larr; Back to {$plural}"
+        ];
+
+        return $labels;
     }
 }
