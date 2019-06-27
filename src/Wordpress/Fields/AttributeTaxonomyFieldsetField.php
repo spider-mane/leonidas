@@ -86,7 +86,7 @@ class AttributeTaxonomyFieldsetField extends FieldBase
             $slug = $attribute->slug;
             $title = htmlspecialchars_decode($attribute->name);
 
-            $meta_key = "{$this->meta_prefix}{$post->post_type}_" . sprintf($this->meta_key_format, $slug);
+            $meta_key = $this->meta_prefix . sprintf($this->meta_key_format, $slug);
 
             $fields[$slug] = [
                 'title' => $title,
@@ -245,7 +245,7 @@ class AttributeTaxonomyFieldsetField extends FieldBase
             /**
              * gather old data for comparison
              */
-            $meta_key = "{$this->meta_prefix}{$post->post_type}_" . sprintf($this->meta_key_format, $slug);
+            $meta_key = $this->meta_prefix . sprintf($this->meta_key_format, $slug);
             $old_data = get_post_meta($post_id, $meta_key, true);
 
 

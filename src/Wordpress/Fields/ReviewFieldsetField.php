@@ -68,14 +68,14 @@ class ReviewFieldsetField extends FieldBase
                 'form_element' => 'input',
                 'attributes' => [
                     'type' => 'text',
-                    'value' => get_post_meta($post->ID, "{$this->meta_prefix}{$post->post_type}_subtitle", true),
+                    'value' => get_post_meta($post->ID, "{$this->meta_prefix}subtitle", true),
                 ]
             ],
             'excerpt' => [
                 'title' => 'Excerpt',
                 'form_element' => 'textarea',
                 // 'content' => get_post_field('excerpt', $post->ID, 'raw'),
-                'content' => get_post_meta($post->ID, "{$this->meta_prefix}{$post->post_type}_excerpt", true),
+                'content' => get_post_meta($post->ID, "{$this->meta_prefix}excerpt", true),
                 'attributes' => [
                     // 'id' => Self::$id_prefix . 'excerpt',
                     // 'class' => 'large-text',
@@ -86,7 +86,7 @@ class ReviewFieldsetField extends FieldBase
             'content' => [
                 'title' => 'Content',
                 'form_element' => 'textarea',
-                'content' => get_post_meta($post->ID, "{$this->meta_prefix}{$post->post_type}_content", true),
+                'content' => get_post_meta($post->ID, "{$this->meta_prefix}content", true),
                 'attributes' => [
                     'rows' => 30
                 ]
@@ -96,7 +96,7 @@ class ReviewFieldsetField extends FieldBase
                 'form_element' => 'input',
                 'attributes' => [
                     'type' => 'url',
-                    'value' => get_post_meta($post->ID, "{$this->meta_prefix}{$post->post_type}_link", true),
+                    'value' => get_post_meta($post->ID, "{$this->meta_prefix}link", true),
                 ]
             ],
         ];
@@ -152,7 +152,7 @@ class ReviewFieldsetField extends FieldBase
         $sanitized_data = filter_var_array($_POST[$this->name], $sanitized_data);
 
         foreach ($sanitized_data as $field => $new_data) {
-            $meta_key = "{$this->meta_prefix}{$post->post_type}_{$field}";
+            $meta_key = "{$this->meta_prefix}{$field}";
             $old_data = get_post_meta($post_id, $meta_key, true);
 
             if ($old_data !== $new_data) {

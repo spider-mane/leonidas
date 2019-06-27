@@ -227,6 +227,9 @@ abstract class FieldBase
         ]);
     }
 
+    /**
+     * 
+     */
     public function __call($name, $arguments)
     {
         if (method_exists($this->manager, $name)) {
@@ -234,6 +237,9 @@ abstract class FieldBase
         }
     }
 
+    /**
+     * 
+     */
     public static function __callStatic($name, $arguments)
     {
         if (method_exists($this->manager, $name)) {
@@ -241,6 +247,9 @@ abstract class FieldBase
         }
     }
 
+    /**
+     * 
+     */
     public function __toString()
     {
         return $this->form_field;

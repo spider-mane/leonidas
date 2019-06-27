@@ -86,7 +86,7 @@ class ContactInfoFieldsetField extends FieldBase
 
             $attrubutes = &$definition['attributes'];
 
-            $attrubutes['value'] = get_post_meta($post->ID, "{$this->meta_prefix}{$post->post_type}_contact_info__{$field}", true) ?? '';
+            $attrubutes['value'] = get_post_meta($post->ID, "{$this->meta_prefix}contact_info__{$field}", true) ?? '';
             $attrubutes['name'] = $this->name . "[$field]";
             $attrubutes['id'] = "{$this->id_prefix}--{$field}";
             $attrubutes['class'] = 'regular-text';
@@ -111,21 +111,21 @@ class ContactInfoFieldsetField extends FieldBase
                 'filter' => 'sanitize_text_field',
                 'type' => 'post_meta',
                 'item' => $post_id,
-                'save' => $this->meta_prefix . "{$post->post_type}_contact_info__phone"
+                'save' => $this->meta_prefix . "contact_info__phone"
             ],
             'fax' => [
                 'check' => 'phone',
                 'filter' => 'sanitize_text_field',
                 'type' => 'post_meta',
                 'item' => $post_id,
-                'save' => $this->meta_prefix . "{$post->post_type}_contact_info__fax"
+                'save' => $this->meta_prefix . "contact_info__fax"
             ],
             'email' => [
                 'check' => 'email',
                 'filter' => 'sanitize_email',
                 'type' => 'post_meta',
                 'item' => $post_id,
-                'save' => $this->meta_prefix . "{$post->post_type}_contact_info__email"
+                'save' => $this->meta_prefix . "contact_info__email"
             ],
         ];
 

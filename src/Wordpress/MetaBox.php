@@ -235,6 +235,11 @@ class MetaBox extends ApiBase implements MetaBox\PostMetaFieldInterface
     public static function create(array $meta_boxes) : array
     {
         foreach ($meta_boxes as $name => $meta_box) {
+
+            if (!isset($meta_box['id'])) {
+                $meta_box['id'] = $name;
+            }
+
             $meta_boxes[$name] = new static($meta_box);
         }
 

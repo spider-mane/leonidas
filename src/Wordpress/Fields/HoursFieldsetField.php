@@ -81,7 +81,7 @@ class HoursFieldsetField extends FieldBase
             $hours['hours']['close'] = [];
 
             foreach ($hours['hours'] as $hour => &$attr) {
-                $attr['value'] = get_post_meta($post_id, $this->meta_prefix . "{$post->post_type}_hours__{$day}_{$hour}", true);
+                $attr['value'] = get_post_meta($post_id, $this->meta_prefix . "hours__{$day}_{$hour}", true);
                 $attr['name'] = "$this->name[$day][$hour]";
             }
         }
@@ -106,7 +106,7 @@ class HoursFieldsetField extends FieldBase
             foreach ($hours as $hour => $time) {
                 $hour = sanitize_text_field($hour);
 
-                $meta_key = $this->meta_prefix . "{$post->post_type}_hours__{$day}_{$hour}";
+                $meta_key = $this->meta_prefix . "hours__{$day}_{$hour}";
 
                 $sanitized_data = filter_var(
                     $time,

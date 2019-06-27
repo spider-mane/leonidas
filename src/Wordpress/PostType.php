@@ -113,9 +113,7 @@ class PostType extends ApiBase
     {
         foreach ($post_types as $post_type => $args) {
 
-            if (isset($args['labels'])) {
-                $args['labels'] = static::build_labels($args);
-            }
+            $args['labels'] = static::build_labels($args);
 
             $post_types[$post_type] = new static($post_type, $args);
         }
@@ -131,7 +129,9 @@ class PostType extends ApiBase
         $plural = $args['labels']['name'] ?? $args['label'];
         $single = $args['labels']['singular_name'] ?? $plural;
 
-        $default_labels = static::create_labels($single, $plural);
+        $hierarchical = (bool)$args['hierarchical'] ?? false;
+
+        $default_labels = static::create_labels($single, $plural, $hierarchical);
 
         return $args['labels'] + $default_labels;
     }
@@ -139,7 +139,7 @@ class PostType extends ApiBase
     /**
      * 
      */
-    public static function create_labels(string $single, string $plural)
+    public static function create_labels(string $single, string $plural, bool $hierarchical = false)
     {
         $single_lower = strtolower($single);
         $plural_lower = strtolower($plural);

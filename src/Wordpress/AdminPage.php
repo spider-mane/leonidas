@@ -133,8 +133,13 @@ class AdminPage extends ApiBase
      */
     public static function create($pages)
     {
-        foreach ($pages as $index => $args) {
-            $pages[$index] = new static($args);
+        foreach ($pages as $key => $args) {
+
+            if (!isset($args['menu_slug'])) {
+                $args['menu_slug'] = $key;
+            }
+
+            $pages[$key] = new static($args);
         }
 
         return $pages;

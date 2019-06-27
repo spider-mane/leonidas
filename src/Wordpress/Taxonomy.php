@@ -122,9 +122,7 @@ class Taxonomy extends ApiBase
     {
         foreach ($taxonomies as $taxonomy => $args) {
 
-            if (isset($args['labels'])) {
-                $args['labels'] = static::build_labels($args);
-            }
+            $args['labels'] = static::build_labels($args);
 
             $taxonomies[$taxonomy] = new static($taxonomy, $args, $args['post_types'] ?? null);
         }
@@ -140,7 +138,9 @@ class Taxonomy extends ApiBase
         $plural = $args['labels']['name'] ?? $args['label'];
         $single = $args['labels']['singular_name'] ?? $plural;
 
-        $default_labels = static::create_labels($single, $plural);
+        $hierarchical = (bool)$args['hierarchical'] ?? false;
+
+        $default_labels = static::create_labels($single, $plural, $hierarchical);
 
         return $args['labels'] + $default_labels;
     }
@@ -148,9 +148,8 @@ class Taxonomy extends ApiBase
     /**
      * 
      */
-    public static function create_labels(string $single, string $plural)
+    public static function create_labels(string $single, string $plural, bool $hierarchical = false)
     {
-        // $single_lower = strtolower($single);
         $plural_lower = strtolower($plural);
 
         $labels = [

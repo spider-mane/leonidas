@@ -91,7 +91,7 @@ class PublicationInfoFieldsetField extends FieldBase
         foreach ($fields as $field => &$info) {
             $attributes = &$info['attributes'];
 
-            $attributes['value'] = get_post_meta($post->ID, "{$this->meta_prefix}{$post->post_type}_{$field}", true);
+            $attributes['value'] = get_post_meta($post->ID, "{$this->meta_prefix}{$field}", true);
             $attributes['name'] = $this->name . "[{$field}]";
             $attributes['id'] = $this->id_prefix . $field;
         }
@@ -131,7 +131,7 @@ class PublicationInfoFieldsetField extends FieldBase
         $sanitized_data = filter_var_array($_POST[$this->name], $sanitized_data);
 
         foreach ($sanitized_data as $field => $new_data) {
-            $meta_key = "{$this->meta_prefix}{$post->post_type}_{$field}";
+            $meta_key = "{$this->meta_prefix}{$field}";
             $old_data = get_post_meta($post_id, $meta_key, true);
 
             if ($old_data !== $new_data) {

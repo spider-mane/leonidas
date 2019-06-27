@@ -72,7 +72,7 @@ class AddressFieldsetField extends FieldBase
             'state' => [
                 'form_element' => 'select',
                 'options' => array_merge(['' => 'Select State'], SelectOptions::us_states()),
-                'selected' => get_post_meta($post_id, $this->meta_prefix . "{$post->post_type}_address__state", true)
+                'selected' => get_post_meta($post_id, $this->meta_prefix . "address__state", true)
             ],
             'zip' => [],
             'complete' => [
@@ -99,7 +99,7 @@ class AddressFieldsetField extends FieldBase
             if ($field !== 'state') {
                 $definition['form_element'] = 'input';
                 $attributes['type'] = 'text';
-                $attributes['value'] = get_post_meta($post_id, $this->meta_prefix . "{$post->post_type}_address__{$field}", true) ?? '';
+                $attributes['value'] = get_post_meta($post_id, $this->meta_prefix . "address__{$field}", true) ?? '';
             }
 
             $attributes['name'] = "{$this->name}[$field]";
@@ -140,7 +140,7 @@ class AddressFieldsetField extends FieldBase
             $rules['filter'] = 'sanitize_text_field';
             $rules['type'] = 'post_meta';
             $rules['item'] = $post_id;
-            $rules['save'] = $meta_prefix . "{$post->post_type}_address__{$field}";
+            $rules['save'] = $meta_prefix . "address__{$field}";
         }
 
         $results = Saveyour::judge($instructions, $_POST[$this->name]);
