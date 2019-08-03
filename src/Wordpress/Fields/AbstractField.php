@@ -65,7 +65,7 @@ abstract class AbstractField
      *
      * @var callable|array
      */
-    protected $filters = ['sanitize_text_field'];
+    protected $filters = ['sanitize_textarea_field'];
 
     /**
      * validation
@@ -347,10 +347,18 @@ abstract class AbstractField
     }
 
     /**
-     *
+     * @todo add validation logic
      */
     protected function validateInput($input)
     {
+        foreach ($this->rules as $rule) {
+            if (false) {
+                // do something
+
+                return false;
+            }
+        }
+
         return true;
     }
 
@@ -364,6 +372,14 @@ abstract class AbstractField
         }
 
         return $input;
+    }
+
+    /**
+     *
+     */
+    protected function sanitizeField($field)
+    {
+        return sanitize_textarea_field($field);
     }
 
     /**
