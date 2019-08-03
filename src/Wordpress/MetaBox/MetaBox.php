@@ -1,80 +1,87 @@
 <?php
 
-namespace Backalley\WordPress;
+namespace Backalley\WordPress\MetaBox;
 
 
 /**
  * @package Backalley-Core
  */
-class MetaBox extends ApiBase implements MetaBox\PostMetaFieldInterface
+class MetaBox implements PostMetaFieldInterface
 {
     /**
      * id
-     * 
+     *
      * @var
      */
     public $id;
 
     /**
      * title
-     * 
+     *
      * @var
      */
     public $title;
 
     /**
      * callback
-     * 
+     *
      * @var
      */
     public $callback;
 
     /**
      * screen
-     * 
+     *
      * @var
      */
     public $screen;
 
     /**
      * context
-     * 
+     *
      * @var
      */
     public $context;
 
     /**
      * priority
-     * 
+     *
      * @var
      */
     public $priority;
 
     /**
      * callback_args
-     * 
+     *
      * @var
      */
     public $callback_args;
 
     /**
      * save_cb
-     * 
+     *
      * @var
      */
     public $save_cb;
 
     /**
      * fields
-     * 
+     *
      * @var
      */
     public $post_meta_fields = [];
 
-    use MetaBox\PostMetaFieldManagerTrait;
+    /**
+     * content
+     *
+     * @var array
+     */
+    protected $content = [];
+
+    use PostMetaFieldManagerTrait;
 
     /**
-     * 
+     *
      */
     final public function __construct($metabox)
     {
@@ -109,7 +116,7 @@ class MetaBox extends ApiBase implements MetaBox\PostMetaFieldInterface
     }
 
     /**
-     * 
+     *
      */
     public function set_id($id)
     {
@@ -118,7 +125,7 @@ class MetaBox extends ApiBase implements MetaBox\PostMetaFieldInterface
     }
 
     /**
-     * 
+     *
      */
     public function set_title($title)
     {
@@ -127,9 +134,9 @@ class MetaBox extends ApiBase implements MetaBox\PostMetaFieldInterface
     }
 
     /**
-     * 
+     *
      */
-    public function set_callback($callback)
+    public function setCallback($callback)
     {
         // $this->callback = $callback ?? [$this, 'render_meta_box'];
         $this->callback = $callback ?? [$this, 'render_post_meta_fields'];
@@ -137,7 +144,7 @@ class MetaBox extends ApiBase implements MetaBox\PostMetaFieldInterface
     }
 
     /**
-     * 
+     *
      */
     public function set_screen($screen)
     {
@@ -146,7 +153,7 @@ class MetaBox extends ApiBase implements MetaBox\PostMetaFieldInterface
     }
 
     /**
-     * 
+     *
      */
     public function set_context($context)
     {
@@ -155,7 +162,7 @@ class MetaBox extends ApiBase implements MetaBox\PostMetaFieldInterface
     }
 
     /**
-     * 
+     *
      */
     public function set_priority($priority)
     {
@@ -164,7 +171,7 @@ class MetaBox extends ApiBase implements MetaBox\PostMetaFieldInterface
     }
 
     /**
-     * 
+     *
      */
     public function set_callback_args($callback_args)
     {
@@ -173,7 +180,7 @@ class MetaBox extends ApiBase implements MetaBox\PostMetaFieldInterface
     }
 
     /**
-     * 
+     *
      */
     public function set_save_cb($save_cb)
     {
@@ -183,7 +190,7 @@ class MetaBox extends ApiBase implements MetaBox\PostMetaFieldInterface
     }
 
     /**
-     * 
+     *
      */
     // public function set_fields($fields)
     // {
@@ -192,7 +199,7 @@ class MetaBox extends ApiBase implements MetaBox\PostMetaFieldInterface
     // }
 
     /**
-     * 
+     *
      */
     public function hook()
     {
@@ -204,7 +211,7 @@ class MetaBox extends ApiBase implements MetaBox\PostMetaFieldInterface
     }
 
     /**
-     * 
+     *
      */
     final public function add_meta_box($post)
     {
@@ -212,37 +219,69 @@ class MetaBox extends ApiBase implements MetaBox\PostMetaFieldInterface
     }
 
     /**
-     * Render meta box using $fields property
+     *
      */
-    // public function render_meta_box($post, $meta_box)
-    // {
-    //     FieldManager::render_all($post, $this->fields ?? []);
-    //     // $this->render_fields($post);
-    // }
+    public function render($post, $meta_box)
+    {
+        $i = count($this->content);
 
-    /**
-     * Callback to save metabox data
-     */
-    // public function save_data($post_id, $post, $update)
-    // {
-    //     FieldManager::save_all($post_id, $post, $update, $this->fields ?? []);
-    //     // $this->save_data($post_id, $post, $update)
-    // }
+        foreach ($this->content as $field) {
+            $i--;
+
+            $field->render($post);
+
+            do_action("backalley/{$post->post_type}/meta_box/{$this->id}/{$field->name}", $post, $meta_box);
+
+            echo '<br>';
+
+            if ($i > 0) {
+                echo '<hr>';
+            }
+        }
+    }
 
     /**
      * Instantiate multiple MetaBoxes
      */
-    public static function create(array $meta_boxes) : array
+    public static function create(array $metaboxes) : array
     {
-        foreach ($meta_boxes as $name => $meta_box) {
+        foreach ($metaboxes as $name => $meta_box) {
 
             if (!isset($meta_box['id'])) {
                 $meta_box['id'] = $name;
             }
 
-            $meta_boxes[$name] = new static($meta_box);
+            $metaboxes[$name] = new static($meta_box);
         }
 
-        return $meta_boxes;
+        return $metaboxes;
+    }
+
+    /**
+     * Get content
+     *
+     * @return  array
+     */
+    public function getContent($slug = null)
+    {
+        return isset($slug) ? $this->content[$slug] : $this->content;
+    }
+
+    /**
+     *
+     */
+    public function addContent(string $slug, MetaboxContent $content)
+    {
+        $this->content[$slug] = $content;
+    }
+
+    /**
+     *
+     */
+    public function setContent(array $content)
+    {
+        foreach ($content as $name => $thing) {
+            $this->addContent($name, $thing);
+        }
     }
 }

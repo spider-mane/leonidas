@@ -8,6 +8,16 @@ use Backalley\Html\HtmlConstructor;
 abstract class AbstractField extends HtmlConstructor implements FormFieldInterface
 {
     /**
+     * @var string
+     */
+    public $id;
+
+    /**
+     * @var string
+     */
+    public $name;
+
+    /**
      * @var array
      */
     public $attributes = [];
@@ -15,56 +25,99 @@ abstract class AbstractField extends HtmlConstructor implements FormFieldInterfa
     /**
      *
      */
-    final public function __construct($args = null, $charset = null)
+    public function __construct()
     {
-        parent::__construct($charset);
-
-        $this->set_attributes($args['attributes'] ?? null);
-        $this->parse_args($args);
+        // maybe do something
     }
 
     /**
-     * set_attributes
+     * Get the value of id
      *
-     * @param array $attributes
+     * @return string
+     */
+    public function getId(): string
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set the value of id
+     *
+     * @param string  $id
+     *
      * @return self
      */
-    public function set_attributes(? array $attributes)
+    public function setId(string $id)
     {
-        $this->attributes = $attributes ?? $this->attributes;
+        $this->id = $id;
 
         return $this;
     }
 
     /**
-     * get_attributes
+     * Get the value of name
      *
-     * @param string
-     * @return mixed
+     * @return string
      */
-    public function get_attributes()
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set the value of name
+     *
+     * @param string  $name
+     *
+     * @return self
+     */
+    public function setName(string $name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of attributes
+     *
+     * @return array
+     */
+    public function getAttributes(): array
     {
         return $this->attributes;
     }
 
     /**
-     * create
+     * Set the value of attributes
      *
-     * @param array $args
-     * @return FormFieldInterface
+     * @param array  $attributes
+     *
+     * @return self
      */
-    public static function create($args) : FormFieldInterface
+    public function setAttributes(array $attributes)
     {
-        return new static($args);
+        $this->attributes = $attributes;
+
+        return $this;
     }
 
     /**
-     * 
+     * Add individual attribute
+     *
+     * @param array $attribute
+     *
+     * @return self
      */
-    abstract protected function parse_args($args);
+    public function addAttribute(string $attribute, $value)
+    {
+        $this->attributes[$attribute] = $value;
+
+        return $this;
+    }
 
     /**
-     * 
+     *
      */
     abstract public function __toString();
 }

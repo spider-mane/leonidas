@@ -12,160 +12,160 @@ abstract class FieldBase
 {
     /**
      * form_field
-     * 
+     *
      * @var string
      */
     public $form_field;
 
     /**
      * name
-     * 
+     *
      * @var string
      */
     public $name;
 
     /**
      * context
-     * 
+     *
      * @var string
      */
     public $context = '';
 
     /**
      * manager
-     * 
+     *
      * @var string
      */
     public $manager;
 
     /**
      * title
-     * 
+     *
      * @var string
      */
     public $title;
 
     /**
      * id
-     * 
+     *
      * @var string
      */
     public $id;
 
     /**
      * classlist
-     * 
+     *
      * @var string
      */
     public $classlist = [];
 
     /**
      * dataset
-     * 
+     *
      * @var string
      */
     public $dataset = [];
 
     /**
      * description
-     * 
+     *
      * @var string
      */
     public $description;
 
     /**
      * attributes
-     * 
+     *
      * @var string
      */
     public $attributes = [];
 
     /**
      * id_prefix
-     * 
+     *
      * @var string
      */
     public $id_prefix;
 
     /**
      * width
-     * 
+     *
      * @var string
      */
     public $width;
 
     /**
      * meta_key
-     * 
+     *
      * @var string
      */
     public $meta_key;
 
     /**
      * meta_prefix
-     * 
+     *
      * @var string
      */
     public $meta_prefix;
 
     /**
      * meta_box_template
-     * 
+     *
      * @var string
      */
     public $meta_box_template;
 
     /**
      * filter
-     * 
+     *
      * @var string
      */
     public $filter = 'sanitize_text_field';
 
     /**
      * validation
-     * 
+     *
      * @var string
      */
     public $validation;
 
     /**
      * validation_messages
-     * 
+     *
      * @var string
      */
     public $validation_errors;
 
     /**
      * display_cb
-     * 
+     *
      * @var string
      */
     public $display_cb;
 
     /**
      * save_cb
-     * 
+     *
      * @var string
      */
     public $save_cb;
 
     /**
      * get_data_cb
-     * 
+     *
      * @var string
      */
     public $get_data_cb;
 
     /**
      * save_data_cb
-     * 
+     *
      * @var string
      */
     public $save_data_cb;
 
     /**
-     * 
+     *
      */
     public function __construct($args)
     {
@@ -228,7 +228,7 @@ abstract class FieldBase
     }
 
     /**
-     * 
+     *
      */
     public function __call($name, $arguments)
     {
@@ -238,7 +238,7 @@ abstract class FieldBase
     }
 
     /**
-     * 
+     *
      */
     public static function __callStatic($name, $arguments)
     {
@@ -248,7 +248,7 @@ abstract class FieldBase
     }
 
     /**
-     * 
+     *
      */
     public function __toString()
     {
@@ -265,7 +265,7 @@ abstract class FieldBase
     }
 
     /**
-     * 
+     *
      */
     public function get_data($object)
     {

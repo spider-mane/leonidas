@@ -11,22 +11,22 @@ use Backalley\FormFields\FormField;
 class PostMetaBoxFieldManager
 {
     /**
-     * 
+     *
      */
     public $field;
 
     /**
-     * 
+     *
      */
     public $width = 'large-text';
 
     /**
-     * 
+     *
      */
     public $taxonomy;
 
     /**
-     * 
+     *
      */
     public function __construct($field)
     {
@@ -34,7 +34,7 @@ class PostMetaBoxFieldManager
     }
 
     /**
-     * 
+     *
      */
     public function get_data($post)
     {
@@ -42,7 +42,7 @@ class PostMetaBoxFieldManager
     }
 
     /**
-     * 
+     *
      */
     public function get_post_terms($post)
     {
@@ -50,7 +50,7 @@ class PostMetaBoxFieldManager
     }
 
     /**
-     * 
+     *
      */
     public function get_post_meta($post)
     {
@@ -58,7 +58,7 @@ class PostMetaBoxFieldManager
     }
 
     /**
-     * 
+     *
      */
     public function save_data($post, $saveyour)
     {
@@ -71,7 +71,7 @@ class PostMetaBoxFieldManager
     }
 
     /**
-     * 
+     *
      */
     public function save($post_id, $post, $update)
     {
@@ -106,7 +106,7 @@ class PostMetaBoxFieldManager
     }
 
     /**
-     * 
+     *
      */
     public static function metabox_fieldset_template($fieldset, $columns = 1, $action = 'render', $title = true)
     {

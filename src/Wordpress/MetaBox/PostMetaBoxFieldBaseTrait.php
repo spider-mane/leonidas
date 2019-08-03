@@ -32,7 +32,7 @@ trait PostMetaBoxFieldBaseTrait
     }
 
     /**
-     * 
+     *
      */
     public static function metabox_fieldset_template($fieldset, $columns = 1, $action = 'render', $title = true)
     {
@@ -61,7 +61,7 @@ trait PostMetaBoxFieldBaseTrait
     }
 
     /**
-     * 
+     *
      */
     public function get_data($post)
     {
@@ -73,7 +73,7 @@ trait PostMetaBoxFieldBaseTrait
     }
 
     /**
-     * 
+     *
      */
     public function save_data($post, $saveyour)
     {
@@ -86,7 +86,7 @@ trait PostMetaBoxFieldBaseTrait
     }
 
     /**
-     * 
+     *
      */
     public function save($post_id, $post, $update)
     {

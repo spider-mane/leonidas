@@ -5,22 +5,21 @@ namespace Backalley\Html;
 class Html extends HtmlConstructor
 {
     /**
-     * 
+     *
      */
     public $html_map;
 
     /**
-     * 
+     *
      */
     public function __construct(array $html_map = [], string $charset = null)
     {
         parent::__construct($charset);
         $this->set_html_map($html_map);
-
     }
 
     /**
-     * 
+     *
      */
     public function __toString()
     {
@@ -28,7 +27,7 @@ class Html extends HtmlConstructor
     }
 
     /**
-     * 
+     *
      */
     public function set_html_map($html_map)
     {
@@ -39,15 +38,15 @@ class Html extends HtmlConstructor
 
     /**
      * genterates an html string from array of element definitions
-     * 
+     *
      * 'tag' => string
      * 'attributes' => array || string
      * 'content' => string
      * 'children' => array
-     * 
+     *
      * @param array $html_map
      * @param bool $recall
-     * 
+     *
      * @return string
      */
     public function construct_html($map = null, $recall = false)
@@ -97,7 +96,7 @@ class Html extends HtmlConstructor
     }
 
     /**
-     * 
+     *
      */
     public static function open(string $tag, $attributes = null, $indent = 0, $new_line = false)
     {
@@ -105,7 +104,7 @@ class Html extends HtmlConstructor
     }
 
     /**
-     * 
+     *
      */
     public static function close(string $tag)
     {
@@ -113,7 +112,15 @@ class Html extends HtmlConstructor
     }
 
     /**
-     * 
+     *
+     */
+    public static function tag(string $tag, string $content = '', $attributes = null)
+    {
+        return static::open($tag, $attributes) . $content . static::close($tag);
+    }
+
+    /**
+     *
      */
     public function attributes($attributes_array)
     {
@@ -121,7 +128,7 @@ class Html extends HtmlConstructor
     }
 
     /**
-     * 
+     *
      */
     public static function script($code)
     {

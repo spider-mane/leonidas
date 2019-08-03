@@ -43,8 +43,6 @@ abstract class HtmlConstructor
      */
     protected static function parse_attributes($attributes_array, &$attr_str = '')
     {
-        // static $attr_str = '';
-
         foreach ($attributes_array as $attr => $val) {
 
             if (is_string($val) || is_int($val)) {
@@ -52,7 +50,7 @@ abstract class HtmlConstructor
                 $attr_str .= " {$attr}={$val}";
                 continue;
             }
-            
+
             // boolean attribute
             if ($val === true) {
                 $attr_str .= " {$attr}=\"{$attr}\"";
@@ -72,7 +70,7 @@ abstract class HtmlConstructor
                 continue;
             }
 
-             // $val represents token list
+            // $val represents token list
             if (is_array($val) && isset($val[0])) {
                 $attr_str .= " {$attr}=\"";
 

@@ -2,9 +2,7 @@
 
 namespace Backalley\Wordpress\Fields;
 
-use Backalley\Backalley;
-use Backalley\WordPress\Term\TermFieldBaseTrait;
-use Backalley\WordPress\MetaBox\PostMetaBoxFieldBaseTrait;
+
 
 
 /**
@@ -14,23 +12,21 @@ class InputField extends FieldBase
 {
     /**
      * type
-     * 
+     *
      * @var string
      */
     public $type = 'text';
 
     /**
      * placeholder
-     * 
+     *
      * @var string
      */
     public $placeholder;
 
-    // use TermFieldBaseTrait;
-    // use PostMetaBoxFieldBaseTrait;
 
     /**
-     * 
+     *
      */
     public function __construct($args)
     {
@@ -39,7 +35,7 @@ class InputField extends FieldBase
     }
 
     /**
-     * 
+     *
      */
     public function render($post)
     {
@@ -65,7 +61,7 @@ class InputField extends FieldBase
     }
 
     /**
-     * 
+     *
      */
     public function render_add_term_form_field($taxonomy)
     {
@@ -84,7 +80,7 @@ class InputField extends FieldBase
     }
 
     /**
-     * 
+     *
      */
     public function render_edit_term_form_field($term, $taxonomy)
     {

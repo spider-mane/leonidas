@@ -14,20 +14,20 @@ class TextareaField extends FieldBase
 {
     /**
      * filter
-     * 
+     *
      * @var string
      */
     public $filter = 'sanitize_textarea_field';
 
     /**
      * content
-     * 
+     *
      * @var string
      */
     public $content;
 
     /**
-     * 
+     *
      */
     public function render($post)
     {

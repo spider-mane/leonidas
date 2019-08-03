@@ -3,10 +3,12 @@
 
   "description": "Wordpress Admin Framework",
 
-  "authors": [{
-    "name": "Chris Williams",
-    "email": "laserbeamvocalist@gmail.com"
-  }],
+  "authors": [
+    {
+      "name": "Chris Williams",
+      "email": "laserbeamvocalist@gmail.com"
+    }
+  ],
 
   "require": {
     "php": ">=7.0.0",
@@ -15,7 +17,10 @@
     "timber/timber": "^1.9",
     "respect/validation": "^1.1",
     "myclabs/deep-copy": "^1.8",
-    "jbzoo/utils": "^2.3"
+    "jbzoo/utils": "^2.3",
+    "twig/twig": "^2.0",
+    "masterminds/html5": "^2.6",
+    "egulias/email-validator": "^2.1"
   },
 
   "autoload": {

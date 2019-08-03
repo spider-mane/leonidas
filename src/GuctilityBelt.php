@@ -42,7 +42,7 @@ class GuctilityBelt
         usort($objects_array, function ($a, $b) use ($order_array, $order_key) {
 
             foreach ([&$a, &$b] as &$obj) {
-                $obj = (int)$order_array[$obj->{$order_key}] >= 0 ? $order_array[$obj->{$order_key}] : 0;
+                $obj = (int) $order_array[$obj->{$order_key}] >= 0 ? $order_array[$obj->{$order_key}] : 0;
             }
 
             if ($a === $b) {
@@ -75,7 +75,7 @@ class GuctilityBelt
         $object_id = $properties['object_id'];
 
         foreach ($objects as $object) {
-            $order_array[$object->$object_id] = (int)get_metadata($object_type, $object->$object_id, $meta_key, true);
+            $order_array[$object->$object_id] = (int) get_metadata($object_type, $object->$object_id, $meta_key, true);
         }
 
         return Self::sort_objects_array($objects, $order_array, $object_id);
@@ -166,29 +166,13 @@ class GuctilityBelt
     /**
      *
      */
-    public static function get_term_tier($term, $taxonomy, &$teir = 1)
-    {
-        $term = get_term_by('id', $term, $taxonomy, OBJECT);
-    // $tier = 1;
-
-        if (!empty($term->parent)) {
-            $tier++;
-            backalley_get_term_tier($term->parent, $taxonomy, $tier);
-        }
-
-        return $tier;
-    }
-
-    /**
-     *
-     */
     public static function get_object($object_array, $property_name, $property_value)
     {
         if (is_array($object_array) || is_string($property_name)) {
             return false;
         }
 
-        foreach ($object_array ? : [] as $object) {
+        foreach ($object_array ?: [] as $object) {
             if ($object->{$property_name} === $property_value) {
                 return $object;
             }
@@ -212,49 +196,47 @@ class GuctilityBelt
     }
 
     /**
-     *  function to verify nonce and user permissions to be called from each custom meta box with input fields
+     *  
      */
-    public static function verify_meta_box_nonce($nonce_name, $nonce_action)
+    public static function safe_save_post($post, $nonce, $action)
     {
-        $post = get_post();
-        // Check that nonce field exists
-        if (!isset($_POST[$nonce_name])) {
-            return;
+        $unsafe_conditions = [
+
+            !isset($_POST[$nonce]), // nonce field does not exist
+
+            !wp_verify_nonce($_POST[$nonce], $action), // nonce action does not match
+
+            defined('DOING_AUTOSAVE') && DOING_AUTOSAVE, // wp performing autosave
+
+            !current_user_can('edit_post', $post->ID) // current user does not have required permission
+        ];
+
+        foreach ($unsafe_conditions as $condition) {
+            if ((bool) $condition) return false;
         }
-        // Check that nonce has specified action
-        if (!wp_verify_nonce($_POST[$nonce_name], $nonce_action)) {
-            return;
-        }
-        // Prevent updating on autosave
-        if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
-            return;
-        }
-        // Verify user permissions
-        if (!current_user_can('edit_post', $post->ID)) {
-            return;
-        }
+
         return true;
     }
 
     /**
      * Send Request to google to geocode given address
      */
-    public static function google_geocode(string $address, string $api_key)
+    public static function google_geocode(string $address, string $key)
     {
         if (empty($address)) {
             return '';
         }
 
-        $address_url_formatted = urlencode($address);
-        $url = "https://maps.googleapis.com/maps/api/geocode/json?address={$address_url_formatted}&key={$api_key}";
-        $resp = file_get_contents($url);
-        $resp = json_decode($resp, true);
+        $address = urlencode($address);
 
-        if ($resp['status'] === 'OK') {
-            $coord = isset($resp['results'][0]['geometry']['location']) ? $resp['results'][0]['geometry']['location'] : null;
-            $coord = isset($coord) ? json_encode($coord) : null;
+        $url = "https://maps.googleapis.com/maps/api/geocode/json?address={$address}&key={$key}";
 
-            return $coord;
+        $response = json_decode(file_get_contents($url), true);
+
+        if ('OK' === $response['status']) {
+            $coordinates = $response['results'][0]['geometry']['location'];
+
+            return json_encode($coordinates);
         }
     }
 
@@ -263,53 +245,20 @@ class GuctilityBelt
      */
     public static function concat_address($street, $city, $state, $zip)
     {
-        if (!empty($street) && !empty($city) && !empty($state) && !empty($zip)) {
-            return "${street}, ${city}, ${state} ${zip}";
-        } else {
-            return '';
-        }
+        return "${street}, ${city}, ${state} ${zip}";
     }
 
     /**
      *
      */
-    public static function json_encode($input, $slashes = true)
+    public static function json_encode($input, bool $slashes = true)
     {
-        if ($slashes === true) {
-            $input = wp_slash(json_encode($input, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
-        } elseif ($slashes === false) {
-            $input = json_encode($input, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+        $input = json_encode($input, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+
+        if ($slashes) {
+            $input = wp_slash($input);
         }
 
         return $input;
-    }
-
-    /**
-     *
-     */
-    public static function get_wp_option(string $option)
-    {
-        $option = get_option($option);
-        $option = json_encode($option);
-
-        return $option;
-    }
-
-    /**
-     * UNDER CONSTRUCTION
-     */
-    public static function validate($thing, $value)
-    {
-        if ($thing === 'tel') {
-            $regex = "/^[0-9]{3}-[0-9]{3}-[0-9]{4}$/";
-        } elseif ($thing === 'price') {
-            $regex = "/[0-9]{1}.^[0-9]{2}$/";
-        }
-
-        if (preg_match($regex, $value)) {
-            return $value;
-        } else {
-            return false;
-        }
     }
 }
