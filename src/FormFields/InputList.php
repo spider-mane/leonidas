@@ -2,8 +2,10 @@
 
 namespace Backalley\FormFields;
 
+use Backalley\FormFields\Contracts\FormFieldInterface;
 
-class InputList extends AbstractField
+
+class InputList extends AbstractField implements FormFieldInterface
 {
     /**
      * input_type
@@ -20,12 +22,12 @@ class InputList extends AbstractField
     public $items = [];
 
     /**
-     * 
+     *
      */
     public $ul = [];
 
     /**
-     * 
+     *
      */
     public function __toString()
     {
@@ -42,7 +44,7 @@ class InputList extends AbstractField
             // opening tag for list item
             $html .= $this->open('li', $li['attributes'] ?? null);
 
-            // toggle control and/or and item 
+            // toggle control and/or and item
             $html .= $this->open('input', $item['attributes'] ?? null);
 
             // create label
@@ -61,7 +63,7 @@ class InputList extends AbstractField
     }
 
     /**
-     * 
+     *
      */
     protected function parse_args($args)
     {
@@ -72,7 +74,7 @@ class InputList extends AbstractField
     }
 
     /**
-     * 
+     *
      */
     protected function define_items_type()
     {

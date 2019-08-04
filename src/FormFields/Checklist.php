@@ -6,8 +6,7 @@
 
 namespace Backalley\FormFields;
 
-use Backalley\Html\HtmlConstructor;
-use Backalley\FormFields\MultiValueTrait;
+use Backalley\FormFields\Contracts\FormFieldInterface;
 
 
 class Checklist extends InputList implements FormFieldInterface
@@ -18,39 +17,39 @@ class Checklist extends InputList implements FormFieldInterface
     public $input_type = 'checkbox';
 
     /**
-     * 
+     *
      */
     public $toggle;
 
     /**
-     * 
+     *
      */
     public $clear;
 
     /**
-     * 
+     *
      */
     public $clear_control;
 
     /**
-     * 
+     *
      */
     public $toggle_control;
 
     /**
-     * 
+     *
      */
     public $selected_attribute = 'checked';
 
     /**
-     * 
+     *
      */
     public static $item_text = 'label';
 
     // use MultiValueTrait;
 
     /**
-     * 
+     *
      */
     public function __toString()
     {
@@ -68,7 +67,7 @@ class Checklist extends InputList implements FormFieldInterface
             // opening tag for list item
             $html .= $this->open('li', $li['attributes'] ?? null);
 
-            // toggle control and/or and item 
+            // toggle control and/or and item
             $html .= isset($toggle) ? $this->open('input', $toggle['attributes'] ?? null) : '';
             $html .= $this->open('input', $item['attributes'] ?? null);
 
@@ -88,7 +87,7 @@ class Checklist extends InputList implements FormFieldInterface
     }
 
     /**
-     * 
+     *
      */
     protected function parse_args($args)
     {
@@ -105,7 +104,7 @@ class Checklist extends InputList implements FormFieldInterface
     }
 
     /**
-     * 
+     *
      */
     public function set_clear_control(string $name, string $value)
     {
@@ -121,7 +120,7 @@ class Checklist extends InputList implements FormFieldInterface
     }
 
     /**
-     * 
+     *
      */
     public function set_toggle_control($toggle_control)
     {
@@ -129,7 +128,7 @@ class Checklist extends InputList implements FormFieldInterface
     }
 
     /**
-     * 
+     *
      */
     protected function define_items_toggle()
     {
@@ -143,4 +142,4 @@ class Checklist extends InputList implements FormFieldInterface
             }
         }
     }
-} 
+}

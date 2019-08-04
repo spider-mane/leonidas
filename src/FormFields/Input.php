@@ -4,6 +4,7 @@ namespace Backalley\FormFields;
 
 use Backalley\Html\TagSage;
 use Backalley\GuctilityBelt;
+use Backalley\FormFields\Contracts\FormFieldInterface;
 
 
 class Input extends AbstractField implements FormFieldInterface

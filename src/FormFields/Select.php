@@ -2,23 +2,23 @@
 
 namespace Backalley\FormFields;
 
-/**
- * 
- */
+use Backalley\FormFields\Contracts\FormFieldInterface;
+
+
 class Select extends AbstractField implements FormFieldInterface
 {
     /**
-     * 
+     *
      */
     public static $selected_attribute = 'selected';
 
     /**
-     * 
+     *
      */
     public static $item_text = 'content';
 
     /**
-     * 
+     *
      */
     public function __toString()
     {
@@ -44,7 +44,7 @@ class Select extends AbstractField implements FormFieldInterface
     }
 
     /**
-     * 
+     *
      */
     public function parse_args($args)
     {
@@ -55,9 +55,9 @@ class Select extends AbstractField implements FormFieldInterface
     }
 
     /**
-     * 
+     *
      */
-    public static function create($args) : FormFieldInterface
+    public static function create($args): FormFieldInterface
     {
         $multiple = $args['multiple'] ?? false;
 

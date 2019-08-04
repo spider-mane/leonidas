@@ -3,6 +3,7 @@
 namespace Backalley\FormFields;
 
 use Backalley\Html\HtmlConstructor;
+use Backalley\FormFields\Contracts\FormFieldInterface;
 
 
 abstract class AbstractField extends HtmlConstructor implements FormFieldInterface

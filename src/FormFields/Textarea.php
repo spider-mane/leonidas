@@ -2,10 +2,12 @@
 
 namespace Backalley\FormFields;
 
+use Backalley\FormFields\Contracts\FormFieldInterface;
+
 class Textarea extends AbstractField implements FormFieldInterface
 {
     /**
-     * 
+     *
      */
     public $content = '';
 
@@ -26,7 +28,7 @@ class Textarea extends AbstractField implements FormFieldInterface
     }
 
     /**
-     * 
+     *
      */
     public function parse_args($args)
     {
