@@ -3,7 +3,6 @@
 namespace Backalley\WordPress\MetaBox;
 
 use Timber\Timber;
-use Backalley\Backalley;
 use Backalley\Wordpress\Fields\AbstractField;
 use Backalley\Wordpress\Fields\Contracts\DataFieldInterface;
 use Backalley\WordPress\MetaBox\Contracts\MetaboxContentInterface;
@@ -54,7 +53,7 @@ class Field extends AbstractField implements MetaboxContentInterface, DataFieldI
      */
     public function saveData($postId, $post, $update)
     {
-        $this->dataManager->saveData($post, $this->processInput());
+        $this->dataManager->saveData($post, $this->getFilteredInput());
     }
 
     /**
@@ -71,8 +70,6 @@ class Field extends AbstractField implements MetaboxContentInterface, DataFieldI
     public function render($post)
     {
         $this->setFormFieldValue($post);
-
-        // exit(var_dump($this->formField));
 
         $context = [
             'label' => $this->label,
@@ -91,7 +88,6 @@ class Field extends AbstractField implements MetaboxContentInterface, DataFieldI
      */
     protected function renderTemplate($context)
     {
-        // Backalley::renderTemplate($this->template, $context);
         Timber::render($this->template, $context);
     }
 }

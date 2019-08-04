@@ -2,13 +2,14 @@
 
 namespace Backalley\Wordpress\Fields;
 
-use Backalley\FormFields\FormFieldInterface;
+use Backalley\FormFields\Contracts\FormFieldInterface;
+use Backalley\Wordpress\Fields\Contracts\DataFieldInterface;
 use Backalley\Wordpress\Fields\Contracts\FieldDataManagerInterface;
 
 /**
  *
  */
-abstract class AbstractField
+abstract class AbstractField implements DataFieldInterface
 {
     /**
      * @var string
@@ -289,7 +290,7 @@ abstract class AbstractField
      */
     public function setRules($rules)
     {
-        $this->validation = $validation;
+        $this->rules = $rules;
 
         return $this;
     }
@@ -301,19 +302,19 @@ abstract class AbstractField
      */
     public function getAlerts(): string
     {
-        return $this->validationErrors;
+        return $this->alerts;
     }
 
     /**
      * Set validation_messages
      *
-     * @param string  $validationErrors  validation_messages
+     * @param string  $alerts  validation_messages
      *
      * @return self
      */
-    public function setAlerts(string $validationErrors)
+    public function setAlerts(string $alerts)
     {
-        $this->validationErrors = $validationErrors;
+        $this->alerts = $alerts;
 
         return $this;
     }
@@ -321,7 +322,7 @@ abstract class AbstractField
     /**
      *
      */
-    public function getInput()
+    public function getRawInput()
     {
         return $_POST[$this->formField->getName()];
     }
@@ -341,9 +342,9 @@ abstract class AbstractField
     /**
      *
      */
-    protected function processInput()
+    protected function getFilteredInput()
     {
-        return $this->filterInput($this->getInput());
+        return $this->filterInput($this->getRawInput());
     }
 
     /**

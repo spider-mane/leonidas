@@ -4,32 +4,35 @@
  * @package Backalley-Core
  */
 
-namespace Backalley\WordPress;
+namespace Backalley\WordPress\PostType;
+
+use Backalley\WordPress\ApiBase;
+use Backalley\WordPress\PostType\Args\CustomArgFactoryTrait;
 
 
 class PostType extends ApiBase
 {
     /**
-     * 
+     *
      */
     public $post_type;
 
     /**
-     * 
+     *
      */
     public $base_args;
 
     /**
-     * 
+     *
      */
     public $post_type_object;
 
     /**
-     * 
+     *
      */
     private static $registered = [];
 
-    use PostType\Args\CustomArgFactoryTrait;
+    use CustomArgFactoryTrait;
 
     final public function __construct($post_type, $args)
     {
@@ -44,7 +47,7 @@ class PostType extends ApiBase
     }
 
     /**
-     * 
+     *
      */
     public function set_post_type(string $post_type)
     {
@@ -52,7 +55,7 @@ class PostType extends ApiBase
     }
 
     /**
-     * 
+     *
      */
     public function set_base_args($args)
     {
@@ -61,7 +64,7 @@ class PostType extends ApiBase
     }
 
     /**
-     * 
+     *
      */
     public function set_custom_args($args)
     {
@@ -69,19 +72,19 @@ class PostType extends ApiBase
     }
 
     /**
-     * 
+     *
      */
     public function set_labels($value, $label = null)
     {
         if ($label) {
             $this->labels[$label] = $value;
         } else {
-            $this->labels = (array)$value;
+            $this->labels = (array) $value;
         }
     }
 
     /**
-     * 
+     *
      */
     final public function register_post_type()
     {
@@ -91,7 +94,7 @@ class PostType extends ApiBase
 
 
     /**
-     * 
+     *
      */
     public static function get_registered()
     {
@@ -99,15 +102,13 @@ class PostType extends ApiBase
     }
 
     /**
-     * Callback to be provided to 
+     * Callback to be provided to
      */
     public static function unregistered()
-    {
-
-    }
+    { }
 
     /**
-     * 
+     *
      */
     public static function create($post_types = [])
     {
@@ -122,14 +123,14 @@ class PostType extends ApiBase
     }
 
     /**
-     * 
+     *
      */
     protected static function build_labels($args)
     {
         $plural = $args['labels']['name'] ?? $args['label'];
         $single = $args['labels']['singular_name'] ?? $plural;
 
-        $hierarchical = (bool)$args['hierarchical'] ?? false;
+        $hierarchical = (bool) $args['hierarchical'] ?? false;
 
         $default_labels = static::create_labels($single, $plural, $hierarchical);
 
@@ -137,7 +138,7 @@ class PostType extends ApiBase
     }
 
     /**
-     * 
+     *
      */
     public static function create_labels(string $single, string $plural, bool $hierarchical = false)
     {

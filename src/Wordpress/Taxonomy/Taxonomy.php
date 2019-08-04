@@ -4,7 +4,10 @@
  * @package Backalley-Core
  */
 
-namespace Backalley\WordPress;
+namespace Backalley\WordPress\Taxonomy;
+
+use Backalley\WordPress\ApiBase;
+use Backalley\WordPress\Taxonomy\Args\CustomTaxonomyArgFactoryTrait;
 
 
 class Taxonomy extends ApiBase
@@ -14,7 +17,7 @@ class Taxonomy extends ApiBase
     public $taxonomy;
     public $taxonomy_object;
 
-    use Taxonomy\Args\CustomTaxonomyArgFactoryTrait;
+    use CustomTaxonomyArgFactoryTrait;
 
     public function __construct($taxonomy, $args, $post_types = null)
     {
@@ -30,7 +33,7 @@ class Taxonomy extends ApiBase
     }
 
     /**
-     * 
+     *
      */
     public function set_taxonomy($taxonomy)
     {
@@ -40,7 +43,7 @@ class Taxonomy extends ApiBase
     }
 
     /**
-     * 
+     *
      */
     public function set_base_args($args)
     {
@@ -51,7 +54,7 @@ class Taxonomy extends ApiBase
     }
 
     /**
-     * 
+     *
      */
     public function set_custom_args($custom_args)
     {
@@ -61,7 +64,7 @@ class Taxonomy extends ApiBase
     }
 
     /**
-     * 
+     *
      */
     public function set_post_types($post_types = null)
     {
@@ -73,7 +76,7 @@ class Taxonomy extends ApiBase
     }
 
     /**
-     * 
+     *
      */
     public function register_taxonomy()
     {
@@ -131,14 +134,14 @@ class Taxonomy extends ApiBase
     }
 
     /**
-     * 
+     *
      */
     protected static function build_labels($args)
     {
         $plural = $args['labels']['name'] ?? $args['label'];
         $single = $args['labels']['singular_name'] ?? $plural;
 
-        $hierarchical = (bool)$args['hierarchical'] ?? false;
+        $hierarchical = (bool) $args['hierarchical'] ?? false;
 
         $default_labels = static::create_labels($single, $plural, $hierarchical);
 
@@ -146,7 +149,7 @@ class Taxonomy extends ApiBase
     }
 
     /**
-     * 
+     *
      */
     public static function create_labels(string $single, string $plural, bool $hierarchical = false)
     {

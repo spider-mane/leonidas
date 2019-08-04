@@ -8,7 +8,7 @@ use Backalley\WordPress\MetaBox\Contracts\MetaboxContentInterface;
 /**
  * @package Backalley-Core
  */
-class MetaBox2
+class MetaBox
 {
     /**
      * id
