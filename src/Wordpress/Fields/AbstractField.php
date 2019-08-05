@@ -322,7 +322,7 @@ abstract class AbstractField implements DataFieldInterface
     /**
      *
      */
-    public function getRawInput()
+    protected function getRawInput()
     {
         return $_POST[$this->formField->getName()];
     }

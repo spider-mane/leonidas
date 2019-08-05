@@ -6,9 +6,9 @@ use Backalley\GuctilityBelt;
 
 
 /**
- * 
+ *
  */
-abstract class FieldManager
+abstract class FieldManager333
 {
     /**
      * list of post variables
@@ -16,7 +16,7 @@ abstract class FieldManager
     public static $post_vars = [];
 
     /**
-     * Instantiate and return requested field 
+     * Instantiate and return requested field
      */
     public static function create($args)
     {
@@ -38,7 +38,7 @@ abstract class FieldManager
     }
 
     /**
-     * 
+     *
      */
     public static function render_all(object $object, array $fields)
     {
@@ -58,7 +58,7 @@ abstract class FieldManager
     }
 
     /**
-     * 
+     *
      */
     public static function save_all($post_id, $post, $update, array $fields)
     {
