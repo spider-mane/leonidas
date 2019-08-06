@@ -16,9 +16,14 @@ class PostMetaManager extends AbstractFieldDataManager implements FieldDataManag
     protected $metaKey;
 
     /**
-     * @var string`
+     * @var string
      */
     protected $metaPrefix;
+
+    /**
+     * @var bool
+     */
+    protected $uniqueValue = true;
 
     /**
      *
@@ -31,9 +36,17 @@ class PostMetaManager extends AbstractFieldDataManager implements FieldDataManag
     /**
      *
      */
+    public function createData($post, $data)
+    {
+        return add_post_meta($post->ID, $this->metaKey, $data, $this->uniqueValue);
+    }
+
+    /**
+     *
+     */
     public function getData($post)
     {
-        return get_post_meta($post->ID, $this->getMetaKey(), true);
+        return get_post_meta($post->ID, $this->getMetaKey(), $this->uniqueValue);
     }
 
     /**
@@ -41,9 +54,23 @@ class PostMetaManager extends AbstractFieldDataManager implements FieldDataManag
      */
     public function saveData($post, $data)
     {
-        update_post_meta($post->ID, $this->metaKey, $data);
+        $response = update_post_meta($post->ID, $this->metaKey, $data);
 
-        do_action("backalley/updated/post/{$this->postType}/{$this->metaKey}", $post, $data);
+        // do_action("backalley/updated/post/{$this->postType}/{$this->metaKey}", $post, $data);
+
+        return $response;
+    }
+
+    /**
+     *
+     */
+    public function deleteData($post)
+    {
+        $response = delete_post_meta($post->id, $this->metaKey, '');
+
+        // do_action("backalley/deleted/post/{$this->postType}/{$this->metaKey}", $post);
+
+        return $response;
     }
 
     /**

@@ -2,36 +2,27 @@
 
 namespace Backalley\Html;
 
-class Html extends HtmlConstructor
+class Html extends AbstractHtmlElementConstructor
 {
     /**
      *
      */
-    public $html_map;
+    public $htmlMap;
 
     /**
      *
      */
-    public function __construct(array $html_map = [], string $charset = null)
+    public function __construct(array $htmlMap = [])
     {
-        parent::__construct($charset);
-        $this->set_html_map($html_map);
+        $this->setHtmlMap($htmlMap);
     }
 
     /**
      *
      */
-    public function __toString()
+    public function setHtmlMap($htmlMap)
     {
-        return $this->construct_html();
-    }
-
-    /**
-     *
-     */
-    public function set_html_map($html_map)
-    {
-        $this->html_map = $html_map;
+        $this->htmlMap = $htmlMap;
 
         return $this;
     }
@@ -49,25 +40,25 @@ class Html extends HtmlConstructor
      *
      * @return string
      */
-    public function construct_html($map = null, $recall = false)
+    public function constructHtml($map = null, $recall = false)
     {
         $html = '';
-        static $marked_up;
+        static $markedUp;
 
         if (!$recall) {
-            $marked_up = [];
+            $markedUp = [];
         }
 
-        foreach ($map ?? $this->html_map as $current_element => $definition) {
+        foreach ($map ?? $this->htmlMap as $currentElement => $definition) {
 
-            if (in_array($current_element, $marked_up)) {
+            if (in_array($currentElement, $markedUp)) {
                 continue;
             }
 
             // add values already existing as strings to $html as they may already exist as markup
             if (is_object($definition) && method_exists($definition, '__toString') || is_string($definition)) {
                 $html .= $definition;
-                $marked_up[] = $current_element;
+                $markedUp[] = $currentElement;
                 continue;
             }
 
@@ -77,19 +68,19 @@ class Html extends HtmlConstructor
             // store children in array to be passed as $html_map argument in recursive call
             if (!empty($children = $definition['children'] ?? null)) {
                 foreach ($children as $child) {
-                    $child_map[$child] = $this->html_map[$child];
+                    $child_map[$child] = $this->htmlMap[$child];
                 }
 
-                $html .= $this->construct_html($child_map, true);
+                $html .= $this->constructHtml($child_map, true);
             }
 
             $html .= parent::close($definition['tag']);
-            $marked_up[] = $current_element;
+            $markedUp[] = $currentElement;
         }
 
         // reset static variables if in initial call stack
         if (!$recall) {
-            $marked_up = null;
+            $markedUp = null;
         }
 
         return $html;
@@ -98,9 +89,9 @@ class Html extends HtmlConstructor
     /**
      *
      */
-    public static function open(string $tag, $attributes = null, $indent = 0, $new_line = false)
+    public static function open(string $tag, $attributes = null, $indent = 0, $newLine = false)
     {
-        return parent::open($tag, $attributes, $indent, $new_line);
+        return parent::open($tag, $attributes, $indent, $newLine);
     }
 
     /**
@@ -122,23 +113,16 @@ class Html extends HtmlConstructor
     /**
      *
      */
-    public function attributes($attributes_array)
+    public function attributes($attrubutesArray)
     {
-        return parent::parse_attributes($attributes_array);
+        return parent::parseAttributes($attrubutesArray);
     }
 
     /**
      *
      */
-    public static function script($code)
+    public function __toString()
     {
-        $tag = '';
-        $attributes = [];
-
-        $script = new HtmlConstructor;
-
-        $tag .= $script->open('script', $attributes);
-        $tag .= $code;
-        $tag .= $script->close('script');
+        return $this->constructHtml();
     }
 }

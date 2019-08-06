@@ -28,5 +28,9 @@
       "Backalley\\": "src/"
     },
     "files": ["backalley-core.php"]
+  },
+
+  "config": {
+    "sort-packages": true
   }
 }

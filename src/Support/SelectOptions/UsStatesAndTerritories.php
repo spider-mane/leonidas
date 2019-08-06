@@ -4,9 +4,9 @@
  * @package Backalley-Core
  */
 
-namespace Backalley\Html;
+namespace Backalley\Support\SelectOptions;
 
-class SelectOptions
+class UsStatesAndTerritories
 {
     private const STATES = [
         'AL' => 'Alabama',
@@ -86,7 +86,7 @@ class SelectOptions
     /**
      *
      */
-    public static function us_states()
+    public static function states()
     {
         return static::STATES;
     }

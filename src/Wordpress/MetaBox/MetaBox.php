@@ -3,7 +3,7 @@
 namespace Backalley\WordPress\MetaBox;
 
 use Backalley\WordPress\MetaBox\Contracts\MetaboxContentInterface;
-
+use Backalley\Html\Html;
 
 /**
  * @package Backalley-Core
@@ -294,7 +294,10 @@ class MetaBox
      */
     protected function render($post)
     {
+        $mb = '';
         $count = $i = count($this->content);
+
+        echo Html::open('div', ['class' => '']);
 
         foreach ($this->content as $content) {
             $i--;
@@ -305,5 +308,7 @@ class MetaBox
                 echo '<hr>';
             }
         }
+
+        echo Html::close('div');
     }
 }

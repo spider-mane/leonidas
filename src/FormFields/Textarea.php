@@ -4,36 +4,59 @@ namespace Backalley\FormFields;
 
 use Backalley\FormFields\Contracts\FormFieldInterface;
 
-class Textarea extends AbstractField implements FormFieldInterface
+class Textarea extends AbstractFormField implements FormFieldInterface
 {
     /**
-     *
+     * @var int
      */
-    public $content = '';
+    public $rows;
 
     /**
-     * __toString
+     * Get the value of rows
      *
-     * @return string
+     * @return int
      */
-    public function __toString()
+    public function getRows(): int
     {
-        $html = '';
+        return $this->rows;
+    }
 
-        $html .= $this->open('textarea', $this->attributes);
-        $html .= $this->content;
-        $html .= $this->close('textarea');
+    /**
+     * Set the value of rows
+     *
+     * @param int $rows
+     *
+     * @return self
+     */
+    public function setRows(int $rows)
+    {
+        $this->rows = $rows;
 
-        return $html;
+        return $this;
     }
 
     /**
      *
      */
-    public function parse_args($args)
+    protected function resolveAttributes()
     {
-        $this->content = $args['content'] ?? $this->content;
+        return parent::resolveAttributes()
+            ->addAttribute('rows', $this->rows);
+    }
 
-        return $this;
+    /**
+     *
+     */
+    public function render()
+    {
+        $this->resolveAttributes();
+
+        $html = '';
+
+        $html .= $this->open('textarea', $this->attributes);
+        $html .= $this->value;
+        $html .= $this->close('textarea');
+
+        return $html;
     }
 }

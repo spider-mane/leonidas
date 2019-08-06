@@ -36,7 +36,7 @@ class Factory
 
         if (class_exists($class)) {
             return new $class;
-        } elseif (TagSage::is_it('standard_input_type', $field)) {
+        } elseif (TagSage::isIt('standard_input_type', $field)) {
             return (new Input)->set_type($field);
         }
 

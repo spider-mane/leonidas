@@ -1,15 +1,16 @@
 <?php
 
-namespace Backalley\Wordpress\Fields;
+namespace Backalley\Wordpress\Fields\Controllers;
 
 use Backalley\FormFields\Contracts\FormFieldInterface;
 use Backalley\Wordpress\Fields\Contracts\DataFieldInterface;
+use Backalley\FormFields\Contracts\FormFieldControllerInterface;
 use Backalley\Wordpress\Fields\Contracts\FieldDataManagerInterface;
 
 /**
  *
  */
-abstract class AbstractField implements DataFieldInterface
+abstract class AbstractFieldController implements DataFieldInterface, FormFieldControllerInterface
 {
     /**
      * @var string
@@ -31,56 +32,25 @@ abstract class AbstractField implements DataFieldInterface
     protected $dataManager;
 
     /**
-     * label
-     *
-     * @var string
-     */
-    protected $label;
-
-    /**
-     * description
-     *
-     * @var string
-     */
-    protected $description;
-
-    /**
-     *
-     */
-    protected $containers;
-
-    /**
-     * attributes
-     *
-     * @var string
-     */
-    protected $attributes = [];
-
-    /**
-     *
-     */
-    protected $template;
-
-    /**
      * Callback function(s) to sanitize incoming data before saving to database
      *
-     * @var callable|array
+     * @var array
      */
-    protected $filters = ['sanitize_textarea_field'];
+    protected $filters = [];
 
     /**
-     * validation
+     * Validation rules
      *
-     * @var string
+     * @var array
      */
-    protected $rules;
+    protected $rules = [];
 
     /**
-     * validation_messages
+     * Alerts to display upon validation failure
      *
-     * @var string
+     * @var array
      */
-    protected $alerts;
+    protected $alerts = [];
 
     /**
      * displayCallback
@@ -118,7 +88,7 @@ abstract class AbstractField implements DataFieldInterface
      *
      * @return  mixed
      */
-    public function getformField()
+    public function getFormField(): FormFieldInterface
     {
         return $this->formField;
     }
@@ -130,7 +100,7 @@ abstract class AbstractField implements DataFieldInterface
      *
      * @return  self
      */
-    public function setformField(FormFieldInterface $formField)
+    public function setFormField(FormFieldInterface $formField)
     {
         $this->formField = $formField;
 
@@ -163,8 +133,6 @@ abstract class AbstractField implements DataFieldInterface
         return $this;
     }
 
-    // abstract public function renderField();
-
     /**
      * Get the value of slug
      *
@@ -178,7 +146,7 @@ abstract class AbstractField implements DataFieldInterface
     /**
      * Set the value of slug
      *
-     * @param string  $slug
+     * @param string $slug
      *
      * @return self
      */
@@ -190,67 +158,9 @@ abstract class AbstractField implements DataFieldInterface
     }
 
     /**
-     * Get label
-     *
-     * @return string
-     */
-    public function getLabel(): string
-    {
-        return $this->label;
-    }
-
-    /**
-     * Set label
-     *
-     * @param string  $label  label
-     *
-     * @return self
-     */
-    public function setLabel(string $label)
-    {
-        $this->label = $label;
-
-        return $this;
-    }
-
-    /**
-     * Get description
-     *
-     * @return string
-     */
-    public function getDescription(): string
-    {
-        return $this->description;
-    }
-
-    /**
-     * Set description
-     *
-     * @param string  $description  description
-     *
-     * @return self
-     */
-    public function setDescription(string $description)
-    {
-        $this->description = $description;
-
-        return $this;
-    }
-
-    /**
-     * Get attributes
-     *
-     * @return string
-     */
-    public function getAttributes(): string
-    {
-        return $this->attributes;
-    }
-
-    /**
      * Get callback function(s) to sanitize incoming data before saving to database
      *
-     * @return callable|array
+     * @return array
      */
     public function getFilters()
     {
@@ -260,13 +170,13 @@ abstract class AbstractField implements DataFieldInterface
     /**
      * Set callback function(s) to sanitize incoming data before saving to database
      *
-     * @param callable|array  $filters  Callback function(s) to sanitize incoming data before saving to database
+     * @param callable  $filters  Callback function(s) to sanitize incoming data before saving to database
      *
      * @return self
      */
-    public function setFilters($filters)
+    public function addFilter(callable $filter)
     {
-        $this->filters = $filters;
+        $this->filters[] = $filter;
 
         return $this;
     }
@@ -276,7 +186,7 @@ abstract class AbstractField implements DataFieldInterface
      *
      * @return string
      */
-    public function getRules(): string
+    public function getRules(): array
     {
         return $this->rules;
     }
@@ -288,9 +198,9 @@ abstract class AbstractField implements DataFieldInterface
      *
      * @return self
      */
-    public function setRules($rules)
+    public function addRule($rule)
     {
-        $this->rules = $rules;
+        $this->rules[] = $rule;
 
         return $this;
     }
@@ -300,7 +210,7 @@ abstract class AbstractField implements DataFieldInterface
      *
      * @return string
      */
-    public function getAlerts(): string
+    public function getAlerts(): array
     {
         return $this->alerts;
     }
@@ -312,11 +222,19 @@ abstract class AbstractField implements DataFieldInterface
      *
      * @return self
      */
-    public function setAlerts(string $alerts)
+    public function setAlerts(array $alerts)
     {
         $this->alerts = $alerts;
 
         return $this;
+    }
+
+    /**
+     *
+     */
+    protected function checkVar()
+    {
+        return filter_has_var(INPUT_POST, $this->formField->getName());
     }
 
     /**
@@ -368,8 +286,17 @@ abstract class AbstractField implements DataFieldInterface
      */
     protected function sanitizeInput($input)
     {
-        foreach ((array) $this->filters as $filter) {
-            $input = $filter($input);
+        if (empty($this->filters)) {
+            $this->addFilter([$this, 'sanitizeDefault']);
+        }
+
+        foreach ($this->filters as $filter) {
+
+            if (is_array($input)) {
+                $input = array_filter($input, $filter);
+            } else {
+                $input = $filter($input);
+            }
         }
 
         return $input;
@@ -378,21 +305,53 @@ abstract class AbstractField implements DataFieldInterface
     /**
      *
      */
-    protected function sanitizeField($field)
+    public function saveInput($object)
     {
-        return sanitize_textarea_field($field);
+        if (true === $this->checkVar()) {
+            exit(var_dump($this->getFilteredInput()));
+            $this->dataManager->saveData($object, $this->getFilteredInput());
+        }
     }
 
     /**
      *
      */
-    protected function displayAlert($rule)
+    protected function getData($object)
     {
-        //
+        return $this->dataManager->getData($object);
     }
 
     /**
      *
      */
-    abstract public function hook();
+    protected function setFormFieldValue($object)
+    {
+        $this->formField->setValue($this->getData($object));
+
+        return $this;
+    }
+
+    /**
+     *
+     */
+    protected function sanitizeDefault($input)
+    {
+        return filter_var($input, FILTER_SANITIZE_STRING);
+    }
+
+    /**
+     *
+     */
+    public function renderFormField($object)
+    {
+        return $this->setFormFieldValue($object)->formField;
+    }
+
+    /**
+     * @todo actually implement it
+     */
+    protected function renderAlert($rule)
+    {
+        // do something
+    }
 }

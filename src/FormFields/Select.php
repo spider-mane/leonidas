@@ -5,51 +5,70 @@ namespace Backalley\FormFields;
 use Backalley\FormFields\Contracts\FormFieldInterface;
 
 
-class Select extends AbstractField implements FormFieldInterface
+class Select extends AbstractFormField implements FormFieldInterface
 {
     /**
      *
      */
-    public static $selected_attribute = 'selected';
+    public $options = [];
 
     /**
      *
      */
-    public static $item_text = 'content';
+    public $value = [];
+
+    /**
+     * @var bool
+     */
+    public $multiple = false;
+
+    /**
+     * @var int
+     */
+    public $size;
 
     /**
      *
      */
-    public function __toString()
+    public function __construct()
     {
-        $html = '';
-
-        $html .= $this->open('select', $this->attributes);
-
-        foreach ($this->options as $value => $option) {
-            $option_attr = ['value' => $value];
-
-            if ($value === $this->selected) {
-                $option_attr['selected'] = true;
-            }
-
-            $html .= $this->open('option', $option_attr);
-            $html .= $option;
-            $html .= $this->close('option');
-        }
-
-        $html .= $this->close('select');
-
-        return $html;
+        // do something maybe
     }
 
     /**
+     * Get the value of options
      *
+     * @return mixed
      */
-    public function parse_args($args)
+    public function getOptions()
     {
-        $this->options = $args['options'];
-        $this->selected = $args['selected'];
+        return $this->options;
+    }
+
+    /**
+     * Set the value of options
+     *
+     * @param mixed $options
+     *
+     * @return self
+     */
+    public function setOptions($options)
+    {
+        $this->options = $options;
+
+        return $this;
+    }
+
+    /**
+     * Set the value of value
+     *
+     * @param mixed $value
+     *
+     * @return self
+     */
+    public function setValue($value)
+    {
+        $this->value[] = $value;
 
         return $this;
     }
@@ -57,10 +76,36 @@ class Select extends AbstractField implements FormFieldInterface
     /**
      *
      */
-    public static function create($args): FormFieldInterface
+    protected function resolveAttributes()
     {
-        $multiple = $args['multiple'] ?? false;
+        return parent::resolveAttributes();
+    }
 
-        return new static($args);
+    /**
+     *
+     */
+    public function render()
+    {
+        $this->resolveAttributes();
+
+        $html = '';
+
+        $html .= $this->open('select', $this->attributes);
+
+        foreach ($this->options as $value => $option) {
+            $optionAttr = ['value' => $value];
+
+            if (in_array($value, $this->value)) {
+                $optionAttr['selected'] = true;
+            }
+
+            $html .= $this->open('option', $optionAttr);
+            $html .= $option;
+            $html .= $this->close('option');
+        }
+
+        $html .= $this->close('select');
+
+        return $html;
     }
 }

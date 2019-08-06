@@ -6,75 +6,174 @@
 
 namespace Backalley\FormFields;
 
+use Backalley\FormFields\Input;
 use Backalley\FormFields\Contracts\FormFieldInterface;
+use Backalley\FormFields\Traits\SupportsMultipleValuesTrait;
 
-
-class Checklist extends InputList implements FormFieldInterface
+class Checklist extends AbstractFormField implements FormFieldInterface
 {
+    /**
+     * Associative array of item definitions with the value as the key
+     *
+     * @var array
+     */
+    public $items = [];
+
+    /**
+     *
+     */
+    public $value = [];
+
+    /**
+     * Value for hidden input that facilitates unsetting all values on the server
+     *
+     * @var string
+     */
+    public $clearControl;
+
+    /**
+     * Value for hidden input that facilitates unsetting single value on the server
+     *
+     * @var mixed
+     */
+    public $toggleControl;
+
     /**
      * {@inheritDoc}
      */
-    public $input_type = 'checkbox';
+    protected const INPUT = 'checkbox';
+
+    /**
+     * {@inheritDoc}
+     */
+    protected const SELECTED = 'checked';
+
+    // use SupportsMultipleValuesTrait;
 
     /**
      *
      */
-    public $toggle;
-
-    /**
-     *
-     */
-    public $clear;
-
-    /**
-     *
-     */
-    public $clear_control;
-
-    /**
-     *
-     */
-    public $toggle_control;
-
-    /**
-     *
-     */
-    public $selected_attribute = 'checked';
-
-    /**
-     *
-     */
-    public static $item_text = 'label';
-
-    // use MultiValueTrait;
-
-    /**
-     *
-     */
-    public function __toString()
+    public function setValue($value)
     {
+        $this->value[] = $value;
+    }
+
+    /**
+     * Get the value of items
+     *
+     * @return mixed
+     */
+    public function getItems()
+    {
+        return $this->items;
+    }
+
+    /**
+     * Set the value of items
+     *
+     * @param mixed $items
+     *
+     * @return self
+     */
+    public function setItems($items)
+    {
+        $this->items = $items;
+
+        return $this;
+    }
+
+    /**
+     * Get value for hidden input that facilitates unsetting all values on the server
+     *
+     * @return string
+     */
+    public function getClearControl(): string
+    {
+        return $this->clearControl;
+    }
+
+    /**
+     * Set value for hidden input that facilitates unsetting all values on the server
+     *
+     * @param string
+     *
+     * @return self
+     */
+    public function setClearControl(string $clearControl)
+    {
+        $this->clearControl = $clearControl;
+
+        return $this;
+    }
+
+    /**
+     * Get value for hidden input that facilitates unsetting single value on the server
+     *
+     * @return mixed
+     */
+    public function getToggleControl(): mixed
+    {
+        return $this->toggleControl;
+    }
+
+    /**
+     * Set value for hidden input that facilitates unsetting single value on the server
+     *
+     * @param mixed $toggleControl
+     *
+     * @return self
+     */
+    public function setToggleControl($toggleControl)
+    {
+        $this->toggleControl = $toggleControl;
+
+        return $this;
+    }
+
+    /**
+     *
+     */
+    protected function resolveAttributes()
+    {
+        return parent::resolveAttributes()
+            ->addAttribute('class', 'thing');
+    }
+
+    /**
+     *
+     */
+    public function render()
+    {
+        $this->resolveAttributes();
+
         $html = '';
 
         $html .= $this->open('div', $this->attributes ?? null);
-        $html .= isset($this->clear_control) ? $this->open('input', $this->clear_control['attributes']) : '';
-        $html .= $this->open('ul', $this->ul['attributes'] ?? null);
+        $html .= isset($this->clearControl)
+            ? (new Input)->setType('hidden')->setName($this->name)->setValue($this->clearControl)
+            : '';
 
-        foreach ($this->items as $item) {
-            $li = $item['li'] ?? null;
-            $label = $item['label'] ?? null;
-            $toggle = $item['toggle'] ?? null;
+        $html .= $this->open('ul');
 
-            // opening tag for list item
-            $html .= $this->open('li', $li['attributes'] ?? null);
+        foreach ($this->items as $item => $element) {
 
-            // toggle control and/or and item
-            $html .= isset($toggle) ? $this->open('input', $toggle['attributes'] ?? null) : '';
-            $html .= $this->open('input', $item['attributes'] ?? null);
+            $itemId = $element['id'] ?? null;
+            $itemName = $this->name . "[{$element['name']}]" ?? '';
+            $itemLabel = $element['label'] ?? null;
 
-            // create label
-            $html .= $this->open('label', $label['attributes'] ?? null);
-            $html .= $label['content'] ?? '';
-            $html .= $this->close('label');
+            $html .= $this->open('li');
+            $html .= isset($this->toggleControl)
+                ? (new Input)->setType('hidden')->setName($itemName)->setValue($this->toggleControl)
+                : '';
+
+            $html .= (new Input)
+                ->setId($itemId)
+                ->setValue($item)
+                ->setType($this::INPUT)
+                ->setName($itemName)
+                ->addAttribute($this::SELECTED, in_array($item, $this->value) ? true : false);
+
+            $html .= (new Label($itemLabel))->setFor($itemId);
 
             // close li
             $html .= $this->close('li');
@@ -84,62 +183,5 @@ class Checklist extends InputList implements FormFieldInterface
         $html .= $this->close('div');
 
         return $html;
-    }
-
-    /**
-     *
-     */
-    protected function parse_args($args)
-    {
-        parent::parse_args($args);
-
-        if (isset($args['clear_control'])) {
-            $this->set_clear_control(...$args['clear_control']);
-        }
-
-        if (isset($args['toggle'])) {
-            $this->set_toggle_control($args['toggle']);
-            $this->define_items_toggle();
-        }
-    }
-
-    /**
-     *
-     */
-    public function set_clear_control(string $name, string $value)
-    {
-        $this->clear_control = [
-            'attributes' => [
-                'type' => 'hidden',
-                'name' => $name,
-                'value' => $value,
-            ]
-        ];
-
-        return $this;
-    }
-
-    /**
-     *
-     */
-    public function set_toggle_control($toggle_control)
-    {
-        $this->toggle_control = $toggle_control;
-    }
-
-    /**
-     *
-     */
-    protected function define_items_toggle()
-    {
-        if (isset($this->toggle_control)) {
-            foreach ($this->items as &$item) {
-                $item['toggle']['attributes'] = [
-                    'type' => 'hidden',
-                    'name' => $item['attributes']['name'],
-                    'value' => $this->toggle_control,
-                ];
-            }
-        }
     }
 }

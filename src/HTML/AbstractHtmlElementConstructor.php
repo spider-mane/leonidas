@@ -6,32 +6,40 @@ namespace Backalley\Html;
 /**
  * @package Backalley-Core
  */
-abstract class HtmlConstructor
+abstract class AbstractHtmlElementConstructor
 {
     /**
-     * 
+     *
      */
-    public $charset = 'UTF-8';
+    protected $charset = 'UTF-8';
 
     /**
-     * 
+     * @var array
      */
-    public function __construct(string $charset = null)
+    public $attributes = [];
+
+    /**
+     *
+     */
+    public function __construct()
     {
-        if (null !== $charset) {
-            $this->set_charset($charset);
-        }
+        // do something maybe
     }
 
     /**
-     * 
+     * Get the value of charset
+     *
+     * @return mixed
      */
-    abstract public function __toString();
+    public function getCharset()
+    {
+        return $this->charset;
+    }
 
     /**
-     * 
+     *
      */
-    public function set_charset($charset)
+    public function setCharset($charset)
     {
         $this->charset = $charset;
 
@@ -39,9 +47,49 @@ abstract class HtmlConstructor
     }
 
     /**
-     * 
+     * Get the value of attributes
+     *
+     * @return array
      */
-    protected static function parse_attributes($attributes_array, &$attr_str = '')
+    public function getAttributes(): array
+    {
+        return $this->attributes;
+    }
+
+    /**
+     * Set the value of attributes
+     *
+     * @param array  $attributes
+     *
+     * @return self
+     */
+    public function setAttributes(array $attributes)
+    {
+        foreach ($attributes as $key => $value) {
+            $this->addAttribute($key, $value);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Add individual attribute
+     *
+     * @param array $attribute
+     *
+     * @return self
+     */
+    public function addAttribute($attribute, $value)
+    {
+        $this->attributes[$attribute] = $value;
+
+        return $this;
+    }
+
+    /**
+     *
+     */
+    protected static function parseAttributes($attributes_array, &$attr_str = '')
     {
         foreach ($attributes_array as $attr => $val) {
 
@@ -92,7 +140,7 @@ abstract class HtmlConstructor
             if (is_array($val)) {
                 foreach ($val as $set => $setval) {
                     // static::parse_attributes(["{$attr}-{$set}" => $setval]);
-                    Self::parse_attributes(["{$attr}-{$set}" => $setval], $attr_str);
+                    static::parseAttributes(["{$attr}-{$set}" => $setval], $attr_str);
                 }
                 continue;
             }
@@ -102,20 +150,20 @@ abstract class HtmlConstructor
     }
 
     /**
-     * 
+     *
      */
     protected static function open(string $tag, $attributes = null, $indent = 0, $new_line = false)
     {
         if (!is_string($attributes) && is_array($attributes)) {
-            $attributes = Self::parse_attributes($attributes);
+            $attributes = static::parseAttributes($attributes);
         }
 
         $attributes = !empty($attributes) ? " {$attributes}" : '';
 
-        $slash = TagSage::is_it('self_closing', $tag) ? ' /' : '';
+        $slash = TagSage::isIt('self_closing', $tag) ? ' /' : '';
 
         if ($new_line === true) {
-            $new_line = !TagSage::is_it('whitespace_sensitive', $tag) ? "\n" : '';
+            $new_line = !TagSage::isIt('whitespace_sensitive', $tag) ? "\n" : '';
         } else {
             $new_line = '';
         }
@@ -124,13 +172,13 @@ abstract class HtmlConstructor
     }
 
     /**
-     * 
+     *
      */
     protected static function close(string $tag)
     {
         // return !in_array($tag, TagSage::$self_closing) ? "</{$tag}>" : '';
 
-        if (TagSage::is_it('self_closing', $tag)) {
+        if (TagSage::isIt('self_closing', $tag)) {
             return '';
         }
 
@@ -138,7 +186,7 @@ abstract class HtmlConstructor
     }
 
     /**
-     * 
+     *
      */
     protected static function indent($tag, $level)
     {
@@ -146,10 +194,15 @@ abstract class HtmlConstructor
     }
 
     /**
-     * 
+     *
      */
-    protected static function new_line()
+    protected static function newLine()
     {
         // code here
     }
+
+    /**
+     *
+     */
+    abstract public function __toString();
 }

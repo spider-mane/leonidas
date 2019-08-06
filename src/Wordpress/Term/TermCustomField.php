@@ -2,8 +2,6 @@
 
 namespace Backalley\WordPress\Term;
 
-use Backalley\FormFields\FormField;
-use Backalley\Html\HtmlConstructor;
 use Backalley\WordPress\Fields\FieldManager;
 
 
@@ -14,48 +12,48 @@ class TermCustomField
 {
     /**
      * The taxonomy to apply the field
-     * 
+     *
      * @var string
      */
     public $taxonomy;
 
     /**
      * Callback function to run to display the field
-     * 
+     *
      * @var string
      */
     public $add_term_form_field_callback;
 
     /**
      * Callback function to run to display the field
-     * 
+     *
      * @var string
      */
     public $edit_term_form_field_callback;
 
     /**
      * Callback function to run to save field data
-     * 
+     *
      * @var string
      */
     public $save_term_callback;
 
     /**
-     * Custom field 
-     * 
+     * Custom field
+     *
      * @var string
      */
     public $field;
 
     /**
-     * Html name or POST query variable assigned to the field 
-     * 
+     * Html name or POST query variable assigned to the field
+     *
      * @var string
      */
     public $name;
 
     /**
-     * 
+     *
      */
     public function __construct($args)
     {
@@ -73,7 +71,7 @@ class TermCustomField
     }
 
     /**
-     * 
+     *
      */
     public function hook()
     {
@@ -87,7 +85,7 @@ class TermCustomField
     }
 
     /**
-     * 
+     *
      */
     public function set_field($field)
     {
@@ -96,7 +94,7 @@ class TermCustomField
     }
 
     /**
-     * 
+     *
      */
     public function bulk_add($fields)
     {

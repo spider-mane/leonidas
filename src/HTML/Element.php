@@ -3,7 +3,7 @@
 namespace Backalley\Html;
 
 
-class Element extends HtmlConstructor
+class Element extends AbstractHtmlElementConstructor
 {
     /**
      * tag
@@ -14,7 +14,7 @@ class Element extends HtmlConstructor
 
     /**
      * attributes
-     * 
+     *
      * @var array
      */
     public $attributes = [];
@@ -35,7 +35,7 @@ class Element extends HtmlConstructor
 
     /**
      * map
-     * 
+     *
      * @var array
      */
     protected static $map = [];
@@ -58,13 +58,13 @@ class Element extends HtmlConstructor
     }
 
     /**
-     * 
+     *
      */
-    public static function create(array $element, string $charset = null)
+    public static function create(array $element)
     {
         self::$map = $element;
 
-        $element = new static(self::$map['root'], $charset);
+        $element = new static(self::$map['root']);
 
         self::$map = [];
 
@@ -72,7 +72,115 @@ class Element extends HtmlConstructor
     }
 
     /**
-     * 
+     * Get tag
+     *
+     * @return  string
+     */
+    public function getTag()
+    {
+        return $this->tag;
+    }
+
+    /**
+     * Set tag
+     *
+     * @param  string  $tag  tag
+     *
+     * @return  self
+     */
+    public function setTag(string $tag)
+    {
+        $this->tag = $tag;
+
+        return $this;
+    }
+
+    /**
+     * get_attributes
+     *
+     * @param string
+     * @return mixed
+     */
+    public function getAttrubutes()
+    {
+        return $this->attributes;
+    }
+
+    /**
+     * set_attributes
+     *
+     * @param array $attributes
+     * @return self
+     */
+    public function setAttrubutes(array $attributes)
+    {
+        $this->attributes = $attributes;
+
+        return $this;
+    }
+
+    /**
+     * Get content
+     *
+     * @return  string
+     */
+    public function getContent()
+    {
+        return $this->content;
+    }
+
+    /**
+     * Set content
+     *
+     * @param  string  $content  content
+     *
+     * @return  self
+     */
+    public function setContent(string $content)
+    {
+        $this->content = $content;
+
+        return $this;
+    }
+
+    /**
+     * Get children
+     *
+     * @return  array
+     */
+    public function getChildren()
+    {
+        return $this->children;
+    }
+
+    /**
+     * Set children
+     *
+     * @param  array  $children  children
+     *
+     * @return  self
+     */
+    public function setChildren(array $children)
+    {
+        foreach ($children as $child) {
+            $this->insertChild(self::$map[$child] ?? $child);
+        }
+
+        return $this;
+    }
+
+    /**
+     *
+     */
+    public function insertChild($child)
+    {
+        $this->children[] = is_array($child) ? new static($child) : $child;
+
+        return $this;
+    }
+
+    /**
+     *
      */
     public function __toString()
     {
@@ -88,113 +196,5 @@ class Element extends HtmlConstructor
         $element .= $this->close($this->tag);
 
         return $element;
-    }
-
-    /**
-     * Get tag
-     *
-     * @return  string
-     */
-    public function get_tag()
-    {
-        return $this->tag;
-    }
-
-    /**
-     * Set tag
-     *
-     * @param  string  $tag  tag
-     *
-     * @return  self
-     */
-    public function set_tag(string $tag)
-    {
-        $this->tag = $tag;
-
-        return $this;
-    }
-
-    /**
-     * get_attributes
-     *
-     * @param string
-     * @return mixed
-     */
-    public function get_attributes()
-    {
-        return $this->attributes;
-    }
-
-    /**
-     * set_attributes
-     *
-     * @param array $attributes
-     * @return self
-     */
-    public function set_attributes(array $attributes)
-    {
-        $this->attributes = $attributes;
-
-        return $this;
-    }
-
-    /**
-     * Get content
-     *
-     * @return  string
-     */
-    public function get_content()
-    {
-        return $this->content;
-    }
-
-    /**
-     * Set content
-     *
-     * @param  string  $content  content
-     *
-     * @return  self
-     */
-    public function set_content(string $content)
-    {
-        $this->content = $content;
-
-        return $this;
-    }
-
-    /**
-     * Get children
-     *
-     * @return  array
-     */
-    public function get_chilren()
-    {
-        return $this->children;
-    }
-
-    /**
-     * Set children
-     *
-     * @param  array  $children  children
-     *
-     * @return  self
-     */
-    public function set_children(array $children)
-    {
-        foreach ($children as $child) {
-            $this->insert_child(self::$map[$child] ?? $child);
-        }
-
-        return $this;
-    }
-
-    /**
-     * 
-     */
-    public function insert_child($child)
-    {
-        $this->children[] = is_array($child) ? new static($child, $this->charset) : $child;
-
-        return $this;
     }
 }

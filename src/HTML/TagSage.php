@@ -2,7 +2,7 @@
 
 /**
  * @package Backalley Core
- * 
+ *
  * Helper class to determine whether or not a tag meets a certain criteria
  */
 
@@ -85,9 +85,9 @@ class TagSage
     ];
 
     /**
-     * 
+     *
      */
-    public static function is_it($query, $value)
+    public static function isIt($query, $value)
     {
         $answer = in_array($value, Self::$$query) ? true : false;
 
@@ -95,9 +95,9 @@ class TagSage
     }
 
     /**
-     * 
+     *
      */
-    public static function what_are($these)
+    public static function whatAre($these)
     {
         switch ($these) {
             case 'self_closing_tags':
@@ -115,9 +115,11 @@ class TagSage
     }
 
     /**
-     * To be called on load if browser info has been requested. 
+     * To be called on load if browser info has been requested.
      * Used to modify property arrays based on browser info.
-     * 
+     *
+     * @todo actually make it
+     *
      * @param string $browser current browser
      */
     public static function ponder($browser)
