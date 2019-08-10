@@ -38,7 +38,7 @@ class PostMetaBoxFieldController extends AbstractFieldController implements Form
      */
     public function hook($postType = null)
     {
-        add_action("save_post_{$this->postType}", [$this, 'savePostActionCallback'], null, PHP_INT_MAX);
+        add_action("save_post_{$this->postType}", [$this, '_savePost'], null, PHP_INT_MAX);
 
         return $this;
     }
@@ -46,7 +46,7 @@ class PostMetaBoxFieldController extends AbstractFieldController implements Form
     /**
      *
      */
-    public function savePostActionCallback($postId, $post, $update)
+    public function _savePost($postId, $post, $update)
     {
         $this->saveInput($post);
     }

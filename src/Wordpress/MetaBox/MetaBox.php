@@ -2,8 +2,9 @@
 
 namespace Backalley\WordPress\MetaBox;
 
-use Backalley\WordPress\MetaBox\Contracts\MetaboxContentInterface;
 use Backalley\Html\Html;
+use Backalley\FormFields\Input;
+use Backalley\WordPress\MetaBox\Contracts\MetaboxContentInterface;
 
 /**
  * @package Backalley-Core
@@ -74,12 +75,18 @@ class MetaBox
     protected $fields = [];
 
     /**
+     * @var string
+     */
+    private $nonce;
+
+    /**
      *
      */
     public function __construct($id, $title)
     {
         $this->id = $id;
         $this->title = $title;
+        $this->setNonce();
     }
 
     /**
@@ -259,7 +266,7 @@ class MetaBox
      */
     public function hook()
     {
-        add_action("add_meta_boxes_{$this->screen}", [$this, 'addMetaBox']);
+        add_action("add_meta_boxes_{$this->screen}", [$this, '_addMetaBox']);
 
         if (!empty($this->save_cb)) {
             add_action("save_post_{$this->screen}", $this->save_cb, null, 3);
@@ -269,9 +276,11 @@ class MetaBox
     }
 
     /**
+     * Callback function to add metabox to admin ui
      *
+     * @param $post
      */
-    public function addMetaBox($post)
+    public function _addMetaBox($post)
     {
         add_meta_box($this->id, $this->title, [$this, 'display'], $this->screen, $this->context, $this->priority, $this->callbackArgs);
     }
@@ -294,10 +303,12 @@ class MetaBox
      */
     protected function render($post)
     {
+        echo $this->generateNonceField();
+
         $mb = '';
         $count = $i = count($this->content);
 
-        echo Html::open('div', ['class' => '']);
+        echo '<div>';
 
         foreach ($this->content as $content) {
             $i--;
@@ -309,6 +320,55 @@ class MetaBox
             }
         }
 
-        echo Html::close('div');
+        echo '</div>';
+    }
+
+    /**
+     * Get the value of nonce
+     *
+     * @return string
+     */
+    public function getNonce()
+    {
+        return $this->nonce;
+    }
+
+    /**
+     * Set the value of nonce
+     *
+     * @return self
+     */
+    private function setNonce()
+    {
+        $this->nonce['name'] = password_hash($this->id, PASSWORD_BCRYPT);
+        $this->nonce['action'] = password_hash($this->title, PASSWORD_BCRYPT);
+
+        return $this;
+    }
+
+    /**
+     * Set the value of nonce
+     *
+     * @param string $nonce
+     *
+     * @return self
+     */
+    public function generateNonceField()
+    {
+        $nonce = '';
+
+        $nonce .= (new Input) // nonce
+            ->setType('hidden')
+            ->setName($this->nonce['name'])
+            ->setValue(wp_create_nonce($this->nonce['action']));
+
+        $nonce .= (new Input) // referer
+            ->setType('hidden')
+            ->setName('_backalley_http_referer')
+            ->setValue(esc_attr(wp_unslash($_SERVER['REQUEST_URI'])));
+
+        // return wp_nonce_field($this->nonce['action'], $this->nonce['name'], true, false);
+
+        return (string) $nonce . "\n";
     }
 }

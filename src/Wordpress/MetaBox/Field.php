@@ -116,7 +116,7 @@ class Field implements MetaboxContentInterface
     /**
      * Set description
      *
-     * @param string  $description  description
+     * @param string $description description
      *
      * @return self
      */

@@ -35,6 +35,16 @@ interface FormFieldInterface
     public function getId(): string;
 
     /**
+     * @param string $label
+     */
+    public function setLabel(string $label);
+
+    /**
+     * @return string
+     */
+    public function getLabel(): string;
+
+    /**
      * @param bool $disabled
      */
     public function setDisabled(bool $disabled);
@@ -63,6 +73,11 @@ interface FormFieldInterface
      * @return bool
      */
     public function isRequired(): bool;
+
+    /**
+     *
+     */
+    public function toHtml(): string;
 
     /**
      * @return string

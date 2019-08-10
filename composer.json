@@ -20,7 +20,8 @@
     "jbzoo/utils": "^2.3",
     "twig/twig": "^2.0",
     "masterminds/html5": "^2.6",
-    "egulias/email-validator": "^2.1"
+    "egulias/email-validator": "^2.1",
+    "moneyphp/money": "^3.2"
   },
 
   "autoload": {

@@ -2,27 +2,26 @@
 
 namespace Backalley\FormFields;
 
-use Backalley\Html\AbstractHtmlElementConstructor;
+use Backalley\Html\AbstractHtmlElement;
 
-
-class Label extends AbstractHtmlElementConstructor
+class Label extends AbstractHtmlElement
 {
     /**
-     *
+     * @var string
      */
-    protected $text = '';
+    protected $innerText;
 
     /**
-     *
+     * @var string
      */
     protected $for;
 
     /**
      *
      */
-    public function __construct($text)
+    public function __construct(string $label)
     {
-        $this->text = $text;
+        $this->innerText = $label;
     }
 
     /**
@@ -56,18 +55,18 @@ class Label extends AbstractHtmlElementConstructor
      */
     public function getText()
     {
-        return $this->text;
+        return $this->innerText;
     }
 
     /**
      *
      */
-    public function __toString()
+    public function toHtml(): string
     {
         $html = '';
 
         $html .= $this->open('label', ['for' => $this->for]);
-        $html .= $this->text;
+        $html .= $this->innerText;
         $html .= $this->close('label');
 
         return $html;

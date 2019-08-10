@@ -11,12 +11,12 @@ use Backalley\FormFields\FormField;
 class TermFieldManager
 {
     /**
-     * 
+     *
      */
     public $field;
 
     /**
-     * 
+     *
      */
     public function __construct($field)
     {
@@ -24,7 +24,7 @@ class TermFieldManager
     }
 
     /**
-     * 
+     *
      */
     public function render_add_term_form_field($taxonomy)
     {
@@ -32,14 +32,15 @@ class TermFieldManager
     }
 
     /**
-     * 
+     *
      */
     public function render_edit_term_form_field($term, $taxonomy)
     {
         Self::edit_term_form_field_template($this->field->generate_field($term));
     }
+
     /**
-     * 
+     *
      */
     public static function term_field_template($field)
     {
@@ -53,7 +54,7 @@ class TermFieldManager
     }
 
     /**
-     * 
+     *
      */
     public static function add_term_form_field_template($field)
     {
@@ -83,7 +84,7 @@ class TermFieldManager
     }
 
     /**
-     * 
+     *
      */
     public static function edit_term_form_field_template($field)
     {
@@ -126,7 +127,7 @@ class TermFieldManager
     }
 
     /**
-     * 
+     *
      */
     public function get_data($term)
     {
@@ -134,7 +135,7 @@ class TermFieldManager
     }
 
     /**
-     * 
+     *
      */
     public function save_term_field($term_id, $tt_id)
     {

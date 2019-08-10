@@ -2,8 +2,16 @@
 
 namespace Backalley\Html;
 
-class Html extends AbstractHtmlElementConstructor
+use Backalley\Html\Traits\ElementConstructorTrait;
+
+class Html
 {
+    use ElementConstructorTrait {
+    open as public;
+    close as public;
+    parseAttributes as public attributes;
+    }
+
     /**
      *
      */
@@ -89,33 +97,9 @@ class Html extends AbstractHtmlElementConstructor
     /**
      *
      */
-    public static function open(string $tag, $attributes = null, $indent = 0, $newLine = false)
-    {
-        return parent::open($tag, $attributes, $indent, $newLine);
-    }
-
-    /**
-     *
-     */
-    public static function close(string $tag)
-    {
-        return parent::close($tag);
-    }
-
-    /**
-     *
-     */
     public static function tag(string $tag, string $content = '', $attributes = null)
     {
         return static::open($tag, $attributes) . $content . static::close($tag);
-    }
-
-    /**
-     *
-     */
-    public function attributes($attrubutesArray)
-    {
-        return parent::parseAttributes($attrubutesArray);
     }
 
     /**

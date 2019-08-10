@@ -2,17 +2,12 @@
 
 namespace Backalley\FormFields;
 
-use Backalley\Html\AbstractHtmlElementConstructor;
+use Backalley\FormFields\Label;
+use Backalley\Html\AbstractHtmlElement;
 use Backalley\FormFields\Contracts\FormFieldInterface;
 
-
-abstract class AbstractFormField extends AbstractHtmlElementConstructor implements FormFieldInterface
+abstract class AbstractFormField extends AbstractHtmlElement implements FormFieldInterface
 {
-    /**
-     * @var string
-     */
-    public $id;
-
     /**
      * @var string
      */
@@ -22,6 +17,16 @@ abstract class AbstractFormField extends AbstractHtmlElementConstructor implemen
      * @var mixed
      */
     public $value;
+
+    /**
+     * @var string
+     */
+    public $label;
+
+    /**
+     * @var string
+     */
+    public $placeholder;
 
     /**
      * @var bool
@@ -44,30 +49,6 @@ abstract class AbstractFormField extends AbstractHtmlElementConstructor implemen
     public function __construct()
     {
         // maybe do something
-    }
-
-    /**
-     * Get the value of id
-     *
-     * @return string
-     */
-    public function getId(): string
-    {
-        return $this->id;
-    }
-
-    /**
-     * Set the value of id
-     *
-     * @param string  $id
-     *
-     * @return self
-     */
-    public function setId(string $id)
-    {
-        $this->id = $id;
-
-        return $this;
     }
 
     /**
@@ -114,6 +95,30 @@ abstract class AbstractFormField extends AbstractHtmlElementConstructor implemen
     public function setValue($value)
     {
         $this->value = $value;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of label
+     *
+     * @return string
+     */
+    public function getLabel(): string
+    {
+        return $this->label;
+    }
+
+    /**
+     * Set the value of label
+     *
+     * @param string $label
+     *
+     * @return self
+     */
+    public function setLabel(string $label)
+    {
+        $this->label = $label;
 
         return $this;
     }
@@ -191,28 +196,47 @@ abstract class AbstractFormField extends AbstractHtmlElementConstructor implemen
     }
 
     /**
+     * Get the value of placeholder
+     *
+     * @return string
+     */
+    public function getPlaceholder(): string
+    {
+        return $this->placeholder;
+    }
+
+    /**
+     * Set the value of placeholder
+     *
+     * @param string $placeholder
+     *
+     * @return self
+     */
+    public function setPlaceholder(string $placeholder)
+    {
+        $this->placeholder = $placeholder;
+
+        return $this;
+    }
+
+    /**
      *
      */
     protected function resolveAttributes()
     {
-        return $this
-            ->addAttribute('id', $this->id)
+        return parent::resolveAttributes()
             ->addAttribute('name', $this->name)
             ->addAttribute('disabled', $this->disabled)
             ->addAttribute('readonly', $this->readonly)
-            ->addAttribute('required', $this->required);
+            ->addAttribute('required', $this->required)
+            ->addAttribute('placeholder', $this->placeholder);
     }
 
     /**
-     *
+     * @return string
      */
-    public function __toString()
+    public function getRenderedLabel()
     {
-        return $this->render();
+        return (string) (new Label($this->label))->setFor($this->id);
     }
-
-    /**
-     *
-     */
-    abstract public function render();
 }

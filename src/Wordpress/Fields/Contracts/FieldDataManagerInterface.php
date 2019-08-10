@@ -15,20 +15,20 @@ interface FieldDataManagerInterface
     /**
      *
      */
-    public function createData($object, $data);
+    public function createData($data, ...$request): bool;
 
     /**
      *
      */
-    public function getData($object);
+    public function getData(...$request);
 
     /**
      *
      */
-    public function saveData($object, $data);
+    public function saveData($data, ...$request): bool;
 
     /**
      *
      */
-    public function deleteData($object);
+    public function deleteData(...$request);
 }

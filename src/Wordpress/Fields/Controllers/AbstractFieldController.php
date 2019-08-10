@@ -2,10 +2,12 @@
 
 namespace Backalley\Wordpress\Fields\Controllers;
 
+use Respect\Validation\Validatable;
 use Backalley\FormFields\Contracts\FormFieldInterface;
 use Backalley\Wordpress\Fields\Contracts\DataFieldInterface;
 use Backalley\FormFields\Contracts\FormFieldControllerInterface;
 use Backalley\Wordpress\Fields\Contracts\FieldDataManagerInterface;
+use Backalley\Wordpress\Fields\Contracts\FormSubmissionManagerInterface;
 
 /**
  *
@@ -32,6 +34,18 @@ abstract class AbstractFieldController implements DataFieldInterface, FormFieldC
     protected $dataManager;
 
     /**
+     * hasDataManager
+     *
+     * @var bool
+     */
+    private $hasDataManager = false;
+
+    /**
+     * @var string
+     */
+    protected $namePrefix = 'ba_';
+
+    /**
      * Callback function(s) to sanitize incoming data before saving to database
      *
      * @var array
@@ -51,6 +65,15 @@ abstract class AbstractFieldController implements DataFieldInterface, FormFieldC
      * @var array
      */
     protected $alerts = [];
+
+    /**
+     * @var array
+     */
+    private $stateCache = [
+        'save_successful' => null,
+        'save_attempted' => null,
+        'input_value' => null,
+    ];
 
     /**
      * displayCallback
@@ -76,11 +99,14 @@ abstract class AbstractFieldController implements DataFieldInterface, FormFieldC
     /**
      *
      */
-    public function __construct($slug, FormFieldInterface $formField, FieldDataManagerInterface $dataManager)
+    public function __construct($slug, FormFieldInterface $formField, ?FieldDataManagerInterface $dataManager = null)
     {
         $this->slug = $slug;
         $this->setformField($formField);
-        $this->setDataManager($dataManager);
+
+        if (isset($dataManager)) {
+            $this->setDataManager($dataManager);
+        }
     }
 
     /**
@@ -129,8 +155,19 @@ abstract class AbstractFieldController implements DataFieldInterface, FormFieldC
         $dataManager->setField($this);
 
         $this->dataManager = $dataManager;
+        $this->hasDataManager = true;
 
         return $this;
+    }
+
+    /**
+     * Get hasDataManager
+     *
+     * @return bool
+     */
+    public function hasDataManager(): bool
+    {
+        return $this->hasDataManager;
     }
 
     /**
@@ -153,6 +190,30 @@ abstract class AbstractFieldController implements DataFieldInterface, FormFieldC
     public function setSlug(string $slug)
     {
         $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of namePrefix
+     *
+     * @return string
+     */
+    public function getNamePrefix(): string
+    {
+        return $this->namePrefix;
+    }
+
+    /**
+     * Set the value of namePrefix
+     *
+     * @param string $namePrefix
+     *
+     * @return self
+     */
+    public function setNamePrefix(string $namePrefix)
+    {
+        $this->namePrefix = $namePrefix;
 
         return $this;
     }
@@ -192,13 +253,29 @@ abstract class AbstractFieldController implements DataFieldInterface, FormFieldC
     }
 
     /**
-     * Set validation
+     * Add validation rules
      *
-     * @param string  $validation  validation
+     * @param array $rules Array of Validatable instances
      *
      * @return self
      */
-    public function addRule($rule)
+    public function addRules(array $rules)
+    {
+        foreach ($rules as $rule) {
+            $this->addRule($rule);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Add validation rule
+     *
+     * @param Validatable $rule instance of Validatable interface
+     *
+     * @return self
+     */
+    public function addRule(Validatable $rule)
     {
         $this->rules[] = $rule;
 
@@ -232,9 +309,9 @@ abstract class AbstractFieldController implements DataFieldInterface, FormFieldC
     /**
      *
      */
-    protected function checkVar()
+    protected function postVarExists()
     {
-        return filter_has_var(INPUT_POST, $this->formField->getName());
+        return filter_has_var(INPUT_POST, $this->getFormFieldName());
     }
 
     /**
@@ -242,7 +319,7 @@ abstract class AbstractFieldController implements DataFieldInterface, FormFieldC
      */
     protected function getRawInput()
     {
-        return $_POST[$this->formField->getName()];
+        return $_POST[$this->getFormFieldName()];
     }
 
     /**
@@ -260,7 +337,7 @@ abstract class AbstractFieldController implements DataFieldInterface, FormFieldC
     /**
      *
      */
-    protected function getFilteredInput()
+    public function getFilteredInput()
     {
         return $this->filterInput($this->getRawInput());
     }
@@ -303,30 +380,54 @@ abstract class AbstractFieldController implements DataFieldInterface, FormFieldC
     }
 
     /**
-     *
+     * @param mixed $processed and packaged request data
      */
-    public function saveInput($object)
+    public function saveInput($request): bool
     {
-        if (true === $this->checkVar()) {
-            exit(var_dump($this->getFilteredInput()));
-            $this->dataManager->saveData($object, $this->getFilteredInput());
+        $result = false;
+
+        $this->stateCache['save_attempted'] = true;
+
+        if (true === $this->postVarExists()) {
+            $result = $this->dataManager->saveData($this->getFilteredInput(), ...$request);
+            $this->stateCache['save_successful'] = $result;
         }
+
+        return $result;
     }
 
     /**
      *
      */
-    protected function getData($object)
+    protected function getData($request)
     {
-        return $this->dataManager->getData($object);
+        return $this->dataManager->getData($request);
     }
 
     /**
      *
      */
-    protected function setFormFieldValue($object)
+    public function getFormFieldName()
     {
-        $this->formField->setValue($this->getData($object));
+        return $this->namePrefix . $this->formField->getName();
+    }
+
+    /**
+     *
+     */
+    protected function setFormFieldName()
+    {
+        $this->formField->setName($this->getFormFieldName());
+
+        return $this;
+    }
+
+    /**
+     *
+     */
+    public function setFormFieldValue($request)
+    {
+        $this->formField->setValue($this->getData($request));
 
         return $this;
     }
@@ -342,9 +443,34 @@ abstract class AbstractFieldController implements DataFieldInterface, FormFieldC
     /**
      *
      */
-    public function renderFormField($object)
+    public function renderFormField($request)
     {
-        return $this->setFormFieldValue($object)->formField;
+        if (!isset($this->displayCallback)) {
+            return $this->_renderFormField($request);
+        } else {
+            $cb = $this->displayCallback;
+            return $cb($request, $this->_renderFormField($request));
+        }
+    }
+
+    /**
+     * function to render the formfield if no callback is supplied
+     */
+    public function _renderFormField($request)
+    {
+        return $this
+            ->prepareFormFieldForRendering($request)
+            ->getFormField(); // $this->formField
+    }
+
+    /**
+     *
+     */
+    protected function prepareFormFieldForRendering($request)
+    {
+        return $this
+            ->setFormFieldValue($request)
+            ->setFormFieldName();
     }
 
     /**
@@ -353,5 +479,47 @@ abstract class AbstractFieldController implements DataFieldInterface, FormFieldC
     protected function renderAlert($rule)
     {
         // do something
+    }
+
+    /**
+     * Get the value of stateCache
+     *
+     * @return array
+     */
+    public function getStateCache(): array
+    {
+        return $this->stateCache;
+    }
+
+    /**
+     * Get the value of stateCache
+     *
+     * @return array
+     */
+    public function getStateParameter(string $state)
+    {
+        return $this->stateCache[$state];
+    }
+
+    /**
+     * Set the value of stateCache
+     *
+     * @param array $stateCache
+     *
+     * @return self
+     */
+    public function resetStateCache(string $nonce)
+    {
+        if (false) {
+            throw new \Exeption("Invalid nonce provided");
+            exit;
+        }
+
+        foreach ($this->stateCache as &$state) {
+            $state = null;
+        }
+        unset($state);
+
+        return $this;
     }
 }
