@@ -1,17 +1,17 @@
 <?php
 
-namespace Backalley\FormFields;
+namespace Backalley\Form\Fields;
 
-use Backalley\FormFields\Label;
+use Backalley\Form\Elements\Label;
 use Backalley\Html\AbstractHtmlElement;
-use Backalley\FormFields\Contracts\FormFieldInterface;
+use Backalley\Form\Contracts\FormFieldInterface;
 
 abstract class AbstractFormField extends AbstractHtmlElement implements FormFieldInterface
 {
     /**
      * @var string
      */
-    public $name;
+    public $name = '';
 
     /**
      * @var mixed
@@ -21,12 +21,12 @@ abstract class AbstractFormField extends AbstractHtmlElement implements FormFiel
     /**
      * @var string
      */
-    public $label;
+    public $label = '';
 
     /**
      * @var string
      */
-    public $placeholder;
+    public $placeholder = '';
 
     /**
      * @var bool
@@ -235,8 +235,8 @@ abstract class AbstractFormField extends AbstractHtmlElement implements FormFiel
     /**
      * @return string
      */
-    public function getRenderedLabel()
+    public function getLabelHtml()
     {
-        return (string) (new Label($this->label))->setFor($this->id);
+        return (new Label($this->label))->setFor($this->id)->toHtml();
     }
 }

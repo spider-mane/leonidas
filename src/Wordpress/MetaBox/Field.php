@@ -3,7 +3,7 @@
 namespace Backalley\WordPress\MetaBox;
 
 use Timber\Timber;
-use Backalley\FormFields\Contracts\FormFieldControllerInterface;
+use Backalley\Form\Contracts\FormFieldControllerInterface;
 use Backalley\WordPress\MetaBox\Contracts\MetaboxContentInterface;
 
 class Field implements MetaboxContentInterface

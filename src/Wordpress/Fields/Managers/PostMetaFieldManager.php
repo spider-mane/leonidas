@@ -1,14 +1,14 @@
 <?php
 
-namespace Backalley\WordPress\Fields\Managers;
+namespace Backalley\Wordpress\Fields\Managers;
 
-use Backalley\Wordpress\Fields\Contracts\FieldDataManagerInterface;
-use Backalley\Wordpress\Fields\Contracts\DataFieldInterface;
+use Backalley\Form\Managers\AbstractFieldDataManager;
+use Backalley\Form\Contracts\FieldDataManagerInterface;
 
 /**
  *
  */
-class PostMetaManager extends AbstractFieldDataManager implements FieldDataManagerInterface
+class PostMetaFieldManager extends AbstractFieldDataManager implements FieldDataManagerInterface
 {
     /**
      * @var string
@@ -19,11 +19,6 @@ class PostMetaManager extends AbstractFieldDataManager implements FieldDataManag
      * @var string
      */
     protected $prefix = 'ba_';
-
-    /**
-     * @var string
-     */
-    protected $dataMap;
 
     /**
      * @var array
@@ -46,9 +41,14 @@ class PostMetaManager extends AbstractFieldDataManager implements FieldDataManag
     protected $serializedAs;
 
     /**
+     * @var string|int Index where seriazed data is to be found
+     */
+    protected $serializationIndex;
+
+    /**
      *
      */
-    public function __construct($metaKey)
+    public function __construct($metaKey, $postType = null)
     {
         $this->metaKey = $metaKey;
     }
@@ -83,30 +83,6 @@ class PostMetaManager extends AbstractFieldDataManager implements FieldDataManag
     public function setPrefix(string $prefix)
     {
         $this->prefix = $prefix;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of dataMap
-     *
-     * @return array
-     */
-    public function getDataMap()
-    {
-        return $this->dataMap;
-    }
-
-    /**
-     * Set the value of dataMap
-     *
-     * @param string $dataMap
-     *
-     * @return self
-     */
-    public function setDataMap(array $dataMap)
-    {
-        $this->dataMap = $dataMap;
 
         return $this;
     }
@@ -186,7 +162,7 @@ class PostMetaManager extends AbstractFieldDataManager implements FieldDataManag
     /**
      *
      */
-    public function createData($data, $post)
+    public function createData($post, $data): bool
     {
         return add_post_meta($post->ID, $this->metaKey, $data, $this->isUniqueValue);
     }
@@ -196,17 +172,21 @@ class PostMetaManager extends AbstractFieldDataManager implements FieldDataManag
      */
     public function getData($post)
     {
-        return get_post_meta($post->ID, $this->getMetaKey(), $this->isUniqueValue);
+        $data = get_post_meta($post->ID, $this->getMetaKey(), $this->isUniqueValue);
+
+        return htmlspecialchars($data);
     }
 
     /**
      *
      */
-    public function saveData($data, $post): bool
+    public function saveData($post, $data): bool
     {
-        return (bool) update_post_meta($post->ID, $this->metaKey, $data, $this->getData($post));
+        $response = (bool) update_post_meta($post->ID, $this->metaKey, $data, $this->getData($post));
 
-        // do_action("backalley/updated/post/{$this->postType}/{$this->metaKey}", $post, $data);
+        do_action("backalley/updated/post/{$post->post_type}/{$this->metaKey}", $post, $data);
+
+        return $response;
     }
 
     /**
@@ -214,9 +194,9 @@ class PostMetaManager extends AbstractFieldDataManager implements FieldDataManag
      */
     public function deleteData($post)
     {
-        $response = delete_post_meta($post->id, $this->metaKey, '');
+        $response = (bool) delete_post_meta($post->id, $this->metaKey, '');
 
-        // do_action("backalley/deleted/post/{$this->postType}/{$this->metaKey}", $post);
+        do_action("backalley/deleted/post/{$post->post_type}/{$this->metaKey}", $post);
 
         return $response;
     }

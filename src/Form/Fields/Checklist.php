@@ -4,12 +4,11 @@
  * @package Backalley-Core
  */
 
-namespace Backalley\FormFields\Fields;
+namespace Backalley\Form\Fields;
 
-use Backalley\FormFields\Input;
-use Backalley\FormFields\Label;
-use Backalley\FormFields\Contracts\FormFieldInterface;
-use Backalley\FormFields\Traits\SupportsMultipleValuesTrait;
+use Backalley\Form\Fields\Input;
+use Backalley\Form\Elements\Label;
+use Backalley\Form\Contracts\FormFieldInterface;
 
 class Checklist extends AbstractFormField implements FormFieldInterface
 {
@@ -144,7 +143,7 @@ class Checklist extends AbstractFormField implements FormFieldInterface
     /**
      *
      */
-    public function toHtml()
+    public function toHtml(): string
     {
         $this->resolveAttributes();
 

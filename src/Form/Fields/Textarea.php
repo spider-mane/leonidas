@@ -1,8 +1,8 @@
 <?php
 
-namespace Backalley\FormFields\Fields;
+namespace Backalley\Form\Fields;
 
-use Backalley\FormFields\Contracts\FormFieldInterface;
+use Backalley\Form\Contracts\FormFieldInterface;
 
 class Textarea extends AbstractFormField implements FormFieldInterface
 {
@@ -47,7 +47,7 @@ class Textarea extends AbstractFormField implements FormFieldInterface
     /**
      *
      */
-    public function toHtml()
+    public function toHtml(): string
     {
         $this->resolveAttributes();
 

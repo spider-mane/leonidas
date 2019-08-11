@@ -1,13 +1,13 @@
 <?php
 
-namespace Backalley\Wordpress\Fields\Contracts;
+namespace Backalley\Form\Contracts;
 
 interface FormSubmissionManagerInterface
 {
     /**
      *
      */
-    public function saveInput(...$request): bool;
+    public function saveInput($request): bool;
 
     /**
      *

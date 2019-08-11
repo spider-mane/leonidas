@@ -1,6 +1,6 @@
 <?php
 
-namespace Backalley\FormFields;
+namespace Backalley\Form\Elements;
 
 use Backalley\Html\AbstractHtmlElement;
 

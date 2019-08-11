@@ -1,12 +1,26 @@
 <?php
 
-namespace Backalley\Wordpress\Fields;
+namespace Backalley\Form\Controllers;
 
-use Backalley\Wordpress\Fields\Contracts\FormSubmissionManagerInterface;
-use Backalley\FormFields\Contracts\FormFieldControllerInterface;
+use Backalley\Form\Contracts\FormFieldControllerInterface;
 
-trait FormSubmissionManagerTrait
+class FormSubmissionGroup
 {
+    /**
+     * @var string
+     */
+    protected $slug;
+
+    /**
+     * @var array
+     */
+    protected $fields = [];
+
+    /**
+     * @var array
+     */
+    protected $callbacks = [];
+
     /**
      * Get the value of fields
      *
@@ -24,7 +38,7 @@ trait FormSubmissionManagerTrait
      *
      * @return self
      */
-    public function setFields($fields)
+    public function setFields($fields): FormSubmissionGroup
     {
         foreach ($fields as $field) {
             $this->addField($field);
@@ -34,7 +48,8 @@ trait FormSubmissionManagerTrait
     }
 
     /**
-     *
+     * @param FormFieldControllerInterface $field
+     * @param string|array $groups
      */
     public function addField(FormFieldControllerInterface $field)
     {
@@ -82,40 +97,39 @@ trait FormSubmissionManagerTrait
     /**
      *
      */
-    public function saveInput($request): bool
+    public function run($request)
     {
-        $saved = false;
+        $values = [];
 
         /** @var FormFieldControllerInterface $field */
-        foreach ($this->fields as $slug => $field) {
 
-            $values[$slug] = $field->getFilteredInput();
+        foreach ($this->fields as $field) {
 
-            if ($field->hasDataManager() && !$field->getState('saved')) {
-                $results[$slug]['saved'] = $field->saveInput($request);
-                $results[$slug]['value'] = $values[$slug];
+            $slug = $field->getFormFieldName();
+
+            if ($field->postVarExists()) {
+                $values[$slug] = $field->getStateParameter('input_value');
+            } else {
+                $values[$slug] = null;
+            }
+
+            // dynamically generate results array if field has a data manager
+            // this allows callbacks to anticipate only input data where it is
+            // not desired for the field to have any saving functionality
+            if ($field->hasDataManager()) {
+                $results[$slug]['saved'] = $field->getStateParameter('save_successful');
+            }
+        }
+
+        if (isset($results)) {
+            foreach ($results as $slug => &$result) {
+                $result['value'] = $values[$slug];
             }
         }
 
         foreach ($this->callbacks as $cb) {
-            $cb($results ?? $values);
+            // send results to callback if it exists, otherwise send vales
+            $cb($results ?? $values, $request);
         }
-
-        return $saved;
-    }
-
-    /**
-     *
-     */
-    public function getFilteredInput()
-    {
-        $input = [];
-
-        /** @var FormFieldControllerInterface $field */
-        foreach ($this->fields as $slug => $field) {
-            $input[$slug] = $field->getFilteredInput();
-        }
-
-        return $input;
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Backalley\FormFields\Contracts;
+namespace Backalley\Form\Contracts;
 
 interface FormFieldInterface
 {

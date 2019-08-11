@@ -80,12 +80,12 @@ class Section implements MetaboxContentInterface
      */
     public function render($post)
     {
-        echo Html::open('fieldset') . Html::tag('h3', $this->title);
+        echo Html::open('div') . Html::tag('h3', $this->title);
 
         foreach ($this->content as $content) {
             $content->render($post);
         }
 
-        echo Html::close('fieldset');
+        echo Html::close('div');
     }
 }

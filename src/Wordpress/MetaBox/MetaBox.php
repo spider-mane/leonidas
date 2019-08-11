@@ -3,7 +3,7 @@
 namespace Backalley\WordPress\MetaBox;
 
 use Backalley\Html\Html;
-use Backalley\FormFields\Input;
+use Backalley\Form\Fields\Input;
 use Backalley\WordPress\MetaBox\Contracts\MetaboxContentInterface;
 
 /**

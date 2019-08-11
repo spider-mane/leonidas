@@ -1,18 +1,17 @@
 <?php
 
-namespace Backalley\Wordpress\Fields\Controllers;
+namespace Backalley\Form\Controllers;
 
 use Respect\Validation\Validatable;
-use Backalley\FormFields\Contracts\FormFieldInterface;
-use Backalley\Wordpress\Fields\Contracts\DataFieldInterface;
-use Backalley\FormFields\Contracts\FormFieldControllerInterface;
-use Backalley\Wordpress\Fields\Contracts\FieldDataManagerInterface;
-use Backalley\Wordpress\Fields\Contracts\FormSubmissionManagerInterface;
+use Backalley\Form\Contracts\DataFieldInterface;
+use Backalley\Form\Contracts\FormFieldInterface;
+use Backalley\Form\Contracts\FieldDataManagerInterface;
+use Backalley\Form\Contracts\FormFieldControllerInterface;
 
 /**
  *
  */
-abstract class AbstractFieldController implements DataFieldInterface, FormFieldControllerInterface
+class FormFieldController implements DataFieldInterface, FormFieldControllerInterface
 {
     /**
      * @var string
@@ -309,7 +308,7 @@ abstract class AbstractFieldController implements DataFieldInterface, FormFieldC
     /**
      *
      */
-    protected function postVarExists()
+    public function postVarExists()
     {
         return filter_has_var(INPUT_POST, $this->getFormFieldName());
     }
@@ -339,7 +338,7 @@ abstract class AbstractFieldController implements DataFieldInterface, FormFieldC
      */
     public function getFilteredInput()
     {
-        return $this->filterInput($this->getRawInput());
+        return $this->stateCache['input_value'] = $this->filterInput($this->getRawInput());
     }
 
     /**
@@ -389,7 +388,7 @@ abstract class AbstractFieldController implements DataFieldInterface, FormFieldC
         $this->stateCache['save_attempted'] = true;
 
         if (true === $this->postVarExists()) {
-            $result = $this->dataManager->saveData($this->getFilteredInput(), ...$request);
+            $result = $this->dataManager->saveData($request, $this->getFilteredInput());
             $this->stateCache['save_successful'] = $result;
         }
 
@@ -407,7 +406,7 @@ abstract class AbstractFieldController implements DataFieldInterface, FormFieldC
     /**
      *
      */
-    public function getFormFieldName()
+    public function getFormFieldName(): string
     {
         return $this->namePrefix . $this->formField->getName();
     }
@@ -449,7 +448,7 @@ abstract class AbstractFieldController implements DataFieldInterface, FormFieldC
             return $this->_renderFormField($request);
         } else {
             $cb = $this->displayCallback;
-            return $cb($request, $this->_renderFormField($request));
+            // return $cb($request, $this->_renderFormField($request));
         }
     }
 
@@ -512,7 +511,6 @@ abstract class AbstractFieldController implements DataFieldInterface, FormFieldC
     {
         if (false) {
             throw new \Exeption("Invalid nonce provided");
-            exit;
         }
 
         foreach ($this->stateCache as &$state) {

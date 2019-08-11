@@ -1,8 +1,8 @@
 <?php
 
-namespace Backalley\Wordpress\Fields;
+namespace Backalley\Wordpress\Forms\Controllers;
 
-use Backalley\FormFields\Contracts\FormFieldControllerInterface;
+use Backalley\Form\Controllers\AbstractFormSubmissionManager;
 
 class PostMetaBoxFormSubmissionManager extends AbstractFormSubmissionManager
 {
@@ -36,7 +36,7 @@ class PostMetaBoxFormSubmissionManager extends AbstractFormSubmissionManager
      *
      * @return self
      */
-    public function setPostType(string $postType)
+    protected function setPostType(string $postType)
     {
         $this->postType = $postType;
 
@@ -48,7 +48,7 @@ class PostMetaBoxFormSubmissionManager extends AbstractFormSubmissionManager
      */
     public function hook()
     {
-        add_action("save_post_{$this->postType}", [$this, '_savePost'], null, PHP_INT_MAX);
+        add_action("save_post_{$this->postType}", [$this, '_handleRequest'], null, PHP_INT_MAX);
 
         return $this;
     }
@@ -56,8 +56,12 @@ class PostMetaBoxFormSubmissionManager extends AbstractFormSubmissionManager
     /**
      *
      */
-    public function _savePost($postId, $post, $update)
+    public function _handleRequest($postId, $post, $update)
     {
+        if (!$update) {
+            return;
+        }
+
         $this->handleRequest($post);
     }
 }

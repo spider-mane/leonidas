@@ -1,13 +1,13 @@
 <?php
 
-namespace Backalley\Wordpress\Fields;
+namespace Backalley\Form\Controllers;
 
-use Backalley\FormFields\Contracts\FormFieldControllerInterface;
+use Backalley\Form\Contracts\FormFieldControllerInterface;
 
 abstract class AbstractFormSubmissionManager
 {
     /**
-     *
+     * @var array
      */
     protected $fields = [];
 
@@ -26,7 +26,7 @@ abstract class AbstractFormSubmissionManager
      */
     public function __construct()
     {
-        //
+        // do something maybe
     }
 
     /**
@@ -59,7 +59,7 @@ abstract class AbstractFormSubmissionManager
      * @param FormFieldControllerInterface $field
      * @param string|array $groups
      */
-    public function addField(FormFieldControllerInterface $field, $groups = null)
+    public function addField(FormFieldControllerInterface $field)
     {
         $name = $field->getFormFieldName();
 
@@ -67,10 +67,6 @@ abstract class AbstractFormSubmissionManager
             $this->fields[$name] = $field;
         } else {
             throw new \Exception("This instance of " . __CLASS__ . " already has a field named {$name}");
-        }
-
-        foreach ((array) $groups as $group) {
-            $this->addFieldToGroup($name, $group);
         }
 
         return $this;
@@ -95,8 +91,8 @@ abstract class AbstractFormSubmissionManager
      */
     public function setGroups(array $groups)
     {
-        foreach ($groups as $group) {
-            $this->addGroup($group);
+        foreach ($groups as $slug => $group) {
+            $this->addGroup($slug, $group);
         }
 
         return $this;
@@ -109,39 +105,13 @@ abstract class AbstractFormSubmissionManager
      *
      * @return self
      */
-    public function addGroup(string $group)
+    public function addGroup(string $slug, FormSubmissionGroup $group)
     {
-        if (!in_array($group, $this->groups)) {
-            $this->groups[$group] = [];
+        if (!in_array($slug, $this->groups)) {
+            $this->groups[$slug] = $group;
         } else {
-            throw new \Exception("This instance of " . __CLASS__ . " already has a group named {$group}");
+            throw new \Exception("This instance of " . __CLASS__ . " already has a group named {$slug}");
         }
-
-        return $this;
-    }
-
-    /**
-     * addFieldToGroup
-     *
-     * @param string $field The slug of the field to add to the group
-     * @param string $group The slug of the group to append field to
-     */
-    public function addFieldToGroup(string $field, string $group)
-    {
-        $this->groups[$group]['fields'] = $field;
-
-        return $this;
-    }
-
-    /**
-     * addFieldToGroup
-     *
-     * @param string $callback The slug of the callback to add to the group
-     * @param string $group The slug of the group to append field to
-     */
-    public function assignCallbackToGroup(string $callback, string $group)
-    {
-        $this->groups[$group]['callbacks'] = $callback;
 
         return $this;
     }
@@ -165,12 +135,12 @@ abstract class AbstractFormSubmissionManager
      *
      * @return self
      */
-    public function addCallBack(string $slug, ?string $group, callable $callback)
+    public function addCallBack(string $slug, callable $callback)
     {
-        $this->callbacks[$slug] = $callback;
-
-        if (isset($group)) {
-            $this->assignCallbackToGroup($slug, $group);
+        if (!isset($this->callbacks[$slug])) {
+            $this->callbacks[$slug] = $callback;
+        } else {
+            throw new \Exception("This instance of " . __CLASS__ . " already has a callback named {$slug}");
         }
 
         return $this;
@@ -179,40 +149,46 @@ abstract class AbstractFormSubmissionManager
     /**
      *
      */
-    public function handleRequest(...$request)
+    public function handleRequest($request)
     {
+        $values = [];
+
         /** @var FormFieldControllerInterface $field */
+
         foreach ($this->fields as $slug => $field) {
 
-            $values[$slug] = $field->getFilteredInput();
+            if ($field->postVarExists()) {
+                $values[$slug] = $field->getFilteredInput();
+            } else {
+                $values[$slug] = null;
+            }
 
+            // dynamically generate results array if field has a data manager
+            // this allows callbacks to anticipate only input data where it is
+            // not desired for the field to have any saving functionality
             if ($field->hasDataManager()) {
                 $results[$slug]['saved'] = $field->saveInput($request);
-                $results[$slug]['value'] = $values[$slug];
+            }
+        }
+
+        if (isset($results)) {
+            foreach ($results as $slug => &$result) {
+                $result['value'] = $values[$slug];
             }
         }
 
         foreach ($this->callbacks as $cb) {
-            $cb($results ?? $values);
+            $cb($results ?? $values, $request);
         }
 
+        /** @var FormSubmissionGroup $group */
         foreach ($this->groups as $group) {
-            $group->run();
+            $group->run($request);
         }
-    }
-
-    /**
-     *
-     */
-    public function getFilteredInput()
-    {
-        $input = [];
 
         /** @var FormFieldControllerInterface $field */
-        foreach ($this->fields as $slug => $field) {
-            $input[$slug] = $field->getFilteredInput();
+        foreach ($this->fields as $field) {
+            $field->resetStateCache('');
         }
-
-        return $input;
     }
 }

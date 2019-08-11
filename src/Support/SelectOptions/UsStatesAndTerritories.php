@@ -86,9 +86,15 @@ class UsStatesAndTerritories
     /**
      *
      */
-    public static function states()
+    public static function states(?string $placeholder = null)
     {
-        return static::STATES;
+        $states = static::STATES;
+
+        if (isset($placeholder)) {
+            $states = ['' => $placeholder] + $states;
+        }
+
+        return $states;
     }
 
     /**

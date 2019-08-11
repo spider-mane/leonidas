@@ -20,7 +20,7 @@ abstract class AbstractHtmlElement
     /**
      * @var string
      */
-    public $id;
+    public $id = '';
 
     /**
      * @var array
@@ -293,5 +293,5 @@ abstract class AbstractHtmlElement
     /**
      *
      */
-    abstract public function toHtml();
+    abstract public function toHtml(): string;
 }

@@ -1,11 +1,8 @@
 <?php
 
-namespace Backalley\FormFields\Fields;
+namespace Backalley\Form\Fields;
 
-use Backalley\Html\TagSage;
-use Backalley\GuctilityBelt;
-use Backalley\FormFields\Contracts\FormFieldInterface;
-
+use Backalley\Form\Contracts\FormFieldInterface;
 
 class Input extends AbstractFormField implements FormFieldInterface
 {
@@ -69,7 +66,7 @@ class Input extends AbstractFormField implements FormFieldInterface
     /**
      *
      */
-    public function toHtml()
+    public function toHtml(): string
     {
         $this->resolveAttributes();
 

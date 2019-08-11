@@ -1,9 +1,8 @@
 <?php
 
-namespace Backalley\FormFields\Fields;
+namespace Backalley\Form\Fields;
 
-use Backalley\FormFields\Contracts\FormFieldInterface;
-
+use Backalley\Form\Contracts\FormFieldInterface;
 
 class Select extends AbstractFormField implements FormFieldInterface
 {
@@ -84,13 +83,17 @@ class Select extends AbstractFormField implements FormFieldInterface
     /**
      *
      */
-    public function toHtml()
+    public function toHtml(): string
     {
         $this->resolveAttributes();
 
         $html = '';
 
         $html .= $this->open('select', $this->attributes);
+
+        if (!empty($this->placeholder)) {
+            $html .= $this->open('option') . $this->placeholder . $this->close('option');
+        }
 
         foreach ($this->options as $value => $option) {
             $optionAttr = ['value' => $value];
