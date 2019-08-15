@@ -107,9 +107,9 @@ class FormFieldController implements DataFieldInterface, FormFieldControllerInte
      * @var array
      */
     private $stateCache = [
-        'has_var' => null,
         'violations' => [],
         'input_value' => null,
+        'has_post_var' => null,
         'save_attempted' => null,
         'save_successful' => null,
     ];
@@ -423,13 +423,14 @@ class FormFieldController implements DataFieldInterface, FormFieldControllerInte
      */
     public function postVarExists()
     {
-        return filter_has_var(INPUT_POST, $this->getFormFieldName());
+        $result = filter_has_var(INPUT_POST, $this->getFormFieldName());
+        return $this->stateCache['post_has_var'] = $result;
     }
 
     /**
      *
      */
-    protected function getRawInput()
+    private function getRawInput()
     {
         return $_POST[$this->getFormFieldName()];
     }
@@ -439,11 +440,9 @@ class FormFieldController implements DataFieldInterface, FormFieldControllerInte
      */
     protected function filterInput($input)
     {
-        if (false === $this->validateInput($input)) {
-            return;
+        if (true === $this->validateInput($input)) {
+            return $this->sanitizeInput($input);
         }
-
-        return $this->sanitizeInput($input);
     }
 
     /**
@@ -451,11 +450,12 @@ class FormFieldController implements DataFieldInterface, FormFieldControllerInte
      */
     public function getFilteredInput()
     {
-        return $this->stateCache['input_value'] = $this->filterInput($this->getRawInput());
+        $input = $this->filterInput($this->getRawInput());
+        return $this->stateCache['input_value'] = $input;
     }
 
     /**
-     * @todo add validation logic
+     *
      */
     protected function validateInput($input)
     {
@@ -464,20 +464,11 @@ class FormFieldController implements DataFieldInterface, FormFieldControllerInte
 
             if (true !== $validator->validate($input)) {
                 $this->stateCache['violations'][] = $rule;
-                // $this->handleInvalidInput($input, $rule);
                 return false;
             }
         }
 
         return true;
-    }
-
-    /**
-     *
-     */
-    protected function handleInvalidInput($input, $rule)
-    {
-        return;
     }
 
     /**
@@ -516,7 +507,7 @@ class FormFieldController implements DataFieldInterface, FormFieldControllerInte
     /**
      *
      */
-    public function saveData($request)
+    protected function saveData($request)
     {
         $filteredInput = $this->getStateParameter('input_value') ?? $this->getFilteredInput();
 
@@ -536,13 +527,13 @@ class FormFieldController implements DataFieldInterface, FormFieldControllerInte
      */
     public function getFormFieldName(): string
     {
-        return $this->namePrefix . $this->formField->getName();
+        return $this->namePrefix . $this->postVar ?? $this->formField->getName();
     }
 
     /**
      *
      */
-    public function escapeValue($value)
+    protected function escapeValue($value)
     {
         return isset($this->escape)
             ? call_user_func($this->escape, $value)
@@ -597,14 +588,6 @@ class FormFieldController implements DataFieldInterface, FormFieldControllerInte
         return $this
             ->setFormFieldValue($request)
             ->setFormFieldName();
-    }
-
-    /**
-     * @todo actually implement it
-     */
-    protected function renderAlert($rule)
-    {
-        // do something
     }
 
     /**

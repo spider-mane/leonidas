@@ -108,7 +108,6 @@ $address = [
         'label' => 'Street',
         'type' => (new Input)
             ->setId('ba-location--address--street')
-            ->setName('street')
             ->setType('text')
             ->addClass('regular-text'),
         'data' => new PostMetaFieldManager('ba_location_address__street'),
@@ -119,7 +118,6 @@ $address = [
         'type' => (new Input)
             ->setId('ba-location--address--city')
             ->setType('text')
-            ->setName('city')
             ->addClass('regular-text'),
         'data' => new PostMetaFieldManager('ba_location_address__city'),
         'groups' => 'address'
@@ -128,7 +126,6 @@ $address = [
         'label' => 'State',
         'type' => (new Select)
             ->setId('ba-location--address--state')
-            ->setName('state')
             ->addClass('regular-text')
             ->setOptions(UsStatesAndTerritories::states('Select State')),
         'data' => new PostMetaFieldManager('ba_location_address__state'),
@@ -137,7 +134,6 @@ $address = [
     'zip' => [
         'label' => 'Zip',
         'type' => (new Input)
-            ->setName('zip')
             ->setId('ba-location--address--zip')
             ->addClass('small-text')
             ->setPlaceholder('Zip'),
@@ -147,7 +143,6 @@ $address = [
     'complete' => [
         'label' => 'Complete',
         'type' => (new Input)
-            ->setName('address')
             ->setId('ba-location--address--complete')
             ->addClass('regular-text')
             ->setPlaceholder('Formatted Address')

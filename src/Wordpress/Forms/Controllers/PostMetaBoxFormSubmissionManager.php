@@ -94,6 +94,16 @@ class PostMetaBoxFormSubmissionManager extends AbstractFormSubmissionManager
     /**
      *
      */
+    public function finalizeRequest($request)
+    {
+        if (!empty($this->alerts)) {
+            set_transient($this::TRANSIENT_RULE_VIOLATION, $this->alerts, 300);
+        }
+    }
+
+    /**
+     *
+     */
     private function isSafeToRun($post)
     {
         $nonceName = $this->nonce['name'] ?? null;
@@ -129,28 +139,6 @@ class PostMetaBoxFormSubmissionManager extends AbstractFormSubmissionManager
             }
 
             delete_transient($transient);
-        }
-    }
-
-    /**
-     *
-     */
-    public function processFieldViolation(FormFieldControllerInterface $field)
-    {
-        $alerts = $field->getAlerts();
-
-        foreach ($field->getStateParameter('violations') as $violation) {
-            $this->alerts[] = $alerts[$violation];
-        }
-    }
-
-    /**
-     *
-     */
-    public function finalizeRequest()
-    {
-        if (!empty($this->alerts)) {
-            set_transient($this::TRANSIENT_RULE_VIOLATION, $this->alerts, 300);
         }
     }
 }

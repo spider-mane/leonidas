@@ -149,50 +149,76 @@ abstract class AbstractFormSubmissionManager
     /**
      *
      */
-    public function handleRequest($request)
+    final protected function handleRequest($request)
     {
-        /**
-         * @var FormFieldControllerInterface $field
-         */
+        /** @var FormFieldControllerInterface $field */
         foreach ($this->fields as $field) {
 
-            if ($field->postVarExists()) {
+            if (!$field->postVarExists()) {
+                continue;
+            }
+
+            if ($field->hasDataManager() && !$field->isSavingDisabled()) {
+                $field->saveInput($request);
+            } else {
                 $field->getFilteredInput();
+            }
 
-                if (!empty($field->getStateParameter('violations'))) {
-                    $this->processFieldViolation($field);
-                }
-
-                if ($field->hasDataManager() && !$field->isSavingDisabled()) {
-                    $field->saveInput($request);
-                }
+            if (!empty($field->getStateParameter('violations'))) {
+                $this->processFieldViolation($field);
             }
         }
 
-        /**
-         * @var FormSubmissionGroup $group
-         */
-        foreach ($this->groups as $group) {
-            $group->run($request);
-        }
-
-        /**
-         * @var FormFieldControllerInterface $field
-         */
-        foreach ($this->fields as $field) {
-            $field->resetStateCache('');
-        }
-
-        $this->finalizeRequest();
+        $this
+            ->runGroups($request)
+            ->resetFieldsCache()
+            ->finalizeRequest($request);
     }
 
     /**
      *
      */
-    abstract function processFieldViolation(FormFieldControllerInterface $field);
+    final private function runGroups($request)
+    {
+        /** @var FormSubmissionGroup $group */
+
+        foreach ($this->groups as $group) {
+            $group->run($request);
+        }
+
+        return $this;
+    }
 
     /**
      *
      */
-    abstract function finalizeRequest();
+    final private function resetFieldsCache()
+    {
+        /** @var FormFieldControllerInterface $field */
+
+        foreach ($this->fields as $field) {
+            $field->resetStateCache('');
+        }
+
+        return $this;
+    }
+
+    /**
+     *
+     */
+    public function processFieldViolation(FormFieldControllerInterface $field)
+    {
+        $alerts = $field->getAlerts();
+
+        foreach ($field->getStateParameter('violations') as $violation) {
+            $this->alerts[] = $alerts[$violation];
+        }
+
+        return $this;
+    }
+
+    /**
+     *
+     */
+    abstract function finalizeRequest($request);
 }
