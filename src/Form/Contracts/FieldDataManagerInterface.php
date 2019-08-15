@@ -5,27 +5,22 @@ namespace Backalley\Form\Contracts;
 interface FieldDataManagerInterface
 {
     /**
-     *
-     */
-    public function setField(DataFieldInterface $field);
-
-    /**
-     *
+     * Create
      */
     public function createData($request, $data): bool;
 
     /**
-     *
+     * Read
      */
     public function getData($request);
 
     /**
-     *
+     * Update
      */
     public function saveData($request, $data): bool;
 
     /**
-     *
+     * Delete
      */
     public function deleteData($request);
 }

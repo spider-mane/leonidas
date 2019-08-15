@@ -2,8 +2,8 @@
 
 namespace Backalley\WordPress\MetaBox;
 
-use Backalley\WordPress\MetaBox\Contracts\MetaboxContentInterface;
 use Backalley\Html\Html;
+use Backalley\WordPress\MetaBox\Contracts\MetaboxContentInterface;
 
 class Section implements MetaboxContentInterface
 {
@@ -15,7 +15,17 @@ class Section implements MetaboxContentInterface
     /**
      * @var array
      */
-    protected $content;
+    protected $content = [];
+
+    /**
+     * @var int
+     */
+    protected $padding = 2;
+
+    /**
+     * @var bool
+     */
+    protected $isFieldset = true;
 
     /**
      *
@@ -76,16 +86,81 @@ class Section implements MetaboxContentInterface
     }
 
     /**
+     * Get the value of isFieldset
+     *
+     * @return bool
+     */
+    public function isFieldset(): bool
+    {
+        return $this->isFieldset;
+    }
+
+    /**
+     * Set the value of isFieldset
+     *
+     * @param bool $isFieldset
+     *
+     * @return self
+     */
+    public function setIsFieldset(bool $isFieldset)
+    {
+        $this->isFieldset = $isFieldset;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of padding
+     *
+     * @return int
+     */
+    public function getPadding(): int
+    {
+        return $this->padding;
+    }
+
+    /**
+     * Set the value of padding
+     *
+     * @param int $padding
+     *
+     * @return self
+     */
+    public function setPadding(int $padding)
+    {
+        $this->padding = $padding;
+
+        return $this;
+    }
+
+    /**
      *
      */
     public function render($post)
     {
-        echo Html::open('div') . Html::tag('h3', $this->title);
+        $html = '';
 
-        foreach ($this->content as $content) {
-            $content->render($post);
+        $titleElement = Html::tag('h3', $this->title);
+        $attributes = ['class' => "py-{$this->padding}"];
+        $container = $this->isFieldset ? 'fieldset' : 'div';
+
+        $html .= Html::open($container, $attributes);
+
+        if ($this->isFieldset && false) {
+            // temporarily disabled because legend elements are absolutely
+            // positioned within their container, making padding not work
+            // as desired
+            $html .= Html::tag('legend', $titleElement);
+        } else {
+            $html .= $titleElement;
         }
 
-        echo Html::close('div');
+        foreach ($this->content as $content) {
+            $html .= $content->render($post);
+        }
+
+        $html .= Html::close($container);
+
+        return $html;
     }
 }

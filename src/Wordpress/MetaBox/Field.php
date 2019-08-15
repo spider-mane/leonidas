@@ -2,12 +2,14 @@
 
 namespace Backalley\WordPress\MetaBox;
 
-use Timber\Timber;
+use Backalley\Wordpress\MetaBox\Traits\UsesTemplateTrait;
 use Backalley\Form\Contracts\FormFieldControllerInterface;
 use Backalley\WordPress\MetaBox\Contracts\MetaboxContentInterface;
 
 class Field implements MetaboxContentInterface
 {
+    use UsesTemplateTrait;
+
     /**
      * label
      *
@@ -33,6 +35,11 @@ class Field implements MetaboxContentInterface
     protected $displayLabel = true;
 
     /**
+     * @var int
+     */
+    protected $rowPadding = 3;
+
+    /**
      * @var string
      */
     protected $submitButton;
@@ -45,7 +52,12 @@ class Field implements MetaboxContentInterface
     /**
      *
      */
-    protected $template = 'metabox__field.twig';
+    private $template = 'metabox__field';
+
+    /**
+     *
+     */
+    private const ROW_TITLE_COL_WITDH = 2;
 
     /**
      *
@@ -128,6 +140,30 @@ class Field implements MetaboxContentInterface
     }
 
     /**
+     * Get the value of rowPadding
+     *
+     * @return int
+     */
+    public function getRowPadding(): int
+    {
+        return $this->rowPadding;
+    }
+
+    /**
+     * Set the value of rowPadding
+     *
+     * @param int $rowPadding
+     *
+     * @return self
+     */
+    public function setRowPadding(int $rowPadding)
+    {
+        $this->rowPadding = $rowPadding;
+
+        return $this;
+    }
+
+    /**
      * Get the value of formFieldController
      *
      * @return FormFieldControllerInterface
@@ -154,19 +190,6 @@ class Field implements MetaboxContentInterface
     /**
      *
      */
-    public function render($post)
-    {
-        $definition = [
-            'label' => $this->label,
-            'description' => $this->description,
-            'field' => $this->renderFormField($post),
-            'hidden' => $this->hiddenInput,
-            'submit_button' => $this->submitButton,
-        ];
-
-        $this->renderTemplate($definition);
-    }
-
     protected function renderFormField($post)
     {
         return $this->formFieldController->renderFormField($post);
@@ -175,8 +198,16 @@ class Field implements MetaboxContentInterface
     /**
      *
      */
-    protected function renderTemplate($context)
+    public function render($post)
     {
-        Timber::render($this->template, $context);
+        return $this->renderTemplate([
+            'label' => $this->label,
+            'hidden' => $this->hiddenInput,
+            'row_padding' => $this->rowPadding,
+            'description' => $this->description,
+            'submit_button' => $this->submitButton,
+            'field' => $this->renderFormField($post),
+            'root_width' => static::ROW_TITLE_COL_WITDH,
+        ]);
     }
 }

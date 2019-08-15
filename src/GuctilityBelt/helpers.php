@@ -99,7 +99,42 @@ function google_geocode(string $address, string $key)
 /**
  *
  */
-function address_format($street, $city, $state, $zip)
+function address_formated(string $street, string $city, string $state, string $zip)
 {
     return "${street}, ${city}, ${state} ${zip}";
+}
+
+
+/**
+ *
+ */
+function address_geodata($results, $post)
+{
+    $updated = false;
+    $post_id = $post->ID;
+
+    foreach ($results as $result) {
+        if (true === $result['saved']) {
+            $updated = true;
+            break;
+        }
+    }
+
+    if (true === $updated) {
+        $complete = address_formated(
+            $results['ba_street']['value'],
+            $results['ba_city']['value'],
+            $results['ba_state']['value'],
+            $results['ba_zip']['value']
+        );
+
+        update_post_meta($post_id, "ba_location_address__complete", $complete);
+
+        if (isset(Backalley::$api_keys['google_maps'])) {
+
+            $coordinates = google_geocode($complete, Backalley::$api_keys['google_maps']);
+
+            update_post_meta($post_id, "ba_location_address__geo", $coordinates);
+        }
+    }
 }

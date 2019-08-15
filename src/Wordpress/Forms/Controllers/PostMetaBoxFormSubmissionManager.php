@@ -2,7 +2,9 @@
 
 namespace Backalley\Wordpress\Forms\Controllers;
 
+use Backalley\Html\Html;
 use Backalley\Form\Controllers\AbstractFormSubmissionManager;
+use Backalley\Form\Contracts\FormFieldControllerInterface;
 
 class PostMetaBoxFormSubmissionManager extends AbstractFormSubmissionManager
 {
@@ -10,6 +12,23 @@ class PostMetaBoxFormSubmissionManager extends AbstractFormSubmissionManager
      * @var string
      */
     protected $postType;
+
+    /**
+     * Array of alerts to display in admin after form submission
+     *
+     * @var  array $alerts
+     */
+    private $alerts = [];
+
+    /**
+     *
+     */
+    private $nonce = [];
+
+    /**
+     *
+     */
+    private const TRANSIENT_RULE_VIOLATION = 'backalley.form.field.ruleViolation';
 
     /**
      *
@@ -48,7 +67,16 @@ class PostMetaBoxFormSubmissionManager extends AbstractFormSubmissionManager
      */
     public function hook()
     {
-        add_action("save_post_{$this->postType}", [$this, '_handleRequest'], null, PHP_INT_MAX);
+        add_action("save_post_{$this->postType}", [$this, 'savePostActionCallback'], null, PHP_INT_MAX);
+        add_action('admin_notices', [$this, 'adminNoticeActionCallback'], null, PHP_INT_MAX);
+
+        return $this;
+    }
+
+    public function setNonce(string $name, string $action)
+    {
+        $this->nonce['name'] = $name;
+        $this->nonce['action'] = $action;
 
         return $this;
     }
@@ -56,12 +84,73 @@ class PostMetaBoxFormSubmissionManager extends AbstractFormSubmissionManager
     /**
      *
      */
-    public function _handleRequest($postId, $post, $update)
+    public function savePostActionCallback($postId, $post, $update)
     {
-        if (!$update) {
-            return;
+        if ($update && $this->isSafeToRun($post)) {
+            $this->handleRequest($post);
+        }
+    }
+
+    /**
+     *
+     */
+    private function isSafeToRun($post)
+    {
+        $nonceName = $this->nonce['name'] ?? null;
+        $nonceAction = $this->nonce['action'] ?? null;
+
+        if (
+            (!isset($nonceName, $nonceAction, $_POST[$nonceName])) // $this->nonce and nonce field does not exist
+            || (!wp_verify_nonce($_POST[$nonceName], $nonceAction)) // nonce action does not match
+            || (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) // wp performing autosave
+            || (!current_user_can('edit_post', $post->ID)) // current user does not have required permission
+        ) {
+            return false;
         }
 
-        $this->handleRequest($post);
+        return true;
+    }
+
+    /**
+     *
+     */
+    public function adminNoticeActionCallback()
+    {
+        $transient = $this::TRANSIENT_RULE_VIOLATION;
+
+        if (false !== $alerts = get_transient($transient)) {
+
+            foreach ($alerts as $alert) {
+                echo Html::tag(
+                    'div',
+                    Html::tag('p', $alert),
+                    ['class' => 'notice notice-error is-dismissible']
+                );
+            }
+
+            delete_transient($transient);
+        }
+    }
+
+    /**
+     *
+     */
+    public function processFieldViolation(FormFieldControllerInterface $field)
+    {
+        $alerts = $field->getAlerts();
+
+        foreach ($field->getStateParameter('violations') as $violation) {
+            $this->alerts[] = $alerts[$violation];
+        }
+    }
+
+    /**
+     *
+     */
+    public function finalizeRequest()
+    {
+        if (!empty($this->alerts)) {
+            set_transient($this::TRANSIENT_RULE_VIOLATION, $this->alerts, 300);
+        }
     }
 }

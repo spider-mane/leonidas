@@ -2,75 +2,182 @@
 
 namespace Backalley\WordPress\MetaBox;
 
+use Backalley\Wordpress\Fields\WpAdminField;
+use Backalley\Form\Contracts\FormFieldInterface;
+use Backalley\Form\Controllers\FormFieldController;
+use Backalley\Form\Contracts\FieldDataManagerInterface;
+use Backalley\Form\Contracts\FormFieldControllerInterface;
+use Backalley\Form\Controllers\AbstractFormSubmissionManager;
+use Backalley\WordPress\MetaBox\Contracts\MetaboxContentInterface;
 
 class Fieldset implements MetaboxContentInterface
 {
     /**
-     * @var string
+     *
      */
-    protected $title;
+    protected $title = '';
 
     /**
      * @var array
      */
-    protected $fields;
+    protected $fields = [];
+
+    /**
+     * @var array
+     */
+    protected $controllers = [];
 
     /**
      *
      */
-    public function __construct($title)
+    protected $formController;
+
+    /**
+     * @var Section
+     */
+    protected $container;
+
+    /**
+     * @var int
+     */
+    protected $rowPadding = 2;
+
+    /**
+     *
+     */
+    public function __construct(string $title, AbstractFormSubmissionManager $formController)
     {
         $this->title = $title;
+        $this->formController = $formController;
+        $this->container = (new Section($this->title))->setIsFieldset(true);
     }
 
     /**
-     * Get the value of title
-     *
-     * @return string
-     */
-    public function getTitle(): string
-    {
-        return $this->title;
-    }
-
-    /**
-     * Get the value of content
+     * Get the value of fields
      *
      * @return array
      */
-    public function getContent(): array
+    public function getFields(): array
     {
-        return $this->content;
+        return $this->fields;
     }
 
     /**
-     * Set the value of content
+     * Set the value of fields
      *
-     * @param array  $content
+     * @param array  $fields
      *
      * @return self
      */
-    public function setContent(array $content)
+    public function setFields(array $fields)
     {
-        foreach ($content as $slug => $value) {
-            $this->addContent($slug, $value);
+        foreach ($fields as $slug => $config) {
+
+            $options = [
+                'label' => $config['label'] ?? null,
+                'description' => $config['description'] ?? null,
+                'save_disabled' => $config['save_disabled'] ?? false,
+            ];
+
+            $this->addfield($slug, $config['type'], $config['data'] ?? null, $options);
         }
 
         return $this;
     }
 
     /**
-     * Set the value of content
+     * Set the value of fields
      *
-     * @param array  $content
+     * @param array  $fields
      *
      * @return self
      */
-    public function addContent(string $slug, MetaboxContentInterface $content)
+    public function addField(string $slug, FormFieldInterface $field, ?FieldDataManagerInterface $data = null, array $options = [])
     {
-        $this->content[$slug] = $content;
+        $controller = (new WpAdminField($slug, $field, $data));
+
+        if (isset($this->formController)) {
+            $this->formController->addField($controller);
+        }
+
+        $scaffold = (new Field($slug, $controller))
+            ->setLabel($options['label'] ?? $field->getLabel() ?? '')
+            ->setDescription($options['description'] ?? '');
+
+        $this->container->addContent($slug, $scaffold);
+
+        $this->fields[$slug] = $scaffold;
+        $this->controllers[$slug] = $controller;
 
         return $this;
+    }
+
+    /**
+     * Get the value of rowPadding
+     *
+     * @return int
+     */
+    public function getRowPadding(): int
+    {
+        return $this->rowPadding;
+    }
+
+    /**
+     * Set the value of rowPadding
+     *
+     * @param int $rowPadding
+     *
+     * @return self
+     */
+    public function setRowPadding(int $rowPadding)
+    {
+        $this->rowPadding = $rowPadding;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of formController
+     *
+     * @return mixed
+     */
+    public function getFormController(): AbstractFormSubmissionManager
+    {
+        return $this->formController;
+    }
+
+    /**
+     * Set the value of formController
+     *
+     * @param mixed $formController
+     *
+     * @return self
+     */
+    public function setFormController(AbstractFormSubmissionManager $formController)
+    {
+        $this->formController = $formController;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of controllers
+     *
+     * @return array
+     */
+    public function getControllers(): array
+    {
+        return $this->controllers;
+    }
+
+    /**
+     * Prepares field to be rendered by assigning fieldset global properties
+     *
+     * @var Field $field
+     */
+    protected function prepareField($field)
+    {
+        $field->setRowPadding($this->rowPadding);
     }
 
     /**
@@ -78,12 +185,10 @@ class Fieldset implements MetaboxContentInterface
      */
     public function render($post)
     {
-        echo Html::open('fieldset') . Html::tag('h3', $this->title);
-
-        foreach ($this->content as $content) {
-            $content->render($post);
+        foreach ($this->fields as $field) {
+            $this->prepareField($field);
         }
 
-        echo Html::close('fieldset');
+        return $this->container->render($post);
     }
 }

@@ -19,6 +19,11 @@ class FormFieldController implements DataFieldInterface, FormFieldControllerInte
     protected $slug;
 
     /**
+     * @var string
+     */
+    protected $postVar;
+
+    /**
      * formField
      *
      * @var FormFieldInterface
@@ -52,6 +57,13 @@ class FormFieldController implements DataFieldInterface, FormFieldControllerInte
     protected $filters = [];
 
     /**
+     * Callback to escape value on display
+     *
+     * @var callable|null
+     */
+    protected $escape = 'htmlspecialchars';
+
+    /**
      * Validation rules
      *
      * @var array
@@ -66,13 +78,9 @@ class FormFieldController implements DataFieldInterface, FormFieldControllerInte
     protected $alerts = [];
 
     /**
-     * @var array
+     * @var bool
      */
-    private $stateCache = [
-        'save_successful' => null,
-        'save_attempted' => null,
-        'input_value' => null,
-    ];
+    private $savingDisabled = false;
 
     /**
      * displayCallback
@@ -96,12 +104,27 @@ class FormFieldController implements DataFieldInterface, FormFieldControllerInte
     protected $saveDataCallback;
 
     /**
+     * @var array
+     */
+    private $stateCache = [
+        'has_var' => null,
+        'violations' => [],
+        'input_value' => null,
+        'save_attempted' => null,
+        'save_successful' => null,
+    ];
+
+    /**
      *
      */
-    public function __construct($slug, FormFieldInterface $formField, ?FieldDataManagerInterface $dataManager = null)
+    public function __construct(string $slug, ?FormFieldInterface $formField = null, ?FieldDataManagerInterface $dataManager = null)
     {
         $this->slug = $slug;
-        $this->setformField($formField);
+        $this->postVar = $slug;
+
+        if (isset($formField)) {
+            $this->setformField($formField);
+        }
 
         if (isset($dataManager)) {
             $this->setDataManager($dataManager);
@@ -151,8 +174,6 @@ class FormFieldController implements DataFieldInterface, FormFieldControllerInte
      */
     public function setDataManager(FieldDataManagerInterface $dataManager)
     {
-        $dataManager->setField($this);
-
         $this->dataManager = $dataManager;
         $this->hasDataManager = true;
 
@@ -189,6 +210,30 @@ class FormFieldController implements DataFieldInterface, FormFieldControllerInte
     public function setSlug(string $slug)
     {
         $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of postVar
+     *
+     * @return string
+     */
+    public function getPostVar(): string
+    {
+        return $this->postVar;
+    }
+
+    /**
+     * Set the value of postVar
+     *
+     * @param string $postVar
+     *
+     * @return self
+     */
+    public function setPostVar(string $postVar)
+    {
+        $this->postVar = $postVar;
 
         return $this;
     }
@@ -258,10 +303,10 @@ class FormFieldController implements DataFieldInterface, FormFieldControllerInte
      *
      * @return self
      */
-    public function addRules(array $rules)
+    public function setRules(array $rules)
     {
-        foreach ($rules as $rule) {
-            $this->addRule($rule);
+        foreach ($rules as $rule => $validator) {
+            $this->addRule($rule, $validator['validator'] ?? $validator, $validator['alert'] ?? null);
         }
 
         return $this;
@@ -274,9 +319,13 @@ class FormFieldController implements DataFieldInterface, FormFieldControllerInte
      *
      * @return self
      */
-    public function addRule(Validatable $rule)
+    public function addRule(string $rule, Validatable $validator, ?string $alert = null)
     {
-        $this->rules[] = $rule;
+        $this->rules[$rule] = $validator;
+
+        if ($alert) {
+            $this->alerts[$rule] = $alert;
+        }
 
         return $this;
     }
@@ -292,7 +341,7 @@ class FormFieldController implements DataFieldInterface, FormFieldControllerInte
     }
 
     /**
-     * Set validation_messages
+     * Set validation messages
      *
      * @param string  $alerts  validation_messages
      *
@@ -300,7 +349,71 @@ class FormFieldController implements DataFieldInterface, FormFieldControllerInte
      */
     public function setAlerts(array $alerts)
     {
-        $this->alerts = $alerts;
+        foreach ($alerts as $rule => $alert) {
+            $this->addAlert($rule, $alert);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Set validation_messages
+     *
+     * @param string  $alerts  validation_messages
+     *
+     * @return self
+     */
+    public function addAlert(string $rule, string $alert)
+    {
+        $this->alerts[$rule] = $alert;
+
+        return $this;
+    }
+
+    /**
+     * Get callback to escape value on display
+     *
+     * @return callable|null
+     */
+    public function getEscape()
+    {
+        return $this->escape;
+    }
+
+    /**
+     * Set callback to escape value on display
+     *
+     * @param callable|null $escape Callback to escape value on display
+     *
+     * @return self
+     */
+    public function setEscape(?callable $escape = null)
+    {
+        $this->escape = $escape;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of savingDisabled
+     *
+     * @return bool
+     */
+    public function isSavingDisabled(): bool
+    {
+        return $this->savingDisabled;
+    }
+
+    /**
+     * Set the value of savingDisabled
+     *
+     * @param bool $savingDisabled
+     *
+     * @return self
+     */
+    public function setSavingDisabled(bool $savingDisabled)
+    {
+        $this->savingDisabled = $savingDisabled;
 
         return $this;
     }
@@ -346,15 +459,25 @@ class FormFieldController implements DataFieldInterface, FormFieldControllerInte
      */
     protected function validateInput($input)
     {
-        foreach ($this->rules as $rule) {
-            if (false) {
-                // do something
+        /** @var Validatable $validator */
+        foreach ($this->rules as $rule => $validator) {
 
+            if (true !== $validator->validate($input)) {
+                $this->stateCache['violations'][] = $rule;
+                // $this->handleInvalidInput($input, $rule);
                 return false;
             }
         }
 
         return true;
+    }
+
+    /**
+     *
+     */
+    protected function handleInvalidInput($input, $rule)
+    {
+        return;
     }
 
     /**
@@ -379,7 +502,7 @@ class FormFieldController implements DataFieldInterface, FormFieldControllerInte
     }
 
     /**
-     * @param mixed $processed and packaged request data
+     * @param mixed
      */
     public function saveInput($request): bool
     {
@@ -387,12 +510,17 @@ class FormFieldController implements DataFieldInterface, FormFieldControllerInte
 
         $this->stateCache['save_attempted'] = true;
 
-        if (true === $this->postVarExists()) {
-            $result = $this->dataManager->saveData($request, $this->getFilteredInput());
-            $this->stateCache['save_successful'] = $result;
-        }
+        return $this->stateCache['save_successful'] = $this->saveData($request);
+    }
 
-        return $result;
+    /**
+     *
+     */
+    public function saveData($request)
+    {
+        $filteredInput = $this->getStateParameter('input_value') ?? $this->getFilteredInput();
+
+        return $this->dataManager->saveData($request, $filteredInput);
     }
 
     /**
@@ -414,6 +542,16 @@ class FormFieldController implements DataFieldInterface, FormFieldControllerInte
     /**
      *
      */
+    public function escapeValue($value)
+    {
+        return isset($this->escape)
+            ? call_user_func($this->escape, $value)
+            : $value;
+    }
+
+    /**
+     *
+     */
     protected function setFormFieldName()
     {
         $this->formField->setName($this->getFormFieldName());
@@ -426,7 +564,9 @@ class FormFieldController implements DataFieldInterface, FormFieldControllerInte
      */
     public function setFormFieldValue($request)
     {
-        $this->formField->setValue($this->getData($request));
+        if ($this->hasDataManager()) {
+            $this->formField->setValue($this->escapeValue($this->getData($request)));
+        }
 
         return $this;
     }
@@ -440,26 +580,13 @@ class FormFieldController implements DataFieldInterface, FormFieldControllerInte
     }
 
     /**
-     *
+     * function to render the formfield if no callback is supplied
      */
     public function renderFormField($request)
     {
-        if (!isset($this->displayCallback)) {
-            return $this->_renderFormField($request);
-        } else {
-            $cb = $this->displayCallback;
-            // return $cb($request, $this->_renderFormField($request));
-        }
-    }
-
-    /**
-     * function to render the formfield if no callback is supplied
-     */
-    public function _renderFormField($request)
-    {
         return $this
             ->prepareFormFieldForRendering($request)
-            ->getFormField(); // $this->formField
+            ->getFormField();
     }
 
     /**

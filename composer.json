@@ -12,16 +12,19 @@
 
   "require": {
     "php": ">=7.0.0",
-    "php-console/php-console": "^3.1",
     "composer/installers": "v1.0.12",
-    "timber/timber": "^1.9",
-    "respect/validation": "^1.1",
-    "myclabs/deep-copy": "^1.8",
-    "jbzoo/utils": "^2.3",
-    "twig/twig": "^2.0",
-    "masterminds/html5": "^2.6",
     "egulias/email-validator": "^2.1",
-    "moneyphp/money": "^3.2"
+    "illuminate/support": "^5.8",
+    "jbzoo/utils": "^2.3",
+    "league/fractal": "^0.18.0",
+    "masterminds/html5": "^2.6",
+    "moneyphp/money": "^3.2",
+    "myclabs/deep-copy": "^1.8",
+    "php-console/php-console": "^3.1",
+    "respect/validation": "^1.1",
+    "symfony/validator": "^4.3",
+    "timber/timber": "^1.9",
+    "twig/twig": "^2.0"
   },
 
   "autoload": {
@@ -33,5 +36,10 @@
 
   "config": {
     "sort-packages": true
+  },
+  "require-dev": {
+    "filp/whoops": "^2.5",
+    "phpbench/phpbench": "@dev",
+    "symfony/var-dumper": "^4.3"
   }
 }

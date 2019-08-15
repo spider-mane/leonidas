@@ -151,44 +151,48 @@ abstract class AbstractFormSubmissionManager
      */
     public function handleRequest($request)
     {
-        $values = [];
-
-        /** @var FormFieldControllerInterface $field */
-
-        foreach ($this->fields as $slug => $field) {
+        /**
+         * @var FormFieldControllerInterface $field
+         */
+        foreach ($this->fields as $field) {
 
             if ($field->postVarExists()) {
-                $values[$slug] = $field->getFilteredInput();
-            } else {
-                $values[$slug] = null;
-            }
+                $field->getFilteredInput();
 
-            // dynamically generate results array if field has a data manager
-            // this allows callbacks to anticipate only input data where it is
-            // not desired for the field to have any saving functionality
-            if ($field->hasDataManager()) {
-                $results[$slug]['saved'] = $field->saveInput($request);
-            }
-        }
+                if (!empty($field->getStateParameter('violations'))) {
+                    $this->processFieldViolation($field);
+                }
 
-        if (isset($results)) {
-            foreach ($results as $slug => &$result) {
-                $result['value'] = $values[$slug];
+                if ($field->hasDataManager() && !$field->isSavingDisabled()) {
+                    $field->saveInput($request);
+                }
             }
         }
 
-        foreach ($this->callbacks as $cb) {
-            $cb($results ?? $values, $request);
-        }
-
-        /** @var FormSubmissionGroup $group */
+        /**
+         * @var FormSubmissionGroup $group
+         */
         foreach ($this->groups as $group) {
             $group->run($request);
         }
 
-        /** @var FormFieldControllerInterface $field */
+        /**
+         * @var FormFieldControllerInterface $field
+         */
         foreach ($this->fields as $field) {
             $field->resetStateCache('');
         }
+
+        $this->finalizeRequest();
     }
+
+    /**
+     *
+     */
+    abstract function processFieldViolation(FormFieldControllerInterface $field);
+
+    /**
+     *
+     */
+    abstract function finalizeRequest();
 }

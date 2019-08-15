@@ -116,7 +116,7 @@ class FormSubmissionGroup
             // dynamically generate results array if field has a data manager
             // this allows callbacks to anticipate only input data where it is
             // not desired for the field to have any saving functionality
-            if ($field->hasDataManager()) {
+            if ($field->hasDataManager() && !$field->isSavingDisabled()) {
                 $results[$slug]['saved'] = $field->getStateParameter('save_successful');
             }
         }

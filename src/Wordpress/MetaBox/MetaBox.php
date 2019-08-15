@@ -266,7 +266,9 @@ class MetaBox
      */
     public function hook()
     {
-        add_action("add_meta_boxes_{$this->screen}", [$this, '_addMetaBox']);
+        $screen = isset($this->screen) ? "add_meta_boxes_{$this->screen}" : null;
+
+        add_action($screen, [$this, '_addMetaBox']);
 
         if (!empty($this->save_cb)) {
             add_action("save_post_{$this->screen}", $this->save_cb, null, 3);
@@ -303,24 +305,25 @@ class MetaBox
      */
     protected function render($post)
     {
-        echo $this->generateNonceField();
+        $html = '';
+        $html .= $this->generateNonceField();
+        $i = count($this->content);
 
-        $mb = '';
-        $count = $i = count($this->content);
-
-        echo '<div>';
+        $html .= Html::open('div', ['class' => 'backalley-wrap']);
 
         foreach ($this->content as $content) {
             $i--;
 
-            $content->render($post);
+            $html .= $content->render($post);
 
             if ($i > 0) {
-                echo '<hr>';
+                $html .= '<hr>';
             }
         }
 
-        echo '</div>';
+        $html .= Html::close('div');
+
+        echo $html;
     }
 
     /**
@@ -340,8 +343,8 @@ class MetaBox
      */
     private function setNonce()
     {
-        $this->nonce['name'] = password_hash($this->id, PASSWORD_BCRYPT);
-        $this->nonce['action'] = password_hash($this->title, PASSWORD_BCRYPT);
+        $this->nonce['name'] = md5($this->id);
+        $this->nonce['action'] = md5($this->title);
 
         return $this;
     }
@@ -360,14 +363,14 @@ class MetaBox
         $nonce .= (new Input) // nonce
             ->setType('hidden')
             ->setName($this->nonce['name'])
-            ->setValue(wp_create_nonce($this->nonce['action']));
+            ->setValue(wp_create_nonce($this->nonce['action']))
+            ->toHtml();
 
         $nonce .= (new Input) // referer
             ->setType('hidden')
             ->setName('_backalley_http_referer')
-            ->setValue(esc_attr(wp_unslash($_SERVER['REQUEST_URI'])));
-
-        // return wp_nonce_field($this->nonce['action'], $this->nonce['name'], true, false);
+            ->setValue(esc_attr(wp_unslash($_SERVER['REQUEST_URI'])))
+            ->toHtml();
 
         return (string) $nonce . "\n";
     }

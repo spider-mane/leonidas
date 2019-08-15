@@ -160,7 +160,7 @@ class PostMetaFieldManager extends AbstractFieldDataManager implements FieldData
     }
 
     /**
-     *
+     * Create
      */
     public function createData($post, $data): bool
     {
@@ -168,17 +168,15 @@ class PostMetaFieldManager extends AbstractFieldDataManager implements FieldData
     }
 
     /**
-     *
+     * Read
      */
     public function getData($post)
     {
-        $data = get_post_meta($post->ID, $this->getMetaKey(), $this->isUniqueValue);
-
-        return htmlspecialchars($data);
+        return get_post_meta($post->ID, $this->metaKey, $this->isUniqueValue);
     }
 
     /**
-     *
+     * Update
      */
     public function saveData($post, $data): bool
     {
@@ -190,7 +188,7 @@ class PostMetaFieldManager extends AbstractFieldDataManager implements FieldData
     }
 
     /**
-     *
+     * Delete
      */
     public function deleteData($post)
     {
