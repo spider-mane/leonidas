@@ -10,7 +10,7 @@ use Backalley\WordPress\ApiBase;
 use Backalley\WordPress\Taxonomy\Args\CustomTaxonomyArgFactoryTrait;
 
 
-class Taxonomy extends ApiBase
+class Taxonomy
 {
     public $post_types;
     public $base_args;

@@ -7,7 +7,7 @@ interface FormSubmissionManagerInterface
     /**
      *
      */
-    public function saveInput($request): bool;
+    public function saveInput($request);
 
     /**
      *

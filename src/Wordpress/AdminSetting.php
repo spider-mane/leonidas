@@ -2,6 +2,7 @@
 
 namespace Backalley\Wordpress;
 
+use Backalley\Form\Contracts\FormFieldInterface;
 use Backalley\Html\Html;
 use Backalley\FormFields\Input;
 
@@ -13,118 +14,118 @@ class AdminSetting extends ApiBase
 {
     /**
      * option_group
-     * 
+     *
      * @var string
      */
     public $option_group;
 
     /**
      * option_name
-     * 
+     *
      * @var string
      */
     public $option_name;
 
     /**
      * type
-     * 
+     *
      * @var string
      */
     public $type;
 
     /**
      * description
-     * 
+     *
      * @var string
      */
     public $description;
 
     /**
      * sanitize_callback
-     * 
+     *
      * @var callable
      */
     public $sanitize_callback;
 
     /**
      * show_in_rest
-     * 
+     *
      * @var bool
      */
     public $show_in_rest;
 
     /**
      * default
-     * 
+     *
      * @var mixed
      */
     public $default;
 
     /**
      * autoload_option
-     * 
+     *
      * @var mixed
      */
     public $autoload_option = true;
 
     /**
      * id
-     * 
+     *
      * @var string
      */
     public $id;
 
     /**
      * title
-     * 
+     *
      * @var string
      */
     public $title;
 
     /**
      * display_callback
-     * 
+     *
      * @var callable
      */
     public $display_callback;
 
     /**
      * page
-     * 
+     *
      * @var string
      */
     public $page;
 
     /**
      * section
-     * 
+     *
      * @var string
      */
     public $section;
 
     /**
      * display_args
-     * 
+     *
      * @var string
      */
     public $display_args = [];
 
     /**
      * tab
-     * 
+     *
      * @var string
      */
     public $tab;
 
     /**
      * form_field
-     * 
+     *
      * @var FormFieldInterface
      */
     public $form_field;
 
     /**
-     * 
+     *
      */
     public function __construct($args)
     {
@@ -136,7 +137,7 @@ class AdminSetting extends ApiBase
     }
 
     /**
-     * 
+     *
      */
     public static function create($settings)
     {
@@ -148,7 +149,7 @@ class AdminSetting extends ApiBase
     }
 
     /**
-     * 
+     *
      */
     protected function set_dynamic_defaults()
     {
@@ -536,11 +537,11 @@ class AdminSetting extends ApiBase
     /**
      * Set form_field
      *
-     * @param   FormFieldInterface  $form_field  form_field
+     * @param FormFieldInterface  $form_field  form_field
      *
-     * @return  self
+     * @return self
      */
-    public function set_form_field($form_field)
+    public function set_form_field(FormFieldInterface $form_field)
     {
         $this->form_field = $form_field;
 
@@ -548,7 +549,7 @@ class AdminSetting extends ApiBase
     }
 
     /**
-     * 
+     *
      */
     public function create_setting()
     {
@@ -574,7 +575,7 @@ class AdminSetting extends ApiBase
     }
 
     /**
-     * 
+     *
      */
     public function remove_setting()
     {
@@ -582,24 +583,22 @@ class AdminSetting extends ApiBase
     }
 
     /**
-     * 
+     *
      */
     public function render($args)
     {
         if (isset($this->display_callback)) {
             $callback = $this->display_callback;
             $callback($this, $args);
-
         } elseif (isset($this->field)) {
             $this->field->render();
-
         } else {
             $this->render_default($args);
         }
     }
 
     /**
-     * 
+     *
      */
     protected function render_default($args)
     {
@@ -620,17 +619,15 @@ class AdminSetting extends ApiBase
     }
 
     /**
-     * 
+     *
      */
     public function sanitize($input)
     {
         if (isset($this->sanitize_callback)) {
             $callback = $this->sanitize_callback;
             $input = $callback($input, $this);
-
         } elseif (isset($this->field)) {
             $input = $this->field->save('false');
-
         } else {
             $input = $this->sanitize_default($input);
         }
@@ -639,7 +636,7 @@ class AdminSetting extends ApiBase
     }
 
     /**
-     * 
+     *
      */
     protected function sanitize_default($value)
     {

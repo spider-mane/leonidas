@@ -442,6 +442,8 @@ class FormFieldController implements DataFieldInterface, FormFieldControllerInte
     {
         if (true === $this->validateInput($input)) {
             return $this->sanitizeInput($input);
+        } else {
+            return false;
         }
     }
 
@@ -483,7 +485,11 @@ class FormFieldController implements DataFieldInterface, FormFieldControllerInte
         foreach ($this->filters as $filter) {
 
             if (is_array($input)) {
-                $input = array_filter($input, $filter);
+
+                foreach ($input as &$value) {
+                    $value = $filter($value);
+                }
+                unset($value);
             } else {
                 $input = $filter($input);
             }
@@ -495,13 +501,10 @@ class FormFieldController implements DataFieldInterface, FormFieldControllerInte
     /**
      * @param mixed
      */
-    public function saveInput($request): bool
+    public function saveInput($request)
     {
-        $result = false;
-
         $this->stateCache['save_attempted'] = true;
-
-        return $this->stateCache['save_successful'] = $this->saveData($request);
+        $this->stateCache['save_successful'] = $this->saveData($request);
     }
 
     /**
@@ -511,7 +514,9 @@ class FormFieldController implements DataFieldInterface, FormFieldControllerInte
     {
         $filteredInput = $this->getStateParameter('input_value') ?? $this->getFilteredInput();
 
-        return $this->dataManager->saveData($request, $filteredInput);
+        if (false !== $filteredInput) {
+            $this->dataManager->saveData($request, $filteredInput);
+        }
     }
 
     /**
@@ -535,9 +540,17 @@ class FormFieldController implements DataFieldInterface, FormFieldControllerInte
      */
     protected function escapeValue($value)
     {
-        return isset($this->escape)
+        $value =  isset($this->escape)
+            ? !is_array($value)
             ? call_user_func($this->escape, $value)
+            : array_filter($value, $this->escape)
             : $value;
+
+        // if (is_array($value)) {
+        //     exit(var_dump($value));
+        // }
+
+        return $value;
     }
 
     /**

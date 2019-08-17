@@ -22,6 +22,13 @@ abstract class AbstractFormSubmissionManager
     protected $callbacks = [];
 
     /**
+     * Array of alerts to display in admin after form submission
+     *
+     * @var  array $alerts
+     */
+    private $alerts = [];
+
+    /**
      *
      */
     public function __construct()
@@ -220,5 +227,5 @@ abstract class AbstractFormSubmissionManager
     /**
      *
      */
-    abstract function finalizeRequest($request);
+    abstract protected function finalizeRequest($request);
 }

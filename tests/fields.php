@@ -8,84 +8,24 @@ use Backalley\WordPress\Backalley;
 use Backalley\Form\Fields\Textarea;
 use Backalley\Form\Fields\Checklist;
 use Backalley\WordPress\MetaBox\Field;
+use Respect\Validation\Validator as v;
 use Backalley\WordPress\MetaBox\MetaBox;
 use Backalley\WordPress\MetaBox\Section;
+use Backalley\WordPress\MetaBox\Fieldset;
 use Backalley\Form\Controllers\FormFieldController;
+use Backalley\Form\Controllers\FormSubmissionGroup;
+use function Backalley\GuctilityBelt\address_format;
+
+use function Backalley\GuctilityBelt\google_geocode;
+use Backalley\WordPress\Fields\Managers\PostTermManager;
 use Backalley\Support\SelectOptions\UsStatesAndTerritories;
 use Backalley\WordPress\Fields\Managers\PostMetaFieldManager;
+use Backalley\WordPress\Fields\Managers\TermRelatedPostsManager;
 use Backalley\Wordpress\Forms\Controllers\PostMetaBoxFormSubmissionManager;
-use Backalley\Form\Controllers\FormSubmissionGroup;
-
-use function Backalley\GuctilityBelt\address_format;
-use function Backalley\GuctilityBelt\google_geocode;
-use Backalley\WordPress\MetaBox\Fieldset;
-use Respect\Validation\Validator as v;
-
-/**
- * add meta boxes
- */
-
-// /**
-//  *
-//  */
-// $postType = 'ba_location';
-
-// $formController = new PostMetaBoxFormSubmissionManager($postType);
-// $formGroup = new FormSubmissionGroup;
-
-// $manager = new PostMetaFieldManager('ba_location_address__state'); #model
-// $field = (new Select) #view
-//     ->setId('ba--test--1')
-//     ->setName('state')
-//     ->setOptions(UsStatesAndTerritories::states())
-//     ->addClass('regular-text')
-//     ->setDisabled(false);
-// $controller = (new FormFieldController('thing', $field, $manager)); #controller
-
-// $select = (new Field('thing', $controller))->setLabel('Select');
-
-// $formGroup->addField($controller)
-//     ->addCallBack('test_joint', function ($arg) {
-//         // exit(var_dump($arg));
-//     });
-
-// $formController->addField($controller)->addGroup('test_group', $formGroup);
-
-// $items = [
-//     'cat' => [
-//         'value' => 'cat',
-//         'label' => 'Cat',
-//         'name' => 'cat',
-//         'id' => 'test--cat',
-//     ],
-//     'dog' => [
-//         'value' => 'dog',
-//         'label' => 'Dog',
-//         'name' => 'dog',
-//         'id' => 'test--dog',
-//     ],
-// ];
-
-// $manager = new PostMetaFieldManager('ba_location_checklist_test');
-// $field = (new Checklist)
-//     ->setId('ba--test--2')
-//     ->setName('test_thing_2')
-//     ->setItems($items)
-//     ->setToggleControl('0');
-// // ->setClearControl();
-// $controller = (new FormFieldController('thing2', $field, $manager));
-// $checklist = (new Field('thing2', $controller))->setLabel('Checklist');
-// $formController->addField($controller);
 
 
-// $metabox = (new MetaBox('location_test', 'Test'))
-//     ->setScreen($postType)
-//     ->setContext('normal')
-//     ->addContent('thing', $select)
-//     ->addContent('thing-2', $checklist)
-//     ->hook();
 
-// $formController->hook();
+
 
 
 ########################################################################################################################
@@ -178,6 +118,7 @@ $fields = [
     'zip' => $controllers['zip'],
 ];
 
+$fields['street']->setSavingDisabled(true);
 foreach ($fields as $slug => $field) {
     $addressGeoGroup->addField($field);
 }
@@ -278,3 +219,44 @@ $formController
     ->hook();
 
 include 'field-grid.php';
+
+$items = [
+    'cat' => [
+        'value' => 'cat',
+        'label' => 'Cat',
+        'name' => 'cat',
+        'id' => 'test--cat',
+    ],
+];
+
+$posts = get_posts([
+    'post_type' => 'ba_menu_item',
+    'posts_per_page' => -1,
+    'orderby' => 'name',
+    'order' => 'ASC',
+]);
+
+
+foreach ($posts as $post) {
+    $items[$post->post_name] = [
+        'value' => '1',
+        'label' => $post->post_title,
+        'name' => (string) $post->ID,
+        'id' => "ba--location-menu-item--{$post->post_name}",
+    ];
+}
+
+$manager = new TermRelatedPostsManager('_ba_location_', 'ba_menu_item', $postType);
+$field = (new Checklist)
+    ->setId('ba-location--menu_items')
+    ->setItems($items)
+    ->setToggleControl('0');
+// ->setClearControl();
+$controller = (new FormFieldController('menu_items', $field, $manager));
+$checklist = (new Field('thing2', $controller))->setLabel('Menu Items');
+
+$metabox->addContent('menu_items', $checklist);
+$formController->addField($controller);
+
+// echo $field;
+// exit;

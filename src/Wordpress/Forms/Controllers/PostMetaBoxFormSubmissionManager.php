@@ -14,13 +14,6 @@ class PostMetaBoxFormSubmissionManager extends AbstractFormSubmissionManager
     protected $postType;
 
     /**
-     * Array of alerts to display in admin after form submission
-     *
-     * @var  array $alerts
-     */
-    private $alerts = [];
-
-    /**
      *
      */
     private $nonce = [];
@@ -94,7 +87,7 @@ class PostMetaBoxFormSubmissionManager extends AbstractFormSubmissionManager
     /**
      *
      */
-    public function finalizeRequest($request)
+    protected function finalizeRequest($request)
     {
         if (!empty($this->alerts)) {
             set_transient($this::TRANSIENT_RULE_VIOLATION, $this->alerts, 300);
@@ -104,7 +97,7 @@ class PostMetaBoxFormSubmissionManager extends AbstractFormSubmissionManager
     /**
      *
      */
-    private function isSafeToRun($post)
+    private function isSafeToRun($post): bool
     {
         $nonceName = $this->nonce['name'] ?? null;
         $nonceAction = $this->nonce['action'] ?? null;

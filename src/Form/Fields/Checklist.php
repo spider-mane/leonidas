@@ -7,10 +7,11 @@
 namespace Backalley\Form\Fields;
 
 use Backalley\Form\Fields\Input;
+use Backalley\Form\DataSchemes\Io;
 use Backalley\Form\Elements\Label;
 use Backalley\Form\Contracts\FormFieldInterface;
 
-class Checklist extends AbstractFormField implements FormFieldInterface
+class Checklist extends AbstractFormField implements FormFieldInterface, IO
 {
     /**
      * Associative array of item definitions with the value as the key
@@ -55,7 +56,7 @@ class Checklist extends AbstractFormField implements FormFieldInterface
      */
     public function setValue($value)
     {
-        $this->value[] = $value;
+        $this->value = $value;
     }
 
     /**
@@ -159,19 +160,21 @@ class Checklist extends AbstractFormField implements FormFieldInterface
         foreach ($this->items as $item => $element) {
 
             $itemId = $element['id'] ?? null;
-            $itemName = $this->name . "[{$element['name']}]" ?? '';
+            $itemName = $element['name'] ?? '';
+            $itemFullName = $this->name . "[{$itemName}]";
+            $itemValue = $element['value'] ?? '';
             $itemLabel = $element['label'] ?? null;
 
             $html .= $this->open('li');
             $html .= isset($this->toggleControl)
-                ? (new Input)->setType('hidden')->setName($itemName)->setValue($this->toggleControl)
+                ? (new Input)->setType('hidden')->setName($itemFullName)->setValue($this->toggleControl)
                 : '';
 
             $html .= (new Input)
                 ->setId($itemId)
-                ->setValue($item)
+                ->setValue($itemValue)
                 ->setType($this::INPUT)
-                ->setName($itemName)
+                ->setName($itemFullName)
                 ->addAttribute($this::SELECTED, in_array($item, $this->value) ? true : false);
 
             $html .= (new Label($itemLabel))->setFor($itemId);

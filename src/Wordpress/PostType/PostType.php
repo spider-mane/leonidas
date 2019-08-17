@@ -10,7 +10,7 @@ use Backalley\WordPress\ApiBase;
 use Backalley\WordPress\PostType\Args\CustomArgFactoryTrait;
 
 
-class PostType extends ApiBase
+class PostType
 {
     /**
      *

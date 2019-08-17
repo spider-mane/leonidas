@@ -48,6 +48,11 @@ class PostMetaFieldManager extends AbstractFieldDataManager implements FieldData
     /**
      *
      */
+    protected $primaryKey = 'ID';
+
+    /**
+     *
+     */
     public function __construct($metaKey, $postType = null)
     {
         $this->metaKey = $metaKey;
@@ -160,7 +165,7 @@ class PostMetaFieldManager extends AbstractFieldDataManager implements FieldData
     }
 
     /**
-     * Create
+     *
      */
     public function createData($post, $data): bool
     {
@@ -168,7 +173,7 @@ class PostMetaFieldManager extends AbstractFieldDataManager implements FieldData
     }
 
     /**
-     * Read
+     *
      */
     public function getData($post)
     {
@@ -176,7 +181,7 @@ class PostMetaFieldManager extends AbstractFieldDataManager implements FieldData
     }
 
     /**
-     * Update
+     *
      */
     public function saveData($post, $data): bool
     {
@@ -188,7 +193,7 @@ class PostMetaFieldManager extends AbstractFieldDataManager implements FieldData
     }
 
     /**
-     * Delete
+     *
      */
     public function deleteData($post)
     {

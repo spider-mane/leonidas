@@ -73,11 +73,36 @@ class Select extends AbstractFormField implements FormFieldInterface
     }
 
     /**
+     * Get the value of multiple
+     *
+     * @return bool
+     */
+    public function isMultiple(): bool
+    {
+        return $this->multiple;
+    }
+
+    /**
+     * Set the value of multiple
+     *
+     * @param bool $multiple
+     *
+     * @return self
+     */
+    public function setMultiple(bool $multiple)
+    {
+        $this->multiple = $multiple;
+
+        return $this;
+    }
+
+    /**
      *
      */
     protected function resolveAttributes()
     {
-        return parent::resolveAttributes();
+        return parent::resolveAttributes()
+            ->addAttribute('multiple', $this->multiple);
     }
 
     /**

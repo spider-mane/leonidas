@@ -7,7 +7,7 @@ interface FieldDataManagerInterface
     /**
      * Create
      */
-    public function createData($request, $data): bool;
+    // public function createData($request, $data): bool;
 
     /**
      * Read
@@ -22,5 +22,5 @@ interface FieldDataManagerInterface
     /**
      * Delete
      */
-    public function deleteData($request);
+    // public function deleteData($request);
 }
