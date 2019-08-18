@@ -231,7 +231,7 @@ class FormFieldController implements DataFieldInterface, FormFieldControllerInte
      *
      * @return self
      */
-    public function setPostVar(string $postVar)
+    public function setPostVar(string $postVar): FormFieldControllerInterface
     {
         $this->postVar = $postVar;
 

@@ -3,76 +3,75 @@
 namespace Backalley\WordPress\AdminPage;
 
 use Backalley\Html\Html;
-use Backalley\WordPress\ApiBase;
-use Backalley\Wordpress\AdminSetting;
+use Backalley\Wordpress\AdminPage\AdminSetting;
 
 /**
- * 
+ *
  */
-class SettingsSection extends ApiBase
+class SettingsSection
 {
     /**
      * id
-     * 
+     *
      * @var string
      */
     public $id;
 
     /**
      * title
-     * 
+     *
      * @var string
      */
     public $title;
 
     /**
      * callable
-     * 
+     *
      * @var callable
      */
     public $callback;
 
     /**
      * page
-     * 
+     *
      * @var string
      */
     public $page;
 
     /**
      * description
-     * 
+     *
      * @var string
      */
     public $description;
 
     /**
      * settings
-     * 
+     *
      * @var array
      */
     public $settings;
 
     /**
-     * 
+     *
      */
-    public function __construct($args)
+    public function __construct(string $id, string $title, ?string $page = null)
     {
-        parent::__construct($args);
+        $this->setId($id)->setTitle($title);
 
-        add_action('admin_init', [$this, 'add_settings_section']);
+        if (isset($page)) {
+            $this->setPage($page);
+        }
     }
 
     /**
-     * 
+     *
      */
-    public static function create($sections)
+    public function hook()
     {
-        foreach ($sections as $index => $args) {
-            $sections[$index] = new static($args);
-        }
+        add_action('admin_init', [$this, 'addSettingsSection']);
 
-        return $sections;
+        return $this;
     }
 
     /**
@@ -80,7 +79,7 @@ class SettingsSection extends ApiBase
      *
      * @return  string
      */
-    public function get_id()
+    public function getId()
     {
         return $this->id;
     }
@@ -92,7 +91,7 @@ class SettingsSection extends ApiBase
      *
      * @return  self
      */
-    public function set_id(string $id)
+    private function setId(string $id)
     {
         $this->id = $id;
 
@@ -104,7 +103,7 @@ class SettingsSection extends ApiBase
      *
      * @return  string
      */
-    public function get_title()
+    public function getTitle()
     {
         return $this->title;
     }
@@ -116,7 +115,7 @@ class SettingsSection extends ApiBase
      *
      * @return  self
      */
-    public function set_title(string $title)
+    private function setTitle(string $title)
     {
         $this->title = $title;
 
@@ -128,7 +127,7 @@ class SettingsSection extends ApiBase
      *
      * @return  string
      */
-    public function get_callback()
+    public function getCallback()
     {
         return $this->callback;
     }
@@ -140,7 +139,7 @@ class SettingsSection extends ApiBase
      *
      * @return self
      */
-    public function set_callback(callable $callback)
+    public function setCallback(callable $callback)
     {
         $this->callback = $callback;
 
@@ -152,7 +151,7 @@ class SettingsSection extends ApiBase
      *
      * @return  string
      */
-    public function get_page()
+    public function getPage()
     {
         return $this->page;
     }
@@ -164,9 +163,16 @@ class SettingsSection extends ApiBase
      *
      * @return  self
      */
-    public function set_page(string $page)
+    public function setPage(string $page)
     {
         $this->page = $page;
+
+        /** @var AdminSetting $setting */
+        if (!empty($this->settings)) {
+            foreach ($this->settings as $setting) {
+                $setting->setPage($this->page);
+            }
+        }
 
         return $this;
     }
@@ -176,7 +182,7 @@ class SettingsSection extends ApiBase
      *
      * @return  string
      */
-    public function get_description()
+    public function getDescription()
     {
         return $this->description;
     }
@@ -188,7 +194,7 @@ class SettingsSection extends ApiBase
      *
      * @return  self
      */
-    public function set_description(string $description)
+    public function setDescription(string $description)
     {
         $this->description = $description;
 
@@ -200,7 +206,7 @@ class SettingsSection extends ApiBase
      *
      * @return  array
      */
-    public function get_settings()
+    public function getSettings()
     {
         return $this->settings;
     }
@@ -208,27 +214,29 @@ class SettingsSection extends ApiBase
     /**
      * Set settings
      *
-     * @param   array  $settings 
+     * @param   array  $settings
      *
      * @return  self
      */
-    public function set_settings(array $settings)
+    public function setSettings(array $settings)
     {
         foreach ($settings as $key => $setting) {
-            $this->push_setting($setting);
+            $this->addSetting($setting);
         }
 
         return $this;
     }
 
     /**
-     * 
+     *
      */
-    public function push_setting($setting)
+    public function addSetting(AdminSetting $setting)
     {
-        $setting = new AdminSetting($setting);
-        $setting->section = $this->id;
-        $setting->page = $this->page;
+        $setting->setSection($this->id);
+
+        if (isset($this->page)) {
+            $setting->setPage($this->page);
+        }
 
         $this->settings[] = $setting;
 
@@ -236,32 +244,30 @@ class SettingsSection extends ApiBase
     }
 
     /**
-     * 
+     *
      */
-    public function add_settings_section()
+    public function addSettingsSection()
     {
         add_settings_section($this->id, $this->title, [$this, 'render'], $this->page);
     }
 
     /**
-     * 
+     *
      */
     public function render()
     {
         if (!isset($this->callback)) {
-            $this->render_default();
-
+            $this->renderDefault();
         } else {
-            $callback = $this->callback;
-            $callback($this);
+            ${$this->callback}($this);
         }
     }
 
     /**
-     * 
+     *
      */
-    public function render_default()
+    public function renderDefault()
     {
-        echo Html::open('p') . $this->description . Html::close('p');
+        echo Html::tag('p', $this->description);
     }
 }

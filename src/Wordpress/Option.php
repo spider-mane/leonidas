@@ -3,43 +3,41 @@
 namespace Backalley\WordPress;
 
 /**
- * 
+ *
  */
-class Option extends ApiBase
+class Option
 {
     /**
      * name
-     * 
+     *
      * @var string
      */
     public $name;
 
     /**
      * value
-     * 
+     *
      * @var mixed
      */
     public $value;
 
     /**
      * autoload
-     * 
+     *
      * @var bool
      */
     public $autoload = true;
 
     /**
-     * 
+     *
      */
     public function __construct($name, $value, $autoload)
     {
-        parent::__construct([
-            'name' => $name,
-            'value' => $value,
-            'autoload' => $autoload,
-        ]);
-
-        $this->add_option();
+        $this
+            ->set_name($name)
+            ->set_value($value)
+            ->set_autoload($autoload)
+            ->add_option();
     }
 
     /**
@@ -115,7 +113,7 @@ class Option extends ApiBase
     }
 
     /**
-     * 
+     *
      */
     public function get_option()
     {
@@ -123,7 +121,7 @@ class Option extends ApiBase
     }
 
     /**
-     * 
+     *
      */
     public function add_option()
     {

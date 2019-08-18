@@ -6,26 +6,43 @@
 
 namespace Backalley\WordPress\Taxonomy;
 
-use Backalley\WordPress\ApiBase;
 use Backalley\WordPress\Taxonomy\Args\CustomTaxonomyArgFactoryTrait;
-
 
 class Taxonomy
 {
-    public $post_types;
-    public $base_args;
-    public $taxonomy;
-    public $taxonomy_object;
-
     use CustomTaxonomyArgFactoryTrait;
 
+    /**
+     *
+     */
+    public $post_types;
+
+    /**
+     *
+     */
+    public $base_args;
+
+    /**
+     *
+     */
+    public $taxonomy;
+
+    /**
+     *
+     */
+    public $taxonomy_object;
+
+    /**
+     *
+     */
     public function __construct($taxonomy, $args, $post_types = null)
     {
-        $this->set_taxonomy($taxonomy);
-        $this->set_base_args($args);
-        $this->set_custom_args($args);
-        $this->set_post_types($post_types);
-        $this->register_taxonomy();
+        $this
+            ->set_taxonomy($taxonomy)
+            ->set_base_args($args)
+            ->set_custom_args($args)
+            ->set_post_types($post_types)
+            ->register_taxonomy();
 
         if (!empty($this->custom_args)) {
             $this->custom_arg_factory();

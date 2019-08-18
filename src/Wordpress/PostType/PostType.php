@@ -6,9 +6,7 @@
 
 namespace Backalley\WordPress\PostType;
 
-use Backalley\WordPress\ApiBase;
 use Backalley\WordPress\PostType\Args\CustomArgFactoryTrait;
-
 
 class PostType
 {

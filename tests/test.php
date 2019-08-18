@@ -12,6 +12,8 @@ use Backalley\Wordpress\Forms\Controllers\PostMetaBoxFormSubmissionManager;
 #ErrorHandling
 // (new Run)->prependHandler(new PrettyPageHandler)->register(); // error handling with whoops
 
+require 'admin-page.php';
+
 Screen::load('post', ['post_type' => 'ba_location'], function () {
     include 'fields.php';
 });
