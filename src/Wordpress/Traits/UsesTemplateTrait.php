@@ -1,6 +1,6 @@
 <?php
 
-namespace Backalley\Wordpress\MetaBox\Traits;
+namespace Backalley\Wordpress\Traits;
 
 use Timber\Timber;
 

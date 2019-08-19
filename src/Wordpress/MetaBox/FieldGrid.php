@@ -2,8 +2,8 @@
 
 namespace Backalley\Wordpress\MetaBox;
 
+use Backalley\Wordpress\Traits\UsesTemplateTrait;
 use Backalley\Form\Controllers\FormFieldController;
-use Backalley\Wordpress\MetaBox\Traits\UsesTemplateTrait;
 use Backalley\Form\Contracts\FormFieldControllerInterface;
 use Backalley\WordPress\MetaBox\Contracts\MetaboxContentInterface;
 

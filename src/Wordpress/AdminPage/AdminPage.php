@@ -2,8 +2,8 @@
 
 namespace Backalley\Wordpress\AdminPage;
 
+use Backalley\Wordpress\Traits\UsesTemplateTrait;
 use Backalley\WordPress\AdminPage\SettingsSection;
-use Backalley\Wordpress\MetaBox\Traits\UsesTemplateTrait;
 
 /**
  * @package Backalley-Core
@@ -342,7 +342,7 @@ class AdminPage
     /**
      *
      */
-    public function addSetting(AdminSetting $setting)
+    public function addSetting(SettingsField $setting)
     {
         $this->settings[] = $setting->setPage($this->menuSlug);
 
@@ -422,13 +422,13 @@ class AdminPage
     /**
      * Set field_groups
      *
-     * @param   mixed  $field_groups  fields
+     * @param   mixed  $fieldGroups  fields
      *
      * @return  self
      */
-    public function setFieldGroups($field_groups)
+    public function setFieldGroups($fieldGroups)
     {
-        foreach (is_array($field_groups) ? $field_groups : [$field_groups] as $field) {
+        foreach ((array) $fieldGroups as $field) {
             $this->addFieldGroup($field);
         }
 
@@ -438,9 +438,9 @@ class AdminPage
     /**
      *
      */
-    public function addFieldGroup($field_group)
+    public function addFieldGroup($fieldGroup)
     {
-        $this->fieldGroups[] = $field_group;
+        $this->fieldGroups[] = $fieldGroup;
 
         return $this;
     }
@@ -451,9 +451,9 @@ class AdminPage
     public function addPage()
     {
         if (isset($this->parentSlug)) {
-            $this->addSubmenuPage()->removePage('submenu');
+            $this->addSubmenuPage()->configurePage('submenu');
         } else {
-            $this->addMenuPage()->removePage('menu');
+            $this->addMenuPage()->configurePage('menu');
         }
 
         return $this;
@@ -517,12 +517,14 @@ class AdminPage
     /**
      *
      */
-    protected function removePage($level)
+    protected function configurePage($level)
     {
         if (false === $this->showInMenu) {
             $remove_page = "remove{$level}page";
             $this->$remove_page();
         }
+
+        return $this;
     }
 
     /**

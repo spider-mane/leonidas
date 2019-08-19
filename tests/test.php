@@ -12,7 +12,11 @@ use Backalley\Wordpress\Forms\Controllers\PostMetaBoxFormSubmissionManager;
 #ErrorHandling
 // (new Run)->prependHandler(new PrettyPageHandler)->register(); // error handling with whoops
 
+// add_action('init', function () {
+//     require 'admin-page.php';
+// });
 require 'admin-page.php';
+
 
 Screen::load('post', ['post_type' => 'ba_location'], function () {
     include 'fields.php';

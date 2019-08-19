@@ -4,6 +4,7 @@ namespace Backalley\WordPress\AdminPage;
 
 use Backalley\Html\Html;
 use Backalley\Wordpress\AdminPage\AdminSetting;
+use Backalley\Wordpress\AdminPage\SettingsField;
 
 /**
  *
@@ -230,7 +231,7 @@ class SettingsSection
     /**
      *
      */
-    public function addSetting(AdminSetting $setting)
+    public function addSetting(SettingsField $setting)
     {
         $setting->setSection($this->id);
 
