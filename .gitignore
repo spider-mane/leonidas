@@ -1,6 +1,7 @@
 # Editor/ IDE
 .idea
 .project
+.vscode
 *.code-workspace
 
 # NPM
