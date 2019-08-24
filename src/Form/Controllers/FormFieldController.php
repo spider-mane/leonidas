@@ -4,6 +4,7 @@ namespace Backalley\Form\Controllers;
 
 use Respect\Validation\Validatable;
 use Backalley\Form\Contracts\DataFieldInterface;
+use Backalley\Form\Contracts\DataTransformerInterface;
 use Backalley\Form\Contracts\FormFieldInterface;
 use Backalley\Form\Contracts\FieldDataManagerInterface;
 use Backalley\Form\Contracts\FormFieldControllerInterface;
@@ -62,6 +63,13 @@ class FormFieldController implements DataFieldInterface, FormFieldControllerInte
      * @var callable|null
      */
     protected $escape = 'htmlspecialchars';
+
+    /**
+     * Callback to escape value on display
+     *
+     * @var DataTransformerInterface
+     */
+    protected $dataTransformer;
 
     /**
      * Validation rules
@@ -465,12 +473,20 @@ class FormFieldController implements DataFieldInterface, FormFieldControllerInte
         foreach ($this->rules as $rule => $validator) {
 
             if (true !== $validator->validate($input)) {
-                $this->stateCache['violations'][] = $rule;
+                $this->handleRuleViolation($rule);
                 return false;
             }
         }
 
         return true;
+    }
+
+    /**
+     *
+     */
+    protected function handleRuleViolation($rule)
+    {
+        $this->stateCache['violations'][] = $rule;
     }
 
     /**
@@ -545,10 +561,6 @@ class FormFieldController implements DataFieldInterface, FormFieldControllerInte
             ? call_user_func($this->escape, $value)
             : array_filter($value, $this->escape)
             : $value;
-
-        // if (is_array($value)) {
-        //     exit(var_dump($value));
-        // }
 
         return $value;
     }
@@ -625,6 +637,9 @@ class FormFieldController implements DataFieldInterface, FormFieldControllerInte
 
     /**
      * Set the value of stateCache
+     *
+     * @todo implement nonce layer to prevent unauthorized access to this
+     * method
      *
      * @param array $stateCache
      *

@@ -1,6 +1,8 @@
 <?php
 
 return [
+    'locations' => ['../public/templates'],
+
     'functions' => [
         'submit_button' => 'submit_button',
         'settings_fields' => 'settings_fields',

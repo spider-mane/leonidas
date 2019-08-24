@@ -51,6 +51,13 @@ class SettingsField
     protected $displayCallback;
 
     /**
+     * callback to escape or filter the value
+     *
+     * @var callable
+     */
+    protected $displayFilter = 'htmlspecialchars';
+
+    /**
      * display_args
      *
      * @var string
@@ -70,6 +77,11 @@ class SettingsField
      * @var FormFieldInterface
      */
     protected $field;
+
+    /**
+     * @var string
+     */
+    protected $pointer;
 
     /**
      *
@@ -106,9 +118,9 @@ class SettingsField
     /**
      * Set tab
      *
-     * @param   string  $tab  tab
+     * @param string $tab
      *
-     * @return  self
+     * @return self
      */
     public function setTab(string $tab)
     {
@@ -120,7 +132,7 @@ class SettingsField
     /**
      * Get id
      *
-     * @return  string
+     * @return string
      */
     public function getId()
     {
@@ -366,6 +378,7 @@ class SettingsField
     {
         $default = $setting['default'] ?? null;
         $description = $setting['description'] ?? null;
+        $value = $this->escapeValue(get_option($this->setting, $default));
 
         if (!isset($this->field)) {
             $this->field = $this->getDefaultField();
@@ -373,12 +386,26 @@ class SettingsField
 
         echo $this->field
             ->setName($this->setting)
-            ->setValue(get_option($this->setting, $default))
+            ->setValue($value)
             ->setId($this->id)
             ->toHtml();
 
-        if (isset($description)) {
+        if (!empty($description)) {
             echo $this->renderDescription($description);
         }
+    }
+
+    /**
+     *
+     */
+    protected function escapeValue($value)
+    {
+        $value =  isset($this->displayFilter)
+            ? !is_array($value)
+            ? call_user_func($this->displayFilter, $value)
+            : array_filter($value, $this->displayFilter)
+            : $value;
+
+        return $value;
     }
 }

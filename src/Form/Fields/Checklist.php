@@ -7,7 +7,7 @@
 namespace Backalley\Form\Fields;
 
 use Backalley\Form\Fields\Input;
-use Backalley\Form\DataSchemes\Io;
+use Backalley\Form\DataSchemes\IO;
 use Backalley\Form\Elements\Label;
 use Backalley\Form\Contracts\FormFieldInterface;
 

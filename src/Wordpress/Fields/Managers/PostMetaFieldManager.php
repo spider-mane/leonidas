@@ -16,44 +16,14 @@ class PostMetaFieldManager extends AbstractFieldDataManager implements FieldData
     protected $metaKey;
 
     /**
-     * @var string
-     */
-    protected $prefix = 'ba_';
-
-    /**
-     * @var array
-     */
-    protected $options = [];
-
-    /**
      * @var bool
      */
     protected $isUniqueValue = true;
 
     /**
-     * @var bool
-     */
-    protected $isSerialized = false;
-
-    /**
-     * @var string
-     */
-    protected $serializedAs;
-
-    /**
-     * @var string|int Index where seriazed data is to be found
-     */
-    protected $serializationIndex;
-
-    /**
      *
      */
-    protected $primaryKey = 'ID';
-
-    /**
-     *
-     */
-    public function __construct($metaKey, $postType = null)
+    public function __construct($metaKey)
     {
         $this->metaKey = $metaKey;
     }
@@ -66,30 +36,6 @@ class PostMetaFieldManager extends AbstractFieldDataManager implements FieldData
     public function getMetaKey(): string
     {
         return $this->metaKey;
-    }
-
-    /**
-     * Get the value of prefix
-     *
-     * @return string
-     */
-    public function getPrefix(): string
-    {
-        return $this->prefix;
-    }
-
-    /**
-     * Set the value of prefix
-     *
-     * @param string $prefix
-     *
-     * @return self
-     */
-    public function setPrefix(string $prefix)
-    {
-        $this->prefix = $prefix;
-
-        return $this;
     }
 
     /**
@@ -112,54 +58,6 @@ class PostMetaFieldManager extends AbstractFieldDataManager implements FieldData
     public function setIsUniqueValue(bool $isUniqueValue)
     {
         $this->isUniqueValue = $isUniqueValue;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of isSerialized
-     *
-     * @return bool
-     */
-    public function isSerialized(): bool
-    {
-        return $this->isSerialized;
-    }
-
-    /**
-     * Set the value of isSerialized
-     *
-     * @param bool $isSerialized
-     *
-     * @return self
-     */
-    public function setIsSerialized(bool $isSerialized)
-    {
-        $this->isSerialized = $isSerialized;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of serializedAs
-     *
-     * @return string
-     */
-    public function getSerializedAs(): string
-    {
-        return $this->serializedAs;
-    }
-
-    /**
-     * Set the value of serializedAs
-     *
-     * @param string $serializedAs
-     *
-     * @return self
-     */
-    public function setSerializedAs(string $serializedAs)
-    {
-        $this->serializedAs = $serializedAs;
 
         return $this;
     }
@@ -197,7 +95,7 @@ class PostMetaFieldManager extends AbstractFieldDataManager implements FieldData
      */
     public function deleteData($post)
     {
-        $response = (bool) delete_post_meta($post->id, $this->metaKey, '');
+        $response = (bool) delete_post_meta($post->id, $this->metaKey, $this->getData($post));
 
         do_action("backalley/deleted/post/{$post->post_type}/{$this->metaKey}", $post);
 

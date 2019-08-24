@@ -1,6 +1,7 @@
 <?php
 
 use Backalley\Form\Fields\Select;
+use Respect\Validation\Validator as v;
 use Backalley\Wordpress\AdminPage\AdminPage;
 use Backalley\Wordpress\AdminPage\SettingsField;
 use Backalley\Wordpress\AdminPage\SettingManager;
@@ -10,11 +11,13 @@ use Backalley\Support\SelectOptions\UsStatesAndTerritories;
 $setting1 = (new SettingManager('ba-test', 'ba-test-1'))
     ->setType('string')
     ->setDescription('this is a test setting')
+    ->addRule('email', v::optional(v::email()), 'Invalid thing provided')
     ->hook();
 
 $setting2 = (new SettingManager('ba-test', 'ba-test-2'))
     ->setType('string')
     ->setDescription('this is another test setting')
+    ->addRule('phone', v::optional(v::phone()), 'Another invalid thing provided')
     ->hook();
 
 $setting3 = (new SettingManager('ba-test', 'ba-test-3'))

@@ -2,9 +2,9 @@
 
 namespace Backalley\Wordpress\AdminPage;
 
-use Respect\Validation\Validatable;
+use Backalley\Form\Controllers\FormFieldController;
 
-class SettingManager
+class SettingManager extends FormFieldController
 {
     /**
      * option_group
@@ -25,7 +25,7 @@ class SettingManager
      *
      * @var string
      */
-    protected $type;
+    protected $type = 'string';
 
     /**
      * description
@@ -49,21 +49,21 @@ class SettingManager
     protected $showInRest;
 
     /**
-     * sanitize_callback
+     * filter
      *
      * @var callable
      */
-    protected $filter;
+    protected $filters = ['sanitize_text_field'];
 
     /**
-     * sanitize_callback
+     * rules
      *
-     * @var Validatable
+     * @var array
      */
-    protected $rules;
+    protected $rules = [];
 
     /**
-     * sanitize_callback
+     * alerts
      *
      * @var array
      */
@@ -89,7 +89,7 @@ class SettingManager
      *
      * @var
      */
-    protected $dataReader;
+    protected $serializedDataReader;
 
     /**
      * sanitize_callback
@@ -292,7 +292,7 @@ class SettingManager
         $args = [
             'type' => $this->type,
             'description' => $this->description,
-            'sanitize_callback' => [$this, 'sanitizeInput'],
+            'sanitize_callback' => [$this, 'processInput'],
             'show_in_rest' => $this->showInRest,
             'default' => $this->defaultValue,
         ];
@@ -303,10 +303,10 @@ class SettingManager
     /**
      *
      */
-    public function sanitizeInput($input)
+    public function processInput($input)
     {
         if (!isset($this->sanitizeCallback)) {
-            $input = $this->sanitizeDefault($input);
+            $input = $this->filterInput($input);
         } else {
             $input = ${$this->sanitizeCallback}($input, $this);
         }
@@ -317,8 +317,22 @@ class SettingManager
     /**
      *
      */
-    protected function sanitizeDefault($value)
+    protected function filterInput($input)
     {
-        return sanitize_text_field($value);
+        if (true === $this->validateInput($input)) {
+            return $this->sanitizeInput($input);
+        } else {
+            return get_option($this->optionName, $this->defaultValue);
+        }
+    }
+
+    /**
+     *
+     */
+    protected function handleRuleViolation($rule)
+    {
+        add_settings_error($this->optionName, "invalid-{$rule}", $this->alerts[$rule], 'error');
+
+        return $this;
     }
 }

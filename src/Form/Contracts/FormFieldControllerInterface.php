@@ -3,6 +3,7 @@
 namespace Backalley\Form\Contracts;
 
 use Respect\Validation\Validatable;
+use Backalley\Form\Contracts\DataTransformerInterface;
 
 interface FormFieldControllerInterface extends FormSubmissionManagerInterface
 {

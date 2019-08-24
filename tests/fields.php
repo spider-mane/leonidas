@@ -20,7 +20,9 @@ use function Backalley\GuctilityBelt\google_geocode;
 use Backalley\WordPress\Fields\Managers\PostTermManager;
 use Backalley\Support\SelectOptions\UsStatesAndTerritories;
 use Backalley\WordPress\Fields\Managers\PostMetaFieldManager;
+use Backalley\Wordpress\Fields\Managers\TermBasedPostMeta;
 use Backalley\WordPress\Fields\Managers\TermRelatedPostsManager;
+use Backalley\Wordpress\Fields\Transformers\PostRelationshipChecklistTransformer;
 use Backalley\Wordpress\Forms\Controllers\PostMetaBoxFormSubmissionManager;
 
 
@@ -178,7 +180,7 @@ $contactInfo = [
     'email' => [
         'label' => 'Email',
         'type' => (new Input)
-            // ->setType('email')
+            ->setType('email')
             ->setName('contact_info__email')
             ->setId('ba-location--contact_info--email')
             ->addClass('regular-text'),
@@ -220,14 +222,14 @@ $formController
 
 include 'field-grid.php';
 
-$items = [
-    'cat' => [
-        'value' => 'cat',
-        'label' => 'Cat',
-        'name' => 'cat',
-        'id' => 'test--cat',
-    ],
-];
+// $items = [
+//     'cat' => [
+//         'value' => 'cat',
+//         'label' => 'Cat',
+//         'name' => 'cat',
+//         'id' => 'test--cat',
+//     ],
+// ];
 
 $posts = get_posts([
     'post_type' => 'ba_menu_item',
@@ -258,5 +260,15 @@ $checklist = (new Field('thing2', $controller))->setLabel('Menu Items');
 $metabox->addContent('menu_items', $checklist);
 $formController->addField($controller);
 
-// echo $field;
-// exit;
+
+$taxonomy = 'ba_delivery_platforms';
+$attribute = 'doordash';
+$metaKey = "ba_location_delivery_platforms__{$attribute}";
+
+$manager = new TermBasedPostMeta($metaKey, $taxonomy, $attribute);
+$element = (new Input)->addClass('large-text')->setType('text');
+$controller = (new FormFieldController('dp_doordash', $element, $manager));
+$field = (new Field('doordash', $controller))->setLabel('DoorDash');
+
+$metabox->addContent('delivery_platform', $field);
+$formController->addField($controller);
