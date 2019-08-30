@@ -6,7 +6,7 @@ use Backalley\Wordpress\AdminPage\AdminPage;
 use Backalley\Wordpress\AdminPage\SettingsField;
 use Backalley\Wordpress\AdminPage\SettingManager;
 use Backalley\WordPress\AdminPage\SettingsSection;
-use Backalley\Support\SelectOptions\UsStatesAndTerritories;
+use Backalley\GuctilityBelt\SelectOptions\UsStatesAndTerritories;
 
 $setting1 = (new SettingManager('ba-test', 'ba-test-1'))
     ->setType('string')

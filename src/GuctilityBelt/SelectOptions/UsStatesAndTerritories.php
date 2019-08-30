@@ -4,7 +4,7 @@
  * @package Backalley-Core
  */
 
-namespace Backalley\Support\SelectOptions;
+namespace Backalley\GuctilityBelt\SelectOptions;
 
 class UsStatesAndTerritories
 {
