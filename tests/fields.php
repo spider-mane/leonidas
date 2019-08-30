@@ -14,6 +14,9 @@ use Backalley\WordPress\MetaBox\Section;
 use Backalley\WordPress\MetaBox\Fieldset;
 use Backalley\Form\Controllers\FormFieldController;
 use Backalley\Form\Controllers\FormSubmissionGroup;
+use Backalley\GuctilityBelt\Address\Address;
+use Backalley\GuctilityBelt\Address\GoogleGeocoder;
+
 use function Backalley\GuctilityBelt\address_format;
 
 use function Backalley\GuctilityBelt\google_geocode;
@@ -120,7 +123,6 @@ $fields = [
     'zip' => $controllers['zip'],
 ];
 
-$fields['street']->setSavingDisabled(true);
 foreach ($fields as $slug => $field) {
     $addressGeoGroup->addField($field);
 }
@@ -131,6 +133,10 @@ $addressGeoGroup->addCallBack('geodata', function ($results, $post) {
     $updated = false;
     $post_id = $post->ID;
 
+    $apiKey = 'AIzaSyC-PMj5P8atDt61zPmdlCeTkVv4KaW-CiU';
+    $geocoder = new GoogleGeocoder($apiKey);
+    $address = (new Address)->setGeocoder($geocoder);
+
     foreach ($results as $result) {
         if (true === $result['saved']) {
             $updated = true;
@@ -139,7 +145,7 @@ $addressGeoGroup->addCallBack('geodata', function ($results, $post) {
     }
 
     if (true === $updated) {
-        $complete = GuctilityBelt::concat_address(
+        $complete = $address->concat(
             $results['ba_street']['value'],
             $results['ba_city']['value'],
             $results['ba_state']['value'],
@@ -148,9 +154,9 @@ $addressGeoGroup->addCallBack('geodata', function ($results, $post) {
 
         update_post_meta($post_id, "ba_location_address__complete", $complete);
 
-        if (isset(Backalley::$api_keys['google_maps'])) {
+        if (isset($apiKey)) {
 
-            $coordinates = GuctilityBelt::google_geocode($complete, Backalley::$api_keys['google_maps']);
+            $coordinates = $address->getGeodata($complete);
 
             update_post_meta($post_id, "ba_location_address__geo", $coordinates);
         }

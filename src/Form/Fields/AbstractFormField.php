@@ -11,37 +11,37 @@ abstract class AbstractFormField extends AbstractHtmlElement implements FormFiel
     /**
      * @var string
      */
-    public $name = '';
+    protected $name = '';
 
     /**
      * @var mixed
      */
-    public $value;
+    protected $value;
 
     /**
      * @var string
      */
-    public $label = '';
+    protected $label = '';
 
     /**
      * @var string
      */
-    public $placeholder = '';
+    protected $placeholder = '';
 
     /**
      * @var bool
      */
-    public $required = false;
+    protected $required = false;
 
     /**
      * @var bool
      */
-    public $disabled = false;
+    protected $disabled = false;
 
     /**
      * @var bool
      */
-    public $readonly = false;
+    protected $readonly = false;
 
     /**
      * Get the value of name

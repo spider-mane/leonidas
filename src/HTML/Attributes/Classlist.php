@@ -2,7 +2,6 @@
 
 namespace Backalley\Html\Attributes;
 
-use Backalley\Html\AbstractHtmlAttribute;
 use Backalley\Html\Contracts\HtmlAttributeInterface;
 
 class Classlist extends AbstractHtmlAttribute implements HtmlAttributeInterface

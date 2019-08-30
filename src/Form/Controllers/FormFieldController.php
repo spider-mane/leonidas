@@ -117,7 +117,7 @@ class FormFieldController implements DataFieldInterface, FormFieldControllerInte
     private $stateCache = [
         'violations' => [],
         'input_value' => null,
-        'has_post_var' => null,
+        'post_has_var' => null,
         'save_attempted' => null,
         'save_successful' => null,
     ];
@@ -446,6 +446,16 @@ class FormFieldController implements DataFieldInterface, FormFieldControllerInte
     /**
      *
      */
+    public function getFilteredInput()
+    {
+        $input = $this->filterInput($this->getRawInput());
+
+        return $this->stateCache['input_value'] = $input;
+    }
+
+    /**
+     *
+     */
     protected function filterInput($input)
     {
         if (true === $this->validateInput($input)) {
@@ -453,15 +463,6 @@ class FormFieldController implements DataFieldInterface, FormFieldControllerInte
         } else {
             return false;
         }
-    }
-
-    /**
-     *
-     */
-    public function getFilteredInput()
-    {
-        $input = $this->filterInput($this->getRawInput());
-        return $this->stateCache['input_value'] = $input;
     }
 
     /**
@@ -528,11 +529,13 @@ class FormFieldController implements DataFieldInterface, FormFieldControllerInte
      */
     protected function saveData($request)
     {
-        $filteredInput = $this->getStateParameter('input_value') ?? $this->getFilteredInput();
+        $filteredInput = $this->getFilteredInput();
 
         if (false !== $filteredInput) {
-            $this->dataManager->saveData($request, $filteredInput);
+            return $this->dataManager->saveData($request, $filteredInput);
         }
+
+        return false;
     }
 
     /**

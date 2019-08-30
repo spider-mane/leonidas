@@ -1,11 +1,15 @@
 <?php
 
-namespace Backalley\Html;
+namespace Backalley\Html\Attributes;
 
 use Backalley\Html\Contracts\HtmlAttributeInterface;
 
 abstract class AbstractHtmlAttribute implements HtmlAttributeInterface
 {
+    /**
+     *
+     */
+    protected $attribute;
     /**
      *
      */

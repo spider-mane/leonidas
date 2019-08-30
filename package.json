@@ -1,4 +1,7 @@
 {
+  "name": "@webtheorystudio/backalley",
+  "description": "object oriented framework for working with wordpress api",
+  "repository": "github:spider-mane/backalley",
   "devDependencies": {
     "@babel/cli": "^7.2.3",
     "@babel/core": "^7.2.2",

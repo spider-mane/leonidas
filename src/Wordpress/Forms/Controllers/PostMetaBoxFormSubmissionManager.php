@@ -79,6 +79,7 @@ class PostMetaBoxFormSubmissionManager extends AbstractFormSubmissionManager
      */
     public function savePostActionCallback($postId, $post, $update)
     {
+        // exit(var_dump($this->isSafeToRun($post), $update));
         if ($update && $this->isSafeToRun($post)) {
             $this->handleRequest($post);
         }

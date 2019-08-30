@@ -12,7 +12,7 @@ interface HtmlAttributeInterface
     /**
      *
      */
-    public function tokenize();
+    public function tokenize(string $attribute);
 
     /**
      *

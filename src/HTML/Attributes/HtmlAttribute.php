@@ -2,7 +2,6 @@
 
 namespace Backalley\Html\Attributes;
 
-use Backalley\Html\AbstractHtmlAttribute;
 use Backalley\Html\Contracts\HtmlAttributeInterface;
 
 class HtmlAttribute extends AbstractHtmlAttribute implements HtmlAttributeInterface
@@ -38,6 +37,6 @@ class HtmlAttribute extends AbstractHtmlAttribute implements HtmlAttributeInterf
      */
     public function parse(): string
     {
-        return $this->value;
+        return (string) $this->value;
     }
 }

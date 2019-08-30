@@ -83,8 +83,10 @@ class PostMetaFieldManager extends AbstractFieldDataManager implements FieldData
      */
     public function saveData($post, $data): bool
     {
-        $response = (bool) update_post_meta($post->ID, $this->metaKey, $data, $this->getData($post));
+        // var_dump($data, $this->getData($post));
 
+        $response = (bool) update_post_meta($post->ID, $this->metaKey, $data, $this->getData($post));
+        // exit(var_dump($response));
         do_action("backalley/updated/post/{$post->post_type}/{$this->metaKey}", $post, $data);
 
         return $response;

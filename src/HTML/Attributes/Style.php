@@ -2,7 +2,6 @@
 
 namespace Backalley\Html\Attributes;
 
-use Backalley\Html\AbstractHtmlAttribute;
 use Backalley\Html\Contracts\HtmlAttributeInterface;
 
 class Style extends AbstractHtmlAttribute implements HtmlAttributeInterface
@@ -75,7 +74,7 @@ class Style extends AbstractHtmlAttribute implements HtmlAttributeInterface
         foreach ($styles as $style) {
             $style = explode(':', $style);
 
-            $value[$style[0]] = $style[1];
+            $value[ltrim($style[0])] = ltrim($style[1]);
         }
 
         return $value;

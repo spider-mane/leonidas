@@ -72,6 +72,16 @@ trait ElementConstructorTrait
     /**
      *
      */
+    private static function attribute($attribute, $value, $space = false)
+    {
+        $space = $space ? ' ' : '';
+
+        return "{$space}{$attribute}=\"{$value}\"";
+    }
+
+    /**
+     *
+     */
     private static function resolvesToAttribute($attr, $val)
     {
         return is_string($val) || is_int($val);
