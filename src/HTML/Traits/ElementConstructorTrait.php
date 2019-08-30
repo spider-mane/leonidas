@@ -2,6 +2,7 @@
 
 namespace Backalley\Html\Traits;
 
+use Backalley\Html\Contracts\HtmlAttributeInterface;
 use Backalley\Html\TagSage;
 
 /**
@@ -43,35 +44,23 @@ trait ElementConstructorTrait
 
             // val is array of boolean values
             if (is_array($val) && $attr === 'boolean_attributes') {
-                foreach ($val as $booleanAttr) {
-                    $attrStr .= " {$booleanAttr}";
+                foreach ($val as $bool) {
+                    $attrStr .= " {$bool}=\"{$bool}\"";
                 }
                 continue;
             }
 
             // $val represents token list
             if (is_array($val) && isset($val[0])) {
-                $attrStr .= " {$attr}=\"";
-
-                $i = 0;
-
-                foreach ($val as $thing) {
-                    if ($i++ === 0) {
-                        $attrStr .= "{$thing}";
-                    } else {
-                        $attrStr .= " {$thing}";
-                    }
-                }
-
-                $attrStr .= "\""; // add closing quote
+                $val = implode(' ', $val);
+                $attrStr .= " {$attr}=\"{$val}\"";
                 continue;
             }
 
             // $val represents a map
             if (is_array($val)) {
                 foreach ($val as $set => $setval) {
-                    // static::parse_attributes(["{$attr}-{$set}" => $setval]);
-                    static::parseAttributes(["{$attr}-{$set}" => $setval], $attrStr);
+                    static::_parseAttributes(["{$attr}-{$set}" => $setval], $attrStr);
                 }
                 continue;
             }

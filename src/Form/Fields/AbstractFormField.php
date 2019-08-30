@@ -44,14 +44,6 @@ abstract class AbstractFormField extends AbstractHtmlElement implements FormFiel
     public $readonly = false;
 
     /**
-     *
-     */
-    public function __construct()
-    {
-        // maybe do something
-    }
-
-    /**
      * Get the value of name
      *
      * @return string

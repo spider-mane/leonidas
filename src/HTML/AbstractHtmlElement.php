@@ -2,6 +2,8 @@
 
 namespace Backalley\Html;
 
+use Backalley\Html\Attributes\Classlist;
+use Backalley\Html\Attributes\Style;
 use DOMElement;
 use Backalley\Html\Traits\ElementConstructorTrait;
 
@@ -23,14 +25,14 @@ abstract class AbstractHtmlElement
     public $id = '';
 
     /**
-     * @var array
+     * @var Classlist
      */
-    protected $classlist = [];
+    protected $classlist;
 
     /**
-     * @var array
+     * @var Style
      */
-    protected $styles = [];
+    protected $styles;
 
     /**
      * @var array
@@ -42,7 +44,8 @@ abstract class AbstractHtmlElement
      */
     public function __construct()
     {
-        // do something maybe
+        $this->classlist = new Classlist;
+        $this->styles = new Style;
     }
 
     /**
@@ -94,7 +97,7 @@ abstract class AbstractHtmlElement
      *
      * @return array
      */
-    public function getClasslist(): array
+    public function getClasslist(): Classlist
     {
         return $this->classlist;
     }
@@ -108,24 +111,7 @@ abstract class AbstractHtmlElement
      */
     public function setClasslist(array $classlist)
     {
-        foreach ($classlist as $class) {
-            $this->addClass($class);
-        }
-
-        return $this;
-    }
-
-    /**
-     * Set the value of classlist
-     *
-     * @param array $classlist
-     *
-     * @return self
-     */
-    protected function resetClasslist(array $classlist = [])
-    {
-        $this->classlist = [];
-        $this->setClasslist($classlist);
+        $this->classlist->set($classlist);
 
         return $this;
     }
@@ -139,7 +125,7 @@ abstract class AbstractHtmlElement
      */
     public function addClass(string $class)
     {
-        $this->classlist[] = $class;
+        $this->classlist->add($class);
 
         return $this;
     }
@@ -153,9 +139,7 @@ abstract class AbstractHtmlElement
      */
     public function removeClass(string $class)
     {
-        while (in_array($class, $this->classlist)) {
-            unset($this->classlist[array_search($class, $this->classlist)]);
-        }
+        $this->classlist->remove($class);
 
         return $this;
     }
@@ -165,9 +149,9 @@ abstract class AbstractHtmlElement
      *
      * @return array
      */
-    public function getStyles(): array
+    public function getStyles(): Style
     {
-        return $this->classlist;
+        return $this->styles;
     }
 
     /**
@@ -187,21 +171,6 @@ abstract class AbstractHtmlElement
     }
 
     /**
-     * Reset the value of styles
-     *
-     * @param array $styles
-     *
-     * @return self
-     */
-    protected function resetStyles(array $styles = [])
-    {
-        $this->styles = [];
-        $this->setStyles($styles);
-
-        return $this;
-    }
-
-    /**
      * Add or overwrite a style
      *
      * @param string $property
@@ -211,7 +180,7 @@ abstract class AbstractHtmlElement
      */
     public function addStyle(string $property, string $value)
     {
-        $this->styles[$property] = $value;
+        $this->styles->set($property, $value);
 
         return $this;
     }
@@ -225,9 +194,7 @@ abstract class AbstractHtmlElement
      */
     public function removeStyle(string $style)
     {
-        while (in_array($style, $this->styles)) {
-            unset($this->styles[array_search($style, $this->styles)]);
-        }
+        $this->styles->remove($style);
 
         return $this;
     }
@@ -279,7 +246,8 @@ abstract class AbstractHtmlElement
     {
         return $this
             ->addAttribute('id', $this->id)
-            ->addAttribute('class', $this->classlist);
+            ->addAttribute('class', $this->classlist->parse())
+            ->addAttribute('style', $this->styles->parse());
     }
 
     /**

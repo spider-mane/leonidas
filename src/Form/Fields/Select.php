@@ -27,14 +27,6 @@ class Select extends AbstractFormField implements FormFieldInterface
     public $size;
 
     /**
-     *
-     */
-    public function __construct()
-    {
-        // do something maybe
-    }
-
-    /**
      * Get the value of options
      *
      * @return mixed

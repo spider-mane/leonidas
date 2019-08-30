@@ -22,14 +22,6 @@ class Input extends AbstractFormField implements FormFieldInterface
     public $value;
 
     /**
-     *
-     */
-    public function __construct()
-    {
-        // code here
-    }
-
-    /**
      * Get the value of type
      *
      * @return string

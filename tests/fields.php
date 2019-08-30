@@ -222,15 +222,6 @@ $formController
 
 include 'field-grid.php';
 
-// $items = [
-//     'cat' => [
-//         'value' => 'cat',
-//         'label' => 'Cat',
-//         'name' => 'cat',
-//         'id' => 'test--cat',
-//     ],
-// ];
-
 $posts = get_posts([
     'post_type' => 'ba_menu_item',
     'posts_per_page' => -1,

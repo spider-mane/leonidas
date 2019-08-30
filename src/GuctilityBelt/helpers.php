@@ -3,32 +3,6 @@
 namespace Backalley\GuctilityBelt;
 
 /**
- * Convert custom argument to an FQN
- */
-function arg_to_class($arg, $class_format = '', $namespace = '')
-{
-    $bridge = str_replace('_', ' ', $arg);
-
-    $bridge = ucwords($bridge);
-    $bridge = str_replace(' ', '', $bridge);
-
-    $class = $namespace . "\\" . sprintf($class_format, $bridge);
-
-    return $class;
-}
-
-/**
- *
- */
-function one_versus_many($key, $fields)
-{
-    if (array_key_exists($key, $fields)) {
-        return [$fields];
-    }
-    return $fields;
-}
-
-/**
  *
  */
 function sort_objects_array(array $objects_array, array $order_array, string $order_key)
@@ -55,86 +29,4 @@ function sort_objects_array(array $objects_array, array $order_array, string $or
     });
 
     return $objects_array;
-}
-
-/**
- *
- */
-function get_object($object_array, $property_name, $property_value)
-{
-    if (is_array($object_array) || is_string($property_name)) {
-        return false;
-    }
-
-    foreach ($object_array ?: [] as $object) {
-        if ($object->{$property_name} === $property_value) {
-            return $object;
-        }
-    }
-
-    return false;
-}
-
-/**
- * Send Request to google to geocode given address
- *
- * @param string $address
- * @param string $key Google Maps api key
- */
-function google_geocode(string $address, string $key)
-{
-    $address = urlencode($address);
-
-    $url = "https://maps.googleapis.com/maps/api/geocode/json?address={$address}&key={$key}";
-
-    $response = json_decode(file_get_contents($url), true);
-
-    if ('OK' === $response['status']) {
-        $coordinates = $response['results'][0]['geometry']['location'];
-
-        return json_encode($coordinates);
-    }
-}
-
-/**
- *
- */
-function address_formated(string $street, string $city, string $state, string $zip)
-{
-    return "${street}, ${city}, ${state} ${zip}";
-}
-
-
-/**
- *
- */
-function address_geodata($results, $post)
-{
-    $updated = false;
-    $post_id = $post->ID;
-
-    foreach ($results as $result) {
-        if (true === $result['saved']) {
-            $updated = true;
-            break;
-        }
-    }
-
-    if (true === $updated) {
-        $complete = address_formated(
-            $results['ba_street']['value'],
-            $results['ba_city']['value'],
-            $results['ba_state']['value'],
-            $results['ba_zip']['value']
-        );
-
-        update_post_meta($post_id, "ba_location_address__complete", $complete);
-
-        if (isset(Backalley::$api_keys['google_maps'])) {
-
-            $coordinates = google_geocode($complete, Backalley::$api_keys['google_maps']);
-
-            update_post_meta($post_id, "ba_location_address__geo", $coordinates);
-        }
-    }
 }

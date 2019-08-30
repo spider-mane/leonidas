@@ -22,6 +22,7 @@ class Label extends AbstractHtmlElement
     public function __construct(string $label)
     {
         $this->innerText = $label;
+        parent::__construct();
     }
 
     /**
