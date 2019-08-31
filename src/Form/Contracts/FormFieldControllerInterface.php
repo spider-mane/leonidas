@@ -45,6 +45,11 @@ interface FormFieldControllerInterface extends FormSubmissionManagerInterface
     /**
      *
      */
+    public function getPostVar(): string;
+
+    /**
+     *
+     */
     public function getStateParameter(string $state);
 
     /**

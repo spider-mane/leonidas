@@ -14,7 +14,7 @@ use Backalley\WordPress\MetaBox\Section;
 use Backalley\WordPress\MetaBox\Fieldset;
 use Backalley\GuctilityBelt\Address\Address;
 use Backalley\Form\Controllers\FormFieldController;
-use Backalley\Form\Controllers\FormSubmissionGroup;
+use Backalley\Form\Groups\AddressMetaGroup;
 use Backalley\GuctilityBelt\Address\GoogleGeocoder;
 
 use function Backalley\GuctilityBelt\address_format;
@@ -107,14 +107,16 @@ $address = [
 
 $address = (new Fieldset('Address', $formController))->setFields($address);
 
-
 $controllers = $address->getControllers();
-$addressGeoGroup = (new FormSubmissionGroup);
-
 /** @var FormFieldController $controller */
 foreach ([$controllers['complete'], $controllers['geo']] as $controller) {
     $controller->setSavingDisabled(true);
 }
+
+$geo = (new PostMetaFieldManager('ba_location_address__geo'));
+$complete = (new PostMetaFieldManager('ba_location_address__complete'));
+$addressHelper = (new Address)->setGeocoder(new GoogleGeocoder('AIzaSyC-PMj5P8atDt61zPmdlCeTkVv4KaW-CiU'));
+$addressGeoGroup = (new AddressMetaGroup($addressHelper, $complete))->setGeoDataManager($geo);
 
 $fields = [
     'street' => $controllers['street'],
@@ -124,44 +126,8 @@ $fields = [
 ];
 
 foreach ($fields as $slug => $field) {
-    $addressGeoGroup->addField($field);
+    $addressGeoGroup->setField($slug, $field);
 }
-
-// add callback to group
-$addressGeoGroup->addCallBack('geodata', function ($results, $post) {
-
-    $updated = false;
-    $post_id = $post->ID;
-
-    $apiKey = 'AIzaSyC-PMj5P8atDt61zPmdlCeTkVv4KaW-CiU';
-    $geocoder = new GoogleGeocoder($apiKey);
-    $address = (new Address)->setGeocoder($geocoder);
-
-    foreach ($results as $result) {
-        if (true === $result['saved']) {
-            $updated = true;
-            break;
-        }
-    }
-
-    if (true === $updated) {
-        $complete = $address->concat(
-            $results['ba_street']['value'],
-            $results['ba_city']['value'],
-            $results['ba_state']['value'],
-            $results['ba_zip']['value']
-        );
-
-        update_post_meta($post_id, "ba_location_address__complete", $complete);
-
-        if (isset($apiKey)) {
-
-            $coordinates = $address->getGeodata($complete);
-
-            update_post_meta($post_id, "ba_location_address__geo", $coordinates);
-        }
-    }
-});
 
 
 $contactInfo = [

@@ -1,10 +1,11 @@
 <?php
 
-namespace Backalley\Form\Controllers;
+namespace Backalley\Form\Groups;
 
 use Backalley\Form\Contracts\FormFieldControllerInterface;
+use Backalley\Form\Contracts\FormSubmissionGroupInterface;
 
-class FormSubmissionGroup
+class FormSubmissionGroupCallback implements FormSubmissionGroupInterface
 {
     /**
      * @var string
@@ -38,7 +39,7 @@ class FormSubmissionGroup
      *
      * @return self
      */
-    public function setFields($fields): FormSubmissionGroup
+    public function setFields($fields)
     {
         foreach ($fields as $field) {
             $this->addField($field);
@@ -92,44 +93,5 @@ class FormSubmissionGroup
         }
 
         return $this;
-    }
-
-    /**
-     *
-     */
-    public function run($request)
-    {
-        $values = [];
-
-        /** @var FormFieldControllerInterface $field */
-
-        foreach ($this->fields as $field) {
-
-            $slug = $field->getFormFieldName();
-
-            if ($field->postVarExists()) {
-                $values[$slug] = $field->getStateParameter('input_value');
-            } else {
-                $values[$slug] = null;
-            }
-
-            // dynamically generate results array if field has a data manager
-            // this allows callbacks to anticipate only input data where it is
-            // not desired for the field to have any saving functionality
-            if ($field->hasDataManager() && !$field->isSavingDisabled()) {
-                $results[$slug]['saved'] = $field->getStateParameter('save_successful');
-            }
-        }
-
-        if (isset($results)) {
-            foreach ($results as $slug => &$result) {
-                $result['value'] = $values[$slug];
-            }
-        }
-
-        foreach ($this->callbacks as $cb) {
-            // send results to callback if it exists, otherwise send vales
-            $cb($results ?? $values, $request);
-        }
     }
 }

@@ -3,6 +3,7 @@
 namespace Backalley\Form\Controllers;
 
 use Backalley\Form\Contracts\FormFieldControllerInterface;
+use Backalley\Form\Contracts\FormSubmissionGroupInterface;
 
 abstract class AbstractFormSubmissionManager
 {
@@ -112,7 +113,7 @@ abstract class AbstractFormSubmissionManager
      *
      * @return self
      */
-    public function addGroup(string $slug, FormSubmissionGroup $group)
+    public function addGroup(string $slug, FormSubmissionGroupInterface $group)
     {
         if (!in_array($slug, $this->groups)) {
             $this->groups[$slug] = $group;
@@ -187,13 +188,47 @@ abstract class AbstractFormSubmissionManager
      */
     final private function runGroups($request)
     {
-        /** @var FormSubmissionGroup $group */
-
         foreach ($this->groups as $group) {
-            $group->run($request);
+            $this->runGroup($request, $group);
         }
 
         return $this;
+    }
+
+    /**
+     *
+     */
+    final private function runGroup($request, FormSubmissionGroupInterface $group)
+    {
+        $values = [];
+
+        /** @var FormFieldControllerInterface $field */
+
+        foreach ($group->getFields() as $field) {
+
+            $slug = $field->getFormFieldName();
+
+            if ($field->postVarExists()) {
+                $values[$slug] = $field->getStateParameter('input_value');
+            } else {
+                $values[$slug] = null;
+            }
+
+            // dynamically generate results array if field has a data manager
+            // this allows callbacks to anticipate only input data where it is
+            // not desired for the field to have any saving functionality
+            if ($field->hasDataManager() && !$field->isSavingDisabled()) {
+                $results[$slug]['saved'] = $field->getStateParameter('save_successful');
+            }
+        }
+
+        if (isset($results)) {
+            foreach ($results as $slug => &$result) {
+                $result['value'] = $values[$slug];
+            }
+        }
+
+        $group->run($request, $results);
     }
 
     /**
