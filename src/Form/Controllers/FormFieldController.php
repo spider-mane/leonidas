@@ -9,9 +9,6 @@ use Backalley\Form\Contracts\FormFieldInterface;
 use Backalley\Form\Contracts\FieldDataManagerInterface;
 use Backalley\Form\Contracts\FormFieldControllerInterface;
 
-/**
- *
- */
 class FormFieldController implements DataFieldInterface, FormFieldControllerInterface
 {
     /**

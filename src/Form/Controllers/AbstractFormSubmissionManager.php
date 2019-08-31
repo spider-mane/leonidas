@@ -8,11 +8,15 @@ use Backalley\Form\Contracts\FormSubmissionGroupInterface;
 abstract class AbstractFormSubmissionManager
 {
     /**
+     * collection of FormFieldControllerInterface objects
+     *
      * @var array
      */
     protected $fields = [];
 
     /**
+     * collection of FormSubmissionGroupInterface objects
+     *
      * @var array
      */
     protected $groups = [];

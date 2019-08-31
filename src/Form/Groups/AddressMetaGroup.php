@@ -169,9 +169,9 @@ class AddressMetaGroup implements FormSubmissionGroupInterface
     }
 
     /**
-     *
+     * @param array $fields individual components that compose the address
      */
-    protected function formatAddress($fields)
+    protected function formatAddress(array $fields)
     {
         return $this->addressHelper->concat(
             $fields['street'],
