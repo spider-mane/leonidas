@@ -73,7 +73,7 @@ class PostMetaFieldManager extends AbstractFieldDataManager implements FieldData
     /**
      *
      */
-    public function getData($post)
+    public function getCurrentData($post)
     {
         return get_post_meta($post->ID, $this->metaKey, $this->isUniqueValue);
     }
@@ -81,7 +81,7 @@ class PostMetaFieldManager extends AbstractFieldDataManager implements FieldData
     /**
      *
      */
-    public function saveData($post, $data): bool
+    public function handleSubmittedData($post, $data): bool
     {
         $response = (bool) update_post_meta($post->ID, $this->metaKey, $data, $this->getData($post));
 

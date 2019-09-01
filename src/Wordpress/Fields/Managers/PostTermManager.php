@@ -91,7 +91,7 @@ class PostTermManager extends AbstractFieldDataManager implements FieldDataManag
     /**
      *
      */
-    public function getData($post)
+    public function getCurrentData($post)
     {
         return get_the_terms($post->ID, $this->taxonomy);
     }
@@ -99,7 +99,7 @@ class PostTermManager extends AbstractFieldDataManager implements FieldDataManag
     /**
      *
      */
-    public function saveData($post, $data): bool
+    public function handleSubmittedData($post, $data): bool
     {
         $original = $this->getData($post);
 

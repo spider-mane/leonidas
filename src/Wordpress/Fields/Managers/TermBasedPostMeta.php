@@ -106,7 +106,7 @@ class TermBasedPostMeta extends PostMetaFieldManager implements FieldDataManager
     /**
      *
      */
-    public function saveData($post, $data): bool
+    public function handleSubmittedData($post, $data): bool
     {
         $response = false;
 

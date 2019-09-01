@@ -529,7 +529,7 @@ class FormFieldController implements DataFieldInterface, FormFieldControllerInte
         $filteredInput = $this->getFilteredInput();
 
         if (false !== $filteredInput) {
-            return $this->dataManager->saveData($request, $filteredInput);
+            return $this->dataManager->processSubmissionData($request, $filteredInput);
         }
 
         return false;
@@ -540,7 +540,7 @@ class FormFieldController implements DataFieldInterface, FormFieldControllerInte
      */
     protected function getData($request)
     {
-        return $this->dataManager->getData($request);
+        return $this->dataManager->getCurrentData($request);
     }
 
     /**

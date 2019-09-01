@@ -87,7 +87,7 @@ class TermRelatedPostsManager extends AbstractFieldDataManager implements FieldD
     /**
      *
      */
-    public function getData($post)
+    public function getCurrentData($post)
     {
         $this->setContext($post);
 
@@ -103,7 +103,7 @@ class TermRelatedPostsManager extends AbstractFieldDataManager implements FieldD
     /**
      *
      */
-    public function saveData($post, $data): bool
+    public function handleSubmittedData($post, $data): bool
     {
         $this->setContext($post);
 

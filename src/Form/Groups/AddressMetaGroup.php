@@ -196,10 +196,10 @@ class AddressMetaGroup implements FormSubmissionGroupInterface
 
         $formattedAddress = $this->formatAddress($fields);
 
-        $this->addressDataManager->saveData($request, $formattedAddress);
+        $this->addressDataManager->processSubmissionData($request, $formattedAddress);
 
         if (isset($this->geoDataManager) && isset($geocoder)) {
-            $this->geoDataManager->saveData($request, $geocoder->getGeodata($formattedAddress));
+            $this->geoDataManager->processSubmissionData($request, $geocoder->getGeodata($formattedAddress));
         }
     }
 }
