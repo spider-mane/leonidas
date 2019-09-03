@@ -113,16 +113,21 @@ class TermBasedPostMeta extends PostMetaFieldManager implements FieldDataManager
         if (isset($this->deleteButton) && filter_has_var(INPUT_POST, $this->deleteButton)) {
 
             $this->deleteData($post);
-            // delete_post_meta($post->ID, $this->metaKey);
-            wp_remove_object_terms($post->ID, $this->attribute, $this->taxonomy);
-
             $response = true;
-            //
         } elseif (has_term($this->attribute, $this->taxonomy, $post->ID)) {
 
-            $response = parent::saveData($post, $data);
+            $response = $this->getCurrentData($post, $data);
         }
 
         return $response;
+    }
+
+    /**
+     *
+     */
+    protected function deleteData($post)
+    {
+        parent::deleteData($post);
+        wp_remove_object_terms($post->ID, $this->attribute, $this->taxonomy);
     }
 }

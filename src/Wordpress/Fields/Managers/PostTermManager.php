@@ -101,7 +101,7 @@ class PostTermManager extends AbstractFieldDataManager implements FieldDataManag
      */
     public function handleSubmittedData($post, $data): bool
     {
-        $original = $this->getData($post);
+        $original = $this->getCurrentData($post);
 
         try {
             $result = wp_set_post_terms($post->ID, $data, $this->taxonomy, $this->newTermsAppended);

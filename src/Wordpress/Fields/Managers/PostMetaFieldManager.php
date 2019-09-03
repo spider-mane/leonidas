@@ -83,9 +83,9 @@ class PostMetaFieldManager extends AbstractFieldDataManager implements FieldData
      */
     public function handleSubmittedData($post, $data): bool
     {
-        $response = (bool) update_post_meta($post->ID, $this->metaKey, $data, $this->getData($post));
+        $response = (bool) update_post_meta($post->ID, $this->metaKey, $data, $this->getCurrentData($post));
 
-        do_action("backalley/updated/post/{$post->post_type}/{$this->metaKey}", $post, $data);
+        do_action("backalley/post/meta/updated/{$post->post_type}/{$this->metaKey}", $post, $data);
 
         return $response;
     }
@@ -95,9 +95,9 @@ class PostMetaFieldManager extends AbstractFieldDataManager implements FieldData
      */
     public function deleteData($post)
     {
-        $response = (bool) delete_post_meta($post->id, $this->metaKey, $this->getData($post));
+        $response = (bool) delete_post_meta($post->id, $this->metaKey, $this->getCurrentData($post));
 
-        do_action("backalley/deleted/post/{$post->post_type}/{$this->metaKey}", $post);
+        do_action("backalley/post/meta/deleted/{$post->post_type}/{$this->metaKey}", $post);
 
         return $response;
     }

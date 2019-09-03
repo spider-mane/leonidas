@@ -529,7 +529,7 @@ class FormFieldController implements DataFieldInterface, FormFieldControllerInte
         $filteredInput = $this->getFilteredInput();
 
         if (false !== $filteredInput) {
-            return $this->dataManager->processSubmissionData($request, $filteredInput);
+            return $this->dataManager->handleSubmittedData($request, $filteredInput);
         }
 
         return false;
