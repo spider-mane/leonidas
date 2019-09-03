@@ -40,7 +40,7 @@ class AddressMetaGroup implements FormSubmissionGroupInterface
      */
     protected $geocoder;
 
-    private const ACCEPTED_FIELDS = ['street', 'apt', 'city', 'state', 'zip'];
+    private const ACCEPTED_FIELDS = ['street', 'city', 'state', 'zip'];
 
     /**
      *
@@ -196,10 +196,10 @@ class AddressMetaGroup implements FormSubmissionGroupInterface
 
         $formattedAddress = $this->formatAddress($fields);
 
-        $this->addressDataManager->processSubmissionData($request, $formattedAddress);
+        $this->addressDataManager->handleSubmittedData($request, $formattedAddress);
 
         if (isset($this->geoDataManager) && isset($geocoder)) {
-            $this->geoDataManager->processSubmissionData($request, $geocoder->getGeodata($formattedAddress));
+            $this->geoDataManager->handleSubmittedData($request, $geocoder->getGeodata($formattedAddress));
         }
     }
 }

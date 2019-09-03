@@ -11,28 +11,32 @@
 
   "require": {
     "php": ">=7.0.0",
-    "commerceguys/addressing": "^1.0",
     "composer/installers": "v1.0.12",
-    "egulias/email-validator": "^2.1",
     "illuminate/contracts": "^5.8",
-    "illuminate/mail": "^5.8",
     "illuminate/support": "^5.8",
     "jbzoo/utils": "^2.3",
     "league/fractal": "^0.18.0",
     "masterminds/html5": "^2.6",
-    "moneyphp/money": "^3.2",
     "monolog/monolog": "^1.24",
     "myclabs/deep-copy": "^1.8",
     "php-console/php-console": "^3.1",
-    "respect/validation": "^1.1",
-    "symfony/validator": "^4.3",
-    "timber/timber": "^1.9",
     "twig/twig": "^2.0"
   },
 
   "require-dev": {
+    "commerceguys/addressing": "^1.0",
+    "egulias/email-validator": "^2.1",
     "filp/whoops": "^2.5",
+    "geocoder-php/google-maps-provider": "^4.4",
+    "guzzlehttp/guzzle": "~6.0",
+    "illuminate/mail": "^5.8",
+    "moneyphp/money": "^3.2",
+    "php-http/guzzle6-adapter": "^2.0",
+    "php-http/message": "^1.8",
     "phpbench/phpbench": "@dev",
+    "respect/validation": "^1.1",
+    "symfony/thanks": "^1.1",
+    "symfony/validator": "^4.3",
     "symfony/var-dumper": "^4.3"
   },
 

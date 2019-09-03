@@ -6,11 +6,10 @@
 
 namespace Backalley\WordPress;
 
-use Twig_Function;
+use Twig\TwigFilter;
 use Twig\Environment;
-use Twig_SimpleFilter;
+use Twig\TwigFunction;
 use Twig\Loader\FilesystemLoader;
-
 
 class Backalley extends \BackalleyCoreBase
 {
@@ -21,54 +20,24 @@ class Backalley extends \BackalleyCoreBase
     // public static $admin_templates;
     // public static $timber_locations;
 
-    public static $api_keys;
-    public static $meta_key_prefix;
-
     /**
      * @var Twig\Environment
      */
     protected static $twigInstance;
 
     public const BASEDIR = '../../';
-    public const PLUGINNAME = 'backalley-core';
+    public const PLUGINNAME = 'backalley';
 
     /**
      *
      */
-    public static function init(array $args = [])
+    public static function init(array $options = [])
     {
         Self::load();
 
-        Self::$api_keys = $args['api_keys'] ?? [];
-        Self::$meta_key_prefix = $args['meta_key_prefix'] ?? '';
-
         static::initTwig();
-        // Self::alias_classes();
 
         add_action('admin_enqueue_scripts', [Self::class, 'enqueue']);
-        add_filter('timber/twig', [Self::class, 'config_twig']);
-    }
-
-    /**
-     *
-     */
-    public static function initTwig()
-    {
-        $loader = new FilesystemLoader(static::$admin_templates);
-
-        $twig = new Environment($loader);
-
-        self::config_twig($twig);
-
-        static::$twigInstance = $twig;
-    }
-
-    /**
-     *
-     */
-    public static function renderTemplate($template, $context)
-    {
-        echo static::$twigInstance->render("{$template}.twig", $context);
     }
 
     // /**
@@ -111,6 +80,32 @@ class Backalley extends \BackalleyCoreBase
     /**
      *
      */
+    public static function initTwig()
+    {
+        $options = [
+            'autoescape' => false,
+        ];
+
+        $loader = new FilesystemLoader(static::$admin_templates);
+
+        $twig = new Environment($loader, $options);
+
+        self::config_twig($twig);
+
+        static::$twigInstance = $twig;
+    }
+
+    /**
+     *
+     */
+    public static function renderTemplate($template, $context)
+    {
+        return static::$twigInstance->render("{$template}.twig", $context);
+    }
+
+    /**
+     *
+     */
     public static function config_twig($twig)
     {
         self::custom_twig_filters($twig);
@@ -131,7 +126,7 @@ class Backalley extends \BackalleyCoreBase
         ];
 
         foreach ($filters as $filter => $function) {
-            $twig->addFilter(new Twig_SimpleFilter($filter, $function));
+            $twig->addFilter(new TwigFilter($filter, $function));
         }
     }
 
@@ -148,7 +143,7 @@ class Backalley extends \BackalleyCoreBase
         ];
 
         foreach ($functions as $alias => $function) {
-            $twig->addFunction(new Twig_Function($alias, $function));
+            $twig->addFunction(new TwigFunction($alias, $function));
         }
     }
 

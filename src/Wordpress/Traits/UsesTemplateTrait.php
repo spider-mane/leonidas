@@ -2,7 +2,7 @@
 
 namespace Backalley\Wordpress\Traits;
 
-use Timber\Timber;
+use Backalley\WordPress\Backalley;
 
 trait UsesTemplateTrait
 {
@@ -11,6 +11,6 @@ trait UsesTemplateTrait
      */
     protected function renderTemplate($context)
     {
-        return Timber::compile("{$this->template}.twig", $context);
+        return Backalley::renderTemplate($this->template, $context);
     }
 }

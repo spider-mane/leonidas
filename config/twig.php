@@ -1,6 +1,10 @@
 <?php
 
 return [
+    'options' => [
+        'autoescape' => false,
+    ],
+
     'locations' => ['../public/templates'],
 
     'functions' => [
@@ -12,7 +16,7 @@ return [
 
     'filters' => [
         'subjectify_objects' => 'backalley_subjectify_wp_objects',
-        'clone_original' => 'DeepCopy\\deep_copy',
+        'copy' => 'DeepCopy\\deep_copy',
         'sort_terms_hierarchicaly' => 'sort_terms_hierarchicaly',
     ]
 ];
