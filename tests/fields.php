@@ -1,36 +1,21 @@
 <?php
 
-use Backalley\GuctilityBelt;
+use Backalley\Form\Controllers\FormFieldController;
+use Backalley\Form\Fields\Checklist;
 use Backalley\Form\Fields\Input;
 use Backalley\Form\Fields\Select;
-use Backalley\WordPress\AdminPage;
-use Backalley\WordPress\Backalley;
-use Backalley\Form\Fields\Textarea;
-use Backalley\Form\Fields\Checklist;
-use Backalley\WordPress\MetaBox\Field;
-use Respect\Validation\Validator as v;
-use Backalley\WordPress\MetaBox\MetaBox;
-use Backalley\WordPress\MetaBox\Section;
-use Backalley\WordPress\MetaBox\Fieldset;
-use Backalley\GuctilityBelt\Address\Address;
-use Backalley\Form\Controllers\FormFieldController;
 use Backalley\Form\Groups\AddressMetaGroup;
+use Backalley\GuctilityBelt\Address\Address;
 use Backalley\GuctilityBelt\Address\GoogleGeocoder;
-
-use function Backalley\GuctilityBelt\address_format;
-
-use function Backalley\GuctilityBelt\google_geocode;
-use Backalley\WordPress\Fields\Managers\PostTermManager;
-use Backalley\Wordpress\Fields\Managers\TermBasedPostMeta;
+use Backalley\GuctilityBelt\SelectOptions\UsStatesAndTerritories;
 use Backalley\WordPress\Fields\Managers\PostMetaFieldManager;
 use Backalley\WordPress\Fields\Managers\TermRelatedPostsManager;
-use Backalley\GuctilityBelt\SelectOptions\UsStatesAndTerritories;
+use Backalley\WordPress\MetaBox\Field;
+use Backalley\WordPress\MetaBox\Fieldset;
+use Backalley\WordPress\MetaBox\MetaBox;
+use Backalley\Wordpress\Fields\Managers\TermBasedPostMeta;
 use Backalley\Wordpress\Forms\Controllers\PostMetaBoxFormSubmissionManager;
-use Backalley\Wordpress\Fields\Transformers\PostRelationshipChecklistTransformer;
-
-
-
-
+use Respect\Validation\Validator as v;
 
 
 ########################################################################################################################

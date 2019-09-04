@@ -1,27 +1,54 @@
 <?php
 
-use Backalley\Html\Html;
+use Backalley\Form\Controllers\FormFieldController;
 use Backalley\Form\Fields\Checklist;
-use Backalley\Wordpress\Load\Screen;
+use Backalley\Form\Fields\Input;
+use Backalley\WordPress\Fields\Managers\TermMetaDataManager;
+use Backalley\WordPress\Fields\Managers\TermRelatedPostsManager;
+use Backalley\WordPress\Fields\WpAdminField;
+use Backalley\WordPress\Forms\Controllers\PostMetaBoxFormSubmissionManager;
 use Backalley\WordPress\MetaBox\Field;
 use Backalley\WordPress\MetaBox\MetaBox;
-use Backalley\Form\Controllers\FormFieldController;
-use Backalley\WordPress\Fields\Managers\TermRelatedPostsManager;
-use Backalley\Wordpress\Forms\Controllers\PostMetaBoxFormSubmissionManager;
+use Backalley\WordPress\Term\Field as TermField;
+use Backalley\Wordpress\Forms\Controllers\TermFieldFormSubmissionManager;
+use Backalley\Wordpress\Helpers\Screen;
 
 #ErrorHandling
 // (new Run)->prependHandler(new PrettyPageHandler)->register(); // error handling with whoops
 
-// add_action('init', function () {
-//     require 'admin-page.php';
-// });
-require 'admin-page.php';
+add_action('init', function () {
+    require 'admin-page.php';
+});
 
+/**
+ *
+ */
+Screen::load(['edit-tags', 'term'], ['taxonomy' => 'ba_menu_category'], function () {
 
+    $taxonomy = get_taxonomy('ba_menu_category');
+    $element = (new Input)->setId('test-joint');
+    $manager = (new TermMetaDataManager('test_data'));
+    $controller = (new WpAdminField('thing', $element, $manager));
+    $formManager = (new TermFieldFormSubmissionManager($taxonomy));
+    $field = (new TermField($taxonomy))
+        ->setFormFieldController($controller)
+        ->setLabel('Test Field')
+        ->setDescription('This is a test term field description')
+        ->hook();
+
+    $formManager->addField($controller)->hook();
+});
+
+/**
+ *
+ */
 Screen::load('post', ['post_type' => 'ba_location'], function () {
     include 'fields.php';
 });
 
+/**
+ *
+ */
 Screen::load('post', ['post_type' => 'ba_menu_item'], function () {
 
     $postType = 'ba_menu_item';

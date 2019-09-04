@@ -20,7 +20,7 @@ interface FormFieldControllerInterface extends FormSubmissionManagerInterface
     /**
      *
      */
-    public function renderFormField($request);
+    public function renderFormField($request): FormFieldInterface;
 
     /**
      *

@@ -3,6 +3,7 @@
 namespace Backalley\Wordpress\Fields;
 
 use Backalley\Form\Contracts\FormFieldControllerInterface;
+use Backalley\Form\Contracts\FormFieldInterface;
 
 class AbstractField
 {
@@ -108,7 +109,7 @@ class AbstractField
     /**
      *
      */
-    protected function renderFormField($object)
+    protected function renderFormField($object): FormFieldInterface
     {
         return $this->formFieldController->renderFormField($object);
     }

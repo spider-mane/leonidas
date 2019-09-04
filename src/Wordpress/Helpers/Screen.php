@@ -1,30 +1,30 @@
 <?php
 
-namespace Backalley\Wordpress\Load;
+namespace Backalley\Wordpress\Helpers;
 
 class Screen
 {
     /**
-     *
+     * @var array
      */
     protected $base;
 
     /**
-     *
+     * @var callable
      */
     protected $callback;
 
     /**
-     *
+     * @var array
      */
     protected $screen;
 
     /**
      *
      */
-    protected function __construct($base, $screen, $callback)
+    protected function __construct($base, array $screen, callable $callback)
     {
-        $this->base = $base;
+        $this->base = (array) $base;
         $this->screen = $screen;
         $this->callback = $callback;
 
@@ -34,7 +34,7 @@ class Screen
     /**
      *
      */
-    public static function load($base, $screen, $callback)
+    public static function load($base, array $screen, callable $callback)
     {
         return new static($base, $screen, $callback);
     }
@@ -44,7 +44,7 @@ class Screen
      */
     public function _load($screen)
     {
-        if ($screen->base !== $this->base) {
+        if (!in_array($screen->base, (array) $this->base)) {
             return;
         }
 
@@ -54,6 +54,6 @@ class Screen
             }
         }
 
-        call_user_func($this->callback);
+        call_user_func($this->callback, $screen);
     }
 }

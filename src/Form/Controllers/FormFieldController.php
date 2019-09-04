@@ -598,7 +598,7 @@ class FormFieldController implements DataFieldInterface, FormFieldControllerInte
     /**
      * function to render the formfield if no callback is supplied
      */
-    public function renderFormField($request)
+    public function renderFormField($request): FormFieldInterface
     {
         return $this
             ->prepareFormFieldForRendering($request)

@@ -1,13 +1,13 @@
 <?php
 
-use Backalley\Form\Fields\Input;
-use Respect\Validation\Validator as v;
+use Backalley\Form\Controllers\FormFieldController;
+use Backalley\Form\Fields\Time;
 use Backalley\WordPress\MetaBox\MetaBox;
 use Backalley\WordPress\MetaBox\Section;
-use Backalley\Wordpress\MetaBox\FieldGrid;
-use Backalley\Form\Controllers\FormFieldController;
 use Backalley\Wordpress\Fields\Managers\PostMetaFieldManager;
 use Backalley\Wordpress\Forms\Controllers\PostMetaBoxFormSubmissionManager;
+use Backalley\Wordpress\MetaBox\FieldGrid;
+use Respect\Validation\Validator as v;
 
 // rows
 $days = [
@@ -40,9 +40,8 @@ foreach ($days as $day) {
         $timeSlug = strtolower($time);
         $slug = "{$daySlug}_{$timeSlug}";
 
-        $element = (new Input)
+        $element = (new Time)
             ->setId("ba--{$daySlug}--{$timeSlug}")
-            ->setType("time")
             ->setName($slug);
 
         $data = (new PostMetaFieldManager("ba_location_hours__{$slug}"));
