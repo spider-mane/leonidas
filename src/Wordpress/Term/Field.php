@@ -27,9 +27,9 @@ class Field extends AbstractField
     /**
      *
      */
-    public function __construct(\WP_Taxonomy $taxonomy, array $options = [])
+    public function __construct(string $taxonomy, array $options = [])
     {
-        $this->taxonomy = $taxonomy;
+        $this->taxonomy = get_taxonomy($taxonomy);
 
         $this->setOptions($options);
     }

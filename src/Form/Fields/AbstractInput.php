@@ -4,12 +4,17 @@ namespace Backalley\Form\Fields;
 
 use Backalley\Form\Contracts\FormFieldInterface;
 
-abstract class AbstractInput extends AbstractFormField implements FormFieldInterface
+abstract class AbstractInput extends AbstractStandardFormControl implements FormFieldInterface
 {
     /**
      * @var string
      */
     protected $type = 'text';
+
+    /**
+     * @var string
+     */
+    protected $dataList;
 
     /**
      * Get the value of type
@@ -28,7 +33,8 @@ abstract class AbstractInput extends AbstractFormField implements FormFieldInter
     {
         return parent::resolveAttributes()
             ->addAttribute('type', $this->type)
-            ->addAttribute('value', $this->value);
+            ->addAttribute('value', $this->value)
+            ->addAttribute('datalist', $this->dataList);
     }
 
     /**
@@ -36,8 +42,8 @@ abstract class AbstractInput extends AbstractFormField implements FormFieldInter
      */
     public function toHtml(): string
     {
-        $this->resolveAttributes();
-
-        return $this->open('input', $this->attributes);
+        return $this
+            ->resolveAttributes()
+            ->open('input', $this->attributes);
     }
 }

@@ -2,9 +2,8 @@
 
 namespace Backalley\Form\Controllers;
 
-use Backalley\FormFields\Contracts\FormFieldControllerInterface;
-use Backalley\FormFields\Contracts\FormFieldInterface;
-
+use Backalley\Form\Contracts\FormFieldControllerInterface;
+use Backalley\Form\Contracts\FormFieldInterface;
 
 class SimpleField implements FormFieldControllerInterface
 {

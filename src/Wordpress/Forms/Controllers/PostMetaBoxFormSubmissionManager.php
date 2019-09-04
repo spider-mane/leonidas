@@ -2,14 +2,14 @@
 
 namespace Backalley\Wordpress\Forms\Controllers;
 
-use Backalley\Html\Html;
-use Backalley\Form\Controllers\AbstractFormSubmissionManager;
 use Backalley\Form\Contracts\FormFieldControllerInterface;
+use Backalley\Form\Controllers\AbstractFormSubmissionManager;
+use Backalley\Html\Html;
 
 class PostMetaBoxFormSubmissionManager extends AbstractFormSubmissionManager
 {
     /**
-     * @var string
+     * @var WP_Post_Type
      */
     protected $postType;
 
@@ -26,9 +26,9 @@ class PostMetaBoxFormSubmissionManager extends AbstractFormSubmissionManager
     /**
      *
      */
-    public function __construct($postType)
+    public function __construct(string $postType)
     {
-        $this->postType = $postType;
+        $this->postType = get_post_type_object($postType);
     }
 
     /**
@@ -36,23 +36,9 @@ class PostMetaBoxFormSubmissionManager extends AbstractFormSubmissionManager
      *
      * @return string
      */
-    public function getPostType(): string
+    public function getPostType(): WP_Post_Type
     {
         return $this->postType;
-    }
-
-    /**
-     * Set the value of postType
-     *
-     * @param string $postType
-     *
-     * @return self
-     */
-    protected function setPostType(string $postType)
-    {
-        $this->postType = $postType;
-
-        return $this;
     }
 
     /**
@@ -60,7 +46,7 @@ class PostMetaBoxFormSubmissionManager extends AbstractFormSubmissionManager
      */
     public function hook()
     {
-        add_action("save_post_{$this->postType}", [$this, 'savePostActionCallback'], null, PHP_INT_MAX);
+        add_action("save_post_{$this->postType->name}", [$this, 'savePostActionCallback'], null, PHP_INT_MAX);
         add_action('admin_notices', [$this, 'adminNoticeActionCallback'], null, PHP_INT_MAX);
 
         return $this;
@@ -79,7 +65,6 @@ class PostMetaBoxFormSubmissionManager extends AbstractFormSubmissionManager
      */
     public function savePostActionCallback($postId, $post, $update)
     {
-        // exit(var_dump($this->isSafeToRun($post), $update));
         if ($update && $this->isSafeToRun($post)) {
             $this->handleRequest($post);
         }

@@ -2,7 +2,11 @@
 
 use Backalley\Form\Controllers\FormFieldController;
 use Backalley\Form\Fields\Checklist;
+use Backalley\Form\Fields\DateTimeLocal;
 use Backalley\Form\Fields\Input;
+use Backalley\Form\Fields\Range;
+use Backalley\Form\Fields\Text;
+use Backalley\Form\Fields\Textarea;
 use Backalley\WordPress\Fields\Managers\TermMetaDataManager;
 use Backalley\WordPress\Fields\Managers\TermRelatedPostsManager;
 use Backalley\WordPress\Fields\WpAdminField;
@@ -25,8 +29,8 @@ add_action('init', function () {
  */
 Screen::load(['edit-tags', 'term'], ['taxonomy' => 'ba_menu_category'], function () {
 
-    $taxonomy = get_taxonomy('ba_menu_category');
-    $element = (new Input)->setId('test-joint');
+    $taxonomy = 'ba_menu_category';
+    $element = (new Text)->setId('test-joint');
     $manager = (new TermMetaDataManager('test_data'));
     $controller = (new WpAdminField('thing', $element, $manager));
     $formManager = (new TermFieldFormSubmissionManager($taxonomy));
@@ -52,7 +56,6 @@ Screen::load('post', ['post_type' => 'ba_location'], function () {
 Screen::load('post', ['post_type' => 'ba_menu_item'], function () {
 
     $postType = 'ba_menu_item';
-
 
     $metabox = (new MetaBox('test', 'Test'))
         ->setScreen($postType)
@@ -91,3 +94,10 @@ Screen::load('post', ['post_type' => 'ba_menu_item'], function () {
 
     $formManager->addField($controller)->hook();
 });
+
+
+/**
+ *
+ */
+// SkyHooks::collect();
+// SkyHooks::dump();

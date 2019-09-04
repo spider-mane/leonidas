@@ -4,7 +4,7 @@ namespace Backalley\Form\Fields;
 
 use Backalley\Form\Contracts\FormFieldInterface;
 
-class Textarea extends AbstractFormField implements FormFieldInterface
+class Textarea extends AbstractStandardFormControl implements FormFieldInterface
 {
     /**
      * @var int
@@ -49,14 +49,8 @@ class Textarea extends AbstractFormField implements FormFieldInterface
      */
     public function toHtml(): string
     {
-        $this->resolveAttributes();
-
-        $html = '';
-
-        $html .= $this->open('textarea', $this->attributes);
-        $html .= $this->value;
-        $html .= $this->close('textarea');
-
-        return $html;
+        return $this
+            ->resolveAttributes()
+            ->tag('textarea', $this->value, $this->attributes);
     }
 }

@@ -27,6 +27,7 @@
     "commerceguys/addressing": "^1.0",
     "egulias/email-validator": "^2.1",
     "filp/whoops": "^2.5",
+    "friendsofphp/php-cs-fixer": "^2.15",
     "geocoder-php/google-maps-provider": "^4.4",
     "guzzlehttp/guzzle": "~6.0",
     "illuminate/mail": "^5.8",

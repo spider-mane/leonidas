@@ -7,9 +7,10 @@ use Backalley\Html\Traits\ElementConstructorTrait;
 class Html
 {
     use ElementConstructorTrait {
-    open as public;
-    close as public;
-    parseAttributes as public attributes;
+        open as public;
+        close as public;
+        tag as public;
+        parseAttributes as public attributes;
     }
 
     /**
@@ -92,14 +93,6 @@ class Html
         }
 
         return $html;
-    }
-
-    /**
-     *
-     */
-    public static function tag(string $tag, string $content = '', $attributes = null)
-    {
-        return static::open($tag, $attributes) . $content . static::close($tag);
     }
 
     /**

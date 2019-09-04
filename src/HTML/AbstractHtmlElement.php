@@ -1,15 +1,15 @@
 <?php
 
+/**
+ * @package Backalley
+ */
+
 namespace Backalley\Html;
 
 use Backalley\Html\Attributes\Classlist;
 use Backalley\Html\Attributes\Style;
-use DOMElement;
 use Backalley\Html\Traits\ElementConstructorTrait;
 
-/**
- * @package Backalley-Core
- */
 abstract class AbstractHtmlElement
 {
     use ElementConstructorTrait;

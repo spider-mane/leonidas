@@ -25,6 +25,10 @@ trait ElementConstructorTrait
     {
         foreach ($attributesArray as $attr => $val) {
 
+            if ('' === $val || null === $val) {
+                continue;
+            }
+
             if (is_string($val) || is_int($val)) {
                 $val = is_string($val) ? "\"{$val}\"" : $val;
                 $attrStr .= " {$attr}={$val}";
@@ -135,6 +139,14 @@ trait ElementConstructorTrait
         $indentation = static::indentation($options['indentation'] ?? 0);
 
         return "{$indentation}</{$tag}>";
+    }
+
+    /**
+     *
+     */
+    protected static function tag(string $tag, string $content = '', $attributes = null)
+    {
+        return static::open($tag, $attributes) . $content . static::close($tag);
     }
 
     /**

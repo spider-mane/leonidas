@@ -2,9 +2,9 @@
 
 namespace Backalley\Form\Fields;
 
+use Backalley\Form\Contracts\FormFieldInterface;
 use Backalley\Form\Elements\Label;
 use Backalley\Html\AbstractHtmlElement;
-use Backalley\Form\Contracts\FormFieldInterface;
 
 abstract class AbstractFormField extends AbstractHtmlElement implements FormFieldInterface
 {
@@ -209,19 +209,6 @@ abstract class AbstractFormField extends AbstractHtmlElement implements FormFiel
         $this->placeholder = $placeholder;
 
         return $this;
-    }
-
-    /**
-     *
-     */
-    protected function resolveAttributes()
-    {
-        return parent::resolveAttributes()
-            ->addAttribute('name', $this->name)
-            ->addAttribute('disabled', $this->disabled)
-            ->addAttribute('readonly', $this->readonly)
-            ->addAttribute('required', $this->required)
-            ->addAttribute('placeholder', $this->placeholder);
     }
 
     /**

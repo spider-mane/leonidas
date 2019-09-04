@@ -7,16 +7,16 @@ use Backalley\Form\Controllers\AbstractFormSubmissionManager;
 class TermFieldFormSubmissionManager extends AbstractFormSubmissionManager
 {
     /**
-     *
+     * @var WP_Taxonomy
      */
     protected $taxonomy;
 
     /**
      *
      */
-    public function __construct(\WP_Taxonomy $taxonomy)
+    public function __construct(string $taxonomy)
     {
-        $this->taxonomy = $taxonomy;
+        $this->taxonomy = get_taxonomy($taxonomy);
     }
 
     /**

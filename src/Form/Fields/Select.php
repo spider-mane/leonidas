@@ -4,7 +4,7 @@ namespace Backalley\Form\Fields;
 
 use Backalley\Form\Contracts\FormFieldInterface;
 
-class Select extends AbstractFormField implements FormFieldInterface
+class Select extends AbstractStandardFormControl implements FormFieldInterface
 {
     /**
      *
