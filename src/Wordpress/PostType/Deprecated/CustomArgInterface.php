@@ -1,12 +1,12 @@
 <?php
 
-namespace Backalley\WordPress\PostType\Args;
+namespace Backalley\Wordpress\PostType\Deprecated;
 
 interface CustomArgInterface
 {
     /**
      * Set the args to into values need by the functionality
-     * 
+     *
      * @param WP_Post_Type $post_type
      * @param array $args The arguments provided
      */

@@ -14,7 +14,7 @@ use Backalley\FormFields\Fields\Textarea;
 use Backalley\Form\Fields\Select;
 use Backalley\FormFields\Fields\Checklist;
 
-class Factory
+class FieldFactory
 {
     /**
      *
@@ -35,7 +35,7 @@ class Factory
     /**
      *
      */
-    protected function input()
+    protected function input(array $args)
     {
         return new Input;
     }
@@ -43,7 +43,7 @@ class Factory
     /**
      *
      */
-    protected function select()
+    protected function select(array $args)
     {
         return new Select;
     }
@@ -51,7 +51,7 @@ class Factory
     /**
      *
      */
-    protected function textarea()
+    protected function textarea(array $args)
     {
         return new Textarea;
     }
@@ -59,7 +59,7 @@ class Factory
     /**
      *
      */
-    protected function checklist()
+    protected function checklist(array $args)
     {
         return new Checklist;
     }

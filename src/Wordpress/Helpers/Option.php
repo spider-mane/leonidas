@@ -1,10 +1,7 @@
 <?php
 
-namespace Backalley\WordPress;
+namespace Backalley\Wordpress\Helpers;
 
-/**
- *
- */
 class Option
 {
     /**

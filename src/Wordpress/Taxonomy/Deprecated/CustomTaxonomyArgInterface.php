@@ -1,6 +1,6 @@
 <?php
 
-namespace Backalley\WordPress\Taxonomy\Args;
+namespace Backalley\Wordpress\Taxonomy\Deprecated;
 
 interface CustomTaxonomyArgInterface
 {

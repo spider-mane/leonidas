@@ -7,7 +7,7 @@ use Backalley\Form\Contracts\FormFieldInterface;
 abstract class AbstractStandardFormControl extends AbstractFormField implements FormFieldInterface
 {
     /**
-     *
+     * {@inheritDoc}
      */
     protected function resolveAttributes()
     {

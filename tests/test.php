@@ -13,14 +13,27 @@ use Backalley\WordPress\Fields\WpAdminField;
 use Backalley\WordPress\Forms\Controllers\PostMetaBoxFormSubmissionManager;
 use Backalley\WordPress\MetaBox\Field;
 use Backalley\WordPress\MetaBox\MetaBox;
+use Backalley\WordPress\Taxonomy\Factory as TaxonomyFactory;
 use Backalley\WordPress\Term\Field as TermField;
 use Backalley\Wordpress\Forms\Controllers\TermFieldFormSubmissionManager;
 use Backalley\Wordpress\Helpers\Screen;
+use Backalley\Wordpress\PostType\Factory as PostTypeFactory;
 
 #ErrorHandling
 // (new Run)->prependHandler(new PrettyPageHandler)->register(); // error handling with whoops
 
 add_action('init', function () {
+
+    $app = require 'config/app.php';
+    $postTypeHandlers = $app['post_type']['option_handlers'];
+    $taxonomieHandlers = $app['taxonomy']['option_handlers'];
+
+    $postTypes = require 'config/post_types.php';
+    $taxonomies = require 'config/taxonomies.php';
+
+    $postTypes = (new PostTypeFactory($postTypeHandlers))->create($postTypes);
+    $taxonomies = (new TaxonomyFactory($taxonomieHandlers))->create($taxonomies);
+
     require 'admin-page.php';
 });
 
