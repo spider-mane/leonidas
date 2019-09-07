@@ -1,0 +1,32 @@
+<?php
+
+use PhpCsFixer\Config;
+use PhpCsFixer\Finder;
+
+
+$finder = Finder::create()
+  ->in(['src', 'tests'])
+  ->exclude(['bin', 'node_modules']);
+
+return Config::create()
+  ->setFinder($finder)
+  ->setRules([
+    '@PSR2' => true,
+
+    'blank_line_after_namespace' => true,
+    'blank_line_after_opening_tag' => true,
+    'blank_line_before_return' => true,
+    'no_blank_lines_after_class_opening' => true,
+    'no_blank_lines_after_phpdoc' => true,
+    'no_unused_imports' => true,
+    'no_whitespace_in_blank_line' => true,
+    'semicolon_after_instruction' => true,
+    'single_blank_line_before_namespace' => true,
+    'single_line_after_imports' => true,
+    'ternary_operator_spaces' => true,
+    'trim_array_spaces' => true,
+
+    'array_syntax' => [
+      'syntax' => 'short'
+    ],
+  ]);

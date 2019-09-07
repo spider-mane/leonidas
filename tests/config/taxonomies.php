@@ -77,6 +77,16 @@ return [
                     'menu_title' => 'Menu Structure',
                     'page_title' => 'Arrange Menu Categories'
                 ]
+            ],
+
+            'structural' => [
+                'roles' => [
+                    'independent_menu' => 'Independent Menu',
+                    'menu_section' => 'Menu Section',
+                    'menu_subsection' => 'Menu Subsection'
+                ],
+                'top' => 'independent_menu',
+                'bottom' => 'menu_subsection'
             ]
         ]
     ],

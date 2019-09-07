@@ -41,7 +41,7 @@ class PostType extends AbstractWpObjectFacade
      */
     protected function getDefaultLabels(string $single, string $plural): array
     {
-        $singleUpper = strtolower($single);
+        $singleLower = strtolower($single);
         $pluralLower = strtolower($plural);
 
         return [
@@ -59,8 +59,8 @@ class PostType extends AbstractWpObjectFacade
             'all_items' => "All {$plural}",
             'archives' => "{$single} Archives",
             'attributes' => "{$single} Attributes",
-            'insert_into_item' => "Insert into {$singleUpper}",
-            'uploaded_to_this_item' => "Uploaded to this {$singleUpper}",
+            'insert_into_item' => "Insert into {$singleLower}",
+            'uploaded_to_this_item' => "Uploaded to this {$singleLower}",
             'filter_items_list' => "Filter {$pluralLower} list",
             'items_list_navigation' => "{$plural} list navigation",
             'items_list' => "{$plural} list",

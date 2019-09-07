@@ -1,12 +1,14 @@
 <?php
 
 use Backalley\Form\Controllers\FormFieldController;
+use Backalley\Form\FieldFactory;
 use Backalley\Form\Fields\Checklist;
 use Backalley\Form\Fields\DateTimeLocal;
 use Backalley\Form\Fields\Input;
 use Backalley\Form\Fields\Range;
 use Backalley\Form\Fields\Text;
 use Backalley\Form\Fields\Textarea;
+use Backalley\GuctilityBelt\SelectOptions\UsStatesAndTerritories;
 use Backalley\WordPress\Fields\Managers\TermMetaDataManager;
 use Backalley\WordPress\Fields\Managers\TermRelatedPostsManager;
 use Backalley\WordPress\Fields\WpAdminField;
@@ -43,7 +45,16 @@ add_action('init', function () {
 Screen::load(['edit-tags', 'term'], ['taxonomy' => 'ba_menu_category'], function () {
 
     $taxonomy = 'ba_menu_category';
-    $element = (new Text)->setId('test-joint');
+    // $element = (new Text)->setId('test-joint');
+    $args = [
+        // 'options_list' => UsStatesAndTerritories::states(),
+        'label' => 'Test Label',
+        'classlist' => ['regular-text'],
+    ];
+    // $element = (new FieldFactory)->create('datetime-local', $args);
+    // $element = (new FieldFactory)->checkbox($args);
+    $element = FieldFactory::text($args);
+
     $manager = (new TermMetaDataManager('test_data'));
     $controller = (new WpAdminField('thing', $element, $manager));
     $formManager = (new TermFieldFormSubmissionManager($taxonomy));

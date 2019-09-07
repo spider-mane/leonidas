@@ -158,6 +158,16 @@ abstract class AbstractFormSubmissionManager
         return $this;
     }
 
+
+    /**
+     * Get $alerts
+     *
+     * @return array
+     */
+    protected function getAlerts(): array
+    {
+        return $this->alerts;
+    }
     /**
      *
      */

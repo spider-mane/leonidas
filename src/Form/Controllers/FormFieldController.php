@@ -2,20 +2,15 @@
 
 namespace Backalley\Form\Controllers;
 
-use Respect\Validation\Validatable;
 use Backalley\Form\Contracts\DataFieldInterface;
 use Backalley\Form\Contracts\DataTransformerInterface;
-use Backalley\Form\Contracts\FormFieldInterface;
 use Backalley\Form\Contracts\FieldDataManagerInterface;
 use Backalley\Form\Contracts\FormFieldControllerInterface;
+use Backalley\Form\Contracts\FormFieldInterface;
+use Respect\Validation\Validatable;
 
 class FormFieldController implements DataFieldInterface, FormFieldControllerInterface
 {
-    /**
-     * @var string
-     */
-    protected $slug;
-
     /**
      * @var string
      */
@@ -41,11 +36,6 @@ class FormFieldController implements DataFieldInterface, FormFieldControllerInte
      * @var bool
      */
     private $hasDataManager = false;
-
-    /**
-     * @var string
-     */
-    protected $namePrefix = 'ba_';
 
     /**
      * Callback function(s) to sanitize incoming data before saving to database
@@ -88,27 +78,6 @@ class FormFieldController implements DataFieldInterface, FormFieldControllerInte
     private $savingDisabled = false;
 
     /**
-     * displayCallback
-     *
-     * @var string
-     */
-    protected $displayCallback;
-
-    /**
-     * getDataCallback
-     *
-     * @var callback
-     */
-    protected $getDataCallback;
-
-    /**
-     * saveDataCallback
-     *
-     * @var callback
-     */
-    protected $saveDataCallback;
-
-    /**
      * @var array
      */
     private $stateCache = [
@@ -122,10 +91,9 @@ class FormFieldController implements DataFieldInterface, FormFieldControllerInte
     /**
      *
      */
-    public function __construct(string $slug, ?FormFieldInterface $formField = null, ?FieldDataManagerInterface $dataManager = null)
+    public function __construct(string $postVar, ?FormFieldInterface $formField = null, ?FieldDataManagerInterface $dataManager = null)
     {
-        $this->slug = $slug;
-        $this->postVar = $slug;
+        $this->setPostVar($postVar);
 
         if (isset($formField)) {
             $this->setformField($formField);
@@ -196,30 +164,6 @@ class FormFieldController implements DataFieldInterface, FormFieldControllerInte
     }
 
     /**
-     * Get the value of slug
-     *
-     * @return string
-     */
-    public function getSlug(): string
-    {
-        return $this->slug;
-    }
-
-    /**
-     * Set the value of slug
-     *
-     * @param string $slug
-     *
-     * @return self
-     */
-    public function setSlug(string $slug)
-    {
-        $this->slug = $slug;
-
-        return $this;
-    }
-
-    /**
      * Get the value of postVar
      *
      * @return string
@@ -239,30 +183,6 @@ class FormFieldController implements DataFieldInterface, FormFieldControllerInte
     public function setPostVar(string $postVar): FormFieldControllerInterface
     {
         $this->postVar = $postVar;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of namePrefix
-     *
-     * @return string
-     */
-    public function getNamePrefix(): string
-    {
-        return $this->namePrefix;
-    }
-
-    /**
-     * Set the value of namePrefix
-     *
-     * @param string $namePrefix
-     *
-     * @return self
-     */
-    public function setNamePrefix(string $namePrefix)
-    {
-        $this->namePrefix = $namePrefix;
 
         return $this;
     }
@@ -428,7 +348,8 @@ class FormFieldController implements DataFieldInterface, FormFieldControllerInte
      */
     public function postVarExists()
     {
-        $result = filter_has_var(INPUT_POST, $this->getFormFieldName());
+        $result = filter_has_var(INPUT_POST, $this->getPostVar());
+
         return $this->stateCache['post_has_var'] = $result;
     }
 
@@ -437,7 +358,7 @@ class FormFieldController implements DataFieldInterface, FormFieldControllerInte
      */
     private function getRawInput()
     {
-        return $_POST[$this->getFormFieldName()];
+        return $_POST[$this->getPostVar()];
     }
 
     /**
@@ -548,7 +469,7 @@ class FormFieldController implements DataFieldInterface, FormFieldControllerInte
      */
     public function getFormFieldName(): string
     {
-        return $this->namePrefix . $this->postVar ?? $this->formField->getName();
+        return $this->getPostVar();
     }
 
     /**
@@ -570,7 +491,7 @@ class FormFieldController implements DataFieldInterface, FormFieldControllerInte
      */
     protected function setFormFieldName()
     {
-        $this->formField->setName($this->getFormFieldName());
+        $this->formField->setName($this->getPostVar());
 
         return $this;
     }

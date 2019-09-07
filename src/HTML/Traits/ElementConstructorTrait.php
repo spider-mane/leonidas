@@ -56,7 +56,7 @@ trait ElementConstructorTrait
 
             // $val represents token list
             if (is_array($val) && isset($val[0])) {
-                $val = implode(' ', $val);
+                $val = implode(' ', array_filter($val));
                 $attrStr .= " {$attr}=\"{$val}\"";
                 continue;
             }

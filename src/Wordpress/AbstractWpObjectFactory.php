@@ -29,5 +29,8 @@ abstract class AbstractWpObjectFactory
         return $objects;
     }
 
+    /**
+     *
+     */
     abstract public function build(string $name, array $args): object;
 }

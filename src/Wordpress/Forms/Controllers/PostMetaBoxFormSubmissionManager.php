@@ -2,9 +2,8 @@
 
 namespace Backalley\Wordpress\Forms\Controllers;
 
-use Backalley\Form\Contracts\FormFieldControllerInterface;
 use Backalley\Form\Controllers\AbstractFormSubmissionManager;
-use Backalley\Html\Html;
+use Backalley\Wordpress\Modules\AdminNotice;
 
 class PostMetaBoxFormSubmissionManager extends AbstractFormSubmissionManager
 {
@@ -46,8 +45,8 @@ class PostMetaBoxFormSubmissionManager extends AbstractFormSubmissionManager
      */
     public function hook()
     {
-        add_action("save_post_{$this->postType->name}", [$this, 'savePostActionCallback'], null, PHP_INT_MAX);
-        add_action('admin_notices', [$this, 'adminNoticeActionCallback'], null, PHP_INT_MAX);
+        add_action("save_post_{$this->postType->name}", [$this, 'savePostActionCallback'], null, 3);
+        add_action('admin_notices', [$this, 'adminNoticeActionCallback'], null, 0);
 
         return $this;
     }
@@ -75,8 +74,8 @@ class PostMetaBoxFormSubmissionManager extends AbstractFormSubmissionManager
      */
     protected function finalizeRequest($request)
     {
-        if (!empty($this->alerts)) {
-            set_transient($this::TRANSIENT_RULE_VIOLATION, $this->alerts, 300);
+        if (!empty($alerts = $this->getAlerts())) {
+            set_transient($this::TRANSIENT_RULE_VIOLATION, $alerts, 300);
         }
     }
 
@@ -110,11 +109,7 @@ class PostMetaBoxFormSubmissionManager extends AbstractFormSubmissionManager
         if (false !== $alerts = get_transient($transient)) {
 
             foreach ($alerts as $alert) {
-                echo Html::tag(
-                    'div',
-                    Html::tag('p', $alert),
-                    ['class' => 'notice notice-error is-dismissible']
-                );
+                echo (new AdminNotice($alert))->setDismissible(false);
             }
 
             delete_transient($transient);

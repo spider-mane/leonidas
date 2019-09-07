@@ -41,7 +41,7 @@ class Taxonomy extends AbstractWpObjectFacade
     {
         register_taxonomy($this->name, $this->objectTypes, $this->buildArgs($this->args));
 
-        $this->registerForPostTypes();
+        $this->registerForObjectTypes();
 
         return $this;
     }
@@ -49,7 +49,7 @@ class Taxonomy extends AbstractWpObjectFacade
     /**
      * pair taxonomy to provided object types
      */
-    public function registerForPostTypes()
+    protected function registerForObjectTypes()
     {
         foreach ((array) $this->objectTypes as $objectType) {
             register_taxonomy_for_object_type($this->name, $objectType);

@@ -287,7 +287,7 @@ class SettingManager extends FormFieldController
     /**
      *
      */
-    public function registerSetting()
+    public function register()
     {
         $args = [
             'type' => $this->type,
@@ -298,6 +298,14 @@ class SettingManager extends FormFieldController
         ];
 
         register_setting($this->optionGroup, $this->optionName, $args);
+    }
+
+    /**
+     *
+     */
+    public function registerSetting()
+    {
+        return $this->register();
     }
 
     /**

@@ -7,7 +7,7 @@ indent_style = space
 insert_final_newline = true
 trim_trailing_whitespace = true
 
-[*.{php,twig}]
+[*.{php, twig}]
 indent_size = 4
 
 [*.{html,twig,json}]
