@@ -23,13 +23,15 @@ class DataManagerFactory implements MultiFieldDataManagerFactoryInterface
      */
     protected $namespace = [];
 
-    protected const NAMESPACE = [
+    public const NAMESPACE = [
         "Backalley\\Form\\DataManagers"
     ];
 
-    protected const MANAGERS = [
+    public const MANAGERS = [
         'callback' => FieldDataManagerCallback::class
     ];
+
+    private const CONVENTION = '%sFieldDataManager';
 
     /**
      *

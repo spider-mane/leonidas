@@ -12,9 +12,9 @@ use Backalley\Wordpress\Fields\Managers\TermMetaDataManager;
 
 class Factory extends DataManagerFactory implements MultiFieldDataManagerFactoryInterface
 {
-    protected const NAMESPACE = [__NAMESPACE__] + parent::NAMESPACE;
+    public const NAMESPACE = [__NAMESPACE__] + parent::NAMESPACE;
 
-    protected const MANAGERS = [
+    public const MANAGERS = [
         'post_meta' => PostMetaFieldManager::class,
         'term_meta' => TermMetaDataManager::class,
         'post_term' => PostTermManager::class,

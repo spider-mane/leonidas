@@ -28,7 +28,7 @@ trait SmartFactoryTrait
      */
     public function addNamespace(string $namespace)
     {
-        $this->namespace = (array) $namespace + (array) $this->namespace;
+        $this->namespace[] = $namespace;
 
         return $this;
     }
@@ -56,6 +56,8 @@ trait SmartFactoryTrait
 
                 $construct[] = $args->get($arg);
                 $args->forget($arg);
+            } else {
+                $construct[] = null;
             }
         }
 
