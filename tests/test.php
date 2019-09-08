@@ -17,6 +17,7 @@ use Backalley\WordPress\MetaBox\Field;
 use Backalley\WordPress\MetaBox\MetaBox;
 use Backalley\WordPress\Taxonomy\Factory as TaxonomyFactory;
 use Backalley\WordPress\Term\Field as TermField;
+use Backalley\Wordpress\Fields\Managers\Factory;
 use Backalley\Wordpress\Forms\Controllers\TermFieldFormSubmissionManager;
 use Backalley\Wordpress\Helpers\Screen;
 use Backalley\Wordpress\PostType\Factory as PostTypeFactory;
@@ -28,13 +29,13 @@ add_action('init', function () {
 
     $app = require 'config/app.php';
     $postTypeHandlers = $app['post_type']['option_handlers'];
-    $taxonomieHandlers = $app['taxonomy']['option_handlers'];
+    $taxonomyHandlers = $app['taxonomy']['option_handlers'];
 
     $postTypes = require 'config/post_types.php';
     $taxonomies = require 'config/taxonomies.php';
 
     $postTypes = (new PostTypeFactory($postTypeHandlers))->create($postTypes);
-    $taxonomies = (new TaxonomyFactory($taxonomieHandlers))->create($taxonomies);
+    $taxonomies = (new TaxonomyFactory($taxonomyHandlers))->create($taxonomies);
 
     require 'admin-page.php';
 });
@@ -45,17 +46,17 @@ add_action('init', function () {
 Screen::load(['edit-tags', 'term'], ['taxonomy' => 'ba_menu_category'], function () {
 
     $taxonomy = 'ba_menu_category';
-    // $element = (new Text)->setId('test-joint');
+
     $args = [
-        // 'options_list' => UsStatesAndTerritories::states(),
+        'options' => UsStatesAndTerritories::states(),
         'label' => 'Test Label',
         'classlist' => ['regular-text'],
     ];
-    // $element = (new FieldFactory)->create('datetime-local', $args);
-    // $element = (new FieldFactory)->checkbox($args);
-    $element = FieldFactory::text($args);
 
-    $manager = (new TermMetaDataManager('test_data'));
+    $element = FieldFactory::select($args);
+    // $element = (new FieldFactory)->create($args);
+
+    $manager = Factory::termMeta(['meta_key' => 'test_data']);
     $controller = (new WpAdminField('thing', $element, $manager));
     $formManager = (new TermFieldFormSubmissionManager($taxonomy));
     $field = (new TermField($taxonomy))
