@@ -158,7 +158,6 @@ abstract class AbstractFormSubmissionManager
         return $this;
     }
 
-
     /**
      * Get $alerts
      *

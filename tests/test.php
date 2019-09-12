@@ -1,6 +1,7 @@
 <?php
 
 use Backalley\Form\Controllers\FormFieldController;
+use Backalley\WordPress\Fields\Field as BackalleyField;
 use Backalley\Form\FieldFactory;
 use Backalley\Form\Fields\Checklist;
 use Backalley\Form\Fields\DateTimeLocal;
@@ -38,12 +39,11 @@ add_action('init', function () {
     $taxonomies = (new TaxonomyFactory($taxonomyHandlers))->create($taxonomies);
 
     require 'admin-page.php';
-});
 
-/**
- *
- */
-Screen::load(['edit-tags', 'term'], ['taxonomy' => 'ba_menu_category'], function () {
+
+
+
+
 
     $taxonomy = 'ba_menu_category';
 
@@ -53,11 +53,26 @@ Screen::load(['edit-tags', 'term'], ['taxonomy' => 'ba_menu_category'], function
         'classlist' => ['regular-text'],
     ];
 
-    $element = FieldFactory::select($args);
+    // $element = FieldFactory::select($args);
     // $element = (new FieldFactory)->create($args);
 
-    $manager = Factory::termMeta(['meta_key' => 'test_data']);
-    $controller = (new WpAdminField('thing', $element, $manager));
+    // $manager = Factory::termMeta(['meta_key' => 'test_data']);
+    // $controller = (new WpAdminField('thing', $element, $manager));
+
+    $controller = (new BackalleyField)->create([
+        'post_var' => 'test-1',
+        'type' => [
+            '@create' => 'select',
+            'options' => UsStatesAndTerritories::states(),
+            'label' => 'Test Label',
+            'classlist' => ['regular-text'],
+        ],
+        'data' => [
+            '@create' => 'term_meta',
+            'meta_key' => 'test_data',
+        ]
+    ]);
+
     $formManager = (new TermFieldFormSubmissionManager($taxonomy));
     $field = (new TermField($taxonomy))
         ->setFormFieldController($controller)
@@ -67,6 +82,49 @@ Screen::load(['edit-tags', 'term'], ['taxonomy' => 'ba_menu_category'], function
 
     $formManager->addField($controller)->hook();
 });
+
+/**
+ *
+ */
+// Screen::load(['edit-tags', 'term'], ['taxonomy' => 'ba_menu_category'], function () {
+
+//     $taxonomy = 'ba_menu_category';
+
+//     $args = [
+//         'options' => UsStatesAndTerritories::states(),
+//         'label' => 'Test Label',
+//         'classlist' => ['regular-text'],
+//     ];
+
+//     $element = FieldFactory::select($args);
+//     // $element = (new FieldFactory)->create($args);
+
+//     $manager = Factory::termMeta(['meta_key' => 'test_data']);
+//     $controller = (new WpAdminField('thing', $element, $manager));
+
+//     // $controller = (new BackalleyField)->create([
+//     //     'post_var' => 'test-1',
+//     //     'type' => [
+//     //         '@create' => 'select',
+//     //         'options' => UsStatesAndTerritories::states(),
+//     //         'label' => 'Test Label',
+//     //         'classlist' => ['regular-text'],
+//     //     ],
+//     //     'data' => [
+//     //         '@create' => 'term_meta',
+//     //         'meta_key' => 'test_data',
+//     //     ]
+//     // ]);
+
+//     $formManager = (new TermFieldFormSubmissionManager($taxonomy));
+//     $field = (new TermField($taxonomy))
+//         ->setFormFieldController($controller)
+//         ->setLabel('Test Field')
+//         ->setDescription('This is a test term field description')
+//         ->hook();
+
+//     $formManager->addField($controller)->hook();
+// });
 
 /**
  *

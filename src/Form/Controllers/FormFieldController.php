@@ -7,7 +7,7 @@
  *
  * @package   Backalley
  * @license   GNU GPL
- * @copyright Copyright (C) WebTheoryStudio, All rights reserved.
+ * @copyright Copyright (C) WebTheory Studio, All rights reserved.
  * @link      https://github.com/spider-mane/backalley
  * @author    Chris Williams <christwilhelm84@gmail.com>
  */
