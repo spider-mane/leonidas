@@ -2,7 +2,6 @@
 
 namespace Backalley\Form;
 
-use Backalley\GuctilityBelt\Concerns\SmartFactoryTrait;
 use Illuminate\Support\Str;
 use ReflectionClass;
 use Respect\Validation\Factory;
@@ -21,7 +20,7 @@ class RuleFactory
 
         foreach ($rules as $rule) {
             $split = explode(':', $rule);
-            $rule = $split[0];
+            $rule = new ReflectionClass($this->getValidator($split[0]));
             $args = explode(';', $split[1] . ';');
 
             foreach ($args as $i => $arg) {
@@ -30,13 +29,7 @@ class RuleFactory
                 unset($args[$i]);
             }
 
-            $rule = new ReflectionClass($this->getValidator($rule));
-
-            $params = $rule
-                ->getConstructor()
-                ->getParameters();
-
-            foreach ($params as $param) {
+            foreach ($rule->getConstructor()->getParameters() as $param) {
                 $construct[$param] = $args[$param] ?? null;
             }
 
