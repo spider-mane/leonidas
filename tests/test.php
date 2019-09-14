@@ -1,7 +1,6 @@
 <?php
 
 use Backalley\Form\Controllers\FormFieldController;
-use Backalley\WordPress\Fields\Field as BackalleyField;
 use Backalley\Form\FieldFactory;
 use Backalley\Form\Fields\Checklist;
 use Backalley\Form\Fields\DateTimeLocal;
@@ -10,6 +9,7 @@ use Backalley\Form\Fields\Range;
 use Backalley\Form\Fields\Text;
 use Backalley\Form\Fields\Textarea;
 use Backalley\GuctilityBelt\SelectOptions\UsStatesAndTerritories;
+use Backalley\WordPress\Fields\Field as BackalleyField;
 use Backalley\WordPress\Fields\Managers\TermMetaDataManager;
 use Backalley\WordPress\Fields\Managers\TermRelatedPostsManager;
 use Backalley\WordPress\Fields\WpAdminField;
@@ -39,11 +39,12 @@ add_action('init', function () {
     $taxonomies = (new TaxonomyFactory($taxonomyHandlers))->create($taxonomies);
 
     require 'admin-page.php';
+});
 
-
-
-
-
+/**
+ *
+ */
+Screen::load(['edit-tags', 'term'], ['taxonomy' => 'ba_menu_category'], function () {
 
     $taxonomy = 'ba_menu_category';
 
@@ -81,50 +82,7 @@ add_action('init', function () {
         ->hook();
 
     $formManager->addField($controller)->hook();
-});
-
-/**
- *
- */
-// Screen::load(['edit-tags', 'term'], ['taxonomy' => 'ba_menu_category'], function () {
-
-//     $taxonomy = 'ba_menu_category';
-
-//     $args = [
-//         'options' => UsStatesAndTerritories::states(),
-//         'label' => 'Test Label',
-//         'classlist' => ['regular-text'],
-//     ];
-
-//     $element = FieldFactory::select($args);
-//     // $element = (new FieldFactory)->create($args);
-
-//     $manager = Factory::termMeta(['meta_key' => 'test_data']);
-//     $controller = (new WpAdminField('thing', $element, $manager));
-
-//     // $controller = (new BackalleyField)->create([
-//     //     'post_var' => 'test-1',
-//     //     'type' => [
-//     //         '@create' => 'select',
-//     //         'options' => UsStatesAndTerritories::states(),
-//     //         'label' => 'Test Label',
-//     //         'classlist' => ['regular-text'],
-//     //     ],
-//     //     'data' => [
-//     //         '@create' => 'term_meta',
-//     //         'meta_key' => 'test_data',
-//     //     ]
-//     // ]);
-
-//     $formManager = (new TermFieldFormSubmissionManager($taxonomy));
-//     $field = (new TermField($taxonomy))
-//         ->setFormFieldController($controller)
-//         ->setLabel('Test Field')
-//         ->setDescription('This is a test term field description')
-//         ->hook();
-
-//     $formManager->addField($controller)->hook();
-// });
+}, 'add-tag');
 
 /**
  *
