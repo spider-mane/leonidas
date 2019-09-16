@@ -2,8 +2,9 @@
 
 namespace Backalley\Wordpress\Fields;
 
+use Backalley\Form\Contracts\MultiFieldDataManagerFactoryInterface;
 use Backalley\Form\Field as BaseField;
-use Backalley\Wordpress\Fields\Managers\Factory as ManagerFactory;
+use Backalley\Wordpress\Fields\Managers\Factory as DataManagerFactory;
 
 class Field extends BaseField
 {
@@ -15,11 +16,8 @@ class Field extends BaseField
     /**
      *
      */
-    protected function getDataManager($args)
+    protected static function createDataManagerFactory(array $options): MultiFieldDataManagerFactoryInterface
     {
-        $manager = $args['@create'];
-        unset($args['@create']);
-
-        return (new ManagerFactory)->create($manager, $args);
+        return (new DataManagerFactory);
     }
 }

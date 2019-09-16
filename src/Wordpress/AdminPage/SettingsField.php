@@ -2,9 +2,9 @@
 
 namespace Backalley\Wordpress\AdminPage;
 
-use Backalley\Html\Html;
-use Backalley\Form\Fields\Input;
 use Backalley\Form\Contracts\FormFieldInterface;
+use Backalley\Form\Fields\Text;
+use Backalley\Html\Html;
 
 class SettingsField
 {
@@ -86,23 +86,11 @@ class SettingsField
     /**
      *
      */
-    public function __construct(string $id, string $title, ?string $page = null)
+    public function __construct(string $id, string $title, string $page)
     {
-        $this->setId($id)->setTitle($title);
-
-        if (isset($page)) {
-            $this->setPage($page);
-        }
-    }
-
-    /**
-     *
-     */
-    public function hook()
-    {
-        add_action('admin_init', [$this, 'addSettingsField']);
-
-        return $this;
+        $this->id = $id;
+        $this->title = $title;
+        $this->page = $page;
     }
 
     /**
@@ -140,20 +128,6 @@ class SettingsField
     }
 
     /**
-     * Set id
-     *
-     * @param   string  $id  id
-     *
-     * @return  self
-     */
-    public function setId(string $id)
-    {
-        $this->id = $id;
-
-        return $this;
-    }
-
-    /**
      * Get title
      *
      * @return  string
@@ -164,17 +138,13 @@ class SettingsField
     }
 
     /**
-     * Set title
+     * Get page
      *
-     * @param   string  $title  title
-     *
-     * @return  self
+     * @return  string
      */
-    public function setTitle(string $title)
+    public function getPage()
     {
-        $this->title = $title;
-
-        return $this;
+        return $this->page;
     }
 
     /**
@@ -221,30 +191,6 @@ class SettingsField
     public function setDisplayCallback(callable $display_callback)
     {
         $this->displayCallback = $display_callback;
-
-        return $this;
-    }
-
-    /**
-     * Get page
-     *
-     * @return  string
-     */
-    public function getPage()
-    {
-        return $this->page;
-    }
-
-    /**
-     * Set page
-     *
-     * @param   string  $page  page
-     *
-     * @return  self
-     */
-    public function setPage(string $page)
-    {
-        $this->page = $page;
 
         return $this;
     }
@@ -324,7 +270,17 @@ class SettingsField
     /**
      *
      */
-    public function addSettingsField()
+    public function hook()
+    {
+        add_action('admin_init', [$this, 'register']);
+
+        return $this;
+    }
+
+    /**
+     *
+     */
+    public function register()
     {
         if (!isset($this->page)) {
             return;
@@ -346,19 +302,18 @@ class SettingsField
         if (!isset($this->displayCallback)) {
             $this->renderDefault($setting);
         } else {
-            call_user_func($this->displayCallback, $args, $this, $setting);
+            ($this->displayCallback)($args, $setting, $this);
         }
     }
 
     /**
-     *
+     * @return FormFieldInterface
      */
-    protected function getDefaultField(): FormFieldInterface
+    protected function createDefaultField(): FormFieldInterface
     {
-        return (new Input)
+        return (new Text)
             ->setClasslist($this->displayArgs['class'] ?? [])
-            ->addClass('regular-text')
-            ->setType('text');
+            ->addClass('regular-text');
     }
 
     /**
@@ -381,7 +336,7 @@ class SettingsField
         $value = $this->escapeValue(get_option($this->setting, $default));
 
         if (!isset($this->field)) {
-            $this->field = $this->getDefaultField();
+            $this->field = $this->createDefaultField();
         }
 
         echo $this->field

@@ -2,10 +2,12 @@
 
 namespace Backalley\Wordpress\Fields;
 
-use Backalley\Form\Contracts\FormFieldControllerInterface;
 use Backalley\Form\Contracts\FormFieldInterface;
+use Backalley\Form\Fields\Input;
+use Backalley\Form\Fields\Text;
+use Backalley\Wordpress\Contracts\WpAdminFieldInterface;
 
-class AbstractField
+class AbstractField implements WpAdminFieldInterface
 {
     /**
      * label
@@ -22,16 +24,16 @@ class AbstractField
     protected $description;
 
     /**
-     * @var FormFieldControllerInterface
+     * @var WpAdminField
      */
     protected $formFieldController;
 
     /**
      *
      */
-    public function __construct(FormFieldControllerInterface $formFieldController)
+    public function __construct(WpAdminField $formFieldController)
     {
-        $this->setFormFieldController($formFieldController);
+        $this->formFieldController = $formFieldController;
     }
 
     /**
@@ -85,25 +87,11 @@ class AbstractField
     /**
      * Get the value of formFieldController
      *
-     * @return FormFieldControllerInterface
+     * @return WpAdminField
      */
-    public function getFormFieldController(): FormFieldControllerInterface
+    public function getFormFieldController(): WpAdminField
     {
         return $this->formFieldController;
-    }
-
-    /**
-     * Set the value of formFieldController
-     *
-     * @param FormFieldControllerInterface $formFieldController
-     *
-     * @return self
-     */
-    public function setFormFieldController(FormFieldControllerInterface $formFieldController)
-    {
-        $this->formFieldController = $formFieldController;
-
-        return $this;
     }
 
     /**

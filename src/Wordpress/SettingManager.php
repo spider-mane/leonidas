@@ -1,6 +1,6 @@
 <?php
 
-namespace Backalley\Wordpress\AdminPage;
+namespace Backalley\Wordpress;
 
 use Backalley\Form\Controllers\FormFieldController;
 

@@ -1,0 +1,21 @@
+{% extends "admin-page-template.twig" %}
+
+{% block alerts %}
+  {{ settings_errors() }}
+{% endblock %}
+
+{% block layout %}
+
+  <form action="options.php" method="post">
+
+    {# output hidden controls that enable saving options #}
+    {% for field_group in field_groups %}
+      {{ settings_fields(field_group) }}
+    {% endfor %}
+
+    {{ do_settings_sections(page) }}
+    {{ submit_button() }}
+
+  </form>
+
+{% endblock %}

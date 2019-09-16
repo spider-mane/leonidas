@@ -1,7 +1,6 @@
 <?php
 
-namespace Backalley\GuctilityBelt;
-
+namespace Backalley\Wordpress\Helpers;
 
 /**
  *

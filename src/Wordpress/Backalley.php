@@ -6,24 +6,26 @@
 
 namespace Backalley\WordPress;
 
-use Twig\TwigFilter;
+use Backalley\Form\FieldFactory;
+use Backalley\Form\FormFieldFactory;
+use Backalley\WordPress\Fields\Field;
+use Backalley\Wordpress\Fields\Managers\Factory as DataManagerFactory;
 use Twig\Environment;
-use Twig\TwigFunction;
 use Twig\Loader\FilesystemLoader;
+use Twig\TwigFilter;
+use Twig\TwigFunction;
 
 class Backalley extends \BackalleyCoreBase
 {
-    // public static $url;
-    // public static $path;
-    // public static $base;
-    // public static $admin_url;
-    // public static $admin_templates;
-    // public static $timber_locations;
-
     /**
-     * @var Twig\Environment
+     * @var Environment
      */
     protected static $twigInstance;
+
+    /**
+     * @var FieldFactory
+     */
+    protected static $fieldFactory;
 
     public const BASEDIR = '../../';
     public const PLUGINNAME = 'backalley';
@@ -31,36 +33,21 @@ class Backalley extends \BackalleyCoreBase
     /**
      *
      */
-    public static function init(array $options = [])
+    public static function init(array $options = null)
     {
-        Self::load();
-
+        static::load();
         static::initTwig();
-
-        add_action('admin_enqueue_scripts', [Self::class, 'enqueue']);
+        static::hook();
+        static::initFieldFactory($options['field'] ?? []);
     }
 
-    // /**
-    //  *
-    //  */
-    // public static function load()
-    // {
-    //     $file = static::BASEDIR . static::PLUGINNAME . '.php';
-
-    //     Self::$path = dirname(static::BASEDIR);
-    //     Self::$url = plugin_dir_url($file);
-    //     Self::$base = plugin_basename($file);
-
-    //     Self::$admin_url = Self::$url . "public/admin";
-    //     Self::$admin_templates = Self::$path . "/public/admin/templates";
-
-    //     Self::$timber_locations = [
-    //         Self::$admin_templates,
-    //         Self::$admin_templates . '/macros',
-    //     ];
-
-    //     Timber::$locations = Self::$timber_locations;
-    // }
+    /**
+     *
+     */
+    protected static function hook()
+    {
+        add_action('admin_enqueue_scripts', [static::class, 'enqueue']);
+    }
 
     /**
      *
@@ -71,10 +58,28 @@ class Backalley extends \BackalleyCoreBase
         wp_enqueue_script('jquery');
 
         # backalley scripts
-        wp_enqueue_script('backalley-core-admin-script', Self::$admin_url . '/assets/js/backalley-admin.js', null, time(), true);
+        wp_enqueue_script('backalley-core-admin-script', static::$admin_url . '/assets/js/backalley-admin.js', null, time(), true);
 
         # backalley styles
-        wp_enqueue_style('backalley-core-styles', Self::$admin_url . '/assets/css/backalley-admin-styles.css', null, time());
+        wp_enqueue_style('backalley-core-styles', static::$admin_url . '/assets/css/backalley-admin-styles.css', null, time());
+    }
+
+    /**
+     *
+     */
+    protected static function initFieldFactory(array $options = [])
+    {
+        unset($options['controller']);
+
+        static::$fieldFactory = Field::bootstrap($options);
+    }
+
+    /**
+     *
+     */
+    public static function createField($args)
+    {
+        return static::$fieldFactory->create($args);
     }
 
     /**
@@ -90,7 +95,7 @@ class Backalley extends \BackalleyCoreBase
 
         $twig = new Environment($loader, $options);
 
-        self::config_twig($twig);
+        static::configTwig($twig);
 
         static::$twigInstance = $twig;
     }
@@ -106,10 +111,10 @@ class Backalley extends \BackalleyCoreBase
     /**
      *
      */
-    public static function config_twig($twig)
+    public static function configTwig($twig)
     {
-        self::custom_twig_filters($twig);
-        self::custom_twig_functions($twig);
+        static::addTwigFilters($twig);
+        static::addTwigFunctions($twig);
 
         return $twig;
     }
@@ -117,13 +122,9 @@ class Backalley extends \BackalleyCoreBase
     /**
      *
      */
-    public static function custom_twig_filters($twig)
+    public static function addTwigFilters($twig)
     {
-        $filters = [
-            'subjectify_objects' => 'backalley_subjectify_wp_objects',
-            'clone_original' => 'DeepCopy\\deep_copy',
-            'sort_terms_hierarchicaly' => 'sort_terms_hierarchicaly',
-        ];
+        $filters = [];
 
         foreach ($filters as $filter => $function) {
             $twig->addFilter(new TwigFilter($filter, $function));
@@ -133,7 +134,7 @@ class Backalley extends \BackalleyCoreBase
     /**
      *
      */
-    public static function custom_twig_functions($twig)
+    public static function addTwigFunctions($twig)
     {
         $functions = [
             'submit_button' => 'submit_button',
@@ -150,11 +151,11 @@ class Backalley extends \BackalleyCoreBase
     /**
      *
      */
-    public static function alias_classes()
+    public static function aliasClasses()
     {
         $aliases = [];
 
-        foreach ($aliases as $class => $alias) {
+        foreach ($aliases as $alias => $class) {
             class_alias($class, $alias);
         }
     }

@@ -38,12 +38,8 @@ class DataManagerFactory implements MultiFieldDataManagerFactoryInterface
      */
     public function __construct()
     {
-        foreach (static::NAMESPACE as $namespace) {
-            $this->addNamespace($namespace);
-        }
-        foreach (static::MANAGERS as $arg => $manager) {
-            $this->addManager($arg, $manager);
-        }
+        $this->namespace = static::NAMESPACE;
+        $this->managers = static::MANAGERS;
     }
 
     /**
@@ -66,6 +62,16 @@ class DataManagerFactory implements MultiFieldDataManagerFactoryInterface
     public function addManager(string $arg, string $manager)
     {
         $this->managers[$arg] = $manager;
+
+        return $this;
+    }
+
+    /**
+     *
+     */
+    public function addManagers(array $managers)
+    {
+        $this->managers = $managers + $this->managers;
 
         return $this;
     }

@@ -2,9 +2,9 @@
 
 namespace Backalley\Wordpress\Forms\Controllers;
 
-use Backalley\Form\Controllers\AbstractFormSubmissionManager;
+use Backalley\Wordpress\Forms\Controllers\AbstractWpAdminFormSubmissionManager;
 
-class TermFieldFormSubmissionManager extends AbstractFormSubmissionManager
+class TermFieldFormSubmissionManager extends AbstractWpAdminFormSubmissionManager
 {
     /**
      * @var WP_Taxonomy
@@ -20,21 +20,47 @@ class TermFieldFormSubmissionManager extends AbstractFormSubmissionManager
     }
 
     /**
+     * Get the value of taxonomy
+     *
+     * @return WP_Taxonomy
+     */
+    public function getTaxonomy(): WP_Taxonomy
+    {
+        return $this->taxonomy;
+    }
+
+    /**
      *
      */
     public function hook()
     {
-        add_action("edited_{$this->taxonomy->name}", [$this, 'saveTermActionCallback'], null, 1);
-        add_action("create_{$this->taxonomy->name}", [$this, 'saveTermActionCallback'], null, 1);
+        foreach (['edited', 'create'] as $event) {
+            add_action("{$event}_{$this->taxonomy->name}", [$this, 'saveTermActionCallback'], null, 1);
+        }
+
+        return parent::hook();
     }
 
+    /**
+     *
+     */
     public function saveTermActionCallback($termId)
     {
-        $this->handleRequest(get_term($termId, $this->taxonomy->name, 'OBJECT'));
+        if ($this->isSafeToRun($termId)) {
+            $this->handleRequest(get_term($termId, $this->taxonomy->name, 'OBJECT'));
+        }
     }
 
-    protected function finalizeRequest($request)
+    /**
+     *
+     */
+    public function isSafeToRun($termId)
     {
-        return;
+        if (!current_user_can('manage_categories', $termId)) {
+
+            return false;
+        }
+
+        return true;
     }
 }

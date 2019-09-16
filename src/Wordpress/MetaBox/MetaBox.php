@@ -2,8 +2,8 @@
 
 namespace Backalley\WordPress\MetaBox;
 
+use Backalley\Form\Fields\Hidden as HiddenInput;
 use Backalley\Html\Html;
-use Backalley\Form\Fields\Input;
 use Backalley\WordPress\MetaBox\Contracts\MetaboxContentInterface;
 
 /**
@@ -268,7 +268,7 @@ class MetaBox
     {
         $screen = isset($this->screen) ? "add_meta_boxes_{$this->screen}" : null;
 
-        add_action($screen, [$this, '_addMetaBox']);
+        add_action($screen, [$this, 'register']);
 
         if (!empty($this->save_cb)) {
             add_action("save_post_{$this->screen}", $this->save_cb, null, 3);
@@ -282,7 +282,7 @@ class MetaBox
      *
      * @param $post
      */
-    public function _addMetaBox($post)
+    public function register()
     {
         add_meta_box($this->id, $this->title, [$this, 'display'], $this->screen, $this->context, $this->priority, $this->callbackArgs);
     }
@@ -360,14 +360,12 @@ class MetaBox
     {
         $nonce = '';
 
-        $nonce .= (new Input) // nonce
-            ->setType('hidden')
+        $nonce .= (new HiddenInput) // nonce
             ->setName($this->nonce['name'])
             ->setValue(wp_create_nonce($this->nonce['action']))
             ->toHtml();
 
-        $nonce .= (new Input) // referer
-            ->setType('hidden')
+        $nonce .= (new HiddenInput) // referer
             ->setName('_backalley_http_referer')
             ->setValue(esc_attr(wp_unslash($_SERVER['REQUEST_URI'])))
             ->toHtml();

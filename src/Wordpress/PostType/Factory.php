@@ -52,9 +52,6 @@ class Factory extends AbstractWpObjectFactory
 
             if (in_array(OptionHandlerInterface::class, class_implements($handler))) {
                 $handler::handle($postType, $args);
-            } elseif (in_array(CustomArgInterface::class, class_implements($handler))) {  // supports deprecated CustomArgInterface
-                $handler::pass($postType, $args);
-                add_action('wp_loaded', [$handler, 'run']);
             } else {
                 throw new \Exception("I don't know what you mean. Your Argument is invalid.");
             }

@@ -1,10 +1,16 @@
 <?php
 
 /**
- * @package Backalley-Core
+ * This file is part of the Backalley package.
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @package   Backalley
+ * @license   GNU GPL
+ * @copyright Copyright (C) WebTheory Studio, All rights reserved.
+ * @link      https://github.com/spider-mane/backalley
+ * @author    Chris Williams <christwilhelm84@gmail.com>
  */
-
-use Timber\Timber;
 
 if (!class_exists('BackalleyCoreBase')) {
 
@@ -18,7 +24,6 @@ if (!class_exists('BackalleyCoreBase')) {
         public static $base;
         public static $admin_url;
         public static $admin_templates;
-        public static $timber_locations;
 
         public static function load()
         {
@@ -28,13 +33,6 @@ if (!class_exists('BackalleyCoreBase')) {
 
             Self::$admin_url = Self::$url . "public/admin";
             Self::$admin_templates = Self::$path . "/public/admin/templates";
-
-            Self::$timber_locations = [
-                Self::$admin_templates,
-                Self::$admin_templates . '/macros',
-            ];
-
-            Timber::$locations = Self::$timber_locations;
         }
     }
 }

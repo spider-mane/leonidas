@@ -53,9 +53,6 @@ class Factory extends AbstractWpObjectFactory
 
             if (in_array(OptionHandlerInterface::class, class_implements($handler))) {
                 $handler::handle($taxonomy, $args);
-            } elseif (in_array(CustomTaxonomyArgInterface::class, class_implements($handler))) {  // supports deprecated CustomTaxonomyArgInterface
-                $handler::pass($taxonomy, $args);
-                add_action('wp_loaded', [$handler, 'run']);
             } else {
                 throw new \Exception("I don't know what you mean. Your Argument is invalid.");
             }

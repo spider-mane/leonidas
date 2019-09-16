@@ -2,65 +2,45 @@
 
 namespace Backalley\Form;
 
-use Backalley\Form\Contracts\FieldDataManagerInterface;
-use Backalley\Form\Contracts\FormFieldControllerInterface;
 use Backalley\Form\Contracts\FormFieldInterface;
-use Backalley\Form\Controllers\FormFieldController;
+use Backalley\Form\Contracts\MultiFieldDataManagerFactoryInterface;
+use Backalley\Form\Contracts\MultiFieldFactoryInterface;
 use Backalley\Form\DataManagerFactory;
 use Backalley\Form\FieldFactory;
-use Backalley\GuctilityBelt\Concerns\SmartFactoryTrait;
-use Illuminate\Support\Collection;
-use ReflectionClass;
 
-class Field
+class Field extends FieldFactory
 {
-    use SmartFactoryTrait;
-
     /**
      *
      */
-    protected $controller = FormFieldController::class;
-
-    /**
-     *
-     */
-    public function create($args): FormFieldControllerInterface
+    public static function bootstrap(array $options = [])
     {
-        $args['form_field'] = $this->getFormField($args['type'] ?? null);
-        $args['data_manager'] = $this->getDataManager($args['data'] ?? null);
+        $formFieldFactory = static::createFormFieldFactory($options['field_factory'] ?? [])
+            ->addNamespaces($options['field_factory']['namespace'] ?? [])
+            ->addFields($options['field_factory']['fields'] ?? []);
 
-        unset($args['type'], $args['data'], $args['rules']);
+        $dataManagerFactory = static::createDataManagerFactory($options['manager_factory'] ?? [])
+            ->addNamespaces($options['manager_factory']['namespace'] ?? [])
+            ->addManagers($options['manager_factory']['managers'] ?? []);
 
-        return $this->getController($args);
+        $controller = $options['controller'] ?? null;
+
+        return (new static($formFieldFactory, $dataManagerFactory, $controller));
     }
 
     /**
      *
      */
-    protected function getController($args): FormFieldControllerInterface
+    protected static function createFormFieldFactory(array $options): MultiFieldFactoryInterface
     {
-        return $this->build($this->controller, Collection::make($args));
+        return new FormFieldFactory;
     }
 
     /**
      *
      */
-    protected function getFormField($args)
+    protected static function createDataManagerFactory(array $options): MultiFieldDataManagerFactoryInterface
     {
-        $type = $args['@create'];
-        unset($args['@create']);
-
-        return (new FieldFactory)->create($type, $args);
-    }
-
-    /**
-     *
-     */
-    protected function getDataManager($args)
-    {
-        $manager = $args['@create'];
-        unset($args['@create']);
-
-        return (new DataManagerFactory)->create($manager, $args);
+        return new DataManagerFactory;
     }
 }

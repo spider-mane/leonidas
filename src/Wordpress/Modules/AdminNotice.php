@@ -96,7 +96,7 @@ class AdminNotice
             'class' => ['notice', "notice-{$this->type}", $this->dismissible ? 'is-dismissible' : null]
         ];
 
-        return $this->tag('div', $this->tag('p', $this->message), $noticeAttr);
+        return $this->tag('div', $this->tag('p', htmlspecialchars($this->message)), $noticeAttr);
     }
 
     /**

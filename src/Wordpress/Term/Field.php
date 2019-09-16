@@ -3,6 +3,7 @@
 namespace Backalley\Wordpress\Term;
 
 use Backalley\Wordpress\Fields\AbstractField;
+use Backalley\Wordpress\Fields\WpAdminField;
 use Backalley\Wordpress\Traits\UsesTemplateTrait;
 
 class Field extends AbstractField
@@ -17,7 +18,10 @@ class Field extends AbstractField
     /**
      * @var array
      */
-    protected $options = [];
+    protected $options = [
+        'add_term_field' => true,
+        'edit_term_field' => true,
+    ];
 
     /**
      * @var string
@@ -27,11 +31,15 @@ class Field extends AbstractField
     /**
      *
      */
-    public function __construct(string $taxonomy, array $options = [])
+    public function __construct(string $taxonomy, WpAdminField $formFieldController, array $options = [])
     {
         $this->taxonomy = get_taxonomy($taxonomy);
 
-        $this->setOptions($options);
+        parent::__construct($formFieldController);
+
+        if (!empty($options)) {
+            $this->setOptions($options);
+        }
     }
 
     /**
@@ -63,10 +71,7 @@ class Field extends AbstractField
      */
     protected function setOptions(array $options)
     {
-        $this->options = array_merge([
-            'add_term_field' => true,
-            'edit_term_field' => true,
-        ], $options);
+        $this->options = $options + $this->options;
 
         return $this;
     }
@@ -83,12 +88,14 @@ class Field extends AbstractField
         if (true === $this->options['add_term_field']) {
             add_action("{$this->taxonomy->name}_add_form_fields", [$this, 'render'], null, 0);
         }
+
+        return $this;
     }
 
     /**
      *
      */
-    private function setTemplate()
+    protected function setTemplate()
     {
         switch (get_current_screen()->base) {
 

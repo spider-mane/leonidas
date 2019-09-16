@@ -2,97 +2,90 @@
 
 namespace Backalley\Form;
 
+use Backalley\Form\Contracts\FieldDataManagerInterface;
+use Backalley\Form\Contracts\FormFieldControllerInterface;
 use Backalley\Form\Contracts\FormFieldInterface;
-use Backalley\Form\Contracts\MultiFieldFactoryInterface;
-use Backalley\Form\Fields\Input;
+use Backalley\Form\Contracts\MultiFieldDataManagerFactoryInterface as iDataManagerFactory;
+use Backalley\Form\Contracts\MultiFieldFactoryInterface as iFormFieldFactory;
+use Backalley\Form\Controllers\FormFieldController;
+use Backalley\Form\FormFieldFactory;
 use Backalley\GuctilityBelt\Concerns\SmartFactoryTrait;
-use Backalley\Html\TagSage;
-use Exception;
 use Illuminate\Support\Collection;
 
-class FieldFactory implements MultiFieldFactoryInterface
+class FieldFactory
 {
     use SmartFactoryTrait;
 
     /**
-     *
+     * @var FormFieldFactory
      */
-    private $fields = [];
+    protected $formFieldFactory;
+
+    /**
+     * @var DataManagerFactory
+     */
+    protected $dataManagerFactory;
 
     /**
      *
      */
-    protected $namespace = [];
-
-    protected const NAMESPACE = [
-        "Backalley\\Form\\Fields"
-    ];
-
-    protected const FIELDS = [];
+    protected $controller = FormFieldController::class;
 
     /**
      *
      */
-    public function __construct()
+    public function __construct(iFormFieldFactory $formFieldFactory, iDataManagerFactory $dataManagerFactory, ?string $controller = null)
     {
-        foreach (static::NAMESPACE as $namespace) {
-            $this->addNamespace($namespace);
+        $this->formFieldFactory = $formFieldFactory;
+        $this->dataManagerFactory = $dataManagerFactory;
+
+        if (isset($controller)) {
+            $this->controller = $controller;
         }
-        foreach (static::FIELDS as $arg => $field) {
-            $this->addField($arg, $field);
-        }
-    }
-
-    /**
-     * Get the value of managers
-     *
-     * @return mixed
-     */
-    public function getFields()
-    {
-        return $this->managers;
-    }
-
-    /**
-     * Set the value of managers
-     *
-     * @param mixed $managers
-     *
-     * @return self
-     */
-    public function addField(string $arg, string $manager)
-    {
-        $this->managers[$arg] = $manager;
-
-        return $this;
     }
 
     /**
      *
      */
-    public function create(string $field, array $args = []): FormFieldInterface
+    public function create($args): FormFieldControllerInterface
     {
-        $class = $this->getClass($field);
-        $args = Collection::make($args);
+        $args['form_field'] = $this->createFormField($args['type'] ?? null);
+        $args['data_manager'] = $this->createDataManager($args['data'] ?? null);
 
-        if (isset($this->fields[$field])) {
-            $field = $this->buildObject($this->fields[$field], $args);
-        } elseif (false !== $class) {
-            $field = $this->buildObject($class, $args);
-        } elseif (TagSage::isIt('standard_input_type', $field)) {
-            $field = $this->buildObject(Input::class, $args->merge(['type' => $field]));
-        } else {
-            throw new Exception("{$field} is not a recognized field type");
-        }
+        unset($args['type'], $args['data']);
 
-        return $field;
+        return $this->createController($args);
     }
 
     /**
      *
      */
-    protected function buildObject(string $class, Collection $args): FormFieldInterface
+    protected function createController($args): FormFieldControllerInterface
     {
-        return $this->build($class, $args);
+        return $this->build($this->controller, Collection::make($args));
+    }
+
+    /**
+     *
+     */
+    protected function createFormField($args): FormFieldInterface
+    {
+        $type = $args['@create'];
+
+        unset($args['@create']);
+
+        return $this->formFieldFactory->create($type, $args);
+    }
+
+    /**
+     *
+     */
+    protected function createDataManager($args): FieldDataManagerInterface
+    {
+        $manager = $args['@create'];
+
+        unset($args['@create']);
+
+        return $this->dataManagerFactory->create($manager, $args);
     }
 }

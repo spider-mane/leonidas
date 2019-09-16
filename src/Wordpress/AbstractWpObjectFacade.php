@@ -127,6 +127,16 @@ abstract class AbstractWpObjectFacade
     /**
      *
      */
+    public function hook()
+    {
+        add_action('init', [$this, 'register']);
+
+        return $this;
+    }
+
+    /**
+     *
+     */
     abstract protected function getDefaultLabels(string $single, string $plural): array;
 
     /**

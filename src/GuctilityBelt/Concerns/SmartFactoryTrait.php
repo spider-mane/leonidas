@@ -36,6 +36,16 @@ trait SmartFactoryTrait
     /**
      *
      */
+    public function addNamespaces(array $namespaces)
+    {
+        $this->namespace = $namespaces + $this->namespace;
+
+        return $this;
+    }
+
+    /**
+     *
+     */
     protected function build(string $class, Collection $args)
     {
         $keys = $args->keys()->transform(function ($arg) {

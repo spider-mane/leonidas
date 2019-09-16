@@ -1,55 +1,42 @@
 <?php
 
+use Backalley\Form\Fields\Email;
 use Backalley\Form\Fields\Select;
-use Respect\Validation\Validator as v;
-use Backalley\Wordpress\AdminPage\AdminPage;
-use Backalley\Wordpress\AdminPage\SettingsField;
-use Backalley\Wordpress\AdminPage\SettingManager;
-use Backalley\WordPress\AdminPage\SettingsSection;
+use Backalley\Form\Fields\Tel;
 use Backalley\GuctilityBelt\SelectOptions\UsStatesAndTerritories;
+use Backalley\WordPress\AdminPage\SettingsSection;
+use Backalley\Wordpress\AdminPage\SettingsField;
+use Backalley\Wordpress\AdminPage\SettingsPage;
+use Backalley\Wordpress\SettingManager;
+use Respect\Validation\Validator as v;
 
-$setting1 = (new SettingManager('ba-test', 'ba-test-1'))
+$group1 = 'ba-test';
+
+/**
+ * register settings
+ */
+$setting1 = (new SettingManager($group1, 'ba-test-1'))
     ->setType('string')
     ->setDescription('this is a test setting')
     ->addRule('email', v::optional(v::email()), 'Invalid thing provided')
     ->hook();
 
-$setting2 = (new SettingManager('ba-test', 'ba-test-2'))
+$setting2 = (new SettingManager($group1, 'ba-test-2'))
     ->setType('string')
     ->setDescription('this is another test setting')
     ->addRule('phone', v::optional(v::phone()), 'Another invalid thing provided')
     ->hook();
 
-$setting3 = (new SettingManager('ba-test', 'ba-test-3'))
+$setting3 = (new SettingManager($group1, 'ba-test-3'))
     ->setType('string')
     ->setDescription('this is a whole nother test setting')
     ->hook();
 
 
-
-$settingField1 = (new SettingsField('ba-test-one', 'Test Setting 1'))
-    ->setSetting('ba-test-1')
-    ->hook();
-
-$settingField2 = (new SettingsField('ba-test-two', 'Test Setting 2'))
-    ->setSetting('ba-test-2')
-    ->setSection('test-section-1')
-    ->hook();
-
-$settingField3 = (new SettingsField('ba-test-three', 'Test Setting 3'))
-    ->setSetting('ba-test-3')
-    ->setSection('test-section-1')
-    ->setField((new Select)->setOptions(UsStatesAndTerritories::states('Select State')))
-    ->hook();
-
-
-
-$section = (new SettingsSection('test-section-1', 'Test Section'))
-    ->setDescription('this is a test section')
-    ->addSetting($settingField1)
-    ->hook();
-
-$page = (new AdminPage('company_info', 'manage_options'))
+/**
+ * add page
+ */
+$page1 = (new SettingsPage('company_info'))
     ->setMenuTitle('Company')
     ->setPageTitle('Company Info')
     ->setIcon('dashicons-store')
@@ -57,8 +44,36 @@ $page = (new AdminPage('company_info', 'manage_options'))
     ->setDescription('this is a test page')
     ->setPosition(100)
     ->setSubMenuName('Basic Info')
-    ->setFieldGroups('ba-test')
-    ->addSection($section)
-    ->addSetting($settingField2)
-    ->addSetting($settingField3)
+    ->addFieldGroups($group1)
+    ->hook()
+    ->getMenuSlug();
+
+
+/**
+ * register sections
+ */
+$section1 = (new SettingsSection('test-section-1', 'Test Section', $page1))
+    ->setDescription('this is a test section')
+    ->hook();
+
+
+/**
+ * register settings fields
+ */
+$settingField1 = (new SettingsField('ba-test-one', 'Test Setting 1', $page1))
+    ->setSetting($setting1->getOptionName())
+    ->setField((new Email)->addClass('regular-text'))
+    ->setSection($section1->getId())
+    ->hook();
+
+$settingField2 = (new SettingsField('ba-test-two', 'Test Setting 2', $page1))
+    ->setSetting($setting2->getOptionName())
+    ->setSection($section1->getId())
+    ->setField((new Tel))
+    ->hook();
+
+$settingField3 = (new SettingsField('ba-test-three', 'Test Setting 3', $page1))
+    ->setSetting($setting3->getOptionName())
+    ->setSection($section1->getId())
+    ->setField((new Select)->setOptions(UsStatesAndTerritories::states('Select State')))
     ->hook();

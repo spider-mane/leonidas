@@ -6,10 +6,10 @@
 
 namespace Backalley\Form\Fields;
 
-use Backalley\Form\Fields\Input;
+use Backalley\Form\Contracts\FormFieldInterface;
 use Backalley\Form\DataSchemes\IO;
 use Backalley\Form\Elements\Label;
-use Backalley\Form\Contracts\FormFieldInterface;
+use Backalley\Form\Fields\Input;
 
 class Checklist extends AbstractFormField implements FormFieldInterface, IO
 {
@@ -38,18 +38,6 @@ class Checklist extends AbstractFormField implements FormFieldInterface, IO
      * @var mixed
      */
     public $toggleControl;
-
-    /**
-     * {@inheritDoc}
-     */
-    protected const INPUT = 'checkbox';
-
-    /**
-     * {@inheritDoc}
-     */
-    protected const SELECTED = 'checked';
-
-    // use SupportsMultipleValuesTrait;
 
     /**
      *
@@ -134,16 +122,6 @@ class Checklist extends AbstractFormField implements FormFieldInterface, IO
     /**
      *
      */
-    protected function resolveAttributes()
-    {
-        $this->addClass('thing');
-
-        return parent::resolveAttributes();
-    }
-
-    /**
-     *
-     */
     public function toHtml(): string
     {
         $this->resolveAttributes();
@@ -152,7 +130,7 @@ class Checklist extends AbstractFormField implements FormFieldInterface, IO
 
         $html .= $this->open('div', $this->attributes ?? null);
         $html .= isset($this->clearControl)
-            ? (new Input)->setType('hidden')->setName($this->name)->setValue($this->clearControl)
+            ? (new Hidden)->setName($this->name . "[]")->setValue($this->clearControl)
             : '';
 
         $html .= $this->open('ul');
@@ -167,19 +145,17 @@ class Checklist extends AbstractFormField implements FormFieldInterface, IO
 
             $html .= $this->open('li');
             $html .= isset($this->toggleControl)
-                ? (new Input)->setType('hidden')->setName($itemFullName)->setValue($this->toggleControl)
+                ? (new Hidden)->setName($itemFullName)->setValue($this->toggleControl)
                 : '';
 
-            $html .= (new Input)
+            $html .= (new Checkbox)
+                ->setChecked(in_array($item, $this->value) ? true : false)
                 ->setId($itemId)
                 ->setValue($itemValue)
-                ->setType($this::INPUT)
-                ->setName($itemFullName)
-                ->addAttribute($this::SELECTED, in_array($item, $this->value) ? true : false);
+                ->setName($itemFullName);
 
             $html .= (new Label($itemLabel))->setFor($itemId);
 
-            // close li
             $html .= $this->close('li');
         }
 

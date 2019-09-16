@@ -1,33 +1,27 @@
 <div class="wrap">
-  <h1>{{ title }}</h1>
 
-  {{ settings_errors() }}
+  {# title #}
+  {% block title %}
+    <h1>{{ title }}</h1>
+  {% endblock %}
 
-  <form action="options.php" method="post">
+  {# alerts #}
+  {% block alerts %}
+    {{ alerts }}
+  {% endblock %}
 
-    {# ourput hidden controls that enable saving options #}
-    {% for field_group in field_groups %}
-      {{ settings_fields(field_group) }}
-    {% endfor %}
+  {# description #}
+  {% if description is not empty %}
 
-    {# output description #}
-    {% if description is not empty %}
+    {% block description %}
       <p>{{ description }}</p>
-    {% endif %}
+    {% endblock %}
 
-    {% if tabs is not empty %}
+  {% endif %}
 
-      {% for tab in tabs %}
-        {{ do_settings_sections(tab.sections) }}
-        {{ submit_button() }}
-      {% endfor %}
+  {# layout #}
+  {% block layout %}
+    {{ layout }}
+  {% endblock %}
 
-    {% else %}
-
-      {{ do_settings_sections(page) }}
-      {{ submit_button() }}
-
-    {% endif %}
-
-  </form>
 </div>

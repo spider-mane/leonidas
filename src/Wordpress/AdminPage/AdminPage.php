@@ -3,7 +3,6 @@
 namespace Backalley\Wordpress\AdminPage;
 
 use Backalley\Wordpress\Traits\UsesTemplateTrait;
-use Backalley\WordPress\AdminPage\SettingsSection;
 
 /**
  * @package Backalley-Core
@@ -13,136 +12,107 @@ class AdminPage
     use UsesTemplateTrait;
 
     /**
-     * page_title
-     *
      * @var string
      */
     protected $pageTitle = '';
 
     /**
-     * menu_title
-     *
      * @var string
      */
     protected $menuTitle = '';
 
     /**
-     * menu_slug
-     *
      * @var string
      */
     protected $menuSlug;
 
     /**
-     * capability
-     *
      * @var string
      */
     protected $capability = 'manage_options';
 
     /**
-     * function
-     *
-     * @var callback
+     * @var callable
      */
     protected $function;
 
     /**
-     * icon
-     *
      * @var string
      */
     protected $icon;
 
     /**
-     * position
-     *
      * @var int
      */
     protected $position;
 
     /**
-     * parent_slug
-     *
      * @var string
      */
     protected $parentSlug;
 
     /**
-     * description
-     *
      * @var string
      */
     protected $description;
 
     /**
-     * show_in_menu
-     *
      * @var bool
      */
     protected $showInMenu = true;
 
     /**
-     * The name that will be shown it the page has submenu items
+     * The name that will be shown if the page has submenu items
      *
      * @var string
      */
     protected $subMenuName;
 
     /**
-     * tabs
-     *
-     * @var array
+     * @var callable
      */
-    protected $tabs = [];
+    protected $alertLoader;
 
     /**
-     * settings
-     *
-     * @var array
+     * @var callable
      */
-    protected $settings = [];
-
-    /**
-     * sections
-     *
-     * @var array
-     */
-    protected $sections = [];
-
-    /**
-     * field_groups
-     *
-     * @var array
-     */
-    protected $fieldGroups = [];
-
-    /**
-     *
-     */
-    private $layout;
+    protected $layout;
 
     /**
      * @var string
      */
-    private $template = 'admin-page-template';
+    protected $template = 'admin-page-template';
 
     /**
      *
      */
-    public function __construct(string $menu_slug, string $capability)
+    public function __construct(string $menuSlug, ?string $capability = null)
     {
-        $this->setMenuSlug($menu_slug)->setCapability($capability);
+        $this->menuSlug = $menuSlug;
+
+        if (isset($capability)) {
+            $this->capability = $capability;
+        }
     }
 
     /**
+     * Get capability
      *
+     * @return  array
      */
-    public function hook()
+    public function getCapability()
     {
-        add_action('admin_menu', [$this, 'addPage']);
+        return $this->capability;
+    }
 
-        return $this;
+    /**
+     * Get menu_slug
+     *
+     * @return  string
+     */
+    public function getMenuSlug()
+    {
+        return $this->menuSlug;
     }
 
     /**
@@ -186,57 +156,9 @@ class AdminPage
      *
      * @return  self
      */
-    public function setMenuTitle(string $menu_title)
+    public function setMenuTitle(string $menuTitle)
     {
-        $this->menuTitle = $menu_title;
-
-        return $this;
-    }
-
-    /**
-     * Get capability
-     *
-     * @return  array
-     */
-    public function getCapability()
-    {
-        return $this->capability;
-    }
-
-    /**
-     * Set capability
-     *
-     * @param   array  $capability  capability
-     *
-     * @return  self
-     */
-    public function setCapability(string $capability)
-    {
-        $this->capability = $capability;
-
-        return $this;
-    }
-
-    /**
-     * Get menu_slug
-     *
-     * @return  string
-     */
-    public function getMenuSlug()
-    {
-        return $this->menuSlug;
-    }
-
-    /**
-     * Set menu_slug
-     *
-     * @param   string  $menu_slug  menu_slug
-     *
-     * @return  self
-     */
-    public function setMenuSlug(string $menu_slug)
-    {
-        $this->menuSlug = $menu_slug;
+        $this->menuTitle = $menuTitle;
 
         return $this;
     }
@@ -244,9 +166,9 @@ class AdminPage
     /**
      * Get function
      *
-     * @return  array
+     * @return callable
      */
-    public function getFunction()
+    public function getFunction(): callable
     {
         return $this->function;
     }
@@ -254,11 +176,11 @@ class AdminPage
     /**
      * Set function
      *
-     * @param   callback  $function  function
+     * @param callable $function  function
      *
      * @return  self
      */
-    public function setFunction(callback $function)
+    public function setFunction(callable $function)
     {
         $this->function = $function;
 
@@ -306,255 +228,11 @@ class AdminPage
      *
      * @return  self
      */
-    public function SetParentSlug(string $parent_slug)
+    public function SetParentSlug(string $parentSlug)
     {
-        $this->parentSlug = $parent_slug;
+        $this->parentSlug = $parentSlug;
 
         return $this;
-    }
-
-    /**
-     * Get settings
-     *
-     * @return  array
-     */
-    public function getSettings()
-    {
-        return $this->settings;
-    }
-
-    /**
-     * Set settings
-     *
-     * @param   array  $settings  settings
-     *
-     * @return  self
-     */
-    public function setSettings(array $settings)
-    {
-        foreach ($settings as $setting) {
-            $this->addSetting($setting);
-        }
-
-        return $this;
-    }
-
-    /**
-     *
-     */
-    public function addSetting(SettingsField $setting)
-    {
-        $this->settings[] = $setting->setPage($this->menuSlug);
-
-        return $this;
-    }
-
-    /**
-     * Get sections
-     *
-     * @return  array
-     */
-    public function getSections()
-    {
-        return $this->sections;
-    }
-
-    /**
-     * Set sections
-     *
-     * @param   array  $sections
-     *
-     * @return  self
-     */
-    public function setSections(array $sections)
-    {
-        foreach ($sections as $section) {
-            $this->addSection($section);
-        }
-
-        return $this;
-    }
-
-    /**
-     *
-     */
-    public function addSection(SettingsSection $section)
-    {
-        $this->sections[] = $section->setPage($this->menuSlug);
-
-        return $this;
-    }
-
-    /**
-     * Get tabs
-     *
-     * @return  array
-     */
-    public function getTabs()
-    {
-        return $this->tabs;
-    }
-
-    /**
-     * Set tabs
-     *
-     * @param   array  $tabs
-     *
-     * @return  self
-     */
-    public function setTabs(array $tabs)
-    {
-        $this->tabs = $tabs;
-
-        return $this;
-    }
-
-    /**
-     * Get field_groups
-     *
-     * @return  array
-     */
-    public function getFieldGroups()
-    {
-        return $this->fieldGroups;
-    }
-
-    /**
-     * Set field_groups
-     *
-     * @param   mixed  $fieldGroups  fields
-     *
-     * @return  self
-     */
-    public function setFieldGroups($fieldGroups)
-    {
-        foreach ((array) $fieldGroups as $field) {
-            $this->addFieldGroup($field);
-        }
-
-        return $this;
-    }
-
-    /**
-     *
-     */
-    public function addFieldGroup($fieldGroup)
-    {
-        $this->fieldGroups[] = $fieldGroup;
-
-        return $this;
-    }
-
-    /**
-     *
-     */
-    public function addPage()
-    {
-        if (isset($this->parentSlug)) {
-            $this->addSubmenuPage()->configurePage('submenu');
-        } else {
-            $this->addMenuPage()->configurePage('menu');
-        }
-
-        return $this;
-    }
-
-    /**
-     *
-     */
-    protected function addSubmenuPage()
-    {
-        add_submenu_page(
-            $this->parentSlug,
-            $this->pageTitle,
-            $this->menuTitle,
-            $this->capability,
-            $this->menuSlug,
-            [$this, 'render']
-        );
-
-        return $this;
-    }
-
-    /**
-     *
-     */
-    protected function addMenuPage()
-    {
-        add_menu_page(
-            $this->pageTitle,
-            $this->menuTitle,
-            $this->capability,
-            $this->menuSlug,
-            [$this, 'render'],
-            $this->icon,
-            $this->position
-        );
-
-        return $this;
-    }
-
-    /**
-     *
-     */
-    protected function removeMenuPage()
-    {
-        remove_menu_page($this->menuSlug);
-
-        return $this;
-    }
-
-    /**
-     *
-     */
-    protected function removeSubmenuPage()
-    {
-        remove_submenu_page($this->parentSlug, $this->menuSlug);
-
-        return $this;
-    }
-
-    /**
-     *
-     */
-    protected function configurePage($level)
-    {
-        if (false === $this->showInMenu) {
-            $remove_page = "remove{$level}page";
-            $this->$remove_page();
-        }
-
-        return $this;
-    }
-
-    /**
-     *
-     */
-    public function render($args)
-    {
-        if (!isset($this->function)) {
-            $this->renderDefault($this);
-        } else {
-            $callback = $this->function;
-            $callback($this, $args);
-        }
-    }
-
-    /**
-     *
-     */
-    public function renderDefault()
-    {
-        $context = [
-            'title' => $this->pageTitle,
-            'tabs' => $this->tabs,
-            'page' => $this->menuSlug,
-            'layout' => $this->layout,
-            'description' => $this->description,
-            'field_groups' => $this->fieldGroups,
-        ];
-
-        echo $this->renderTemplate($context);
     }
 
     /**
@@ -642,7 +320,7 @@ class AdminPage
     /**
      * Set the name that will be shown it the page has submenu items
      *
-     * @param string $subMenuName The name that will be shown it the page has submenu items
+     * @param string $subMenuName
      *
      * @return self
      */
@@ -651,5 +329,146 @@ class AdminPage
         $this->subMenuName = $subMenuName;
 
         return $this;
+    }
+
+    /**
+     * Get the value of alertLoader
+     *
+     * @return callable
+     */
+    public function getAlertLoader(): callable
+    {
+        return $this->alertLoader;
+    }
+
+    /**
+     * Set the value of alertLoader
+     *
+     * @param callable $alertLoader
+     *
+     * @return self
+     */
+    public function setAlertLoader(callable $alertLoader)
+    {
+        $this->alertLoader = $alertLoader;
+
+        return $this;
+    }
+
+    /**
+     *
+     */
+    public function hook()
+    {
+        add_action('admin_menu', [$this, 'register']);
+
+        return $this;
+    }
+
+    /**
+     *
+     */
+    public function register()
+    {
+        if (isset($this->parentSlug)) {
+            $this->addSubmenuPage()->configurePage('submenu');
+        } else {
+            $this->addMenuPage()->configurePage('menu');
+        }
+
+        return $this;
+    }
+
+    /**
+     *
+     */
+    final protected function addSubmenuPage()
+    {
+        add_submenu_page(
+            $this->parentSlug,
+            $this->pageTitle,
+            $this->menuTitle,
+            $this->capability,
+            $this->menuSlug,
+            [$this, 'render']
+        );
+
+        return $this;
+    }
+
+    /**
+     *
+     */
+    final protected function addMenuPage()
+    {
+        add_menu_page(
+            $this->pageTitle,
+            $this->menuTitle,
+            $this->capability,
+            $this->menuSlug,
+            [$this, 'render'],
+            $this->icon,
+            $this->position
+        );
+
+        return $this;
+    }
+
+    /**
+     *
+     */
+    protected function configurePage(string $level)
+    {
+        if (false === $this->showInMenu) {
+            call_user_func([$this, "remove{$level}page"]);
+        }
+
+        return $this;
+    }
+
+    /**
+     *
+     */
+    protected function removeMenuPage()
+    {
+        remove_menu_page($this->menuSlug);
+
+        return $this;
+    }
+
+    /**
+     *
+     */
+    protected function removeSubmenuPage()
+    {
+        remove_submenu_page($this->parentSlug, $this->menuSlug);
+
+        return $this;
+    }
+
+    /**
+     *
+     */
+    public function render($args)
+    {
+        if (!isset($this->function)) {
+            $this->renderDefault();
+        } else {
+            ($this->function)($args, $this);
+        }
+    }
+
+    /**
+     *
+     */
+    public function renderDefault()
+    {
+        echo $this->renderTemplate([
+            'title' => $this->pageTitle,
+            'page' => $this->menuSlug,
+            'layout' => $this->layout,
+            'alerts' => $this->alertLoader,
+            'description' => $this->description,
+        ]);
     }
 }

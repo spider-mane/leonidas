@@ -12,9 +12,4 @@ interface MetaboxContentInterface
      *
      */
     public function render($post);
-
-    // /**
-    //  *
-    //  */
-    // public function toHtml5();
 }

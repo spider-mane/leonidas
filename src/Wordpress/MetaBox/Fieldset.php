@@ -2,20 +2,17 @@
 
 namespace Backalley\WordPress\MetaBox;
 
-use Backalley\Wordpress\Fields\WpAdminField;
-use Backalley\Form\Contracts\FormFieldInterface;
-use Backalley\Form\Controllers\FormFieldController;
-use Backalley\Form\Contracts\FieldDataManagerInterface;
-use Backalley\Form\Contracts\FormFieldControllerInterface;
-use Backalley\Form\Controllers\AbstractFormSubmissionManager;
 use Backalley\WordPress\MetaBox\Contracts\MetaboxContentInterface;
+use Backalley\Wordpress\Fields\WpAdminField;
+use Backalley\Wordpress\Forms\Controllers\AbstractWpAdminFormSubmissionManager;
+use Backalley\Wordpress\MetaBox\Contracts\MetaboxFieldInterface;
 
 class Fieldset implements MetaboxContentInterface
 {
     /**
-     *
+     * @var string
      */
-    protected $title = '';
+    protected $title;
 
     /**
      * @var array
@@ -23,93 +20,49 @@ class Fieldset implements MetaboxContentInterface
     protected $fields = [];
 
     /**
-     * @var array
-     */
-    protected $controllers = [];
-
-    /**
-     *
+     * @var AbstractWpAdminFormSubmissionManager
      */
     protected $formController;
 
     /**
-     * @var Section
+     * @var MetaboxContentInterface
      */
     protected $container;
 
     /**
+     * horizontal padding for each field
+     *
      * @var int
      */
     protected $rowPadding = 2;
 
     /**
+     * @var array
+     */
+    protected $fieldOptions = [
+        'submit_button' => null,
+        'hidden_input' => null,
+    ];
+
+    /**
+     * @var array
+     */
+    protected $containerOptions = [
+        'padding' => 2
+    ];
+
+    /**
      *
      */
-    public function __construct(string $title, AbstractFormSubmissionManager $formController)
+    public function __construct(string $title, ?AbstractWpAdminFormSubmissionManager $formController = null)
     {
         $this->title = $title;
-        $this->formController = $formController;
-        $this->container = (new Section($this->title))->setIsFieldset(true);
-    }
 
-    /**
-     * Get the value of fields
-     *
-     * @return array
-     */
-    public function getFields(): array
-    {
-        return $this->fields;
-    }
-
-    /**
-     * Set the value of fields
-     *
-     * @param array  $fields
-     *
-     * @return self
-     */
-    public function setFields(array $fields)
-    {
-        foreach ($fields as $slug => $config) {
-
-            $options = [
-                'label' => $config['label'] ?? null,
-                'description' => $config['description'] ?? null,
-                'save_disabled' => $config['save_disabled'] ?? false,
-            ];
-
-            $this->addfield($slug, $config['type'], $config['data'] ?? null, $options);
+        if (isset($formController)) {
+            $this->formController = $formController;
         }
 
-        return $this;
-    }
-
-    /**
-     * Set the value of fields
-     *
-     * @param array  $fields
-     *
-     * @return self
-     */
-    public function addField(string $slug, FormFieldInterface $field, ?FieldDataManagerInterface $data = null, array $options = [])
-    {
-        $controller = (new WpAdminField($slug, $field, $data));
-
-        if (isset($this->formController)) {
-            $this->formController->addField($controller);
-        }
-
-        $scaffold = (new Field($slug, $controller))
-            ->setLabel($options['label'] ?? $field->getLabel() ?? '')
-            ->setDescription($options['description'] ?? '');
-
-        $this->container->addContent($slug, $scaffold);
-
-        $this->fields[$slug] = $scaffold;
-        $this->controllers[$slug] = $controller;
-
-        return $this;
+        $this->container = $this->createContainer();
     }
 
     /**
@@ -137,47 +90,168 @@ class Fieldset implements MetaboxContentInterface
     }
 
     /**
-     * Get the value of formController
+     * Get the value of containerOptions
      *
-     * @return mixed
+     * @return array
      */
-    public function getFormController(): AbstractFormSubmissionManager
+    public function getContainerOptions(): array
     {
-        return $this->formController;
+        return $this->containerOptions;
     }
 
     /**
-     * Set the value of formController
+     * Set the value of containerOptions
      *
-     * @param mixed $formController
+     * @param array $containerOptions
      *
      * @return self
      */
-    public function setFormController(AbstractFormSubmissionManager $formController)
+    public function setContainerOptions(array $containerOptions)
     {
-        $this->formController = $formController;
+        $this->containerOptions = $containerOptions;
 
         return $this;
     }
 
     /**
-     * Get the value of controllers
+     *
+     */
+    public function setContainerOption(string $option, $value)
+    {
+        $this->containerOptions[$option] = $value;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of fieldOptions
      *
      * @return array
      */
-    public function getControllers(): array
+    public function getFieldOptions(): array
     {
-        return $this->controllers;
+        return $this->fieldOptions;
+    }
+
+    /**
+     * Set the value of fieldOptions
+     *
+     * @param array $fieldOptions
+     *
+     * @return self
+     */
+    public function setFieldOptions(array $fieldOptions)
+    {
+        $this->fieldOptions = $fieldOptions;
+
+        return $this;
+    }
+
+    /**
+     *
+     */
+    public function setFieldOption(string $option, $value)
+    {
+        $this->fieldOptions[$option] = $value;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of formController
+     *
+     * @return mixed
+     */
+    public function getFormController(): AbstractWpAdminFormSubmissionManager
+    {
+        return $this->formController;
+    }
+
+    /**
+     * Get the value of fields
+     *
+     * @return array
+     */
+    public function getFields(): array
+    {
+        return $this->fields;
+    }
+
+    /**
+     * Set the value of fields
+     *
+     * @param array  $fields
+     *
+     * @return self
+     */
+    public function addFields(array $fields)
+    {
+        foreach ($fields as $slug => $options) {
+
+            $field = $options['field'];
+
+            unset($options['field']);
+
+            $this->addfield($slug, $field, $options);
+        }
+
+        return $this;
+    }
+
+    /**
+     *
+     */
+    public function addField(string $slug, WpAdminField $field, array $options = [])
+    {
+        if (isset($this->formController)) {
+            $this->formController->addField($field);
+        }
+
+        $field = $this->createFieldContainer($field, $options)
+            ->setLabel($options['label'] ?? $field->getFormField()->getLabel() ?? '')
+            ->setDescription($options['description'] ?? '');
+
+        $this->container->addContent($slug, $field);
+
+        $this->fields[$slug] = $field;
+
+        return $this;
+    }
+
+    /**
+     *
+     */
+    protected function createContainer(): MetaboxContentInterface
+    {
+        return (new Section($this->title))->setIsFieldset(true);
+    }
+
+    /**
+     *
+     */
+    protected function createFieldContainer(WpAdminField $field, array $options): MetaboxFieldInterface
+    {
+        return new Field($field);
     }
 
     /**
      * Prepares field to be rendered by assigning fieldset global properties
      *
-     * @var Field $field
+     * @param MetaboxFieldInterface $field
      */
     protected function prepareField($field)
     {
-        $field->setRowPadding($this->rowPadding);
+        return;
+    }
+
+    /**
+     * Prepares container to be rendered by applying any options set for it
+     *
+     * @return MetaboxContentInterface
+     */
+    protected function prepareContainer(): MetaboxContentInterface
+    {
+        return $this->container->setPadding($this->containerOptions['padding']);
     }
 
     /**
@@ -186,9 +260,10 @@ class Fieldset implements MetaboxContentInterface
     public function render($post)
     {
         foreach ($this->fields as $field) {
+            $field->setRowPadding($this->rowPadding);
             $this->prepareField($field);
         }
 
-        return $this->container->render($post);
+        return $this->prepareContainer()->render($post);
     }
 }
