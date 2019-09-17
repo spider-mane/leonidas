@@ -8,7 +8,6 @@ use Backalley\Form\Contracts\FormFieldInterface;
 use Backalley\Form\Contracts\MultiFieldDataManagerFactoryInterface as iDataManagerFactory;
 use Backalley\Form\Contracts\MultiFieldFactoryInterface as iFormFieldFactory;
 use Backalley\Form\Controllers\FormFieldController;
-use Backalley\Form\FormFieldFactory;
 use Backalley\GuctilityBelt\Concerns\SmartFactoryTrait;
 use Illuminate\Support\Collection;
 
@@ -17,12 +16,12 @@ class FieldFactory
     use SmartFactoryTrait;
 
     /**
-     * @var FormFieldFactory
+     * @var iFormFieldFactory
      */
     protected $formFieldFactory;
 
     /**
-     * @var DataManagerFactory
+     * @var iDataManagerFactory
      */
     protected $dataManagerFactory;
 
@@ -47,7 +46,7 @@ class FieldFactory
     /**
      *
      */
-    public function create($args): FormFieldControllerInterface
+    public function create(array $args): FormFieldControllerInterface
     {
         $args['form_field'] = $this->createFormField($args['type'] ?? null);
         $args['data_manager'] = $this->createDataManager($args['data'] ?? null);
@@ -60,7 +59,7 @@ class FieldFactory
     /**
      *
      */
-    protected function createController($args): FormFieldControllerInterface
+    protected function createController(array $args): FormFieldControllerInterface
     {
         return $this->build($this->controller, Collection::make($args));
     }
@@ -68,7 +67,7 @@ class FieldFactory
     /**
      *
      */
-    protected function createFormField($args): FormFieldInterface
+    protected function createFormField(array $args): FormFieldInterface
     {
         $type = $args['@create'];
 
@@ -80,7 +79,7 @@ class FieldFactory
     /**
      *
      */
-    protected function createDataManager($args): FieldDataManagerInterface
+    protected function createDataManager(array $args): FieldDataManagerInterface
     {
         $manager = $args['@create'];
 

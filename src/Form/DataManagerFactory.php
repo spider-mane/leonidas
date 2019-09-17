@@ -5,6 +5,7 @@ namespace Backalley\Form;
 use Backalley\Form\Contracts\FieldDataManagerInterface;
 use Backalley\Form\Contracts\MultiFieldDataManagerFactoryInterface;
 use Backalley\Form\Managers\FieldDataManagerCallback;
+use Backalley\GuctilityBelt\Concerns\ClassResolverTrait;
 use Backalley\GuctilityBelt\Concerns\SmartFactoryTrait;
 use Exception;
 use Illuminate\Support\Collection;
@@ -12,6 +13,7 @@ use Illuminate\Support\Collection;
 class DataManagerFactory implements MultiFieldDataManagerFactoryInterface
 {
     use SmartFactoryTrait;
+    use ClassResolverTrait;
 
     /**
      *
@@ -21,25 +23,25 @@ class DataManagerFactory implements MultiFieldDataManagerFactoryInterface
     /**
      *
      */
-    protected $namespace = [];
+    protected $namespaces = [];
 
-    public const NAMESPACE = [
-        "Backalley\\Form\\DataManagers"
+    public const NAMESPACES = [
+        'webtheory.form' => __NAMESPACE__ . "\\DataManagers",
     ];
 
     public const MANAGERS = [
         'callback' => FieldDataManagerCallback::class
     ];
 
-    private const CONVENTION = '%sFieldDataManager';
+    protected const CONVENTION = '%sFieldDataManager';
 
     /**
      *
      */
-    public function __construct()
+    public function __construct(array $namespaces = [], array $managers = [])
     {
-        $this->namespace = static::NAMESPACE;
-        $this->managers = static::MANAGERS;
+        $this->namespaces = $namespaces + static::NAMESPACES;
+        $this->managers = $managers + static::MANAGERS;
     }
 
     /**
@@ -81,12 +83,11 @@ class DataManagerFactory implements MultiFieldDataManagerFactoryInterface
      */
     public function create(string $manager, array $args = []): FieldDataManagerInterface
     {
-        $class = $this->getClass($manager);
         $args = Collection::make($args);
 
         if (isset($this->managers[$manager])) {
             $manager = $this->buildObject($this->managers[$manager], $args);
-        } elseif (false !== $class) {
+        } elseif ($class = $this->getClass($manager)) {
             $manager = $this->buildObject($class, $args);
         } else {
             throw new Exception("{$manager} is not a recognized field data manager");

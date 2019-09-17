@@ -230,8 +230,14 @@ class FormFieldController implements DataFieldInterface, FormFieldControllerInte
      */
     public function setRules(array $rules)
     {
+        $this->rules = [];
+
         foreach ($rules as $rule => $validator) {
-            $this->addRule($rule, $validator['validator'] ?? $validator, $validator['alert'] ?? null);
+            $this->addRule(
+                $rule,
+                $validator['validator'] ?? $validator['check'] ?? $validator,
+                $validator['alert'] ?? null
+            );
         }
 
         return $this;

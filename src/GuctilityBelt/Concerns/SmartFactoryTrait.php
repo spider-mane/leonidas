@@ -14,9 +14,9 @@ trait SmartFactoryTrait
      *
      * @return mixed
      */
-    public function getNamespace()
+    public function getNamespaces(): array
     {
-        return $this->namespace;
+        return $this->namespaces;
     }
 
     /**
@@ -28,7 +28,7 @@ trait SmartFactoryTrait
      */
     public function addNamespace(string $namespace)
     {
-        $this->namespace[] = $namespace;
+        $this->namespaces[] = $namespace;
 
         return $this;
     }
@@ -38,7 +38,7 @@ trait SmartFactoryTrait
      */
     public function addNamespaces(array $namespaces)
     {
-        $this->namespace = $namespaces + $this->namespace;
+        $this->namespaces = $namespaces + $this->namespaces;
 
         return $this;
     }
@@ -49,7 +49,7 @@ trait SmartFactoryTrait
     protected function build(string $class, Collection $args)
     {
         $keys = $args->keys()->transform(function ($arg) {
-            return $this->getParam($arg);
+            return static::getParam($arg);
         });
 
         $reflection = new ReflectionClass($class);
@@ -62,7 +62,7 @@ trait SmartFactoryTrait
 
             if ($keys->contains($param->name)) {
 
-                $arg = $this->getArg($param->name);
+                $arg = static::getArg($param->name);
 
                 $construct[] = $args->get($arg);
                 $args->forget($arg);
@@ -74,7 +74,7 @@ trait SmartFactoryTrait
         $object = $reflection->newInstance(...$construct);
 
         foreach ($args as $property => $value) {
-            $setter = $this->getSetter($property);
+            $setter = static::getSetter($property);
 
             if ($reflection->hasMethod($setter)) {
                 $reflection->getMethod($setter)->invoke($object, $value);
@@ -113,40 +113,9 @@ trait SmartFactoryTrait
     /**
      *
      */
-    protected static function getClassName(string $class)
-    {
-        return Str::studly($class);
-    }
-
-    /**
-     *
-     */
-    protected static function getFqn(string $namespace, string $class)
-    {
-        return $namespace . '\\' . static::getClassName($class);
-    }
-
-    /**
-     *
-     */
-    protected function getClass(string $class)
-    {
-        foreach ((array) $this->getNamespace() as $namespace) {
-
-            if ((class_exists($class = $this->getFqn($namespace, $class)))) {
-                return $class;
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     *
-     */
     public function __call($name, $args)
     {
-        return $this->create($this->getArg($name), $args[0]);
+        return $this->create(static::getArg($name), $args[0]);
     }
 
     /**

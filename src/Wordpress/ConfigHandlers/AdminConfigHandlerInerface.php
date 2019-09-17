@@ -2,7 +2,7 @@
 
 namespace Backalley\Wordpress\ConfigHandlers;
 
-interface ConfigHandlerInerface
+interface AdminConfigHandlerInerface
 {
     /**
      *

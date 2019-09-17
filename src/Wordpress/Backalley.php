@@ -6,10 +6,7 @@
 
 namespace Backalley\WordPress;
 
-use Backalley\Form\FieldFactory;
-use Backalley\Form\FormFieldFactory;
 use Backalley\WordPress\Fields\Field;
-use Backalley\Wordpress\Fields\Managers\Factory as DataManagerFactory;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 use Twig\TwigFilter;
@@ -23,7 +20,7 @@ class Backalley extends \BackalleyCoreBase
     protected static $twigInstance;
 
     /**
-     * @var FieldFactory
+     * @var Field
      */
     protected static $fieldFactory;
 
@@ -36,9 +33,9 @@ class Backalley extends \BackalleyCoreBase
     public static function init(array $options = null)
     {
         static::load();
-        static::initTwig();
         static::hook();
-        static::initFieldFactory($options['field'] ?? []);
+        static::initTwig();
+        static::initFieldFactory();
     }
 
     /**
@@ -67,17 +64,15 @@ class Backalley extends \BackalleyCoreBase
     /**
      *
      */
-    protected static function initFieldFactory(array $options = [])
+    protected static function initFieldFactory()
     {
-        unset($options['controller']);
-
-        static::$fieldFactory = Field::bootstrap($options);
+        static::$fieldFactory = new Field;
     }
 
     /**
      *
      */
-    public static function createField($args)
+    public static function createField(array $args)
     {
         return static::$fieldFactory->create($args);
     }
@@ -85,7 +80,7 @@ class Backalley extends \BackalleyCoreBase
     /**
      *
      */
-    public static function initTwig()
+    protected static function initTwig()
     {
         $options = [
             'autoescape' => false,
@@ -103,7 +98,7 @@ class Backalley extends \BackalleyCoreBase
     /**
      *
      */
-    public static function renderTemplate($template, $context)
+    public static function renderTemplate(string $template, array $context)
     {
         return static::$twigInstance->render("{$template}.twig", $context);
     }
@@ -111,7 +106,7 @@ class Backalley extends \BackalleyCoreBase
     /**
      *
      */
-    public static function configTwig($twig)
+    protected static function configTwig($twig)
     {
         static::addTwigFilters($twig);
         static::addTwigFunctions($twig);
@@ -122,7 +117,7 @@ class Backalley extends \BackalleyCoreBase
     /**
      *
      */
-    public static function addTwigFilters($twig)
+    protected static function addTwigFilters($twig)
     {
         $filters = [];
 
@@ -134,7 +129,7 @@ class Backalley extends \BackalleyCoreBase
     /**
      *
      */
-    public static function addTwigFunctions($twig)
+    protected static function addTwigFunctions($twig)
     {
         $functions = [
             'submit_button' => 'submit_button',
@@ -151,7 +146,7 @@ class Backalley extends \BackalleyCoreBase
     /**
      *
      */
-    public static function aliasClasses()
+    protected static function aliasClasses()
     {
         $aliases = [];
 

@@ -67,7 +67,7 @@ Screen::load(['edit-tags', 'term'], ['taxonomy' => 'ba_menu_category'], function
         ],
         // 'rules' => [
         //     'thing' => [
-        //         'validator' => Validator::optional(Validator::phone()),
+        //         'check' => Validator::optional(Validator::phone()),
         //         'alert' => 'wrong thing'
         //     ]
         // ]

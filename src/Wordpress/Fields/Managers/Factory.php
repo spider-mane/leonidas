@@ -10,7 +10,9 @@ use Backalley\Wordpress\Fields\Managers\TermMetaDataManager;
 
 class Factory extends DataManagerFactory implements MultiFieldDataManagerFactoryInterface
 {
-    public const NAMESPACE = [__NAMESPACE__] + parent::NAMESPACE;
+    public const NAMESPACES = [
+        'webtheory.wordpress' => __NAMESPACE__
+    ] + parent::NAMESPACES;
 
     public const MANAGERS = [
         'post_meta' => PostMetaFieldManager::class,

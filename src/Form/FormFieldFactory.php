@@ -5,14 +5,18 @@ namespace Backalley\Form;
 use Backalley\Form\Contracts\FormFieldInterface;
 use Backalley\Form\Contracts\MultiFieldFactoryInterface;
 use Backalley\Form\Fields\Input;
+use Backalley\GuctilityBelt\Concerns\ClassResolverTrait;
 use Backalley\GuctilityBelt\Concerns\SmartFactoryTrait;
 use Backalley\Html\TagSage;
 use Exception;
+use Illuminate\Support\Arr as IlluminateArr;
 use Illuminate\Support\Collection;
+use JBZoo\Utils\Arr;
 
 class FormFieldFactory implements MultiFieldFactoryInterface
 {
     use SmartFactoryTrait;
+    use ClassResolverTrait;
 
     /**
      *
@@ -22,26 +26,28 @@ class FormFieldFactory implements MultiFieldFactoryInterface
     /**
      *
      */
-    protected $namespace = [];
+    protected $namespaces = [];
 
     /**
      *
      */
     protected $rules = [];
 
-    protected const NAMESPACE = [
-        "Backalley\\Form\\Fields"
+    public const NAMESPACES = [
+        'webtheory.form' => __NAMESPACE__ . "\\Fields"
     ];
 
-    protected const FIELDS = [];
+    public const FIELDS = [];
+
+    protected const CONVENTION = null;
 
     /**
      *
      */
-    public function __construct()
+    public function __construct(array $namespaces = [], array $fields = [])
     {
-        $this->namespace = static::NAMESPACE;
-        $this->fields = static::FIELDS;
+        $this->namespaces = $namespaces + static::NAMESPACES;
+        $this->fields = $fields + static::FIELDS;
     }
 
     /**
@@ -73,9 +79,7 @@ class FormFieldFactory implements MultiFieldFactoryInterface
      */
     public function addFields(array $fields)
     {
-        foreach ($fields as $arg => $field) {
-            $this->addField($arg, $field);
-        }
+        $this->fields = $fields + $this->fields;
 
         return $this;
     }

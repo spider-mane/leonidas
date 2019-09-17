@@ -2,7 +2,6 @@
 
 namespace Backalley\Form;
 
-use Backalley\Form\Contracts\FormFieldInterface;
 use Backalley\Form\Contracts\MultiFieldDataManagerFactoryInterface;
 use Backalley\Form\Contracts\MultiFieldFactoryInterface;
 use Backalley\Form\DataManagerFactory;
@@ -13,34 +12,39 @@ class Field extends FieldFactory
     /**
      *
      */
-    public static function bootstrap(array $options = [])
+    public function __construct(array $options = [])
     {
-        $formFieldFactory = static::createFormFieldFactory($options['field_factory'] ?? [])
-            ->addNamespaces($options['field_factory']['namespace'] ?? [])
-            ->addFields($options['field_factory']['fields'] ?? []);
-
-        $dataManagerFactory = static::createDataManagerFactory($options['manager_factory'] ?? [])
-            ->addNamespaces($options['manager_factory']['namespace'] ?? [])
-            ->addManagers($options['manager_factory']['managers'] ?? []);
-
+        $field = $options['form_field_factory'] ?? [];
+        $manager = $options['data_manager_factory'] ?? [];
         $controller = $options['controller'] ?? null;
 
-        return (new static($formFieldFactory, $dataManagerFactory, $controller));
+        $this->formFieldFactory = $this->createFormFieldFactory($field);
+        $this->dataManagerFactory = $this->createDataManagerFactory($manager);
+
+        if (isset($controller)) {
+            $this->controller = $controller;
+        }
     }
 
     /**
      *
      */
-    protected static function createFormFieldFactory(array $options): MultiFieldFactoryInterface
+    protected function createFormFieldFactory(array $options): MultiFieldFactoryInterface
     {
-        return new FormFieldFactory;
+        $namespaces = $options['namespaces'] ?? [];
+        $fields = $options['fields'] ?? [];
+
+        return new FormFieldFactory($namespaces, $fields);
     }
 
     /**
      *
      */
-    protected static function createDataManagerFactory(array $options): MultiFieldDataManagerFactoryInterface
+    protected function createDataManagerFactory(array $options): MultiFieldDataManagerFactoryInterface
     {
-        return new DataManagerFactory;
+        $namespaces = $options['namespaces'] ?? [];
+        $managers = $options['managers'] ?? [];
+
+        return new DataManagerFactory($namespaces, $managers);
     }
 }

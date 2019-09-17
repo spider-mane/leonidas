@@ -71,7 +71,17 @@ class AdminPage
     /**
      * @var callable
      */
-    protected $alertLoader;
+    protected $adminTitleCallback;
+
+    /**
+     * @var callable
+     */
+    protected $submenuFileCallback;
+
+    /**
+     * @var callable
+     */
+    protected $parentFileCallback;
 
     /**
      * @var callable
@@ -332,6 +342,78 @@ class AdminPage
     }
 
     /**
+     * Get the value of adminTitleCallback
+     *
+     * @return callable
+     */
+    public function getAdminTitleCallback(): callable
+    {
+        return $this->adminTitleCallback;
+    }
+
+    /**
+     * Set the value of adminTitleCallback
+     *
+     * @param callable $adminTitleCallback
+     *
+     * @return self
+     */
+    public function setAdminTitleCallback(callable $adminTitleCallback)
+    {
+        $this->adminTitleCallback = $adminTitleCallback;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of submenuFileCallback
+     *
+     * @return callable
+     */
+    public function getSubmenuFileCallback(): callable
+    {
+        return $this->submenuFileCallback;
+    }
+
+    /**
+     * Set the value of submenuFileCallback
+     *
+     * @param callable $submenuFileCallback
+     *
+     * @return self
+     */
+    public function setSubmenuFileCallback(callable $submenuFileCallback)
+    {
+        $this->submenuFileCallback = $submenuFileCallback;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of parentFileCallback
+     *
+     * @return callable
+     */
+    public function getParentFileCallback(): callable
+    {
+        return $this->parentFileCallback;
+    }
+
+    /**
+     * Set the value of parentFileCallback
+     *
+     * @param callable $parentFileCallback
+     *
+     * @return self
+     */
+    public function setParentFileCallback(callable $parentFileCallback)
+    {
+        $this->parentFileCallback = $parentFileCallback;
+
+        return $this;
+    }
+
+    /**
      * Get the value of alertLoader
      *
      * @return callable
@@ -423,6 +505,36 @@ class AdminPage
             call_user_func([$this, "remove{$level}page"]);
         }
 
+        if (isset($this->adminTitleCallback)) {
+            add_filter('admin_title', $this->adminTitleCallback, PHP_INT_MAX, PHP_INT_MAX);
+        }
+
+        call_user_func([$this, "configure{$level}page"]);
+
+        return $this;
+    }
+
+    /**
+     *
+     */
+    protected function configureMenuPage()
+    {
+        return $this;
+    }
+
+    /**
+     *
+     */
+    protected function configureSubmenuPage()
+    {
+        if (isset($this->submenuFileCallback)) {
+            add_filter('submenu_file', $this->submenuFileCallback, PHP_INT_MAX, PHP_INT_MAX);
+        }
+
+        if (isset($this->parentFileCallback)) {
+            add_filter('parent_file', $this->parentFileCallback, PHP_INT_MAX, PHP_INT_MAX);
+        }
+
         return $this;
     }
 
@@ -449,6 +561,14 @@ class AdminPage
     /**
      *
      */
+    public function doAdminNotices()
+    {
+        do_action('admin_notices');
+    }
+
+    /**
+     *
+     */
     public function render($args)
     {
         if (!isset($this->function)) {
@@ -461,13 +581,13 @@ class AdminPage
     /**
      *
      */
-    public function renderDefault()
+    protected function renderDefault()
     {
         echo $this->renderTemplate([
             'title' => $this->pageTitle,
             'page' => $this->menuSlug,
             'layout' => $this->layout,
-            'alerts' => $this->alertLoader,
+            'alerts' => $this->alertLoader ?? [$this, 'doAdminNotices'],
             'description' => $this->description,
         ]);
     }
