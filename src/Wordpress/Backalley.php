@@ -1,9 +1,5 @@
 <?php
 
-/**
- * @package Backalley-Core
- */
-
 namespace Backalley\WordPress;
 
 use Backalley\WordPress\Fields\Field;
@@ -30,7 +26,7 @@ class Backalley extends \BackalleyCoreBase
     /**
      *
      */
-    public static function init(array $options = null)
+    public static function init(array $options = [])
     {
         static::load();
         static::hook();

@@ -2,9 +2,9 @@
 
 use Backalley\Post2Post\SomewhatRelatableToPostTypeArg;
 use Backalley\Post2Post\TermRelatedPostsManager;
-use Backalley\SortableObjects\SortByTermPostTypeArg;
-use Backalley\SortableObjects\SortableTaxonomyArg;
-use Backalley\StructuredTaxonomy\StructuralTaxonomyArg;
+use Backalley\SortOrder\SortByTermPostTypeArg;
+use Backalley\SortOrder\SortableTaxonomyArg;
+use Backalley\TaxRoles\StructuralTaxonomyArg;
 use Backalley\Taxtrubute\TermBasedPostMeta;
 use Backalley\Wordpress\Taxonomy\OptionHandlers\MaintainMetaboxHierarchy;
 

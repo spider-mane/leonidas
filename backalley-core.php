@@ -1,38 +1,40 @@
 <?php
 
 /**
- * This file is part of the Backalley package.
+ * This file is part of the WebTheory Backalley package.
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
  * @package   Backalley
- * @license   GNU GPL
- * @copyright Copyright (C) WebTheory Studio, All rights reserved.
+ * @license   GPL-3.0-or-later
+ * @copyright Copyright (C) Chris Williams, All rights reserved.
  * @link      https://github.com/spider-mane/backalley
- * @author    Chris Williams <christwilhelm84@gmail.com>
+ * @author    Chris Williams <spider.mane.web@gmail.com>
  */
 
 if (!class_exists('BackalleyCoreBase')) {
 
-    /**
-     *
-     */
-    class BackalleyCoreBase
+    abstract class BackalleyCoreBase
     {
-        public static $url;
-        public static $path;
-        public static $base;
-        public static $admin_url;
-        public static $admin_templates;
+        protected static $url;
+        protected static $path;
+        protected static $base;
+        protected static $admin_url;
+        protected static $admin_templates;
 
-        public static function load()
+        protected static function load()
         {
-            Self::$path = __DIR__;
-            Self::$url = plugin_dir_url(__FILE__);
-            Self::$base = plugin_basename(__FILE__);
+            static::$path = __DIR__;
+            static::$url = plugin_dir_url(__FILE__);
+            static::$base = plugin_basename(__FILE__);
 
-            Self::$admin_url = Self::$url . "public/admin";
-            Self::$admin_templates = Self::$path . "/public/admin/templates";
+            static::$admin_url = static::$url . "public/admin";
+            static::$admin_templates = static::$path . "/public/admin/templates";
+        }
+
+        public static function get(string $property)
+        {
+            return Self::${$property};
         }
     }
 }

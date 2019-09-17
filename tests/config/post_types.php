@@ -2,6 +2,36 @@
 
 return [
 
+    // /**
+    //  *
+    //  */
+    // 'post' => [
+
+    //     "can_export" => true,
+    //     "capability_type" => "post",
+    //     "exclude_from_search" => false,
+    //     "has_archive" => true,
+    //     "hierarchical" => false,
+    //     "menu_icon" => "dashicons-welcome-write-blog",
+    //     "menu_position" => 9,
+    //     "public" => true,
+    //     "publicly_queryable" => true,
+    //     "show_in_admin_bar" => true,
+    //     "show_in_menu" => true,
+    //     "show_in_nav_menus" => true,
+    //     "show_in_rest" => true,
+    //     "show_ui" => true,
+    //     "supports" => ["title"],
+
+    //     'description' => 'Site blog',
+
+    //     'labels' => [
+    //         'name' => 'Blog Posts',
+    //         'singular_name' => 'Blog Post',
+    //         'menu_name' => 'Blog',
+    //     ]
+    // ],
+
     /**
      *
      */

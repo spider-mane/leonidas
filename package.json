@@ -1,7 +1,12 @@
 {
-  "name": "@webtheorystudio/backalley",
-  "description": "object oriented framework for working with wordpress api",
+  "name": "@webtheory/backalley",
+  "description": "Object oriented framework for working with wordpress api",
+  "author": {
+    "name": "Chris Williams",
+    "email": "spider.mane.web@gmail.com"
+  },
   "repository": "github:spider-mane/backalley",
+  "license": "GPL-3.0-or-later",
   "devDependencies": {
     "@babel/cli": "^7.2.3",
     "@babel/core": "^7.2.2",

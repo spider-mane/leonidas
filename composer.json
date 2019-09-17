@@ -1,11 +1,12 @@
 {
   "name": "webtheory/backalley",
   "description": "Wordpress development framework",
+  "license": "GPL-3.0-or-later",
 
   "authors": [
     {
       "name": "Chris Williams",
-      "email": "laserbeamvocalist@gmail.com"
+      "email": "spider.mane.web@gmail.com"
     }
   ],
 
