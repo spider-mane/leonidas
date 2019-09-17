@@ -1,8 +1,8 @@
 <?php
 
-use Backalley\Form\Controllers\FormFieldController;
+use Backalley\Wordpress\Fields\WpAdminField;
 
-class ObjectMetaManager extends FormFieldController
+class ObjectMetaManager extends WpAdminField
 {
     /**
      * @var string

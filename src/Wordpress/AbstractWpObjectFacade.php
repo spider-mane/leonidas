@@ -115,7 +115,7 @@ abstract class AbstractWpObjectFacade
      */
     protected function buildArgs(array $args): array
     {
-        foreach ($this::EXALTED_ARGS as $arg) {
+        foreach (static::EXALTED_ARGS as $arg) {
             if (!empty($property = $this->{$arg})) {
                 $args[$arg] = $property;
             }

@@ -2,9 +2,9 @@
 
 namespace Backalley\Wordpress;
 
-use Backalley\Form\Controllers\FormFieldController;
+use Backalley\Wordpress\Fields\WpAdminField;
 
-class SettingManager extends FormFieldController
+class SettingManager extends WpAdminField
 {
     /**
      * option_group
