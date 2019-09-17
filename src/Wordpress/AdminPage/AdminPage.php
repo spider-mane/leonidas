@@ -69,16 +69,22 @@ class AdminPage
     protected $subMenuName;
 
     /**
+     * @see https://developer.wordpress.org/reference/hooks/admin_title/
+     *
      * @var callable
      */
     protected $adminTitleCallback;
 
     /**
+     * @see https://developer.wordpress.org/reference/hooks/submenu_file/
+     *
      * @var callable
      */
     protected $submenuFileCallback;
 
     /**
+     * @see https://developer.wordpress.org/reference/hooks/parent_file/
+     *
      * @var callable
      */
     protected $parentFileCallback;
@@ -409,6 +415,30 @@ class AdminPage
     public function setParentFileCallback(callable $parentFileCallback)
     {
         $this->parentFileCallback = $parentFileCallback;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of layout
+     *
+     * @return callable
+     */
+    public function getLayout(): callable
+    {
+        return $this->layout;
+    }
+
+    /**
+     * Set the value of layout
+     *
+     * @param callable $layout
+     *
+     * @return self
+     */
+    public function setLayout(callable $layout)
+    {
+        $this->layout = $layout;
 
         return $this;
     }
