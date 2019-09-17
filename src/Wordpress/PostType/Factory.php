@@ -39,11 +39,6 @@ class Factory extends AbstractWpObjectFactory
             $this->processOptions($options, $postType);
         }
 
-        /**
-         *
-         */
-        do_action("backalley/post_type/registered", $postType, $args);
-
         return $postType;
     }
 
@@ -60,11 +55,6 @@ class Factory extends AbstractWpObjectFactory
             } else {
                 throw new \Exception("I don't know what you mean. Your Argument is invalid.");
             }
-
-            /**
-             *
-             */
-            do_action("backalley/post_type/registered/option", $postType, $option, $args);
         }
     }
 }
