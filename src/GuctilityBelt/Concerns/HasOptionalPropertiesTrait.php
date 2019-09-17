@@ -1,6 +1,6 @@
 <?php
 
-namespace Backalley\Wordpress\Traits;
+namespace Backalley\GuctilityBelt\Concerns;
 
 trait HasOptionalPropertiesTrait
 {
