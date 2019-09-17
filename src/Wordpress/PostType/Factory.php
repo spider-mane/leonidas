@@ -5,7 +5,6 @@ namespace Backalley\Wordpress\PostType;
 use Backalley\WordPress\PostType\OptionHandlerInterface;
 use Backalley\WordPress\PostType\PostType;
 use Backalley\Wordpress\AbstractWpObjectFactory;
-use Backalley\Wordpress\PostType\Deprecated\CustomArgInterface;
 
 class Factory extends AbstractWpObjectFactory
 {

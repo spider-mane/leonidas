@@ -4,7 +4,6 @@ namespace Backalley\Wordpress\Taxonomy;
 
 use Backalley\WordPress\Taxonomy\Taxonomy;
 use Backalley\Wordpress\AbstractWpObjectFactory;
-use Backalley\Wordpress\Taxonomy\Deprecated\CustomTaxonomyArgInterface;
 use Backalley\Wordpress\Taxonomy\OptionHandlerInterface;
 
 class Factory extends AbstractWpObjectFactory

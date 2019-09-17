@@ -1,6 +1,6 @@
 <?php
 
-namespace Backalley\Wordpress\ConfigHandlers;
+namespace Backalley\Wordpress\Contracts;
 
 interface AdminConfigHandlerInerface
 {

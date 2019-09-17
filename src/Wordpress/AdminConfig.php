@@ -3,7 +3,7 @@
 namespace Backalley\Wordpress;
 
 use Backalley\GuctilityBelt\Concerns\ClassResolverTrait;
-use Backalley\Wordpress\ConfigHandlers\AdminConfigHandlerInerface as ConfigHandler;
+use Backalley\Wordpress\Contracts\AdminConfigHandlerInerface as ConfigHandler;
 
 class AdminConfig
 {
