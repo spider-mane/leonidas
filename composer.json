@@ -13,9 +13,9 @@
 
   "require": {
     "php": ">=7.0.0",
-    "illuminate/config": "^6.0",
-    "illuminate/contracts": "^6.0",
-    "illuminate/support": "^6.0",
+    "illuminate/config": "^5.8",
+    "illuminate/contracts": "^5.8",
+    "illuminate/support": "^5.8",
     "league/fractal": "^0.18.0",
     "giggsey/libphonenumber-for-php": "^8.10",
     "respect/validation": "^1.1",
@@ -32,7 +32,7 @@
     "friendsofphp/php-cs-fixer": "^2.15",
     "geocoder-php/google-maps-provider": "^4.4",
     "guzzlehttp/guzzle": "~6.0",
-    "illuminate/mail": "^6.0",
+    "illuminate/mail": "^5.8",
     "moneyphp/money": "^3.2",
     "php-http/guzzle6-adapter": "^2.0",
     "php-http/message": "^1.8",
