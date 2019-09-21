@@ -13,7 +13,7 @@ abstract class AbstractHtmlAttribute implements HtmlAttributeInterface
     /**
      *
      */
-    public function __toSting()
+    public function __toString()
     {
         return $this->getAttribute();
     }

@@ -18,4 +18,9 @@ interface HtmlAttributeInterface
      *
      */
     public function getAttribute(): string;
+
+    /**
+     *
+     */
+    public function __toString();
 }

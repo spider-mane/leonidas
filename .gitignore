@@ -6,11 +6,12 @@
 
 # NPM
 node_modules/
+package-lock.json
 
 # Composer
 vendor/
 composer.lock
 composer.phar
 
-# Something
+# Misc
 .DS_Store

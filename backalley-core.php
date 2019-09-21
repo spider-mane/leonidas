@@ -40,6 +40,6 @@ if (!class_exists('BackalleyCoreBase')) {
 }
 
 #Composer Autoload
-if (file_exists(dirname(__FILE__) . '/vendor/autoload.php')) {
-    require dirname(__FILE__) . '/vendor/autoload.php';
+if (file_exists($autoload = __DIR__ . '/vendor/autoload.php')) {
+    require $autoload;
 }

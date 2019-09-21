@@ -23,10 +23,22 @@ use Backalley\Wordpress\Fields\Managers\Factory;
 use Backalley\Wordpress\Forms\Controllers\TermFieldFormSubmissionManager;
 use Backalley\Wordpress\PostType\Factory as PostTypeFactory;
 use Backalley\Wordpress\Screen;
+use Backalley\Wordpress\WpMaster;
 use Respect\Validation\Validator;
 
+/**
+ * init
+ */
+Backalley::init();
+
+/**
+ * admin modifiers
+ */
+WpMaster::clearDashboard();
+WpMaster::setPostsAsBlog();
+
 #ErrorHandling
-// (new Run)->prependHandler(new PrettyPageHandler)->register(); // error handling with whoops
+(new Run)->prependHandler(new PrettyPageHandler)->register(); // error handling with whoops
 
 add_action('init', function () {
 
