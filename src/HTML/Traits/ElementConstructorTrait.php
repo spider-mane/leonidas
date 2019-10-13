@@ -144,7 +144,7 @@ trait ElementConstructorTrait
     /**
      *
      */
-    protected static function tag(string $tag, string $content = '', $attributes = null)
+    protected static function tag(string $tag, ?string $content = '', $attributes = null)
     {
         return static::open($tag, $attributes) . $content . static::close($tag);
     }
