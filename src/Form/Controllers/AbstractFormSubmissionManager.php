@@ -213,7 +213,7 @@ abstract class AbstractFormSubmissionManager
      */
     final private function runGroup($request, FormSubmissionGroupInterface $group)
     {
-        $values = [];
+        $results = [];
 
         /** @var FormFieldControllerInterface $field */
 
@@ -222,23 +222,12 @@ abstract class AbstractFormSubmissionManager
             $slug = $field->getFormFieldName();
 
             if ($field->postVarExists()) {
-                $values[$slug] = $field->getStateParameter('input_value');
+                $results[$slug]['value'] = $field->getFilteredInput();
             } else {
-                $values[$slug] = null;
+                $results[$slug]['value'] = null;
             }
 
-            // dynamically generate results array if field has a data manager
-            // this allows callbacks to anticipate only input data where it is
-            // not desired for the field to have any saving functionality
-            if ($field->hasDataManager() && !$field->isSavingDisabled()) {
-                $results[$slug]['saved'] = $field->getStateParameter('save_successful');
-            }
-        }
-
-        if (isset($results)) {
-            foreach ($results as $slug => &$result) {
-                $result['value'] = $values[$slug];
-            }
+            $results[$slug]['saved'] = $field->getStateParameter('save_successful');
         }
 
         $group->run($request, $results);
@@ -275,5 +264,8 @@ abstract class AbstractFormSubmissionManager
     /**
      *
      */
-    abstract protected function finalizeRequest($request);
+    protected function finalizeRequest($request)
+    {
+        return;
+    }
 }

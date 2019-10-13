@@ -1,1 +1,2 @@
 tests/ export-ignore
+lib/ export-ignore

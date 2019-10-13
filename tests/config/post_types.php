@@ -67,20 +67,6 @@ return [
             "pages" => false,
             "feeds" => true
         ],
-
-        "options" => [
-            "sort_by_term" => [
-                "taxonomy" => "ba_menu_category",
-
-                "submenu_page" => [
-                    "capability" => "manage_options",
-                    "submenu_file" => "ba_sort_terms&taxonomy=ba_menu_category",
-                    "display" => false
-                ],
-
-                "term_row_action" => true
-            ]
-        ]
     ],
 
     /**
@@ -116,9 +102,6 @@ return [
             "feeds" => true
         ],
 
-        "options" => [
-            "somewhat_relatable_to" => ["ba_menu_item"]
-        ]
     ],
 
     /**

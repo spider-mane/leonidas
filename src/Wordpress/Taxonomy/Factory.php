@@ -48,12 +48,16 @@ class Factory extends AbstractWpObjectFactory
     protected function processOptions($options, \WP_Taxonomy $taxonomy)
     {
         foreach ($options as $option => $args) {
-            $handler = $this->optionHandlers[$option];
+            $handler = $this->optionHandlers[$option] ?? null;
 
-            if (in_array(OptionHandlerInterface::class, class_implements($handler))) {
+            if (!$handler) {
+                throw new \Exception("There is no registered handler for the {$option} option provided");
+            }
+
+            if ($handler && in_array(OptionHandlerInterface::class, class_implements($handler))) {
                 $handler::handle($taxonomy, $args);
             } else {
-                throw new \Exception("I don't know what you mean. Your Argument is invalid.");
+                throw new \Exception("{$handler} is not a valid option handler");
             }
         }
     }

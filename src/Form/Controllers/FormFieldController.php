@@ -354,9 +354,11 @@ class FormFieldController implements DataFieldInterface, FormFieldControllerInte
      */
     public function postVarExists()
     {
-        $result = filter_has_var(INPUT_POST, $this->getPostVar());
+        if (!$this->stateCache['post_has_var']) {
+            $this->stateCache['post_has_var'] = filter_has_var(INPUT_POST, $this->getPostVar());
+        }
 
-        return $this->stateCache['post_has_var'] = $result;
+        return $this->stateCache['post_has_var'];
     }
 
     /**
@@ -372,9 +374,11 @@ class FormFieldController implements DataFieldInterface, FormFieldControllerInte
      */
     public function getFilteredInput()
     {
-        $input = $this->filterInput($this->getRawInput());
+        if (!$this->stateCache['input_value']) {
+            $this->stateCache['input_value'] = $this->filterInput($this->getRawInput());
+        }
 
-        return $this->stateCache['input_value'] = $input;
+        return $this->stateCache['input_value'];
     }
 
     /**

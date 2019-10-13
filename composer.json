@@ -50,6 +50,13 @@
     "files": ["backalley-core.php"]
   },
 
+  "autoload-dev": {
+    "psr-4": {
+      "Library\\": "lib/"
+    },
+    "files": ["tests/test.php"]
+  },
+
   "config": {
     "sort-packages": true
   }
