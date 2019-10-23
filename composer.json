@@ -4,12 +4,10 @@
   "type": "wordpress-muplugin",
   "license": "GPL-3.0-or-later",
 
-  "authors": [
-    {
-      "name": "Chris Williams",
-      "email": "spider.mane.web@gmail.com"
-    }
-  ],
+  "authors": [{
+    "name": "Chris Williams",
+    "email": "spider.mane.web@gmail.com"
+  }],
 
   "require": {
     "php": ">=7.0.0",
@@ -18,7 +16,7 @@
     "illuminate/config": "^5.8",
     "illuminate/contracts": "^5.8",
     "illuminate/support": "^5.8",
-    "league/fractal": "^0.18.0",
+    "league/fractal": "^0.17",
     "monolog/monolog": "^1.24",
     "myclabs/deep-copy": "^1.8",
     "respect/validation": "^1.1",
