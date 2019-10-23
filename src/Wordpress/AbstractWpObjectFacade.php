@@ -1,6 +1,6 @@
 <?php
 
-namespace Backalley\Wordpress;
+namespace Backalley\WordPress;
 
 abstract class AbstractWpObjectFacade
 {

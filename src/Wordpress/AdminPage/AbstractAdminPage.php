@@ -1,6 +1,6 @@
 <?php
 
-namespace Backalley\Wordpress\AdminPage;
+namespace Backalley\WordPress\AdminPage;
 
 abstract class AbstractAdminPage
 {

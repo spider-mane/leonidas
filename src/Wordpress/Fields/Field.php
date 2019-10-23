@@ -1,12 +1,12 @@
 <?php
 
-namespace Backalley\Wordpress\Fields;
+namespace Backalley\WordPress\Fields;
 
 use Backalley\Form\Contracts\MultiFieldDataManagerFactoryInterface;
 use Backalley\Form\Contracts\MultiFieldFactoryInterface;
 use Backalley\Form\Field as BaseField;
-use Backalley\Wordpress\Fields\Factory as WpFormFieldFactory;
-use Backalley\Wordpress\Fields\Managers\Factory as WpDataManagerFactory;
+use Backalley\WordPress\Fields\Factory as WpFormFieldFactory;
+use Backalley\WordPress\Fields\Managers\Factory as WpDataManagerFactory;
 
 class Field extends BaseField
 {

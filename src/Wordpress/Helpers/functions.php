@@ -1,6 +1,6 @@
 <?php
 
-namespace Backalley\Wordpress\Helpers;
+namespace Backalley\WordPress\Helpers;
 
 /**
  *

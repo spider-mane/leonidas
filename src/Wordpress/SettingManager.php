@@ -1,8 +1,8 @@
 <?php
 
-namespace Backalley\Wordpress;
+namespace Backalley\WordPress;
 
-use Backalley\Wordpress\Fields\WpAdminField;
+use Backalley\WordPress\Fields\WpAdminField;
 
 class SettingManager extends WpAdminField
 {

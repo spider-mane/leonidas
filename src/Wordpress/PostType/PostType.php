@@ -1,12 +1,8 @@
 <?php
 
-/**
- * @package Backalley
- */
-
 namespace Backalley\WordPress\PostType;
 
-use Backalley\Wordpress\AbstractWpObjectFacade;
+use Backalley\WordPress\AbstractWpObjectFacade;
 
 class PostType extends AbstractWpObjectFacade
 {

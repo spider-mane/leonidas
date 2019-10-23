@@ -1,10 +1,10 @@
 <?php
 
-namespace Backalley\Wordpress\PostType;
+namespace Backalley\WordPress\PostType;
 
 use Backalley\WordPress\PostType\OptionHandlerInterface;
 use Backalley\WordPress\PostType\PostType;
-use Backalley\Wordpress\AbstractWpObjectFactory;
+use Backalley\WordPress\AbstractWpObjectFactory;
 
 class Factory extends AbstractWpObjectFactory
 {

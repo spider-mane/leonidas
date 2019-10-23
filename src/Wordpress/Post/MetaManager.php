@@ -1,6 +1,6 @@
 <?php
 
-namespace Backalley\Wordpress\Post;
+namespace Backalley\WordPress\Post;
 
 use ObjectMetaManager;
 

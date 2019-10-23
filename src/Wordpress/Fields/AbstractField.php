@@ -1,11 +1,11 @@
 <?php
 
-namespace Backalley\Wordpress\Fields;
+namespace Backalley\WordPress\Fields;
 
 use Backalley\Form\Contracts\FormFieldInterface;
 use Backalley\Form\Fields\Input;
 use Backalley\Form\Fields\Text;
-use Backalley\Wordpress\Contracts\WpAdminFieldInterface;
+use Backalley\WordPress\Contracts\WpAdminFieldInterface;
 
 class AbstractField implements WpAdminFieldInterface
 {

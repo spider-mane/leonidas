@@ -1,6 +1,6 @@
 <?php
 
-namespace Backalley\Wordpress\Traits;
+namespace Backalley\WordPress\Traits;
 
 use Backalley\WordPress\Backalley;
 

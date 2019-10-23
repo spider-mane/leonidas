@@ -1,6 +1,6 @@
 <?php
 
-namespace Backalley\Wordpress\Fields\Managers;
+namespace Backalley\WordPress\Fields\Managers;
 
 use Backalley\Form\Contracts\FieldDataManagerInterface;
 use Backalley\Form\Managers\AbstractFieldDataManager;

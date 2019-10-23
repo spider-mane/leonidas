@@ -5,7 +5,7 @@ namespace Backalley\WordPress\MetaBox;
 use Backalley\Form\Contracts\FormFieldControllerInterface;
 use Backalley\WordPress\Fields\AbstractField;
 use Backalley\WordPress\Traits\UsesTemplateTrait;
-use Backalley\Wordpress\MetaBox\Contracts\MetaboxFieldInterface;
+use Backalley\WordPress\MetaBox\Contracts\MetaboxFieldInterface;
 
 class Field extends AbstractField implements MetaboxFieldInterface
 {

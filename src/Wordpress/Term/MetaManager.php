@@ -1,6 +1,6 @@
 <?php
 
-namespace Backalley\Wordpress\Term;
+namespace Backalley\WordPress\Term;
 
 use ObjectMetaManager;
 

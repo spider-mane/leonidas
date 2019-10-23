@@ -1,8 +1,8 @@
 <?php
 
-namespace Backalley\Wordpress\Taxonomy\OptionHandlers;
+namespace Backalley\WordPress\Taxonomy\OptionHandlers;
 
-use Backalley\Wordpress\Taxonomy\OptionHandlerInterface;
+use Backalley\WordPress\Taxonomy\OptionHandlerInterface;
 
 class MaintainMetaboxHierarchy implements OptionHandlerInterface
 {

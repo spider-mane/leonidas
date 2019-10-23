@@ -1,9 +1,9 @@
 <?php
 
-namespace Backalley\Wordpress;
+namespace Backalley\WordPress;
 
 use Backalley\GuctilityBelt\Concerns\ClassResolverTrait;
-use Backalley\Wordpress\Contracts\AdminConfigHandlerInerface as ConfigHandler;
+use Backalley\WordPress\Contracts\AdminConfigHandlerInerface as ConfigHandler;
 
 class AdminConfig
 {

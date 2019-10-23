@@ -1,6 +1,6 @@
 <?php
 
-namespace Backalley\Wordpress\Post\Status;
+namespace Backalley\WordPress\Post\Status;
 
 use Backalley\Html\Html;
 

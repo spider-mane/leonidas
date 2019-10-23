@@ -1,8 +1,8 @@
 <?php
 
-namespace Backalley\Wordpress\Forms\Controllers;
+namespace Backalley\WordPress\Forms\Controllers;
 
-use Backalley\Wordpress\Forms\Controllers\AbstractWpAdminFormSubmissionManager;
+use Backalley\WordPress\Forms\Controllers\AbstractWpAdminFormSubmissionManager;
 
 class TermFieldFormSubmissionManager extends AbstractWpAdminFormSubmissionManager
 {

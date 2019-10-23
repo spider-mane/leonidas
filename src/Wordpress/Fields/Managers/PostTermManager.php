@@ -2,8 +2,8 @@
 
 namespace Backalley\WordPress\Fields\Managers;
 
-use Backalley\Form\Managers\AbstractFieldDataManager;
 use Backalley\Form\Contracts\FieldDataManagerInterface;
+use Backalley\Form\Managers\AbstractFieldDataManager;
 
 class PostTermManager extends AbstractFieldDataManager implements FieldDataManagerInterface
 {

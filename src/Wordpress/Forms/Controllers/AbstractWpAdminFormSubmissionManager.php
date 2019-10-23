@@ -1,9 +1,9 @@
 <?php
 
-namespace Backalley\Wordpress\Forms\Controllers;
+namespace Backalley\WordPress\Forms\Controllers;
 
 use Backalley\Form\Controllers\AbstractFormSubmissionManager;
-use Backalley\Wordpress\Modules\AdminNotice;
+use Backalley\WordPress\Modules\AdminNotice;
 
 abstract class AbstractWpAdminFormSubmissionManager extends AbstractFormSubmissionManager
 {

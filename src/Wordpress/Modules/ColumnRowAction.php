@@ -1,6 +1,6 @@
 <?php
 
-namespace Backalley\Wordpress\Modules;
+namespace Backalley\WordPress\Modules;
 
 use Backalley\Html\Traits\ElementConstructorTrait;
 

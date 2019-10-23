@@ -1,11 +1,11 @@
 <?php
 
-namespace Backalley\Wordpress\MetaBox;
+namespace Backalley\WordPress\MetaBox;
 
-use Backalley\Wordpress\Traits\UsesTemplateTrait;
-use Backalley\Form\Controllers\FormFieldController;
 use Backalley\Form\Contracts\FormFieldControllerInterface;
+use Backalley\Form\Controllers\FormFieldController;
 use Backalley\WordPress\MetaBox\Contracts\MetaboxContentInterface;
+use Backalley\WordPress\Traits\UsesTemplateTrait;
 
 class FieldGrid implements MetaboxContentInterface
 {

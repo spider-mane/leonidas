@@ -4,9 +4,9 @@ use Backalley\Form\Controllers\FormFieldController;
 use Backalley\Form\Fields\Time;
 use Backalley\WordPress\MetaBox\MetaBox;
 use Backalley\WordPress\MetaBox\Section;
-use Backalley\Wordpress\Fields\Managers\PostMetaFieldManager;
-use Backalley\Wordpress\Forms\Controllers\PostMetaBoxFormSubmissionManager;
-use Backalley\Wordpress\MetaBox\FieldGrid;
+use Backalley\WordPress\Fields\Managers\PostMetaFieldManager;
+use Backalley\WordPress\Forms\Controllers\PostMetaBoxFormSubmissionManager;
+use Backalley\WordPress\MetaBox\FieldGrid;
 use Respect\Validation\Validator as v;
 
 // rows

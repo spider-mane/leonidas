@@ -1,6 +1,6 @@
 <?php
 
-namespace Backalley\Wordpress\Fields;
+namespace Backalley\WordPress\Fields;
 
 use Backalley\Form\Controllers\FormFieldController;
 

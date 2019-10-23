@@ -5,8 +5,8 @@ use Backalley\Form\Fields\Tel;
 use Backalley\WordPress\Fields\Managers\PostMetaFieldManager;
 use Backalley\WordPress\MetaBox\Fieldset;
 use Backalley\WordPress\MetaBox\MetaBox;
-use Backalley\Wordpress\Fields\WpAdminField;
-use Backalley\Wordpress\Forms\Controllers\PostMetaBoxFormSubmissionManager;
+use Backalley\WordPress\Fields\WpAdminField;
+use Backalley\WordPress\Forms\Controllers\PostMetaBoxFormSubmissionManager;
 use Respect\Validation\Validator as v;
 
 

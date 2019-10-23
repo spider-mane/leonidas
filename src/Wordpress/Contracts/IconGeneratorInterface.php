@@ -1,6 +1,6 @@
 <?php
 
-namespace Backalley\Wordpress\Contracts;
+namespace Backalley\WordPress\Contracts;
 
 interface IconGeneratorInterface
 {

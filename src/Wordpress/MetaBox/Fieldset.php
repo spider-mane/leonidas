@@ -3,9 +3,9 @@
 namespace Backalley\WordPress\MetaBox;
 
 use Backalley\WordPress\MetaBox\Contracts\MetaboxContentInterface;
-use Backalley\Wordpress\Fields\WpAdminField;
-use Backalley\Wordpress\Forms\Controllers\AbstractWpAdminFormSubmissionManager;
-use Backalley\Wordpress\MetaBox\Contracts\MetaboxFieldInterface;
+use Backalley\WordPress\Fields\WpAdminField;
+use Backalley\WordPress\Forms\Controllers\AbstractWpAdminFormSubmissionManager;
+use Backalley\WordPress\MetaBox\Contracts\MetaboxFieldInterface;
 
 class Fieldset implements MetaboxContentInterface
 {

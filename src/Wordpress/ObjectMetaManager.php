@@ -1,6 +1,8 @@
 <?php
 
-use Backalley\Wordpress\Fields\WpAdminField;
+namespace Backalley\WordPress;
+
+use Backalley\WordPress\Fields\WpAdminField;
 
 class ObjectMetaManager extends WpAdminField
 {

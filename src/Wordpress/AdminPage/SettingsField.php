@@ -1,6 +1,6 @@
 <?php
 
-namespace Backalley\Wordpress\AdminPage;
+namespace Backalley\WordPress\AdminPage;
 
 use Backalley\Form\Contracts\FormFieldInterface;
 use Backalley\Form\Fields\Text;

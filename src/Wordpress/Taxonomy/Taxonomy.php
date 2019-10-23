@@ -1,12 +1,8 @@
 <?php
 
-/**
- * @package Backalley-Core
- */
-
 namespace Backalley\WordPress\Taxonomy;
 
-use Backalley\Wordpress\AbstractWpObjectFacade;
+use Backalley\WordPress\AbstractWpObjectFacade;
 
 class Taxonomy extends AbstractWpObjectFacade
 {

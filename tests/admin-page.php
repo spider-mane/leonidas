@@ -5,9 +5,9 @@ use Backalley\Form\Fields\Select;
 use Backalley\Form\Fields\Tel;
 use Backalley\GuctilityBelt\SelectOptions\UsStatesAndTerritories;
 use Backalley\WordPress\AdminPage\SettingsSection;
-use Backalley\Wordpress\AdminPage\SettingsField;
-use Backalley\Wordpress\AdminPage\SettingsPage;
-use Backalley\Wordpress\SettingManager;
+use Backalley\WordPress\AdminPage\SettingsField;
+use Backalley\WordPress\AdminPage\SettingsPage;
+use Backalley\WordPress\SettingManager;
 use Respect\Validation\Validator as v;
 
 $group1 = 'ba-test';
