@@ -1,8 +1,8 @@
 <?php
 
-namespace WebTheory\Form\Contracts;
+namespace WebTheory\Saveyour\Contracts;
 
-use WebTheory\Form\Contracts\FieldDataManagerInterface;
+use WebTheory\Saveyour\Contracts\FieldDataManagerInterface;
 
 interface MultiFieldDataManagerFactoryInterface
 {

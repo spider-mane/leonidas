@@ -2,8 +2,8 @@
 
 namespace WebTheory\WordPress\Fields;
 
-use WebTheory\Form\Contracts\MultiFieldFactoryInterface;
-use WebTheory\Form\FormFieldFactory;
+use WebTheory\Saveyour\Contracts\MultiFieldFactoryInterface;
+use WebTheory\Saveyour\FormFieldFactory;
 
 class Factory extends FormFieldFactory implements MultiFieldFactoryInterface
 {

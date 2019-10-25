@@ -1,8 +1,8 @@
 <?php
 
-use WebTheory\Form\Fields\Email;
-use WebTheory\Form\Fields\Select;
-use WebTheory\Form\Fields\Tel;
+use WebTheory\Saveyour\Fields\Email;
+use WebTheory\Saveyour\Fields\Select;
+use WebTheory\Saveyour\Fields\Tel;
 use WebTheory\GuctilityBelt\SelectOptions\UsStatesAndTerritories;
 use WebTheory\WordPress\AdminPage\SettingsSection;
 use WebTheory\WordPress\AdminPage\SettingsField;

@@ -1,6 +1,6 @@
 <?php
 
-namespace WebTheory\Form\DataSchemes;
+namespace WebTheory\Saveyour\DataSchemes;
 
 /**
  * {@inheritDoc}

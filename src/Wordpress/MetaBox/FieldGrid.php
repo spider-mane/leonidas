@@ -2,8 +2,8 @@
 
 namespace WebTheory\WordPress\MetaBox;
 
-use WebTheory\Form\Contracts\FormFieldControllerInterface;
-use WebTheory\Form\Controllers\FormFieldController;
+use WebTheory\Saveyour\Contracts\FormFieldControllerInterface;
+use WebTheory\Saveyour\Controllers\FormFieldController;
 use WebTheory\WordPress\MetaBox\Contracts\MetaboxContentInterface;
 use WebTheory\WordPress\Traits\UsesTemplateTrait;
 

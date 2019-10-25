@@ -1,8 +1,8 @@
 <?php
 
-namespace WebTheory\Form\Fields;
+namespace WebTheory\Saveyour\Fields;
 
-use WebTheory\Form\Contracts\FormFieldInterface;
+use WebTheory\Saveyour\Contracts\FormFieldInterface;
 
 class Url extends AbstractInput implements FormFieldInterface
 {

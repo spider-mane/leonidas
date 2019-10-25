@@ -52,7 +52,7 @@
     "psr-4": {
       "Library\\": "lib/"
     },
-    "files": ["tests/test.php"]
+    "files": ["test/start.php"]
   },
 
   "config": {

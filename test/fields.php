@@ -1,7 +1,7 @@
 <?php
 
-use WebTheory\Form\Fields\Email;
-use WebTheory\Form\Fields\Tel;
+use WebTheory\Saveyour\Fields\Email;
+use WebTheory\Saveyour\Fields\Tel;
 use WebTheory\WordPress\Fields\Managers\PostMetaFieldManager;
 use WebTheory\WordPress\MetaBox\Fieldset;
 use WebTheory\WordPress\MetaBox\MetaBox;

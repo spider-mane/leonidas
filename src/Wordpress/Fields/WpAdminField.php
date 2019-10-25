@@ -2,7 +2,7 @@
 
 namespace WebTheory\WordPress\Fields;
 
-use WebTheory\Form\Controllers\FormFieldController;
+use WebTheory\Saveyour\Controllers\FormFieldController;
 
 class WpAdminField extends FormFieldController
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace WebTheory\Form\Traits;
+namespace WebTheory\Saveyour\Traits;
 
 trait ShantHaveCurrentData
 {

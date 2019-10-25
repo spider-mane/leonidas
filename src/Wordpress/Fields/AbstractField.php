@@ -2,9 +2,9 @@
 
 namespace WebTheory\WordPress\Fields;
 
-use WebTheory\Form\Contracts\FormFieldInterface;
-use WebTheory\Form\Fields\Input;
-use WebTheory\Form\Fields\Text;
+use WebTheory\Saveyour\Contracts\FormFieldInterface;
+use WebTheory\Saveyour\Fields\Input;
+use WebTheory\Saveyour\Fields\Text;
 use WebTheory\WordPress\Contracts\WpAdminFieldInterface;
 
 class AbstractField implements WpAdminFieldInterface

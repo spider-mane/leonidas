@@ -2,8 +2,8 @@
 
 namespace WebTheory\WordPress\AdminPage;
 
-use WebTheory\Form\Contracts\FormFieldInterface;
-use WebTheory\Form\Fields\Text;
+use WebTheory\Saveyour\Contracts\FormFieldInterface;
+use WebTheory\Saveyour\Fields\Text;
 use WebTheory\Html\Html;
 
 class SettingsField

@@ -1,6 +1,6 @@
 <?php
 
-namespace WebTheory\Form\DataSchemes;
+namespace WebTheory\Saveyour\DataSchemes;
 
 /**
  * DataScheme interfaces do not provide a list of required methods, but are

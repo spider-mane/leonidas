@@ -1,6 +1,6 @@
 <?php
 
-namespace WebTheory\Form\Contracts;
+namespace WebTheory\Saveyour\Contracts;
 
 interface FieldDataManagerInterface
 {

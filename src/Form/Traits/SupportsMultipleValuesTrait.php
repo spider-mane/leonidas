@@ -1,6 +1,6 @@
 <?
 
-namespace WebTheory\FormFields\Traits;
+namespace WebTheory\SaveyourFields\Traits;
 
 
 trait SupportsMultipleValuesTrait

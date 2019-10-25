@@ -2,7 +2,7 @@
 
 namespace WebTheory\WordPress\Forms\Controllers;
 
-use WebTheory\Form\Controllers\AbstractFormSubmissionManager;
+use WebTheory\Saveyour\Controllers\AbstractFormSubmissionManager;
 use WebTheory\WordPress\Modules\AdminNotice;
 
 abstract class AbstractWpAdminFormSubmissionManager extends AbstractFormSubmissionManager

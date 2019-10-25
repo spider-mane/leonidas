@@ -2,7 +2,7 @@
 
 namespace WebTheory\WordPress\MetaBox;
 
-use WebTheory\Form\Contracts\FormFieldControllerInterface;
+use WebTheory\Saveyour\Contracts\FormFieldControllerInterface;
 use WebTheory\WordPress\Fields\AbstractField;
 use WebTheory\WordPress\Traits\UsesTemplateTrait;
 use WebTheory\WordPress\MetaBox\Contracts\MetaboxFieldInterface;

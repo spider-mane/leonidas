@@ -1,9 +1,9 @@
 <?php
 
-namespace WebTheory\Form\Groups;
+namespace WebTheory\Saveyour\Groups;
 
-use WebTheory\Form\Contracts\FormFieldControllerInterface;
-use WebTheory\Form\Contracts\FormSubmissionGroupInterface;
+use WebTheory\Saveyour\Contracts\FormFieldControllerInterface;
+use WebTheory\Saveyour\Contracts\FormSubmissionGroupInterface;
 
 class FormSubmissionGroupCallback implements FormSubmissionGroupInterface
 {

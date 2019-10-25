@@ -2,8 +2,8 @@
 
 namespace WebTheory\WordPress\Fields\Managers;
 
-use WebTheory\Form\Contracts\FieldDataManagerInterface;
-use WebTheory\Form\Managers\AbstractFieldDataManager;
+use WebTheory\Saveyour\Contracts\FieldDataManagerInterface;
+use WebTheory\Saveyour\Managers\AbstractFieldDataManager;
 
 class PostTermManager extends AbstractFieldDataManager implements FieldDataManagerInterface
 {

@@ -2,7 +2,7 @@
 
 namespace WebTheory\WordPress\Fields\Managers;
 
-use WebTheory\Form\Contracts\FieldDataManagerInterface;
+use WebTheory\Saveyour\Contracts\FieldDataManagerInterface;
 
 /**
  *

@@ -2,7 +2,7 @@
 
 namespace WebTheory\WordPress\MetaBox;
 
-use WebTheory\Form\Fields\Hidden as HiddenInput;
+use WebTheory\Saveyour\Fields\Hidden as HiddenInput;
 use WebTheory\Html\Html;
 use WebTheory\WordPress\MetaBox\Contracts\MetaboxContentInterface;
 
