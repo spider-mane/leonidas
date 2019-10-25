@@ -1,11 +1,11 @@
 <?php
 
-namespace Backalley\WordPress\MetaBox;
+namespace WebTheory\WordPress\MetaBox;
 
-use Backalley\Form\Contracts\FormFieldControllerInterface;
-use Backalley\WordPress\Fields\AbstractField;
-use Backalley\WordPress\Traits\UsesTemplateTrait;
-use Backalley\WordPress\MetaBox\Contracts\MetaboxFieldInterface;
+use WebTheory\Form\Contracts\FormFieldControllerInterface;
+use WebTheory\WordPress\Fields\AbstractField;
+use WebTheory\WordPress\Traits\UsesTemplateTrait;
+use WebTheory\WordPress\MetaBox\Contracts\MetaboxFieldInterface;
 
 class Field extends AbstractField implements MetaboxFieldInterface
 {

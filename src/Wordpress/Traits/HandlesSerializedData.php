@@ -1,6 +1,6 @@
 <?php
 
-namespace Backalley\WordPress\Traits;
+namespace WebTheory\WordPress\Traits;
 
 trait HandlesSerializedData
 {

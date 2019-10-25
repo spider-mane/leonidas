@@ -1,8 +1,8 @@
 <?php
 
-namespace Backalley\Form\Contracts;
+namespace WebTheory\Form\Contracts;
 
-use Backalley\Form\Contracts\FormFieldInterface;
+use WebTheory\Form\Contracts\FormFieldInterface;
 
 interface FormFieldFactoryInterface
 {

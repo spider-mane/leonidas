@@ -1,10 +1,10 @@
 <?php
 
-namespace Backalley\GuctilityBelt;
+namespace WebTheory\GuctilityBelt;
 
-use Backalley\GuctilityBelt\Concerns\ClassResolverTrait;
-use Backalley\GuctilityBelt\Concerns\SmartFactoryTrait;
-use Backalley\GuctilityBelt\Contracts\SmartFactoryInterface;
+use WebTheory\GuctilityBelt\Concerns\ClassResolverTrait;
+use WebTheory\GuctilityBelt\Concerns\SmartFactoryTrait;
+use WebTheory\GuctilityBelt\Contracts\SmartFactoryInterface;
 
 abstract class AbstractSmartFactory implements SmartFactoryInterface
 {

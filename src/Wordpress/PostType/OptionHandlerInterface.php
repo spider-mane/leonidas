@@ -1,6 +1,6 @@
 <?php
 
-namespace Backalley\WordPress\PostType;
+namespace WebTheory\WordPress\PostType;
 
 interface OptionHandlerInterface
 {

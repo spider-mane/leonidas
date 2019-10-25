@@ -1,6 +1,6 @@
 <?php
 
-namespace Backalley\Form\DataSchemes;
+namespace WebTheory\Form\DataSchemes;
 
 /**
  * {@inheritDoc}

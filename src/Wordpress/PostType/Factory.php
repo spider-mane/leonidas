@@ -1,10 +1,10 @@
 <?php
 
-namespace Backalley\WordPress\PostType;
+namespace WebTheory\WordPress\PostType;
 
-use Backalley\WordPress\PostType\OptionHandlerInterface;
-use Backalley\WordPress\PostType\PostType;
-use Backalley\WordPress\AbstractWpObjectFactory;
+use WebTheory\WordPress\PostType\OptionHandlerInterface;
+use WebTheory\WordPress\PostType\PostType;
+use WebTheory\WordPress\AbstractWpObjectFactory;
 
 class Factory extends AbstractWpObjectFactory
 {

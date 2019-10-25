@@ -1,8 +1,8 @@
 <?php
 
-namespace Backalley\WordPress\Post\Status;
+namespace WebTheory\WordPress\Post\Status;
 
-use Backalley\Html\Html;
+use WebTheory\Html\Html;
 
 class Status
 {

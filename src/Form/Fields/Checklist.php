@@ -4,12 +4,12 @@
  * @package Backalley-Core
  */
 
-namespace Backalley\Form\Fields;
+namespace WebTheory\Form\Fields;
 
-use Backalley\Form\Contracts\FormFieldInterface;
-use Backalley\Form\DataSchemes\IO;
-use Backalley\Form\Elements\Label;
-use Backalley\Form\Fields\Input;
+use WebTheory\Form\Contracts\FormFieldInterface;
+use WebTheory\Form\DataSchemes\IO;
+use WebTheory\Form\Elements\Label;
+use WebTheory\Form\Fields\Input;
 
 class Checklist extends AbstractFormField implements FormFieldInterface, IO
 {

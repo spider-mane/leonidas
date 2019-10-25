@@ -1,8 +1,8 @@
 <?php
 
-namespace Backalley\Html;
+namespace WebTheory\Html;
 
-use Backalley\Html\Traits\ElementConstructorTrait;
+use WebTheory\Html\Traits\ElementConstructorTrait;
 
 class Html
 {

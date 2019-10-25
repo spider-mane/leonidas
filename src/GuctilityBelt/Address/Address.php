@@ -1,6 +1,6 @@
 <?php
 
-namespace Backalley\GuctilityBelt\Address;
+namespace WebTheory\GuctilityBelt\Address;
 
 class Address
 {

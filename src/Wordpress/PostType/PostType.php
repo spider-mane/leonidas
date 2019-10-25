@@ -1,8 +1,8 @@
 <?php
 
-namespace Backalley\WordPress\PostType;
+namespace WebTheory\WordPress\PostType;
 
-use Backalley\WordPress\AbstractWpObjectFacade;
+use WebTheory\WordPress\AbstractWpObjectFacade;
 
 class PostType extends AbstractWpObjectFacade
 {

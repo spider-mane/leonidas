@@ -1,6 +1,6 @@
 <?php
 
-namespace Backalley\Form\DataSchemes;
+namespace WebTheory\Form\DataSchemes;
 
 /**
  * DataScheme interfaces do not provide a list of required methods, but are

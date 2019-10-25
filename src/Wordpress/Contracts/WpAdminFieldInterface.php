@@ -1,8 +1,8 @@
 <?php
 
-namespace Backalley\WordPress\Contracts;
+namespace WebTheory\WordPress\Contracts;
 
-use Backalley\WordPress\Fields\WpAdminField;
+use WebTheory\WordPress\Fields\WpAdminField;
 
 interface WpAdminFieldInterface
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace Backalley\WordPress\AdminPage;
+namespace WebTheory\WordPress\AdminPage;
 
-use Backalley\WordPress\Traits\UsesTemplateTrait;
+use WebTheory\WordPress\Traits\UsesTemplateTrait;
 
 /**
  * @package Backalley-Core

@@ -1,10 +1,10 @@
 <?php
 
-namespace Backalley\WordPress\AdminPage;
+namespace WebTheory\WordPress\AdminPage;
 
-use Backalley\Form\Contracts\FormFieldInterface;
-use Backalley\Form\Fields\Text;
-use Backalley\Html\Html;
+use WebTheory\Form\Contracts\FormFieldInterface;
+use WebTheory\Form\Fields\Text;
+use WebTheory\Html\Html;
 
 class SettingsField
 {

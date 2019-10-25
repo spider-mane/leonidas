@@ -1,8 +1,8 @@
 <?php
 
-namespace Backalley\Form\Fields;
+namespace WebTheory\Form\Fields;
 
-use Backalley\Form\Contracts\FormFieldInterface;
+use WebTheory\Form\Contracts\FormFieldInterface;
 
 class Submit extends AbstractInput implements FormFieldInterface
 {

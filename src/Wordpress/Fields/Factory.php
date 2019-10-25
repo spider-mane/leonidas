@@ -1,9 +1,9 @@
 <?php
 
-namespace Backalley\WordPress\Fields;
+namespace WebTheory\WordPress\Fields;
 
-use Backalley\Form\Contracts\MultiFieldFactoryInterface;
-use Backalley\Form\FormFieldFactory;
+use WebTheory\Form\Contracts\MultiFieldFactoryInterface;
+use WebTheory\Form\FormFieldFactory;
 
 class Factory extends FormFieldFactory implements MultiFieldFactoryInterface
 {

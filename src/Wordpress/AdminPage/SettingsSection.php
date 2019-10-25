@@ -1,8 +1,8 @@
 <?php
 
-namespace Backalley\WordPress\AdminPage;
+namespace WebTheory\WordPress\AdminPage;
 
-use Backalley\Html\Html;
+use WebTheory\Html\Html;
 
 /**
  *

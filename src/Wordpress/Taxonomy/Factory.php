@@ -1,10 +1,10 @@
 <?php
 
-namespace Backalley\WordPress\Taxonomy;
+namespace WebTheory\WordPress\Taxonomy;
 
-use Backalley\WordPress\Taxonomy\Taxonomy;
-use Backalley\WordPress\AbstractWpObjectFactory;
-use Backalley\WordPress\Taxonomy\OptionHandlerInterface;
+use WebTheory\WordPress\Taxonomy\Taxonomy;
+use WebTheory\WordPress\AbstractWpObjectFactory;
+use WebTheory\WordPress\Taxonomy\OptionHandlerInterface;
 
 class Factory extends AbstractWpObjectFactory
 {

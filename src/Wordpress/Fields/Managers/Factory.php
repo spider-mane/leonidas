@@ -1,12 +1,12 @@
 <?php
 
-namespace Backalley\WordPress\Fields\Managers;
+namespace WebTheory\WordPress\Fields\Managers;
 
-use Backalley\Form\Contracts\MultiFieldDataManagerFactoryInterface;
-use Backalley\Form\DataManagerFactory;
-use Backalley\WordPress\Fields\Managers\PostTermManager;
-use Backalley\WordPress\Fields\Managers\PostMetaFieldManager;
-use Backalley\WordPress\Fields\Managers\TermMetaDataManager;
+use WebTheory\Form\Contracts\MultiFieldDataManagerFactoryInterface;
+use WebTheory\Form\DataManagerFactory;
+use WebTheory\WordPress\Fields\Managers\PostTermManager;
+use WebTheory\WordPress\Fields\Managers\PostMetaFieldManager;
+use WebTheory\WordPress\Fields\Managers\TermMetaDataManager;
 
 class Factory extends DataManagerFactory implements MultiFieldDataManagerFactoryInterface
 {

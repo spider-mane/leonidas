@@ -1,6 +1,6 @@
 <?php
 
-namespace Backalley\GuctilityBelt;
+namespace WebTheory\GuctilityBelt;
 
 /**
  *

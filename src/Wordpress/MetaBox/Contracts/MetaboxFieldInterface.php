@@ -1,9 +1,9 @@
 <?php
 
-namespace Backalley\WordPress\MetaBox\Contracts;
+namespace WebTheory\WordPress\MetaBox\Contracts;
 
-use Backalley\WordPress\MetaBox\Contracts\MetaboxContentInterface;
-use Backalley\WordPress\Contracts\WpAdminFieldInterface;
+use WebTheory\WordPress\MetaBox\Contracts\MetaboxContentInterface;
+use WebTheory\WordPress\Contracts\WpAdminFieldInterface;
 
 interface MetaboxFieldInterface extends MetaboxContentInterface, WpAdminFieldInterface
 {

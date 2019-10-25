@@ -1,6 +1,6 @@
 <?php
 
-namespace Backalley\GuctilityBelt\Contracts;
+namespace WebTheory\GuctilityBelt\Contracts;
 
 interface Configurable
 {

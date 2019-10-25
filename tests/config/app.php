@@ -1,6 +1,6 @@
 <?php
 
-use Backalley\WordPress\Taxonomy\OptionHandlers\MaintainMetaboxHierarchy;
+use WebTheory\WordPress\Taxonomy\OptionHandlers\MaintainMetaboxHierarchy;
 
 return [
     'data_managers' => [],

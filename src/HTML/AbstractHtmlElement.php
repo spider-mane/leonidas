@@ -4,11 +4,11 @@
  * @package Backalley
  */
 
-namespace Backalley\Html;
+namespace WebTheory\Html;
 
-use Backalley\Html\Attributes\Classlist;
-use Backalley\Html\Attributes\Style;
-use Backalley\Html\Traits\ElementConstructorTrait;
+use WebTheory\Html\Attributes\Classlist;
+use WebTheory\Html\Attributes\Style;
+use WebTheory\Html\Traits\ElementConstructorTrait;
 
 abstract class AbstractHtmlElement
 {

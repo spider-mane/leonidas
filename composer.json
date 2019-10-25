@@ -43,9 +43,9 @@
 
   "autoload": {
     "psr-4": {
-      "Backalley\\": "src/"
+      "WebTheory\\": "src/"
     },
-    "files": ["backalley-core.php"]
+    "files": ["leonidas.php"]
   },
 
   "autoload-dev": {

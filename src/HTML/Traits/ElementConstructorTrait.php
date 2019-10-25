@@ -1,9 +1,9 @@
 <?php
 
-namespace Backalley\Html\Traits;
+namespace WebTheory\Html\Traits;
 
-use Backalley\Html\Contracts\HtmlAttributeInterface;
-use Backalley\Html\TagSage;
+use WebTheory\Html\Contracts\HtmlAttributeInterface;
+use WebTheory\Html\TagSage;
 
 /**
  *

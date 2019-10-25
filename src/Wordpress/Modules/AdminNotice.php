@@ -1,8 +1,8 @@
 <?php
 
-namespace Backalley\WordPress\Modules;
+namespace WebTheory\WordPress\Modules;
 
-use Backalley\Html\Traits\ElementConstructorTrait;
+use WebTheory\Html\Traits\ElementConstructorTrait;
 
 class AdminNotice
 {

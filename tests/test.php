@@ -1,13 +1,13 @@
 <?php
 
-use Backalley\GuctilityBelt\SelectOptions\UsStatesAndTerritories;
-use Backalley\WordPress\Backalley;
-use Backalley\WordPress\Taxonomy\Factory as TaxonomyFactory;
-use Backalley\WordPress\Term\Field as TermField;
-use Backalley\WordPress\Forms\Controllers\TermFieldFormSubmissionManager;
-use Backalley\WordPress\PostType\Factory as PostTypeFactory;
-use Backalley\WordPress\Screen;
-use Backalley\WordPress\WpMaster;
+use WebTheory\GuctilityBelt\SelectOptions\UsStatesAndTerritories;
+use WebTheory\WordPress\Backalley;
+use WebTheory\WordPress\Taxonomy\Factory as TaxonomyFactory;
+use WebTheory\WordPress\Term\Field as TermField;
+use WebTheory\WordPress\Forms\Controllers\TermFieldFormSubmissionManager;
+use WebTheory\WordPress\PostType\Factory as PostTypeFactory;
+use WebTheory\WordPress\Screen;
+use WebTheory\WordPress\WpMaster;
 use Respect\Validation\Validator as v;
 use Whoops\Handler\PrettyPageHandler;
 use Whoops\Run;

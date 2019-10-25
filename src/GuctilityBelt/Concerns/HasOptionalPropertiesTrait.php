@@ -1,6 +1,6 @@
 <?php
 
-namespace Backalley\GuctilityBelt\Concerns;
+namespace WebTheory\GuctilityBelt\Concerns;
 
 trait HasOptionalPropertiesTrait
 {

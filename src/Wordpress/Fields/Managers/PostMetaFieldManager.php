@@ -1,8 +1,8 @@
 <?php
 
-namespace Backalley\WordPress\Fields\Managers;
+namespace WebTheory\WordPress\Fields\Managers;
 
-use Backalley\Form\Contracts\FieldDataManagerInterface;
+use WebTheory\Form\Contracts\FieldDataManagerInterface;
 
 /**
  *

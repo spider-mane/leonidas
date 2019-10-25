@@ -1,8 +1,8 @@
 <?php
 
-namespace Backalley\Html\Attributes;
+namespace WebTheory\Html\Attributes;
 
-use Backalley\Html\Contracts\HtmlAttributeInterface;
+use WebTheory\Html\Contracts\HtmlAttributeInterface;
 
 class HtmlAttribute extends AbstractHtmlAttribute implements HtmlAttributeInterface
 {

@@ -1,13 +1,13 @@
 <?php
 
-use Backalley\Form\Fields\Email;
-use Backalley\Form\Fields\Select;
-use Backalley\Form\Fields\Tel;
-use Backalley\GuctilityBelt\SelectOptions\UsStatesAndTerritories;
-use Backalley\WordPress\AdminPage\SettingsSection;
-use Backalley\WordPress\AdminPage\SettingsField;
-use Backalley\WordPress\AdminPage\SettingsPage;
-use Backalley\WordPress\SettingManager;
+use WebTheory\Form\Fields\Email;
+use WebTheory\Form\Fields\Select;
+use WebTheory\Form\Fields\Tel;
+use WebTheory\GuctilityBelt\SelectOptions\UsStatesAndTerritories;
+use WebTheory\WordPress\AdminPage\SettingsSection;
+use WebTheory\WordPress\AdminPage\SettingsField;
+use WebTheory\WordPress\AdminPage\SettingsPage;
+use WebTheory\WordPress\SettingManager;
 use Respect\Validation\Validator as v;
 
 $group1 = 'ba-test';

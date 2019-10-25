@@ -1,8 +1,8 @@
 <?php
 
-namespace Backalley\Form\Elements;
+namespace WebTheory\Form\Elements;
 
-use Backalley\Html\AbstractHtmlElement;
+use WebTheory\Html\AbstractHtmlElement;
 
 class Label extends AbstractHtmlElement
 {

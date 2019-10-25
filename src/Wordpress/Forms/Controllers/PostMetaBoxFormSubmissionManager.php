@@ -1,8 +1,8 @@
 <?php
 
-namespace Backalley\WordPress\Forms\Controllers;
+namespace WebTheory\WordPress\Forms\Controllers;
 
-use Backalley\WordPress\Forms\Controllers\AbstractWpAdminFormSubmissionManager;
+use WebTheory\WordPress\Forms\Controllers\AbstractWpAdminFormSubmissionManager;
 
 class PostMetaBoxFormSubmissionManager extends AbstractWpAdminFormSubmissionManager
 {

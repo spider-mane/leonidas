@@ -1,11 +1,11 @@
 <?php
 
-namespace Backalley\WordPress\MetaBox;
+namespace WebTheory\WordPress\MetaBox;
 
-use Backalley\WordPress\MetaBox\Contracts\MetaboxContentInterface;
-use Backalley\WordPress\Fields\WpAdminField;
-use Backalley\WordPress\Forms\Controllers\AbstractWpAdminFormSubmissionManager;
-use Backalley\WordPress\MetaBox\Contracts\MetaboxFieldInterface;
+use WebTheory\WordPress\MetaBox\Contracts\MetaboxContentInterface;
+use WebTheory\WordPress\Fields\WpAdminField;
+use WebTheory\WordPress\Forms\Controllers\AbstractWpAdminFormSubmissionManager;
+use WebTheory\WordPress\MetaBox\Contracts\MetaboxFieldInterface;
 
 class Fieldset implements MetaboxContentInterface
 {

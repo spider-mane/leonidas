@@ -1,10 +1,10 @@
 <?php
 
-namespace Backalley\WordPress\Term;
+namespace WebTheory\WordPress\Term;
 
-use Backalley\WordPress\Fields\AbstractField;
-use Backalley\WordPress\Fields\WpAdminField;
-use Backalley\WordPress\Traits\UsesTemplateTrait;
+use WebTheory\WordPress\Fields\AbstractField;
+use WebTheory\WordPress\Fields\WpAdminField;
+use WebTheory\WordPress\Traits\UsesTemplateTrait;
 
 class Field extends AbstractField
 {

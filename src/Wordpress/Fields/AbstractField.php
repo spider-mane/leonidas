@@ -1,11 +1,11 @@
 <?php
 
-namespace Backalley\WordPress\Fields;
+namespace WebTheory\WordPress\Fields;
 
-use Backalley\Form\Contracts\FormFieldInterface;
-use Backalley\Form\Fields\Input;
-use Backalley\Form\Fields\Text;
-use Backalley\WordPress\Contracts\WpAdminFieldInterface;
+use WebTheory\Form\Contracts\FormFieldInterface;
+use WebTheory\Form\Fields\Input;
+use WebTheory\Form\Fields\Text;
+use WebTheory\WordPress\Contracts\WpAdminFieldInterface;
 
 class AbstractField implements WpAdminFieldInterface
 {

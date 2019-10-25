@@ -1,6 +1,6 @@
 <?php
 
-namespace Backalley\WordPress\MetaBox;
+namespace WebTheory\WordPress\MetaBox;
 
 class Factory
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Backalley\WordPress\Taxonomy;
+namespace WebTheory\WordPress\Taxonomy;
 
 interface OptionHandlerInterface
 {

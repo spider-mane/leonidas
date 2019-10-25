@@ -1,8 +1,8 @@
 <?php
 
-namespace Backalley\WordPress\MetaBox;
+namespace WebTheory\WordPress\MetaBox;
 
-use Backalley\WordPress\MetaBox\Contracts\MetaboxContentInterface;
+use WebTheory\WordPress\MetaBox\Contracts\MetaboxContentInterface;
 
 class TabGroup implements MetaboxContentInterface
 {

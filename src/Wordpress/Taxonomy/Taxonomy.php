@@ -1,8 +1,8 @@
 <?php
 
-namespace Backalley\WordPress\Taxonomy;
+namespace WebTheory\WordPress\Taxonomy;
 
-use Backalley\WordPress\AbstractWpObjectFacade;
+use WebTheory\WordPress\AbstractWpObjectFacade;
 
 class Taxonomy extends AbstractWpObjectFacade
 {

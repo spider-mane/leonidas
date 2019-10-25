@@ -1,9 +1,9 @@
 <?php
 
-namespace Backalley\Form\Groups;
+namespace WebTheory\Form\Groups;
 
-use Backalley\Form\Contracts\FormFieldControllerInterface;
-use Backalley\Form\Contracts\FormSubmissionGroupInterface;
+use WebTheory\Form\Contracts\FormFieldControllerInterface;
+use WebTheory\Form\Contracts\FormSubmissionGroupInterface;
 
 class FormSubmissionGroupCallback implements FormSubmissionGroupInterface
 {

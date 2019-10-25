@@ -1,6 +1,6 @@
 <?php
 
-namespace Backalley\WordPress\Contracts;
+namespace WebTheory\WordPress\Contracts;
 
 interface AdminConfigHandlerInerface
 {

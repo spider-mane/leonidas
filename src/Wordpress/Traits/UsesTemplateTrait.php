@@ -1,8 +1,8 @@
 <?php
 
-namespace Backalley\WordPress\Traits;
+namespace WebTheory\WordPress\Traits;
 
-use Backalley\WordPress\Backalley;
+use WebTheory\WordPress\Backalley;
 
 trait UsesTemplateTrait
 {

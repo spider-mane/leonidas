@@ -1,8 +1,8 @@
 <?php
 
-namespace Backalley\WordPress\Fields;
+namespace WebTheory\WordPress\Fields;
 
-use Backalley\Form\Controllers\FormFieldController;
+use WebTheory\Form\Controllers\FormFieldController;
 
 class WpAdminField extends FormFieldController
 {

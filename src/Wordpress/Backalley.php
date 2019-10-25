@@ -1,8 +1,8 @@
 <?php
 
-namespace Backalley\WordPress;
+namespace WebTheory\WordPress;
 
-use Backalley\WordPress\Fields\Field;
+use WebTheory\WordPress\Fields\Field;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 use Twig\TwigFilter;

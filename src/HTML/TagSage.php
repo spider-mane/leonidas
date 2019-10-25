@@ -6,7 +6,7 @@
  * Helper class to determine whether or not a tag meets a certain criteria
  */
 
-namespace Backalley\Html;
+namespace WebTheory\Html;
 
 class TagSage
 {

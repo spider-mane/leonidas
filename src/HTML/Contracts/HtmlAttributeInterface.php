@@ -1,6 +1,6 @@
 <?php
 
-namespace Backalley\Html\Contracts;
+namespace WebTheory\Html\Contracts;
 
 interface HtmlAttributeInterface
 {

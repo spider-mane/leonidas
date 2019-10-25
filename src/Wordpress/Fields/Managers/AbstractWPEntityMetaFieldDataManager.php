@@ -1,9 +1,9 @@
 <?php
 
-namespace Backalley\WordPress\Fields\Managers;
+namespace WebTheory\WordPress\Fields\Managers;
 
-use Backalley\Form\Contracts\FieldDataManagerInterface;
-use Backalley\Form\Managers\AbstractFieldDataManager;
+use WebTheory\Form\Contracts\FieldDataManagerInterface;
+use WebTheory\Form\Managers\AbstractFieldDataManager;
 
 abstract class AbstractWPEntityMetaFieldDataManager extends AbstractFieldDataManager implements FieldDataManagerInterface
 {

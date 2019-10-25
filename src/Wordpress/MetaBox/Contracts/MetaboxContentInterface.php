@@ -1,6 +1,6 @@
 <?php
 
-namespace Backalley\WordPress\MetaBox\Contracts;
+namespace WebTheory\WordPress\MetaBox\Contracts;
 
 
 /**

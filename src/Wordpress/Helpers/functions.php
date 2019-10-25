@@ -1,6 +1,6 @@
 <?php
 
-namespace Backalley\WordPress\Helpers;
+namespace WebTheory\WordPress\Helpers;
 
 /**
  *

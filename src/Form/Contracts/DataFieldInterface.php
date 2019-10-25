@@ -1,6 +1,6 @@
 <?php
 
-namespace Backalley\Form\Contracts;
+namespace WebTheory\Form\Contracts;
 
 interface DataFieldInterface
 {

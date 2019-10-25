@@ -1,10 +1,10 @@
 <?php
 
-namespace Backalley\WordPress\MetaBox;
+namespace WebTheory\WordPress\MetaBox;
 
-use Backalley\Form\Fields\Hidden as HiddenInput;
-use Backalley\Html\Html;
-use Backalley\WordPress\MetaBox\Contracts\MetaboxContentInterface;
+use WebTheory\Form\Fields\Hidden as HiddenInput;
+use WebTheory\Html\Html;
+use WebTheory\WordPress\MetaBox\Contracts\MetaboxContentInterface;
 
 /**
  * @package Backalley-Core

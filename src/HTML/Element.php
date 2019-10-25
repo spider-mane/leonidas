@@ -1,6 +1,6 @@
 <?php
 
-namespace Backalley\Html;
+namespace WebTheory\Html;
 
 
 class Element extends AbstractHtmlElementConstructor

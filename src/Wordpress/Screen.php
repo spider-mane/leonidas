@@ -1,6 +1,6 @@
 <?php
 
-namespace Backalley\WordPress;
+namespace WebTheory\WordPress;
 
 class Screen
 {

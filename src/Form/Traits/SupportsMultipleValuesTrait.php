@@ -1,6 +1,6 @@
 <?
 
-namespace Backalley\FormFields\Traits;
+namespace WebTheory\FormFields\Traits;
 
 
 trait SupportsMultipleValuesTrait

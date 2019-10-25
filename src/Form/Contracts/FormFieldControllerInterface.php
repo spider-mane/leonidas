@@ -1,9 +1,9 @@
 <?php
 
-namespace Backalley\Form\Contracts;
+namespace WebTheory\Form\Contracts;
 
 use Respect\Validation\Validatable;
-use Backalley\Form\Contracts\DataTransformerInterface;
+use WebTheory\Form\Contracts\DataTransformerInterface;
 
 interface FormFieldControllerInterface extends FormSubmissionManagerInterface
 {
