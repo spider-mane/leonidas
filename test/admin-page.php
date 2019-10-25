@@ -4,10 +4,10 @@ use WebTheory\Saveyour\Fields\Email;
 use WebTheory\Saveyour\Fields\Select;
 use WebTheory\Saveyour\Fields\Tel;
 use WebTheory\GuctilityBelt\SelectOptions\UsStatesAndTerritories;
-use WebTheory\WordPress\AdminPage\SettingsSection;
-use WebTheory\WordPress\AdminPage\SettingsField;
-use WebTheory\WordPress\AdminPage\SettingsPage;
-use WebTheory\WordPress\SettingManager;
+use WebTheory\Leonidas\AdminPage\SettingsSection;
+use WebTheory\Leonidas\AdminPage\SettingsField;
+use WebTheory\Leonidas\AdminPage\SettingsPage;
+use WebTheory\Leonidas\SettingManager;
 use Respect\Validation\Validator as v;
 
 $group1 = 'ba-test';

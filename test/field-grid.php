@@ -2,11 +2,11 @@
 
 use WebTheory\Saveyour\Controllers\FormFieldController;
 use WebTheory\Saveyour\Fields\Time;
-use WebTheory\WordPress\MetaBox\MetaBox;
-use WebTheory\WordPress\MetaBox\Section;
-use WebTheory\WordPress\Fields\Managers\PostMetaFieldManager;
-use WebTheory\WordPress\Forms\Controllers\PostMetaBoxFormSubmissionManager;
-use WebTheory\WordPress\MetaBox\FieldGrid;
+use WebTheory\Leonidas\MetaBox\MetaBox;
+use WebTheory\Leonidas\MetaBox\Section;
+use WebTheory\Leonidas\Fields\Managers\PostMetaFieldManager;
+use WebTheory\Leonidas\Forms\Controllers\PostMetaBoxFormSubmissionManager;
+use WebTheory\Leonidas\MetaBox\FieldGrid;
 use Respect\Validation\Validator as v;
 
 // rows
