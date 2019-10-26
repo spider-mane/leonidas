@@ -7,7 +7,7 @@ use WebTheory\Html\Html;
 use WebTheory\Leonidas\MetaBox\Contracts\MetaboxContentInterface;
 
 /**
- * @package Backalley-Core
+ * @package Leonidas-Core
  */
 class MetaBox
 {

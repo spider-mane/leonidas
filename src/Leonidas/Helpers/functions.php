@@ -40,69 +40,6 @@ function infer_object_properties($object_type, $properties = null)
 }
 
 /**
- * Borrowed from get name later,
- * needs to be modified to handle wider variety of objects
- */
-function sort_terms_hierarchicaly(array &$terms, array &$into, $parent_id = 0)
-{
-    foreach ($terms as $index => $term) {
-        if ($term->parent == $parent_id) {
-            $into[$term->term_id] = $term;
-            unset($terms[$index]);
-        }
-    }
-    foreach ($into as $parent_term) {
-        $parent_term->backalley->children = [];
-        sort_terms_hierarchicaly($terms, $parent_term->backalley->children, $parent_term->term_id);
-    }
-}
-
-/**
- * Takes a one dimensional array of wordpress hierarchical objects and
- * structures them hierachically. Care must be taken to pass an array of fully
- * cloned object if modifying the original objects is not the desired outcome.
- */
-function subjectify_wp_objects(array $wp_objects_array)
-{
-    if (property_exists($wp_objects_array[0], 'term_id') && property_exists($wp_objects_array[0], 'taxonomy')) {
-        $object_id = 'term_id';
-        $parent = 'parent';
-    } elseif (property_exists($wp_objects_array[0], 'ID') && property_exists($wp_objects_array[0], 'post_type')) {
-        $object_id = 'ID';
-        $parent = 'post_parent';
-    }
-
-    foreach ($wp_objects_array as $object) {
-        if (!property_exists($object, 'parent')) {
-            throw new Error('for this function to work, all terms in the array must have a parent property with a numerical value');
-        }
-
-        if (!property_exists($object, 'backalley')) {
-            $object->backalley = new stdClass();
-        }
-    }
-
-    foreach ($wp_objects_array as $object) {
-        if (!empty($object->{$parent})) {
-            foreach ($wp_objects_array as $potential_parent) {
-                if ($object->{$parent} === $potential_parent->{$object_id}) {
-                    $potential_parent->backalley->children[] = $object;
-                    break;
-                }
-            }
-        }
-    }
-
-    foreach ($wp_objects_array as $index => $object) {
-        if (!empty($object->{$parent})) {
-            unset($wp_objects_array[$index]);
-        }
-    }
-
-    return $wp_objects_array;
-}
-
-/**
  *
  */
 function return_json($status)

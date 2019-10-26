@@ -51,7 +51,7 @@ Screen::load(['edit-tags', 'term'], ['taxonomy' => 'ba_menu_category'], function
 
     $taxonomy = 'ba_menu_category';
 
-    $controller = Backalley::createField([
+    $controller = Leonidas::createField([
         'post_var' => 'test-1',
         'type' => [
             '@create' => 'select',

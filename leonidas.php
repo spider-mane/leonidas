@@ -1,11 +1,11 @@
 <?php
 
 /**
- * This file is part of the WebTheory Backalley package.
+ * This file is part of the WebTheory Leonidas package.
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @package   Backalley
+ * @package   Leonidas
  * @license   GPL-3.0-or-later
  * @copyright Copyright (C) Chris Williams, All rights reserved.
  * @link      https://github.com/spider-mane/backalley

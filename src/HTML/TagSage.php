@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @package Backalley Core
+ * @package Leonidas Core
  *
  * Helper class to determine whether or not a tag meets a certain criteria
  */

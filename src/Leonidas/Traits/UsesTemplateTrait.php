@@ -2,7 +2,7 @@
 
 namespace WebTheory\Leonidas\Traits;
 
-use WebTheory\Leonidas\Backalley;
+use WebTheory\Leonidas\Leonidas;
 
 trait UsesTemplateTrait
 {
@@ -11,6 +11,6 @@ trait UsesTemplateTrait
      */
     protected function renderTemplate($context)
     {
-        return Backalley::renderTemplate($this->template, $context);
+        return Leonidas::renderTemplate($this->template, $context);
     }
 }

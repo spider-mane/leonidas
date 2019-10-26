@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @package Backalley
+ * @package Leonidas
  */
 
 namespace WebTheory\Html;

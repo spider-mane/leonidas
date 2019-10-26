@@ -5,7 +5,7 @@ namespace WebTheory\Leonidas\AdminPage;
 use WebTheory\Leonidas\Traits\UsesTemplateTrait;
 
 /**
- * @package Backalley-Core
+ * @package Leonidas-Core
  */
 class AdminPage
 {
