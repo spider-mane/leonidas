@@ -2,13 +2,13 @@
 
 namespace WebTheory\Leonidas;
 
-use WebTheory\Leonidas\Fields\Field;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
+use WebTheory\Leonidas\Fields\Field;
 
-class Backalley extends \BackalleyCoreBase
+class Leonidas extends \WebTheoryLeonidas
 {
     /**
      * @var Environment

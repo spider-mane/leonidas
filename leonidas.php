@@ -12,9 +12,9 @@
  * @author    Chris Williams <spider.mane.web@gmail.com>
  */
 
-if (!class_exists('BackalleyCoreBase')) {
+if (!class_exists('WebTheoryLeonidas')) {
 
-    abstract class BackalleyCoreBase
+    abstract class WebTheoryLeonidas
     {
         protected static $url;
         protected static $path;

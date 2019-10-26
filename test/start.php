@@ -1,14 +1,14 @@
 <?php
 
+use Respect\Validation\Validator as v;
 use WebTheory\GuctilityBelt\SelectOptions\UsStatesAndTerritories;
-use WebTheory\Leonidas\Backalley;
-use WebTheory\Leonidas\Taxonomy\Factory as TaxonomyFactory;
-use WebTheory\Leonidas\Term\Field as TermField;
 use WebTheory\Leonidas\Forms\Controllers\TermFieldFormSubmissionManager;
+use WebTheory\Leonidas\Leonidas;
 use WebTheory\Leonidas\PostType\Factory as PostTypeFactory;
 use WebTheory\Leonidas\Screen;
+use WebTheory\Leonidas\Taxonomy\Factory as TaxonomyFactory;
+use WebTheory\Leonidas\Term\Field as TermField;
 use WebTheory\Leonidas\WpMaster;
-use Respect\Validation\Validator as v;
 use Whoops\Handler\PrettyPageHandler;
 use Whoops\Run;
 
@@ -18,7 +18,7 @@ use Whoops\Run;
 /**
  * init
  */
-Backalley::init();
+Leonidas::init();
 
 add_action('init', function () {
 
