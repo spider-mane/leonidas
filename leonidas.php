@@ -12,15 +12,25 @@
  * @author    Chris Williams <spider.mane.web@gmail.com>
  */
 
-if (!class_exists('WebTheoryLeonidas')) {
+use WebTheory\Leonidas\Leonidas;
 
-    abstract class WebTheoryLeonidas
+# composer autoload
+if (file_exists($autoload = __DIR__ . '/vendor/autoload.php')) {
+    require $autoload;
+}
+
+# define filesystem variables in base class
+if (!class_exists('WebTheoryLeonidasPluginBaseClass')) {
+
+    class WebTheoryLeonidasPluginBaseClass
     {
         protected static $url;
         protected static $path;
         protected static $base;
-        protected static $admin_url;
-        protected static $admin_templates;
+        protected static $adminUrl;
+        protected static $adminTemplates;
+
+        protected static $loaded = false;
 
         protected static function load()
         {
@@ -28,18 +38,25 @@ if (!class_exists('WebTheoryLeonidas')) {
             static::$url = plugin_dir_url(__FILE__);
             static::$base = plugin_basename(__FILE__);
 
-            static::$admin_url = static::$url . "public/admin";
-            static::$admin_templates = static::$path . "/public/admin/templates";
+            static::$adminUrl = static::$url . "public/admin";
+            static::$adminTemplates = static::$path . "/public/admin/templates";
+
+            static::$loaded = true;
         }
 
         public static function get(string $property)
         {
-            return Self::${$property};
+            return static::${$property};
+        }
+
+        public static function isLoaded()
+        {
+            return static::$loaded;
         }
     }
 }
 
-#Composer Autoload
-if (file_exists($autoload = __DIR__ . '/vendor/autoload.php')) {
-    require $autoload;
+# bootstrap plugin
+if (!Leonidas::isLoaded()) {
+    Leonidas::init();
 }

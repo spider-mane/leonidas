@@ -1,6 +1,6 @@
 <?php
 
-namespace WebTheory\Saveyour\Fields;
+namespace WebTheory\Saveyour\Validation\Fields;
 
 use WebTheory\Saveyour\Contracts\FormFieldInterface;
 

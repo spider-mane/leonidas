@@ -2,36 +2,48 @@
 
 namespace WebTheory\Leonidas;
 
+use Illuminate\Config\Repository;
+use Pimple\Container as PimpleContainer;
+use Pimple\Psr11\Container;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
 use WebTheory\Leonidas\Fields\Field;
 
-class Leonidas extends \WebTheoryLeonidas
+class Leonidas extends \WebTheoryLeonidasPluginBaseClass
 {
     /**
-     * @var Environment
+     * @var Container
      */
-    protected static $twigInstance;
-
-    /**
-     * @var Field
-     */
-    protected static $fieldFactory;
-
-    public const BASEDIR = '../../';
-    public const PLUGINNAME = 'backalley';
+    protected static $container;
 
     /**
      *
      */
-    public static function init(array $options = [])
+    public static function init()
     {
+        if (static::isLoaded()) {
+            throw new \Exception('Do not call ' . __METHOD__ . ' method.');
+        }
+
         static::load();
+        static::bootstrap();
         static::hook();
-        static::initTwig();
-        static::initFieldFactory();
+    }
+
+    /**
+     * 
+     */
+    protected static function bootstrap()
+    {
+        $container = new PimpleContainer;
+
+        static::bindConfig($container);
+        static::bindTwig($container);
+        static::bindField($container);
+
+        static::$container = new Container($container);
     }
 
     /**
@@ -51,103 +63,56 @@ class Leonidas extends \WebTheoryLeonidas
         wp_enqueue_script('jquery');
 
         # backalley scripts
-        wp_enqueue_script('backalley-core-admin-script', static::$admin_url . '/assets/js/backalley-admin.js', null, time(), true);
+        wp_enqueue_script('backalley-core-admin-script', static::$adminUrl . '/assets/js/backalley-admin.js', null, time(), true);
 
         # backalley styles
-        wp_enqueue_style('backalley-core-styles', static::$admin_url . '/assets/css/backalley-admin-styles.css', null, time());
+        wp_enqueue_style('backalley-core-styles', static::$adminUrl . '/assets/css/backalley-admin-styles.css', null, time());
+    }
+
+    /**
+     * 
+     */
+    protected static function bindConfig(PimpleContainer $container)
+    {
+        $container['config'] = $container->factory(function ($plugin) {
+            return new Repository(require static::$path . '/config/leonidas.php');
+        });
     }
 
     /**
      *
      */
-    protected static function initFieldFactory()
+    protected static function bindTwig(PimpleContainer $container)
     {
-        static::$fieldFactory = new Field;
+        $container['twig'] = $container->factory(function ($plugin) {
+
+            $config = $plugin['config']->get('twig');
+
+            $loader = new FilesystemLoader(static::$adminTemplates);
+
+            $twig = new Environment($loader, $config['options']);
+
+            // define filters
+            foreach ($config['filters'] as $filter => $function) {
+                $twig->addFilter(new TwigFilter($filter, $function));
+            }
+
+            // define functions
+            foreach ($config['functions'] as $alias => $function) {
+                $twig->addFunction(new TwigFunction($alias, $function));
+            }
+
+            return $twig;
+        });
     }
 
     /**
      *
      */
-    public static function createField(array $args)
+    protected static function bindField(PimpleContainer $container)
     {
-        return static::$fieldFactory->create($args);
-    }
-
-    /**
-     *
-     */
-    protected static function initTwig()
-    {
-        $options = [
-            'autoescape' => false,
-        ];
-
-        $loader = new FilesystemLoader(static::$admin_templates);
-
-        $twig = new Environment($loader, $options);
-
-        static::configTwig($twig);
-
-        static::$twigInstance = $twig;
-    }
-
-    /**
-     *
-     */
-    public static function renderTemplate(string $template, array $context)
-    {
-        return static::$twigInstance->render("{$template}.twig", $context);
-    }
-
-    /**
-     *
-     */
-    protected static function configTwig($twig)
-    {
-        static::addTwigFilters($twig);
-        static::addTwigFunctions($twig);
-
-        return $twig;
-    }
-
-    /**
-     *
-     */
-    protected static function addTwigFilters($twig)
-    {
-        $filters = [];
-
-        foreach ($filters as $filter => $function) {
-            $twig->addFilter(new TwigFilter($filter, $function));
-        }
-    }
-
-    /**
-     *
-     */
-    protected static function addTwigFunctions($twig)
-    {
-        $functions = [
-            'submit_button' => 'submit_button',
-            'settings_fields' => 'settings_fields',
-            'do_settings_sections' => 'do_settings_sections',
-            'settings_errors' => 'settings_errors',
-        ];
-
-        foreach ($functions as $alias => $function) {
-            $twig->addFunction(new TwigFunction($alias, $function));
-        }
-    }
-
-    /**
-     *
-     */
-    protected static function aliasClasses()
-    {
-        $aliases = [];
-
-        foreach ($aliases as $alias => $class) {
-            class_alias($class, $alias);
-        }
+        $container['field'] = $container->factory(function ($plugin) {
+            return new Field;
+        });
     }
 }

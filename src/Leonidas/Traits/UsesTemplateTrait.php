@@ -11,6 +11,8 @@ trait UsesTemplateTrait
      */
     protected function renderTemplate($context)
     {
-        return Leonidas::renderTemplate($this->template, $context);
+        $template = "{$this->template}.twig";
+
+        return Leonidas::get('container')->get('twig')->render($template, $context);
     }
 }

@@ -2,7 +2,7 @@
 
 namespace WebTheory\Saveyour\Contracts;
 
-interface FormSubmissionGroupInterface
+interface FormDataProcessorInterface
 {
     /**
      *

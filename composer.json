@@ -19,6 +19,7 @@
     "league/fractal": "^0.17",
     "monolog/monolog": "^1.24",
     "myclabs/deep-copy": "^1.8",
+    "pimple/pimple": "^3.2",
     "respect/validation": "^1.1",
     "twig/twig": "^2.0"
   },
@@ -27,15 +28,16 @@
     "commerceguys/addressing": "^1.0",
     "egulias/email-validator": "^2.1",
     "filp/whoops": "^2.5",
-    "jbzoo/utils": "^2.3",
     "friendsofphp/php-cs-fixer": "^2.15",
     "geocoder-php/google-maps-provider": "^4.4",
     "guzzlehttp/guzzle": "~6.0",
     "illuminate/mail": "^5.8",
+    "jbzoo/utils": "^2.3",
     "moneyphp/money": "^3.2",
     "php-http/guzzle6-adapter": "^2.0",
     "php-http/message": "^1.8",
     "phpbench/phpbench": "@dev",
+    "phpunit/phpunit": "^8.4",
     "symfony/thanks": "^1.1",
     "symfony/validator": "^4.3",
     "symfony/var-dumper": "^4.3"
@@ -57,5 +59,12 @@
 
   "config": {
     "sort-packages": true
+  },
+
+  "extra": {
+    "assets-files": [
+      "public/admin/assets/css/backalley-admin-styles.css",
+      "public/admin/assets/js/backalley-admin.js"
+    ]
   }
 }

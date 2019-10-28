@@ -1,11 +1,11 @@
 <?php
 
-namespace WebTheory\Saveyour\Groups;
+namespace WebTheory\Saveyour\Processors;
 
+use WebTheory\Saveyour\Contracts\FormDataProcessorInterface;
 use WebTheory\Saveyour\Contracts\FormFieldControllerInterface;
-use WebTheory\Saveyour\Contracts\FormSubmissionGroupInterface;
 
-class FormSubmissionGroupCallback implements FormSubmissionGroupInterface
+class FormSubmissionCallback implements FormDataProcessorInterface
 {
     /**
      * @var string

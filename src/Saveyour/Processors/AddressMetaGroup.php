@@ -1,14 +1,14 @@
 <?php
 
-namespace WebTheory\Saveyour\Groups;
+namespace WebTheory\Saveyour\Processors;
 
-use WebTheory\Saveyour\Contracts\FieldDataManagerInterface;
-use WebTheory\Saveyour\Contracts\FormFieldControllerInterface;
-use WebTheory\Saveyour\Contracts\FormSubmissionGroupInterface;
 use WebTheory\GuctilityBelt\Address\Address as AddressHelper;
 use WebTheory\GuctilityBelt\Address\AddressGeocoderInterface;
+use WebTheory\Saveyour\Contracts\FieldDataManagerInterface;
+use WebTheory\Saveyour\Contracts\FormDataProcessorInterface;
+use WebTheory\Saveyour\Contracts\FormFieldControllerInterface;
 
-class AddressMetaGroup implements FormSubmissionGroupInterface
+class AddressMetaGroup implements FormDataProcessorInterface
 {
     /**
      * @var array

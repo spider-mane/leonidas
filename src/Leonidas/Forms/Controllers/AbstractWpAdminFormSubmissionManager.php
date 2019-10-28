@@ -2,10 +2,10 @@
 
 namespace WebTheory\Leonidas\Forms\Controllers;
 
-use WebTheory\Saveyour\Controllers\AbstractFormSubmissionManager;
 use WebTheory\Leonidas\Modules\AdminNotice;
+use WebTheory\Saveyour\Controllers\FormSubmissionManager;
 
-abstract class AbstractWpAdminFormSubmissionManager extends AbstractFormSubmissionManager
+abstract class AbstractWpAdminFormSubmissionManager extends FormSubmissionManager
 {
     /**
      *

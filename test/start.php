@@ -13,12 +13,8 @@ use Whoops\Handler\PrettyPageHandler;
 use Whoops\Run;
 
 #ErrorHandling
-(new Run)->prependHandler(new PrettyPageHandler)->register(); // error handling with whoops
+// (new Run)->prependHandler(new PrettyPageHandler)->register(); // error handling with whoops
 
-/**
- * init
- */
-Leonidas::init();
 
 add_action('init', function () {
 
@@ -51,7 +47,9 @@ Screen::load(['edit-tags', 'term'], ['taxonomy' => 'ba_menu_category'], function
 
     $taxonomy = 'ba_menu_category';
 
-    $controller = Leonidas::createField([
+    $factory = Leonidas::get('container')->get('field');
+
+    $controller = $factory->create([
         'post_var' => 'test-1',
         'type' => [
             '@create' => 'select',

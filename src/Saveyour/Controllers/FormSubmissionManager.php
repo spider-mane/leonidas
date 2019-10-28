@@ -2,10 +2,11 @@
 
 namespace WebTheory\Saveyour\Controllers;
 
+use WebTheory\Saveyour\Contracts\FormDataProcessorInterface;
 use WebTheory\Saveyour\Contracts\FormFieldControllerInterface;
-use WebTheory\Saveyour\Contracts\FormSubmissionGroupInterface;
+use WebTheory\Saveyour\Contracts\FormValidatorInterface;
 
-abstract class AbstractFormSubmissionManager
+class FormSubmissionManager
 {
     /**
      * collection of FormFieldControllerInterface objects
@@ -15,16 +16,16 @@ abstract class AbstractFormSubmissionManager
     protected $fields = [];
 
     /**
-     * collection of FormSubmissionGroupInterface objects
+     * collection of FormDataProcessorInterface objects
      *
      * @var array
      */
-    protected $groups = [];
+    protected $processors = [];
 
     /**
      * @var array
      */
-    protected $callbacks = [];
+    protected $validators = [];
 
     /**
      * Array of alerts to display in admin after form submission
@@ -39,6 +40,26 @@ abstract class AbstractFormSubmissionManager
     public function __construct()
     {
         // do something maybe
+    }
+
+    /**
+     * Get the value of validators
+     *
+     * @return mixed
+     */
+    public function getValidators()
+    {
+        return $this->validators;
+    }
+
+    /**
+     *
+     */
+    public function addValidator(FormValidatorInterface $validator)
+    {
+        $this->validators[] = $validator;
+
+        return $this;
     }
 
     /**
@@ -91,7 +112,7 @@ abstract class AbstractFormSubmissionManager
      */
     public function getGroups(): array
     {
-        return $this->groups;
+        return $this->processors;
     }
 
     /**
@@ -117,42 +138,12 @@ abstract class AbstractFormSubmissionManager
      *
      * @return self
      */
-    public function addGroup(string $slug, FormSubmissionGroupInterface $group)
+    public function addGroup(string $slug, FormDataProcessorInterface $group)
     {
-        if (!in_array($slug, $this->groups)) {
-            $this->groups[$slug] = $group;
+        if (!in_array($slug, $this->processors)) {
+            $this->processors[$slug] = $group;
         } else {
             throw new \Exception("This instance of " . __CLASS__ . " already has a group named {$slug}");
-        }
-
-        return $this;
-    }
-
-    /**
-     * Get the value of callbacks
-     *
-     * @return array
-     */
-    public function getCallbacks(): array
-    {
-        return $this->callbacks;
-    }
-
-    /**
-     * Set the value of callbacks
-     *
-     * @param string $slug
-     * @param string $group
-     * @param callable $callback
-     *
-     * @return self
-     */
-    public function addCallBack(string $slug, callable $callback)
-    {
-        if (!isset($this->callbacks[$slug])) {
-            $this->callbacks[$slug] = $callback;
-        } else {
-            throw new \Exception("This instance of " . __CLASS__ . " already has a callback named {$slug}");
         }
 
         return $this;
@@ -167,6 +158,33 @@ abstract class AbstractFormSubmissionManager
     {
         return $this->alerts;
     }
+
+    /**
+     *
+     */
+    protected function isSafe(): bool
+    {
+        foreach ($this->validators as $validator) {
+            if (!$validator->isValid()) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     *
+     */
+    public function handle($request = null)
+    {
+        if ($this->isSafe()) {
+            return $this->handleRequest($request);
+        }
+
+        return false;
+    }
+
     /**
      *
      */
@@ -191,7 +209,7 @@ abstract class AbstractFormSubmissionManager
         }
 
         $this
-            ->runGroups($request)
+            ->runProcessors($request)
             ->resetFieldsCache()
             ->finalizeRequest($request);
     }
@@ -199,10 +217,10 @@ abstract class AbstractFormSubmissionManager
     /**
      *
      */
-    final private function runGroups($request)
+    final private function runProcessors($request)
     {
-        foreach ($this->groups as $group) {
-            $this->runGroup($request, $group);
+        foreach ($this->processors as $processor) {
+            $this->runProcessor($request, $processor);
         }
 
         return $this;
@@ -211,13 +229,13 @@ abstract class AbstractFormSubmissionManager
     /**
      *
      */
-    final private function runGroup($request, FormSubmissionGroupInterface $group)
+    final private function runProcessor($request, FormDataProcessorInterface $processor)
     {
         $results = [];
 
         /** @var FormFieldControllerInterface $field */
 
-        foreach ($group->getFields() as $field) {
+        foreach ($processor->getFields() as $field) {
 
             $slug = $field->getFormFieldName();
 
@@ -230,7 +248,7 @@ abstract class AbstractFormSubmissionManager
             $results[$slug]['saved'] = $field->getStateParameter('save_successful');
         }
 
-        $group->run($request, $results);
+        $processor->run($request, $results);
     }
 
     /**
