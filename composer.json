@@ -21,7 +21,10 @@
     "myclabs/deep-copy": "^1.8",
     "pimple/pimple": "^3.2",
     "respect/validation": "^1.1",
-    "twig/twig": "^2.0"
+    "twig/twig": "^2.0",
+    "webtheory/html": "^0.1",
+    "webtheory/guctilitybelt": "^0.1",
+    "webtheory/saveyour": "^0.1"
   },
 
   "require-dev": {
@@ -54,7 +57,7 @@
     "psr-4": {
       "Library\\": "lib/"
     },
-    "files": ["test/start.php"]
+    "files": ["tests/acceptance/start.php"]
   },
 
   "config": {

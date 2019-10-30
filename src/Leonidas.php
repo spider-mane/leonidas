@@ -33,7 +33,7 @@ class Leonidas extends \WebTheoryLeonidasPluginBaseClass
     }
 
     /**
-     * 
+     *
      */
     protected static function bootstrap()
     {
@@ -70,13 +70,13 @@ class Leonidas extends \WebTheoryLeonidasPluginBaseClass
     }
 
     /**
-     * 
+     *
      */
     protected static function bindConfig(PimpleContainer $container)
     {
-        $container['config'] = $container->factory(function ($plugin) {
+        $container['config'] = function ($plugin) {
             return new Repository(require static::$path . '/config/leonidas.php');
-        });
+        };
     }
 
     /**
@@ -84,7 +84,7 @@ class Leonidas extends \WebTheoryLeonidasPluginBaseClass
      */
     protected static function bindTwig(PimpleContainer $container)
     {
-        $container['twig'] = $container->factory(function ($plugin) {
+        $container['twig'] = function ($plugin) {
 
             $config = $plugin['config']->get('twig');
 
@@ -103,7 +103,7 @@ class Leonidas extends \WebTheoryLeonidasPluginBaseClass
             }
 
             return $twig;
-        });
+        };
     }
 
     /**
@@ -111,8 +111,8 @@ class Leonidas extends \WebTheoryLeonidasPluginBaseClass
      */
     protected static function bindField(PimpleContainer $container)
     {
-        $container['field'] = $container->factory(function ($plugin) {
+        $container['field'] = function ($plugin) {
             return new Field;
-        });
+        };
     }
 }
