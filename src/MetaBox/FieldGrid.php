@@ -2,10 +2,11 @@
 
 namespace WebTheory\Leonidas\MetaBox;
 
-use WebTheory\Saveyour\Contracts\FormFieldControllerInterface;
-use WebTheory\Saveyour\Controllers\FormFieldController;
+use Psr\Http\Message\ServerRequestInterface;
 use WebTheory\Leonidas\MetaBox\Contracts\MetaboxContentInterface;
 use WebTheory\Leonidas\Traits\UsesTemplateTrait;
+use WebTheory\Saveyour\Contracts\FormFieldControllerInterface;
+use WebTheory\Saveyour\Controllers\FormFieldController;
 
 class FieldGrid implements MetaboxContentInterface
 {
@@ -307,12 +308,12 @@ class FieldGrid implements MetaboxContentInterface
     /**
      *
      */
-    public function render($post)
+    public function render(ServerRequestInterface $request)
     {
         /** @var FormFieldControllerInterface $field */
         foreach ($this->fields as $field) {
             // triggers field controller to set formfield dynamic value
-            $field->renderFormField($post);
+            $field->render($request);
         }
 
         return $this->renderTemplate([

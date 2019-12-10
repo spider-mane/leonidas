@@ -2,6 +2,7 @@
 
 namespace WebTheory\Leonidas\Forms\Controllers;
 
+use GuzzleHttp\Psr7\ServerRequest;
 use WebTheory\Leonidas\Forms\Controllers\AbstractWpAdminFormSubmissionManager;
 
 class PostMetaBoxFormSubmissionManager extends AbstractWpAdminFormSubmissionManager
@@ -45,7 +46,13 @@ class PostMetaBoxFormSubmissionManager extends AbstractWpAdminFormSubmissionMana
     public function savePostActionCallback($postId, $post, $update)
     {
         if ($update && $this->isSafeToRun($post)) {
-            $this->handleRequest($post);
+
+            $request = ServerRequest::fromGlobals()
+                ->withAttribute('post', $post)
+                ->withAttribute('post_id', $postId)
+                ->withAttribute('update', $update);
+
+            $this->process($request);
         }
     }
 

@@ -2,6 +2,7 @@
 
 namespace WebTheory\Leonidas\Term;
 
+use GuzzleHttp\Psr7\ServerRequest;
 use WebTheory\Leonidas\Fields\AbstractField;
 use WebTheory\Leonidas\Fields\WpAdminField;
 use WebTheory\Leonidas\Traits\UsesTemplateTrait;
@@ -118,12 +119,14 @@ class Field extends AbstractField
      */
     public function render($term = null)
     {
+        $request = ServerRequest::fromGlobals()->withAttribute('term', $term);
+
         echo $this
             ->setTemplate()
             ->renderTemplate([
                 'label' => $this->label,
                 'description' => $this->description,
-                'field' => $this->renderFormField($term)
+                'field' => $this->renderFormField($request)
             ]);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace WebTheory\Leonidas\MetaBox;
 
+use Psr\Http\Message\ServerRequestInterface;
 use WebTheory\Leonidas\MetaBox\Contracts\MetaboxContentInterface;
 use WebTheory\Leonidas\Fields\WpAdminField;
 use WebTheory\Leonidas\Forms\Controllers\AbstractWpAdminFormSubmissionManager;
@@ -257,13 +258,13 @@ class Fieldset implements MetaboxContentInterface
     /**
      *
      */
-    public function render($post)
+    public function render(ServerRequestInterface $request)
     {
         foreach ($this->fields as $field) {
             $field->setRowPadding($this->rowPadding);
             $this->prepareField($field);
         }
 
-        return $this->prepareContainer()->render($post);
+        return $this->prepareContainer()->render($request);
     }
 }

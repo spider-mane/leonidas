@@ -2,7 +2,7 @@
 
 namespace WebTheory\Leonidas;
 
-use Illuminate\Config\Repository;
+use Noodlehaus\Config;
 use Pimple\Container as PimpleContainer;
 use Pimple\Psr11\Container;
 use Twig\Environment;
@@ -75,7 +75,7 @@ class Leonidas extends \WebTheoryLeonidasPluginBaseClass
     protected static function bindConfig(PimpleContainer $container)
     {
         $container['config'] = function ($plugin) {
-            return new Repository(require static::$path . '/config/leonidas.php');
+            return new Config(static::$path . '/config/leonidas.php');
         };
     }
 

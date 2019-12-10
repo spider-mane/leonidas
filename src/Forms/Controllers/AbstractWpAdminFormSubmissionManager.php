@@ -2,7 +2,9 @@
 
 namespace WebTheory\Leonidas\Forms\Controllers;
 
+use Psr\Http\Message\ServerRequestInterface;
 use WebTheory\Leonidas\Modules\AdminNotice;
+use WebTheory\Saveyour\Controllers\FormProcessingCache;
 use WebTheory\Saveyour\Controllers\FormSubmissionManager;
 
 abstract class AbstractWpAdminFormSubmissionManager extends FormSubmissionManager
@@ -41,7 +43,7 @@ abstract class AbstractWpAdminFormSubmissionManager extends FormSubmissionManage
     /**
      *
      */
-    protected function finalizeRequest($request)
+    protected function processResults(ServerRequestInterface $request, FormProcessingCache $cache)
     {
         if (empty($alerts = $this->getAlerts())) {
             return;

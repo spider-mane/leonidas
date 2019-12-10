@@ -2,10 +2,10 @@
 
 namespace WebTheory\Leonidas\Fields\Managers;
 
+use Psr\Http\Message\ServerRequestInterface;
 use WebTheory\Saveyour\Contracts\FieldDataManagerInterface;
-use WebTheory\Saveyour\Managers\AbstractFieldDataManager;
 
-class PostTermManager extends AbstractFieldDataManager implements FieldDataManagerInterface
+class PostTermManager implements FieldDataManagerInterface
 {
     /**
      *
@@ -91,16 +91,17 @@ class PostTermManager extends AbstractFieldDataManager implements FieldDataManag
     /**
      *
      */
-    public function getCurrentData($post)
+    public function getCurrentData(ServerRequestInterface $request)
     {
-        return get_the_terms($post->ID, $this->taxonomy);
+        return get_the_terms($request->getAttribute('post')->ID, $this->taxonomy);
     }
 
     /**
      *
      */
-    public function handleSubmittedData($post, $data): bool
+    public function handleSubmittedData(ServerRequestInterface $request, $data): bool
     {
+        $post = $request->getAttribute('post');
         $original = $this->getCurrentData($post);
 
         try {

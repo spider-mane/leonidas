@@ -8,7 +8,7 @@
  * @package   Leonidas
  * @license   GPL-3.0-or-later
  * @copyright Copyright (C) Chris Williams, All rights reserved.
- * @link      https://github.com/spider-mane/backalley
+ * @link      https://github.com/spider-mane/lenidas
  * @author    Chris Williams <spider.mane.web@gmail.com>
  */
 

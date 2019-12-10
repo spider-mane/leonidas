@@ -2,10 +2,11 @@
 
 namespace WebTheory\Leonidas\MetaBox;
 
-use WebTheory\Saveyour\Contracts\FormFieldControllerInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use WebTheory\Leonidas\Fields\AbstractField;
-use WebTheory\Leonidas\Traits\UsesTemplateTrait;
 use WebTheory\Leonidas\MetaBox\Contracts\MetaboxFieldInterface;
+use WebTheory\Leonidas\Traits\UsesTemplateTrait;
+use WebTheory\Saveyour\Contracts\FormFieldControllerInterface;
 
 class Field extends AbstractField implements MetaboxFieldInterface
 {
@@ -111,7 +112,7 @@ class Field extends AbstractField implements MetaboxFieldInterface
     /**
      *
      */
-    public function render($post)
+    public function render(ServerRequestInterface $request)
     {
         return $this->renderTemplate([
             'label' => $this->label,
@@ -119,7 +120,7 @@ class Field extends AbstractField implements MetaboxFieldInterface
             'row_padding' => $this->rowPadding,
             'description' => $this->description,
             'submit_button' => $this->submitButton,
-            'field' => $this->renderFormField($post),
+            'field' => $this->renderFormField($request),
             'root_width' => static::ROW_TITLE_COL_WITDH,
         ]);
     }

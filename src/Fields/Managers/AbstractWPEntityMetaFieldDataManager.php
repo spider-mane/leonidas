@@ -2,10 +2,10 @@
 
 namespace WebTheory\Leonidas\Fields\Managers;
 
+use Psr\Http\Message\ServerRequestInterface;
 use WebTheory\Saveyour\Contracts\FieldDataManagerInterface;
-use WebTheory\Saveyour\Managers\AbstractFieldDataManager;
 
-abstract class AbstractWPEntityMetaFieldDataManager extends AbstractFieldDataManager implements FieldDataManagerInterface
+abstract class AbstractWPEntityMetaFieldDataManager implements FieldDataManagerInterface
 {
     /**
      * @var string
@@ -32,8 +32,10 @@ abstract class AbstractWPEntityMetaFieldDataManager extends AbstractFieldDataMan
     /**
      *
      */
-    public function getCurrentData($entity)
+    public function getCurrentData(ServerRequestInterface $request)
     {
+        $entity = $request->getAttribute(static::MODEL);
+
         return get_metadata(
             static::MODEL,
             $entity->{static::ID_KEY} ?? null,
@@ -45,14 +47,16 @@ abstract class AbstractWPEntityMetaFieldDataManager extends AbstractFieldDataMan
     /**
      *
      */
-    public function handleSubmittedData($entity, $data): bool
+    public function handleSubmittedData(ServerRequestInterface $request, $data): bool
     {
+        $entity = $request->getAttribute(static::MODEL);
+
         $response = (bool) update_metadata(
             static::MODEL,
             $entity->{static::ID_KEY},
             $this->metaKey,
             $data,
-            $this->getCurrentData($entity)
+            $this->getCurrentData($request)
         );
 
         return $response;

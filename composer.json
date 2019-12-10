@@ -1,5 +1,5 @@
 {
-  "name": "webtheory/backalley",
+  "name": "webtheory/leonidas",
   "description": "Wordpress development framework",
   "type": "wordpress-muplugin",
   "license": "GPL-3.0-or-later",
@@ -10,21 +10,19 @@
   }],
 
   "require": {
-    "php": ">=7.0.0",
+    "php": ">=7.1",
     "composer/installers": "^1.7",
-    "giggsey/libphonenumber-for-php": "^8.10",
-    "illuminate/config": "^5.8",
-    "illuminate/contracts": "^5.8",
-    "illuminate/support": "^5.8",
-    "league/fractal": "^0.17",
+    "guzzlehttp/psr7": "^1.6",
+    "hassankhan/config": "^2.1",
+    "league/container": "^3.3",
     "monolog/monolog": "^1.24",
     "myclabs/deep-copy": "^1.8",
     "pimple/pimple": "^3.2",
     "respect/validation": "^1.1",
     "twig/twig": "^2.0",
-    "webtheory/html": "^0.1",
-    "webtheory/guctilitybelt": "^0.1",
-    "webtheory/saveyour": "^0.1"
+    "webtheory/guctilitybelt": "^0.2.0",
+    "webtheory/html": "^0.1.0",
+    "webtheory/saveyour": "^0.1.0"
   },
 
   "require-dev": {
@@ -33,12 +31,7 @@
     "filp/whoops": "^2.5",
     "friendsofphp/php-cs-fixer": "^2.15",
     "geocoder-php/google-maps-provider": "^4.4",
-    "guzzlehttp/guzzle": "~6.0",
-    "illuminate/mail": "^5.8",
-    "jbzoo/utils": "^2.3",
-    "moneyphp/money": "^3.2",
-    "php-http/guzzle6-adapter": "^2.0",
-    "php-http/message": "^1.8",
+    "giggsey/libphonenumber-for-php": "^8.10",
     "phpbench/phpbench": "@dev",
     "phpunit/phpunit": "^8.4",
     "symfony/thanks": "^1.1",
@@ -48,14 +41,14 @@
 
   "autoload": {
     "psr-4": {
-      "WebTheory\\": "src/"
+      "WebTheory\\Leonidas\\": "src/"
     },
     "files": ["leonidas.php"]
   },
 
   "autoload-dev": {
     "psr-4": {
-      "Library\\": "lib/"
+      "WebTheory\\Leonidas\\Tests\\": "tests/"
     },
     "files": ["tests/acceptance/start.php"]
   },

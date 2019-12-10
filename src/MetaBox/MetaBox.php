@@ -2,9 +2,10 @@
 
 namespace WebTheory\Leonidas\MetaBox;
 
-use WebTheory\Saveyour\Fields\Hidden as HiddenInput;
+use GuzzleHttp\Psr7\ServerRequest;
 use WebTheory\Html\Html;
 use WebTheory\Leonidas\MetaBox\Contracts\MetaboxContentInterface;
+use WebTheory\Saveyour\Fields\Hidden as HiddenInput;
 
 /**
  * @package Leonidas-Core
@@ -308,13 +309,14 @@ class MetaBox
         $html = '';
         $html .= $this->generateNonceField();
         $i = count($this->content);
+        $request = ServerRequest::fromGlobals()->withAttribute('post', $post);
 
         $html .= Html::open('div', ['class' => 'backalley-wrap']);
 
         foreach ($this->content as $content) {
             $i--;
 
-            $html .= $content->render($post);
+            $html .= $content->render($request);
 
             if ($i > 0) {
                 $html .= '<hr>';

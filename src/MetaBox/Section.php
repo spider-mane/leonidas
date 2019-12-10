@@ -2,6 +2,7 @@
 
 namespace WebTheory\Leonidas\MetaBox;
 
+use Psr\Http\Message\ServerRequestInterface;
 use WebTheory\Html\Html;
 use WebTheory\Leonidas\MetaBox\Contracts\MetaboxContentInterface;
 
@@ -136,7 +137,7 @@ class Section implements MetaboxContentInterface
     /**
      *
      */
-    public function render($post)
+    public function render(ServerRequestInterface $request)
     {
         $html = '';
 
@@ -156,7 +157,7 @@ class Section implements MetaboxContentInterface
         }
 
         foreach ($this->content as $content) {
-            $html .= $content->render($post);
+            $html .= $content->render($request);
         }
 
         $html .= Html::close($container);

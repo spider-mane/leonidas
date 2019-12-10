@@ -2,10 +2,9 @@
 
 namespace WebTheory\Leonidas\Fields;
 
-use WebTheory\Saveyour\Contracts\FormFieldInterface;
-use WebTheory\Saveyour\Fields\Input;
-use WebTheory\Saveyour\Fields\Text;
+use Psr\Http\Message\ServerRequestInterface;
 use WebTheory\Leonidas\Contracts\WpAdminFieldInterface;
+use WebTheory\Saveyour\Contracts\FormFieldInterface;
 
 class AbstractField implements WpAdminFieldInterface
 {
@@ -97,8 +96,8 @@ class AbstractField implements WpAdminFieldInterface
     /**
      *
      */
-    protected function renderFormField($object): FormFieldInterface
+    protected function renderFormField(ServerRequestInterface $request): FormFieldInterface
     {
-        return $this->formFieldController->renderFormField($object);
+        return $this->formFieldController->render($request);
     }
 }

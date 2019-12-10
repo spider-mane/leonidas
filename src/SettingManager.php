@@ -2,9 +2,9 @@
 
 namespace WebTheory\Leonidas;
 
-use WebTheory\Leonidas\Fields\WpAdminField;
+use WebTheory\Saveyour\InputPurifier;
 
-class SettingManager extends WpAdminField
+class SettingManager extends InputPurifier
 {
     /**
      * option_group
@@ -86,17 +86,8 @@ class SettingManager extends WpAdminField
      * Object that can convert a serialized format to a php readable data format
      * and vice versa. This allows unlimited flexability in allowable
      * serialization formats.
-     *
-     * @var
      */
     protected $serializedDataReader;
-
-    /**
-     * sanitize_callback
-     *
-     * @var callable
-     */
-    protected $sanitizeCallback;
 
     /**
      *
@@ -292,7 +283,7 @@ class SettingManager extends WpAdminField
         $args = [
             'type' => $this->type,
             'description' => $this->description,
-            'sanitize_callback' => [$this, 'processInput'],
+            'sanitize_callback' => [$this, 'filterInput'],
             'show_in_rest' => $this->showInRest,
             'default' => $this->defaultValue,
         ];
@@ -311,27 +302,9 @@ class SettingManager extends WpAdminField
     /**
      *
      */
-    public function processInput($input)
+    protected function returnIfFailed()
     {
-        if (!isset($this->sanitizeCallback)) {
-            $input = $this->filterInput($input);
-        } else {
-            $input = ${$this->sanitizeCallback}($input, $this);
-        }
-
-        return $input;
-    }
-
-    /**
-     *
-     */
-    protected function filterInput($input)
-    {
-        if (true === $this->validateInput($input)) {
-            return $this->sanitizeInput($input);
-        } else {
-            return get_option($this->optionName, $this->defaultValue);
-        }
+        return get_option($this->optionName, $this->defaultValue);
     }
 
     /**
@@ -339,7 +312,11 @@ class SettingManager extends WpAdminField
      */
     protected function handleRuleViolation($rule)
     {
-        add_settings_error($this->optionName, "invalid-{$rule}", $this->alerts[$rule], 'error');
+        $alert = $this->alerts[$rule] ?? null;
+
+        if ($alert) {
+            add_settings_error($this->optionName, "invalid-{$rule}", $alert, 'error');
+        }
 
         return $this;
     }
