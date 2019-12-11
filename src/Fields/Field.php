@@ -2,13 +2,13 @@
 
 namespace WebTheory\Leonidas\Fields;
 
-use WebTheory\Saveyour\Contracts\MultiFieldDataManagerFactoryInterface;
-use WebTheory\Saveyour\Contracts\MultiFieldFactoryInterface;
-use WebTheory\Saveyour\Field as BaseField;
 use WebTheory\Leonidas\Fields\Factory as WpFormFieldFactory;
 use WebTheory\Leonidas\Fields\Managers\Factory as WpDataManagerFactory;
+use WebTheory\Saveyour\Contracts\FieldDataManagerResolverFactoryInterface;
+use WebTheory\Saveyour\Contracts\FormFieldResolverFactoryInterface;
+use WebTheory\Saveyour\Factories\SimpleFieldFactory;
 
-class Field extends BaseField
+class Field extends SimpleFieldFactory
 {
     /**
      *
@@ -18,7 +18,7 @@ class Field extends BaseField
     /**
      *
      */
-    protected function createFormFieldFactory(array $options): MultiFieldFactoryInterface
+    protected function createFormFieldFactory(array $options): FormFieldResolverFactoryInterface
     {
         $namespaces = $options['namespaces'] ?? [];
         $fields = $options['fields'] ?? [];
@@ -29,7 +29,7 @@ class Field extends BaseField
     /**
      *
      */
-    protected function createDataManagerFactory(array $options): MultiFieldDataManagerFactoryInterface
+    protected function createDataManagerFactory(array $options): FieldDataManagerResolverFactoryInterface
     {
         $namespaces = $options['namespaces'] ?? [];
         $managers = $options['managers'] ?? [];

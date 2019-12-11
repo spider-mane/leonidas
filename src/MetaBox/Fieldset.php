@@ -3,9 +3,9 @@
 namespace WebTheory\Leonidas\MetaBox;
 
 use Psr\Http\Message\ServerRequestInterface;
-use WebTheory\Leonidas\MetaBox\Contracts\MetaboxContentInterface;
 use WebTheory\Leonidas\Fields\WpAdminField;
 use WebTheory\Leonidas\Forms\Controllers\AbstractWpAdminFormSubmissionManager;
+use WebTheory\Leonidas\MetaBox\Contracts\MetaboxContentInterface;
 use WebTheory\Leonidas\MetaBox\Contracts\MetaboxFieldInterface;
 
 class Fieldset implements MetaboxContentInterface
@@ -176,6 +176,18 @@ class Fieldset implements MetaboxContentInterface
     public function getFields(): array
     {
         return $this->fields;
+    }
+
+    /**
+     *
+     */
+    public function setFields(array $fields)
+    {
+        $this->fields = [];
+
+        $this->addFields($fields);
+
+        return $this;
     }
 
     /**

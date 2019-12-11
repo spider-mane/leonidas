@@ -5,7 +5,7 @@ return [
     /**
      *
      */
-    'ba_delivery_platforms' => [
+    'wts_test_tax' => [
 
         'hierarchical' => false,
         'meta_box_cb' => false,
@@ -19,7 +19,7 @@ return [
         'show_in_rest' => true,
         'show_tagcloud' => false,
         'show_ui' => true,
-        'object_types' => 'ba_location',
+        'object_types' => 'wts_test_cpt',
 
         'description' => '',
 
@@ -38,7 +38,7 @@ return [
     /**
      *
      */
-    'ba_menu_category' => [
+    'wts_test_tax_2' => [
 
         'hierarchical' => true,
         'meta_box_cb' => null,
@@ -52,7 +52,7 @@ return [
         'show_in_rest' => true,
         'show_tagcloud' => true,
         'show_ui' => true,
-        'object_types' => 'ba_menu_item',
+        'object_types' => 'wts_test_cpt',
 
         'description' => 'Use this to organize',
 
@@ -67,71 +67,4 @@ return [
             'hierarchical' => true
         ],
     ],
-
-    /**
-     *
-     */
-    'ba_protein' => [
-
-        'hierarchical' => false,
-        'meta_box_cb' => null,
-        'public' => true,
-        'publicly_queryable' => true,
-        'rest_base' => 'menu-item-protein',
-        'show_admin_column' => true,
-        'show_in_menu' => true,
-        'show_in_nav_menus' => true,
-        'show_in_quick_edit' => false,
-        'show_in_rest' => true,
-        'show_tagcloud' => true,
-        'show_ui' => true,
-        'object_types' => 'ba_menu_item',
-
-        'description' => '',
-
-        'labels' => [
-            'name' => 'Proteins',
-            'singular_name' => 'Protein'
-        ],
-
-        'rewrite' => [
-            'slug' => 'proteins',
-            'with_front' => true,
-            'hierarchical' => false
-        ],
-    ],
-
-    /**
-     *
-     */
-    'ba_diet' => [
-
-        'hierarchical' => false,
-        'meta_box_cb' => false,
-        'public' => true,
-        'publicly_queryable' => true,
-        'rest_base' => 'menu-item-diet',
-        'show_admin_column' => true,
-        'show_in_menu' => true,
-        'show_in_nav_menus' => true,
-        'show_in_quick_edit' => false,
-        'show_in_rest' => true,
-        'show_tagcloud' => true,
-        'show_ui' => true,
-        'object_types' => 'ba_menu_item',
-
-        'description' => '',
-
-        'labels' => [
-            'name' => 'Diets',
-            'singular_name' => 'Diet'
-        ],
-
-        'rewrite' => [
-            'slug' => 'special-diets',
-            'with_front' => true,
-            'hierarchical' => false
-        ],
-    ],
-
 ];

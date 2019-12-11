@@ -1,13 +1,16 @@
 <?php
 
-use WebTheory\Saveyour\Controllers\FormFieldController;
-use WebTheory\Saveyour\Fields\Time;
-use WebTheory\Leonidas\MetaBox\MetaBox;
-use WebTheory\Leonidas\MetaBox\Section;
 use WebTheory\Leonidas\Fields\Managers\PostMetaFieldManager;
 use WebTheory\Leonidas\Forms\Controllers\PostMetaBoxFormSubmissionManager;
 use WebTheory\Leonidas\MetaBox\FieldGrid;
-use Respect\Validation\Validator as v;
+use WebTheory\Leonidas\MetaBox\MetaBox;
+use WebTheory\Leonidas\MetaBox\Section;
+use WebTheory\Saveyour\Controllers\FormFieldController;
+use WebTheory\Saveyour\Fields\Time;
+
+################################################################################
+
+$postType = 'wts_test_cpt';
 
 // rows
 $days = [

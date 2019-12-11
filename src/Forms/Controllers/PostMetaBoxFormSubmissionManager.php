@@ -3,6 +3,7 @@
 namespace WebTheory\Leonidas\Forms\Controllers;
 
 use GuzzleHttp\Psr7\ServerRequest;
+use WP_Post_Type;
 use WebTheory\Leonidas\Forms\Controllers\AbstractWpAdminFormSubmissionManager;
 
 class PostMetaBoxFormSubmissionManager extends AbstractWpAdminFormSubmissionManager
@@ -11,6 +12,11 @@ class PostMetaBoxFormSubmissionManager extends AbstractWpAdminFormSubmissionMana
      * @var WP_Post_Type
      */
     protected $postType;
+
+    /**
+     * {@inheritDoc}
+     */
+    protected const TRANSIENT__RULE_VIOLATION = 'leonidas.postMetaBox.field.ruleViolation';
 
     /**
      *

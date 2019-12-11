@@ -119,14 +119,15 @@ class Field extends AbstractField
      */
     public function render($term = null)
     {
-        $request = ServerRequest::fromGlobals()->withAttribute('term', $term);
+        $request = ServerRequest::fromGlobals();
 
-        echo $this
-            ->setTemplate()
+        echo $this->setTemplate()
             ->renderTemplate([
                 'label' => $this->label,
                 'description' => $this->description,
-                'field' => $this->renderFormField($request)
+                'field' => $this->renderFormField(
+                    $term ? $request->withAttribute('term', $term) : $request
+                )
             ]);
     }
 }

@@ -1,14 +1,14 @@
 <?php
 
+use Respect\Validation\Validator as v;
+use WebTheory\GuctilityBelt\SelectOptions\UsStatesAndTerritories;
+use WebTheory\Leonidas\AdminPage\SettingsField;
+use WebTheory\Leonidas\AdminPage\SettingsPage;
+use WebTheory\Leonidas\AdminPage\SettingsSection;
+use WebTheory\Leonidas\SettingManager;
 use WebTheory\Saveyour\Fields\Email;
 use WebTheory\Saveyour\Fields\Select;
 use WebTheory\Saveyour\Fields\Tel;
-use WebTheory\GuctilityBelt\SelectOptions\UsStatesAndTerritories;
-use WebTheory\Leonidas\AdminPage\SettingsSection;
-use WebTheory\Leonidas\AdminPage\SettingsField;
-use WebTheory\Leonidas\AdminPage\SettingsPage;
-use WebTheory\Leonidas\SettingManager;
-use Respect\Validation\Validator as v;
 
 $group1 = 'ba-test';
 
@@ -37,6 +37,7 @@ $setting3 = (new SettingManager($group1, 'ba-test-3'))
  * add page
  */
 $page1 = (new SettingsPage('company_info'))
+    ->addFieldGroups($group1)
     ->setMenuTitle('Company')
     ->setPageTitle('Company Info')
     ->setIcon('dashicons-store')
@@ -44,7 +45,6 @@ $page1 = (new SettingsPage('company_info'))
     ->setDescription('this is a test page')
     ->setPosition(100)
     ->setSubMenuName('Basic Info')
-    ->addFieldGroups($group1)
     ->hook()
     ->getMenuSlug();
 

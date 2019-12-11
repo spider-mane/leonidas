@@ -9,6 +9,7 @@ use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
+use WebTheory\Leonidas\Field as FieldProxy;
 use WebTheory\Leonidas\Fields\Field;
 
 class Leonidas extends \WebTheoryLeonidasPluginBaseClass
@@ -42,8 +43,17 @@ class Leonidas extends \WebTheoryLeonidasPluginBaseClass
         static::bindConfig($container);
         static::bindTwig($container);
         static::bindField($container);
-
         static::$container = new Container($container);
+
+        static::initiateProxies();
+    }
+
+    /**
+     *
+     */
+    protected static function initiateProxies()
+    {
+        FieldProxy::objectProxyInit();
     }
 
     /**

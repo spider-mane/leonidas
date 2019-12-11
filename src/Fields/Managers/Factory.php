@@ -2,16 +2,16 @@
 
 namespace WebTheory\Leonidas\Fields\Managers;
 
-use WebTheory\Saveyour\Contracts\MultiFieldDataManagerFactoryInterface;
-use WebTheory\Saveyour\DataManagerFactory;
-use WebTheory\Leonidas\Fields\Managers\PostTermManager;
 use WebTheory\Leonidas\Fields\Managers\PostMetaFieldManager;
+use WebTheory\Leonidas\Fields\Managers\PostTermManager;
 use WebTheory\Leonidas\Fields\Managers\TermMetaDataManager;
+use WebTheory\Saveyour\Contracts\FieldDataManagerResolverFactoryInterface;
+use WebTheory\Saveyour\Factories\DataManagerFactory;
 
-class Factory extends DataManagerFactory implements MultiFieldDataManagerFactoryInterface
+class Factory extends DataManagerFactory implements FieldDataManagerResolverFactoryInterface
 {
     public const NAMESPACES = [
-        'webtheory.wordpress' => __NAMESPACE__
+        'webtheory.leonidas' => __NAMESPACE__
     ] + parent::NAMESPACES;
 
     public const MANAGERS = [

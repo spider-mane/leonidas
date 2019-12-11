@@ -17,7 +17,7 @@ abstract class AbstractWpAdminFormSubmissionManager extends FormSubmissionManage
     /**
      *
      */
-    protected const TRANSIENT__RULE_VIOLATION = 'backalley.form.field.ruleViolation';
+    protected const TRANSIENT__RULE_VIOLATION = 'leonidas.form.field.ruleViolation';
 
     /**
      *
@@ -45,8 +45,10 @@ abstract class AbstractWpAdminFormSubmissionManager extends FormSubmissionManage
      */
     protected function processResults(ServerRequestInterface $request, FormProcessingCache $cache)
     {
-        if (empty($alerts = $this->getAlerts())) {
-            return;
+        $alerts = array_filter($cache->inputViolations());
+
+        if (empty($alerts)) {
+            return $this;
         }
 
         $transient = static::TRANSIENT__RULE_VIOLATION;
@@ -67,15 +69,19 @@ abstract class AbstractWpAdminFormSubmissionManager extends FormSubmissionManage
     public function adminNoticeActionCallback()
     {
         $transient = static::TRANSIENT__RULE_VIOLATION;
+        $fields = get_transient($transient);
 
-        if (false !== $alerts = get_transient($transient)) {
+        if (false === $fields) {
+            return;
+        }
 
+        foreach ($fields as $alerts) {
             foreach ($alerts as $alert) {
                 echo (new AdminNotice($alert))->setDismissible(false);
             }
-
-            delete_transient($transient);
         }
+
+        delete_transient($transient);
     }
 
     /**

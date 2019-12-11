@@ -2,6 +2,8 @@
 
 namespace WebTheory\Leonidas\Forms\Controllers;
 
+use GuzzleHttp\Psr7\ServerRequest;
+use WP_Taxonomy;
 use WebTheory\Leonidas\Forms\Controllers\AbstractWpAdminFormSubmissionManager;
 
 class TermFieldFormSubmissionManager extends AbstractWpAdminFormSubmissionManager
@@ -10,6 +12,11 @@ class TermFieldFormSubmissionManager extends AbstractWpAdminFormSubmissionManage
      * @var WP_Taxonomy
      */
     protected $taxonomy;
+
+    /**
+     * {@inheritDoc}
+     */
+    protected const TRANSIENT__RULE_VIOLATION = 'leonidas.term.field.ruleViolation';
 
     /**
      *
@@ -47,7 +54,13 @@ class TermFieldFormSubmissionManager extends AbstractWpAdminFormSubmissionManage
     public function saveTermActionCallback($termId)
     {
         if ($this->isSafeToRun($termId)) {
-            $this->handleRequest(get_term($termId, $this->taxonomy->name, 'OBJECT'));
+
+            $term = get_term($termId, $this->taxonomy->name, 'OBJECT');
+            $request = ServerRequest::fromGlobals()
+                ->withAttribute('term', $term)
+                ->withAttribute('term_id', $termId);
+
+            $this->process($request);
         }
     }
 
@@ -57,7 +70,6 @@ class TermFieldFormSubmissionManager extends AbstractWpAdminFormSubmissionManage
     public function isSafeToRun($termId)
     {
         if (!current_user_can('manage_categories', $termId)) {
-
             return false;
         }
 

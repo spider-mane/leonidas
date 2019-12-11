@@ -11,7 +11,7 @@ $finder = Finder::create()
 return Config::create()
   ->setFinder($finder)
   ->setRules([
-    '@PSR2' => true,
+    '@PSR12' => true,
 
     'blank_line_after_namespace' => true,
     'blank_line_after_opening_tag' => true,

@@ -1,6 +1,6 @@
 {
   "name": "webtheory/leonidas",
-  "description": "Wordpress development framework",
+  "description": "OOP Framework to simplify working with the WordPress api",
   "type": "wordpress-muplugin",
   "license": "GPL-3.0-or-later",
 
@@ -14,9 +14,7 @@
     "composer/installers": "^1.7",
     "guzzlehttp/psr7": "^1.6",
     "hassankhan/config": "^2.1",
-    "league/container": "^3.3",
     "monolog/monolog": "^1.24",
-    "myclabs/deep-copy": "^1.8",
     "pimple/pimple": "^3.2",
     "respect/validation": "^1.1",
     "twig/twig": "^2.0",
@@ -55,12 +53,5 @@
 
   "config": {
     "sort-packages": true
-  },
-
-  "extra": {
-    "assets-files": [
-      "public/admin/assets/css/backalley-admin-styles.css",
-      "public/admin/assets/js/backalley-admin.js"
-    ]
   }
 }

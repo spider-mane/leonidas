@@ -2,7 +2,7 @@
 
 namespace WebTheory\Leonidas\Term;
 
-use ObjectMetaManager;
+use WebTheory\Leonidas\ObjectMetaManager;
 
 class MetaManager extends ObjectMetaManager
 {
