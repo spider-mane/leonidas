@@ -51,17 +51,17 @@ class Leonidas extends \WebTheoryLeonidasPluginBaseClass
     /**
      *
      */
-    protected static function initiateProxies()
+    protected static function hook()
     {
-        FieldProxy::objectProxyInit();
+        add_action('admin_enqueue_scripts', [static::class, 'enqueue']);
     }
 
     /**
      *
      */
-    protected static function hook()
+    protected static function initiateProxies()
     {
-        add_action('admin_enqueue_scripts', [static::class, 'enqueue']);
+        FieldProxy::objectProxyInit();
     }
 
     /**
