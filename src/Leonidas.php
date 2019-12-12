@@ -73,10 +73,10 @@ class Leonidas extends \WebTheoryLeonidasPluginBaseClass
         wp_enqueue_script('jquery');
 
         # backalley scripts
-        wp_enqueue_script('backalley-core-admin-script', static::$adminUrl . '/assets/js/backalley-admin.js', null, time(), true);
+        wp_enqueue_script('backalley-core-admin-script', static::$assets . '/js/backalley-admin.js', null, time(), true);
 
         # backalley styles
-        wp_enqueue_style('backalley-core-styles', static::$adminUrl . '/assets/css/backalley-admin-styles.css', null, time());
+        wp_enqueue_style('backalley-core-styles', static::$assets . '/css/backalley-admin-styles.css', null, time());
     }
 
     /**
@@ -98,7 +98,7 @@ class Leonidas extends \WebTheoryLeonidasPluginBaseClass
 
             $config = $plugin['config']->get('twig');
 
-            $loader = new FilesystemLoader(static::$adminTemplates);
+            $loader = new FilesystemLoader(static::$templates);
 
             $twig = new Environment($loader, $config['options']);
 

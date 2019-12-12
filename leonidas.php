@@ -27,8 +27,8 @@ if (!class_exists('WebTheoryLeonidasPluginBaseClass')) {
         protected static $url;
         protected static $path;
         protected static $base;
-        protected static $adminUrl;
-        protected static $adminTemplates;
+        protected static $assets;
+        protected static $templates;
 
         protected static $loaded = false;
 
@@ -38,8 +38,8 @@ if (!class_exists('WebTheoryLeonidasPluginBaseClass')) {
             static::$url = plugin_dir_url(__FILE__);
             static::$base = plugin_basename(__FILE__);
 
-            static::$adminUrl = static::$url . "public/admin";
-            static::$adminTemplates = static::$path . "/public/admin/templates";
+            static::$assets = static::$url . "/assets/dist";
+            static::$templates = static::$path . "/templates";
 
             static::$loaded = true;
         }
