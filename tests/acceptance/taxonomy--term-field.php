@@ -16,10 +16,9 @@ $taxonomy = 'wts_test_tax';
 
 $factory = Leonidas::get('container')->get('field');
 
-$state = $factory->create([
+$state = Field::select([
     'request_var' => 'test-1',
     'type' => [
-        '@create' => 'select',
         'options' => UsStatesAndTerritories::states(),
         'label' => 'Test Label',
         'classlist' => ['regular-text'],
