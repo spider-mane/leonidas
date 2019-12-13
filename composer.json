@@ -41,7 +41,6 @@
     "psr-4": {
       "WebTheory\\Leonidas\\": "src/"
     },
-    "files": ["leonidas.php"]
   },
 
   "autoload-dev": {
