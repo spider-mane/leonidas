@@ -2,6 +2,8 @@
 
 namespace WebTheory\Leonidas\Helpers;
 
+use function WebTheory\GuctilityBelt\sort_objects_array;
+
 /**
  *
  */

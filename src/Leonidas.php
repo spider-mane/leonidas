@@ -28,6 +28,8 @@ class Leonidas extends \WebTheoryLeonidasPluginBaseClass
             throw new \Exception('Do not call ' . __METHOD__ . ' method.');
         }
 
+        require dirname(__FILE__) . '/Helpers/functions.php';
+
         static::load();
         static::bootstrap();
         static::hook();
