@@ -10,17 +10,12 @@ class PostTermManager implements FieldDataManagerInterface
     /**
      *
      */
-    private $taxonomy;
+    protected $taxonomy;
 
     /**
      * @var bool
      */
-    private $newTermsAppended = false;
-
-    /**
-     * @var bool
-     */
-    private $commaSeparatedList = false;
+    protected $appendNewTerms = false;
 
     /**
      *
@@ -41,49 +36,25 @@ class PostTermManager implements FieldDataManagerInterface
     }
 
     /**
-     * Get the value of newTermsAppended
+     * Get the value of appendNewTerms
      *
      * @return bool
      */
     public function areNewTermsAppended(): bool
     {
-        return $this->newTermsAppended;
+        return $this->appendNewTerms;
     }
 
     /**
-     * Set the value of newTermsAppended
+     * Set the value of appendNewTerms
      *
-     * @param bool $newTermsAppended
+     * @param bool $appendNewTerms
      *
      * @return self
      */
-    public function setNewTermsAppended(bool $newTermsAppended)
+    public function setAppendNewTerms(bool $appendNewTerms)
     {
-        $this->newTermsAppended = $newTermsAppended;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of commaSeparatedList
-     *
-     * @return bool
-     */
-    public function isCommaSeparatedList(): bool
-    {
-        return $this->commaSeparatedList;
-    }
-
-    /**
-     * Set the value of commaSeparatedList
-     *
-     * @param bool $commaSeparatedList
-     *
-     * @return self
-     */
-    public function setCommaSeparatedList(bool $commaSeparatedList)
-    {
-        $this->commaSeparatedList = $commaSeparatedList;
+        $this->appendNewTerms = $appendNewTerms;
 
         return $this;
     }
@@ -105,7 +76,7 @@ class PostTermManager implements FieldDataManagerInterface
         $original = $this->getCurrentData($post);
 
         try {
-            $result = wp_set_post_terms($post->ID, $data, $this->taxonomy, $this->newTermsAppended);
+            $result = wp_set_post_terms($post->ID, $data, $this->taxonomy, $this->appendNewTerms);
         } catch (\WP_Error $e) {
             $result = null;
         }

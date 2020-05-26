@@ -7,15 +7,17 @@ use WebTheory\Leonidas\ObjectMetaManager;
 class MetaManager extends ObjectMetaManager
 {
     /**
-     *
+     * {@inheritDoc}
      */
-    protected $objectType = 'term';
+    protected const OBJECT_TYPE = 'term';
 
     /**
-     *
+     * {@inheritDoc}
      */
-    public function __construct($metaKey)
-    {
-        $this->metaKey = $metaKey;
-    }
+    protected const GET_OBJECT_FUNCTION = 'get_term';
+
+    /**
+     * {@inheritDoc}
+     */
+    protected const OBJECT_ID_KEY = 'term_id';
 }

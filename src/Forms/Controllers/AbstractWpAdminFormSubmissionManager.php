@@ -17,15 +17,8 @@ abstract class AbstractWpAdminFormSubmissionManager extends FormSubmissionManage
     /**
      *
      */
-    protected const TRANSIENT__RULE_VIOLATION = 'leonidas.form.field.ruleViolation';
-
-    /**
-     *
-     */
     protected function hook()
     {
-        add_action('admin_notices', [$this, 'adminNoticeActionCallback'], null, 0);
-
         return $this;
     }
 
@@ -45,43 +38,17 @@ abstract class AbstractWpAdminFormSubmissionManager extends FormSubmissionManage
      */
     protected function processResults(ServerRequestInterface $request, FormProcessingCache $cache)
     {
-        $alerts = array_filter($cache->inputViolations());
+        $fields = array_filter($cache->inputViolations());
 
-        if (empty($alerts)) {
-            return $this;
-        }
-
-        $transient = static::TRANSIENT__RULE_VIOLATION;
-        $exp = 300;
-
-        if (false === $messages = get_transient($transient)) {
-            set_transient($transient, $alerts, $exp);
-        } else {
-            set_transient($transient, $messages + $alerts, $exp);
-        }
-
-        return $this;
-    }
-
-    /**
-     *
-     */
-    public function adminNoticeActionCallback()
-    {
-        $transient = static::TRANSIENT__RULE_VIOLATION;
-        $fields = get_transient($transient);
-
-        if (false === $fields) {
-            return;
-        }
-
-        foreach ($fields as $alerts) {
-            foreach ($alerts as $alert) {
-                echo (new AdminNotice($alert))->setDismissible(false);
+        if ($fields) {
+            foreach ($fields as $alerts) {
+                foreach ($alerts as $alert) {
+                    (new AdminNotice($alert))->setDismissible(false)->register();
+                }
             }
         }
 
-        delete_transient($transient);
+        return $this;
     }
 
     /**

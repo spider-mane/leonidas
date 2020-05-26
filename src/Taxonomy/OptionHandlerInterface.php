@@ -5,7 +5,7 @@ namespace WebTheory\Leonidas\Taxonomy;
 interface OptionHandlerInterface
 {
     /**
-     * Set the args to into values need by the functionality
+     * Set arguments into values needed to implement the functionality
      *
      * @param \WP_Taxonomy $taxonomy
      * @param array $args The arguments provided

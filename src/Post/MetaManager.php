@@ -2,20 +2,22 @@
 
 namespace WebTheory\Leonidas\Post;
 
-use ObjectMetaManager;
+use WebTheory\Leonidas\ObjectMetaManager;
 
 class MetaManager extends ObjectMetaManager
 {
     /**
-     *
+     * {@inheritDoc}
      */
-    protected $objectType = 'post';
+    protected const OBJECT_TYPE = 'post';
 
     /**
-     *
+     * {@inheritDoc}
      */
-    public function __construct($metaKey)
-    {
-        $this->metaKey = $metaKey;
-    }
+    protected const GET_OBJECT_FUNCTION = 'get_post';
+
+    /**
+     * {@inheritDoc}
+     */
+    protected const OBJECT_ID_KEY = 'ID';
 }

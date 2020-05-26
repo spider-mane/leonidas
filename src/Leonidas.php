@@ -11,6 +11,7 @@ use Twig\TwigFilter;
 use Twig\TwigFunction;
 use WebTheory\Leonidas\Field as FieldProxy;
 use WebTheory\Leonidas\Fields\Field;
+use WebTheory\Leonidas\Modules\AdminNoticeLoader;
 
 class Leonidas extends \WebTheoryLeonidasPluginBaseClass
 {
@@ -48,6 +49,7 @@ class Leonidas extends \WebTheoryLeonidasPluginBaseClass
         static::$container = new Container($container);
 
         static::initiateProxies();
+        static::prepareAdminAlerts();
     }
 
     /**
@@ -64,6 +66,14 @@ class Leonidas extends \WebTheoryLeonidasPluginBaseClass
     protected static function initiateProxies()
     {
         FieldProxy::objectProxyInit();
+    }
+
+    /**
+     *
+     */
+    protected static function prepareAdminAlerts()
+    {
+        AdminNoticeLoader::hook();
     }
 
     /**

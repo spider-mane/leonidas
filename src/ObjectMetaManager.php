@@ -2,15 +2,11 @@
 
 namespace WebTheory\Leonidas;
 
-use WebTheory\Leonidas\Fields\WpAdminField;
+use WebTheory\Leonidas\Modules\AdminNotice;
+use WebTheory\Saveyour\InputPurifier;
 
-class ObjectMetaManager extends WpAdminField
+abstract class ObjectMetaManager extends InputPurifier
 {
-    /**
-     * @var string
-     */
-    protected $objectType;
-
     /**
      * @var string
      */
@@ -52,22 +48,31 @@ class ObjectMetaManager extends WpAdminField
     protected $showInRest;
 
     /**
-     *
+     * @var array
      */
-    public function __construct(string $objectType, string $metaKey)
-    {
-        $this->objectSubtype = $objectType;
-        $this->metaKey = $metaKey;
-    }
+    protected $capability = 'edit_posts';
 
     /**
-     * Get the value of objectType
-     *
-     * @return string
+     * @var string
      */
-    public function getObjectType(): string
+    protected const OBJECT_TYPE = '';
+
+    /**
+     *
+     */
+    protected const GET_OBJECT_FUNCTION = '';
+
+    /**
+     * @var string
+     */
+    protected const OBJECT_ID_KEY = '';
+
+    /**
+     * @var string
+     */
+    public function __construct(string $metaKey)
     {
-        return $this->objectType;
+        $this->metaKey = $metaKey;
     }
 
     /**
@@ -205,7 +210,7 @@ class ObjectMetaManager extends WpAdminField
      *
      * @return bool
      */
-    public function getShowInRest(): bool
+    public function isShownInRest(): bool
     {
         return $this->showInRest;
     }
@@ -225,6 +230,30 @@ class ObjectMetaManager extends WpAdminField
     }
 
     /**
+     * Get the value of capability
+     *
+     * @return string
+     */
+    public function getCapability(): string
+    {
+        return $this->capability;
+    }
+
+    /**
+     * Set the value of capability
+     *
+     * @param string $capability
+     *
+     * @return self
+     */
+    public function setCapability(string $capability)
+    {
+        $this->capability = $capability;
+
+        return $this;
+    }
+
+    /**
      *
      */
     public function register()
@@ -234,38 +263,32 @@ class ObjectMetaManager extends WpAdminField
             'type' => $this->dataType,
             'description' => $this->description,
             'single' => $this->single,
-            'sanitize_callback' => [$this, 'processInput'],
-            'auth_callback' => $this->authCallback,
+            'sanitize_callback' => $this->sanitizeCallback ?? [$this, 'filterInput'],
+            'auth_callback' => $this->authCallback ?? [$this, 'authorizeAction'],
             'show_in_rest' => $this->showInRest,
         ];
 
-        register_meta($this->objectType, $this->metaKey, $args);
+        register_meta(static::OBJECT_TYPE, $this->metaKey, $args);
     }
 
     /**
      *
      */
-    public function processInput($input)
+    public function authorizeAction($allowed, $metaKey, $objectId, $userId, $cap, $caps)
     {
-        if (!isset($this->sanitizeCallback)) {
-            $input = $this->filterInput($input);
-        } else {
-            $input = ${$this->sanitizeCallback}($input, $this);
-        }
-
-        return $input;
+        return current_user_can($this->capability, $objectId, $this->metaKey);
     }
 
     /**
      *
      */
-    protected function filterInput($input)
+    protected function returnIfFailed()
     {
-        if (true === $this->validateInput($input)) {
-            return $this->sanitizeInput($input);
-        } else {
-            return false;
-        }
+        return get_metadata(
+            static::OBJECT_TYPE,
+            (static::GET_OBJECT_FUNCTION)()->{static::OBJECT_ID_KEY},
+            $this->metaKey
+        );
     }
 
     /**
@@ -273,6 +296,12 @@ class ObjectMetaManager extends WpAdminField
      */
     protected function handleRuleViolation($rule)
     {
+        $alert = $this->alerts[$rule] ?? null;
+
+        if ($alert) {
+            new AdminNotice($alert);
+        }
+
         return $this;
     }
 }

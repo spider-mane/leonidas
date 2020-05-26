@@ -11,6 +11,11 @@ class AdminNotice
     /**
      * @var string
      */
+    protected $id;
+
+    /**
+     * @var string
+     */
     protected $message;
 
     /**
@@ -26,9 +31,39 @@ class AdminNotice
     /**
      * @var string
      */
-    public function __construct(string $message)
+    protected $screen;
+
+    /**
+     * @var string
+     */
+    public function __construct(string $message, string $id = '')
     {
+        $this->id = $id;
         $this->message = $message;
+    }
+
+    /**
+     * Get the value of id
+     *
+     * @return string
+     */
+    public function getId(): string
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set the value of id
+     *
+     * @param string $id
+     *
+     * @return self
+     */
+    public function setId(string $id)
+    {
+        $this->id = $id;
+
+        return $this;
     }
 
     /**
@@ -77,6 +112,38 @@ class AdminNotice
         $this->type = $type;
 
         return $this;
+    }
+
+    /**
+     * Get the value of screen
+     *
+     * @return string
+     */
+    public function getScreen(): string
+    {
+        return $this->screen;
+    }
+
+    /**
+     * Set the value of screen
+     *
+     * @param string $screen
+     *
+     * @return self
+     */
+    public function setScreen(string $screen)
+    {
+        $this->screen = $screen;
+
+        return $this;
+    }
+
+    /**
+     *
+     */
+    public function register()
+    {
+        AdminNoticeLoader::addNotice($this);
     }
 
     /**

@@ -5,13 +5,13 @@ namespace WebTheory\Leonidas\MetaBox;
 use GuzzleHttp\Psr7\ServerRequest;
 use WebTheory\Html\Html;
 use WebTheory\Leonidas\MetaBox\Contracts\MetaboxContentInterface;
+use WebTheory\Leonidas\Traits\CanBeRestrictedTrait;
 use WebTheory\Saveyour\Fields\Hidden as HiddenInput;
 
-/**
- * @package Leonidas-Core
- */
 class MetaBox
 {
+    use CanBeRestrictedTrait;
+
     /**
      * id
      *
@@ -293,11 +293,8 @@ class MetaBox
      */
     public function display($post, $metaBox)
     {
-        if (!isset($this->callback)) {
-            $this->render($post);
-        } else {
-            $callback = $this->callback;
-            $callback($post, $metaBox, $this);
+        if ($this->shouldLoad($post)) {
+            isset($this->callback) ? ($this->callback)($post, $metaBox, $this) : $this->render($post);
         }
     }
 

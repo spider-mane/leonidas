@@ -70,24 +70,9 @@ class SettingManager extends InputPurifier
     protected $alerts = [];
 
     /**
-     * @var bool
+     * @var callable
      */
-    protected $isSerialized = false;
-
-    /**
-     * The index where the targeted value in a serialized data object is to be
-     * found. Use dot notation for nested values.
-     *
-     * @var string
-     */
-    protected $pointer;
-
-    /**
-     * Object that can convert a serialized format to a php readable data format
-     * and vice versa. This allows unlimited flexability in allowable
-     * serialization formats.
-     */
-    protected $serializedDataReader;
+    protected $sanitizeCallback;
 
     /**
      *
@@ -204,7 +189,7 @@ class SettingManager extends InputPurifier
     }
 
     /**
-     * Get sanitize_callback
+     * Get sanitizeCallback
      *
      * @return  callback|null
      */
@@ -214,15 +199,15 @@ class SettingManager extends InputPurifier
     }
 
     /**
-     * Set sanitize_callback
+     * Set sanitizeCallback
      *
-     * @param callable $sanitize_callback
+     * @param callable $sanitizeCallback
      *
      * @return self
      */
-    public function setSanitizeCallback(callable $sanitize_callback)
+    public function setSanitizeCallback(callable $sanitizeCallback)
     {
-        $this->sanitizeCallback = $sanitize_callback;
+        $this->sanitizeCallback = $sanitizeCallback;
 
         return $this;
     }
@@ -283,7 +268,7 @@ class SettingManager extends InputPurifier
         $args = [
             'type' => $this->type,
             'description' => $this->description,
-            'sanitize_callback' => [$this, 'filterInput'],
+            'sanitize_callback' => $this->sanitizeCallback ?? [$this, 'filterInput'],
             'show_in_rest' => $this->showInRest,
             'default' => $this->defaultValue,
         ];

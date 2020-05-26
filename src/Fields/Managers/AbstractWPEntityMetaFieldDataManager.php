@@ -65,7 +65,7 @@ abstract class AbstractWPEntityMetaFieldDataManager implements FieldDataManagerI
     /**
      *
      */
-    public function createData($entity, $data): bool
+    protected function createData($entity, $data): bool
     {
         return add_metadata(
             static::MODEL,

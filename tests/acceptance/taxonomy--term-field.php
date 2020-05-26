@@ -43,7 +43,7 @@ $domain = Field::create([
     'rules' => [
         'thing' => [
             'validator' => Validator::optional(Validator::domain()),
-            'alert' => 'wrong thing'
+            'alert' => 'Invalid Domain'
         ]
     ]
 ]);

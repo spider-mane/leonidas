@@ -1,5 +1,7 @@
 <?php
 
+use WebTheory\Leonidas\Helpers\SkyHooks;
+use WebTheory\Leonidas\Modules\AdminNotice;
 use WebTheory\Leonidas\Screen;
 use Whoops\Handler\PrettyPageHandler;
 use Whoops\Run;
