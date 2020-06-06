@@ -3,6 +3,7 @@
 namespace WebTheory\Leonidas\Modules;
 
 use WebTheory\Html\Traits\ElementConstructorTrait;
+use WebTheory\Leonidas\Loaders\AdminNoticeLoader;
 
 class AdminNotice
 {

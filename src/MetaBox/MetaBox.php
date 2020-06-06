@@ -6,11 +6,12 @@ use GuzzleHttp\Psr7\ServerRequest;
 use WebTheory\Html\Html;
 use WebTheory\Leonidas\MetaBox\Contracts\MetaboxContentInterface;
 use WebTheory\Leonidas\Traits\CanBeRestrictedTrait;
-use WebTheory\Saveyour\Fields\Hidden as HiddenInput;
+use WebTheory\Leonidas\Traits\HasNonceTrait;
 
 class MetaBox
 {
     use CanBeRestrictedTrait;
+    use HasNonceTrait;
 
     /**
      * id
@@ -36,7 +37,7 @@ class MetaBox
     /**
      * screen
      *
-     * @var string|array
+     * @var string
      */
     protected $screen;
 
@@ -45,14 +46,14 @@ class MetaBox
      *
      * @var string
      */
-    protected $context;
+    protected $context = 'normal';
 
     /**
      * priority
      *
      * @var string
      */
-    protected $priority;
+    protected $priority = 'default';
 
     /**
      * callbackArgs
@@ -76,18 +77,13 @@ class MetaBox
     protected $fields = [];
 
     /**
-     * @var string
-     */
-    private $nonce;
-
-    /**
      *
      */
-    public function __construct($id, $title)
+    public function __construct(string $id, string $title, string $screen)
     {
         $this->id = $id;
         $this->title = $title;
-        $this->setNonce();
+        $this->screen = $screen;
     }
 
     /**
@@ -267,9 +263,7 @@ class MetaBox
      */
     public function hook()
     {
-        $screen = isset($this->screen) ? "add_meta_boxes_{$this->screen}" : null;
-
-        add_action($screen, [$this, 'register']);
+        add_action("add_meta_boxes_{$this->screen}", [$this, 'register']);
 
         if (!empty($this->save_cb)) {
             add_action("save_post_{$this->screen}", $this->save_cb, null, 3);
@@ -285,7 +279,15 @@ class MetaBox
      */
     public function register()
     {
-        add_meta_box($this->id, $this->title, [$this, 'display'], $this->screen, $this->context, $this->priority, $this->callbackArgs);
+        add_meta_box(
+            $this->id,
+            $this->title,
+            [$this, 'display'],
+            $this->screen,
+            $this->context,
+            $this->priority,
+            $this->callbackArgs
+        );
     }
 
     /**
@@ -303,11 +305,11 @@ class MetaBox
      */
     protected function render($post)
     {
-        $html = '';
-        $html .= $this->generateNonceField();
         $i = count($this->content);
         $request = ServerRequest::fromGlobals()->withAttribute('post', $post);
 
+        $html = '';
+        $html .= isset($this->nonce) ? $this->nonce->field() . "\n" : '';
         $html .= Html::open('div', ['class' => 'backalley-wrap']);
 
         foreach ($this->content as $content) {
@@ -323,52 +325,5 @@ class MetaBox
         $html .= Html::close('div');
 
         echo $html;
-    }
-
-    /**
-     * Get the value of nonce
-     *
-     * @return string
-     */
-    public function getNonce()
-    {
-        return $this->nonce;
-    }
-
-    /**
-     * Set the value of nonce
-     *
-     * @return self
-     */
-    private function setNonce()
-    {
-        $this->nonce['name'] = md5($this->id);
-        $this->nonce['action'] = md5($this->title);
-
-        return $this;
-    }
-
-    /**
-     * Set the value of nonce
-     *
-     * @param string $nonce
-     *
-     * @return self
-     */
-    public function generateNonceField()
-    {
-        $nonce = '';
-
-        $nonce .= (new HiddenInput) // nonce
-            ->setName($this->nonce['name'])
-            ->setValue(wp_create_nonce($this->nonce['action']))
-            ->toHtml();
-
-        $nonce .= (new HiddenInput) // referer
-            ->setName('_backalley_http_referer')
-            ->setValue(esc_attr(wp_unslash($_SERVER['REQUEST_URI'])))
-            ->toHtml();
-
-        return (string) $nonce . "\n";
     }
 }

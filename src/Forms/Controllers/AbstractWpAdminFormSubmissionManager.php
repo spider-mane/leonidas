@@ -12,24 +12,8 @@ abstract class AbstractWpAdminFormSubmissionManager extends FormSubmissionManage
     /**
      *
      */
-    protected $nonce = [];
-
-    /**
-     *
-     */
     protected function hook()
     {
-        return $this;
-    }
-
-    /**
-     *
-     */
-    public function setNonce(string $name, string $action)
-    {
-        $this->nonce['name'] = $name;
-        $this->nonce['action'] = $action;
-
         return $this;
     }
 
@@ -49,23 +33,5 @@ abstract class AbstractWpAdminFormSubmissionManager extends FormSubmissionManage
         }
 
         return $this;
-    }
-
-    /**
-     *
-     */
-    protected function formHasValidNonce(): bool
-    {
-        $nonceName = $this->nonce['name'] ?? null;
-        $nonceAction = $this->nonce['action'] ?? null;
-
-        if (
-            !isset($nonceName, $nonceAction, $_POST[$nonceName])
-            || !wp_verify_nonce($_POST[$nonceName], $nonceAction)
-        ) {
-            return false;
-        }
-
-        return true;
     }
 }

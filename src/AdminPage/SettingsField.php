@@ -2,9 +2,9 @@
 
 namespace WebTheory\Leonidas\AdminPage;
 
+use WebTheory\Html\Html;
 use WebTheory\Saveyour\Contracts\FormFieldInterface;
 use WebTheory\Saveyour\Fields\Text;
-use WebTheory\Html\Html;
 
 class SettingsField
 {

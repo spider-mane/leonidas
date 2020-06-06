@@ -25,9 +25,4 @@ interface WpExtensionInterface extends ContainerInterface
      *
      */
     public function getType(): string;
-
-    /**
-     *
-     */
-    public function getDescription(): string;
 }

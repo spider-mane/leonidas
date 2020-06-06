@@ -1,5 +1,6 @@
 <?php
 
+use WebTheory\Leonidas\Auth\Nonce;
 use WebTheory\Leonidas\Fields\Managers\PostMetaFieldManager;
 use WebTheory\Leonidas\Forms\Controllers\PostMetaBoxFormSubmissionManager;
 use WebTheory\Leonidas\MetaBox\FieldGrid;
@@ -10,7 +11,16 @@ use WebTheory\Saveyour\Fields\Time;
 
 ################################################################################
 
-$postType = 'wts_test_cpt';
+$postType = 'wts_test_cpt_2';
+$nonce = new Nonce('wts-metabox', 'edit_' . $postType);
+
+$metabox = (new MetaBox('wts_hours', 'Hours', $postType))
+    ->setNonce($nonce)
+    ->hook();
+
+$formController = (new PostMetaBoxFormSubmissionManager($postType))
+    ->setNonce($nonce)
+    ->hook();
 
 // rows
 $days = [
@@ -65,5 +75,5 @@ foreach ($days as $day) {
 // create section and add fieldgrid as content
 $section = (new Section('Hours'))->addContent('hours', $fieldGrid);
 
-/** @var MetaBox $metabox */
+//
 $metabox->addContent('hours', $section);

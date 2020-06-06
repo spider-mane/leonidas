@@ -5,18 +5,27 @@ namespace WebTheory\Leonidas\Forms\Controllers;
 use GuzzleHttp\Psr7\ServerRequest;
 use WP_Taxonomy;
 use WebTheory\Leonidas\Forms\Controllers\AbstractWpAdminFormSubmissionManager;
+use WebTheory\Leonidas\Forms\Validators\NoAutosaveValidator;
+use WebTheory\Leonidas\Forms\Validators\Permissions\EditTerm;
+use WebTheory\Leonidas\Forms\Validators\WpNonceValidator;
+use WebTheory\Leonidas\Traits\HasNonceTrait;
 
 class TermFieldFormSubmissionManager extends AbstractWpAdminFormSubmissionManager
 {
+    use HasNonceTrait;
+
     /**
      * @var WP_Taxonomy
      */
     protected $taxonomy;
 
     /**
-     * {@inheritDoc}
+     * @var array
      */
-    protected const TRANSIENT__RULE_VIOLATION = 'leonidas.term.field.ruleViolation';
+    protected $actions = [
+        'edited' => true,
+        'created' => true,
+    ];
 
     /**
      *
@@ -41,8 +50,10 @@ class TermFieldFormSubmissionManager extends AbstractWpAdminFormSubmissionManage
      */
     public function hook()
     {
-        foreach (['edited', 'create'] as $event) {
-            add_action("{$event}_{$this->taxonomy->name}", [$this, 'saveTermActionCallback'], null, 1);
+        foreach ($this->actions as $event => $enabled) {
+            if ($enabled) {
+                add_action("{$event}_{$this->taxonomy->name}", [$this, 'processTermFields'], null, PHP_INT_MAX);
+            }
         }
 
         return parent::hook();
@@ -51,28 +62,28 @@ class TermFieldFormSubmissionManager extends AbstractWpAdminFormSubmissionManage
     /**
      *
      */
-    public function saveTermActionCallback($termId)
+    public function processTermFields($termId, $ttId)
     {
-        if ($this->isSafeToRun($termId)) {
+        $this->addDefaultFormValidators();
 
-            $term = get_term($termId, $this->taxonomy->name, 'OBJECT');
-            $request = ServerRequest::fromGlobals()
-                ->withAttribute('term', $term)
-                ->withAttribute('term_id', $termId);
+        $request = ServerRequest::fromGlobals()
+            ->withAttribute('term', get_term($termId, $this->taxonomy->name, 'OBJECT'))
+            ->withAttribute('term_id', $termId)
+            ->withAttribute('tt_id', $ttId);
 
-            $this->process($request);
-        }
+        $this->process($request);
     }
 
     /**
      *
      */
-    public function isSafeToRun($termId)
+    protected function addDefaultFormValidators()
     {
-        if (!current_user_can('manage_categories', $termId)) {
-            return false;
-        }
+        $this->addValidator('no_autosave', new NoAutosaveValidator);
+        $this->addValidator('user_cannot_edit', new EditTerm);
 
-        return true;
+        if (isset($this->nonce)) {
+            $this->addValidator('invalid_request', new WpNonceValidator($this->nonce));
+        }
     }
 }

@@ -36,8 +36,7 @@ $setting3 = (new SettingManager($group1, 'ba-test-3'))
 /**
  * add page
  */
-$page1 = (new SettingsPage('company_info'))
-    ->addFieldGroups($group1)
+$page1 = (new SettingsPage('company_info', $group1))
     ->setMenuTitle('Company')
     ->setPageTitle('Company Info')
     ->setIcon('dashicons-store')

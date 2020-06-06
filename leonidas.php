@@ -5,19 +5,32 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @package   Leonidas
- * @license   GPL-3.0-or-later
+ * @package Leonidas
+ * @license GPL-3.0-or-later
  * @copyright Copyright (C) Chris Williams, All rights reserved.
- * @link      https://github.com/spider-mane/lenidas
- * @author    Chris Williams <spider.mane.web@gmail.com>
+ * @link https://github.com/spider-mane/lenidas
+ * @author Chris Williams <spider.mane.web@gmail.com>
+ *
+ * @wordpress-plugin
+ * Plugin Name: Leonidas
+ * Description: Description of the plugin.
  */
 
 use WebTheory\Leonidas\Leonidas;
+use WebTheory\Leonidas\WpExtension;
 
 # composer autoload
 if (file_exists($autoload = __DIR__ . '/vendor/autoload.php')) {
     require $autoload;
 }
+
+// Leonidas::init(WpExtension::create([
+//     'name' => plugin_basename(__FILE__),
+//     'path' => __DIR__,
+//     'url' => plugin_dir_url(__FILE__),
+//     'prefix' => 'leon',
+//     'type' => 'plugin'
+// ]));
 
 # define filesystem variables in base class
 if (!class_exists('WebTheoryLeonidasPluginBaseClass')) {

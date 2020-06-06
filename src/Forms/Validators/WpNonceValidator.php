@@ -2,34 +2,30 @@
 
 namespace WebTheory\Leonidas\Forms\Validators;
 
+use Psr\Http\Message\ServerRequestInterface;
+use WebTheory\Leonidas\Auth\Nonce;
 use WebTheory\Saveyour\Contracts\FormValidatorInterface;
 
 class WpNonceValidator implements FormValidatorInterface
 {
     /**
-     *
+     * @var Nonce
      */
-    protected $name;
+    protected $nonce;
 
     /**
      *
      */
-    protected $action;
-
-    /**
-     *
-     */
-    public function __construct($name, $action)
+    public function __construct(Nonce $nonce)
     {
-        $this->name = $name;
-        $this->action = $action;
+        $this->nonce = $nonce;
     }
 
     /**
      *
      */
-    public function isValid(): bool
+    public function isValid(ServerRequestInterface $request): bool
     {
-        return (bool) wp_verify_nonce($_POST[$this->name], $this->action);
+        return $this->nonce->verify($request);
     }
 }

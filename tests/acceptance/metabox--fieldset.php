@@ -1,6 +1,7 @@
 <?php
 
 use Respect\Validation\Validator;
+use WebTheory\Leonidas\Auth\Nonce;
 use WebTheory\Leonidas\Fields\Managers\PostMetaFieldManager;
 use WebTheory\Leonidas\Fields\WpAdminField;
 use WebTheory\Leonidas\Forms\Controllers\PostMetaBoxFormSubmissionManager;
@@ -17,6 +18,7 @@ use WebTheory\Saveyour\Fields\Tel;
  *
  */
 $postType = 'wts_test_cpt';
+$nonce = new Nonce('wts-metabox', 'save-post-fields');
 
 /**
  * create fields
@@ -51,7 +53,9 @@ $email->addRule('email', Validator::optional(Validator::email()), 'Enter Valid E
  *
  */
 $formController = (new PostMetaBoxFormSubmissionManager($postType))
-    ->setFields($phone, $fax, $email);
+    ->setFields($phone, $fax, $email)
+    ->setNonce($nonce)
+    ->hook();
 
 /**
  * create fieldset
@@ -78,20 +82,12 @@ $contactInfo->addFields([
 ]);
 
 
-/**
- *
- */
-$metabox = (new MetaBox('test', 'Test'))
-    ->setScreen($postType)
+//
+$metabox = (new MetaBox('test', 'Test', $postType))
+    ->setNonce($nonce)
     ->setContext('normal')
     ->addContent('contact_info', $contactInfo)
     ->hook();
-
-/**
- *
- */
-$nonce = $metabox->getNonce();
-$formController->setNonce($nonce['name'], $nonce['action'])->hook();
 
 ################################################################################
 #

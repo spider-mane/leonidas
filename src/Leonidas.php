@@ -9,9 +9,8 @@ use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
-use WebTheory\Leonidas\Field as FieldProxy;
 use WebTheory\Leonidas\Fields\Field;
-use WebTheory\Leonidas\Modules\AdminNoticeLoader;
+use WebTheory\Leonidas\Loaders\AdminNoticeLoader;
 
 class Leonidas extends \WebTheoryLeonidasPluginBaseClass
 {
@@ -26,30 +25,35 @@ class Leonidas extends \WebTheoryLeonidasPluginBaseClass
     public static function init()
     {
         if (static::isLoaded()) {
-            throw new \Exception('Do not call ' . __METHOD__ . ' method.');
+            $method = __METHOD__;
+            $message = "Leonidas should only be initiated internally. If you're seeing this Exception it is because the
+            user, a plugin, or a theme has made an illegitimate call to {$method}";
+
+            throw new \Exception($message);
         }
 
         require dirname(__FILE__) . '/Helpers/functions.php';
 
         static::load();
-        static::bootstrap();
+        static::bootstrapContainer();
+        static::initiateLoaders();
         static::hook();
+
+        do_action('leonidas.init');
     }
 
     /**
      *
      */
-    protected static function bootstrap()
+    protected static function bootstrapContainer()
     {
         $container = new PimpleContainer;
 
         static::bindConfig($container);
         static::bindTwig($container);
         static::bindField($container);
-        static::$container = new Container($container);
 
-        static::initiateProxies();
-        static::prepareAdminAlerts();
+        static::$container = new Container($container);
     }
 
     /**
@@ -63,15 +67,7 @@ class Leonidas extends \WebTheoryLeonidasPluginBaseClass
     /**
      *
      */
-    protected static function initiateProxies()
-    {
-        FieldProxy::objectProxyInit();
-    }
-
-    /**
-     *
-     */
-    protected static function prepareAdminAlerts()
+    protected static function initiateLoaders()
     {
         AdminNoticeLoader::hook();
     }

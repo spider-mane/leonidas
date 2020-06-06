@@ -1,6 +1,8 @@
 <?php
 
-namespace WebTheory\Leonidas\Modules;
+namespace WebTheory\Leonidas\Loaders;
+
+use WebTheory\Leonidas\Modules\AdminNotice;
 
 class AdminNoticeLoader
 {

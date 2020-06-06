@@ -8,11 +8,7 @@
 
   <form action="options.php" method="post">
 
-    {# output hidden controls that enable saving options #}
-    {% for field_group in field_groups %}
-      {{ settings_fields(field_group) }}
-    {% endfor %}
-
+    {{ settings_fields(option_group) }}
     {{ do_settings_sections(page) }}
     {{ submit_button() }}
 

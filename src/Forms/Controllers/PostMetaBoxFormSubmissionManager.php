@@ -5,18 +5,19 @@ namespace WebTheory\Leonidas\Forms\Controllers;
 use GuzzleHttp\Psr7\ServerRequest;
 use WP_Post_Type;
 use WebTheory\Leonidas\Forms\Controllers\AbstractWpAdminFormSubmissionManager;
+use WebTheory\Leonidas\Forms\Validators\NoAutosaveValidator;
+use WebTheory\Leonidas\Forms\Validators\Permissions\EditPost;
+use WebTheory\Leonidas\Forms\Validators\WpNonceValidator;
+use WebTheory\Leonidas\Traits\HasNonceTrait;
 
 class PostMetaBoxFormSubmissionManager extends AbstractWpAdminFormSubmissionManager
 {
+    use HasNonceTrait;
+
     /**
      * @var WP_Post_Type
      */
     protected $postType;
-
-    /**
-     * {@inheritDoc}
-     */
-    protected const TRANSIENT__RULE_VIOLATION = 'leonidas.postMetaBox.field.ruleViolation';
 
     /**
      *
@@ -51,30 +52,26 @@ class PostMetaBoxFormSubmissionManager extends AbstractWpAdminFormSubmissionMana
      */
     public function savePostActionCallback($postId, $post, $update)
     {
-        if ($update && $this->isSafeToRun($post)) {
+        $this->addDefaultFormValidators();
 
-            $request = ServerRequest::fromGlobals()
-                ->withAttribute('post', $post)
-                ->withAttribute('post_id', $postId)
-                ->withAttribute('update', $update);
+        $request = ServerRequest::fromGlobals()
+            ->withAttribute('post', $post)
+            ->withAttribute('post_id', $postId)
+            ->withAttribute('update', $update);
 
-            $this->process($request);
-        }
+        $this->process($request);
     }
 
     /**
      *
      */
-    protected function isSafeToRun($post): bool
+    protected function addDefaultFormValidators()
     {
-        if (
-            !$this->formHasValidNonce()
-            || defined('DOING_AUTOSAVE') && DOING_AUTOSAVE
-            || !current_user_can('edit_post', $post->ID)
-        ) {
-            return false;
-        }
+        $this->addValidator('no_autosave', new NoAutosaveValidator);
+        $this->addValidator('user_cannot_edit', new EditPost);
 
-        return true;
+        if (isset($this->nonce)) {
+            $this->addValidator('invalid_request', new WpNonceValidator($this->nonce));
+        }
     }
 }

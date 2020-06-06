@@ -2,7 +2,7 @@
 
 namespace WebTheory\Leonidas\AdminPage;
 
-class SettingsPage extends AdminPage
+class SettingsPage extends AbstractAdminPage
 {
     /**
      * tabs
@@ -12,16 +12,34 @@ class SettingsPage extends AdminPage
     protected $tabs = [];
 
     /**
-     * field_groups
-     *
-     * @var array
+     * @var string
      */
-    protected $fieldGroups = [];
+    protected $optionGroup;
 
     /**
      * @var string
      */
     protected $template = 'settings-page-template';
+
+    /**
+     *
+     */
+    public function __construct(string $menuSlug, string $optionGroup, ?string $capability = null)
+    {
+        $this->optionGroup = $optionGroup;
+
+        parent::__construct($menuSlug, $capability);
+    }
+
+    /**
+     * Get optionGroup
+     *
+     * @return string
+     */
+    public function getOptionGroup(): string
+    {
+        return $this->optionGroup;
+    }
 
     /**
      * Get tabs
@@ -48,42 +66,16 @@ class SettingsPage extends AdminPage
     }
 
     /**
-     * Get field_groups
-     *
-     * @return  array
-     */
-    public function getFieldGroups()
-    {
-        return $this->fieldGroups;
-    }
-
-    /**
-     * Set field_groups
-     *
-     * @param   mixed  $fieldGroups  fields
-     *
-     * @return  self
-     */
-    public function addFieldGroups(string ...$fieldGroups)
-    {
-        foreach ($fieldGroups as $fieldGroup) {
-            $this->fieldGroups[] = $fieldGroup;
-        }
-
-        return $this;
-    }
-
-    /**
      *
      */
-    public function renderDefault()
+    protected function getTemplateContext(): array
     {
-        echo $this->renderTemplate([
+        return [
             'title' => $this->pageTitle,
             'tabs' => $this->tabs,
             'page' => $this->menuSlug,
             'description' => $this->description,
-            'field_groups' => $this->fieldGroups,
-        ]);
+            'option_group' => $this->optionGroup,
+        ];
     }
 }
