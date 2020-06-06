@@ -26,6 +26,6 @@ class WpNonceValidator implements FormValidatorInterface
      */
     public function isValid(ServerRequestInterface $request): bool
     {
-        return $this->nonce->verify($request);
+        return $this->nonce->validate($request);
     }
 }

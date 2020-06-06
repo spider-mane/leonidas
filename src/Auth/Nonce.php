@@ -79,6 +79,14 @@ class Nonce
     /**
      *
      */
+    protected function render(bool $referer = false)
+    {
+        echo $this->field($referer);
+    }
+
+    /**
+     *
+     */
     public function field(bool $referer = false)
     {
         return wp_nonce_field($this->action, $this->name, $referer, false);
@@ -95,24 +103,36 @@ class Nonce
     /**
      *
      */
-    public static function tick()
+    public function verify(ServerRequestInterface $request)
     {
-        return wp_nonce_tick();
+        $nonce = Request::var($request, $this->name);
+
+        return $nonce ? wp_verify_nonce($nonce, $this->action) : false;
     }
 
     /**
      *
      */
-    public function verify(ServerRequestInterface $request)
+    public function validate(ServerRequestInterface $request)
     {
-        $nonce = Request::var($request, $this->name);
+        $verified = $this->verify($request);
 
-        if (!$nonce) {
-            return false;
-        }
+        return $verified && ($verified <= $this->expiration);
+    }
 
-        $verified = wp_verify_nonce($nonce, $this->action);
+    /**
+     *
+     */
+    public function __toString()
+    {
+        return $this->field(false);
+    }
 
-        return $verified && $verified <= $this->expiration;
+    /**
+     *
+     */
+    public static function tick()
+    {
+        return wp_nonce_tick();
     }
 }

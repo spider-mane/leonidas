@@ -274,14 +274,8 @@ class SettingManager extends InputPurifier
         ];
 
         register_setting($this->optionGroup, $this->optionName, $args);
-    }
 
-    /**
-     *
-     */
-    public function registerSetting()
-    {
-        return $this->register();
+        return $this;
     }
 
     /**

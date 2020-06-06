@@ -141,20 +141,6 @@ class MetaBox
     }
 
     /**
-     * Set screen
-     *
-     * @param string|array  $screen  screen
-     *
-     * @return self
-     */
-    public function setScreen($screen)
-    {
-        $this->screen = $screen;
-
-        return $this;
-    }
-
-    /**
      * Get context
      *
      * @return string
@@ -288,6 +274,8 @@ class MetaBox
             $this->priority,
             $this->callbackArgs
         );
+
+        return $this;
     }
 
     /**
@@ -310,6 +298,7 @@ class MetaBox
 
         $html = '';
         $html .= isset($this->nonce) ? $this->nonce->field() . "\n" : '';
+
         $html .= Html::open('div', ['class' => 'backalley-wrap']);
 
         foreach ($this->content as $content) {

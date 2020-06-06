@@ -145,6 +145,8 @@ class AdminNotice
     public function register()
     {
         AdminNoticeLoader::addNotice($this);
+
+        return $this;
     }
 
     /**

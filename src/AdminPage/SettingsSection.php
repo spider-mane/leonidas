@@ -148,6 +148,8 @@ class SettingsSection
     public function register()
     {
         add_settings_section($this->id, $this->title, [$this, 'render'], $this->page);
+
+        return $this;
     }
 
     /**

@@ -289,6 +289,8 @@ class SettingsField
         $args = ['label_for' => $this->id] + $this->displayArgs;
 
         add_settings_field($this->id, $this->title, [$this, 'render'], $this->page, $this->section, $args);
+
+        return $this;
     }
 
     /**

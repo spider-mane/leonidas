@@ -269,6 +269,8 @@ abstract class ObjectMetaManager extends InputPurifier
         ];
 
         register_meta(static::OBJECT_TYPE, $this->metaKey, $args);
+
+        return $this;
     }
 
     /**

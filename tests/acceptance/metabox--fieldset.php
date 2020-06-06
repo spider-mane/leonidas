@@ -85,7 +85,6 @@ $contactInfo->addFields([
 //
 $metabox = (new MetaBox('test', 'Test', $postType))
     ->setNonce($nonce)
-    ->setContext('normal')
     ->addContent('contact_info', $contactInfo)
     ->hook();
 

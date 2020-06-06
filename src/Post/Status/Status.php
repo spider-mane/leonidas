@@ -17,6 +17,11 @@ class Status
     protected $options;
 
     /**
+     * @var object
+     */
+    protected $args;
+
+    /**
      *
      */
     public function __construct(string $name, $options = [])
@@ -72,6 +77,16 @@ class Status
     }
 
     /**
+     * Get the value of args
+     *
+     * @return object
+     */
+    public function getArgs(): object
+    {
+        return $this->args;
+    }
+
+    /**
      *
      */
     public function editOption($option, $value)
@@ -92,6 +107,8 @@ class Status
      */
     public function register()
     {
-        return register_post_status($this->name, $this->options);
+        $this->args = register_post_status($this->name, $this->options);
+
+        return $this;
     }
 }
