@@ -3,7 +3,6 @@
 namespace WebTheory\Leonidas\Term;
 
 use GuzzleHttp\Psr7\ServerRequest;
-use WP_Taxonomy;
 use WebTheory\Leonidas\Traits\HasNonceTrait;
 
 class FieldLoader
@@ -11,7 +10,7 @@ class FieldLoader
     use HasNonceTrait;
 
     /**
-     * @var WP_Taxonomy
+     * @var string
      */
     protected $taxonomy;
 
@@ -33,16 +32,16 @@ class FieldLoader
      */
     public function __construct(string $taxonomy, Field ...$fields)
     {
-        $this->taxonomy = get_taxonomy($taxonomy);
+        $this->taxonomy = $taxonomy;
         $this->fields = $fields;
     }
 
     /**
      * Get the value of taxonomy
      *
-     * @return WP_Taxonomy
+     * @return string
      */
-    public function getTaxonomy(): WP_Taxonomy
+    public function getTaxonomy(): string
     {
         return $this->taxonomy;
     }
@@ -71,11 +70,11 @@ class FieldLoader
     public function hook()
     {
         if (true === $this->screens['edit']) {
-            add_action("{$this->taxonomy->name}_edit_form_fields", [$this, 'renderFields'], null, 1);
+            add_action("{$this->taxonomy}_edit_form_fields", [$this, 'renderFields'], null, 1);
         }
 
         if (true === $this->screens['add']) {
-            add_action("{$this->taxonomy->name}_add_form_fields", [$this, 'renderFields'], null, 0);
+            add_action("{$this->taxonomy}_add_form_fields", [$this, 'renderFields'], null, 0);
         }
 
         return $this;

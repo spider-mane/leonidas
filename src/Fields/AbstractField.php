@@ -4,6 +4,7 @@ namespace WebTheory\Leonidas\Fields;
 
 use Psr\Http\Message\ServerRequestInterface;
 use WebTheory\Leonidas\Contracts\WpAdminFieldInterface;
+use WebTheory\Saveyour\Contracts\FormFieldControllerInterface;
 use WebTheory\Saveyour\Contracts\FormFieldInterface;
 
 class AbstractField implements WpAdminFieldInterface
@@ -23,14 +24,14 @@ class AbstractField implements WpAdminFieldInterface
     protected $description;
 
     /**
-     * @var WpAdminField
+     * @var FormFieldControllerInterface
      */
     protected $formFieldController;
 
     /**
      *
      */
-    public function __construct(WpAdminField $formFieldController)
+    public function __construct(FormFieldControllerInterface $formFieldController)
     {
         $this->formFieldController = $formFieldController;
     }
@@ -86,9 +87,9 @@ class AbstractField implements WpAdminFieldInterface
     /**
      * Get the value of formFieldController
      *
-     * @return WpAdminField
+     * @return FormFieldControllerInterface
      */
-    public function getFormFieldController(): WpAdminField
+    public function getFormFieldController(): FormFieldControllerInterface
     {
         return $this->formFieldController;
     }

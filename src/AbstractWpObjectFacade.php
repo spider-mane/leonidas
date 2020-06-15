@@ -22,12 +22,17 @@ abstract class AbstractWpObjectFacade
     /**
      * @var array
      */
+    public $capabilities;
+
+    /**
+     * @var array
+     */
     public $rewrite;
 
     /**
-     *
+     * @var string
      */
-    public const EXALTED_ARGS = ['labels', 'rewrite'];
+    public $description;
 
     /**
      * Get the value of name
@@ -111,11 +116,69 @@ abstract class AbstractWpObjectFacade
     }
 
     /**
+     * Get the value of capabilities
+     *
+     * @return array
+     */
+    public function getCapabilities(): array
+    {
+        return $this->capabilities;
+    }
+
+    /**
+     * Set the value of capabilities
+     *
+     * @param array $capabilities
+     *
+     * @return self
+     */
+    public function setCapabilities(array $capabilities)
+    {
+        $this->capabilities = $capabilities;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of description
+     *
+     * @return string
+     */
+    public function getDescription(): string
+    {
+        return $this->description;
+    }
+
+    /**
+     * Set the value of description
+     *
+     * @param string $description
+     *
+     * @return self
+     */
+    public function setDescription(string $description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     *
+     */
+    public function hook()
+    {
+        add_action('init', [$this, 'register']);
+
+        return $this;
+    }
+
+    /**
      *
      */
     protected function buildArgs(array $args): array
     {
-        foreach (static::EXALTED_ARGS as $arg) {
+        foreach ($this->getExaltedArgs() as $arg) {
             if (!empty($property = $this->{$arg})) {
                 $args[$arg] = $property;
             }
@@ -127,11 +190,9 @@ abstract class AbstractWpObjectFacade
     /**
      *
      */
-    public function hook()
+    protected function getExaltedArgs()
     {
-        add_action('init', [$this, 'register']);
-
-        return $this;
+        return ['labels', 'rewrite', 'capabilities', 'description'];
     }
 
     /**

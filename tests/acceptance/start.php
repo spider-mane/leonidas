@@ -3,6 +3,7 @@
 use WebTheory\Leonidas\Helpers\SkyHooks;
 use WebTheory\Leonidas\Modules\AdminNotice;
 use WebTheory\Leonidas\Screen;
+use WebTheory\Leonidas\Util\TermCollection;
 use Whoops\Handler\PrettyPageHandler;
 use Whoops\Run;
 
@@ -16,6 +17,10 @@ use Whoops\Run;
 add_action('init', function () {
     require 'wp-object-factories.php';
     require 'page--standard.php';
+
+    // $terms = TermCollection::fromIds(2, 3, 4, 5);
+
+    // exit(var_dump($terms->getNames()));
 });
 
 /**

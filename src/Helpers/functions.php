@@ -39,7 +39,7 @@ function sort_objects_by_meta(array $objects, string $object_type, string $meta_
 /**
  *
  */
-function infer_object_properties($object_type, $properties = null)
+function infer_object_properties($object_type)
 {
     switch ($object_type) {
         case 'post':

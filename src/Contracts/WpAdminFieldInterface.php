@@ -2,7 +2,7 @@
 
 namespace WebTheory\Leonidas\Contracts;
 
-use WebTheory\Leonidas\Fields\WpAdminField;
+use WebTheory\Saveyour\Contracts\FormFieldControllerInterface;
 
 interface WpAdminFieldInterface
 {
@@ -29,5 +29,5 @@ interface WpAdminFieldInterface
     /**
      *
      */
-    public function getFormFieldController(): WpAdminField;
+    public function getFormFieldController(): FormFieldControllerInterface;
 }

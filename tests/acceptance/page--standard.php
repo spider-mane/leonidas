@@ -13,27 +13,6 @@ use WebTheory\Saveyour\Fields\Tel;
 $group1 = 'ba-test';
 
 /**
- * register settings
- */
-$setting1 = (new SettingManager($group1, 'ba-test-1'))
-    ->setType('string')
-    ->setDescription('this is a test setting')
-    ->addRule('email', v::optional(v::email()), 'Invalid thing provided')
-    ->hook();
-
-$setting2 = (new SettingManager($group1, 'ba-test-2'))
-    ->setType('string')
-    ->setDescription('this is another test setting')
-    ->addRule('phone', v::optional(v::phone()), 'Another invalid thing provided')
-    ->hook();
-
-$setting3 = (new SettingManager($group1, 'ba-test-3'))
-    ->setType('string')
-    ->setDescription('this is a whole nother test setting')
-    ->hook();
-
-
-/**
  * add page
  */
 $page1 = (new SettingsPage('company_info', $group1))
@@ -46,6 +25,27 @@ $page1 = (new SettingsPage('company_info', $group1))
     ->setSubMenuName('Basic Info')
     ->hook()
     ->getMenuSlug();
+
+
+/**
+ * register settings
+ */
+$setting1 = (new SettingManager($group1, 'ba-test-1'))
+    ->setType('string')
+    ->setDescription('emial address')
+    ->addRule('email', v::optional(v::email()), 'Invalid email')
+    ->hook();
+
+$setting2 = (new SettingManager($group1, 'ba-test-2'))
+    ->setType('string')
+    ->setDescription('phone number')
+    ->addRule('phone', v::optional(v::phone()), 'Invalid phone number')
+    ->hook();
+
+$setting3 = (new SettingManager($group1, 'ba-test-3'))
+    ->setType('string')
+    ->setDescription('this is a whole nother test setting')
+    ->hook();
 
 
 /**

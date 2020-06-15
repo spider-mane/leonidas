@@ -42,7 +42,7 @@ $domain = $factory->create([
     ],
     'rules' => [
         'thing' => [
-            'validator' => Validator::optional(Validator::domain()),
+            'validator' => Validator::optional(Validator::domain(false)),
             'alert' => 'Invalid Domain'
         ]
     ]

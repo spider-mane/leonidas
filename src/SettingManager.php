@@ -7,14 +7,14 @@ use WebTheory\Saveyour\InputPurifier;
 class SettingManager extends InputPurifier
 {
     /**
-     * option_group
+     * optionGroup
      *
      * @var string
      */
     protected $optionGroup;
 
     /**
-     * option_name
+     * optionName
      *
      * @var string
      */
@@ -42,7 +42,7 @@ class SettingManager extends InputPurifier
     protected $defaultValue;
 
     /**
-     * show_in_rest
+     * showInRest
      *
      * @var bool
      */
@@ -87,13 +87,13 @@ class SettingManager extends InputPurifier
      */
     public function hook()
     {
-        add_action('admin_init', [$this, 'registerSetting']);
+        add_action('admin_init', [$this, 'register']);
 
         return $this;
     }
 
     /**
-     * Get option_group
+     * Get optionGroup
      *
      * @return  string
      */
@@ -103,21 +103,21 @@ class SettingManager extends InputPurifier
     }
 
     /**
-     * Set option_group
+     * Set optionGroup
      *
-     * @param   string  $option_group  option_group
+     * @param   string  $optionGroup  optionGroup
      *
      * @return  self
      */
-    public function setOptionGroup(string $option_group)
+    public function setOptionGroup(string $optionGroup)
     {
-        $this->optionGroup = $option_group;
+        $this->optionGroup = $optionGroup;
 
         return $this;
     }
 
     /**
-     * Get option_name
+     * Get optionName
      *
      * @return  string
      */
@@ -133,9 +133,9 @@ class SettingManager extends InputPurifier
      *
      * @return  self
      */
-    private function setOptionName(string $option_name)
+    private function setOptionName(string $optionName)
     {
-        $this->optionName = $option_name;
+        $this->optionName = $optionName;
 
         return $this;
     }
@@ -213,7 +213,7 @@ class SettingManager extends InputPurifier
     }
 
     /**
-     * Get show_in_rest
+     * Get showInRest
      *
      * @return  bool
      */
@@ -223,15 +223,15 @@ class SettingManager extends InputPurifier
     }
 
     /**
-     * Set show_in_rest
+     * Set showInRest
      *
-     * @param   bool  $show_in_rest  show_in_rest
+     * @param   bool  $showInRest  showInRest
      *
      * @return  self
      */
-    public function setShowInRest(bool $show_in_rest)
+    public function setShowInRest(bool $showInRest)
     {
-        $this->showInRest = $show_in_rest;
+        $this->showInRest = $showInRest;
 
         return $this;
     }

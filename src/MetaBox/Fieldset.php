@@ -3,10 +3,10 @@
 namespace WebTheory\Leonidas\MetaBox;
 
 use Psr\Http\Message\ServerRequestInterface;
-use WebTheory\Leonidas\Fields\WpAdminField;
 use WebTheory\Leonidas\Forms\Controllers\AbstractWpAdminFormSubmissionManager;
 use WebTheory\Leonidas\MetaBox\Contracts\MetaboxContentInterface;
 use WebTheory\Leonidas\MetaBox\Contracts\MetaboxFieldInterface;
+use WebTheory\Saveyour\Contracts\FormFieldControllerInterface;
 
 class Fieldset implements MetaboxContentInterface
 {
@@ -214,7 +214,7 @@ class Fieldset implements MetaboxContentInterface
     /**
      *
      */
-    public function addField(string $slug, WpAdminField $field, array $options = [])
+    public function addField(string $slug, FormFieldControllerInterface $field, array $options = [])
     {
         if (isset($this->formController)) {
             $this->formController->addField($field);
@@ -242,7 +242,7 @@ class Fieldset implements MetaboxContentInterface
     /**
      *
      */
-    protected function createFieldContainer(WpAdminField $field, array $options): MetaboxFieldInterface
+    protected function createFieldContainer(FormFieldControllerInterface $field, array $options): MetaboxFieldInterface
     {
         return new Field($field);
     }
