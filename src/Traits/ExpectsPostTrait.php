@@ -4,7 +4,7 @@ namespace WebTheory\Leonidas\Traits;
 
 use Psr\Http\Message\ServerRequestInterface;
 
-trait UsesPostTrait
+trait ExpectsPostTrait
 {
     /**
      *
