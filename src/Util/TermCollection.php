@@ -73,6 +73,14 @@ class TermCollection
     /**
      *
      */
+    public function isEmpty(): bool
+    {
+        return empty($this->terms);
+    }
+
+    /**
+     *
+     */
     protected function diffCallback()
     {
         return function (WP_Term $term1, WP_Term $term2) {

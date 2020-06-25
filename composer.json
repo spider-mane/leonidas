@@ -19,7 +19,7 @@
     "pimple/pimple": "^3.2",
     "twig/twig": "^2.0",
     "webtheory/guctilitybelt": "^0.2.0",
-    "webtheory/html": "^0.1.0",
+    "webtheory/html": "^0.1.3",
     "webtheory/saveyour": "^0.1.0"
   },
   "require-dev": {
@@ -42,7 +42,7 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "WebTheory\\Leonidas\\Tests\\": "tests/"
+      "WebTheory\\Leonidas\\Tests\\": "tests/unit"
     },
     "files": [
       "tests/acceptance/start.php"

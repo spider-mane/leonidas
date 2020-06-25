@@ -75,6 +75,14 @@ class PostCollection
     /**
      *
      */
+    public function isEmpty(): bool
+    {
+        return empty($this->posts);
+    }
+
+    /**
+     *
+     */
     public function append(WP_Post $post)
     {
         $this->posts[] = $post;
