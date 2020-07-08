@@ -5,7 +5,7 @@ namespace WebTheory\Leonidas\Fields\Transformers;
 use WebTheory\Leonidas\Util\TermCollection;
 use WebTheory\Saveyour\Contracts\DataTransformerInterface;
 
-class TermChecklistTransformer implements DataTransformerInterface
+class TermIdChecklistTransformer implements DataTransformerInterface
 {
     /**
      *

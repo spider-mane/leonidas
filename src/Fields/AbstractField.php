@@ -4,11 +4,14 @@ namespace WebTheory\Leonidas\Fields;
 
 use Psr\Http\Message\ServerRequestInterface;
 use WebTheory\Leonidas\Contracts\WpAdminFieldInterface;
+use WebTheory\Leonidas\Traits\CanBeRestrictedTrait;
 use WebTheory\Saveyour\Contracts\FormFieldControllerInterface;
 use WebTheory\Saveyour\Contracts\FormFieldInterface;
 
 class AbstractField implements WpAdminFieldInterface
 {
+    use CanBeRestrictedTrait;
+
     /**
      * label
      *

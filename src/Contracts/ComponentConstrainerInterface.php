@@ -2,12 +2,12 @@
 
 namespace WebTheory\Leonidas\Contracts;
 
-use WP_Post;
+use Psr\Http\Message\ServerRequestInterface;
 
 interface ComponentConstrainerInterface
 {
     /**
      *
      */
-    public function loadComponentForPost(WP_Post $post);
+    public function screenMeetsCriteria(ServerRequestInterface $request): bool;
 }

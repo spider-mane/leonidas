@@ -6,10 +6,13 @@ use Psr\Http\Message\ServerRequestInterface;
 use WebTheory\Leonidas\Forms\Controllers\AbstractWpAdminFormSubmissionManager;
 use WebTheory\Leonidas\MetaBox\Contracts\MetaboxContentInterface;
 use WebTheory\Leonidas\MetaBox\Contracts\MetaboxFieldInterface;
+use WebTheory\Leonidas\Traits\CanBeRestrictedTrait;
 use WebTheory\Saveyour\Contracts\FormFieldControllerInterface;
 
 class Fieldset implements MetaboxContentInterface
 {
+    use CanBeRestrictedTrait;
+
     /**
      * @var string
      */
@@ -270,7 +273,7 @@ class Fieldset implements MetaboxContentInterface
     /**
      *
      */
-    public function render(ServerRequestInterface $request)
+    public function render(ServerRequestInterface $request): string
     {
         foreach ($this->fields as $field) {
             $field->setRowPadding($this->rowPadding);

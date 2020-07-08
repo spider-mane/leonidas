@@ -33,6 +33,7 @@ Screen::load(['edit-tags', 'term'], ['taxonomy' => 'wts_test_tax'], function () 
  * post_type_tests
  */
 Screen::load('post', ['post_type' => 'wts_test_cpt'], function () {
+    require 'metabox--section.php';
     require 'metabox--fieldset.php';
 });
 

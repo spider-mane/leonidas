@@ -5,16 +5,19 @@ namespace WebTheory\Leonidas\MetaBox;
 use Psr\Http\Message\ServerRequestInterface;
 use WebTheory\Html\Html;
 use WebTheory\Leonidas\MetaBox\Contracts\MetaboxContentInterface;
+use WebTheory\Leonidas\Traits\CanBeRestrictedTrait;
 
 class Section implements MetaboxContentInterface
 {
+    use CanBeRestrictedTrait;
+
     /**
      * @var string
      */
     protected $title;
 
     /**
-     * @var array
+     * @var MetaboxContentInterface[]
      */
     protected $content = [];
 
@@ -137,7 +140,7 @@ class Section implements MetaboxContentInterface
     /**
      *
      */
-    public function render(ServerRequestInterface $request)
+    public function render(ServerRequestInterface $request): string
     {
         $html = '';
 
@@ -157,7 +160,9 @@ class Section implements MetaboxContentInterface
         }
 
         foreach ($this->content as $content) {
-            $html .= $content->render($request);
+            if ($content->shouldBeRendered($request)) {
+                $html .= $content->render($request);
+            }
         }
 
         $html .= Html::close($container);

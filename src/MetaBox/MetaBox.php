@@ -5,12 +5,10 @@ namespace WebTheory\Leonidas\MetaBox;
 use GuzzleHttp\Psr7\ServerRequest;
 use WebTheory\Html\Html;
 use WebTheory\Leonidas\MetaBox\Contracts\MetaboxContentInterface;
-use WebTheory\Leonidas\Traits\CanBeRestrictedTrait;
 use WebTheory\Leonidas\Traits\HasNonceTrait;
 
 class MetaBox
 {
-    use CanBeRestrictedTrait;
     use HasNonceTrait;
 
     /**
@@ -65,7 +63,7 @@ class MetaBox
     /**
      * content
      *
-     * @var array
+     * @var MetaboxContentInterface[]
      */
     protected $content = [];
 
@@ -283,31 +281,32 @@ class MetaBox
      */
     public function display($post, $metaBox)
     {
-        if ($this->shouldLoad($post)) {
-            isset($this->callback) ? ($this->callback)($post, $metaBox, $this) : $this->render($post);
-        }
+        isset($this->callback) ? ($this->callback)($post, $metaBox, $this) : $this->render($post);
     }
 
     /**
      *
      */
-    protected function render($post)
+    public function render($post)
     {
-        $i = count($this->content);
         $request = ServerRequest::fromGlobals()->withAttribute('post', $post);
 
         $html = '';
         $html .= isset($this->nonce) ? $this->nonce->field() . "\n" : '';
-
         $html .= Html::open('div', ['class' => 'backalley-wrap']);
+
+        $i = count($this->content);
 
         foreach ($this->content as $content) {
             $i--;
 
-            $html .= $content->render($request);
+            if ($content->shouldBeRendered($request)) {
 
-            if ($i > 0) {
-                $html .= '<hr>';
+                $html .= $content->render($request);
+
+                if ($i > 0) {
+                    $html .= '<hr>';
+                }
             }
         }
 

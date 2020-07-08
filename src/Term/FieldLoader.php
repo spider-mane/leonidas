@@ -3,6 +3,7 @@
 namespace WebTheory\Leonidas\Term;
 
 use GuzzleHttp\Psr7\ServerRequest;
+use WebTheory\Leonidas\Contracts\TermFieldInterface;
 use WebTheory\Leonidas\Traits\HasNonceTrait;
 
 class FieldLoader
@@ -15,7 +16,7 @@ class FieldLoader
     protected $taxonomy;
 
     /**
-     * @var Field[]
+     * @var TermFieldInterface[]
      */
     protected $fields = [];
 
@@ -92,7 +93,9 @@ class FieldLoader
         $html .= isset($this->nonce) ? $this->nonce->field() . "\n" : '';
 
         foreach ($this->fields as $field) {
-            $html .= $field->render($request) . "\n";
+            if ($field->shouldBeRendered($request)) {
+                $html .= $field->render($request) . "\n";
+            }
         }
 
         echo $html;

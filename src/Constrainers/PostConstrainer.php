@@ -2,11 +2,15 @@
 
 namespace WebTheory\Leonidas\Constrainers;
 
+use Psr\Http\Message\ServerRequestInterface;
 use WP_Post;
 use WebTheory\Leonidas\Contracts\ComponentConstrainerInterface;
+use WebTheory\Leonidas\Traits\ExpectsPostTrait;
 
 class PostConstrainer implements ComponentConstrainerInterface
 {
+    use ExpectsPostTrait;
+
     /**
      * @var int[]
      */
@@ -33,8 +37,8 @@ class PostConstrainer implements ComponentConstrainerInterface
     /**
      *
      */
-    public function loadComponentForPost(WP_Post $post)
+    public function screenMeetsCriteria(ServerRequestInterface $request): bool
     {
-        return in_array($post->ID, $this->posts);
+        return in_array($this->getPostId($request), $this->posts);
     }
 }

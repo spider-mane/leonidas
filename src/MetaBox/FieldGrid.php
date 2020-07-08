@@ -4,6 +4,7 @@ namespace WebTheory\Leonidas\MetaBox;
 
 use Psr\Http\Message\ServerRequestInterface;
 use WebTheory\Leonidas\MetaBox\Contracts\MetaboxContentInterface;
+use WebTheory\Leonidas\Traits\CanBeRestrictedTrait;
 use WebTheory\Leonidas\Traits\UsesTemplateTrait;
 use WebTheory\Saveyour\Contracts\FormFieldControllerInterface;
 use WebTheory\Saveyour\Controllers\FormFieldController;
@@ -11,6 +12,7 @@ use WebTheory\Saveyour\Controllers\FormFieldController;
 class FieldGrid implements MetaboxContentInterface
 {
     use UsesTemplateTrait;
+    use CanBeRestrictedTrait;
 
     /**
      * @var array
@@ -23,7 +25,7 @@ class FieldGrid implements MetaboxContentInterface
     protected $rows = [];
 
     /**
-     * @var array
+     * @var FormFieldControllerInterface[]
      */
     protected $fields = [];
 
@@ -308,7 +310,7 @@ class FieldGrid implements MetaboxContentInterface
     /**
      *
      */
-    public function render(ServerRequestInterface $request)
+    public function render(ServerRequestInterface $request): string
     {
         /** @var FormFieldControllerInterface $field */
         foreach ($this->fields as $field) {

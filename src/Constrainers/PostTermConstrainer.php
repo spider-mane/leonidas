@@ -2,12 +2,16 @@
 
 namespace WebTheory\Leonidas\Constrainers;
 
+use Psr\Http\Message\ServerRequestInterface;
 use WP_Post;
 use WP_Term;
 use WebTheory\Leonidas\Contracts\ComponentConstrainerInterface;
+use WebTheory\Leonidas\Traits\ExpectsPostTrait;
 
 class PostTermConstrainer implements ComponentConstrainerInterface
 {
+    use ExpectsPostTrait;
+
     /**
      * @var string
      */
@@ -30,16 +34,6 @@ class PostTermConstrainer implements ComponentConstrainerInterface
     {
         $this->taxonomy = $taxonomy;
         $this->terms = $terms;
-    }
-
-    /**
-     *
-     */
-    public function loadComponentForPost(WP_Post $post)
-    {
-        return $this->matchAll ?
-            $this->matchesAllTerms($post) :
-            $this->matchesSingleTerm($post);
     }
 
     /**
@@ -82,6 +76,18 @@ class PostTermConstrainer implements ComponentConstrainerInterface
         $this->matchAll = $matchAll;
 
         return $this;
+    }
+
+    /**
+     *
+     */
+    public function screenMeetsCriteria(ServerRequestInterface $request)
+    {
+        $post = $this->getPost($request);
+
+        return $this->matchAll ?
+            $this->matchesAllTerms($post) :
+            $this->matchesSingleTerm($post);
     }
 
     /**

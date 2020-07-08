@@ -3,10 +3,11 @@
 namespace WebTheory\Leonidas\Term;
 
 use Psr\Http\Message\ServerRequestInterface;
+use WebTheory\Leonidas\Contracts\TermFieldInterface;
 use WebTheory\Leonidas\Fields\AbstractField;
 use WebTheory\Leonidas\Traits\UsesTemplateTrait;
 
-class Field extends AbstractField
+class Field extends AbstractField implements TermFieldInterface
 {
     use UsesTemplateTrait;
 
@@ -18,7 +19,7 @@ class Field extends AbstractField
     /**
      *
      */
-    protected function setTemplate()
+    protected function setTemplate(): Field
     {
         switch (get_current_screen()->base) {
 

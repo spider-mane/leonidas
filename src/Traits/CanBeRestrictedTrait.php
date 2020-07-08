@@ -2,7 +2,7 @@
 
 namespace WebTheory\Leonidas\Traits;
 
-use WP_Post;
+use Psr\Http\Message\ServerRequestInterface;
 use WebTheory\Leonidas\Contracts\ComponentConstrainerInterface;
 
 trait CanBeRestrictedTrait
@@ -53,10 +53,10 @@ trait CanBeRestrictedTrait
     /**
      *
      */
-    protected function shouldLoad(WP_Post $post): bool
+    public function shouldBeRendered(ServerRequestInterface $request): bool
     {
         foreach ($this->constraints as $constraint) {
-            if (!$constraint->loadComponentForPost($post)) {
+            if (!$constraint->screenMeetsCriteria($request)) {
                 return false;
             }
         }

@@ -2,15 +2,9 @@
 
 namespace WebTheory\Leonidas\MetaBox\Contracts;
 
-use Psr\Http\Message\ServerRequestInterface;
+use WebTheory\Leonidas\Contracts\ScreenComponentInterface;
 
-/**
- *
- */
-interface MetaboxContentInterface
+interface MetaboxContentInterface extends ScreenComponentInterface
 {
-    /**
-     *
-     */
-    public function render(ServerRequestInterface $request);
+    //
 }
