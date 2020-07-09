@@ -4,9 +4,9 @@ namespace WebTheory\Leonidas\Fields\Selections;
 
 use WP_Taxonomy;
 use WP_Term;
-use WebTheory\Saveyour\Contracts\SelectionProviderInterface;
+use WebTheory\Saveyour\Contracts\ChecklistItemsInterface;
 
-class TaxonomyChecklistItems extends AbstractTermChecklistItems implements SelectionProviderInterface
+class TaxonomyChecklistItems extends AbstractTermChecklistItems implements ChecklistItemsInterface
 {
     /**
      * @var WP_Taxonomy

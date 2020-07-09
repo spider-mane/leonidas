@@ -90,7 +90,7 @@ class FieldLoader
         $term && $request = $request->withAttribute('term', $term);
 
         $html = '';
-        $html .= isset($this->nonce) ? $this->nonce->field() . "\n" : '';
+        $html .= $this->maybeRenderNonce();
 
         foreach ($this->fields as $field) {
             if ($field->shouldBeRendered($request)) {

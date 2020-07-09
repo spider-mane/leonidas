@@ -292,7 +292,7 @@ class MetaBox
         $request = ServerRequest::fromGlobals()->withAttribute('post', $post);
 
         $html = '';
-        $html .= isset($this->nonce) ? $this->nonce->field() . "\n" : '';
+        $html .= $this->maybeRenderNonce();
         $html .= Html::open('div', ['class' => 'backalley-wrap']);
 
         $i = count($this->content);

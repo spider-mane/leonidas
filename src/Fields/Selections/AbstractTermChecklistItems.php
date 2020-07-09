@@ -2,10 +2,10 @@
 
 namespace WebTheory\Leonidas\Fields\Selections;
 
-use WebTheory\Saveyour\Contracts\SelectionProviderInterface;
+use WebTheory\Saveyour\Contracts\ChecklistItemsInterface;
 use WebTheory\Saveyour\Fields\Selections\AbstractChecklistSelectionProvider;
 
-abstract class AbstractTermChecklistItems extends AbstractChecklistSelectionProvider implements SelectionProviderInterface
+abstract class AbstractTermChecklistItems extends AbstractChecklistSelectionProvider implements ChecklistItemsInterface
 {
     /**
      * @var string
@@ -34,14 +34,6 @@ abstract class AbstractTermChecklistItems extends AbstractChecklistSelectionProv
         $this->idFormat = $idFormat;
 
         return $this;
-    }
-
-    /**
-     * @param WP_Term $term
-     */
-    protected function provideItemKey($term): string
-    {
-        return $term->term_id;
     }
 
     /**

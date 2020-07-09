@@ -41,7 +41,7 @@ class TermChecklist extends AbstractField implements FormFieldControllerInterfac
     protected function createFormField(): ?FormFieldInterface
     {
         return (new Checklist)
-            ->setSelectionProvider(new TaxonomyChecklistItems($this->taxonomy))
+            ->setChecklistItemProvider(new TaxonomyChecklistItems($this->taxonomy))
             ->setId("wts--{$this->taxonomy}-checklist")
             ->addClass('thing');
     }

@@ -34,4 +34,20 @@ trait HasNonceTrait
 
         return $this;
     }
+
+    /**
+     *
+     */
+    protected function renderNonce(): string
+    {
+        return $this->nonce->field() . "\n";
+    }
+
+    /**
+     *
+     */
+    protected function maybeRenderNonce(): string
+    {
+        return isset($this->nonce) ? $this->renderNonce() : '';
+    }
 }

@@ -4,9 +4,9 @@ namespace WebTheory\Leonidas\Fields\Selections;
 
 use WP_Post;
 use WebTheory\Leonidas\Util\PostCollection;
-use WebTheory\Saveyour\Contracts\SelectionProviderInterface;
+use WebTheory\Saveyour\Contracts\ChecklistItemsInterface;
 
-class PostCollectionChecklistItems extends AbstractPostChecklistItems implements SelectionProviderInterface
+class PostCollectionChecklistItems extends AbstractPostChecklistItems implements ChecklistItemsInterface
 {
     /**
      * @var PostCollection

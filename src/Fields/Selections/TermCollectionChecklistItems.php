@@ -4,9 +4,9 @@ namespace WebTheory\Leonidas\Fields\Selections;
 
 use WP_Term;
 use WebTheory\Leonidas\Util\TermCollection;
-use WebTheory\Saveyour\Contracts\SelectionProviderInterface;
+use WebTheory\Saveyour\Contracts\ChecklistItemsInterface;
 
-class TermCollectionChecklistItems extends AbstractTermChecklistItems implements SelectionProviderInterface
+class TermCollectionChecklistItems extends AbstractTermChecklistItems implements ChecklistItemsInterface
 {
     /**
      * @var TermCollection

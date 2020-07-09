@@ -5,14 +5,14 @@ namespace WebTheory\Leonidas\MetaBox;
 use Psr\Http\Message\ServerRequestInterface;
 use WebTheory\Leonidas\MetaBox\Contracts\MetaboxContentInterface;
 use WebTheory\Leonidas\Traits\CanBeRestrictedTrait;
-use WebTheory\Leonidas\Traits\UsesTemplateTrait;
+use WebTheory\Leonidas\Traits\RendersWithTemplateTrait;
 use WebTheory\Saveyour\Contracts\FormFieldControllerInterface;
 use WebTheory\Saveyour\Controllers\FormFieldController;
 
 class FieldGrid implements MetaboxContentInterface
 {
-    use UsesTemplateTrait;
     use CanBeRestrictedTrait;
+    use RendersWithTemplateTrait;
 
     /**
      * @var array
@@ -310,21 +310,21 @@ class FieldGrid implements MetaboxContentInterface
     /**
      *
      */
-    public function render(ServerRequestInterface $request): string
+    protected function defineTemplateContext(ServerRequestInterface $request): array
     {
         /** @var FormFieldControllerInterface $field */
         foreach ($this->fields as $field) {
-            // triggers field controller to set formfield dynamic value
+            // triggers field controller to set formField dynamic value
             $field->render($request);
         }
 
-        return $this->renderTemplate([
+        return [
             'map' => $this->map,
             'rows' => $this->rows,
             'columns' => $this->columns,
             'row_padding' => $this->rowPadding,
             'row_root_width' => static::ROW_TITLE_COL_WITDH,
             'col_width' => isset($this->columnWidth) ? "-{$this->columnWidth}" : null,
-        ]);
+        ];
     }
 }

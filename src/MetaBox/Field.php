@@ -5,14 +5,12 @@ namespace WebTheory\Leonidas\MetaBox;
 use Psr\Http\Message\ServerRequestInterface;
 use WebTheory\Leonidas\Fields\AbstractField;
 use WebTheory\Leonidas\MetaBox\Contracts\MetaboxFieldInterface;
-use WebTheory\Leonidas\Traits\ExpectsPostTrait;
-use WebTheory\Leonidas\Traits\UsesTemplateTrait;
+use WebTheory\Leonidas\Traits\RendersWithTemplateTrait;
 use WebTheory\Saveyour\Contracts\FormFieldControllerInterface;
 
 class Field extends AbstractField implements MetaboxFieldInterface
 {
-    use ExpectsPostTrait;
-    use UsesTemplateTrait;
+    use RendersWithTemplateTrait;
 
     /**
      * label
@@ -114,9 +112,9 @@ class Field extends AbstractField implements MetaboxFieldInterface
     /**
      *
      */
-    public function render(ServerRequestInterface $request): string
+    protected function defineTemplateContext(ServerRequestInterface $request): array
     {
-        return $this->renderTemplate([
+        return [
             'label' => $this->label,
             'hidden' => $this->hiddenInput,
             'row_padding' => $this->rowPadding,
@@ -124,6 +122,6 @@ class Field extends AbstractField implements MetaboxFieldInterface
             'submit_button' => $this->submitButton,
             'field' => $this->renderFormField($request),
             'root_width' => static::ROW_TITLE_COL_WIDTH,
-        ]);
+        ];
     }
 }
