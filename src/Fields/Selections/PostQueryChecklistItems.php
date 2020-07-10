@@ -18,13 +18,13 @@ class PostQueryChecklistItems extends AbstractPostChecklistItems implements Chec
      */
     public function __construct(WP_Query $query)
     {
-        $this->query = clone $query;
+        $this->query = $query;
     }
 
     /**
      * @return WP_Post[]
      */
-    protected function provideItemsAsRawData(): array
+    public function provideItemsAsRawData(): array
     {
         return $this->query->get_posts();
     }

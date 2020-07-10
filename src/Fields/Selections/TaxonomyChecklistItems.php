@@ -24,7 +24,7 @@ class TaxonomyChecklistItems extends AbstractTermChecklistItems implements Check
     /**
      * @param WP_Term $item
      */
-    protected function provideItemsAsRawData(): array
+    public function provideItemsAsRawData(): array
     {
         return get_terms([
             'taxonomy' => $this->taxonomy,

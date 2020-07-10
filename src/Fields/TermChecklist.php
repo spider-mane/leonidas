@@ -4,7 +4,7 @@ namespace WebTheory\Leonidas\Fields;
 
 use WebTheory\Leonidas\Fields\Managers\PostTermDataManager;
 use WebTheory\Leonidas\Fields\Selections\TaxonomyChecklistItems;
-use WebTheory\Leonidas\Fields\Transformers\TermChecklistTransformer;
+use WebTheory\Leonidas\Fields\Transformers\TermIdChecklistTransformer;
 use WebTheory\Saveyour\Contracts\DataTransformerInterface;
 use WebTheory\Saveyour\Contracts\FieldDataManagerInterface;
 use WebTheory\Saveyour\Contracts\FormFieldControllerInterface;
@@ -30,7 +30,7 @@ class TermChecklist extends AbstractField implements FormFieldControllerInterfac
     public function __construct(string $taxonomy, string $requestVar, array $options = [])
     {
         $this->taxonomy = $taxonomy;
-        $this->options = $options;
+        $this->options = $this->defineOptions($options);
 
         parent::__construct($requestVar);
     }
@@ -38,11 +38,25 @@ class TermChecklist extends AbstractField implements FormFieldControllerInterfac
     /**
      *
      */
+    protected function defineOptions(array $options)
+    {
+        return [
+            'id' => $options['id'] ?? "wts--{$this->taxonomy}-checklist",
+            'class' => $options['class'] ?? []
+        ];
+    }
+
+    /**
+     *
+     */
     protected function createFormField(): ?FormFieldInterface
     {
+        $options = $this->options;
+
         return (new Checklist)
             ->setChecklistItemProvider(new TaxonomyChecklistItems($this->taxonomy))
-            ->setId("wts--{$this->taxonomy}-checklist")
+            ->setId($options['id'])
+            ->setClasslist($options['class'])
             ->addClass('thing');
     }
 
@@ -59,7 +73,7 @@ class TermChecklist extends AbstractField implements FormFieldControllerInterfac
      */
     protected function createDataTransformer(): ?DataTransformerInterface
     {
-        return new TermChecklistTransformer();
+        return new TermIdChecklistTransformer();
     }
 
     /**

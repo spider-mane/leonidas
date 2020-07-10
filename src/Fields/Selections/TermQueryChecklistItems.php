@@ -24,7 +24,7 @@ class TermQueryChecklistItems extends AbstractTermChecklistItems implements Chec
     /**
      * @return WP_Term[]
      */
-    protected function provideItemsAsRawData(): array
+    public function provideItemsAsRawData(): array
     {
         return $this->query->get_terms();
     }

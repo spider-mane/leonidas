@@ -24,7 +24,7 @@ class TermCollectionChecklistItems extends AbstractTermChecklistItems implements
     /**
      * @return WP_Term[]
      */
-    protected function provideItemsAsRawData(): array
+    public function provideItemsAsRawData(): array
     {
         return $this->collection->getTerms();
     }

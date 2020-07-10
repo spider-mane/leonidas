@@ -3,9 +3,8 @@
 namespace WebTheory\Leonidas\Fields\Selections;
 
 use WebTheory\Saveyour\Contracts\ChecklistItemsInterface;
-use WebTheory\Saveyour\Fields\Selections\AbstractChecklistSelectionProvider;
 
-abstract class AbstractPostChecklistItems extends AbstractChecklistSelectionProvider implements ChecklistItemsInterface
+abstract class AbstractPostChecklistItems implements ChecklistItemsInterface
 {
     /**
      * @var string
@@ -39,7 +38,7 @@ abstract class AbstractPostChecklistItems extends AbstractChecklistSelectionProv
     /**
      * @param WP_Post $post
      */
-    protected function provideItemValue($post): string
+    public function provideItemValue($post): string
     {
         return $post->ID;
     }
@@ -47,7 +46,7 @@ abstract class AbstractPostChecklistItems extends AbstractChecklistSelectionProv
     /**
      * @param WP_Post $post
      */
-    protected function provideItemLabel($post): string
+    public function provideItemLabel($post): string
     {
         return $post->post_title;
     }
@@ -55,7 +54,7 @@ abstract class AbstractPostChecklistItems extends AbstractChecklistSelectionProv
     /**
      * @param WP_Post $post
      */
-    protected function provideItemId($post): string
+    public function provideItemId($post): string
     {
         return sprintf($this->idFormat, $post->post_name);
     }

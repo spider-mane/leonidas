@@ -18,13 +18,13 @@ class PostCollectionChecklistItems extends AbstractPostChecklistItems implements
      */
     public function __construct(PostCollection $collection)
     {
-        $this->collection = clone $collection;
+        $this->collection = $collection;
     }
 
     /**
      * @return WP_Post[]
      */
-    protected function provideItemsAsRawData(): array
+    public function provideItemsAsRawData(): array
     {
         return $this->collection->getPosts();
     }
