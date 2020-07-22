@@ -1,10 +1,8 @@
 <?php
 
-namespace WebTheory\Leonidas\Fields\Selections;
+namespace WebTheory\Leonidas\Fields\Selections\Traits;
 
-use WebTheory\Saveyour\Contracts\ChecklistItemsInterface;
-
-abstract class AbstractPostChecklistItems implements ChecklistItemsInterface
+trait PostChecklistItemsTrait
 {
     /**
      * @var string
@@ -33,14 +31,6 @@ abstract class AbstractPostChecklistItems implements ChecklistItemsInterface
         $this->idFormat = $idFormat;
 
         return $this;
-    }
-
-    /**
-     * @param WP_Post $post
-     */
-    public function provideItemValue($post): string
-    {
-        return $post->ID;
     }
 
     /**

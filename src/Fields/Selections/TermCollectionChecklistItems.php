@@ -2,30 +2,10 @@
 
 namespace WebTheory\Leonidas\Fields\Selections;
 
-use WP_Term;
-use WebTheory\Leonidas\Util\TermCollection;
+use WebTheory\Leonidas\Fields\Selections\Traits\TermChecklistItemsTrait;
 use WebTheory\Saveyour\Contracts\ChecklistItemsInterface;
 
-class TermCollectionChecklistItems extends AbstractTermChecklistItems implements ChecklistItemsInterface
+class TermCollectionChecklistItems extends AbstractTermCollectionSelection implements ChecklistItemsInterface
 {
-    /**
-     * @var TermCollection
-     */
-    protected $collection;
-
-    /**
-     *
-     */
-    public function __construct(TermCollection $collection)
-    {
-        $this->collection = $collection;
-    }
-
-    /**
-     * @return WP_Term[]
-     */
-    public function provideItemsAsRawData(): array
-    {
-        return $this->collection->getTerms();
-    }
+    use TermChecklistItemsTrait;
 }

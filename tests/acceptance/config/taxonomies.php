@@ -19,7 +19,7 @@ return [
         'show_in_rest' => true,
         'show_tagcloud' => false,
         'show_ui' => true,
-        'object_types' => 'wts_test_cpt',
+        'object_types' => 'wts_test_cpt_2',
 
         'description' => '',
 

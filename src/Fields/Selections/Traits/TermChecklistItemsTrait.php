@@ -1,10 +1,8 @@
 <?php
 
-namespace WebTheory\Leonidas\Fields\Selections;
+namespace WebTheory\Leonidas\Fields\Selections\Traits;
 
-use WebTheory\Saveyour\Contracts\ChecklistItemsInterface;
-
-abstract class AbstractTermChecklistItems implements ChecklistItemsInterface
+trait TermChecklistItemsTrait
 {
     /**
      * @var string
@@ -40,7 +38,7 @@ abstract class AbstractTermChecklistItems implements ChecklistItemsInterface
      */
     public function provideItemValue($term): string
     {
-        return $term->term_id;
+        return (string) $term->term_id;
     }
 
     /**

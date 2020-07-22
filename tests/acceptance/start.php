@@ -41,5 +41,7 @@ Screen::load('post', ['post_type' => 'wts_test_cpt_2'], function () {
     require 'metabox--field-grid.php';
 });
 
+require 'metabox--post-selections.php';
+
 // SkyHooks::collect();
 // SkyHooks::dump();
