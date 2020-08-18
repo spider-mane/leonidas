@@ -59,7 +59,7 @@ class Status
      */
     public function setOptions(array $options)
     {
-        $tag = Html::tag('span', '(%s)', ['class' => 'count']);
+        $tag = Html::tag('span', ['class' => 'count'], '(%s)');
         $title = ucfirst($this->name);
 
         $this->options = $options + [

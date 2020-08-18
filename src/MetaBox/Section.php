@@ -144,7 +144,7 @@ class Section implements MetaboxContentInterface
     {
         $html = '';
 
-        $titleElement = Html::tag('h3', $this->title);
+        $titleElement = Html::tag('h3', [], $this->title);
         $attributes = ['class' => "py-{$this->padding}"];
         $container = $this->isFieldset ? 'fieldset' : 'div';
 
@@ -154,7 +154,7 @@ class Section implements MetaboxContentInterface
             // temporarily disabled because legend elements are absolutely
             // positioned within their container, making padding not work
             // as desired
-            $html .= Html::tag('legend', $titleElement);
+            $html .= Html::tag('legend', [], $titleElement);
         } else {
             $html .= $titleElement;
         }

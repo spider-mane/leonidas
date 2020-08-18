@@ -3,9 +3,9 @@
 namespace WebTheory\Leonidas\Fields\Selections;
 
 use WP_Term;
-use WebTheory\Saveyour\Contracts\SuperSelectionProviderInterface;
+use WebTheory\Saveyour\Contracts\SelectionProviderInterface;
 
-abstract class AbstractTermSuperSelection implements SuperSelectionProviderInterface
+abstract class AbstractTermSelectionProvider implements SelectionProviderInterface
 {
     /**
      *
@@ -39,7 +39,7 @@ abstract class AbstractTermSuperSelection implements SuperSelectionProviderInter
     /**
      * @param WP_Term $term
      */
-    public function provideItemValue($term): string
+    public function defineSelectionValue($term): string
     {
         return (string) $term->{$this->valueKey};
     }

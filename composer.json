@@ -19,8 +19,8 @@
     "pimple/pimple": "^3.2",
     "twig/twig": "^2.0",
     "webtheory/guctilitybelt": "^0.2.0",
-    "webtheory/html": "^0.1.3",
-    "webtheory/saveyour": "^0.1.11"
+    "webtheory/html": "^0.2.0",
+    "webtheory/saveyour": "^0.2.0"
   },
   "require-dev": {
     "commerceguys/addressing": "^1.0",

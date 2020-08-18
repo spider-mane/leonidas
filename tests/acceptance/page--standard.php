@@ -9,6 +9,7 @@ use WebTheory\Leonidas\SettingManager;
 use WebTheory\Saveyour\Fields\Email;
 use WebTheory\Saveyour\Fields\Select;
 use WebTheory\Saveyour\Fields\Tel;
+use WebTheory\Saveyour\Selections\StateSelectOptions;
 
 $group1 = 'ba-test';
 
@@ -74,5 +75,5 @@ $settingField2 = (new SettingsField('ba-test-two', 'Test Setting 2', $page1))
 $settingField3 = (new SettingsField('ba-test-three', 'Test Setting 3', $page1))
     ->setSetting($setting3->getOptionName())
     ->setSection($section1->getId())
-    ->setField((new Select)->setOptions(UsStatesAndTerritories::states('Select State')))
+    ->setField((new Select)->setSelectionProvider(new StateSelectOptions()))
     ->hook();

@@ -36,7 +36,7 @@ trait PostChecklistItemsTrait
     /**
      * @param WP_Post $post
      */
-    public function provideItemLabel($post): string
+    public function defineSelectionLabel($post): string
     {
         return $post->post_title;
     }
@@ -44,7 +44,7 @@ trait PostChecklistItemsTrait
     /**
      * @param WP_Post $post
      */
-    public function provideItemId($post): string
+    public function defineSelectionId($post): string
     {
         return sprintf($this->idFormat, $post->post_name);
     }

@@ -3,9 +3,9 @@
 namespace WebTheory\Leonidas\Fields\Selections;
 
 use WebTheory\Leonidas\Fields\Selections\Traits\PostChecklistItemsTrait;
-use WebTheory\Saveyour\Contracts\ChecklistItemsInterface;
+use WebTheory\Saveyour\Contracts\ChecklistItemsProviderInterface;
 
-class PostCollectionChecklistItems extends AbstractPostCollectionSelection implements ChecklistItemsInterface
+class PostCollectionChecklistItems extends AbstractPostCollectionSelection implements ChecklistItemsProviderInterface
 {
     use PostChecklistItemsTrait;
 }

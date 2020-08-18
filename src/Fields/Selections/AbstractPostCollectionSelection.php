@@ -4,9 +4,9 @@ namespace WebTheory\Leonidas\Fields\Selections;
 
 use WP_Post;
 use WebTheory\Leonidas\Util\PostCollection;
-use WebTheory\Saveyour\Contracts\SuperSelectionProviderInterface;
+use WebTheory\Saveyour\Contracts\SelectionProviderInterface;
 
-abstract class AbstractPostCollectionSelection extends AbstractPostSuperSelection implements SuperSelectionProviderInterface
+abstract class AbstractPostCollectionSelection extends AbstractPostSelectionProvider implements SelectionProviderInterface
 {
     /**
      * @var PostCollection
@@ -24,7 +24,7 @@ abstract class AbstractPostCollectionSelection extends AbstractPostSuperSelectio
     /**
      * @return WP_Post[]
      */
-    public function provideItemsAsRawData(): array
+    public function provideSelectionsData(): array
     {
         return $this->collection->getPosts();
     }

@@ -1,16 +1,16 @@
 <?php
 
-namespace WebTheory\Leonidas\Fields\Transformers;
+namespace WebTheory\Leonidas\Fields\Formatters;
 
 use WebTheory\Leonidas\Util\TermCollection;
-use WebTheory\Saveyour\Contracts\DataTransformerInterface;
+use WebTheory\Saveyour\Contracts\DataFormatterInterface;
 
-class TermIdChecklistTransformer implements DataTransformerInterface
+class TermIdChecklistFormatter implements DataFormatterInterface
 {
     /**
      *
      */
-    public function transform($terms)
+    public function formatData($terms)
     {
         $terms = new TermCollection(...$terms);
 
@@ -20,7 +20,7 @@ class TermIdChecklistTransformer implements DataTransformerInterface
     /**
      *
      */
-    public function reverseTransform($terms)
+    public function formatInput($terms)
     {
         if (in_array('0', $terms)) {
             unset($terms[array_search('0', $terms)]);

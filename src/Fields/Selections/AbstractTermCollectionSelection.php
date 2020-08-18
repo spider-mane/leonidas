@@ -4,9 +4,9 @@ namespace WebTheory\Leonidas\Fields\Selections;
 
 use WP_Term;
 use WebTheory\Leonidas\Util\TermCollection;
-use WebTheory\Saveyour\Contracts\SuperSelectionProviderInterface;
+use WebTheory\Saveyour\Contracts\SelectionProviderInterface;
 
-abstract class AbstractTermCollectionSelection extends AbstractTermSuperSelection implements SuperSelectionProviderInterface
+abstract class AbstractTermCollectionSelection extends AbstractTermSelectionProvider implements SelectionProviderInterface
 {
     /**
      * @var TermCollection
@@ -24,7 +24,7 @@ abstract class AbstractTermCollectionSelection extends AbstractTermSuperSelectio
     /**
      * @return WP_Term[]
      */
-    public function provideItemsAsRawData(): array
+    public function provideSelectionsData(): array
     {
         return $this->collection->getTerms();
     }

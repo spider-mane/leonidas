@@ -36,7 +36,7 @@ trait TermChecklistItemsTrait
     /**
      * @param WP_Term $term
      */
-    public function provideItemValue($term): string
+    public function defineSelectionValue($term): string
     {
         return (string) $term->term_id;
     }
@@ -44,7 +44,7 @@ trait TermChecklistItemsTrait
     /**
      * @param WP_Term $term
      */
-    public function provideItemLabel($term): string
+    public function defineSelectionLabel($term): string
     {
         return $term->name;
     }
@@ -52,7 +52,7 @@ trait TermChecklistItemsTrait
     /**
      * @param WP_Term $term
      */
-    public function provideItemId($term): string
+    public function defineSelectionId($term): string
     {
         return sprintf($this->idFormat, $term->slug);
     }

@@ -145,7 +145,7 @@ class ColumnRowAction
             'aria-label' => sprintf($this->ariaLabel, "&#8220;{$object->name}&#8221;")
         ];
 
-        $actions[$this->action] = $this->tag('a', $this->title, $attributes + $this->attributes);
+        $actions[$this->action] = $this->tag('a', $attributes + $this->attributes, $this->title);
 
         return $actions;
     }

@@ -9,7 +9,7 @@ trait NonHierarchicalTaxonomySelectionTrait
     /**
      * @param WP_Term $term
      */
-    public function provideItemValue(WP_Term $term): string
+    public function defineSelectionValue($term): string
     {
         return $term->name;
     }

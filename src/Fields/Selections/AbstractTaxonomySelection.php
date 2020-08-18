@@ -4,9 +4,9 @@ namespace WebTheory\Leonidas\Fields\Selections;
 
 use WP_Taxonomy;
 use WP_Term;
-use WebTheory\Saveyour\Contracts\SuperSelectionProviderInterface;
+use WebTheory\Saveyour\Contracts\SelectionProviderInterface;
 
-abstract class AbstractTaxonomySelection extends AbstractTermSuperSelection implements SuperSelectionProviderInterface
+abstract class AbstractTaxonomySelection extends AbstractTermSelectionProvider implements SelectionProviderInterface
 {
     /**
      * @var WP_Taxonomy
@@ -24,7 +24,7 @@ abstract class AbstractTaxonomySelection extends AbstractTermSuperSelection impl
     /**
      * @return WP_Term[]
      */
-    public function provideItemsAsRawData(): array
+    public function provideSelectionsData(): array
     {
         return get_terms([
             'taxonomy' => $this->taxonomy,

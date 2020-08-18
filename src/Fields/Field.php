@@ -18,7 +18,7 @@ class Field extends SimpleFieldFactory
     /**
      *
      */
-    protected function createFormFieldFactory(array $options): FormFieldResolverFactoryInterface
+    protected function defineFormFieldFactory(array $options): FormFieldResolverFactoryInterface
     {
         $namespaces = $options['namespaces'] ?? [];
         $fields = $options['fields'] ?? [];
@@ -29,7 +29,7 @@ class Field extends SimpleFieldFactory
     /**
      *
      */
-    protected function createDataManagerFactory(array $options): FieldDataManagerResolverFactoryInterface
+    protected function defineDataManagerFactory(array $options): FieldDataManagerResolverFactoryInterface
     {
         $namespaces = $options['namespaces'] ?? [];
         $managers = $options['managers'] ?? [];

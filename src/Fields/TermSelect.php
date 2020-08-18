@@ -2,17 +2,17 @@
 
 namespace WebTheory\Leonidas\Fields;
 
-use WebTheory\Leonidas\Fields\Formatters\TermIdChecklistFormatter;
+use WebTheory\Leonidas\Fields\Formatters\TermSelectFormatter;
 use WebTheory\Leonidas\Fields\Managers\PostTermDataManager;
-use WebTheory\Leonidas\Fields\Selections\TaxonomyChecklistItems;
+use WebTheory\Leonidas\Fields\Selections\TaxonomySelectOptions;
 use WebTheory\Saveyour\Contracts\DataFormatterInterface;
 use WebTheory\Saveyour\Contracts\FieldDataManagerInterface;
 use WebTheory\Saveyour\Contracts\FormFieldControllerInterface;
 use WebTheory\Saveyour\Contracts\FormFieldInterface;
 use WebTheory\Saveyour\Controllers\AbstractField;
-use WebTheory\Saveyour\Fields\Checklist;
+use WebTheory\Saveyour\Fields\Select;
 
-class TermChecklist extends AbstractField implements FormFieldControllerInterface
+class TermSelect extends AbstractField implements FormFieldControllerInterface
 {
     /**
      *
@@ -41,23 +41,24 @@ class TermChecklist extends AbstractField implements FormFieldControllerInterfac
     protected function defineOptions(array $options)
     {
         return [
-            'id' => $options['id'] ?? "wts--{$this->taxonomy}-checklist",
-            'class' => $options['class'] ?? []
+            'id' => $options['id'] ?? "wts--{$this->taxonomy}-select",
+            'class' => $options['class'] ?? [],
+            'multiple' => $options['multiple'] ?? false
         ];
     }
 
     /**
      *
      */
-    protected function defineFormField(): ?FormFieldInterface
+    protected function defineFormField(): FormFieldInterface
     {
         $options = $this->options;
 
-        return (new Checklist)
-            ->setSelectionProvider(new TaxonomyChecklistItems($this->taxonomy))
+        return (new Select)
+            ->setSelectionProvider(new TaxonomySelectOptions($this->taxonomy))
+            ->setMultiple($options['multiple'])
             ->setId($options['id'])
-            ->setClasslist($options['class'])
-            ->addClass('thing');
+            ->setClasslist($options['class']);
     }
 
     /**
@@ -73,7 +74,7 @@ class TermChecklist extends AbstractField implements FormFieldControllerInterfac
      */
     protected function defineDataFormatter(): ?DataFormatterInterface
     {
-        return new TermIdChecklistFormatter();
+        return new TermSelectFormatter();
     }
 
     /**

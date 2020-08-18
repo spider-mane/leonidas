@@ -6,6 +6,7 @@ use WebTheory\Leonidas\Fields\Selections\TaxonomyChecklistItems;
 use WebTheory\Leonidas\Fields\Selections\TaxonomySelectOptions;
 use WebTheory\Leonidas\Fields\Selections\TermQuerySelectOptions;
 use WebTheory\Leonidas\Fields\TermChecklist;
+use WebTheory\Leonidas\Fields\TermSelect;
 use WebTheory\Leonidas\Forms\Controllers\PostMetaBoxFormSubmissionManager;
 use WebTheory\Leonidas\MetaBox\Field;
 use WebTheory\Leonidas\MetaBox\MetaBox;
@@ -24,7 +25,7 @@ Screen::load('post', ['post_type' => 'wts_test_cpt_2'], function () {
     ################################################################################
     # Base
     ################################################################################
-    $test = 'Taxonomy Checklist Items';
+    $test = 'Taxonomy Checklist';
     $postType = 'wts_test_cpt_2';
     $taxonomy = 'wts_test_tax';
     $taxName = get_taxonomy($taxonomy)->labels->name;
@@ -49,11 +50,19 @@ Screen::load('post', ['post_type' => 'wts_test_cpt_2'], function () {
     $checklistField = (new Field($checklist))->setLabel($test);
 
     $manager->addField($checklist);
-    $metabox->addContent('taxtribute-checklist', $checklistField);
+    $metabox->addContent('taxonomy-checklist', $checklistField);
 
     ################################################################################
     # Post Query Select Options
     ################################################################################
-    $options = new TaxonomySelectOptions($taxonomy);
-    $formField = (new Select)->setSelectionProvider($options);
+    $options = [
+        'multiple' => true,
+        'class' => ['regular-text']
+    ];
+
+    $select = new TermSelect($taxonomy, 'wts_tax_input_2', $options);
+    $selectField = (new Field($select))->setLabel('Taxonomy Select');
+
+    $manager->addField($select);
+    $metabox->addContent('taxonomy-select', $selectField);
 });

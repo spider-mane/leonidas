@@ -169,6 +169,6 @@ class SettingsSection
      */
     public function renderDefault()
     {
-        echo Html::tag('p', $this->description);
+        echo Html::tag('p', [], $this->description);
     }
 }

@@ -7,9 +7,9 @@ use WP_Term;
 trait TermSelectOptionsTrait
 {
     /**
-     *
+     * @param WP_Term $term
      */
-    public function provideItemContent(WP_Term $term): string
+    public function defineSelectionText($term): string
     {
         return $term->name;
     }
