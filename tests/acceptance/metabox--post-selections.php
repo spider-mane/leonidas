@@ -1,23 +1,13 @@
 <?php
 
-use Respect\Validation\Validator as v;
 use WebTheory\Leonidas\Auth\Nonce;
-use WebTheory\Leonidas\Fields\Selections\TaxonomyChecklistItems;
-use WebTheory\Leonidas\Fields\Selections\TaxonomySelectOptions;
-use WebTheory\Leonidas\Fields\Selections\TermQuerySelectOptions;
 use WebTheory\Leonidas\Fields\TermChecklist;
+use WebTheory\Leonidas\Fields\TermSelect2;
 use WebTheory\Leonidas\Fields\TermSelect;
 use WebTheory\Leonidas\Forms\Controllers\PostMetaBoxFormSubmissionManager;
 use WebTheory\Leonidas\MetaBox\Field;
 use WebTheory\Leonidas\MetaBox\MetaBox;
-use WebTheory\Leonidas\MetaBox\Section;
 use WebTheory\Leonidas\Screen;
-use WebTheory\Saveyour\Controllers\FormFieldControllerBuilder;
-use WebTheory\Saveyour\Fields\Select;
-use WebTheory\Saveyour\Fields\Url;
-use WebTheory\Taxtribute\Constrainer;
-use WebTheory\Taxtribute\Model;
-use WebTheory\Taxtribute\TermBasedPostMeta;
 
 Screen::load('post', ['post_type' => 'wts_test_cpt_2'], function () {
     // exit(var_dump($_POST));
@@ -39,9 +29,6 @@ Screen::load('post', ['post_type' => 'wts_test_cpt_2'], function () {
     $manager = (new PostMetaBoxFormSubmissionManager($postType))
         ->setNonce($nonce)
         ->hook();
-
-    // $section = (new Section($taxName));
-    // $metabox->addContent('test', $section);
 
     ################################################################################
     # Checklist
@@ -65,4 +52,17 @@ Screen::load('post', ['post_type' => 'wts_test_cpt_2'], function () {
 
     $manager->addField($select);
     $metabox->addContent('taxonomy-select', $selectField);
+
+    ################################################################################
+    # Term Select2
+    ################################################################################
+    $options = [
+        'multiple' => true,
+    ];
+
+    $select2 = new TermSelect2($taxonomy, 'wts_tax_input_3', $options);
+    $select2Field = (new Field($select2))->setLabel('Taxonomy Select2');
+
+    $manager->addField($select2);
+    $metabox->addContent('taxonomy-select2', $select2Field);
 });
