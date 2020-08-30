@@ -1,6 +1,6 @@
 <?php
 
-namespace WebTheory\Post2Post;
+namespace WebTheory\Leonidas\Fields\Formatters;
 
 use WP_Post;
 use WebTheory\Leonidas\Util\PostCollection;
@@ -21,7 +21,7 @@ class PostsToIdsDataFormatter implements DataFormatterInterface
     }
 
     /**
-     * @param WP_Post[] $posts
+     * @param array $terms
      *
      * @return array
      */

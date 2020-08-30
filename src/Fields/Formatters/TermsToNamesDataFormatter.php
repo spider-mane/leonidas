@@ -20,7 +20,7 @@ class TermsToNamesDataFormatter implements DataFormatterInterface
     }
 
     /**
-     * @param WP_Term[] $posts
+     * @param array $terms
      *
      * @return array
      */
