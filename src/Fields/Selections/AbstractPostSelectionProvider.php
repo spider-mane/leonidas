@@ -5,7 +5,7 @@ namespace WebTheory\Leonidas\Fields\Selections;
 use WP_Post;
 use WebTheory\Saveyour\Contracts\SelectionProviderInterface;
 
-abstract class AbstractPostSelectionProvider extends AbstractPostSelectionProvider implements SelectionProviderInterface
+abstract class AbstractPostSelectionProvider implements SelectionProviderInterface
 {
     /**
      * @param WP_Post $post

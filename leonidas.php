@@ -51,7 +51,7 @@ if (!class_exists('WebTheoryLeonidasPluginBaseClass')) {
             static::$url = plugin_dir_url(__FILE__);
             static::$base = plugin_basename(__FILE__);
 
-            static::$assets = static::$url . "/assets/dist";
+            static::$assets = static::$url . "assets/dist";
             static::$templates = static::$path . "/templates";
 
             static::$loaded = true;
