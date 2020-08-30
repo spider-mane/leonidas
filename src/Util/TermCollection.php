@@ -161,9 +161,9 @@ class TermCollection
      */
     public static function fromIds(int ...$ids): TermCollection
     {
-        return static::fromQuery(new WP_Term_Query([
+        return static::create([
             'include' => $ids,
             'hide_empty' => false
-        ]));
+        ]);
     }
 }

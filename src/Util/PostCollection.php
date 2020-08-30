@@ -173,10 +173,10 @@ class PostCollection
      */
     public static function fromIds(int ...$ids): PostCollection
     {
-        return static::fromQuery(new WP_Query([
+        return static::create([
             'post_type' => 'any',
             'post__in' => $ids,
             'posts_per_page' => -1
-        ]));
+        ]);
     }
 }

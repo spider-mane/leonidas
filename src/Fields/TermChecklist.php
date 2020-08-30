@@ -2,9 +2,10 @@
 
 namespace WebTheory\Leonidas\Fields;
 
-use WebTheory\Leonidas\Fields\Formatters\TermIdChecklistFormatter;
+use WebTheory\Leonidas\Fields\Formatters\TermsToIdsDataFormatter;
 use WebTheory\Leonidas\Fields\Managers\PostTermDataManager;
 use WebTheory\Leonidas\Fields\Selections\TaxonomyChecklistItems;
+use WebTheory\Saveyour\Contracts\ChecklistItemsProviderInterface;
 use WebTheory\Saveyour\Contracts\DataFormatterInterface;
 use WebTheory\Saveyour\Contracts\FieldDataManagerInterface;
 use WebTheory\Saveyour\Contracts\FormFieldControllerInterface;
@@ -54,10 +55,18 @@ class TermChecklist extends AbstractField implements FormFieldControllerInterfac
         $options = $this->options;
 
         return (new Checklist)
-            ->setSelectionProvider(new TaxonomyChecklistItems($this->taxonomy))
+            ->setSelectionProvider($this->createSelection())
             ->setId($options['id'])
             ->setClasslist($options['class'])
             ->addClass('thing');
+    }
+
+    /**
+     *
+     */
+    protected function createSelection(): ChecklistItemsProviderInterface
+    {
+        return new TaxonomyChecklistItems($this->taxonomy);
     }
 
     /**
@@ -73,7 +82,7 @@ class TermChecklist extends AbstractField implements FormFieldControllerInterfac
      */
     protected function defineDataFormatter(): ?DataFormatterInterface
     {
-        return new TermIdChecklistFormatter();
+        return new TermsToIdsDataFormatter();
     }
 
     /**

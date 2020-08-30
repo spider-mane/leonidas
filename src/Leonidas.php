@@ -79,23 +79,21 @@ class Leonidas extends \WebTheoryLeonidasPluginBaseClass
     {
         $lib = static::$assets . "/lib";
 
-        // exit(var_dump($lib));
-
         # wp included libraries
         wp_enqueue_script('jquery');
 
-        # backalley scripts
+        # styles
+        wp_enqueue_style('select2--css', $lib . '/select2.min.css', null, time());
+        wp_enqueue_style('trix--css', $lib . '/trix.css', null, time());
+
+        wp_enqueue_style('backalley-core-styles', static::$assets . '/css/backalley-admin-styles.css', null, time());
+
+        # scripts
         wp_enqueue_script('select2--js', $lib . '/select2.full.min.js', null, time(), true);
         wp_enqueue_script('trix--js', $lib . '/trix.js', null, time(), true);
         wp_enqueue_script('saveyour--js', $lib . '/saveyour.js', ['select2--js', 'trix--js'], time(), true);
 
         wp_enqueue_script('backalley-core-admin-script', static::$assets . '/js/backalley-admin.js', null, time(), true);
-
-        # backalley styles
-        wp_enqueue_style('select2--css', $lib . '/select2.min.css', null, time());
-        wp_enqueue_style('trix--css', $lib . '/trix.css', null, time());
-
-        wp_enqueue_style('backalley-core-styles', static::$assets . '/css/backalley-admin-styles.css', null, time());
     }
 
     /**

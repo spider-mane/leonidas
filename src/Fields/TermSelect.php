@@ -2,13 +2,14 @@
 
 namespace WebTheory\Leonidas\Fields;
 
-use WebTheory\Leonidas\Fields\Formatters\TermSelectFormatter;
+use WebTheory\Leonidas\Fields\Formatters\TermsToIdsDataFormatter;
 use WebTheory\Leonidas\Fields\Managers\PostTermDataManager;
 use WebTheory\Leonidas\Fields\Selections\TaxonomySelectOptions;
 use WebTheory\Saveyour\Contracts\DataFormatterInterface;
 use WebTheory\Saveyour\Contracts\FieldDataManagerInterface;
 use WebTheory\Saveyour\Contracts\FormFieldControllerInterface;
 use WebTheory\Saveyour\Contracts\FormFieldInterface;
+use WebTheory\Saveyour\Contracts\OptionsProviderInterface;
 use WebTheory\Saveyour\Controllers\AbstractField;
 use WebTheory\Saveyour\Fields\Select;
 
@@ -55,10 +56,18 @@ class TermSelect extends AbstractField implements FormFieldControllerInterface
         $options = $this->options;
 
         return (new Select)
-            ->setSelectionProvider(new TaxonomySelectOptions($this->taxonomy))
+            ->setSelectionProvider($this->createSelection())
             ->setMultiple($options['multiple'])
             ->setId($options['id'])
             ->setClasslist($options['class']);
+    }
+
+    /**
+     *
+     */
+    protected function createSelection(): OptionsProviderInterface
+    {
+        return new TaxonomySelectOptions($this->taxonomy);
     }
 
     /**
@@ -74,7 +83,7 @@ class TermSelect extends AbstractField implements FormFieldControllerInterface
      */
     protected function defineDataFormatter(): ?DataFormatterInterface
     {
-        return new TermSelectFormatter();
+        return new TermsToIdsDataFormatter();
     }
 
     /**

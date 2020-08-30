@@ -2,13 +2,16 @@
 
 namespace WebTheory\Leonidas\Fields\Formatters;
 
+use WP_Term;
 use WebTheory\Leonidas\Util\TermCollection;
 use WebTheory\Saveyour\Contracts\DataFormatterInterface;
 
-class TermSelectFormatter implements DataFormatterInterface
+class TermsToIdsDataFormatter implements DataFormatterInterface
 {
     /**
+     * @param WP_Term[] $posts
      *
+     * @return array
      */
     public function formatData($terms)
     {
@@ -18,10 +21,16 @@ class TermSelectFormatter implements DataFormatterInterface
     }
 
     /**
+     * @param WP_Term[] $posts
      *
+     * @return array
      */
     public function formatInput($terms)
     {
+        if (in_array('', $terms)) {
+            unset($terms[array_search('', $terms)]);
+        }
+
         return array_map('intval', $terms);
     }
 }
