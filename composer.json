@@ -14,6 +14,7 @@
     "composer/installers": "^1.7",
     "guzzlehttp/psr7": "^1.6",
     "hassankhan/config": "^2.1",
+    "jbzoo/utils": "^4.2",
     "league/container": "^3.3",
     "monolog/monolog": "^1.24",
     "pimple/pimple": "^3.2",

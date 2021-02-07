@@ -3,12 +3,12 @@
 namespace WebTheory\Leonidas\Framework;
 
 use Psr\Http\Message\ServerRequestInterface;
-use WebTheory\Leonidas\Auth\Nonce;
-use WebTheory\Leonidas\Forms\Controllers\PostMetaBoxFormSubmissionManager;
+use WebTheory\Leonidas\Core\Auth\Nonce;
+use WebTheory\Leonidas\Admin\Forms\Controllers\PostMetaBoxFormSubmissionManager;
 use WebTheory\Leonidas\Framework\AbstractModule;
 use WebTheory\Leonidas\Framework\WpExtension;
-use WebTheory\Leonidas\MetaBox\MetaBox;
-use WebTheory\Leonidas\Traits\ExpectsPostTrait;
+use WebTheory\Leonidas\Admin\Metabox\MetaBox;
+use WebTheory\Leonidas\Admin\Traits\ExpectsPostTrait;
 
 abstract class AbstractPostMetaBoxLoader extends AbstractModule
 {

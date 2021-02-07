@@ -1,11 +1,11 @@
 <?php
 
-use WebTheory\Leonidas\Auth\Nonce;
-use WebTheory\Leonidas\Fields\Managers\PostMetaFieldManager;
-use WebTheory\Leonidas\Forms\Controllers\PostMetaBoxFormSubmissionManager;
-use WebTheory\Leonidas\MetaBox\FieldGrid;
-use WebTheory\Leonidas\MetaBox\MetaBox;
-use WebTheory\Leonidas\MetaBox\Section;
+use WebTheory\Leonidas\Core\Auth\Nonce;
+use WebTheory\Leonidas\Admin\Fields\Managers\PostMetaFieldManager;
+use WebTheory\Leonidas\Admin\Forms\Controllers\PostMetaBoxFormSubmissionManager;
+use WebTheory\Leonidas\Admin\Metabox\FieldGrid;
+use WebTheory\Leonidas\Admin\Metabox\MetaBox;
+use WebTheory\Leonidas\Admin\Metabox\Section;
 use WebTheory\Saveyour\Controllers\FormFieldController;
 use WebTheory\Saveyour\Fields\Time;
 

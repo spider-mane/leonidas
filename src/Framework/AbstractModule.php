@@ -2,7 +2,7 @@
 
 namespace WebTheory\Leonidas\Framework;
 
-use WebTheory\Leonidas\Contracts\ModuleInterface;
+use WebTheory\Leonidas\Admin\Contracts\ModuleInterface;
 
 abstract class AbstractModule implements ModuleInterface
 {

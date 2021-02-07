@@ -1,13 +1,13 @@
 <?php
 
-use WebTheory\Leonidas\Auth\Nonce;
-use WebTheory\Leonidas\Fields\TermChecklist;
-use WebTheory\Leonidas\Fields\TermSelect2;
-use WebTheory\Leonidas\Fields\TermSelect;
-use WebTheory\Leonidas\Forms\Controllers\PostMetaBoxFormSubmissionManager;
-use WebTheory\Leonidas\MetaBox\Field;
-use WebTheory\Leonidas\MetaBox\MetaBox;
-use WebTheory\Leonidas\Screen;
+use WebTheory\Leonidas\Core\Auth\Nonce;
+use WebTheory\Leonidas\Admin\Fields\TermChecklist;
+use WebTheory\Leonidas\Admin\Fields\TermSelect2;
+use WebTheory\Leonidas\Admin\Fields\TermSelect;
+use WebTheory\Leonidas\Admin\Forms\Controllers\PostMetaBoxFormSubmissionManager;
+use WebTheory\Leonidas\Admin\Metabox\Field;
+use WebTheory\Leonidas\Admin\Metabox\MetaBox;
+use WebTheory\Leonidas\Admin\Screen;
 
 Screen::load('post', ['post_type' => 'wts_test_cpt_2'], function () {
     // exit(var_dump($_POST));

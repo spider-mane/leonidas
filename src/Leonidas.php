@@ -9,8 +9,8 @@ use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
-use WebTheory\Leonidas\Fields\Field;
-use WebTheory\Leonidas\Loaders\AdminNoticeLoader;
+use WebTheory\Leonidas\Admin\Fields\Field;
+use WebTheory\Leonidas\Admin\Loaders\AdminNoticeLoader;
 
 class Leonidas extends \WebTheoryLeonidasPluginBaseClass
 {

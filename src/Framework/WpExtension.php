@@ -5,7 +5,7 @@ namespace WebTheory\Leonidas\Framework;
 use Exception;
 use League\Container\Container;
 use Psr\Container\ContainerInterface;
-use WebTheory\Leonidas\Contracts\WpExtensionInterface;
+use WebTheory\Leonidas\Admin\Contracts\WpExtensionInterface;
 
 class WpExtension implements WpExtensionInterface
 {
