@@ -71,7 +71,7 @@ class Nonce
     /**
      *
      */
-    public function generate()
+    public function generate(): string
     {
         return wp_create_nonce($this->action);
     }

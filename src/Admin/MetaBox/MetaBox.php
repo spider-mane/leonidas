@@ -4,7 +4,7 @@ namespace WebTheory\Leonidas\Admin\Metabox;
 
 use GuzzleHttp\Psr7\ServerRequest;
 use WebTheory\Html\Html;
-use WebTheory\Leonidas\Admin\Metabox\Contracts\MetaboxContentInterface;
+use WebTheory\Leonidas\Admin\Contracts\MetaboxComponentInterface;
 use WebTheory\Leonidas\Core\Traits\HasNonceTrait;
 
 class MetaBox
@@ -63,7 +63,7 @@ class MetaBox
     /**
      * content
      *
-     * @var MetaboxContentInterface[]
+     * @var MetaboxComponentInterface[]
      */
     protected $content = [];
 
@@ -223,7 +223,7 @@ class MetaBox
     /**
      *
      */
-    public function addContent(string $slug, MetaboxContentInterface $content)
+    public function addContent(string $slug, MetaboxComponentInterface $content)
     {
         $this->content[$slug] = $content;
 
@@ -302,7 +302,7 @@ class MetaBox
 
             if ($content->shouldBeRendered($request)) {
 
-                $html .= $content->render($request);
+                $html .= $content->renderComponent($request);
 
                 if ($i > 0) {
                     $html .= '<hr>';

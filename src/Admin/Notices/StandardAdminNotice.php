@@ -1,13 +1,18 @@
 <?php
 
-namespace WebTheory\Leonidas\Admin;
+namespace WebTheory\Leonidas\Admin\Notices;
 
+use GuzzleHttp\Psr7\ServerRequest;
+use Psr\Http\Message\ServerRequestInterface;
 use WebTheory\Html\Traits\ElementConstructorTrait;
+use WebTheory\Leonidas\Admin\Contracts\AdminNoticeInterface;
 use WebTheory\Leonidas\Admin\Loaders\AdminNoticeLoader;
+use WebTheory\Leonidas\Admin\Traits\CanBeRestrictedTrait;
 
-class AdminNotice
+class StandardAdminNotice implements AdminNoticeInterface
 {
     use ElementConstructorTrait;
+    use CanBeRestrictedTrait;
 
     /**
      * @var string
@@ -160,7 +165,15 @@ class AdminNotice
     /**
      *
      */
-    public function toHtml()
+    public function render()
+    {
+        echo $this->renderComponent(ServerRequest::fromGlobals());
+    }
+
+    /**
+     *
+     */
+    public function renderComponent(ServerRequestInterface $request): string
     {
         $noticeAttr = [
             'class' => ['notice', "notice-{$this->type}", $this->dismissible ? 'is-dismissible' : null]
@@ -169,21 +182,5 @@ class AdminNotice
         $noticeBody = $this->tag('p', [], htmlspecialchars($this->message));
 
         return $this->tag('div', $noticeAttr, $noticeBody);
-    }
-
-    /**
-     *
-     */
-    public function render()
-    {
-        echo $this->toHtml();
-    }
-
-    /**
-     *
-     */
-    public function __toString()
-    {
-        return $this->toHtml();
     }
 }

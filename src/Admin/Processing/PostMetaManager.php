@@ -1,10 +1,8 @@
 <?php
 
-namespace WebTheory\Leonidas\Admin\Post;
+namespace WebTheory\Leonidas\Admin\Processing;
 
-use WebTheory\Leonidas\Admin\AbstractWpObjectMetaManager;
-
-class MetaManager extends AbstractWpObjectMetaManager
+class PostMetaManager extends AbstractWpObjectMetaManager
 {
     /**
      * {@inheritDoc}

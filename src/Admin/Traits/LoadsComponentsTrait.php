@@ -3,14 +3,14 @@
 namespace WebTheory\Leonidas\Admin\Traits;
 
 use Psr\Http\Message\ServerRequestInterface;
-use WebTheory\Leonidas\Admin\Contracts\ScreenComponentInterface;
+use WebTheory\Leonidas\Admin\Contracts\AdminComponentInterface;
 
 trait LoadsComponentsTrait
 {
     /**
      *
      */
-    protected function maybeRenderComponent(ScreenComponentInterface $component, ServerRequestInterface $request): string
+    protected function maybeRenderComponent(AdminComponentInterface $component, ServerRequestInterface $request): string
     {
         return $component->shouldBeRendered($request)
             ? $this->renderComponent($component, $request)
@@ -20,8 +20,8 @@ trait LoadsComponentsTrait
     /**
      *
      */
-    protected function renderComponent(ScreenComponentInterface $component, ServerRequestInterface $request): string
+    protected function renderComponent(AdminComponentInterface $component, ServerRequestInterface $request): string
     {
-        return $component->render($request);
+        return $component->renderComponent($request);
     }
 }

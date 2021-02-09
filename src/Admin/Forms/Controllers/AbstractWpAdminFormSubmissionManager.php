@@ -3,7 +3,7 @@
 namespace WebTheory\Leonidas\Admin\Forms\Controllers;
 
 use Psr\Http\Message\ServerRequestInterface;
-use WebTheory\Leonidas\Admin\AdminNotice;
+use WebTheory\Leonidas\Admin\Notices\StandardAdminNotice;
 use WebTheory\Saveyour\Controllers\FormProcessingCache;
 use WebTheory\Saveyour\Controllers\FormSubmissionManager;
 
@@ -27,7 +27,7 @@ abstract class AbstractWpAdminFormSubmissionManager extends FormSubmissionManage
         if ($fields) {
             foreach ($fields as $alerts) {
                 foreach ($alerts as $alert) {
-                    (new AdminNotice($alert))->setDismissible(false)->register();
+                    (new StandardAdminNotice($alert))->setDismissible(false)->register();
                 }
             }
         }

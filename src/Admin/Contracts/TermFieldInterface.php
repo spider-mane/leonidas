@@ -2,7 +2,6 @@
 
 namespace WebTheory\Leonidas\Admin\Contracts;
 
-interface TermFieldInterface extends ScreenComponentInterface
+interface TermFieldInterface extends AdminFieldInterface
 {
-    //
 }

@@ -14,5 +14,5 @@ interface AdminComponentInterface
     /**
      *
      */
-    public function componentShouldRender(ServerRequestInterface $request): bool;
+    public function shouldBeRendered(ServerRequestInterface $request): bool;
 }

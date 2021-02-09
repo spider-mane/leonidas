@@ -2,12 +2,13 @@
 
 namespace WebTheory\Leonidas\Admin\Loaders;
 
-use WebTheory\Leonidas\Admin\AdminNotice;
+use GuzzleHttp\Psr7\ServerRequest;
+use WebTheory\Leonidas\Admin\Contracts\AdminNoticeInterface;
 
 class AdminNoticeLoader
 {
     /**
-     * @var AdminNotice[]
+     * @var AdminNoticeInterface[]
      */
     protected static $notices = [];
 
@@ -21,14 +22,14 @@ class AdminNoticeLoader
      */
     public static function hook()
     {
-        add_action('admin_notices', [static::class, 'render']);
+        add_action('admin_notices', [static::class, 'renderNotices']);
         add_action('wp_redirect', [static::class, 'setTransient']);
     }
 
     /**
      *
      */
-    public static function addNotice(AdminNotice $notice)
+    public static function addNotice(AdminNoticeInterface $notice)
     {
         static::$notices[] = $notice;
     }
@@ -48,17 +49,22 @@ class AdminNoticeLoader
     /**
      *
      */
-    public static function render()
+    public static function renderNotices()
     {
-        /** @var AdminNotice[] $alerts */
-        $alerts = get_transient(static::TRANSIENT);
+        /** @var AdminNoticeInterface[] $notices */
+        $notices = get_transient(static::TRANSIENT);
 
-        if ($alerts) {
-            foreach ($alerts as $alert) {
-                $alert->render();
-            }
-
-            delete_transient(static::TRANSIENT);
+        if (!$notices) {
+            return;
         }
+
+        $request = ServerRequest::fromGlobals();
+
+        foreach ($notices as $notice) {
+            if ($notice->shouldBeRendered($request))
+                $notice->renderComponent($request);
+        }
+
+        delete_transient(static::TRANSIENT);
     }
 }

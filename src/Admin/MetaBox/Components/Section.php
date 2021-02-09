@@ -1,13 +1,13 @@
 <?php
 
-namespace WebTheory\Leonidas\Admin\Metabox;
+namespace WebTheory\Leonidas\Admin\Metabox\Components;
 
 use Psr\Http\Message\ServerRequestInterface;
 use WebTheory\Html\Html;
-use WebTheory\Leonidas\Admin\Metabox\Contracts\MetaboxContentInterface;
+use WebTheory\Leonidas\Admin\Contracts\MetaboxComponentInterface;
 use WebTheory\Leonidas\Admin\Traits\CanBeRestrictedTrait;
 
-class Section implements MetaboxContentInterface
+class Section implements MetaboxComponentInterface
 {
     use CanBeRestrictedTrait;
 
@@ -17,7 +17,7 @@ class Section implements MetaboxContentInterface
     protected $title;
 
     /**
-     * @var MetaboxContentInterface[]
+     * @var MetaboxComponentInterface[]
      */
     protected $content = [];
 
@@ -82,7 +82,7 @@ class Section implements MetaboxContentInterface
      *
      * @return self
      */
-    public function addContent(string $slug, MetaboxContentInterface $content)
+    public function addContent(string $slug, MetaboxComponentInterface $content)
     {
         $this->content[$slug] = $content;
 
@@ -140,7 +140,7 @@ class Section implements MetaboxContentInterface
     /**
      *
      */
-    public function render(ServerRequestInterface $request): string
+    public function renderComponent(ServerRequestInterface $request): string
     {
         $html = '';
 
@@ -161,7 +161,7 @@ class Section implements MetaboxContentInterface
 
         foreach ($this->content as $content) {
             if ($content->shouldBeRendered($request)) {
-                $html .= $content->render($request);
+                $html .= $content->renderComponent($request);
             }
         }
 

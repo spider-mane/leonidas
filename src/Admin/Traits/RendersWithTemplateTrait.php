@@ -11,7 +11,7 @@ trait RendersWithTemplateTrait
     /**
      *
      */
-    public function render(ServerRequestInterface $request): string
+    public function renderComponent(ServerRequestInterface $request): string
     {
         return $this->renderTemplate($this->defineTemplateContext($request));
     }

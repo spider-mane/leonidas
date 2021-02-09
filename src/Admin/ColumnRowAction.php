@@ -2,11 +2,16 @@
 
 namespace WebTheory\Leonidas\Admin;
 
+use GuzzleHttp\Psr7\ServerRequest;
+use Psr\Http\Message\ServerRequestInterface;
 use WebTheory\Html\Traits\ElementConstructorTrait;
+use WebTheory\Leonidas\Admin\Contracts\ColumnRowActionInterface;
+use WebTheory\Leonidas\Admin\Traits\CanBeRestrictedTrait;
 
-class ColumnRowAction
+class ColumnRowAction implements ColumnRowActionInterface
 {
     use ElementConstructorTrait;
+    use CanBeRestrictedTrait;
 
     /**
      * @var string
@@ -132,21 +137,34 @@ class ColumnRowAction
      */
     public function hook()
     {
-        add_filter("{$this->entity}_row_actions", [$this, 'filter'], null, 2);
+        add_filter("{$this->entity}_row_actions", [$this, 'addRowAction'], null, 2);
     }
 
     /**
      *
      */
-    public function filter($actions, $object)
+    public function addRowAction($actions, $object)
     {
+        $request = ServerRequest::fromGlobals()
+            ->withAttribute('object', $object);
+
+        $actions[$this->action] = $this->renderComponent($request);
+
+        return $actions;
+    }
+
+    /**
+     *
+     */
+    public function renderComponent(ServerRequestInterface $request): string
+    {
+        $object = $request->getAttribute('object', '');
+
         $attributes = [
             'href' => sprintf($this->link, $object->slug),
             'aria-label' => sprintf($this->ariaLabel, "&#8220;{$object->name}&#8221;")
         ];
 
-        $actions[$this->action] = $this->tag('a', $attributes + $this->attributes, $this->title);
-
-        return $actions;
+        return $this->tag('a', $attributes + $this->attributes, $this->title);
     }
 }

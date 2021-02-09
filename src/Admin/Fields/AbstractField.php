@@ -3,12 +3,12 @@
 namespace WebTheory\Leonidas\Admin\Fields;
 
 use Psr\Http\Message\ServerRequestInterface;
-use WebTheory\Leonidas\Admin\Contracts\WpAdminFieldInterface;
+use WebTheory\Leonidas\Admin\Contracts\AdminFieldInterface;
 use WebTheory\Leonidas\Admin\Traits\CanBeRestrictedTrait;
 use WebTheory\Saveyour\Contracts\FormFieldControllerInterface;
 use WebTheory\Saveyour\Contracts\FormFieldInterface;
 
-class AbstractField implements WpAdminFieldInterface
+abstract class AbstractField implements AdminFieldInterface
 {
     use CanBeRestrictedTrait;
 

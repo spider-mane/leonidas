@@ -7,7 +7,7 @@ use WebTheory\Leonidas\Core\Auth\Nonce;
 use WebTheory\Leonidas\Admin\Forms\Controllers\PostMetaBoxFormSubmissionManager;
 use WebTheory\Leonidas\Framework\AbstractModule;
 use WebTheory\Leonidas\Framework\WpExtension;
-use WebTheory\Leonidas\Admin\Metabox\MetaBox;
+use WebTheory\Leonidas\Admin\Metabox\Metabox;
 use WebTheory\Leonidas\Admin\Traits\ExpectsPostTrait;
 
 abstract class AbstractPostMetaBoxLoader extends AbstractModule

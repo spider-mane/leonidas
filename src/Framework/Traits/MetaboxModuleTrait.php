@@ -2,8 +2,8 @@
 
 namespace WebTheory\Leonidas\Framework\Traits;
 
-use WebTheory\Leonidas\Admin\Metabox\Contracts\MetaboxContentInterface;
-use WebTheory\Leonidas\Admin\Metabox\MetaBox;
+use WebTheory\Leonidas\Admin\Contracts\MetaboxComponentInterface;
+use WebTheory\Leonidas\Admin\Metabox\Metabox;
 
 trait MetaboxModuleTrait
 {
@@ -59,7 +59,7 @@ trait MetaboxModuleTrait
     abstract protected static function createMetaBox(): MetaBox;
 
     /**
-     * @return MetaboxContentInterface[]
+     * @return MetaboxComponentInterface[]
      */
     abstract protected static function composeMetabox(): array;
 }

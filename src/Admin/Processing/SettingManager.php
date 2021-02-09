@@ -1,10 +1,9 @@
 <?php
 
-namespace WebTheory\Leonidas\Admin;
+namespace WebTheory\Leonidas\Admin\Processing;
 
-use WebTheory\Saveyour\InputPurifier;
 
-class SettingManager extends InputPurifier
+class SettingManager extends AbstractInputManager
 {
     /**
      * optionGroup

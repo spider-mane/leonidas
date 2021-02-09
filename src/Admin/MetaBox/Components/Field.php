@@ -1,10 +1,10 @@
 <?php
 
-namespace WebTheory\Leonidas\Admin\Metabox;
+namespace WebTheory\Leonidas\Admin\Metabox\Components;
 
 use Psr\Http\Message\ServerRequestInterface;
+use WebTheory\Leonidas\Admin\Contracts\MetaboxFieldInterface;
 use WebTheory\Leonidas\Admin\Fields\AbstractField;
-use WebTheory\Leonidas\Admin\Metabox\Contracts\MetaboxFieldInterface;
 use WebTheory\Leonidas\Admin\Traits\RendersWithTemplateTrait;
 use WebTheory\Saveyour\Contracts\FormFieldControllerInterface;
 

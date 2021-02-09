@@ -1,15 +1,15 @@
 <?php
 
-namespace WebTheory\Leonidas\Admin\Metabox;
+namespace WebTheory\Leonidas\Admin\Metabox\Components;
 
 use Psr\Http\Message\ServerRequestInterface;
 use WebTheory\Leonidas\Admin\Forms\Controllers\AbstractWpAdminFormSubmissionManager;
-use WebTheory\Leonidas\Admin\Metabox\Contracts\MetaboxContentInterface;
-use WebTheory\Leonidas\Admin\Metabox\Contracts\MetaboxFieldInterface;
+use WebTheory\Leonidas\Admin\Contracts\MetaboxComponentInterface;
+use WebTheory\Leonidas\Admin\Contracts\MetaboxFieldInterface;
 use WebTheory\Leonidas\Admin\Traits\CanBeRestrictedTrait;
 use WebTheory\Saveyour\Contracts\FormFieldControllerInterface;
 
-class Fieldset implements MetaboxContentInterface
+class Fieldset implements MetaboxComponentInterface
 {
     use CanBeRestrictedTrait;
 
@@ -29,7 +29,7 @@ class Fieldset implements MetaboxContentInterface
     protected $formController;
 
     /**
-     * @var MetaboxContentInterface
+     * @var MetaboxComponentInterface
      */
     protected $container;
 
@@ -237,7 +237,7 @@ class Fieldset implements MetaboxContentInterface
     /**
      *
      */
-    protected function createContainer(): MetaboxContentInterface
+    protected function createContainer(): MetaboxComponentInterface
     {
         return (new Section($this->title))->setIsFieldset(true);
     }
@@ -263,9 +263,9 @@ class Fieldset implements MetaboxContentInterface
     /**
      * Prepares container to be rendered by applying any options set for it
      *
-     * @return MetaboxContentInterface
+     * @return MetaboxComponentInterface
      */
-    protected function prepareContainer(): MetaboxContentInterface
+    protected function prepareContainer(): MetaboxComponentInterface
     {
         return $this->container->setPadding($this->containerOptions['padding']);
     }
@@ -273,13 +273,13 @@ class Fieldset implements MetaboxContentInterface
     /**
      *
      */
-    public function render(ServerRequestInterface $request): string
+    public function renderComponent(ServerRequestInterface $request): string
     {
         foreach ($this->fields as $field) {
             $field->setRowPadding($this->rowPadding);
             $this->prepareField($field);
         }
 
-        return $this->prepareContainer()->render($request);
+        return $this->prepareContainer()->renderComponent($request);
     }
 }

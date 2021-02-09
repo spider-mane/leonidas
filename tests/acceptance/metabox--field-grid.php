@@ -3,9 +3,9 @@
 use WebTheory\Leonidas\Core\Auth\Nonce;
 use WebTheory\Leonidas\Admin\Fields\Managers\PostMetaFieldManager;
 use WebTheory\Leonidas\Admin\Forms\Controllers\PostMetaBoxFormSubmissionManager;
-use WebTheory\Leonidas\Admin\Metabox\FieldGrid;
-use WebTheory\Leonidas\Admin\Metabox\MetaBox;
-use WebTheory\Leonidas\Admin\Metabox\Section;
+use WebTheory\Leonidas\Admin\Metabox\Components\FieldGrid;
+use WebTheory\Leonidas\Admin\Metabox\Metabox;
+use WebTheory\Leonidas\Admin\Metabox\Components\Section;
 use WebTheory\Saveyour\Controllers\FormFieldController;
 use WebTheory\Saveyour\Fields\Time;
 

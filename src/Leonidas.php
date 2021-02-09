@@ -9,7 +9,6 @@ use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
-use WebTheory\Leonidas\Admin\Fields\Field;
 use WebTheory\Leonidas\Admin\Loaders\AdminNoticeLoader;
 
 class Leonidas extends \WebTheoryLeonidasPluginBaseClass
@@ -51,7 +50,6 @@ class Leonidas extends \WebTheoryLeonidasPluginBaseClass
 
         static::bindConfig($container);
         static::bindTwig($container);
-        static::bindField($container);
 
         static::$container = new Container($container);
     }
@@ -131,16 +129,6 @@ class Leonidas extends \WebTheoryLeonidasPluginBaseClass
             }
 
             return $twig;
-        };
-    }
-
-    /**
-     *
-     */
-    protected static function bindField(PimpleContainer $container)
-    {
-        $container['field'] = function ($plugin) {
-            return new Field;
         };
     }
 }

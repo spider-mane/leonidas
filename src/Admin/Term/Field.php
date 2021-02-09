@@ -3,8 +3,8 @@
 namespace WebTheory\Leonidas\Admin\Term;
 
 use Psr\Http\Message\ServerRequestInterface;
-use WebTheory\Leonidas\Admin\Fields\AbstractField;
 use WebTheory\Leonidas\Admin\Contracts\TermFieldInterface;
+use WebTheory\Leonidas\Admin\Fields\AbstractField;
 use WebTheory\Leonidas\Admin\Traits\UsesTemplateTrait;
 
 class Field extends AbstractField implements TermFieldInterface
@@ -40,7 +40,7 @@ class Field extends AbstractField implements TermFieldInterface
     /**
      * @return string
      */
-    public function render(ServerRequestInterface $request): string
+    public function renderComponent(ServerRequestInterface $request): string
     {
         $context = [
             'label' => $this->label,

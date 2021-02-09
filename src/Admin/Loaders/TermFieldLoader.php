@@ -1,12 +1,13 @@
 <?php
 
-namespace WebTheory\Leonidas\Admin\Term;
+namespace WebTheory\Leonidas\Admin\Loaders;
 
 use GuzzleHttp\Psr7\ServerRequest;
+use WebTheory\Leonidas\Admin\Contracts\ComponentLoaderInterface;
 use WebTheory\Leonidas\Admin\Contracts\TermFieldInterface;
 use WebTheory\Leonidas\Core\Traits\HasNonceTrait;
 
-class FieldLoader
+class TermFieldLoader implements ComponentLoaderInterface
 {
     use HasNonceTrait;
 
@@ -31,7 +32,7 @@ class FieldLoader
     /**
      *
      */
-    public function __construct(string $taxonomy, Field ...$fields)
+    public function __construct(string $taxonomy, TermFieldInterface ...$fields)
     {
         $this->taxonomy = $taxonomy;
         $this->fields = $fields;
@@ -60,7 +61,7 @@ class FieldLoader
     /**
      *
      */
-    public function addField(Field $field)
+    public function addField(TermFieldInterface $field)
     {
         $this->fields = $field;
     }
@@ -94,7 +95,7 @@ class FieldLoader
 
         foreach ($this->fields as $field) {
             if ($field->shouldBeRendered($request)) {
-                $html .= $field->render($request) . "\n";
+                $html .= $field->renderComponent($request) . "\n";
             }
         }
 

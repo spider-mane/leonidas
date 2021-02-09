@@ -1,11 +1,10 @@
 <?php
 
-namespace WebTheory\Leonidas\Admin;
+namespace WebTheory\Leonidas\Admin\Processing;
 
-use WebTheory\Leonidas\Admin\AdminNotice;
-use WebTheory\Saveyour\InputPurifier;
+use WebTheory\Leonidas\Admin\Notices\StandardAdminNotice;
 
-abstract class AbstractWpObjectMetaManager extends InputPurifier
+abstract class AbstractWpObjectMetaManager extends AbstractInputManager
 {
     /**
      * @var string
@@ -303,7 +302,7 @@ abstract class AbstractWpObjectMetaManager extends InputPurifier
         $alert = $this->alerts[$rule] ?? null;
 
         if ($alert) {
-            new AdminNotice($alert);
+            new StandardAdminNotice($alert);
         }
 
         return $this;

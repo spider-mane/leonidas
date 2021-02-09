@@ -4,7 +4,7 @@ namespace WebTheory\Leonidas\Admin\Contracts;
 
 use WebTheory\Saveyour\Contracts\FormFieldControllerInterface;
 
-interface WpAdminFieldInterface
+interface AdminFieldInterface extends AdminComponentInterface
 {
     /**
      *

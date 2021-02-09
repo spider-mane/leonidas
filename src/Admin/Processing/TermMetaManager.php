@@ -1,10 +1,8 @@
 <?php
 
-namespace WebTheory\Leonidas\Admin\Term;
+namespace WebTheory\Leonidas\Admin\Processing;
 
-use WebTheory\Leonidas\Admin\AbstractWpObjectMetaManager;
-
-class MetaManager extends AbstractWpObjectMetaManager
+class TermMetaManager extends AbstractWpObjectMetaManager
 {
     /**
      * {@inheritDoc}

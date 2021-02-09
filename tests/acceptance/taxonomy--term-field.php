@@ -5,7 +5,7 @@ use WebTheory\Leonidas\Core\Auth\Nonce;
 use WebTheory\Leonidas\Admin\Fields\Managers\TermMetaDataManager;
 use WebTheory\Leonidas\Admin\Forms\Controllers\TermFieldFormSubmissionManager;
 use WebTheory\Leonidas\Admin\Term\Field as TermField;
-use WebTheory\Leonidas\Admin\Term\FieldLoader;
+use WebTheory\Leonidas\Admin\Loaders\TermFieldLoader;
 use WebTheory\Saveyour\Controllers\FormFieldControllerBuilder;
 use WebTheory\Saveyour\Fields\Select;
 use WebTheory\Saveyour\Fields\Text;
@@ -62,5 +62,5 @@ $domain = (new TermField($domain))
     ->setDescription('Enter domain of thing');
 
 
-$loader = new FieldLoader($taxonomy, $address, $domain);
+$loader = new TermFieldLoader($taxonomy, $address, $domain);
 $loader->setNonce($nonce)->hook();

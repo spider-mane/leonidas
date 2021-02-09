@@ -1,15 +1,15 @@
 <?php
 
-namespace WebTheory\Leonidas\Admin\Metabox;
+namespace WebTheory\Leonidas\Admin\Metabox\Components;
 
 use Psr\Http\Message\ServerRequestInterface;
-use WebTheory\Leonidas\Admin\Metabox\Contracts\MetaboxContentInterface;
+use WebTheory\Leonidas\Admin\Contracts\MetaboxComponentInterface;
 use WebTheory\Leonidas\Admin\Traits\CanBeRestrictedTrait;
 use WebTheory\Leonidas\Admin\Traits\RendersWithTemplateTrait;
 use WebTheory\Saveyour\Contracts\FormFieldControllerInterface;
 use WebTheory\Saveyour\Controllers\FormFieldController;
 
-class FieldGrid implements MetaboxContentInterface
+class FieldGrid implements MetaboxComponentInterface
 {
     use CanBeRestrictedTrait;
     use RendersWithTemplateTrait;

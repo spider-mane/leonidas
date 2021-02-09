@@ -5,8 +5,8 @@ use WebTheory\Leonidas\Admin\Fields\TermChecklist;
 use WebTheory\Leonidas\Admin\Fields\TermSelect2;
 use WebTheory\Leonidas\Admin\Fields\TermSelect;
 use WebTheory\Leonidas\Admin\Forms\Controllers\PostMetaBoxFormSubmissionManager;
-use WebTheory\Leonidas\Admin\Metabox\Field;
-use WebTheory\Leonidas\Admin\Metabox\MetaBox;
+use WebTheory\Leonidas\Admin\Metabox\Components\Field;
+use WebTheory\Leonidas\Admin\Metabox\Metabox;
 use WebTheory\Leonidas\Admin\Screen;
 
 Screen::load('post', ['post_type' => 'wts_test_cpt_2'], function () {
