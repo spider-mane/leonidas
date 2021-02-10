@@ -4,32 +4,12 @@ namespace WebTheory\Leonidas\Admin\Metabox\Components;
 
 use Psr\Http\Message\ServerRequestInterface;
 use WebTheory\Leonidas\Admin\Contracts\MetaboxFieldInterface;
-use WebTheory\Leonidas\Admin\Fields\AbstractField;
+use WebTheory\Leonidas\Admin\AbstractAdminField;
 use WebTheory\Leonidas\Admin\Traits\RendersWithTemplateTrait;
-use WebTheory\Saveyour\Contracts\FormFieldControllerInterface;
 
-class Field extends AbstractField implements MetaboxFieldInterface
+class Field extends AbstractAdminField implements MetaboxFieldInterface
 {
     use RendersWithTemplateTrait;
-
-    /**
-     * label
-     *
-     * @var string
-     */
-    protected $label;
-
-    /**
-     * description
-     *
-     * @var string
-     */
-    protected $description;
-
-    /**
-     * @var FormFieldControllerInterface
-     */
-    protected $formFieldController;
 
     /**
      * @var bool

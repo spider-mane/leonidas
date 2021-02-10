@@ -18,7 +18,7 @@ trait ExpectsPostTrait
     /**
      *
      */
-    protected function getPostId(ServerRequestInterface $request): int
+    protected function getPostId(ServerRequestInterface $request): ?int
     {
         $post = $this->getPost($request);
 

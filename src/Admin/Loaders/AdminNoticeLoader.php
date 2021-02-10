@@ -58,12 +58,15 @@ class AdminNoticeLoader
             return;
         }
 
+        $html = '';
         $request = ServerRequest::fromGlobals();
 
         foreach ($notices as $notice) {
             if ($notice->shouldBeRendered($request))
-                $notice->renderComponent($request);
+                $html .= $notice->renderComponent($request);
         }
+
+        echo $html;
 
         delete_transient(static::TRANSIENT);
     }

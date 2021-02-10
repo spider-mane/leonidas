@@ -1,6 +1,6 @@
 <?php
 
-namespace WebTheory\Leonidas\Admin\Fields;
+namespace WebTheory\Leonidas\Admin;
 
 use Psr\Http\Message\ServerRequestInterface;
 use WebTheory\Leonidas\Admin\Contracts\AdminFieldInterface;
@@ -8,7 +8,7 @@ use WebTheory\Leonidas\Admin\Traits\CanBeRestrictedTrait;
 use WebTheory\Saveyour\Contracts\FormFieldControllerInterface;
 use WebTheory\Saveyour\Contracts\FormFieldInterface;
 
-abstract class AbstractField implements AdminFieldInterface
+abstract class AbstractAdminField implements AdminFieldInterface
 {
     use CanBeRestrictedTrait;
 
