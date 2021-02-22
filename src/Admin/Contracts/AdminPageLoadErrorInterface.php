@@ -2,6 +2,6 @@
 
 namespace WebTheory\Leonidas\Admin\Contracts;
 
-interface AdminPageLoadErrorInterface extends AdminComponentInterface
+interface AdminPageLoadErrorInterface extends SimpleAdminComponentInterface
 {
 }

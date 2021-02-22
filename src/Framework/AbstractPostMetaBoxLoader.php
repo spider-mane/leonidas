@@ -65,7 +65,7 @@ abstract class AbstractPostMetaBoxLoader extends AbstractModule
     protected $nonce;
 
     /**
-     * @var MetaBox
+     * @var Metabox
      */
     protected $metabox;
 
@@ -142,7 +142,7 @@ abstract class AbstractPostMetaBoxLoader extends AbstractModule
     /**
      *
      */
-    abstract protected function createMetaBox(): MetaBox;
+    abstract protected function createMetaBox(): Metabox;
 
     /**
      *

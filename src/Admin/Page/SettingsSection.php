@@ -4,9 +4,6 @@ namespace WebTheory\Leonidas\Admin\Page;
 
 use WebTheory\Html\Html;
 
-/**
- *
- */
 class SettingsSection
 {
     /**
@@ -147,7 +144,7 @@ class SettingsSection
      */
     public function register()
     {
-        add_settings_section($this->id, $this->title, [$this, 'render'], $this->page);
+        add_settings_section($this->id, $this->title, [$this, 'renderSection'], $this->page);
 
         return $this;
     }
@@ -155,7 +152,7 @@ class SettingsSection
     /**
      *
      */
-    public function render()
+    public function renderSection()
     {
         if (!isset($this->callback)) {
             $this->renderDefault();

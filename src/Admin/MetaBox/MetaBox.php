@@ -3,14 +3,11 @@
 namespace WebTheory\Leonidas\Admin\Metabox;
 
 use GuzzleHttp\Psr7\ServerRequest;
-use WebTheory\Html\Html;
-use WebTheory\Leonidas\Admin\Contracts\MetaboxComponentInterface;
-use WebTheory\Leonidas\Core\Traits\HasNonceTrait;
+use WP_Post;
+use WebTheory\Leonidas\Admin\Contracts\MetaboxLayoutInterface;
 
-class MetaBox
+class Metabox
 {
-    use HasNonceTrait;
-
     /**
      * id
      *
@@ -26,16 +23,9 @@ class MetaBox
     protected $title;
 
     /**
-     * callback
-     *
-     * @var callable
-     */
-    protected $callback;
-
-    /**
      * screen
      *
-     * @var string
+     * @var string|string[]|WP_Screen
      */
     protected $screen;
 
@@ -58,26 +48,19 @@ class MetaBox
      *
      * @var array
      */
-    protected $callbackArgs;
+    protected $callbackArgs = [];
 
     /**
-     * content
+     * layout
      *
-     * @var MetaboxComponentInterface[]
+     * @var MetaboxLayoutInterface
      */
-    protected $content = [];
-
-    /**
-     * fields
-     *
-     * @var array
-     */
-    protected $fields = [];
+    protected $layout;
 
     /**
      *
      */
-    public function __construct(string $id, string $title, string $screen)
+    public function __construct(string $id, string $title, $screen)
     {
         $this->id = $id;
         $this->title = $title;
@@ -131,7 +114,7 @@ class MetaBox
     /**
      * Get screen
      *
-     * @return string|array
+     * @return string|string[]|WP_Screen
      */
     public function getScreen()
     {
@@ -211,47 +194,11 @@ class MetaBox
     }
 
     /**
-     * Get content
-     *
-     * @return  array
-     */
-    public function getContent($slug = null)
-    {
-        return isset($slug) ? $this->content[$slug] : $this->content;
-    }
-
-    /**
-     *
-     */
-    public function addContent(string $slug, MetaboxComponentInterface $content)
-    {
-        $this->content[$slug] = $content;
-
-        return $this;
-    }
-
-    /**
-     *
-     */
-    public function setContent(array $content)
-    {
-        foreach ($content as $name => $thing) {
-            $this->addContent($name, $thing);
-        }
-
-        return $this;
-    }
-
-    /**
      *
      */
     public function hook()
     {
         add_action("add_meta_boxes_{$this->screen}", [$this, 'register']);
-
-        if (!empty($this->save_cb)) {
-            add_action("save_post_{$this->screen}", $this->save_cb, null, 3);
-        }
 
         return $this;
     }
@@ -266,7 +213,7 @@ class MetaBox
         add_meta_box(
             $this->id,
             $this->title,
-            [$this, 'display'],
+            [$this, 'renderMetabox'],
             $this->screen,
             $this->context,
             $this->priority,
@@ -279,39 +226,12 @@ class MetaBox
     /**
      *
      */
-    public function display($post, $metaBox)
+    public function renderMetabox(WP_Post $post, array $args)
     {
-        isset($this->callback) ? ($this->callback)($post, $metaBox, $this) : $this->render($post);
-    }
+        $request = ServerRequest::fromGlobals()
+            ->withAttribute('post', $post)
+            ->withAttribute('args', $args);
 
-    /**
-     *
-     */
-    public function render($post)
-    {
-        $request = ServerRequest::fromGlobals()->withAttribute('post', $post);
-
-        $html = '';
-        $html .= $this->maybeRenderNonce();
-        $html .= Html::open('div', ['class' => 'backalley-wrap']);
-
-        $i = count($this->content);
-
-        foreach ($this->content as $content) {
-            $i--;
-
-            if ($content->shouldBeRendered($request)) {
-
-                $html .= $content->renderComponent($request);
-
-                if ($i > 0) {
-                    $html .= '<hr>';
-                }
-            }
-        }
-
-        $html .= Html::close('div');
-
-        echo $html;
+        echo $this->layout->renderComponent($request);
     }
 }

@@ -74,7 +74,7 @@ $contactInfo = (new Section('Contact Information'))
     ->addContent('email', $emailField);
 
 # metabox
-$metabox = (new MetaBox('section-test', 'Section Test', $postType))
+$metabox = (new Metabox('section-test', 'Section Test', $postType))
     ->addContent('contact_info', $contactInfo)
     ->setNonce($nonce)
     ->hook();

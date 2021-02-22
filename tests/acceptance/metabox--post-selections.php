@@ -22,7 +22,7 @@ Screen::load('post', ['post_type' => 'wts_test_cpt_2'], function () {
 
     $nonce = new Nonce('selection-nonce', 'save-selection');
 
-    $metabox = (new MetaBox('selections-metabox', 'Selections Tests', $postType))
+    $metabox = (new Metabox('selections-metabox', 'Selections Tests', $postType))
         ->setNonce($nonce)
         ->hook();
 

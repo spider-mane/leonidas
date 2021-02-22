@@ -14,7 +14,7 @@ use WebTheory\Saveyour\Fields\Time;
 $postType = 'wts_test_cpt_2';
 $nonce = new Nonce('wts-metabox', 'edit_' . $postType);
 
-$metabox = (new MetaBox('wts_hours', 'Hours', $postType))
+$metabox = (new Metabox('wts_hours', 'Hours', $postType))
     ->setNonce($nonce)
     ->hook();
 

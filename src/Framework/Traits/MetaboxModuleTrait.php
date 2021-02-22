@@ -8,7 +8,7 @@ use WebTheory\Leonidas\Admin\Metabox\Metabox;
 trait MetaboxModuleTrait
 {
     /**
-     * @var MetaBox
+     * @var Metabox
      */
     protected static $metabox;
 
@@ -44,19 +44,19 @@ trait MetaboxModuleTrait
     /**
      *
      */
-    public static function renderMetaBox($post, $data, MetaBox $metabox)
+    public static function renderMetaBox($post, $data, Metabox $metabox)
     {
         foreach (static::composeMetabox() as $key => $component) {
             static::$metabox->addContent($key, $component);
         }
 
-        static::$metabox->render($post);
+        static::$metabox->renderMetabox($post);
     }
 
     /**
      *
      */
-    abstract protected static function createMetaBox(): MetaBox;
+    abstract protected static function createMetaBox(): Metabox;
 
     /**
      * @return MetaboxComponentInterface[]

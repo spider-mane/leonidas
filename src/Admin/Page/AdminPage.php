@@ -69,21 +69,21 @@ class AdminPage
     /**
      * @see https://developer.wordpress.org/reference/hooks/admin_title/
      *
-     * @var callable
+     * @var null|callable
      */
     protected $adminTitleCallback;
 
     /**
      * @see https://developer.wordpress.org/reference/hooks/submenu_file/
      *
-     * @var callable
+     * @var null|callable
      */
     protected $submenuFileCallback;
 
     /**
      * @see https://developer.wordpress.org/reference/hooks/parent_file/
      *
-     * @var callable
+     * @var null|callable
      */
     protected $parentFileCallback;
 
@@ -529,12 +529,12 @@ class AdminPage
     /**
      *
      */
-    public function renderPage(array $args = [])
+    public function renderPage(array $args)
     {
+        $this->layout->setTitle($this->pageTitle);
+
         $request = ServerRequest::fromGlobals()
             ->withAttribute('args', $args);
-
-        $this->layout->setTitle($this->pageTitle);
 
         if ($this->layout->shouldBeRendered($request)) {
             echo $this->layout->renderComponent($request);

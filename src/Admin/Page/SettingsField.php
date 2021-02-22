@@ -79,11 +79,6 @@ class SettingsField
     protected $field;
 
     /**
-     * @var string
-     */
-    protected $pointer;
-
-    /**
      *
      */
     public function __construct(string $id, string $title, string $page)
@@ -282,13 +277,9 @@ class SettingsField
      */
     public function register()
     {
-        if (!isset($this->page)) {
-            return;
-        }
-
         $args = ['label_for' => $this->id] + $this->displayArgs;
 
-        add_settings_field($this->id, $this->title, [$this, 'render'], $this->page, $this->section, $args);
+        add_settings_field($this->id, $this->title, [$this, 'renderField'], $this->page, $this->section, $args);
 
         return $this;
     }
@@ -296,7 +287,7 @@ class SettingsField
     /**
      *
      */
-    public function render($args)
+    public function renderField($args)
     {
         $settings = get_registered_settings();
         $setting = $settings[$this->setting];
@@ -357,7 +348,7 @@ class SettingsField
      */
     protected function escapeValue($value)
     {
-        $value =  isset($this->displayFilter)
+        $value = isset($this->displayFilter)
             ? !is_array($value)
             ? call_user_func($this->displayFilter, $value)
             : array_filter($value, $this->displayFilter)

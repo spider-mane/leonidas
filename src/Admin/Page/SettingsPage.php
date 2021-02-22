@@ -5,7 +5,7 @@ namespace WebTheory\Leonidas\Admin\Page;
 use WebTheory\Leonidas\Admin\Contracts\AdminPageLayoutInterface;
 use WebTheory\Leonidas\Admin\Page\Components\StandardSettingsPageLayout;
 
-class StandardSettingsPage extends AdminPage
+class SettingsPage extends AdminPage
 {
     /**
      * @var string
@@ -35,7 +35,7 @@ class StandardSettingsPage extends AdminPage
     /**
      *
      */
-    public function renderPage(array $args = [])
+    public function renderPage(array $args)
     {
         $this->setLayout($this->createLayout());
 
