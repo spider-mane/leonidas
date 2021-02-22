@@ -1,6 +1,6 @@
 <?php
 
-namespace WebTheory\Leonidas;
+namespace WebTheory\Leonidas\Core;
 
 abstract class AbstractWpObjectFactory
 {

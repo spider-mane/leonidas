@@ -72,29 +72,6 @@ function return_json($status)
 /**
  *
  */
-function safe_save_post($post, $nonce, $action)
-{
-    $unsafe_conditions = [
-
-        !isset($_POST[$nonce]), // nonce field does not exist
-
-        !wp_verify_nonce($_POST[$nonce], $action), // nonce action does not match
-
-        defined('DOING_AUTOSAVE') && DOING_AUTOSAVE, // wp performing autosave
-
-        !current_user_can('edit_post', $post->ID) // current user does not have required permission
-    ];
-
-    foreach ($unsafe_conditions as $condition) {
-        if ((bool) $condition) return false;
-    }
-
-    return true;
-}
-
-/**
- *
- */
 function json_encode_wp_safe($input, bool $slashes = true)
 {
     $input = json_encode($input, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);

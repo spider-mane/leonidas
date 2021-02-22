@@ -2,14 +2,12 @@
 
 namespace WebTheory\Leonidas\Admin\Contracts;
 
-use Psr\Container\ContainerInterface;
-
-interface WpExtensionInterface extends ContainerInterface
+interface WpExtensionInterface
 {
     /**
      *
      */
-    public function config(string $name, $default);
+    public function getConfig(string $name, $default);
 
     /**
      *

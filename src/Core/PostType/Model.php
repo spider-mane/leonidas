@@ -3,7 +3,7 @@
 namespace WebTheory\Leonidas\Core\PostType;
 
 use Exception;
-use WebTheory\GuctilityBelt\TxtCase;
+use WebTheory\GuctilityBelt\CaseSwap;
 
 class Model
 {
@@ -35,7 +35,7 @@ class Model
      */
     public function __call($name, $args)
     {
-        $name = TxtCase::snake($name);
+        $name = CaseSwap::snake($name);
 
         if (isset(static::META_KEY_MAP[$name])) {
             return $this->get($name);

@@ -3,18 +3,19 @@
 namespace WebTheory\Leonidas\Framework;
 
 use WebTheory\Leonidas\Admin\Contracts\ModuleInterface;
+use WebTheory\Leonidas\Admin\Contracts\WpExtensionInterface;
 
 abstract class AbstractModule implements ModuleInterface
 {
     /**
-     * @var WpExtension
+     * @var WpExtensionInterface
      */
     protected $extension;
 
     /**
-     * @param WpExtension $extension
+     * @param WpExtensionInterface $extension
      */
-    public function __construct(WpExtension $extension)
+    public function __construct(WpExtensionInterface $extension)
     {
         $this->extension = $extension;
     }

@@ -2,9 +2,10 @@
 
 namespace WebTheory\Leonidas\Core\Taxonomy\OptionHandlers;
 
-use WebTheory\Leonidas\Core\Taxonomy\OptionHandlerInterface;
+use WP_Taxonomy;
+use WebTheory\Leonidas\Core\Contracts\TaxonomyOptionHandlerInterface;
 
-class MaintainMetaboxHierarchy implements OptionHandlerInterface
+class MaintainMetaboxHierarchy implements TaxonomyOptionHandlerInterface
 {
     /**
      *
@@ -44,7 +45,7 @@ class MaintainMetaboxHierarchy implements OptionHandlerInterface
     /**
      *
      */
-    public static function handle(\WP_Taxonomy $taxonomy, $arg)
+    public static function handle(WP_Taxonomy $taxonomy, $arg)
     {
         if (true === $arg) {
             (new static($taxonomy))->hook();

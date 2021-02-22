@@ -3,9 +3,10 @@
 namespace WebTheory\Leonidas\Core\Auth;
 
 use Psr\Http\Message\ServerRequestInterface;
+use WebTheory\Leonidas\Core\Contracts\AuthTokenInterface;
 use WebTheory\Saveyour\Request;
 
-class Nonce
+class Nonce implements AuthTokenInterface
 {
     /**
      * @var string
@@ -79,7 +80,7 @@ class Nonce
     /**
      *
      */
-    protected function render(bool $referer = false)
+    protected function render(bool $referer = false): void
     {
         echo $this->field($referer);
     }
@@ -87,9 +88,17 @@ class Nonce
     /**
      *
      */
-    public function field(bool $referer = false)
+    public function field(bool $referer = false): string
     {
         return wp_nonce_field($this->action, $this->name, $referer, false);
+    }
+
+    /**
+     *
+     */
+    public function toHtml(): string
+    {
+        return $this->field(false);
     }
 
     /**
@@ -103,7 +112,7 @@ class Nonce
     /**
      *
      */
-    public function verify(ServerRequestInterface $request)
+    public function verify(ServerRequestInterface $request): bool
     {
         $nonce = Request::var($request, $this->name);
 
@@ -113,7 +122,7 @@ class Nonce
     /**
      *
      */
-    public function validate(ServerRequestInterface $request)
+    public function validate(ServerRequestInterface $request): bool
     {
         $verified = $this->verify($request);
 

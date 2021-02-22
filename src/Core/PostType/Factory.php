@@ -2,9 +2,9 @@
 
 namespace WebTheory\Leonidas\Core\PostType;
 
-use WebTheory\Leonidas\Core\PostType\OptionHandlerInterface;
-use WebTheory\Leonidas\Core\PostType\PostType;
 use WebTheory\Leonidas\Core\AbstractWpObjectFactory;
+use WebTheory\Leonidas\Core\Contracts\PostTypeOptionHandlerInterface;
+use WebTheory\Leonidas\Core\PostType\PostType;
 
 class Factory extends AbstractWpObjectFactory
 {
@@ -53,7 +53,7 @@ class Factory extends AbstractWpObjectFactory
                 throw new \Exception("There is no registered handler for the {$option} option provided");
             }
 
-            if ($handler && in_array(OptionHandlerInterface::class, class_implements($handler))) {
+            if ($handler && in_array(PostTypeOptionHandlerInterface::class, class_implements($handler))) {
                 $handler::handle($postType, $args);
             } else {
                 throw new \Exception("{$handler} is not a valid option handler");

@@ -6,6 +6,7 @@ use Exception;
 use League\Container\Container;
 use Psr\Container\ContainerInterface;
 use WebTheory\Leonidas\Admin\Contracts\WpExtensionInterface;
+use WebTheory\Leonidas\Framework\Enum\ExtensionType;
 
 class WpExtension implements WpExtensionInterface
 {
@@ -13,6 +14,16 @@ class WpExtension implements WpExtensionInterface
      * @var string
      */
     protected $name;
+
+    /**
+     * @var string
+     */
+    protected $title;
+
+    /**
+     * @var string
+     */
+    protected $prefix;
 
     /**
      * @var string
@@ -25,12 +36,7 @@ class WpExtension implements WpExtensionInterface
     protected $url;
 
     /**
-     * @var string
-     */
-    protected $prefix;
-
-    /**
-     * @var string
+     * @var ExtensionType
      */
     protected $type;
 
@@ -45,16 +51,11 @@ class WpExtension implements WpExtensionInterface
     protected $master;
 
     /**
-     *
-     */
-    protected const ACCEPTED_TYPES = ['theme', 'plugin', 'mu-plugin', 'mixin'];
-
-    /**
      * @param string $name
      * @param string $path
      * @param string $url
      * @param string $prefix
-     * @param string $type
+     * @param ExtensionType $type
      * @param ContainerInterface|null $container
      * @throws Exception
      */
@@ -63,14 +64,14 @@ class WpExtension implements WpExtensionInterface
         string $path,
         string $url,
         string $prefix,
-        string $type,
+        ExtensionType $type,
         ?ContainerInterface $container = null
     ) {
         $this->name = $name;
         $this->path = $path;
         $this->url = $url;
         $this->prefix = $prefix;
-        $this->setType($type);
+        $this->type = $type;
         $this->container = $container ?? $this->getDefaultContainer();
     }
 
@@ -125,7 +126,7 @@ class WpExtension implements WpExtensionInterface
      * @param $default
      * @return mixed
      */
-    public function config(string $name, $default)
+    public function getConfig(string $name, $default)
     {
         return $this->get('config')->get($name, $default);
     }
@@ -136,25 +137,6 @@ class WpExtension implements WpExtensionInterface
     protected function getDefaultContainer(): ContainerInterface
     {
         return new Container();
-    }
-
-    /**
-     * Set the value of type
-     *
-     * @param string $type
-     *
-     * @return self
-     * @throws Exception
-     */
-    protected function setType(string $type)
-    {
-        if (!in_array($type, static::ACCEPTED_TYPES)) {
-            throw new Exception("{$type} is not an accepted extension type.");
-        }
-
-        $this->type = $type;
-
-        return $this;
     }
 
     /**

@@ -3,7 +3,7 @@
 namespace WebTheory\Leonidas\Core\Taxonomy;
 
 use WebTheory\Leonidas\Core\AbstractWpObjectFactory;
-use WebTheory\Leonidas\Core\Taxonomy\OptionHandlerInterface;
+use WebTheory\Leonidas\Core\Contracts\TaxonomyOptionHandlerInterface;
 use WebTheory\Leonidas\Core\Taxonomy\Taxonomy;
 
 class Factory extends AbstractWpObjectFactory
@@ -54,7 +54,7 @@ class Factory extends AbstractWpObjectFactory
                 throw new \Exception("There is no registered handler for the {$option} option provided");
             }
 
-            if ($handler && in_array(OptionHandlerInterface::class, class_implements($handler))) {
+            if ($handler && in_array(TaxonomyOptionHandlerInterface::class, class_implements($handler))) {
                 $handler::handle($taxonomy, $args);
             } else {
                 throw new \Exception("{$handler} is not a valid option handler");

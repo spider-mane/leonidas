@@ -4,13 +4,8 @@ namespace WebTheory\Leonidas\Admin\Contracts;
 
 use Psr\Http\Message\ServerRequestInterface;
 
-interface AdminComponentInterface
+interface AdminComponentInterface extends SimpleAdminComponentInterface
 {
-    /**
-     *
-     */
-    public function renderComponent(ServerRequestInterface $request): string;
-
     /**
      *
      */

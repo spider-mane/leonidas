@@ -1,6 +1,6 @@
 <?php
 
-namespace WebTheory\Leonidas;
+namespace WebTheory\Leonidas\Core;
 
 abstract class AbstractWpObjectFacade
 {
@@ -190,7 +190,7 @@ abstract class AbstractWpObjectFacade
     /**
      *
      */
-    protected function getExaltedArgs()
+    public function getExaltedArgs()
     {
         return ['labels', 'rewrite', 'capabilities', 'description'];
     }
