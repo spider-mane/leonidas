@@ -307,7 +307,7 @@ class FieldGrid implements MetaboxComponentInterface
     /**
      *
      */
-    protected function getView(): ViewInterface
+    protected function defineView(ServerRequestInterface $request): ViewInterface
     {
         return new FieldGridView();
     }

@@ -76,7 +76,7 @@ class SimpleAdminPageLayout extends AbstractPageLayout implements AdminPageLayou
     /**
      *
      */
-    protected function getView(): ViewInterface
+    protected function defineView(ServerRequestInterface $request): ViewInterface
     {
         return new SimpleAdminPageView();
     }

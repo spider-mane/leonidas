@@ -19,7 +19,7 @@ class TermField extends AbstractAdminField implements TermFieldInterface
     /**
      *
      */
-    protected function getView(): ViewInterface
+    protected function defineView(ServerRequestInterface $request): ViewInterface
     {
         switch (get_current_screen()->base) {
 

@@ -12,13 +12,13 @@ trait RendersWithViewTrait
      */
     public function renderComponent(ServerRequestInterface $request): string
     {
-        return $this->getView()->render($this->defineViewContext($request));
+        return $this->defineView($request)->render($this->defineViewContext($request));
     }
 
     /**
      *
      */
-    abstract protected function getView(): ViewInterface;
+    abstract protected function defineView(ServerRequestInterface $request): ViewInterface;
 
     /**
      *

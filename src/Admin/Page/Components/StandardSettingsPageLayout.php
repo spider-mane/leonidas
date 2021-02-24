@@ -56,7 +56,7 @@ class StandardSettingsPageLayout extends AbstractPageLayout implements AdminPage
     /**
      *
      */
-    protected function getView(): ViewInterface
+    protected function defineView(ServerRequestInterface $request): ViewInterface
     {
         return new StandardSettingsPageView();
     }

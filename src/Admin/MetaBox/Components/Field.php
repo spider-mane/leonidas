@@ -88,7 +88,7 @@ class Field extends AbstractAdminField implements MetaboxFieldInterface
         return $this;
     }
 
-    protected function getView(): ViewInterface
+    protected function defineView(ServerRequestInterface $request): ViewInterface
     {
         return new FieldView();
     }
