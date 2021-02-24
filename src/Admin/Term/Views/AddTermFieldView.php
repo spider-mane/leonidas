@@ -10,5 +10,5 @@ class AddTermFieldView extends AbstractLeonidasTwigView implements ViewInterface
     /**
      *
      */
-    protected $template = 'screens/term/add-field.twig';
+    protected $template = 'screens/term/components/add-field.twig';
 }

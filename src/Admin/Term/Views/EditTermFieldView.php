@@ -10,5 +10,5 @@ class EditTermFieldView extends AbstractLeonidasTwigView implements ViewInterfac
     /**
      *
      */
-    protected $template = 'screens/term/edit-field.twig';
+    protected $template = 'screens/term/components/edit-field.twig';
 }
