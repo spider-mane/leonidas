@@ -1,6 +1,6 @@
 <?php
 
-namespace WebTheory\Leonidas\Admin\Post\Status;
+namespace WebTheory\Leonidas\Admin\Post;
 
 use WebTheory\Html\Html;
 

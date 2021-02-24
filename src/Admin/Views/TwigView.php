@@ -4,8 +4,9 @@ namespace WebTheory\Leonidas\Admin;
 
 use Twig\Environment;
 use WebTheory\Leonidas\Admin\Contracts\ViewInterface;
+use WebTheory\Leonidas\Admin\Views\AbstractTwigView;
 
-class TwigTemplate implements ViewInterface
+class TwigView extends AbstractTwigView implements ViewInterface
 {
     /**
      * @var string
@@ -15,7 +16,7 @@ class TwigTemplate implements ViewInterface
     /**
      * @var Environment
      */
-    protected $environment;
+    protected $twigEnvironment;
 
     /**
      *
@@ -23,14 +24,22 @@ class TwigTemplate implements ViewInterface
     public function __construct(string $template, Environment $environment)
     {
         $this->template = $template;
-        $this->environment = $environment;
+        $this->twigEnvironment = $environment;
     }
 
     /**
      *
      */
-    public function render(array $context = []): string
+    protected function getTwigEnvironment(): Environment
     {
-        return $this->environment->render($this->template, $context);
+        return $this->twigEnvironment;
+    }
+
+    /**
+     *
+     */
+    protected function getTemplate(): string
+    {
+        return $this->template;
     }
 }

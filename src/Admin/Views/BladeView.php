@@ -4,7 +4,7 @@ namespace WebTheory\Leonidas\Admin\Views;
 
 use WebTheory\Leonidas\Admin\Contracts\ViewInterface;
 
-class BladeTemplate implements ViewInterface
+class BladeView implements ViewInterface
 {
     /**
      * @var string

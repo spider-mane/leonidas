@@ -15,7 +15,7 @@ class MetaboxLayout implements MetaboxLayoutInterface
     use HasNonceTrait;
 
     /**
-     * component
+     * Collection of components that fill the layout
      *
      * @var MetaboxComponentInterface[]
      */
@@ -30,9 +30,9 @@ class MetaboxLayout implements MetaboxLayoutInterface
     }
 
     /**
-     * Get content
+     * Get components
      *
-     * @return MetaboxComponentInterface
+     * @return MetaboxComponentInterface[]
      */
     public function getComponents(): array
     {
@@ -54,7 +54,9 @@ class MetaboxLayout implements MetaboxLayoutInterface
     }
 
     /**
+     * Add single component
      *
+     * @param MetaboxComponentInterface $component
      */
     public function addComponent(MetaboxComponentInterface $component)
     {

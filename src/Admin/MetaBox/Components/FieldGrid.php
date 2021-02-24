@@ -4,15 +4,17 @@ namespace WebTheory\Leonidas\Admin\Metabox\Components;
 
 use Psr\Http\Message\ServerRequestInterface;
 use WebTheory\Leonidas\Admin\Contracts\MetaboxComponentInterface;
+use WebTheory\Leonidas\Admin\Contracts\ViewInterface;
+use WebTheory\Leonidas\Admin\Metabox\Views\FieldGridView;
 use WebTheory\Leonidas\Admin\Traits\CanBeRestrictedTrait;
-use WebTheory\Leonidas\Admin\Traits\RendersWithTemplateTrait;
+use WebTheory\Leonidas\Admin\Traits\RendersWithViewTrait;
 use WebTheory\Saveyour\Contracts\FormFieldControllerInterface;
 use WebTheory\Saveyour\Controllers\FormFieldController;
 
 class FieldGrid implements MetaboxComponentInterface
 {
     use CanBeRestrictedTrait;
-    use RendersWithTemplateTrait;
+    use RendersWithViewTrait;
 
     /**
      * @var array
@@ -58,11 +60,6 @@ class FieldGrid implements MetaboxComponentInterface
      * @var int|bool
      */
     protected $startOffset = false;
-
-    /**
-     *
-     */
-    private $template = 'metabox__field-grid';
 
     /**
      * The following constants are used define the maximum allowed field columns
@@ -310,7 +307,15 @@ class FieldGrid implements MetaboxComponentInterface
     /**
      *
      */
-    protected function defineTemplateContext(ServerRequestInterface $request): array
+    protected function getView(): ViewInterface
+    {
+        return new FieldGridView();
+    }
+
+    /**
+     *
+     */
+    protected function defineViewContext(ServerRequestInterface $request): array
     {
         /** @var FormFieldControllerInterface $field */
         foreach ($this->fields as $field) {

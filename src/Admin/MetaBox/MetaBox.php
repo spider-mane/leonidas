@@ -88,30 +88,6 @@ class Metabox
     }
 
     /**
-     * Get callback
-     *
-     * @return callable
-     */
-    public function getCallback(): callable
-    {
-        return $this->callback;
-    }
-
-    /**
-     * Set callback
-     *
-     * @param callable  $callback  callback
-     *
-     * @return self
-     */
-    public function setCallback(callable $callback)
-    {
-        $this->callback = $callback;
-
-        return $this;
-    }
-
-    /**
      * Get screen
      *
      * @return string|string[]|WP_Screen

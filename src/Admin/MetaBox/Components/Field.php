@@ -3,13 +3,17 @@
 namespace WebTheory\Leonidas\Admin\Metabox\Components;
 
 use Psr\Http\Message\ServerRequestInterface;
-use WebTheory\Leonidas\Admin\Contracts\MetaboxFieldInterface;
 use WebTheory\Leonidas\Admin\AbstractAdminField;
-use WebTheory\Leonidas\Admin\Traits\RendersWithTemplateTrait;
+use WebTheory\Leonidas\Admin\Contracts\MetaboxFieldInterface;
+use WebTheory\Leonidas\Admin\Contracts\ViewInterface;
+use WebTheory\Leonidas\Admin\Metabox\Views\FieldView;
+use WebTheory\Leonidas\Admin\Traits\CanBeRestrictedTrait;
+use WebTheory\Leonidas\Admin\Traits\RendersWithViewTrait;
 
 class Field extends AbstractAdminField implements MetaboxFieldInterface
 {
-    use RendersWithTemplateTrait;
+    use CanBeRestrictedTrait;
+    use RendersWithViewTrait;
 
     /**
      * @var bool
@@ -30,11 +34,6 @@ class Field extends AbstractAdminField implements MetaboxFieldInterface
      * @var array
      */
     protected $hiddenInput;
-
-    /**
-     *
-     */
-    private $template = 'metabox__field';
 
     /**
      *
@@ -89,10 +88,15 @@ class Field extends AbstractAdminField implements MetaboxFieldInterface
         return $this;
     }
 
+    protected function getView(): ViewInterface
+    {
+        return new FieldView();
+    }
+
     /**
      *
      */
-    protected function defineTemplateContext(ServerRequestInterface $request): array
+    protected function defineViewContext(ServerRequestInterface $request): array
     {
         return [
             'label' => $this->label,

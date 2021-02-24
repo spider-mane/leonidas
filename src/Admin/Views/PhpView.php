@@ -4,7 +4,7 @@ namespace WebTheory\Leonidas\Admin\Views;
 
 use WebTheory\Leonidas\Admin\Contracts\ViewInterface;
 
-class PhpTemplate implements ViewInterface
+class PhpView implements ViewInterface
 {
     /**
      * @var string;

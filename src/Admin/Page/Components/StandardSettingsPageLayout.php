@@ -4,13 +4,15 @@ namespace WebTheory\Leonidas\Admin\Page\Components;
 
 use Psr\Http\Message\ServerRequestInterface;
 use WebTheory\Leonidas\Admin\Contracts\AdminPageLayoutInterface;
+use WebTheory\Leonidas\Admin\Contracts\ViewInterface;
+use WebTheory\Leonidas\Admin\Page\Views\StandardSettingsPageView;
 use WebTheory\Leonidas\Admin\Traits\CanBeRestrictedTrait;
-use WebTheory\Leonidas\Admin\Traits\UsesTwigView;
+use WebTheory\Leonidas\Admin\Traits\RendersWithViewTrait;
 
 class StandardSettingsPageLayout extends AbstractPageLayout implements AdminPageLayoutInterface
 {
     use CanBeRestrictedTrait;
-    use UsesTwigView;
+    use RendersWithViewTrait;
 
     /**
      * @var string
@@ -23,18 +25,12 @@ class StandardSettingsPageLayout extends AbstractPageLayout implements AdminPage
     protected $optionGroup;
 
     /**
-     * @var string
-     */
-    protected $template = 'settings-page-template.twig';
-
-    /**
      *
      */
     public function __construct(string $page, string $optionGroup)
     {
         $this->page = $page;
         $this->optionGroup = $optionGroup;
-        $this->view = $this->getDefaultView();
     }
 
     /**
@@ -60,23 +56,15 @@ class StandardSettingsPageLayout extends AbstractPageLayout implements AdminPage
     /**
      *
      */
-    public function renderComponent(ServerRequestInterface $request): string
+    protected function getView(): ViewInterface
     {
-        return $this->renderTemplate($this->getTemplateContext());
+        return new StandardSettingsPageView();
     }
 
     /**
      *
      */
-    protected function getTemplateToRender(): string
-    {
-        return $this->template;
-    }
-
-    /**
-     *
-     */
-    protected function getTemplateContext(): array
+    protected function defineViewContext(ServerRequestInterface $request): array
     {
         return [
             'title' => $this->title,
