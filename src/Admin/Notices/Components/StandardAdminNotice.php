@@ -1,18 +1,18 @@
 <?php
 
-namespace WebTheory\Leonidas\Admin\Notices;
+namespace WebTheory\Leonidas\Admin\Notices\Components;
 
-use GuzzleHttp\Psr7\ServerRequest;
 use Psr\Http\Message\ServerRequestInterface;
-use WebTheory\Html\Traits\ElementConstructorTrait;
 use WebTheory\Leonidas\Admin\Contracts\AdminNoticeInterface;
-use WebTheory\Leonidas\Admin\Loaders\AdminNoticeLoader;
+use WebTheory\Leonidas\Admin\Contracts\ViewInterface;
+use WebTheory\Leonidas\Admin\Notices\Views\StandardAdminNoticeView;
 use WebTheory\Leonidas\Admin\Traits\CanBeRestrictedTrait;
+use WebTheory\Leonidas\Admin\Traits\RendersWithViewTrait;
 
 class StandardAdminNotice implements AdminNoticeInterface
 {
-    use ElementConstructorTrait;
     use CanBeRestrictedTrait;
+    use RendersWithViewTrait;
 
     /**
      * @var string
@@ -40,7 +40,9 @@ class StandardAdminNotice implements AdminNoticeInterface
     protected $screen;
 
     /**
-     * @var string
+     *
+     * @param string $message
+     * @param string $id
      */
     public function __construct(string $message, string $id = '')
     {
@@ -147,40 +149,20 @@ class StandardAdminNotice implements AdminNoticeInterface
     /**
      *
      */
-    public function register()
+    protected function defineView(ServerRequestInterface $request): ViewInterface
     {
-        AdminNoticeLoader::addNotice($this);
-
-        return $this;
+        return new StandardAdminNoticeView();
     }
 
     /**
      *
      */
-    public function hook()
+    protected function defineViewContext(ServerRequestInterface $request): array
     {
-        add_action('admin_notices', [$this, 'render']);
-    }
-
-    /**
-     *
-     */
-    public function render()
-    {
-        echo $this->renderComponent(ServerRequest::fromGlobals());
-    }
-
-    /**
-     *
-     */
-    public function renderComponent(ServerRequestInterface $request): string
-    {
-        $noticeAttr = [
-            'class' => ['notice', "notice-{$this->type}", $this->dismissible ? 'is-dismissible' : null]
+        return [
+            'type' => $this->type,
+            'is_dismissible' => $this->dismissible,
+            'message' => $this->message
         ];
-
-        $noticeBody = $this->tag('p', [], htmlspecialchars($this->message));
-
-        return $this->tag('div', $noticeAttr, $noticeBody);
     }
 }

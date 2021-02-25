@@ -3,13 +3,16 @@
 namespace WebTheory\Leonidas\Admin\Metabox\Components;
 
 use Psr\Http\Message\ServerRequestInterface;
-use WebTheory\Html\Html;
 use WebTheory\Leonidas\Admin\Contracts\MetaboxComponentInterface;
+use WebTheory\Leonidas\Admin\Contracts\ViewInterface;
+use WebTheory\Leonidas\Admin\Metabox\Views\SectionView;
 use WebTheory\Leonidas\Admin\Traits\CanBeRestrictedTrait;
+use WebTheory\Leonidas\Admin\Traits\RendersWithViewTrait;
 
 class Section implements MetaboxComponentInterface
 {
     use CanBeRestrictedTrait;
+    use RendersWithViewTrait;
 
     /**
      * @var string
@@ -19,7 +22,7 @@ class Section implements MetaboxComponentInterface
     /**
      * @var MetaboxComponentInterface[]
      */
-    protected $content = [];
+    protected $components = [];
 
     /**
      * @var int
@@ -56,7 +59,7 @@ class Section implements MetaboxComponentInterface
      */
     public function getContent(): array
     {
-        return $this->content;
+        return $this->components;
     }
 
     /**
@@ -84,7 +87,7 @@ class Section implements MetaboxComponentInterface
      */
     public function addContent(string $slug, MetaboxComponentInterface $content)
     {
-        $this->content[$slug] = $content;
+        $this->components[$slug] = $content;
 
         return $this;
     }
@@ -140,33 +143,22 @@ class Section implements MetaboxComponentInterface
     /**
      *
      */
-    public function renderComponent(ServerRequestInterface $request): string
+    protected function defineView(ServerRequestInterface $request): ViewInterface
     {
-        $html = '';
+        return new SectionView();
+    }
 
-        $titleElement = Html::tag('h3', [], $this->title);
-        $attributes = ['class' => "py-{$this->padding}"];
-        $container = $this->isFieldset ? 'fieldset' : 'div';
-
-        $html .= Html::open($container, $attributes);
-
-        if ($this->isFieldset && false) {
-            // temporarily disabled because legend elements are absolutely
-            // positioned within their container, making padding not work
-            // as desired
-            $html .= Html::tag('legend', [], $titleElement);
-        } else {
-            $html .= $titleElement;
-        }
-
-        foreach ($this->content as $content) {
-            if ($content->shouldBeRendered($request)) {
-                $html .= $content->renderComponent($request);
-            }
-        }
-
-        $html .= Html::close($container);
-
-        return $html;
+    /**
+     *
+     */
+    protected function defineViewContext(ServerRequestInterface $request): array
+    {
+        return [
+            'padding' => $this->padding,
+            'title' => $this->title,
+            'is_fieldset' => $this->isFieldset,
+            'components' => $this->components,
+            'request' => $request
+        ];
     }
 }

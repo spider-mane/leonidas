@@ -4,70 +4,132 @@ namespace WebTheory\Leonidas\Admin\Loaders;
 
 use GuzzleHttp\Psr7\ServerRequest;
 use WebTheory\Leonidas\Admin\Contracts\AdminNoticeInterface;
+use WebTheory\Leonidas\Admin\Contracts\ComponentLoaderInterface;
 
-class AdminNoticeLoader
+class AdminNoticeLoader implements ComponentLoaderInterface
 {
     /**
      * @var AdminNoticeInterface[]
      */
-    protected static $notices = [];
+    protected $notices = [];
 
     /**
      * @var string
      */
-    protected const TRANSIENT = 'leonidas.adminNotices';
+    protected $cacheKey;
 
     /**
      *
      */
-    public static function hook()
+    protected const CACHE_TTL = 300;
+
+    /**
+     *
+     */
+    public function __construct(string $cacheKey)
     {
-        add_action('admin_notices', [static::class, 'renderNotices']);
-        add_action('wp_redirect', [static::class, 'setTransient']);
+        $this->cacheKey = $cacheKey;
+    }
+
+    /**
+     * Get the value of notices
+     *
+     * @return AdminNoticeInterface[]
+     */
+    public function getNotices(): array
+    {
+        return $this->notices;
     }
 
     /**
      *
      */
-    public static function addNotice(AdminNoticeInterface $notice)
+    public function hasNotices(): bool
     {
-        static::$notices[] = $notice;
+        return !empty($this->notices);
     }
 
     /**
      *
      */
-    final public static function setTransient()
+    public function addNotice(AdminNoticeInterface $notice)
     {
-        if (is_admin() && static::$notices) {
-            set_transient(static::TRANSIENT, static::$notices, 300);
-        }
+        $this->notices[] = $notice;
 
-        return func_get_arg(0);
+        return $this;
     }
 
     /**
      *
      */
-    public static function renderNotices()
+    protected function addNotices(AdminNoticeInterface ...$notices)
     {
-        /** @var AdminNoticeInterface[] $notices */
-        $notices = get_transient(static::TRANSIENT);
-
-        if (!$notices) {
-            return;
-        }
-
-        $html = '';
-        $request = ServerRequest::fromGlobals();
-
         foreach ($notices as $notice) {
-            if ($notice->shouldBeRendered($request))
-                $html .= $notice->renderComponent($request);
+            $this->addNotice($notice);
         }
 
-        echo $html;
+        return $this;
+    }
 
-        delete_transient(static::TRANSIENT);
+    /**
+     * Get the value of cacheKey
+     *
+     * @return string
+     */
+    public function getCacheKey(): string
+    {
+        return $this->cacheKey;
+    }
+
+    /**
+     *
+     */
+    public function hook()
+    {
+        add_action('admin_notices', $this->getRenderNoticesCallback());
+        add_action('wp_redirect', $this->getCacheNoticesCallback()); //! FILTER HOOK! first argument must be returned by callback
+
+        return $this;
+    }
+
+    /**
+     *
+     */
+    protected function getCacheNoticesCallback()
+    {
+        return function () {
+            if (is_admin() && $this->hasNotices()) {
+                set_transient($this->getCacheKey(), $this->getNotices(), static::CACHE_TTL);
+            }
+
+            return func_get_arg(0); // required because 'wp_redirect' is a filter hook
+        };
+    }
+
+    /**
+     *
+     */
+    protected function getRenderNoticesCallback()
+    {
+        return function () {
+            /** @var AdminNoticeInterface[] $notices */
+            $notices = get_transient($this->getCacheKey());
+
+            if (!$notices) {
+                return;
+            }
+
+            $output = '';
+            $request = ServerRequest::fromGlobals();
+
+            foreach ($notices as $notice) {
+                if ($notice->shouldBeRendered($request))
+                    $output .= $notice->renderComponent($request);
+            }
+
+            delete_transient($this->getCacheKey());
+
+            echo $output;
+        };
     }
 }

@@ -13,11 +13,13 @@
  *
  * @wordpress-plugin
  * Plugin Name: Leonidas
- * Description: Description of the plugin.
+ * Description: Enhanced OOP wrapper for the WordPress api.
  */
 
+use League\Container\Container;
+use WebTheory\Leonidas\Framework\Enum\ExtensionType;
+use WebTheory\Leonidas\Framework\WpExtension;
 use WebTheory\Leonidas\Leonidas;
-use WebTheory\Leonidas\WpExtension;
 
 # composer autoload
 if (file_exists($autoload = __DIR__ . '/vendor/autoload.php')) {
@@ -25,11 +27,14 @@ if (file_exists($autoload = __DIR__ . '/vendor/autoload.php')) {
 }
 
 // Leonidas::init(WpExtension::create([
-//     'name' => plugin_basename(__FILE__),
+//     'name' => 'Leonidas',
+//     'prefix' => 'lds',
+//     'base' => plugin_basename(__FILE__),
 //     'path' => __DIR__,
 //     'url' => plugin_dir_url(__FILE__),
-//     'prefix' => 'leon',
-//     'type' => 'plugin'
+//     'assets' => '',
+//     'type' => new ExtensionType('plugin'),
+//     'container' => new Container()
 // ]));
 
 # define filesystem variables in base class

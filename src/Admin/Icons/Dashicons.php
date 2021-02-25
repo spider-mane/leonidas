@@ -1,10 +1,10 @@
 <?php
 
-namespace WebTheory\Leonidas\Admin;
+namespace WebTheory\Leonidas\Admin\Icons;
 
 use WebTheory\Leonidas\Admin\Contracts\IconResolverInterface;
 
-class DashiconsIconResolver implements IconResolverInterface
+class Dashicons implements IconResolverInterface
 {
     /**
      *
@@ -22,8 +22,8 @@ class DashiconsIconResolver implements IconResolverInterface
     /**
      *
      */
-    public function getIcon(): string
+    public function get(): string
     {
-        return 'dasicons-' . $this->icon;
+        return 'dashicons-' . $this->icon;
     }
 }

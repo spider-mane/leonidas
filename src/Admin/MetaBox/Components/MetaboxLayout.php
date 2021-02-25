@@ -3,16 +3,19 @@
 namespace WebTheory\Leonidas\Admin\MetaBox\Components;
 
 use Psr\Http\Message\ServerRequestInterface;
-use WebTheory\Html\Html;
 use WebTheory\Leonidas\Admin\Contracts\MetaboxComponentInterface;
 use WebTheory\Leonidas\Admin\Contracts\MetaboxLayoutInterface;
+use WebTheory\Leonidas\Admin\Contracts\ViewInterface;
+use WebTheory\Leonidas\Admin\Metabox\Views\MetaboxLayoutView;
 use WebTheory\Leonidas\Admin\Traits\CanBeRestrictedTrait;
+use WebTheory\Leonidas\Admin\Traits\RendersWithViewTrait;
 use WebTheory\Leonidas\Core\Traits\HasNonceTrait;
 
 class MetaboxLayout implements MetaboxLayoutInterface
 {
     use CanBeRestrictedTrait;
     use HasNonceTrait;
+    use RendersWithViewTrait;
 
     /**
      * Collection of components that fill the layout
@@ -68,36 +71,28 @@ class MetaboxLayout implements MetaboxLayoutInterface
     /**
      *
      */
-    public function renderComponent(ServerRequestInterface $request): string
+    protected function defineView(ServerRequestInterface $request): ViewInterface
     {
-        $html = '';
-        $html .= $this->maybeRenderNonce();
-        $html .= Html::open('div', ['class' => 'backalley-wrap']);
-
-        $i = count($this->components);
-
-        foreach ($this->components as $component) {
-            $i--;
-
-            if ($component->shouldBeRendered($request)) {
-
-                $html .= $component->renderComponent($request);
-
-                if ($i > 0) {
-                    $html .= $this->getSeparator();
-                }
-            }
-        }
-
-        $html .= Html::close('div');
-
-        return $html;
+        return new MetaboxLayoutView();
     }
 
     /**
      *
      */
-    protected function getSeparator()
+    protected function defineViewContext(ServerRequestInterface $request): array
+    {
+        return [
+            'components' => $this->getComponents(),
+            'auth_field' => $this->maybeRenderNonce(),
+            'separator' => $this->getComponentSeparator(),
+            'request' => $request
+        ];
+    }
+
+    /**
+     *
+     */
+    protected function getComponentSeparator()
     {
         return '<hr>';
     }

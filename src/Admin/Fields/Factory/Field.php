@@ -1,9 +1,7 @@
 <?php
 
-namespace WebTheory\Leonidas\Admin\Fields;
+namespace WebTheory\Leonidas\Admin\Fields\Factory;
 
-use WebTheory\Leonidas\Admin\Fields\Factory as WpFormFieldFactory;
-use WebTheory\Leonidas\Admin\Fields\Managers\Factory as WpDataManagerFactory;
 use WebTheory\Saveyour\Contracts\FieldDataManagerResolverFactoryInterface;
 use WebTheory\Saveyour\Contracts\FormFieldResolverFactoryInterface;
 use WebTheory\Saveyour\Factories\SimpleFieldFactory;
@@ -23,7 +21,7 @@ class Field extends SimpleFieldFactory
         $namespaces = $options['namespaces'] ?? [];
         $fields = $options['fields'] ?? [];
 
-        return new WpFormFieldFactory($namespaces, $fields);
+        return new FormField($namespaces, $fields);
     }
 
     /**
@@ -34,6 +32,6 @@ class Field extends SimpleFieldFactory
         $namespaces = $options['namespaces'] ?? [];
         $managers = $options['managers'] ?? [];
 
-        return new WpDataManagerFactory($namespaces, $managers);
+        return new DataManager($namespaces, $managers);
     }
 }

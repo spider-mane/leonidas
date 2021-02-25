@@ -7,5 +7,5 @@ interface IconResolverInterface
     /**
      * @return string The icon uri
      */
-    public function getIcon(): string;
+    public function get(): string;
 }

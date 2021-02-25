@@ -9,9 +9,10 @@ use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
+use WebTheoryLeonidasPluginBaseClass;
 use WebTheory\Leonidas\Admin\Loaders\AdminNoticeLoader;
 
-class Leonidas extends \WebTheoryLeonidasPluginBaseClass
+class Leonidas extends WebTheoryLeonidasPluginBaseClass
 {
     /**
      * @var Container
@@ -60,14 +61,6 @@ class Leonidas extends \WebTheoryLeonidasPluginBaseClass
     protected static function hook()
     {
         add_action('admin_enqueue_scripts', [static::class, 'enqueue']);
-    }
-
-    /**
-     *
-     */
-    protected static function initiateLoaders()
-    {
-        AdminNoticeLoader::hook();
     }
 
     /**
@@ -129,6 +122,20 @@ class Leonidas extends \WebTheoryLeonidasPluginBaseClass
             }
 
             return $twig;
+        };
+    }
+
+    /**
+     *
+     */
+    protected static function bindAdminNoticeLoader(PimpleContainer $container)
+    {
+        $container['notice_loader'] = function ($plugin) {
+
+            $loader = new AdminNoticeLoader('leonidas.adminNotices');
+            $loader->hook();
+
+            return $loader;
         };
     }
 }

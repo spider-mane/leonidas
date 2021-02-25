@@ -52,7 +52,12 @@ class TermFieldFormSubmissionManager extends AbstractWpAdminFormSubmissionManage
     {
         foreach ($this->actions as $event => $enabled) {
             if ($enabled) {
-                add_action("{$event}_{$this->taxonomy->name}", [$this, 'processTermFields'], null, PHP_INT_MAX);
+                add_action(
+                    "{$event}_{$this->taxonomy->name}",
+                    [$this, 'processTermFields'],
+                    null,
+                    PHP_INT_MAX
+                );
             }
         }
 

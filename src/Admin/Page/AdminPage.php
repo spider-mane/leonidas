@@ -457,7 +457,7 @@ class AdminPage
             $this->capability,
             $this->menuSlug,
             [$this, 'renderPage'],
-            $this->icon->getIcon(),
+            $this->icon->get(),
             $this->position
         );
 
