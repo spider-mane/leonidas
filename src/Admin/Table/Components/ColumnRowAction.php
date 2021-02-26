@@ -1,8 +1,7 @@
 <?php
 
-namespace WebTheory\Leonidas\Admin;
+namespace WebTheory\Leonidas\Admin\Table;
 
-use GuzzleHttp\Psr7\ServerRequest;
 use Psr\Http\Message\ServerRequestInterface;
 use WebTheory\Html\Traits\ElementConstructorTrait;
 use WebTheory\Leonidas\Admin\Contracts\ColumnRowActionInterface;
@@ -12,16 +11,6 @@ class ColumnRowAction implements ColumnRowActionInterface
 {
     use ElementConstructorTrait;
     use CanBeRestrictedTrait;
-
-    /**
-     * @var string
-     */
-    protected $entity;
-
-    /**
-     * @var string
-     */
-    protected $action;
 
     /**
      * @var string
@@ -46,22 +35,10 @@ class ColumnRowAction implements ColumnRowActionInterface
     /**
      *
      */
-    public function __construct(string $entity, string $action, string $title, string $link)
+    public function __construct(string $title, string $link)
     {
-        $this->entity = $entity;
-        $this->action = $action;
         $this->title = $title;
         $this->link = $link;
-    }
-
-    /**
-     * Get the value of action
-     *
-     * @return string
-     */
-    public function getAction(): string
-    {
-        return $this->action;
     }
 
     /**
@@ -130,27 +107,6 @@ class ColumnRowAction implements ColumnRowActionInterface
         $this->attributes = $attributes;
 
         return $this;
-    }
-
-    /**
-     *
-     */
-    public function hook()
-    {
-        add_filter("{$this->entity}_row_actions", [$this, 'addRowAction'], null, 2);
-    }
-
-    /**
-     *
-     */
-    public function addRowAction($actions, $object)
-    {
-        $request = ServerRequest::fromGlobals()
-            ->withAttribute('object', $object);
-
-        $actions[$this->action] = $this->renderComponent($request);
-
-        return $actions;
     }
 
     /**
