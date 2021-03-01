@@ -3,12 +3,14 @@
 namespace WebTheory\Leonidas\Admin\Page;
 
 use GuzzleHttp\Psr7\ServerRequest;
+use Psr\Http\Message\ServerRequestInterface;
+use WebTheory\Leonidas\Admin\Contracts\AdminPageInterface;
 use WebTheory\Leonidas\Admin\Contracts\AdminPageLayoutInterface;
 use WebTheory\Leonidas\Admin\Contracts\AdminPageLoadErrorInterface;
 use WebTheory\Leonidas\Admin\Contracts\AdminTitleResolverInterface;
-use WebTheory\Leonidas\Admin\Contracts\IconResolverInterface;
 use WebTheory\Leonidas\Admin\Contracts\ParentFileResolverInterface;
 use WebTheory\Leonidas\Admin\Contracts\SubmenuFileResolverInterface;
+use WebTheory\Leonidas\Admin\Traits\CanBeRestrictedTrait;
 
 abstract class AbstractAdminPage
 {
@@ -33,17 +35,17 @@ abstract class AbstractAdminPage
     protected $capability = 'manage_options';
 
     /**
-     * @var IconResolverInterface
+     * @var null|string
      */
-    protected $icon;
+    protected $iconUrl;
 
     /**
-     * @var int
+     * @var null|int
      */
     protected $position;
 
     /**
-     * @var string
+     * @var null|string
      */
     protected $parentSlug;
 
@@ -65,11 +67,6 @@ abstract class AbstractAdminPage
     protected $layout;
 
     /**
-     * @var AdminPageLoadErrorInterface
-     */
-    protected $errorPage;
-
-    /**
      * @see https://developer.wordpress.org/reference/hooks/admin_title/
      *
      * @var null|AdminTitleResolverInterface
@@ -77,25 +74,11 @@ abstract class AbstractAdminPage
     protected $adminTitleResolver;
 
     /**
-     * @see https://developer.wordpress.org/reference/hooks/submenu_file/
-     *
-     * @var null|SubmenuFileResolverInterface
-     */
-    protected $submenuFileResolver;
-
-    /**
-     * @see https://developer.wordpress.org/reference/hooks/parent_file/
-     *
-     * @var null|ParentFileResolverInterface
-     */
-    protected $parentFileResolver;
-
-    /**
      * Get capability
      *
-     * @return  array
+     * @return  string
      */
-    public function getCapability()
+    public function getCapability(): string
     {
         return $this->capability;
     }
@@ -105,7 +88,7 @@ abstract class AbstractAdminPage
      *
      * @return  string
      */
-    public function getMenuSlug()
+    public function getMenuSlug(): string
     {
         return $this->menuSlug;
     }
@@ -115,7 +98,7 @@ abstract class AbstractAdminPage
      *
      * @return  string
      */
-    public function getPageTitle()
+    public function getPageTitle(): string
     {
         return $this->pageTitle;
     }
@@ -139,7 +122,7 @@ abstract class AbstractAdminPage
      *
      * @return  string
      */
-    public function getMenuTitle()
+    public function getMenuTitle(): string
     {
         return $this->menuTitle;
     }
@@ -209,23 +192,23 @@ abstract class AbstractAdminPage
     /**
      * Get icon
      *
-     * @return IconResolverInterface
+     * @return string
      */
-    public function getIcon(): IconResolverInterface
+    public function getIconUrl(): string
     {
-        return $this->icon;
+        return $this->iconUrl;
     }
 
     /**
      * Set icon
      *
-     * @param IconResolverInterface $icon icon
+     * @param string $iconUrl icon
      *
      * @return self
      */
-    public function setIcon(IconResolverInterface $icon)
+    public function setIconUrl(string $iconUrl)
     {
-        $this->icon = $icon;
+        $this->iconUrl = $iconUrl;
 
         return $this;
     }
@@ -255,30 +238,6 @@ abstract class AbstractAdminPage
     }
 
     /**
-     * Get the name that will be shown it the page has submenu items
-     *
-     * @return string
-     */
-    public function getSubMenuName(): string
-    {
-        return $this->subMenuName;
-    }
-
-    /**
-     * Set the name that will be shown it the page has submenu items
-     *
-     * @param string $subMenuName
-     *
-     * @return self
-     */
-    public function setSubMenuName(string $subMenuName)
-    {
-        $this->subMenuName = $subMenuName;
-
-        return $this;
-    }
-
-    /**
      * Get the value of layout
      *
      * @return AdminPageLayoutInterface
@@ -286,30 +245,6 @@ abstract class AbstractAdminPage
     public function getLayout(): AdminPageLayoutInterface
     {
         return $this->layout;
-    }
-
-    /**
-     * Get the value of errorPage
-     *
-     * @return AdminPageLoadErrorInterface
-     */
-    public function getErrorPage(): AdminPageLoadErrorInterface
-    {
-        return $this->errorPage;
-    }
-
-    /**
-     * Set the value of errorPage
-     *
-     * @param AdminPageLoadErrorInterface $errorPage
-     *
-     * @return self
-     */
-    public function setErrorPage(AdminPageLoadErrorInterface $errorPage)
-    {
-        $this->errorPage = $errorPage;
-
-        return $this;
     }
 
     /**
@@ -336,213 +271,13 @@ abstract class AbstractAdminPage
         return $this;
     }
 
-    /**
-     * Get the value of submenuFileResolver
-     *
-     * @return null|SubmenuFileResolverInterface
-     */
-    public function getSubmenuFileResolver(): ?SubmenuFileResolverInterface
+    public function renderComponent(ServerRequestInterface $request): string
     {
-        return $this->submenuFileResolver;
+        return $this->getLayout()->renderComponent($request);
     }
 
-    /**
-     * Set the value of submenuFileResolver
-     *
-     * @param SubmenuFileResolverInterface $submenuFileResolver
-     *
-     * @return self
-     */
-    public function setSubmenuFileResolver(SubmenuFileResolverInterface $submenuFileResolver)
+    public function defineAdminTitle(string $adminTitle, string $title): string
     {
-        $this->submenuFileResolver = $submenuFileResolver;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of parentFileResolver
-     *
-     * @return null|ParentFileResolverInterface
-     */
-    public function getParentFileResolver(): ?ParentFileResolverInterface
-    {
-        return $this->parentFileResolver;
-    }
-
-    /**
-     * Set the value of parentFileResolver
-     *
-     * @param ParentFileResolverInterface $parentFileResolver
-     *
-     * @return self
-     */
-    public function setParentFileResolver(ParentFileResolverInterface $parentFileResolver)
-    {
-        $this->parentFileResolver = $parentFileResolver;
-
-        return $this;
-    }
-
-    /**
-     *
-     */
-    public function hook()
-    {
-        add_action('admin_menu', [$this, 'register']);
-
-        return $this;
-    }
-
-    /**
-     *
-     */
-    public function register()
-    {
-        if (isset($this->parentSlug)) {
-            $this->addSubmenuPage()->configurePage('submenu');
-        } else {
-            $this->addMenuPage()->configurePage('menu');
-        }
-
-        return $this;
-    }
-
-    /**
-     *
-     */
-    protected function addSubmenuPage()
-    {
-        add_submenu_page(
-            htmlspecialchars($this->parentSlug),
-            $this->pageTitle,
-            $this->menuTitle,
-            $this->capability,
-            htmlspecialchars($this->menuSlug),
-            [$this, 'renderPage']
-        );
-
-        return $this;
-    }
-
-    /**
-     *
-     */
-    protected function addMenuPage()
-    {
-        add_menu_page(
-            $this->pageTitle,
-            $this->menuTitle,
-            $this->capability,
-            htmlspecialchars($this->menuSlug),
-            [$this, 'renderPage'],
-            $this->icon->get(),
-            $this->position
-        );
-
-        return $this;
-    }
-
-    /**
-     *
-     */
-    protected function configurePage(string $level)
-    {
-        if (false === $this->showInMenu) {
-            ([$this, "remove{$level}page"])();
-        }
-
-        if (isset($this->adminTitleResolver)) {
-            add_filter('admin_title', [$this, 'resolveParentFile'], null, PHP_INT_MAX);
-        }
-
-        ([$this, "configure{$level}page"])();
-
-        return $this;
-    }
-
-    /**
-     *
-     */
-    protected function configureMenuPage()
-    {
-        return $this;
-    }
-
-    /**
-     *
-     */
-    protected function configureSubmenuPage()
-    {
-        if (isset($this->submenuFileResolver)) {
-            add_filter('submenu_file', [$this, 'resolveSubmenuFile'], null, PHP_INT_MAX);
-        }
-
-        if (isset($this->parentFileResolver)) {
-            add_filter('parent_file', [$this, 'resolveParentFile'], null, PHP_INT_MAX);
-        }
-
-        return $this;
-    }
-
-    /**
-     *
-     */
-    protected function removeMenuPage()
-    {
-        remove_menu_page($this->menuSlug);
-
-        return $this;
-    }
-
-    /**
-     *
-     */
-    protected function removeSubmenuPage()
-    {
-        remove_submenu_page($this->parentSlug, $this->menuSlug);
-
-        return $this;
-    }
-
-    /**
-     *
-     */
-    public function resolveAdminTitle(string $adminTitle, string $title)
-    {
-        return $this->adminTitleResolver->resolveAdminTitle($adminTitle, $title);
-    }
-
-    /**
-     *
-     */
-    public function resolveSubmenuFile(string $submenuFile, string $parentFile)
-    {
-        return $this->submenuFileResolver->resolveSubmenuFile($submenuFile, $parentFile);
-    }
-
-    /**
-     *
-     */
-    public function resolveParentFile(string $parentFile)
-    {
-        return $this->parentFileResolver->resolveParentFile($parentFile);
-    }
-
-    /**
-     *
-     */
-    public function renderPage(array $args)
-    {
-        $this->layout->setTitle($this->pageTitle);
-
-        $request = ServerRequest::fromGlobals()
-            ->withAttribute('args', $args);
-
-        if ($this->layout->shouldBeRendered($request)) {
-            echo $this->layout->renderComponent($request);
-        } else {
-            echo $this->errorPage->renderComponent($request);
-        }
+        return $this->getAdminTitleResolver()->resolveAdminTitle($adminTitle, $title);
     }
 }

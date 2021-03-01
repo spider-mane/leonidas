@@ -6,7 +6,7 @@ use GuzzleHttp\Psr7\ServerRequest;
 use WebTheory\Leonidas\Admin\Contracts\AdminPageLayoutInterface;
 use WebTheory\Saveyour\Contracts\FormSubmissionManagerInterface;
 
-class AdminPage extends AbstractAdminPage
+class SelfLoadingAdminPage extends AbstractSelfLoadingAdminPage
 {
     /**
      * @var null|FormSubmissionManagerInterface

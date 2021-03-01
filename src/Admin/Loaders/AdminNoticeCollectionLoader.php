@@ -3,10 +3,11 @@
 namespace WebTheory\Leonidas\Admin\Loaders;
 
 use GuzzleHttp\Psr7\ServerRequest;
+use WebTheory\Leonidas\Admin\Contracts\AdminNoticeCollectionLoaderInterface;
 use WebTheory\Leonidas\Admin\Contracts\AdminNoticeInterface;
 use WebTheory\Leonidas\Admin\Contracts\ComponentLoaderInterface;
 
-class AdminNoticeLoader implements ComponentLoaderInterface
+class AdminNoticeCollectionLoader implements AdminNoticeCollectionLoaderInterface
 {
     /**
      * @var AdminNoticeInterface[]
@@ -26,9 +27,10 @@ class AdminNoticeLoader implements ComponentLoaderInterface
     /**
      *
      */
-    public function __construct(string $cacheKey)
+    public function __construct(string $cacheKey, AdminNoticeInterface ...$notices)
     {
         $this->cacheKey = $cacheKey;
+        $this->notices = $notices;
     }
 
     /**
@@ -86,8 +88,21 @@ class AdminNoticeLoader implements ComponentLoaderInterface
      */
     public function hook()
     {
+        $this->targetAdminNoticesHook()->targetWpRedirectHook();
+
+        return $this;
+    }
+
+    protected function targetAdminNoticesHook(): AdminNoticeCollectionLoader
+    {
         add_action('admin_notices', $this->getRenderNoticesCallback());
-        add_action('wp_redirect', $this->getCacheNoticesCallback()); //! FILTER HOOK! first argument must be returned by callback
+
+        return $this;
+    }
+
+    protected function targetWpRedirectHook(): AdminNoticeCollectionLoader
+    {
+        add_filter('wp_redirect', $this->getCacheNoticesCallback()); //! FILTER HOOK! first argument must be returned by callback
 
         return $this;
     }

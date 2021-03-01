@@ -1,6 +1,6 @@
 <?php
 
-namespace WebTheory\Leonidas\Admin\MetaBox\Components;
+namespace WebTheory\Leonidas\Admin\Metabox\Components;
 
 use Psr\Http\Message\ServerRequestInterface;
 use WebTheory\Leonidas\Admin\Contracts\MetaboxComponentInterface;

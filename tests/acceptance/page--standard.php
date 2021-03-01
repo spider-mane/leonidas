@@ -3,9 +3,9 @@
 use Respect\Validation\Validator as v;
 use WebTheory\GuctilityBelt\SelectOptions\UsStatesAndTerritories;
 use WebTheory\Leonidas\Admin\Page\SettingsField;
-use WebTheory\Leonidas\Admin\Page\SettingsPage;
+use WebTheory\Leonidas\Admin\Page\SelfLoadingSettingsPage;
 use WebTheory\Leonidas\Admin\Page\SettingsSection;
-use WebTheory\Leonidas\Admin\SettingManager;
+use WebTheory\Leonidas\Admin\Processing\SettingManager;
 use WebTheory\Saveyour\Fields\Email;
 use WebTheory\Saveyour\Fields\Select;
 use WebTheory\Saveyour\Fields\Tel;
@@ -16,10 +16,10 @@ $group1 = 'ba-test';
 /**
  * add page
  */
-$page1 = (new SettingsPage('company_info', $group1))
+$page1 = (new SelfLoadingSettingsPage('company_info', $group1))
     ->setMenuTitle('Company')
     ->setPageTitle('Company Info')
-    ->setIcon('dashicons-store')
+    ->setIconUrl('dashicons-store')
     ->setShowInMenu(true)
     ->setDescription('this is a test page')
     ->setPosition(100)

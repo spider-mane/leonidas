@@ -4,9 +4,9 @@ use GuzzleHttp\Psr7\Request as Psr7Request;
 use GuzzleHttp\Psr7\ServerRequest;
 use Respect\Validation\Validator;
 use WebTheory\Leonidas\Admin\Fields\Managers\PostMetaFieldManager;
-use WebTheory\Leonidas\Admin\Forms\Controllers\PostMetaBoxFormSubmissionManager;
+use WebTheory\Leonidas\Admin\Forms\Controllers\PostMetaboxFormSubmissionManager;
 use WebTheory\Leonidas\Admin\Metabox\Components\Fieldset;
-use WebTheory\Leonidas\Admin\Metabox\Metabox;
+use WebTheory\Leonidas\Admin\Metabox\AutoLoadingMetabox;
 use WebTheory\Leonidas\Core\Auth\Nonce;
 use WebTheory\Leonidas\Core\Helpers\SkyHooks;
 use WebTheory\Saveyour\Controllers\FormFieldController;
@@ -57,7 +57,7 @@ $email->addRule('email', Validator::optional(Validator::email()), 'Enter Valid E
 /**
  *
  */
-$formController = (new PostMetaBoxFormSubmissionManager($postType))
+$formController = (new PostMetaboxFormSubmissionManager($postType))
     ->setFields($phone, $fax, $email)
     ->setNonce($nonce)
     ->hook();
@@ -88,7 +88,7 @@ $contactInfo->addFields([
 
 
 //
-$metabox = (new Metabox('fieldset-test', 'Fieldset Test', $postType))
+$metabox = (new AutoLoadingMetabox('fieldset-test', 'Fieldset Test', $postType))
     ->setNonce($nonce)
     ->addContent('contact_info', $contactInfo)
     ->hook();

@@ -4,11 +4,11 @@ use Respect\Validation\Validator;
 use WebTheory\Leonidas\Admin\Constrainers\PostConstrainer;
 use WebTheory\Leonidas\Admin\Fields\Managers\PostMetaFieldManager;
 use WebTheory\Leonidas\Admin\Fields\WpAdminField;
-use WebTheory\Leonidas\Admin\Forms\Controllers\PostMetaBoxFormSubmissionManager;
+use WebTheory\Leonidas\Admin\Forms\Controllers\PostMetaboxFormSubmissionManager;
 use WebTheory\Leonidas\Admin\Metabox\Components\Field;
 use WebTheory\Leonidas\Admin\Metabox\Components\Fieldset;
 use WebTheory\Leonidas\Admin\Metabox\Components\Section;
-use WebTheory\Leonidas\Admin\Metabox\Metabox;
+use WebTheory\Leonidas\Admin\Metabox\AutoLoadingMetabox;
 use WebTheory\Leonidas\Core\Auth\Nonce;
 use WebTheory\Leonidas\Core\Helpers\SkyHooks;
 use WebTheory\Saveyour\Controllers\FormFieldController;
@@ -63,7 +63,7 @@ $emailField = (new Field($email))
 $nonce = new Nonce('wts-metabox', 'save-post-fields');
 
 # submission manager
-$formController = (new PostMetaBoxFormSubmissionManager($postType))
+$formController = (new PostMetaboxFormSubmissionManager($postType))
     ->setFields($phone, $fax, $email)
     ->setNonce($nonce)
     ->hook();
@@ -75,7 +75,7 @@ $contactInfo = (new Section('Contact Information'))
     ->addContent('email', $emailField);
 
 # metabox
-$metabox = (new Metabox('section-test', 'Section Test', $postType))
+$metabox = (new AutoLoadingMetabox('section-test', 'Section Test', $postType))
     ->addContent('contact_info', $contactInfo)
     ->setNonce($nonce)
     ->hook();

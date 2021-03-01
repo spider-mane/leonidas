@@ -10,7 +10,7 @@ use Twig\Loader\FilesystemLoader;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
 use WebTheoryLeonidasPluginBaseClass;
-use WebTheory\Leonidas\Admin\Loaders\AdminNoticeLoader;
+use WebTheory\Leonidas\Admin\Loaders\AdminNoticeCollectionLoader;
 
 class Leonidas extends WebTheoryLeonidasPluginBaseClass
 {
@@ -132,7 +132,7 @@ class Leonidas extends WebTheoryLeonidasPluginBaseClass
     {
         $container['notice_loader'] = function ($plugin) {
 
-            $loader = new AdminNoticeLoader('leonidas.adminNotices');
+            $loader = new AdminNoticeCollectionLoader('leonidas.adminNotices');
             $loader->hook();
 
             return $loader;

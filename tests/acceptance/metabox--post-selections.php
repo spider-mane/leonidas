@@ -4,9 +4,9 @@ use WebTheory\Leonidas\Core\Auth\Nonce;
 use WebTheory\Leonidas\Admin\Fields\TermChecklist;
 use WebTheory\Leonidas\Admin\Fields\TermSelect2;
 use WebTheory\Leonidas\Admin\Fields\TermSelect;
-use WebTheory\Leonidas\Admin\Forms\Controllers\PostMetaBoxFormSubmissionManager;
+use WebTheory\Leonidas\Admin\Forms\Controllers\PostMetaboxFormSubmissionManager;
 use WebTheory\Leonidas\Admin\Metabox\Components\Field;
-use WebTheory\Leonidas\Admin\Metabox\Metabox;
+use WebTheory\Leonidas\Admin\Metabox\AutoLoadingMetabox;
 use WebTheory\Leonidas\Admin\Screen;
 
 Screen::load('post', ['post_type' => 'wts_test_cpt_2'], function () {
@@ -22,11 +22,11 @@ Screen::load('post', ['post_type' => 'wts_test_cpt_2'], function () {
 
     $nonce = new Nonce('selection-nonce', 'save-selection');
 
-    $metabox = (new Metabox('selections-metabox', 'Selections Tests', $postType))
+    $metabox = (new AutoLoadingMetabox('selections-metabox', 'Selections Tests', $postType))
         ->setNonce($nonce)
         ->hook();
 
-    $manager = (new PostMetaBoxFormSubmissionManager($postType))
+    $manager = (new PostMetaboxFormSubmissionManager($postType))
         ->setNonce($nonce)
         ->hook();
 

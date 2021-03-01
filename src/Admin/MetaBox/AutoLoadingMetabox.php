@@ -3,17 +3,11 @@
 namespace WebTheory\Leonidas\Admin\Metabox;
 
 use GuzzleHttp\Psr7\ServerRequest;
-use Psr\Http\Message\ServerRequestInterface;
 use WP_Post;
-use WebTheory\Leonidas\Admin\Contracts\MetaboxInterface;
 use WebTheory\Leonidas\Admin\Contracts\MetaboxLayoutInterface;
-use WebTheory\Leonidas\Admin\Traits\CanBeRestrictedTrait;
-use WebTheory\Leonidas\Admin\Traits\RendersWithViewTrait;
 
-class Metabox implements MetaboxInterface
+class AutoLoadingMetabox
 {
-    use CanBeRestrictedTrait;
-
     /**
      * id
      *
@@ -66,11 +60,11 @@ class Metabox implements MetaboxInterface
     /**
      *
      */
-    public function __construct(string $id, string $title, MetaboxLayoutInterface $layout)
+    public function __construct(string $id, string $title, $screen)
     {
         $this->id = $id;
         $this->title = $title;
-        $this->layout = $layout;
+        $this->screen = $screen;
     }
 
     /**
@@ -98,7 +92,7 @@ class Metabox implements MetaboxInterface
      *
      * @return string|string[]|WP_Screen
      */
-    public function getScreen(): string
+    public function getScreen()
     {
         return $this->screen;
     }
@@ -176,17 +170,44 @@ class Metabox implements MetaboxInterface
     }
 
     /**
-     * Get layout
      *
-     * @return MetaboxLayoutInterface
      */
-    public function getLayout(): MetaboxLayoutInterface
+    public function hook()
     {
-        return $this->layout;
+        add_action("add_meta_boxes_{$this->screen}", [$this, 'register']);
+
+        return $this;
     }
 
-    public function renderComponent(ServerRequestInterface $request): string
+    /**
+     * Callback function to add metabox to admin ui
+     *
+     * @param $post
+     */
+    public function register()
     {
-        return $this->layout->renderComponent($request);
+        add_meta_box(
+            $this->id,
+            $this->title,
+            [$this, 'renderMetabox'],
+            $this->screen,
+            $this->context,
+            $this->priority,
+            $this->callbackArgs
+        );
+
+        return $this;
+    }
+
+    /**
+     *
+     */
+    public function renderMetabox(WP_Post $post, array $args)
+    {
+        $request = ServerRequest::fromGlobals()
+            ->withAttribute('post', $post)
+            ->withAttribute('args', $args);
+
+        echo $this->layout->renderComponent($request);
     }
 }

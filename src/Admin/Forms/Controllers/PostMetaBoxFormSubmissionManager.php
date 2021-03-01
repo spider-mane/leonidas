@@ -10,7 +10,7 @@ use WebTheory\Leonidas\Admin\Forms\Validators\Permissions\EditPost;
 use WebTheory\Leonidas\Admin\Forms\Validators\WpNonceValidator;
 use WebTheory\Leonidas\Core\Traits\HasNonceTrait;
 
-class PostMetaBoxFormSubmissionManager extends AbstractWpAdminFormSubmissionManager
+class PostMetaboxFormSubmissionManager extends AbstractWpAdminFormSubmissionManager
 {
     use HasNonceTrait;
 

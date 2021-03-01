@@ -3,16 +3,17 @@
 namespace WebTheory\Leonidas\Admin\Forms\Controllers;
 
 use Psr\Http\Message\ServerRequestInterface;
+use WebTheory\Leonidas\Admin\Contracts\AdminNoticeCollectionLoaderInterface;
 use WebTheory\Leonidas\Admin\Contracts\AdminNoticeInterface;
-use WebTheory\Leonidas\Admin\Loaders\AdminNoticeLoader;
-use WebTheory\Leonidas\Admin\Notices\StandardAdminNotice;
+use WebTheory\Leonidas\Admin\Loaders\AdminNoticeCollectionLoader;
+use WebTheory\Leonidas\Admin\Notices\Components\StandardAdminNotice;
 use WebTheory\Saveyour\Controllers\FormProcessingCache;
 use WebTheory\Saveyour\Controllers\FormSubmissionManager;
 
 abstract class AbstractWpAdminFormSubmissionManager extends FormSubmissionManager
 {
     /**
-     * @var AdminNoticeLoader
+     * @var AdminNoticeCollectionLoaderInterface
      */
     protected $adminNoticeLoader;
 
@@ -27,7 +28,7 @@ abstract class AbstractWpAdminFormSubmissionManager extends FormSubmissionManage
     /**
      *
      */
-    public function __construct(AdminNoticeLoader $adminNoticeLoader)
+    public function __construct(AdminNoticeCollectionLoaderInterface $adminNoticeLoader)
     {
         $this->adminNoticeLoader = $adminNoticeLoader;
     }

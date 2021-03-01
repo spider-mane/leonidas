@@ -3,6 +3,7 @@
 namespace WebTheory\Leonidas;
 
 use Psr\Container\ContainerInterface;
+use WebTheory\Leonidas\Framework\WpExtension;
 
 class ExtensionBuilder
 {

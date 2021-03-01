@@ -2,9 +2,9 @@
 
 use WebTheory\Leonidas\Core\Auth\Nonce;
 use WebTheory\Leonidas\Admin\Fields\Managers\PostMetaFieldManager;
-use WebTheory\Leonidas\Admin\Forms\Controllers\PostMetaBoxFormSubmissionManager;
+use WebTheory\Leonidas\Admin\Forms\Controllers\PostMetaboxFormSubmissionManager;
 use WebTheory\Leonidas\Admin\Metabox\Components\FieldGrid;
-use WebTheory\Leonidas\Admin\Metabox\Metabox;
+use WebTheory\Leonidas\Admin\Metabox\AutoLoadingMetabox;
 use WebTheory\Leonidas\Admin\Metabox\Components\Section;
 use WebTheory\Saveyour\Controllers\FormFieldController;
 use WebTheory\Saveyour\Fields\Time;
@@ -14,11 +14,11 @@ use WebTheory\Saveyour\Fields\Time;
 $postType = 'wts_test_cpt_2';
 $nonce = new Nonce('wts-metabox', 'edit_' . $postType);
 
-$metabox = (new Metabox('wts_hours', 'Hours', $postType))
+$metabox = (new AutoLoadingMetabox('wts_hours', 'Hours', $postType))
     ->setNonce($nonce)
     ->hook();
 
-$formController = (new PostMetaBoxFormSubmissionManager($postType))
+$formController = (new PostMetaboxFormSubmissionManager($postType))
     ->setNonce($nonce)
     ->hook();
 
@@ -64,7 +64,7 @@ foreach ($days as $day) {
         /**
          * populate form submission manager with each field
          *
-         *  @var PostMetaBoxFormSubmissionManager $formController
+         *  @var PostMetaboxFormSubmissionManager $formController
          */
         $formController->addField($field);
 

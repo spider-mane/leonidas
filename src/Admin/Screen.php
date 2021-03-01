@@ -76,7 +76,7 @@ class Screen
             }
         }
 
-        call_user_func($this->callback, $screen);
+        ($this->callback)($screen);
     }
 
     /**
@@ -88,6 +88,6 @@ class Screen
             return;
         }
 
-        call_user_func($this->callback);
+        ($this->callback)();
     }
 }

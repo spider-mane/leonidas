@@ -5,64 +5,24 @@ namespace WebTheory\Leonidas\Admin\Loaders;
 use GuzzleHttp\Psr7\ServerRequest;
 use WP_Post;
 use WebTheory\Leonidas\Admin\Contracts\ComponentLoaderInterface;
-use WebTheory\Leonidas\Admin\Contracts\MetaBoxInterface;
+use WebTheory\Leonidas\Admin\Contracts\MetaboxInterface;
 use WebTheory\Leonidas\Core\Traits\HasNonceTrait;
 
-class MetaBoxLoader implements ComponentLoaderInterface
+class MetaboxLoader implements ComponentLoaderInterface
 {
     use HasNonceTrait;
 
     /**
-     * screen
-     *
-     * @var string
+     * @var MetaboxInterface
      */
-    protected $screen;
-
-    /**
-     * metaBoxes
-     *
-     * @var MetaBoxInterface[]
-     */
-    protected $metaBoxes = [];
+    protected $metabox;
 
     /**
      *
      */
-    public const ARG_KEY = 'leonidas.metabox';
-
-    /**
-     *
-     */
-    public function __construct(string $screen)
+    public function __construct(MetaboxInterface $metabox)
     {
-        $this->screen = $screen;
-    }
-
-    /**
-     * Get screen
-     *
-     * @return string|array
-     */
-    public function getScreen()
-    {
-        return $this->screen;
-    }
-
-    /**
-     * @var MetaBoxInterface[]
-     */
-    public function getMetaBoxes(): array
-    {
-        return $this->metaBoxes;
-    }
-
-    /**
-     *
-     */
-    public function addMetaBox(MetaBoxInterface $metabox)
-    {
-        $this->metaBoxes[$metabox->getId()] = $metabox;
+        $this->metabox = $metabox;
     }
 
     /**
@@ -70,7 +30,16 @@ class MetaBoxLoader implements ComponentLoaderInterface
      */
     public function hook()
     {
-        add_action("add_meta_boxes", [$this, 'registerMetaBoxes']);
+        $this->targetAddMetaboxesHook();
+
+        return $this;
+    }
+
+    protected function targetAddMetaboxesHook()
+    {
+        $postType = $this->metabox->getScreen();
+
+        add_action("add_meta_boxes_{$postType}", [$this, 'registerMetabox'], null, PHP_INT_MAX);
 
         return $this;
     }
@@ -80,40 +49,33 @@ class MetaBoxLoader implements ComponentLoaderInterface
      *
      * @param $post
      */
-    public function registerMetaBoxes()
+    public function registerMetabox(WP_Post $post): void
     {
-        foreach ($this->metaBoxes as $metaBox) {
+        $request = ServerRequest::fromGlobals()
+            ->withAttribute('post', $post);
+
+        if ($this->metabox->shouldBeRendered($request)) {
             add_meta_box(
-                $metaBox->getId(),
-                $metaBox->getTitle(),
+                $this->metabox->getId(),
+                $this->metabox->getTitle(),
                 [$this, 'renderMetabox'],
-                $metaBox->getScreen(),
-                $metaBox->getContext(),
-                $metaBox->getPriority(),
-                $metaBox->getCallBackArgs() + [static::ARG_KEY => $metaBox]
+                $this->metabox->getScreen(),
+                $this->metabox->getContext(),
+                $this->metabox->getPriority(),
+                $this->metabox->getCallBackArgs()
             );
         }
-
-        return $this;
     }
 
     /**
      * @param WP_Post $post
      */
-    public function renderMetabox($post, $postId, $metabox)
+    public function renderMetabox(WP_Post $post, array $args): void
     {
-        /** @var MetaBoxInterface $metabox */
-        $metabox = $this->metaBoxes[$metabox[static::ARG_KEY]] ?? null;
         $request = ServerRequest::fromGlobals()
             ->withAttribute('post', $post)
-            ->withAttribute('post_id', $postId);
+            ->withAttribute('args', $args);
 
-        if (
-            $metabox
-            && $metabox->getScreen() === $post->post_type
-            && $metabox->shouldBeRendered($request)
-        ) {
-            echo $metabox->renderComponent($request);
-        }
+        echo $this->metabox->renderComponent($request);
     }
 }
