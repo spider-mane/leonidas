@@ -59,19 +59,7 @@ class Status
      */
     public function setOptions(array $options)
     {
-        $tag = Html::tag('span', ['class' => 'count'], '(%s)');
-        $title = ucfirst($this->name);
-
-        $this->options = $options + [
-            'label' => _x($title, 'post'),
-            'public' => true,
-            'exclude_from_search' => false,
-            'show_in_admin_all_list' => true,
-            'show_in_admin_status_list' => true,
-            'post_type' => array('post', 'movie'),
-            'publish_text' => __('Apply Changes'),
-            'label_count' => _n_noop("{$title} {$tag}", "{$title} {$tag}"),
-        ];
+        $this->options = $options + $this->getDefaultOptions();
 
         return $this;
     }
@@ -100,6 +88,23 @@ class Status
     public function getOptionValue($option)
     {
         return $this->options[$option];
+    }
+
+    protected function getDefaultOptions(): array
+    {
+        $tag = Html::tag('span', ['class' => 'count'], '(%s)');
+        $title = ucfirst($this->name);
+
+        return [
+            'label' => _x($title, 'post'),
+            'public' => true,
+            'exclude_from_search' => false,
+            'show_in_admin_all_list' => true,
+            'show_in_admin_status_list' => true,
+            'post_type' => array('post', 'movie'),
+            'publish_text' => __('Apply Changes'),
+            'label_count' => _n_noop("{$title} {$tag}", "{$title} {$tag}"),
+        ];
     }
 
     /**

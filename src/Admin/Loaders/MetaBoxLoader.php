@@ -3,6 +3,7 @@
 namespace WebTheory\Leonidas\Admin\Loaders;
 
 use GuzzleHttp\Psr7\ServerRequest;
+use Psr\Http\Message\ServerRequestInterface;
 use WP_Post;
 use WebTheory\Leonidas\Admin\Contracts\ComponentLoaderInterface;
 use WebTheory\Leonidas\Admin\Contracts\MetaboxInterface;
@@ -28,14 +29,14 @@ class MetaboxLoader implements ComponentLoaderInterface
     /**
      *
      */
-    public function hook()
+    public function hook(): MetaboxLoader
     {
         $this->targetAddMetaboxesHook();
 
         return $this;
     }
 
-    protected function targetAddMetaboxesHook()
+    protected function targetAddMetaboxesHook(): MetaboxLoader
     {
         $postType = $this->metabox->getScreen();
 
@@ -51,18 +52,19 @@ class MetaboxLoader implements ComponentLoaderInterface
      */
     public function registerMetabox(WP_Post $post): void
     {
-        $request = ServerRequest::fromGlobals()
+        $metabox = $this->metabox;
+        $request = $this->getServerRequest()
             ->withAttribute('post', $post);
 
-        if ($this->metabox->shouldBeRendered($request)) {
+        if ($metabox->shouldBeRendered($request)) {
             add_meta_box(
-                $this->metabox->getId(),
-                $this->metabox->getTitle(),
+                $metabox->getId(),
+                $metabox->getTitle(),
                 [$this, 'renderMetabox'],
-                $this->metabox->getScreen(),
-                $this->metabox->getContext(),
-                $this->metabox->getPriority(),
-                $this->metabox->getCallBackArgs()
+                $metabox->getScreen(),
+                $metabox->getContext(),
+                $metabox->getPriority(),
+                $metabox->getCallBackArgs()
             );
         }
     }
@@ -70,12 +72,17 @@ class MetaboxLoader implements ComponentLoaderInterface
     /**
      * @param WP_Post $post
      */
-    public function renderMetabox(WP_Post $post, array $args): void
+    public function renderMetabox(WP_Post $post, array $metabox): void
     {
-        $request = ServerRequest::fromGlobals()
+        $request = $this->getServerRequest()
             ->withAttribute('post', $post)
-            ->withAttribute('args', $args);
+            ->withAttribute('metabox', $metabox);
 
         echo $this->metabox->renderComponent($request);
+    }
+
+    protected function getServerRequest(): ServerRequestInterface
+    {
+        return ServerRequest::fromGlobals();
     }
 }

@@ -4,7 +4,7 @@ namespace WebTheory\Leonidas\Admin;
 
 use Psr\Http\Message\ServerRequestInterface;
 
-class AbstractAdminComponentCallback
+class AbstractLazyAdminComponent
 {
     /**
      * @var callable

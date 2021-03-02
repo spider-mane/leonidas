@@ -52,7 +52,7 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "WebTheory\\Leonidas\\Tests\\": "tests/unit"
+      "Tests\\": "tests/unit/"
     },
     "files": [
       "tests/acceptance/start.php"

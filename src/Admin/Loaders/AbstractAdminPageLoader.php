@@ -3,6 +3,7 @@
 namespace WebTheory\Leonidas\Admin\Loaders;
 
 use GuzzleHttp\Psr7\ServerRequest;
+use Psr\Http\Message\ServerRequestInterface;
 use WebTheory\Leonidas\Admin\Contracts\AdminPageInterface;
 use WebTheory\Leonidas\Admin\Contracts\AdminPageLoadErrorInterface;
 
@@ -21,7 +22,7 @@ abstract class AbstractAdminPageLoader
     /**
      *
      */
-    public function hook()
+    public function hook(): AbstractAdminPageLoader
     {
         $this->targetAdminMenuHook();
 
@@ -31,7 +32,7 @@ abstract class AbstractAdminPageLoader
     /**
      *
      */
-    protected function targetAdminMenuHook()
+    protected function targetAdminMenuHook(): AbstractAdminPageLoader
     {
         add_action('admin_menu', [$this, 'register']);
 
@@ -41,7 +42,7 @@ abstract class AbstractAdminPageLoader
     /**
      *
      */
-    protected function targetAdminTitleHook()
+    protected function targetAdminTitleHook(): AbstractAdminPageLoader
     {
         add_filter('admin_title', [$this, 'resolveAdminTitle'], null, PHP_INT_MAX);
 
@@ -51,7 +52,7 @@ abstract class AbstractAdminPageLoader
     /**
      *
      */
-    public function register()
+    public function register(): AbstractAdminPageLoader
     {
         $this->addPage()->configurePage();
 
@@ -83,9 +84,9 @@ abstract class AbstractAdminPageLoader
     /**
      *
      */
-    public function renderPage(array $args)
+    public function renderPage(array $args): void
     {
-        $request = ServerRequest::fromGlobals()
+        $request = $this->getServerRequest()
             ->withAttribute('args', $args);
 
         if ($this->adminPage->shouldBeRendered($request)) {
@@ -93,6 +94,11 @@ abstract class AbstractAdminPageLoader
         } else {
             echo $this->errorPage->renderComponent($request);
         }
+    }
+
+    protected function getServerRequest(): ServerRequestInterface
+    {
+        return ServerRequest::fromGlobals();
     }
 
     abstract protected function addPage(): AbstractAdminPageLoader;

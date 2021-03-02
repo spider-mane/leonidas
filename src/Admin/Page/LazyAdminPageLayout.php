@@ -3,11 +3,11 @@
 namespace WebTheory\Leonidas\Admin\Page;
 
 use Psr\Http\Message\ServerRequestInterface;
-use WebTheory\Leonidas\Admin\AbstractAdminComponentCallback;
+use WebTheory\Leonidas\Admin\AbstractLazyAdminComponent;
 use WebTheory\Leonidas\Admin\Contracts\AdminPageLayoutInterface;
 use WebTheory\Leonidas\Admin\Traits\CanBeRestrictedTrait;
 
-class AdminPageLayoutCallback extends AbstractAdminComponentCallback implements AdminPageLayoutInterface
+class LazyAdminPageLayout extends AbstractLazyAdminComponent implements AdminPageLayoutInterface
 {
     use CanBeRestrictedTrait;
 }
