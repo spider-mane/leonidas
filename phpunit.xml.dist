@@ -12,8 +12,12 @@
   stopOnFailure="false">
 
   <testsuites>
-    <testsuite name="Webtheory Test Suite">
+    <testsuite name="leonidas">
       <directory>tests/unit</directory>
+    </testsuite>
+
+    <testsuite name="admin">
+      <directory>tests/unit/admin</directory>
     </testsuite>
   </testsuites>
 

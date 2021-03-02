@@ -21,12 +21,14 @@ class SubmenuPageLoader extends AbstractAdminPageLoader
 
     protected function addPage(): AbstractAdminPageLoader
     {
+        $page = $this->adminPage;
+
         add_submenu_page(
-            htmlspecialchars($this->adminPage->getParentSlug()),
-            $this->adminPage->getPageTitle(),
-            $this->adminPage->getMenuTitle(),
-            $this->adminPage->getCapability(),
-            htmlspecialchars($this->adminPage->getMenuSlug()),
+            htmlspecialchars($page->getParentSlug()),
+            $page->getPageTitle(),
+            $page->getMenuTitle(),
+            $page->getCapability(),
+            htmlspecialchars($page->getMenuSlug()),
             [$this, 'renderPage']
         );
 
