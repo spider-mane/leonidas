@@ -38,9 +38,9 @@ class Metabox implements MetaboxInterface
     /**
      * context
      *
-     * @var string
+     * @var null|string
      */
-    protected $context = 'normal';
+    protected $context = 'advanced';
 
     /**
      * priority
@@ -98,9 +98,23 @@ class Metabox implements MetaboxInterface
      *
      * @return string|string[]|WP_Screen
      */
-    public function getScreen(): string
+    public function getScreen()
     {
         return $this->screen;
+    }
+
+    /**
+     * Set screen
+     *
+     * @param string|string[]|WP_Screen $screen screen
+     *
+     * @return self
+     */
+    public function setScreen($screen)
+    {
+        $this->screen = $screen;
+
+        return $this;
     }
 
     /**

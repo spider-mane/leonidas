@@ -9,7 +9,7 @@ use WebTheory\Leonidas\Admin\Contracts\MetaboxCollectionLoaderInterFace;
 use WebTheory\Leonidas\Admin\Contracts\MetaboxInterface;
 use WebTheory\Leonidas\Core\Traits\HasNonceTrait;
 
-class MetaboxCollectionLoader implements MetaboxCollectionLoaderInterFace
+class PostMetaboxCollectionLoader implements MetaboxCollectionLoaderInterFace
 {
     use HasNonceTrait;
 
@@ -43,9 +43,9 @@ class MetaboxCollectionLoader implements MetaboxCollectionLoaderInterFace
     /**
      * Add metabox to the stored collection of metaboxes to be loaded.
      * @param MetaboxInterface $metabox
-     * @return MetaboxCollectionLoader
+     * @return PostMetaboxCollectionLoader
      */
-    public function addMetabox(MetaboxInterface $metabox): MetaboxCollectionLoader
+    public function addMetabox(MetaboxInterface $metabox): PostMetaboxCollectionLoader
     {
         $this->metaboxes[$metabox->getId()] = $metabox;
 
@@ -55,7 +55,7 @@ class MetaboxCollectionLoader implements MetaboxCollectionLoaderInterFace
     /**
      * {@inheritDoc}
      */
-    public function hook(): MetaboxCollectionLoader
+    public function hook(): PostMetaboxCollectionLoader
     {
         $this->targetAddMetaboxesHook();
 
@@ -65,7 +65,7 @@ class MetaboxCollectionLoader implements MetaboxCollectionLoaderInterFace
     /**
      * Register callback function to register metaboxes in $metaboxes property.
      */
-    protected function targetAddMetaboxesHook(): MetaboxCollectionLoader
+    protected function targetAddMetaboxesHook(): PostMetaboxCollectionLoader
     {
         add_action("add_meta_boxes", [$this, 'registerMetaboxes'], null, PHP_INT_MAX);
 

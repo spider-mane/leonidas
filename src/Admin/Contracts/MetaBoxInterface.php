@@ -8,11 +8,11 @@ interface MetaboxInterface extends AdminComponentInterface
 
     public function getTitle(): string;
 
-    public function getScreen(): ?string;
+    public function getScreen();
 
     public function getContext(): string;
 
     public function getPriority(): string;
 
-    public function getCallBackArgs(): array;
+    public function getCallBackArgs(): ?array;
 }

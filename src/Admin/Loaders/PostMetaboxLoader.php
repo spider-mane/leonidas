@@ -9,7 +9,7 @@ use WebTheory\Leonidas\Admin\Contracts\ComponentLoaderInterface;
 use WebTheory\Leonidas\Admin\Contracts\MetaboxInterface;
 use WebTheory\Leonidas\Core\Traits\HasNonceTrait;
 
-class MetaboxLoader implements ComponentLoaderInterface
+class PostMetaboxLoader implements ComponentLoaderInterface
 {
     use HasNonceTrait;
 
@@ -27,20 +27,30 @@ class MetaboxLoader implements ComponentLoaderInterface
     }
 
     /**
+     * Get the value of metabox
+     *
+     * @return MetaboxInterface
+     */
+    public function getMetabox(): MetaboxInterface
+    {
+        return $this->metabox;
+    }
+
+    /**
      *
      */
-    public function hook(): MetaboxLoader
+    public function hook(): PostMetaboxLoader
     {
         $this->targetAddMetaboxesHook();
 
         return $this;
     }
 
-    protected function targetAddMetaboxesHook(): MetaboxLoader
+    protected function targetAddMetaboxesHook(): PostMetaboxLoader
     {
-        $postType = $this->metabox->getScreen();
+        $post = $this->metabox->getScreen();
 
-        add_action("add_meta_boxes_{$postType}", [$this, 'registerMetabox'], null, PHP_INT_MAX);
+        add_action("add_meta_boxes_{$post}", [$this, 'registerMetabox'], null, PHP_INT_MAX);
 
         return $this;
     }
@@ -48,11 +58,11 @@ class MetaboxLoader implements ComponentLoaderInterface
     /**
      * Callback function to add metabox to admin ui
      *
-     * @param $post
+     * @param WP_Post $post
      */
     public function registerMetabox(WP_Post $post): void
     {
-        $metabox = $this->metabox;
+        $metabox = $this->getMetabox();
         $request = $this->getServerRequest()
             ->withAttribute('post', $post);
 
@@ -69,20 +79,20 @@ class MetaboxLoader implements ComponentLoaderInterface
         }
     }
 
-    /**
-     * @param WP_Post $post
-     */
-    public function renderMetabox(WP_Post $post, array $metabox): void
-    {
-        $request = $this->getServerRequest()
-            ->withAttribute('post', $post)
-            ->withAttribute('metabox', $metabox);
-
-        echo $this->metabox->renderComponent($request);
-    }
-
     protected function getServerRequest(): ServerRequestInterface
     {
         return ServerRequest::fromGlobals();
+    }
+
+    /**
+     * @param WP_Post $object
+     */
+    public function renderMetabox(WP_Post $object, array $metabox): void
+    {
+        $request = $this->getServerRequest()
+            ->withAttribute('post', $object)
+            ->withAttribute('metabox', $metabox);
+
+        echo $this->getMetabox()->renderComponent($request);
     }
 }

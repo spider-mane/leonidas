@@ -1,32 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit bootstrap="vendor/autoload.php"
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/8.5/phpunit.xsd"
   backupGlobals="false"
   backupStaticAttributes="false"
+  beStrictAboutCoversAnnotation="true"
+  beStrictAboutOutputDuringTests="false"
+  beStrictAboutTodoAnnotatedTests="true"
+  bootstrap="vendor/autoload.php"
   colors="true"
-  verbose="true"
-  testdox="true"
   convertErrorsToExceptions="true"
   convertNoticesToExceptions="true"
   convertWarningsToExceptions="true"
+  executionOrder="depends,defects"
+  forceCoversAnnotation="false"
   processIsolation="false"
+  testdox="true"
+  verbose="true"
   stopOnFailure="false">
 
+  <!-- Testsuites -->
   <testsuites>
-    <testsuite name="leonidas">
+    <testsuite name="default">
       <directory>tests/unit</directory>
     </testsuite>
 
-    <testsuite name="admin">
+    <testsuite name="Admin">
       <directory>tests/unit/admin</directory>
+    </testsuite>
+
+    <testsuite name="Ui">
+      <directory>tests/unit/admin/ui</directory>
     </testsuite>
   </testsuites>
 
+  <!-- Filters -->
   <filter>
-    <whitelist>
+    <whitelist processUncoveredFilesFromWhitelist="true">
       <directory suffix=".php">src/</directory>
     </whitelist>
   </filter>
 
+  <!-- Logging -->
   <logging>
     <log type="junit"
       target="build/report.junit.xml"/>
