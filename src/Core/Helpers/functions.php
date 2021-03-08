@@ -5,20 +5,6 @@ namespace WebTheory\Leonidas\Core\Helpers;
 use function WebTheory\GuctilityBelt\sort_objects_array;
 
 /**
- * Returns the exact version string passed if SCRIPT_DEBUG is undefined or set
- * to false or unix timestamp if it's set to true. Useful to prevent browser
- * using cached scripts and stylesheets during development.
- *
- * @param string $version Actual version of the asset
- *
- * @return string|int
- */
-function deversion(string $version)
-{
-    return (defined('SCRIPT_DEBUG') && SCRIPT_DEBUG) ? time() : $version;
-}
-
-/**
  *
  */
 function sort_objects_by_meta(array $objects, string $object_type, string $meta_key)

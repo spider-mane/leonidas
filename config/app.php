@@ -1,12 +1,14 @@
 <?php
 
-use WebTheory\Leonidas\Plugin\Modules\LeonidasAssetRegistrarModule;
+use WebTheory\Leonidas\Plugin\Modules\LeonidasAssetLoaderModule;
 
 return [
 
     'modules' => [
-        LeonidasAssetRegistrarModule::class
+        LeonidasAssetLoaderModule::class
     ],
 
     'providers' => [],
+
+    'bootstrap' => [],
 ];

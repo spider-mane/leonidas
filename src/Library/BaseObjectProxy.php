@@ -1,6 +1,6 @@
 <?php
 
-namespace WebTheory\Leonidas;
+namespace WebTheory\Leonidas\Library;
 
 use WebTheory\GuctilityBelt\Traits\ObjectProxyBaseTrait;
 

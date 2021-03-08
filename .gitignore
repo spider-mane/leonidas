@@ -17,4 +17,4 @@ composer.phar
 .DS_Store
 
 # Development Script
-dev.php
+boot/development.php

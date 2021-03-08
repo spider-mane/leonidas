@@ -23,9 +23,9 @@ if (file_exists($autoload = __DIR__ . '/vendor/autoload.php')) {
     require $autoload;
 }
 
-// file required for development purposes
-if (file_exists($dev = __DIR__ . '/dev.php')) {
-    require $dev;
+// required for development purposes only
+if (file_exists($development = __DIR__ . '/boot/development.php')) {
+    require $development;
 }
 
 // bootstrap

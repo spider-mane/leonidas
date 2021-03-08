@@ -225,7 +225,7 @@ class WpExtension implements WpExtensionInterface
     {
         $const = $this->dev;
 
-        return !empty($const) && defined($const) && true === $const;
+        return !empty($const) && defined($const) && true === constant($const);
     }
 
     public static function create(array $args): WpExtension

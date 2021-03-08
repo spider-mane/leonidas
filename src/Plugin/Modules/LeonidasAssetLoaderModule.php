@@ -7,9 +7,9 @@ use WebTheory\Leonidas\Core\Asset\Script;
 use WebTheory\Leonidas\Core\Asset\Style;
 use WebTheory\Leonidas\Framework\Modules\AbstractAdminAssetLoaderModule;
 
-final class LeonidasAssetRegistrarModule extends AbstractAdminAssetLoaderModule implements ModuleInterface
+final class LeonidasAssetLoaderModule extends AbstractAdminAssetLoaderModule implements ModuleInterface
 {
-    protected function enqueueOrRegisterAdminScripts(): void
+    protected function doAdminEnqueueScriptsAction(): void
     {
         $ext = $this->getExtension();
         $saveyourDeps = ['select2', 'trix'];

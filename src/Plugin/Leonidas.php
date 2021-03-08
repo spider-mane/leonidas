@@ -11,10 +11,10 @@ use Twig\TwigFilter;
 use Twig\TwigFunction;
 use WebTheory\Leonidas\Admin\Contracts\WpExtensionInterface;
 use WebTheory\Leonidas\Admin\Loaders\AdminNoticeCollectionLoader;
-use WebTheory\Leonidas\BaseObjectProxy;
 use WebTheory\Leonidas\Framework\Enum\ExtensionType;
 use WebTheory\Leonidas\Framework\ModuleInitializer;
 use WebTheory\Leonidas\Framework\WpExtension;
+use WebTheory\Leonidas\Library\BaseObjectProxy;
 use WebTheory\Leonidas\Plugin\Exceptions\LeonidasAlreadyLoadedException;
 
 final class Leonidas

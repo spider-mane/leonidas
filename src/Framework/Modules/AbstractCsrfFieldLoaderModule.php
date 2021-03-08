@@ -2,21 +2,29 @@
 
 namespace WebTheory\Leonidas\Framework\Modules;
 
+use Closure;
 use WebTheory\Leonidas\Admin\Contracts\ModuleInterface;
 
 abstract class AbstractCsrfFieldLoaderModule extends AbstractModule implements ModuleInterface
 {
-    protected function targetHook()
+    public function hook(): void
     {
-        add_action('tag', $this->getHookCallback());
+        $this->targetHook();
     }
 
-    protected function getHookCallback()
+    protected function targetHook(): AbstractCsrfFieldLoaderModule
+    {
+        add_action('', $this->getCallback());
+
+        return $this;
+    }
+
+    protected function getCallback(): Closure
     {
         return function () {
-            $this->renderCsrfFields();
+            $this->doAction();
         };
     }
 
-    abstract protected function renderCsrfFields(): void;
+    abstract protected function doAction(): void;
 }
