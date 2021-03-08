@@ -9,12 +9,12 @@ use WebTheory\Leonidas\Admin\Contracts\ViewInterface;
 use WebTheory\Leonidas\Admin\Page\Views\SimpleAdminPageView;
 use WebTheory\Leonidas\Admin\Traits\CanBeRestrictedTrait;
 use WebTheory\Leonidas\Admin\Traits\RendersWithViewTrait;
-use WebTheory\Leonidas\Core\Traits\HasNonceTrait;
+use WebTheory\Leonidas\Core\Traits\MaybeHandlesCsrfTrait;
 
 class SimpleAdminPageLayout extends AbstractPageLayout implements AdminPageLayoutInterface
 {
     use CanBeRestrictedTrait;
-    use HasNonceTrait;
+    use MaybeHandlesCsrfTrait;
     use RendersWithViewTrait;
 
     /**

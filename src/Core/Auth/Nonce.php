@@ -3,10 +3,10 @@
 namespace WebTheory\Leonidas\Core\Auth;
 
 use Psr\Http\Message\ServerRequestInterface;
-use WebTheory\Leonidas\Core\Contracts\AuthTokenInterface;
+use WebTheory\Leonidas\Core\Contracts\CsrfManagerInterface;
 use WebTheory\Saveyour\Request;
 
-class Nonce implements AuthTokenInterface
+class Nonce implements CsrfManagerInterface
 {
     /**
      * @var string
@@ -44,7 +44,7 @@ class Nonce implements AuthTokenInterface
      *
      * @return string
      */
-    public function getName(): string
+    public function getTag(): string
     {
         return $this->name;
     }
@@ -75,6 +75,14 @@ class Nonce implements AuthTokenInterface
     public function generate(): string
     {
         return wp_create_nonce($this->action);
+    }
+
+    /**
+     *
+     */
+    public function renderField(): string
+    {
+        return $this->field(false);
     }
 
     /**

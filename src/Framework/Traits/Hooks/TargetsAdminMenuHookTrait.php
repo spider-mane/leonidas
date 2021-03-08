@@ -1,6 +1,6 @@
 <?php
 
-namespace WebTheory\Leonidas\Admin\Traits\Hooks;
+namespace WebTheory\Leonidas\Framework\Traits\Hooks;
 
 trait TargetsAdminMenuHookTrait
 {
@@ -10,15 +10,10 @@ trait TargetsAdminMenuHookTrait
             'admin_menu',
             [$this, 'doAdminMenuAction'],
             $this->defineAdminMenuHookPriority(),
-            $this->defineAdminMenuHookArgCount()
+            PHP_INT_MAX
         );
 
         return $this;
-    }
-
-    protected function defineAdminMenuHookArgCount(): int
-    {
-        return PHP_INT_MAX;
     }
 
     protected function defineAdminMenuHookPriority(): ?int

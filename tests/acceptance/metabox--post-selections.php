@@ -27,7 +27,7 @@ Screen::load('post', ['post_type' => 'wts_test_cpt_2'], function () {
         ->hook();
 
     $manager = (new PostMetaboxFormSubmissionManager($postType))
-        ->setNonce($nonce)
+        ->setTokenManager($nonce)
         ->hook();
 
     ################################################################################

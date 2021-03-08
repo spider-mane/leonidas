@@ -2,22 +2,18 @@
 
 namespace WebTheory\Leonidas\Admin\Views;
 
-use Twig\Environment;
-use WebTheory\Leonidas\Leonidas;
+use WebTheory\Leonidas\Admin\Proxies\TwigLoader;
 
-abstract class AbstractLeonidasTwigView extends AbstractTwigView
+abstract class AbstractLeonidasTwigView
 {
     /**
      * @var string
      */
     protected $template;
 
-    /**
-     *
-     */
-    protected function getTwigEnvironment(): Environment
+    public function render(array $context = []): string
     {
-        return Leonidas::get('container')->get('twig');
+        return TwigLoader::render($this->getTemplate(), $context);
     }
 
     /**

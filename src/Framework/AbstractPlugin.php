@@ -2,45 +2,8 @@
 
 namespace WebTheory\Leonidas\Framework;
 
-abstract class AbstractPlugin extends WpExtension
+abstract class AbstractPlugin
 {
-    /**
-     * @var string
-     */
-    protected $url;
-
-    /**
-     * @var string
-     */
-    protected $path;
-
-    /**
-     * @var string
-     */
-    protected $base;
-
-    /**
-     * @var string
-     */
-    protected $assets;
-
-    /**
-     *
-     */
-    public function __construct(
-        string $url,
-        string $path,
-        string $base,
-        string $assets
-    ) {
-        $this->url = $url;
-        $this->path = $path;
-        $this->base = $base;
-        $this->assets = $assets;
-
-        $this->init();
-    }
-
     /**
      *
      */

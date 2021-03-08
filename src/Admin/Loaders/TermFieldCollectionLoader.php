@@ -3,13 +3,15 @@
 namespace WebTheory\Leonidas\Admin\Loaders;
 
 use GuzzleHttp\Psr7\ServerRequest;
+use Psr\Http\Message\ServerRequestInterface;
+use WP_Term;
 use WebTheory\Leonidas\Admin\Contracts\ComponentLoaderInterface;
 use WebTheory\Leonidas\Admin\Contracts\TermFieldInterface;
-use WebTheory\Leonidas\Core\Traits\HasNonceTrait;
+use WebTheory\Leonidas\Core\Traits\MaybeHandlesCsrfTrait;
 
 class TermFieldCollectionLoader implements ComponentLoaderInterface
 {
-    use HasNonceTrait;
+    use MaybeHandlesCsrfTrait;
 
     /**
      * @var string
@@ -84,28 +86,43 @@ class TermFieldCollectionLoader implements ComponentLoaderInterface
 
     protected function targetTaxonomyEditFormFieldsHook(): TermFieldCollectionLoader
     {
-        add_action("{$this->taxonomy}_edit_form_fields", [$this, 'renderFields'], null, 1);
+        add_action("{$this->taxonomy}_edit_form_fields", [$this, 'renderFieldsOnEdit'], null, PHP_INT_MAX);
 
         return $this;
     }
 
     protected function targetTaxonomyAddFormFieldsHook(): TermFieldCollectionLoader
     {
-        add_action("{$this->taxonomy}_add_form_fields", [$this, 'renderFields'], null, 0);
+        add_action("{$this->taxonomy}_add_form_fields", [$this, 'renderFieldsOnAdd'], null, PHP_INT_MAX);
 
         return $this;
+    }
+
+    public function renderFieldsOnEdit(WP_Term $term, string $taxonomy): void
+    {
+        $request = $this->getServerRequest()
+            ->withAttribute('term', $term)
+            ->withAttribute('taxonomy', $taxonomy)
+            ->withAttribute('context', $this->getScreenContext());
+
+        echo $this->renderFields($request);
+    }
+
+    public function renderFieldsOnAdd(string $taxonomy): void
+    {
+        $request = $this->getServerRequest()
+            ->withAttribute('taxonomy', $taxonomy)
+            ->withAttribute('context', $this->getScreenContext());
+
+        echo $this->renderFields($request);
     }
 
     /**
      * @return void
      */
-    public function renderFields($term = null): void
+    protected function renderFields(ServerRequestInterface $request): string
     {
-        $request = ServerRequest::fromGlobals();
-        $term && $request = $request->withAttribute('term', $term);
-
         $html = '';
-        $html .= $this->maybeRenderNonce();
 
         foreach ($this->fields as $field) {
             if ($field->shouldBeRendered($request)) {
@@ -113,6 +130,16 @@ class TermFieldCollectionLoader implements ComponentLoaderInterface
             }
         }
 
-        echo $html;
+        return $html;
+    }
+
+    protected function getServerRequest(): ServerRequestInterface
+    {
+        return ServerRequest::fromGlobals();
+    }
+
+    protected function getScreenContext()
+    {
+        return get_current_screen()->base;
     }
 }

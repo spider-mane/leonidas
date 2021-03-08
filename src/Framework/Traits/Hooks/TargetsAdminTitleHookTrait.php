@@ -1,6 +1,6 @@
 <?php
 
-namespace WebTheory\Leonidas\Admin\Traits\Hooks;
+namespace WebTheory\Leonidas\Framework\Traits\Hooks;
 
 trait TargetsAdminTitleHookTrait
 {
@@ -10,15 +10,10 @@ trait TargetsAdminTitleHookTrait
             'admin_title',
             [$this, 'resolveAdminTitle'],
             $this->defineAdminTitleHookPriority(),
-            $this->defineAdminTitleHookArgCount()
+            PHP_INT_MAX
         );
 
         return $this;
-    }
-
-    protected function defineAdminTitleHookArgCount(): int
-    {
-        return PHP_INT_MAX;
     }
 
     protected function defineAdminTitleHookPriority(): ?int

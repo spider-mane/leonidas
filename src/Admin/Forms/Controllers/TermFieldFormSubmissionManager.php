@@ -8,11 +8,11 @@ use WebTheory\Leonidas\Admin\Forms\Controllers\AbstractWpAdminFormSubmissionMana
 use WebTheory\Leonidas\Admin\Forms\Validators\NoAutosaveValidator;
 use WebTheory\Leonidas\Admin\Forms\Validators\Permissions\EditTerm;
 use WebTheory\Leonidas\Admin\Forms\Validators\WpNonceValidator;
-use WebTheory\Leonidas\Core\Traits\HasNonceTrait;
+use WebTheory\Leonidas\Core\Traits\MaybeHandlesCsrfTrait;
 
 class TermFieldFormSubmissionManager extends AbstractWpAdminFormSubmissionManager
 {
-    use HasNonceTrait;
+    use MaybeHandlesCsrfTrait;
 
     /**
      * @var WP_Taxonomy
@@ -87,8 +87,8 @@ class TermFieldFormSubmissionManager extends AbstractWpAdminFormSubmissionManage
         $this->addValidator('no_autosave', new NoAutosaveValidator);
         $this->addValidator('user_cannot_edit', new EditTerm);
 
-        if (isset($this->nonce)) {
-            $this->addValidator('invalid_request', new WpNonceValidator($this->nonce));
+        if (isset($this->csrfManager)) {
+            $this->addValidator('invalid_request', new WpNonceValidator($this->csrfManager));
         }
     }
 }

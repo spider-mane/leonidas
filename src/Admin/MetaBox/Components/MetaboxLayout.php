@@ -9,12 +9,12 @@ use WebTheory\Leonidas\Admin\Contracts\ViewInterface;
 use WebTheory\Leonidas\Admin\Metabox\Views\MetaboxLayoutView;
 use WebTheory\Leonidas\Admin\Traits\CanBeRestrictedTrait;
 use WebTheory\Leonidas\Admin\Traits\RendersWithViewTrait;
-use WebTheory\Leonidas\Core\Traits\HasNonceTrait;
+use WebTheory\Leonidas\Core\Traits\MaybeHandlesCsrfTrait;
 
 class MetaboxLayout implements MetaboxLayoutInterface
 {
     use CanBeRestrictedTrait;
-    use HasNonceTrait;
+    use MaybeHandlesCsrfTrait;
     use RendersWithViewTrait;
 
     /**
@@ -83,7 +83,7 @@ class MetaboxLayout implements MetaboxLayoutInterface
     {
         return [
             'components' => $this->getComponents(),
-            'auth_field' => $this->maybeRenderNonce(),
+            'auth_field' => $this->maybeRenderTokenField(),
             'separator' => $this->getComponentSeparator(),
             'request' => $request
         ];

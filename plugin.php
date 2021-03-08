@@ -8,73 +8,64 @@
  * @package Leonidas
  * @license GPL-3.0-or-later
  * @copyright Copyright (C) Chris Williams, All rights reserved.
- * @link https://github.com/spider-mane/lenidas
+ * @link https://github.com/spider-mane/leonidas
  * @author Chris Williams <spider.mane.web@gmail.com>
  *
  * @wordpress-plugin
  * Plugin Name: Leonidas
- * Description: Enhanced OOP wrapper for the WordPress api.
+ * Description: Plugin framework with enhanced api library.
  */
 
-use League\Container\Container;
-use WebTheory\Leonidas\Framework\Enum\ExtensionType;
-use WebTheory\Leonidas\Framework\WpExtension;
-use WebTheory\Leonidas\Leonidas;
+use WebTheory\Leonidas\Plugin\Leonidas;
 
-# composer autoload
+// composer autoload
 if (file_exists($autoload = __DIR__ . '/vendor/autoload.php')) {
     require $autoload;
 }
 
-// Leonidas::init(WpExtension::create([
+// file required for development purposes
+if (file_exists($dev = __DIR__ . '/dev.php')) {
+    require $dev;
+}
+
+// bootstrap
+Leonidas::init([
+    'path' => realpath(__DIR__),
+    'base' => plugin_basename(__FILE__),
+    'uri' => plugin_dir_url(__FILE__),
+]);
+
+
+
+
+
+/**
+ * Below is an example of bootstrapping an extension from the extension base
+ * file instead of using a bootstrap class.
+ *
+ * @todo Relocate this to a markdown file
+ */
+
+// use Psr\Container\ContainerInterface;
+// use WebTheory\Leonidas\Framework\Enum\ExtensionType;
+// use WebTheory\Leonidas\Framework\ModuleInitializer;
+// use WebTheory\Leonidas\Framework\WpExtension;
+
+// /** @var ContainerInterface $container */
+// $container = require 'boot/container.php';
+
+// $extension = WpExtension::create([
 //     'name' => 'Leonidas',
-//     'prefix' => 'lds',
-//     'base' => plugin_basename(__FILE__),
+//     'prefix' => 'leon',
 //     'path' => __DIR__,
+//     'base' => plugin_basename(__FILE__),
 //     'url' => plugin_dir_url(__FILE__),
-//     'assets' => '',
+//     'assets' => '/assets/dist',
+//     'dev' => 'LEONIDAS_IN_DEVELOPMENT',
 //     'type' => new ExtensionType('plugin'),
-//     'container' => new Container()
-// ]));
+//     'container' => $container
+// ]);
 
-# define filesystem variables in base class
-if (!class_exists('WebTheoryLeonidasPluginBaseClass')) {
+// $plugin = new ModuleInitializer($extension, $extension->config('app.modules'));
 
-    class WebTheoryLeonidasPluginBaseClass
-    {
-        protected static $url;
-        protected static $path;
-        protected static $base;
-        protected static $assets;
-        protected static $templates;
-
-        protected static $loaded = false;
-
-        protected static function load()
-        {
-            static::$path = __DIR__;
-            static::$url = plugin_dir_url(__FILE__);
-            static::$base = plugin_basename(__FILE__);
-
-            static::$assets = static::$url . "assets/dist";
-            static::$templates = static::$path . "/templates";
-
-            static::$loaded = true;
-        }
-
-        public static function get(string $property)
-        {
-            return static::${$property};
-        }
-
-        public static function isLoaded()
-        {
-            return static::$loaded;
-        }
-    }
-}
-
-# bootstrap plugin
-if (!Leonidas::isLoaded()) {
-    Leonidas::init();
-}
+// $plugin->init();

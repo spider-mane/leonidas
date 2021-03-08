@@ -3,8 +3,10 @@
 namespace WebTheory\Leonidas\Framework;
 
 use Exception;
+use InvalidArgumentException;
 use League\Container\Container;
 use Psr\Container\ContainerInterface;
+use WebTheory\Leonidas\Admin\Contracts\ModuleInterface;
 use WebTheory\Leonidas\Admin\Contracts\WpExtensionInterface;
 use WebTheory\Leonidas\Framework\Enum\ExtensionType;
 
@@ -18,12 +20,12 @@ class WpExtension implements WpExtensionInterface
     /**
      * @var string
      */
-    protected $title;
+    protected $prefix;
 
     /**
      * @var string
      */
-    protected $prefix;
+    protected $base;
 
     /**
      * @var string
@@ -33,7 +35,14 @@ class WpExtension implements WpExtensionInterface
     /**
      * @var string
      */
-    protected $url;
+    protected $uri;
+
+    /**
+     * Asset base directory
+     *
+     * @var string
+     */
+    protected $assetDir;
 
     /**
      * @var ExtensionType
@@ -46,9 +55,12 @@ class WpExtension implements WpExtensionInterface
     protected $container;
 
     /**
-     * @var Leonidas
+     * Name of a constant that will return true if the extension is in its
+     * development environment
+     *
+     * @var string
      */
-    protected $master;
+    protected $dev;
 
     /**
      * @param string $name
@@ -56,23 +68,26 @@ class WpExtension implements WpExtensionInterface
      * @param string $url
      * @param string $prefix
      * @param ExtensionType $type
-     * @param ContainerInterface|null $container
-     * @throws Exception
+     * @param ContainerInterface $container
      */
     public function __construct(
         string $name,
+        string $prefix,
         string $path,
         string $url,
-        string $prefix,
+        string $assetDir,
         ExtensionType $type,
-        ?ContainerInterface $container = null
+        ContainerInterface $container,
+        string $dev
     ) {
         $this->name = $name;
-        $this->path = $path;
-        $this->url = $url;
+        $this->path = realpath($path);
+        $this->url = realpath($url);
         $this->prefix = $prefix;
-        $this->type = $type;
-        $this->container = $container ?? $this->getDefaultContainer();
+        $this->type = $type->getValue();
+        $this->assetDir = realpath("{$this->url}/{$assetDir}");
+        $this->container = $container;
+        $this->dev = $dev;
     }
 
     /**
@@ -96,6 +111,46 @@ class WpExtension implements WpExtensionInterface
     }
 
     /**
+     * Get the value of base
+     *
+     * @return string
+     */
+    public function getBase(): string
+    {
+        return $this->base;
+    }
+
+    /**
+     * Get the value of path
+     *
+     * @return string
+     */
+    public function getPath(): string
+    {
+        return $this->path;
+    }
+
+    /**
+     * Get the value of uri
+     *
+     * @return string
+     */
+    public function getUri(): string
+    {
+        return $this->uri;
+    }
+
+    /**
+     * Get the value of assetDir
+     *
+     * @return string
+     */
+    protected function getAssetDir(): string
+    {
+        return $this->assetDir;
+    }
+
+    /**
      * @return string
      */
     public function getType(): string
@@ -104,8 +159,7 @@ class WpExtension implements WpExtensionInterface
     }
 
     /**
-     * @param $id
-     * @return mixed
+     * {@inheritDoc}
      */
     public function get($id)
     {
@@ -113,8 +167,7 @@ class WpExtension implements WpExtensionInterface
     }
 
     /**
-     * @param $id
-     * @return bool
+     * {@inheritDoc}
      */
     public function has($id)
     {
@@ -122,30 +175,70 @@ class WpExtension implements WpExtensionInterface
     }
 
     /**
-     * @param string $name
-     * @param $default
-     * @return mixed
+     * {@inheritDoc}
      */
-    public function getConfig(string $name, $default)
+    public function config(string $name, $default = null)
     {
         return $this->get('config')->get($name, $default);
     }
 
     /**
-     *
+     * {@inheritDoc}
      */
-    protected function getDefaultContainer(): ContainerInterface
+    public function file(?string $file): ?string
     {
-        return new Container();
+        $file = $file ?? '';
+
+        return realpath($this->getPath() . $file);
     }
 
     /**
-     * Get the value of container
-     *
-     * @return ContainerInterface
+     * {@inheritDoc}
      */
-    public function getContainer(): ContainerInterface
+    public function asset(?string $asset = null): string
     {
-        return $this->container;
+        $asset = $asset ?? '';
+
+        return realpath($this->getAssetDir() . "/{$asset}");
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function prefix(string $value, string $delimiter = '_'): string
+    {
+        return $this->getPrefix() . $delimiter . $value;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function vot(?string $version = null): ?string
+    {
+        return $this->isInDev() ? time() : $version;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function isInDev(): bool
+    {
+        $const = $this->dev;
+
+        return !empty($const) && defined($const) && true === $const;
+    }
+
+    public static function create(array $args): WpExtension
+    {
+        return new static(
+            $args['name'],
+            $args['prefix'],
+            $args['path'],
+            $args['uri'],
+            $args['asset_dir'],
+            $args['type'],
+            $args['container'],
+            $args['dev']
+        );
     }
 }

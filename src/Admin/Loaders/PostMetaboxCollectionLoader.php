@@ -7,11 +7,11 @@ use Psr\Http\Message\ServerRequestInterface;
 use WP_Post;
 use WebTheory\Leonidas\Admin\Contracts\MetaboxCollectionLoaderInterFace;
 use WebTheory\Leonidas\Admin\Contracts\MetaboxInterface;
-use WebTheory\Leonidas\Core\Traits\HasNonceTrait;
+use WebTheory\Leonidas\Core\Traits\MaybeHandlesCsrfTrait;
 
 class PostMetaboxCollectionLoader implements MetaboxCollectionLoaderInterFace
 {
-    use HasNonceTrait;
+    use MaybeHandlesCsrfTrait;
 
     /**
      * Collection of metaboxes

@@ -1,6 +1,6 @@
 <?php
 
-namespace WebTheory\Leonidas\Admin\Traits\Hooks;
+namespace WebTheory\Leonidas\Framework\Traits\Hooks;
 
 trait TargetsSubmenuFileHookTrait
 {
@@ -10,15 +10,10 @@ trait TargetsSubmenuFileHookTrait
             'submenu_file',
             [$this, 'resolveSubmenuFile'],
             $this->defineSubmenuFileHookPriority(),
-            $this->defineSubmenuFileHookArgCount()
+            PHP_INT_MAX
         );
 
         return $this;
-    }
-
-    protected function defineSubmenuFileHookArgCount(): int
-    {
-        return PHP_INT_MAX;
     }
 
     protected function defineSubmenuFileHookPriority(): ?int

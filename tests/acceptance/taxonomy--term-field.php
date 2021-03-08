@@ -63,4 +63,4 @@ $domain = (new TermField($domain))
 
 
 $loader = new TermFieldCollectionLoader($taxonomy, $address, $domain);
-$loader->setNonce($nonce)->hook();
+$loader->setTokenManager($nonce)->hook();

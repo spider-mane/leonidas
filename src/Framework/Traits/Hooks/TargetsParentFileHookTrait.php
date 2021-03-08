@@ -1,6 +1,6 @@
 <?php
 
-namespace WebTheory\Leonidas\Admin\Traits\Hooks;
+namespace WebTheory\Leonidas\Framework\Traits\Hooks;
 
 trait TargetsParentFileHookTrait
 {
@@ -10,15 +10,10 @@ trait TargetsParentFileHookTrait
             'parent_file',
             [$this, 'resolveParentFile'],
             $this->defineParentFileHookPriority(),
-            $this->defineParentFileHookArgCount()
+            PHP_INT_MAX
         );
 
         return $this;
-    }
-
-    protected function defineParentFileHookArgCount(): int
-    {
-        return PHP_INT_MAX;
     }
 
     protected function defineParentFileHookPriority(): ?int

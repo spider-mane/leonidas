@@ -19,7 +19,7 @@ $metabox = (new AutoLoadingMetabox('wts_hours', 'Hours', $postType))
     ->hook();
 
 $formController = (new PostMetaboxFormSubmissionManager($postType))
-    ->setNonce($nonce)
+    ->setTokenManager($nonce)
     ->hook();
 
 // rows
