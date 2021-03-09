@@ -15,6 +15,3 @@ composer.phar
 
 # Misc
 .DS_Store
-
-# Development Script
-boot/development.php

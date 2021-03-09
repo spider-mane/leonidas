@@ -4,8 +4,8 @@ namespace WebTheory\Leonidas\Admin\Metabox\Components;
 
 use Psr\Http\Message\ServerRequestInterface;
 use WebTheory\Leonidas\Admin\Forms\Controllers\AbstractWpAdminFormSubmissionManager;
-use WebTheory\Leonidas\Admin\Contracts\MetaboxComponentInterface;
-use WebTheory\Leonidas\Admin\Contracts\MetaboxFieldInterface;
+use WebTheory\Leonidas\Contracts\Admin\Components\MetaboxComponentInterface;
+use WebTheory\Leonidas\Contracts\Admin\Components\MetaboxFieldInterface;
 use WebTheory\Leonidas\Admin\Traits\CanBeRestrictedTrait;
 use WebTheory\Saveyour\Contracts\FormFieldControllerInterface;
 

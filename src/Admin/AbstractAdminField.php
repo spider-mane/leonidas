@@ -3,7 +3,7 @@
 namespace WebTheory\Leonidas\Admin;
 
 use Psr\Http\Message\ServerRequestInterface;
-use WebTheory\Leonidas\Admin\Contracts\AdminFieldInterface;
+use WebTheory\Leonidas\Contracts\Admin\Components\AdminFieldInterface;
 use WebTheory\Saveyour\Contracts\FormFieldControllerInterface;
 use WebTheory\Saveyour\Contracts\FormFieldInterface;
 

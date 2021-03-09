@@ -3,8 +3,8 @@
 namespace WebTheory\Leonidas\Admin\Metabox\Views;
 
 use WebTheory\Html\Traits\ElementConstructorTrait;
-use WebTheory\Leonidas\Admin\Contracts\AdminComponentInterface;
-use WebTheory\Leonidas\Admin\Contracts\ViewInterface;
+use WebTheory\Leonidas\Contracts\Admin\Components\AdminComponentInterface;
+use WebTheory\Leonidas\Contracts\Admin\Components\ViewInterface;
 
 class SectionView implements ViewInterface
 {

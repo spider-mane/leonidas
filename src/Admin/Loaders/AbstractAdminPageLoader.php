@@ -4,8 +4,8 @@ namespace WebTheory\Leonidas\Admin\Loaders;
 
 use GuzzleHttp\Psr7\ServerRequest;
 use Psr\Http\Message\ServerRequestInterface;
-use WebTheory\Leonidas\Admin\Contracts\AdminPageInterface;
-use WebTheory\Leonidas\Admin\Contracts\AdminPageLoadErrorInterface;
+use WebTheory\Leonidas\Contracts\Admin\Components\AdminPageInterface;
+use WebTheory\Leonidas\Contracts\Admin\Components\AdminPageLoadErrorInterface;
 
 abstract class AbstractAdminPageLoader
 {

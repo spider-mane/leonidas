@@ -5,10 +5,12 @@ namespace WebTheory\Leonidas\Framework;
 use Exception;
 use InvalidArgumentException;
 use League\Container\Container;
+use Noodlehaus\ConfigInterface;
 use Psr\Container\ContainerInterface;
-use WebTheory\Leonidas\Admin\Contracts\ModuleInterface;
-use WebTheory\Leonidas\Admin\Contracts\WpExtensionInterface;
-use WebTheory\Leonidas\Framework\Enum\ExtensionType;
+use Respect\Validation\Rules\File;
+use WebTheory\Leonidas\Contracts\Extension\ModuleInterface;
+use WebTheory\Leonidas\Contracts\Extension\WpExtensionInterface;
+use WebTheory\Leonidas\Enum\ExtensionType;
 
 class WpExtension implements WpExtensionInterface
 {
@@ -21,6 +23,11 @@ class WpExtension implements WpExtensionInterface
      * @var string
      */
     protected $prefix;
+
+    /**
+     * @var string
+     */
+    protected $description;
 
     /**
      * @var string
@@ -42,7 +49,7 @@ class WpExtension implements WpExtensionInterface
      *
      * @var string
      */
-    protected $assetDir;
+    protected $assetUri;
 
     /**
      * @var ExtensionType
@@ -55,6 +62,16 @@ class WpExtension implements WpExtensionInterface
     protected $container;
 
     /**
+     * @var ExtensionDependencyMap
+     */
+    protected $dependencies;
+
+    /**
+     * @var ExtensionDependentMap
+     */
+    protected $dependents;
+
+    /**
      * Name of a constant that will return true if the extension is in its
      * development environment
      *
@@ -65,7 +82,7 @@ class WpExtension implements WpExtensionInterface
     /**
      * @param string $name
      * @param string $path
-     * @param string $url
+     * @param string $uri
      * @param string $prefix
      * @param ExtensionType $type
      * @param ContainerInterface $container
@@ -73,19 +90,23 @@ class WpExtension implements WpExtensionInterface
     public function __construct(
         string $name,
         string $prefix,
+        string $description,
+        string $base,
         string $path,
-        string $url,
-        string $assetDir,
+        string $uri,
+        string $assetUri,
         ExtensionType $type,
         ContainerInterface $container,
         string $dev
     ) {
         $this->name = $name;
-        $this->path = realpath($path);
-        $this->url = realpath($url);
         $this->prefix = $prefix;
-        $this->type = $type->getValue();
-        $this->assetDir = realpath("{$this->url}/{$assetDir}");
+        $this->description = $description;
+        $this->base = $base;
+        $this->path = $path;
+        $this->uri = rtrim($uri, '/');
+        $this->type = $type;
+        $this->assetUri = "{$this->uri}/{$assetUri}/";
         $this->container = $container;
         $this->dev = $dev;
     }
@@ -108,6 +129,16 @@ class WpExtension implements WpExtensionInterface
     public function getPrefix(): string
     {
         return $this->prefix;
+    }
+
+    /**
+     * Get the value of description
+     *
+     * @return string
+     */
+    public function getDescription(): string
+    {
+        return $this->description;
     }
 
     /**
@@ -147,7 +178,7 @@ class WpExtension implements WpExtensionInterface
      */
     protected function getAssetDir(): string
     {
-        return $this->assetDir;
+        return $this->assetUri;
     }
 
     /**
@@ -179,17 +210,31 @@ class WpExtension implements WpExtensionInterface
      */
     public function config(string $name, $default = null)
     {
-        return $this->get('config')->get($name, $default);
+        return $this->get(ConfigInterface::class)->get($name, $default);
     }
 
     /**
      * {@inheritDoc}
      */
-    public function file(?string $file): ?string
+    public function relPath(?string $file = null): ?string
     {
-        $file = $file ?? '';
+        return $this->getBase() . $file;
+    }
 
-        return realpath($this->getPath() . $file);
+    /**
+     * {@inheritDoc}
+     */
+    public function absPath(?string $file = null): ?string
+    {
+        return $this->getPath() . $file;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function uri(?string $route = null): string
+    {
+        return $this->getUri() . $route;
     }
 
     /**
@@ -197,17 +242,15 @@ class WpExtension implements WpExtensionInterface
      */
     public function asset(?string $asset = null): string
     {
-        $asset = $asset ?? '';
-
-        return realpath($this->getAssetDir() . "/{$asset}");
+        return $this->getAssetDir() . $asset;
     }
 
     /**
      * {@inheritDoc}
      */
-    public function prefix(string $value, string $delimiter = '_'): string
+    public function prefix(string $value, string $separator = '_'): string
     {
-        return $this->getPrefix() . $delimiter . $value;
+        return $this->getPrefix() . $separator . $value;
     }
 
     /**
@@ -225,17 +268,26 @@ class WpExtension implements WpExtensionInterface
     {
         $const = $this->dev;
 
-        return !empty($const) && defined($const) && true === constant($const);
+        return !empty($const) && defined($const) && (constant($const) === true);
     }
 
+    /**
+     * Returns a new instance of WpExtension using values in the array passed.
+     *
+     * @param array $args
+     *
+     * @return WpExtension
+     */
     public static function create(array $args): WpExtension
     {
         return new static(
             $args['name'],
             $args['prefix'],
+            $args['description'],
+            $args['base'],
             $args['path'],
             $args['uri'],
-            $args['asset_dir'],
+            $args['assets'],
             $args['type'],
             $args['container'],
             $args['dev']

@@ -2,7 +2,7 @@
 
 namespace WebTheory\Leonidas\Admin\Loaders;
 
-use WebTheory\Leonidas\Admin\Contracts\SubmenuPageInterface;
+use WebTheory\Leonidas\Contracts\Admin\Components\SubmenuPageInterface;
 
 class SubmenuPageLoader extends AbstractAdminPageLoader
 {

@@ -2,7 +2,7 @@
 
 namespace WebTheory\Leonidas\Core\Hook;
 
-use WebTheory\Leonidas\Core\Contracts\HookInterface;
+use WebTheory\Leonidas\Contracts\Hook\HookInterface;
 
 class Hook implements HookInterface
 {

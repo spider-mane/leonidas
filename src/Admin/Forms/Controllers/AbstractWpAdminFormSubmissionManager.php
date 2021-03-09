@@ -3,8 +3,8 @@
 namespace WebTheory\Leonidas\Admin\Forms\Controllers;
 
 use Psr\Http\Message\ServerRequestInterface;
-use WebTheory\Leonidas\Admin\Contracts\AdminNoticeCollectionLoaderInterface;
-use WebTheory\Leonidas\Admin\Contracts\AdminNoticeInterface;
+use WebTheory\Leonidas\Contracts\Admin\Components\AdminNoticeCollectionLoaderInterface;
+use WebTheory\Leonidas\Contracts\Admin\Components\AdminNoticeInterface;
 use WebTheory\Leonidas\Admin\Loaders\AdminNoticeCollectionLoader;
 use WebTheory\Leonidas\Admin\Notices\Components\StandardAdminNotice;
 use WebTheory\Saveyour\Controllers\FormProcessingCache;

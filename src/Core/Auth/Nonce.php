@@ -3,7 +3,7 @@
 namespace WebTheory\Leonidas\Core\Auth;
 
 use Psr\Http\Message\ServerRequestInterface;
-use WebTheory\Leonidas\Core\Contracts\CsrfManagerInterface;
+use WebTheory\Leonidas\Contracts\Auth\CsrfManagerInterface;
 use WebTheory\Saveyour\Request;
 
 class Nonce implements CsrfManagerInterface
@@ -37,16 +37,6 @@ class Nonce implements CsrfManagerInterface
         if ($expiration && (1 === $expiration || 2 === $expiration)) {
             $this->expiration = $expiration;
         }
-    }
-
-    /**
-     * Get the value of name
-     *
-     * @return string
-     */
-    public function getTag(): string
-    {
-        return $this->name;
     }
 
     /**

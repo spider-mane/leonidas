@@ -2,9 +2,10 @@
 
 namespace WebTheory\Leonidas\Core\Auth;
 
-use WebTheory\Leonidas\Core\Contracts\CsrfManagerInterface;
+use WebTheory\Leonidas\Contracts\Auth\CsrfManagerInterface;
+use WebTheory\Leonidas\Contracts\Auth\CsrfManagerRepositoryInterface;
 
-class CsrfManagerRepository
+class CsrfManagerRepository implements CsrfManagerRepositoryInterface
 {
     /**
      * @var CsrfManagerInterface[]
@@ -32,9 +33,23 @@ class CsrfManagerRepository
     /**
      *
      */
-    public function getManager(string $name): ?CsrfManagerInterface
+    public function getManager(string $tag): ?CsrfManagerInterface
     {
-        return $this->managers[$name] ?? null;
+        return $this->managers[$tag] ?? null;
+    }
+
+    /**
+     *
+     */
+    public function getManagerSelection(string ...$tags): array
+    {
+        $managers = [];
+
+        foreach ($tags as $tag) {
+            $managers[] = $this->getManager($tag);
+        }
+
+        return $managers;
     }
 
     /**

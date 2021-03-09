@@ -3,7 +3,7 @@
 namespace WebTheory\Leonidas\Core\Taxonomy\OptionHandlers;
 
 use WP_Taxonomy;
-use WebTheory\Leonidas\Core\Contracts\TaxonomyOptionHandlerInterface;
+use WebTheory\Leonidas\Contracts\Options\TaxonomyOptionHandlerInterface;
 
 class MaintainMetaboxHierarchy implements TaxonomyOptionHandlerInterface
 {

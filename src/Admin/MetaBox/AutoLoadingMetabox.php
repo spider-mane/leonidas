@@ -4,7 +4,7 @@ namespace WebTheory\Leonidas\Admin\Metabox;
 
 use GuzzleHttp\Psr7\ServerRequest;
 use WP_Post;
-use WebTheory\Leonidas\Admin\Contracts\MetaboxLayoutInterface;
+use WebTheory\Leonidas\Contracts\Admin\Components\MetaboxLayoutInterface;
 
 class AutoLoadingMetabox
 {

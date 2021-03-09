@@ -3,8 +3,8 @@
 namespace WebTheory\Leonidas\Admin\Metabox;
 
 use Psr\Http\Message\ServerRequestInterface;
-use WebTheory\Leonidas\Admin\Contracts\MetaboxCollectionInterface;
-use WebTheory\Leonidas\Admin\Contracts\MetaboxContainerInterface;
+use WebTheory\Leonidas\Contracts\Admin\Components\MetaboxCollectionInterface;
+use WebTheory\Leonidas\Contracts\Admin\Components\MetaboxContainerInterface;
 
 class StandardMetaboxContainer implements MetaboxContainerInterface
 {

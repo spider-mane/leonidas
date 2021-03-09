@@ -2,7 +2,7 @@
 
 namespace WebTheory\Leonidas\Admin\Page\Components;
 
-use WebTheory\Leonidas\Admin\Contracts\AdminPageLayoutInterface;
+use WebTheory\Leonidas\Contracts\Admin\Components\AdminPageLayoutInterface;
 
 abstract class AbstractPageLayout implements AdminPageLayoutInterface
 {

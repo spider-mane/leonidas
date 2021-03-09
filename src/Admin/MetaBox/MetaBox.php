@@ -5,8 +5,8 @@ namespace WebTheory\Leonidas\Admin\Metabox;
 use GuzzleHttp\Psr7\ServerRequest;
 use Psr\Http\Message\ServerRequestInterface;
 use WP_Post;
-use WebTheory\Leonidas\Admin\Contracts\MetaboxInterface;
-use WebTheory\Leonidas\Admin\Contracts\MetaboxLayoutInterface;
+use WebTheory\Leonidas\Contracts\Admin\Components\MetaboxInterface;
+use WebTheory\Leonidas\Contracts\Admin\Components\MetaboxLayoutInterface;
 use WebTheory\Leonidas\Admin\Traits\CanBeRestrictedTrait;
 use WebTheory\Leonidas\Admin\Traits\RendersWithViewTrait;
 

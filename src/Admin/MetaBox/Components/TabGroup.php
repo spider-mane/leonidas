@@ -3,8 +3,8 @@
 namespace WebTheory\Leonidas\Admin\Metabox\Components;
 
 use Psr\Http\Message\ServerRequestInterface;
-use WebTheory\Leonidas\Admin\Contracts\MetaboxComponentInterface;
-use WebTheory\Leonidas\Admin\Contracts\ViewInterface;
+use WebTheory\Leonidas\Contracts\Admin\Components\MetaboxComponentInterface;
+use WebTheory\Leonidas\Contracts\Admin\Components\ViewInterface;
 use WebTheory\Leonidas\Admin\Metabox\Views\TabGroupView;
 use WebTheory\Leonidas\Admin\Traits\CanBeRestrictedTrait;
 use WebTheory\Leonidas\Admin\Traits\RendersWithViewTrait;

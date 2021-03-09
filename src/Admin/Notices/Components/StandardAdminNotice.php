@@ -3,8 +3,8 @@
 namespace WebTheory\Leonidas\Admin\Notices\Components;
 
 use Psr\Http\Message\ServerRequestInterface;
-use WebTheory\Leonidas\Admin\Contracts\AdminNoticeInterface;
-use WebTheory\Leonidas\Admin\Contracts\ViewInterface;
+use WebTheory\Leonidas\Contracts\Admin\Components\AdminNoticeInterface;
+use WebTheory\Leonidas\Contracts\Admin\Components\ViewInterface;
 use WebTheory\Leonidas\Admin\Notices\Views\StandardAdminNoticeView;
 use WebTheory\Leonidas\Admin\Traits\CanBeRestrictedTrait;
 use WebTheory\Leonidas\Admin\Traits\RendersWithViewTrait;

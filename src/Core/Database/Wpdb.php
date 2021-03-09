@@ -2,7 +2,7 @@
 
 namespace WebTheory\Leonidas\Core\Database;
 
-use WebTheory\Leonidas\Core\Contracts\DatabaseConnectionInterface;
+use WebTheory\Leonidas\Contracts\Database\DatabaseConnectionInterface;
 
 class Wpdb implements DatabaseConnectionInterface
 {

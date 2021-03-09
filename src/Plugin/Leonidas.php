@@ -4,14 +4,15 @@ namespace WebTheory\Leonidas\Plugin;
 
 use League\Container\Container;
 use Noodlehaus\Config;
+use Noodlehaus\ConfigInterface;
 use Psr\Container\ContainerInterface;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
-use WebTheory\Leonidas\Admin\Contracts\WpExtensionInterface;
 use WebTheory\Leonidas\Admin\Loaders\AdminNoticeCollectionLoader;
-use WebTheory\Leonidas\Framework\Enum\ExtensionType;
+use WebTheory\Leonidas\Contracts\Extension\WpExtensionInterface;
+use WebTheory\Leonidas\Enum\ExtensionType;
 use WebTheory\Leonidas\Framework\ModuleInitializer;
 use WebTheory\Leonidas\Framework\WpExtension;
 use WebTheory\Leonidas\Library\BaseObjectProxy;
@@ -56,11 +57,6 @@ final class Leonidas
      */
     private static $instance;
 
-    private const PLUGIN_NAME = 'Leonidas';
-    private const PLUGIN_PREFIX = 'leon';
-    private const ASSET_DIR = '/assets/dist';
-    private const DEV_CONST = 'LEONIDAS_DEVELOPMENT';
-
     private function __construct(string $base, string $path, string $uri)
     {
         $this->path = $path;
@@ -85,15 +81,18 @@ final class Leonidas
 
     private function buildExtension(): WpExtensionInterface
     {
+        /** @var ConfigInterface $config */
+        $config = $this->container->get('config');
+
         return WpExtension::create([
-            'name' => static::PLUGIN_NAME,
-            'prefix' => static::PLUGIN_PREFIX,
+            'name' => $config->get('app.name'),
+            'prefix' => $config->get('app.prefix'),
             'path' => $this->path,
             'base' => $this->base,
             'uri' => $this->uri,
-            'assets' => static::ASSET_DIR,
-            'dev' => static::DEV_CONST,
-            'type' => new ExtensionType('plugin'),
+            'assets' => $config->get('app.assets'),
+            'dev' => $config->get('app.dev'),
+            'type' => new ExtensionType($config->get('app.type')),
             'container' => $this->container
         ]);
     }
@@ -171,7 +170,7 @@ final class Leonidas
         static::$instance = new self(
             $root['base'],
             $root['path'],
-            $root['uri'],
+            $root['uri']
         );
 
         static::$instance->reallyReallyInit();

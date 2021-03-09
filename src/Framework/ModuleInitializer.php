@@ -4,7 +4,7 @@ namespace WebTheory\Leonidas\Framework;
 
 use InvalidArgumentException;
 use WebTheory\Leonidas\Admin\Contracts\ModuleInterface;
-use WebTheory\Leonidas\Framework\Contracts\ModuleInitializerInterface;
+use WebTheory\Leonidas\Contracts\Extension\ModuleInitializerInterface;
 use WebTheory\Leonidas\Framework\Exceptions\InvalidModuleException;
 use WebTheory\Leonidas\Framework\WpExtension;
 

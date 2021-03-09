@@ -4,10 +4,11 @@ namespace WebTheory\Leonidas\Admin\Constrainers;
 
 use Psr\Http\Message\ServerRequestInterface;
 use WP_Post;
-use WebTheory\Leonidas\Admin\Contracts\ComponentConstrainerInterface;
 use WebTheory\Leonidas\Admin\Traits\ExpectsPostTrait;
+use WebTheory\Leonidas\Contracts\Admin\Components\ComponentConstrainerInterface;
+use WebTheory\Leonidas\Contracts\ConstrainerInterface;
 
-class PostConstrainer implements ComponentConstrainerInterface
+class PostConstrainer implements ConstrainerInterface
 {
     use ExpectsPostTrait;
 
@@ -37,7 +38,7 @@ class PostConstrainer implements ComponentConstrainerInterface
     /**
      *
      */
-    public function screenMeetsCriteria(ServerRequestInterface $request): bool
+    public function requestMeetsCriteria(ServerRequestInterface $request): bool
     {
         return in_array($this->getPostId($request), $this->posts);
     }

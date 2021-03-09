@@ -5,9 +5,9 @@ namespace WebTheory\Leonidas\Admin\Loaders;
 use GuzzleHttp\Psr7\ServerRequest;
 use Psr\Http\Message\ServerRequestInterface;
 use WP_Term;
-use WebTheory\Leonidas\Admin\Contracts\ComponentLoaderInterface;
-use WebTheory\Leonidas\Admin\Contracts\TermFieldInterface;
-use WebTheory\Leonidas\Core\Traits\MaybeHandlesCsrfTrait;
+use WebTheory\Leonidas\Contracts\Admin\Components\ComponentLoaderInterface;
+use WebTheory\Leonidas\Contracts\Admin\Components\TermFieldInterface;
+use WebTheory\Leonidas\Traits\MaybeHandlesCsrfTrait;
 
 class TermFieldCollectionLoader implements ComponentLoaderInterface
 {

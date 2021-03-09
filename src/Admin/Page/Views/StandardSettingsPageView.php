@@ -2,7 +2,7 @@
 
 namespace WebTheory\Leonidas\Admin\Page\Views;
 
-use WebTheory\Leonidas\Admin\Contracts\ViewInterface;
+use WebTheory\Leonidas\Contracts\Admin\Components\ViewInterface;
 use WebTheory\Leonidas\Admin\Views\AbstractLeonidasTwigView;
 
 class StandardSettingsPageView extends AbstractLeonidasTwigView implements ViewInterface

@@ -3,7 +3,7 @@
 namespace WebTheory\Leonidas\Admin\Traits;
 
 use Psr\Http\Message\ServerRequestInterface;
-use WebTheory\Leonidas\Admin\Contracts\AdminComponentInterface;
+use WebTheory\Leonidas\Contracts\Admin\Components\AdminComponentInterface;
 
 trait RendersComponentsTrait
 {

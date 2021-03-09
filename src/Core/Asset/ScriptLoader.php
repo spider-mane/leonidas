@@ -2,7 +2,7 @@
 
 namespace WebTheory\Leonidas\Core\Asset;
 
-use WebTheory\Leonidas\Core\Contracts\ScriptInterface;
+use WebTheory\Leonidas\Contracts\Ui\ScriptInterface;
 
 class ScriptLoader
 {

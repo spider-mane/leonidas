@@ -1,3 +1,3 @@
 <?php
 
-require realpath('../src/Core/Helpers/functions.php');
+require '../src/Core/Helpers/functions.php';

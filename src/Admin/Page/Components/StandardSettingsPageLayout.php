@@ -3,8 +3,8 @@
 namespace WebTheory\Leonidas\Admin\Page\Components;
 
 use Psr\Http\Message\ServerRequestInterface;
-use WebTheory\Leonidas\Admin\Contracts\AdminPageLayoutInterface;
-use WebTheory\Leonidas\Admin\Contracts\ViewInterface;
+use WebTheory\Leonidas\Contracts\Admin\Components\AdminPageLayoutInterface;
+use WebTheory\Leonidas\Contracts\Admin\Components\ViewInterface;
 use WebTheory\Leonidas\Admin\Page\Views\StandardSettingsPageView;
 use WebTheory\Leonidas\Admin\Traits\CanBeRestrictedTrait;
 use WebTheory\Leonidas\Admin\Traits\RendersWithViewTrait;

@@ -5,9 +5,9 @@ namespace WebTheory\Leonidas\Admin\Loaders;
 use GuzzleHttp\Psr7\ServerRequest;
 use Psr\Http\Message\ServerRequestInterface;
 use WP_Post;
-use WebTheory\Leonidas\Admin\Contracts\MetaboxCollectionLoaderInterFace;
-use WebTheory\Leonidas\Admin\Contracts\MetaboxInterface;
-use WebTheory\Leonidas\Core\Traits\MaybeHandlesCsrfTrait;
+use WebTheory\Leonidas\Contracts\Admin\Components\MetaboxCollectionLoaderInterFace;
+use WebTheory\Leonidas\Contracts\Admin\Components\MetaboxInterface;
+use WebTheory\Leonidas\Traits\MaybeHandlesCsrfTrait;
 
 class PostMetaboxCollectionLoader implements MetaboxCollectionLoaderInterFace
 {

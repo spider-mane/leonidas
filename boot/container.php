@@ -7,7 +7,7 @@ use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
-use WebTheory\Leonidas\Admin\Contracts\AdminNoticeInterface;
+use WebTheory\Leonidas\Contracts\Admin\Components\AdminNoticeInterface;
 use WebTheory\Leonidas\Admin\Loaders\AdminNoticeCollectionLoader;
 
 $container = new Container();

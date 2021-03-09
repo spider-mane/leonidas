@@ -8,7 +8,7 @@ use WebTheory\Leonidas\Admin\Forms\Controllers\AbstractWpAdminFormSubmissionMana
 use WebTheory\Leonidas\Admin\Forms\Validators\NoAutosaveValidator;
 use WebTheory\Leonidas\Admin\Forms\Validators\Permissions\EditTerm;
 use WebTheory\Leonidas\Admin\Forms\Validators\WpNonceValidator;
-use WebTheory\Leonidas\Core\Traits\MaybeHandlesCsrfTrait;
+use WebTheory\Leonidas\Traits\MaybeHandlesCsrfTrait;
 
 class TermFieldFormSubmissionManager extends AbstractWpAdminFormSubmissionManager
 {

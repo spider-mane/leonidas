@@ -2,14 +2,14 @@
 
 namespace WebTheory\Leonidas\Plugin\Modules;
 
-use WebTheory\Leonidas\Admin\Contracts\ModuleInterface;
 use WebTheory\Leonidas\Core\Asset\Script;
 use WebTheory\Leonidas\Core\Asset\Style;
+use WebTheory\Leonidas\Contracts\Extension\ModuleInterface;
 use WebTheory\Leonidas\Framework\Modules\AbstractAdminAssetLoaderModule;
 
 final class LeonidasAssetLoaderModule extends AbstractAdminAssetLoaderModule implements ModuleInterface
 {
-    protected function doAdminEnqueueScriptsAction(): void
+    protected function doAdminEnqueueScriptsAction(string $hookSuffix): void
     {
         $ext = $this->getExtension();
         $saveyourDeps = ['select2', 'trix'];

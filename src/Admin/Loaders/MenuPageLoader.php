@@ -2,7 +2,7 @@
 
 namespace WebTheory\Leonidas\Admin\Loaders;
 
-use WebTheory\Leonidas\Admin\Contracts\MenuPageInterface;
+use WebTheory\Leonidas\Contracts\Admin\Components\MenuPageInterface;
 
 class MenuPageLoader extends AbstractAdminPageLoader
 {

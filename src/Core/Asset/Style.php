@@ -2,7 +2,7 @@
 
 namespace WebTheory\Leonidas\Core\Asset;
 
-use WebTheory\Leonidas\Core\Contracts\StyleInterface;
+use WebTheory\Leonidas\Contracts\Ui\StyleInterface;
 
 class Style extends AbstractAsset implements StyleInterface
 {

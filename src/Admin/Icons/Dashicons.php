@@ -2,7 +2,7 @@
 
 namespace WebTheory\Leonidas\Admin\Icons;
 
-use WebTheory\Leonidas\Admin\Contracts\IconResolverInterface;
+use WebTheory\Leonidas\Contracts\Admin\Components\IconResolverInterface;
 
 class Dashicons implements IconResolverInterface
 {

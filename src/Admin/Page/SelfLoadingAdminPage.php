@@ -3,7 +3,7 @@
 namespace WebTheory\Leonidas\Admin\Page;
 
 use GuzzleHttp\Psr7\ServerRequest;
-use WebTheory\Leonidas\Admin\Contracts\AdminPageLayoutInterface;
+use WebTheory\Leonidas\Contracts\Admin\Components\AdminPageLayoutInterface;
 use WebTheory\Saveyour\Contracts\FormSubmissionManagerInterface;
 
 class SelfLoadingAdminPage extends AbstractSelfLoadingAdminPage

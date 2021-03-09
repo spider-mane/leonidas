@@ -2,7 +2,7 @@
 
 namespace WebTheory\Leonidas\Admin\Views;
 
-use WebTheory\Leonidas\Admin\Contracts\ViewInterface;
+use WebTheory\Leonidas\Contracts\Admin\Components\ViewInterface;
 
 class PhpView implements ViewInterface
 {

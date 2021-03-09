@@ -3,7 +3,7 @@
 namespace WebTheory\Leonidas\Admin;
 
 use Twig\Environment;
-use WebTheory\Leonidas\Admin\Contracts\ViewInterface;
+use WebTheory\Leonidas\Contracts\Admin\Components\ViewInterface;
 use WebTheory\Leonidas\Admin\Views\AbstractTwigView;
 
 class TwigView extends AbstractTwigView implements ViewInterface

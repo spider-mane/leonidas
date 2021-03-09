@@ -2,7 +2,7 @@
 
 namespace WebTheory\Leonidas\Admin\Page;
 
-use WebTheory\Leonidas\Admin\Contracts\AdminPageLayoutInterface;
+use WebTheory\Leonidas\Contracts\Admin\Components\AdminPageLayoutInterface;
 use WebTheory\Leonidas\Admin\Page\Components\StandardSettingsPageLayout;
 
 class SelfLoadingSettingsPage extends AbstractSelfLoadingAdminPage

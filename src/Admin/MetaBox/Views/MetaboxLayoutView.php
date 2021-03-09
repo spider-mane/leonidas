@@ -3,8 +3,8 @@
 namespace WebTheory\Leonidas\Admin\Metabox\Views;
 
 use WebTheory\Html\Traits\ElementConstructorTrait;
-use WebTheory\Leonidas\Admin\Contracts\MetaboxComponentInterface;
-use WebTheory\Leonidas\Admin\Contracts\ViewInterface;
+use WebTheory\Leonidas\Contracts\Admin\Components\MetaboxComponentInterface;
+use WebTheory\Leonidas\Contracts\Admin\Components\ViewInterface;
 
 class MetaboxLayoutView implements ViewInterface
 {

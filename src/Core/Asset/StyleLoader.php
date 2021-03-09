@@ -2,12 +2,12 @@
 
 namespace WebTheory\Leonidas\Core\Asset;
 
-use WebTheory\Leonidas\Core\Contracts\StyleInterface;
+use WebTheory\Leonidas\Contracts\Ui\StyleInterface;
 
 class StyleLoader
 {
     /**
-     * @var StyleInterface[]
+     * @var \WebTheory\Leonidas\Contracts\Ui\StyleInterface[]
      */
     protected $styles = [];
 

@@ -4,8 +4,8 @@ namespace WebTheory\Leonidas\Admin\Term\Components;
 
 use Psr\Http\Message\ServerRequestInterface;
 use WebTheory\Leonidas\Admin\AbstractAdminField;
-use WebTheory\Leonidas\Admin\Contracts\TermFieldInterface;
-use WebTheory\Leonidas\Admin\Contracts\ViewInterface;
+use WebTheory\Leonidas\Contracts\Admin\Components\TermFieldInterface;
+use WebTheory\Leonidas\Contracts\Admin\Components\ViewInterface;
 use WebTheory\Leonidas\Admin\Term\Views\AddTermFieldView;
 use WebTheory\Leonidas\Admin\Term\Views\EditTermFieldView;
 use WebTheory\Leonidas\Admin\Traits\CanBeRestrictedTrait;

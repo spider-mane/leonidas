@@ -3,7 +3,7 @@
 namespace WebTheory\Leonidas\Core\Taxonomy;
 
 use WebTheory\Leonidas\Core\AbstractWpObjectFactory;
-use WebTheory\Leonidas\Core\Contracts\TaxonomyOptionHandlerInterface;
+use WebTheory\Leonidas\Contracts\Options\TaxonomyOptionHandlerInterface;
 use WebTheory\Leonidas\Core\Taxonomy\Taxonomy;
 
 class Factory extends AbstractWpObjectFactory

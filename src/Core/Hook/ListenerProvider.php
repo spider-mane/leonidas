@@ -3,8 +3,8 @@
 namespace WebTheory\Leonidas\Core\Hook;
 
 use Psr\EventDispatcher\ListenerProviderInterface;
-use WebTheory\Leonidas\Core\Contracts\HookInterface;
-use WebTheory\Leonidas\Core\Contracts\ListenerInterface;
+use WebTheory\Leonidas\Contracts\Hook\HookInterface;
+use WebTheory\Leonidas\Contracts\Hook\ListenerInterface;
 
 class ListenerProvider implements ListenerProviderInterface
 {

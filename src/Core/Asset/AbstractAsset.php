@@ -2,7 +2,7 @@
 
 namespace WebTheory\Leonidas\Core\Asset;
 
-use WebTheory\Leonidas\Core\Contracts\AssetInterface;
+use WebTheory\Leonidas\Contracts\Ui\AssetInterface;
 
 abstract class AbstractAsset implements AssetInterface
 {

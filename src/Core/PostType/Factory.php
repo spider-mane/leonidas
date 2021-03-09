@@ -3,7 +3,7 @@
 namespace WebTheory\Leonidas\Core\PostType;
 
 use WebTheory\Leonidas\Core\AbstractWpObjectFactory;
-use WebTheory\Leonidas\Core\Contracts\PostTypeOptionHandlerInterface;
+use WebTheory\Leonidas\Contracts\Options\PostTypeOptionHandlerInterface;
 use WebTheory\Leonidas\Core\PostType\PostType;
 
 class Factory extends AbstractWpObjectFactory
