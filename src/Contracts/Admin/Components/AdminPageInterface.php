@@ -2,8 +2,6 @@
 
 namespace WebTheory\Leonidas\Contracts\Admin\Components;
 
-use WebTheory\Leonidas\Admin\Contracts\AdminComponentInterface;
-
 interface AdminPageInterface extends AdminComponentInterface
 {
     public function getPageTitle(): string;

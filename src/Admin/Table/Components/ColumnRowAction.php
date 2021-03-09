@@ -5,7 +5,7 @@ namespace WebTheory\Leonidas\Admin\Table;
 use Psr\Http\Message\ServerRequestInterface;
 use WebTheory\Html\Traits\ElementConstructorTrait;
 use WebTheory\Leonidas\Contracts\Admin\Components\ColumnRowActionInterface;
-use WebTheory\Leonidas\Admin\Traits\CanBeRestrictedTrait;
+use WebTheory\Leonidas\Traits\CanBeRestrictedTrait;
 
 class ColumnRowAction implements ColumnRowActionInterface
 {

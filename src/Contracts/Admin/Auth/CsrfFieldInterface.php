@@ -4,7 +4,7 @@ namespace WebTheory\Leonidas\Contracts\Admin\Auth;
 
 interface CsrfFieldInterface
 {
-    public function render(): string;
+    public function renderField(): string;
 
     public function getTag(): string;
 

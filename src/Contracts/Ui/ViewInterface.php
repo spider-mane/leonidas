@@ -7,5 +7,5 @@ interface ViewInterface
     /**
      *
      */
-    public function render(array $context): string;
+    public function render(array $data): string;
 }

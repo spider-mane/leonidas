@@ -6,7 +6,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use WebTheory\Leonidas\Admin\Forms\Controllers\AbstractWpAdminFormSubmissionManager;
 use WebTheory\Leonidas\Contracts\Admin\Components\MetaboxComponentInterface;
 use WebTheory\Leonidas\Contracts\Admin\Components\MetaboxFieldInterface;
-use WebTheory\Leonidas\Admin\Traits\CanBeRestrictedTrait;
+use WebTheory\Leonidas\Traits\CanBeRestrictedTrait;
 use WebTheory\Saveyour\Contracts\FormFieldControllerInterface;
 
 class Fieldset implements MetaboxComponentInterface

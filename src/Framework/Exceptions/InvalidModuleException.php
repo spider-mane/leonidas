@@ -3,7 +3,7 @@
 namespace WebTheory\Leonidas\Framework\Exceptions;
 
 use RuntimeException;
-use WebTheory\Leonidas\Admin\Contracts\ModuleInterface;
+use WebTheory\Leonidas\Contracts\Extension\ModuleInterface;
 
 class InvalidModuleException extends RuntimeException
 {

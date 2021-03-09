@@ -1,6 +1,6 @@
 <?php
 
-namespace WebTheory\Leonidas\Admin\Traits;
+namespace WebTheory\Leonidas\Traits;
 
 use Psr\Http\Message\ServerRequestInterface;
 use WP_Post;

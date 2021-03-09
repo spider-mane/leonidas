@@ -85,16 +85,6 @@ abstract class AbstractAdminField implements AdminFieldInterface
     }
 
     /**
-     * Get the value of formFieldController
-     *
-     * @return FormFieldControllerInterface
-     */
-    public function getFormFieldController(): FormFieldControllerInterface
-    {
-        return $this->formFieldController;
-    }
-
-    /**
      *
      */
     protected function renderFormField(ServerRequestInterface $request): FormFieldInterface

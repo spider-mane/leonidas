@@ -2,9 +2,9 @@
 
 namespace WebTheory\Leonidas\Framework\Modules;
 
-use WebTheory\Leonidas\Admin\Contracts\ModuleInterface;
-use WebTheory\Leonidas\Framework\Traits\Hooks\TargetsAdminEnqueueScriptHook;
-use WebTheory\Leonidas\Framework\Traits\Hooks\TargetsWpEnqueueScriptsHook;
+use WebTheory\Leonidas\Contracts\Extension\ModuleInterface;
+use WebTheory\Leonidas\Traits\Hooks\TargetsAdminEnqueueScriptHook;
+use WebTheory\Leonidas\Traits\Hooks\TargetsWpEnqueueScriptsHook;
 
 abstract class AbstractExtensionAssetLoaderModule extends AbstractModule implements ModuleInterface
 {

@@ -4,13 +4,13 @@ namespace WebTheory\Leonidas\Admin\Page;
 
 use GuzzleHttp\Psr7\ServerRequest;
 use Psr\Http\Message\ServerRequestInterface;
+use WebTheory\Leonidas\Traits\CanBeRestrictedTrait;
+use WebTheory\Leonidas\Contracts\Admin\AdminPageLoadErrorInterface;
+use WebTheory\Leonidas\Contracts\Admin\AdminTitleResolverInterface;
 use WebTheory\Leonidas\Contracts\Admin\Components\AdminPageInterface;
 use WebTheory\Leonidas\Contracts\Admin\Components\AdminPageLayoutInterface;
-use WebTheory\Leonidas\Contracts\Admin\Components\AdminPageLoadErrorInterface;
-use WebTheory\Leonidas\Contracts\Admin\Components\AdminTitleResolverInterface;
-use WebTheory\Leonidas\Contracts\Admin\Components\ParentFileResolverInterface;
-use WebTheory\Leonidas\Contracts\Admin\Components\SubmenuFileResolverInterface;
-use WebTheory\Leonidas\Admin\Traits\CanBeRestrictedTrait;
+use WebTheory\Leonidas\Contracts\Admin\ParentFileResolverInterface;
+use WebTheory\Leonidas\Contracts\Admin\SubmenuFileResolverInterface;
 
 abstract class AbstractAdminPage
 {

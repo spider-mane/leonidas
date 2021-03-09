@@ -7,8 +7,8 @@ use Psr\Http\Message\ServerRequestInterface;
 use WP_Post;
 use WebTheory\Leonidas\Contracts\Admin\Components\MetaboxInterface;
 use WebTheory\Leonidas\Contracts\Admin\Components\MetaboxLayoutInterface;
-use WebTheory\Leonidas\Admin\Traits\CanBeRestrictedTrait;
-use WebTheory\Leonidas\Admin\Traits\RendersWithViewTrait;
+use WebTheory\Leonidas\Traits\CanBeRestrictedTrait;
+use WebTheory\Leonidas\Traits\RendersWithViewTrait;
 
 class Metabox implements MetaboxInterface
 {

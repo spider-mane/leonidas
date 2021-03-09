@@ -3,8 +3,8 @@
 namespace WebTheory\Leonidas\Framework;
 
 use InvalidArgumentException;
-use WebTheory\Leonidas\Admin\Contracts\ModuleInterface;
 use WebTheory\Leonidas\Contracts\Extension\ModuleInitializerInterface;
+use WebTheory\Leonidas\Contracts\Extension\ModuleInterface;
 use WebTheory\Leonidas\Framework\Exceptions\InvalidModuleException;
 use WebTheory\Leonidas\Framework\WpExtension;
 
@@ -26,9 +26,9 @@ class ModuleInitializer implements ModuleInitializerInterface
         $this->modules = $modules;
     }
 
-    public function init(): ModuleInitializerInterface
+    public function init(): void
     {
-        return $this->hookInModules();
+        $this->hookInModules();
     }
 
     protected function hookInModules(): ModuleInitializer

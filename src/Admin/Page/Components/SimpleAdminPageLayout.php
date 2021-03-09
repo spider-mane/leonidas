@@ -7,8 +7,8 @@ use WebTheory\Leonidas\Contracts\Admin\Components\AdminPageComponentInterface;
 use WebTheory\Leonidas\Contracts\Admin\Components\AdminPageLayoutInterface;
 use WebTheory\Leonidas\Contracts\Admin\Components\ViewInterface;
 use WebTheory\Leonidas\Admin\Page\Views\SimpleAdminPageView;
-use WebTheory\Leonidas\Admin\Traits\CanBeRestrictedTrait;
-use WebTheory\Leonidas\Admin\Traits\RendersWithViewTrait;
+use WebTheory\Leonidas\Traits\CanBeRestrictedTrait;
+use WebTheory\Leonidas\Traits\RendersWithViewTrait;
 use WebTheory\Leonidas\Traits\MaybeHandlesCsrfTrait;
 
 class SimpleAdminPageLayout extends AbstractPageLayout implements AdminPageLayoutInterface

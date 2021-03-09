@@ -6,8 +6,8 @@ use Psr\Http\Message\ServerRequestInterface;
 use WebTheory\Leonidas\Contracts\Admin\Components\MetaboxComponentInterface;
 use WebTheory\Leonidas\Contracts\Admin\Components\ViewInterface;
 use WebTheory\Leonidas\Admin\Metabox\Views\TabGroupView;
-use WebTheory\Leonidas\Admin\Traits\CanBeRestrictedTrait;
-use WebTheory\Leonidas\Admin\Traits\RendersWithViewTrait;
+use WebTheory\Leonidas\Traits\CanBeRestrictedTrait;
+use WebTheory\Leonidas\Traits\RendersWithViewTrait;
 
 class TabGroup implements MetaboxComponentInterface
 {

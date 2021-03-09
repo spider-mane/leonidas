@@ -6,8 +6,8 @@ use Psr\Http\Message\ServerRequestInterface;
 use WebTheory\Leonidas\Contracts\Admin\Components\AdminNoticeInterface;
 use WebTheory\Leonidas\Contracts\Admin\Components\ViewInterface;
 use WebTheory\Leonidas\Admin\Notices\Views\StandardAdminNoticeView;
-use WebTheory\Leonidas\Admin\Traits\CanBeRestrictedTrait;
-use WebTheory\Leonidas\Admin\Traits\RendersWithViewTrait;
+use WebTheory\Leonidas\Traits\CanBeRestrictedTrait;
+use WebTheory\Leonidas\Traits\RendersWithViewTrait;
 
 class StandardAdminNotice implements AdminNoticeInterface
 {

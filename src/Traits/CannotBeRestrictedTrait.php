@@ -1,6 +1,6 @@
 <?php
 
-namespace WebTheory\Leonidas\Admin\Traits;
+namespace WebTheory\Leonidas\Traits;
 
 use GuzzleHttp\Psr7\ServerRequest;
 

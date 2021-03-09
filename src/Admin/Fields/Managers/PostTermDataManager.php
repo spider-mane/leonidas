@@ -3,7 +3,7 @@
 namespace WebTheory\Leonidas\Admin\Fields\Managers;
 
 use Psr\Http\Message\ServerRequestInterface;
-use WebTheory\Leonidas\Admin\Traits\ExpectsPostTrait;
+use WebTheory\Leonidas\Traits\ExpectsPostTrait;
 use WebTheory\Leonidas\Core\Util\TermCollection;
 use WebTheory\Saveyour\Contracts\FieldDataManagerInterface;
 

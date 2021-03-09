@@ -5,9 +5,8 @@ namespace WebTheory\Leonidas\Admin\Constrainers;
 use Psr\Http\Message\ServerRequestInterface;
 use WP_Post;
 use WP_Term;
-use WebTheory\Leonidas\Admin\Traits\ExpectsPostTrait;
-use WebTheory\Leonidas\Contracts\Admin\Components\ComponentConstrainerInterface;
-use WebTheory\Leonidas\Contracts\ConstrainerInterface;
+use WebTheory\Leonidas\Traits\ExpectsPostTrait;
+use WebTheory\Leonidas\Contracts\Auth\ConstrainerInterface;
 
 class PostTermConstrainer implements ConstrainerInterface
 {

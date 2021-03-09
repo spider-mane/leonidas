@@ -2,8 +2,6 @@
 
 namespace WebTheory\Leonidas\Contracts\Extension;
 
-use WebTheory\Leonidas\Contracts\Extension\WpExtensionInterface;
-
 interface ModuleInterface
 {
     /**

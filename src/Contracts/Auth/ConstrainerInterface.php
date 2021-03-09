@@ -1,6 +1,6 @@
 <?php
 
-namespace WebTheory\Leonidas\Contracts;
+namespace WebTheory\Leonidas\Contracts\Auth;
 
 use Psr\Http\Message\ServerRequestInterface;
 

@@ -4,7 +4,6 @@ namespace WebTheory\Leonidas\Contracts\Ui;
 
 interface AssetInterface
 {
-
     /**
      * @return string
      */

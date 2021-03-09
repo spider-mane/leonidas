@@ -9,7 +9,7 @@ use WebTheory\Leonidas\Contracts\Admin\Components\AdminTitleResolverInterface;
 use WebTheory\Leonidas\Contracts\Admin\Components\ParentFileResolverInterface;
 use WebTheory\Leonidas\Contracts\Admin\Components\SubmenuFileResolverInterface;
 use WebTheory\Leonidas\Contracts\Admin\Components\SubmenuPageInterface;
-use WebTheory\Leonidas\Admin\Traits\CanBeRestrictedTrait;
+use WebTheory\Leonidas\Traits\CanBeRestrictedTrait;
 
 class SubmenuPage extends AbstractAdminPage implements SubmenuPageInterface
 {

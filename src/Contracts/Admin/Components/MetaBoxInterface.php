@@ -2,8 +2,6 @@
 
 namespace WebTheory\Leonidas\Contracts\Admin\Components;
 
-use WebTheory\Leonidas\Admin\Contracts\AdminComponentInterface;
-
 interface MetaboxInterface extends AdminComponentInterface
 {
     public function getId(): string;

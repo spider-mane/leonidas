@@ -8,8 +8,8 @@ use WebTheory\Leonidas\Contracts\Admin\Components\TermFieldInterface;
 use WebTheory\Leonidas\Contracts\Admin\Components\ViewInterface;
 use WebTheory\Leonidas\Admin\Term\Views\AddTermFieldView;
 use WebTheory\Leonidas\Admin\Term\Views\EditTermFieldView;
-use WebTheory\Leonidas\Admin\Traits\CanBeRestrictedTrait;
-use WebTheory\Leonidas\Admin\Traits\RendersWithViewTrait;
+use WebTheory\Leonidas\Traits\CanBeRestrictedTrait;
+use WebTheory\Leonidas\Traits\RendersWithViewTrait;
 
 class TermField extends AbstractAdminField implements TermFieldInterface
 {

@@ -7,8 +7,8 @@ use WebTheory\Leonidas\Admin\AbstractAdminField;
 use WebTheory\Leonidas\Contracts\Admin\Components\MetaboxFieldInterface;
 use WebTheory\Leonidas\Contracts\Admin\Components\ViewInterface;
 use WebTheory\Leonidas\Admin\Metabox\Views\FieldView;
-use WebTheory\Leonidas\Admin\Traits\CanBeRestrictedTrait;
-use WebTheory\Leonidas\Admin\Traits\RendersWithViewTrait;
+use WebTheory\Leonidas\Traits\CanBeRestrictedTrait;
+use WebTheory\Leonidas\Traits\RendersWithViewTrait;
 
 class Field extends AbstractAdminField implements MetaboxFieldInterface
 {

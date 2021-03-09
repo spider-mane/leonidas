@@ -6,8 +6,8 @@ use Psr\Http\Message\ServerRequestInterface;
 use WebTheory\Leonidas\Contracts\Admin\Components\AdminPageLayoutInterface;
 use WebTheory\Leonidas\Contracts\Admin\Components\ViewInterface;
 use WebTheory\Leonidas\Admin\Page\Views\StandardSettingsPageView;
-use WebTheory\Leonidas\Admin\Traits\CanBeRestrictedTrait;
-use WebTheory\Leonidas\Admin\Traits\RendersWithViewTrait;
+use WebTheory\Leonidas\Traits\CanBeRestrictedTrait;
+use WebTheory\Leonidas\Traits\RendersWithViewTrait;
 
 class StandardSettingsPageLayout extends AbstractPageLayout implements AdminPageLayoutInterface
 {

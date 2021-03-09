@@ -6,5 +6,5 @@ use WebTheory\Leonidas\Framework\WpExtension;
 
 interface ModuleInitializerInterface
 {
-    public function init(): ModuleInitializerInterface;
+    public function init(): void;
 }

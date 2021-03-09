@@ -4,12 +4,13 @@ namespace WebTheory\Leonidas\Framework\Modules;
 
 use Closure;
 use WP_Screen;
-use WebTheory\Leonidas\Admin\Contracts\ModuleInterface;
-use WebTheory\Leonidas\Concerns\Hooks\LoadsCsrfFieldsTrait;
-use WebTheory\Leonidas\Contracts\Dashboard\ScreenInterface;
-use WebTheory\Leonidas\Core\Auth\CsrfManagerRepository;
 use WebTheory\Leonidas\Contracts\Auth\CsrfManagerInterface;
-use WebTheory\Leonidas\Framework\Traits\Hooks\TargetsInAdminHeaderHook;
+use WebTheory\Leonidas\Contracts\Auth\CsrfManagerRepositoryInterface;
+use WebTheory\Leonidas\Contracts\Dashboard\ScreenInterface;
+use WebTheory\Leonidas\Contracts\Extension\ModuleInterface;
+use WebTheory\Leonidas\Core\Auth\CsrfManagerRepository;
+use WebTheory\Leonidas\Traits\Hooks\TargetsInAdminHeaderHook;
+use WebTheory\Leonidas\Traits\LoadsCsrfFieldsTrait;
 
 abstract class AbstractCsrfFieldLoaderModule extends AbstractModule implements ModuleInterface
 {
@@ -26,9 +27,9 @@ abstract class AbstractCsrfFieldLoaderModule extends AbstractModule implements M
         echo $this->renderCsrfFields();
     }
 
-    protected function getManagerRepository(): CsrfManagerRepository
+    protected function getManagerRepository(): CsrfManagerRepositoryInterface
     {
-        return $this->extension->get(CsrfManagerRepository::class);
+        return $this->extension->get(CsrfManagerRepositoryInterface::class);
     }
 
     protected function getRequiredManagerTags(): array
