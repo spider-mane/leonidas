@@ -7,9 +7,9 @@ use PHPUnit\Framework\TestCase;
 use WP_Screen;
 use WebTheory\Leonidas\Contracts\Admin\Components\MetaboxInterface;
 use WebTheory\Leonidas\Contracts\Admin\Components\MetaboxLayoutInterface;
-use WebTheory\Leonidas\Admin\Enum\MetaboxContext;
-use WebTheory\Leonidas\Admin\Enum\MetaboxPriority;
-use WebTheory\Leonidas\Admin\Metabox\Metabox;
+use WebTheory\Leonidas\Library\Admin\Enum\MetaboxContext;
+use WebTheory\Leonidas\Library\Admin\Enum\MetaboxPriority;
+use WebTheory\Leonidas\Library\Admin\Metabox\Metabox;
 
 class MetaboxTest extends TestCase
 {

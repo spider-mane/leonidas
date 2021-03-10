@@ -21,7 +21,7 @@ if (file_exists($development = __DIR__ . '/boot/development.php')) {
 /** @var ContainerInterface $container */
 $container = require 'boot/container.php';
 
-$extension = WpExtension::create([
+$base = WpExtension::create([
     'name' => 'Extension Name',
     'prefix' => 'pre',
     'path' => __DIR__,
@@ -33,7 +33,7 @@ $extension = WpExtension::create([
     'container' => $container
 ]);
 
-$plugin = new ModuleInitializer($extension, $extension->config('app.modules'));
+$extension = new ModuleInitializer($base, $base->config('app.modules'));
 
-$plugin->init();
+$extension->init();
 ```

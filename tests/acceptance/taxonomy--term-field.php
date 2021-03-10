@@ -1,11 +1,11 @@
 <?php
 
 use Respect\Validation\Validator;
-use WebTheory\Leonidas\Admin\Fields\Managers\TermMetaDataManager;
-use WebTheory\Leonidas\Admin\Forms\Controllers\TermFieldFormSubmissionManager;
-use WebTheory\Leonidas\Admin\Loaders\TermFieldCollectionLoader;
-use WebTheory\Leonidas\Admin\Term\Components\TermField;
-use WebTheory\Leonidas\Core\Auth\Nonce;
+use WebTheory\Leonidas\Library\Admin\Fields\Managers\TermMetaDataManager;
+use WebTheory\Leonidas\Library\Admin\Forms\Controllers\TermFieldFormSubmissionManager;
+use WebTheory\Leonidas\Library\Admin\Loaders\TermFieldCollectionLoader;
+use WebTheory\Leonidas\Library\Admin\Term\Components\TermField;
+use WebTheory\Leonidas\Library\Core\Auth\Nonce;
 use WebTheory\Saveyour\Controllers\FormFieldControllerBuilder;
 use WebTheory\Saveyour\Fields\Select;
 use WebTheory\Saveyour\Fields\Text;

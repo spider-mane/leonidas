@@ -1,0 +1,22 @@
+; This file is for unifying the coding style for different editors and IDEs.
+; More information at http://editorconfig.org
+
+[*]
+charset = utf-8
+indent_size = 2
+end_of_line = lf
+indent_style = space
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.{html,json}]
+insert_final_newline = false
+
+[*.js]
+; insert js specific rules here
+
+[*.scss]
+; insert scss specific rules here
+
+[*.md]
+trim_trailing_whitespace = false

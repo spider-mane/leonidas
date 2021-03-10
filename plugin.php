@@ -13,7 +13,7 @@
  *
  * @wordpress-plugin
  * Plugin Name: Leonidas
- * Description: Plugin framework with enhanced api library.
+ * Description: Theme and plugin framework with enhanced WordPress abstraction library.
  */
 
 use WebTheory\Leonidas\Plugin\Leonidas;
@@ -23,7 +23,7 @@ if (file_exists($autoload = __DIR__ . '/vendor/autoload.php')) {
     require $autoload;
 }
 
-// required for development purposes only
+// required during development only
 if (file_exists($development = __DIR__ . '/boot/development.php')) {
     require $development;
 }

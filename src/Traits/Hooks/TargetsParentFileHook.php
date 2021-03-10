@@ -6,7 +6,7 @@ use Closure;
 
 trait TargetsParentFileHook
 {
-    protected function targetParentFileHook()
+    protected function targetParentFileHook(): TargetsParentFileHook
     {
         add_filter('parent_file', $this->getParentFileCallback(), null, PHP_INT_MAX);
 

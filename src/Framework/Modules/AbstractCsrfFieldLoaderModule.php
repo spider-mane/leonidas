@@ -8,7 +8,7 @@ use WebTheory\Leonidas\Contracts\Auth\CsrfManagerInterface;
 use WebTheory\Leonidas\Contracts\Auth\CsrfManagerRepositoryInterface;
 use WebTheory\Leonidas\Contracts\Dashboard\ScreenInterface;
 use WebTheory\Leonidas\Contracts\Extension\ModuleInterface;
-use WebTheory\Leonidas\Core\Auth\CsrfManagerRepository;
+use WebTheory\Leonidas\Library\Core\Auth\CsrfManagerRepository;
 use WebTheory\Leonidas\Traits\Hooks\TargetsInAdminHeaderHook;
 use WebTheory\Leonidas\Traits\LoadsCsrfFieldsTrait;
 

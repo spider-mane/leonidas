@@ -1,8 +1,8 @@
 <?php
 
-use WebTheory\Leonidas\Admin\Screen;
-use WebTheory\Leonidas\Core\Helpers\SkyHooks;
-use WebTheory\Leonidas\Core\Util\TermCollection;
+use WebTheory\Leonidas\Library\Admin\Screen;
+use WebTheory\Leonidas\Library\Core\Helpers\SkyHooks;
+use WebTheory\Leonidas\Library\Core\Util\TermCollection;
 use Whoops\Handler\PrettyPageHandler;
 use Whoops\Run;
 

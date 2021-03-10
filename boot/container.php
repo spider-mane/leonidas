@@ -1,14 +1,14 @@
 <?php
 
 use League\Container\Container;
-use Noodlehaus\Config;
 use Noodlehaus\ConfigInterface;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
+use WebTheory\GuctilityBelt\Config;
+use WebTheory\Leonidas\Library\Admin\Loaders\AdminNoticeCollectionLoader;
 use WebTheory\Leonidas\Contracts\Admin\Components\AdminNoticeInterface;
-use WebTheory\Leonidas\Admin\Loaders\AdminNoticeCollectionLoader;
 
 $container = new Container();
 
@@ -16,7 +16,6 @@ $container = new Container();
 $container->add(ConfigInterface::class, function () {
     return new Config(realpath('../config'));
 })->setAlias('config')->setShared(true);
-
 
 
 // register twig environment
@@ -41,7 +40,6 @@ $container->add(Environment::class, function () use ($container) {
 })->setAlias('twig')->setShared(true);
 
 
-
 // register admin loader
 $container->add(AdminNoticeInterface::class, function () {
 
@@ -51,4 +49,14 @@ $container->add(AdminNoticeInterface::class, function () {
     return $loader;
 })->setAlias('notice_loader')->setShared(true);
 
+
+// bootstrap providers
+$providers = $container->get('config')->get('app.providers', []);
+
+foreach ($providers as $provider) {
+    $container->addServiceProvider($provider);
+}
+
+
+// return bootstrapped container
 return $container;
