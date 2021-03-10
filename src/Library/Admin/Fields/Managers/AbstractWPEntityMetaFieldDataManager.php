@@ -1,6 +1,6 @@
 <?php
 
-namespace WebTheory\Leonidas\Library\Admin\Fields\Managers;
+namespace Leonidas\Library\Admin\Fields\Managers;
 
 use Psr\Http\Message\ServerRequestInterface;
 use WebTheory\Saveyour\Contracts\FieldDataManagerInterface;

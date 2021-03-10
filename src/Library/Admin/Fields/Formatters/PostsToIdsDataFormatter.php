@@ -1,9 +1,9 @@
 <?php
 
-namespace WebTheory\Leonidas\Library\Admin\Fields\Formatters;
+namespace Leonidas\Library\Admin\Fields\Formatters;
 
 use WP_Post;
-use WebTheory\Leonidas\Library\Core\Util\PostCollection;
+use Leonidas\Library\Core\Util\PostCollection;
 use WebTheory\Saveyour\Contracts\DataFormatterInterface;
 
 class PostsToIdsDataFormatter implements DataFormatterInterface

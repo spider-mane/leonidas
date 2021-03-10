@@ -1,6 +1,6 @@
 <?php
 
-namespace WebTheory\Leonidas\Library\Admin\Fields;
+namespace Leonidas\Library\Admin\Fields;
 
 use WebTheory\Saveyour\Contracts\FormFieldControllerInterface;
 use WebTheory\Saveyour\Contracts\FormFieldInterface;

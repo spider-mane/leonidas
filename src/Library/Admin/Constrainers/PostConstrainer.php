@@ -1,11 +1,11 @@
 <?php
 
-namespace WebTheory\Leonidas\Library\Admin\Constrainers;
+namespace Leonidas\Library\Admin\Constrainers;
 
 use Psr\Http\Message\ServerRequestInterface;
 use WP_Post;
-use WebTheory\Leonidas\Traits\ExpectsPostTrait;
-use WebTheory\Leonidas\Contracts\Auth\ConstrainerInterface;
+use Leonidas\Traits\ExpectsPostTrait;
+use Leonidas\Contracts\Auth\ConstrainerInterface;
 
 class PostConstrainer implements ConstrainerInterface
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace WebTheory\Leonidas\Library\Admin\Fields\Selections;
+namespace Leonidas\Library\Admin\Fields\Selections;
 
 use WP_Term;
 use WebTheory\Saveyour\Contracts\SelectionProviderInterface;

@@ -1,8 +1,8 @@
 <?php
 
-namespace WebTheory\Leonidas\Traits;
+namespace Leonidas\Traits;
 
-use WebTheory\Leonidas\Contracts\Auth\CsrfManagerInterface;
+use Leonidas\Contracts\Auth\CsrfManagerInterface;
 
 trait MaybeHandlesCsrfTrait
 {

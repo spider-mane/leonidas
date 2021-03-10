@@ -1,6 +1,6 @@
 <?php
 
-namespace WebTheory\Leonidas\Library\Core\Cache;
+namespace Leonidas\Library\Core\Cache;
 
 use DateTimeInterface;
 use Psr\Cache\CacheItemInterface;

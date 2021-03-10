@@ -1,11 +1,11 @@
 <?php
 
-namespace WebTheory\Leonidas\Library\Admin\Table;
+namespace Leonidas\Library\Admin\Table;
 
 use Psr\Http\Message\ServerRequestInterface;
 use WebTheory\Html\Traits\ElementConstructorTrait;
-use WebTheory\Leonidas\Contracts\Admin\Components\ColumnRowActionInterface;
-use WebTheory\Leonidas\Traits\CanBeRestrictedTrait;
+use Leonidas\Contracts\Admin\Components\ColumnRowActionInterface;
+use Leonidas\Traits\CanBeRestrictedTrait;
 
 class ColumnRowAction implements ColumnRowActionInterface
 {

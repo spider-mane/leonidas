@@ -1,10 +1,10 @@
 <?php
 
-namespace WebTheory\Leonidas\Library\Admin\Fields\Managers;
+namespace Leonidas\Library\Admin\Fields\Managers;
 
 use Psr\Http\Message\ServerRequestInterface;
-use WebTheory\Leonidas\Traits\ExpectsPostTrait;
-use WebTheory\Leonidas\Library\Core\Util\TermCollection;
+use Leonidas\Traits\ExpectsPostTrait;
+use Leonidas\Library\Core\Util\TermCollection;
 use WebTheory\Saveyour\Contracts\FieldDataManagerInterface;
 
 class PostTermDataManager implements FieldDataManagerInterface

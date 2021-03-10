@@ -1,6 +1,6 @@
 <?php
 
-namespace WebTheory\Leonidas\Contracts\Admin;
+namespace Leonidas\Contracts\Admin;
 
 interface ScreenInterface
 {

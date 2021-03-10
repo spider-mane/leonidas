@@ -1,6 +1,6 @@
 <?php
 
-namespace WebTheory\Leonidas\Contracts\Admin\Components;
+namespace Leonidas\Contracts\Admin\Components;
 
 use Psr\Http\Message\ServerRequestInterface;
 

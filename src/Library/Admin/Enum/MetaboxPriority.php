@@ -1,6 +1,6 @@
 <?php
 
-namespace WebTheory\Leonidas\Library\Admin\Enum;
+namespace Leonidas\Library\Admin\Enum;
 
 use MyCLabs\Enum\Enum;
 

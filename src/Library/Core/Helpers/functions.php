@@ -1,6 +1,6 @@
 <?php
 
-namespace WebTheory\Leonidas\Library\Core\Helpers;
+namespace Leonidas\Library\Core\Helpers;
 
 use function WebTheory\GuctilityBelt\sort_objects_array;
 

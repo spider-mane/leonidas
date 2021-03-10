@@ -1,6 +1,6 @@
 <?php
 
-use WebTheory\Leonidas\Plugin\Modules\LeonidasAssetLoaderModule;
+use Leonidas\Plugin\Modules\LeonidasAssetLoaderModule;
 
 return [
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace WebTheory\Leonidas\Library\Core\PostType;
+namespace Leonidas\Library\Core\PostType;
 
 use Exception;
 use WebTheory\GuctilityBelt\CaseSwap;

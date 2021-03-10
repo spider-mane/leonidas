@@ -1,11 +1,11 @@
 <?php
 
-namespace WebTheory\Leonidas\Library\Admin\Loaders;
+namespace Leonidas\Library\Admin\Loaders;
 
 use GuzzleHttp\Psr7\ServerRequest;
 use Psr\Http\Message\ServerRequestInterface;
-use WebTheory\Leonidas\Contracts\Admin\Components\AdminPageInterface;
-use WebTheory\Leonidas\Contracts\Admin\Components\AdminPageLoadErrorInterface;
+use Leonidas\Contracts\Admin\Components\AdminPageInterface;
+use Leonidas\Contracts\Admin\Components\AdminPageLoadErrorInterface;
 
 abstract class AbstractAdminPageLoader
 {

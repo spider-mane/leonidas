@@ -1,6 +1,6 @@
 <?php
 
-namespace WebTheory\Leonidas\Contracts\Hook;
+namespace Leonidas\Contracts\Hook;
 
 interface HookInterface
 {

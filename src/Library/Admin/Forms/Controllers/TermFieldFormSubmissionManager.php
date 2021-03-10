@@ -1,14 +1,14 @@
 <?php
 
-namespace WebTheory\Leonidas\Library\Admin\Forms\Controllers;
+namespace Leonidas\Library\Admin\Forms\Controllers;
 
 use GuzzleHttp\Psr7\ServerRequest;
 use WP_Taxonomy;
-use WebTheory\Leonidas\Library\Admin\Forms\Controllers\AbstractWpAdminFormSubmissionManager;
-use WebTheory\Leonidas\Library\Admin\Forms\Validators\NoAutosaveValidator;
-use WebTheory\Leonidas\Library\Admin\Forms\Validators\Permissions\EditTerm;
-use WebTheory\Leonidas\Library\Admin\Forms\Validators\WpNonceValidator;
-use WebTheory\Leonidas\Traits\MaybeHandlesCsrfTrait;
+use Leonidas\Library\Admin\Forms\Controllers\AbstractWpAdminFormSubmissionManager;
+use Leonidas\Library\Admin\Forms\Validators\NoAutosaveValidator;
+use Leonidas\Library\Admin\Forms\Validators\Permissions\EditTerm;
+use Leonidas\Library\Admin\Forms\Validators\WpNonceValidator;
+use Leonidas\Traits\MaybeHandlesCsrfTrait;
 
 class TermFieldFormSubmissionManager extends AbstractWpAdminFormSubmissionManager
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace WebTheory\Leonidas\Library\Core\Util;
+namespace Leonidas\Library\Core\Util;
 
 use WP_Term;
 use WP_Term_Query;

@@ -1,6 +1,6 @@
 <?php
 
-namespace WebTheory\Leonidas\Contracts\Database;
+namespace Leonidas\Contracts\Database;
 
 interface DatabaseConnectionInterface
 {

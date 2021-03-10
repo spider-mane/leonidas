@@ -1,15 +1,15 @@
 <?php
 
-namespace WebTheory\Leonidas\Library\Admin\Page\Components;
+namespace Leonidas\Library\Admin\Page\Components;
 
 use Psr\Http\Message\ServerRequestInterface;
-use WebTheory\Leonidas\Contracts\Admin\Components\AdminPageComponentInterface;
-use WebTheory\Leonidas\Contracts\Admin\Components\AdminPageLayoutInterface;
-use WebTheory\Leonidas\Contracts\Admin\Components\ViewInterface;
-use WebTheory\Leonidas\Library\Admin\Page\Views\SimpleAdminPageView;
-use WebTheory\Leonidas\Traits\CanBeRestrictedTrait;
-use WebTheory\Leonidas\Traits\RendersWithViewTrait;
-use WebTheory\Leonidas\Traits\MaybeHandlesCsrfTrait;
+use Leonidas\Contracts\Admin\Components\AdminPageComponentInterface;
+use Leonidas\Contracts\Admin\Components\AdminPageLayoutInterface;
+use Leonidas\Contracts\Admin\Components\ViewInterface;
+use Leonidas\Library\Admin\Page\Views\SimpleAdminPageView;
+use Leonidas\Traits\CanBeRestrictedTrait;
+use Leonidas\Traits\RendersWithViewTrait;
+use Leonidas\Traits\MaybeHandlesCsrfTrait;
 
 class SimpleAdminPageLayout extends AbstractPageLayout implements AdminPageLayoutInterface
 {

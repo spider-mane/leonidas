@@ -1,9 +1,9 @@
 <?php
 
-namespace WebTheory\Leonidas\Library\Admin\Term\Views;
+namespace Leonidas\Library\Admin\Term\Views;
 
-use WebTheory\Leonidas\Contracts\Admin\Components\ViewInterface;
-use WebTheory\Leonidas\Library\Admin\Views\AbstractLeonidasTwigView;
+use Leonidas\Contracts\Admin\Components\ViewInterface;
+use Leonidas\Library\Admin\Views\AbstractLeonidasTwigView;
 
 class EditTermFieldView extends AbstractLeonidasTwigView implements ViewInterface
 {

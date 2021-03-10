@@ -1,8 +1,8 @@
 <?php
 
-namespace WebTheory\Leonidas\Library\Admin\Page\Components;
+namespace Leonidas\Library\Admin\Page\Components;
 
-use WebTheory\Leonidas\Contracts\Admin\Components\AdminPageLayoutInterface;
+use Leonidas\Contracts\Admin\Components\AdminPageLayoutInterface;
 
 abstract class AbstractPageLayout implements AdminPageLayoutInterface
 {

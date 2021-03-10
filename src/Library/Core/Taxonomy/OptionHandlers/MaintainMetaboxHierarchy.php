@@ -1,9 +1,9 @@
 <?php
 
-namespace WebTheory\Leonidas\Library\Core\Taxonomy\OptionHandlers;
+namespace Leonidas\Library\Core\Taxonomy\OptionHandlers;
 
 use WP_Taxonomy;
-use WebTheory\Leonidas\Contracts\Options\TaxonomyOptionHandlerInterface;
+use Leonidas\Contracts\Options\TaxonomyOptionHandlerInterface;
 
 class MaintainMetaboxHierarchy implements TaxonomyOptionHandlerInterface
 {

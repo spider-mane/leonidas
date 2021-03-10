@@ -1,8 +1,8 @@
 <?php
 
-namespace WebTheory\Leonidas\Library\Core\Taxonomy;
+namespace Leonidas\Library\Core\Taxonomy;
 
-use WebTheory\Leonidas\Library\Core\AbstractWpObjectFacade;
+use Leonidas\Library\Core\AbstractWpObjectFacade;
 
 class Taxonomy extends AbstractWpObjectFacade
 {

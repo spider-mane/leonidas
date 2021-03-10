@@ -1,15 +1,15 @@
 <?php
 
-namespace WebTheory\Leonidas\Library\Admin\Page;
+namespace Leonidas\Library\Admin\Page;
 
 use GuzzleHttp\Psr7\ServerRequest;
-use WebTheory\Leonidas\Contracts\Admin\Components\AdminPageLayoutInterface;
-use WebTheory\Leonidas\Contracts\Admin\Components\AdminPageLoadErrorInterface;
-use WebTheory\Leonidas\Contracts\Admin\Components\AdminTitleResolverInterface;
-use WebTheory\Leonidas\Contracts\Admin\Components\MenuPageInterface;
-use WebTheory\Leonidas\Contracts\Admin\Components\ParentFileResolverInterface;
-use WebTheory\Leonidas\Contracts\Admin\Components\SubmenuFileResolverInterface;
-use WebTheory\Leonidas\Traits\CanBeRestrictedTrait;
+use Leonidas\Contracts\Admin\Components\AdminPageLayoutInterface;
+use Leonidas\Contracts\Admin\Components\AdminPageLoadErrorInterface;
+use Leonidas\Contracts\Admin\Components\AdminTitleResolverInterface;
+use Leonidas\Contracts\Admin\Components\MenuPageInterface;
+use Leonidas\Contracts\Admin\Components\ParentFileResolverInterface;
+use Leonidas\Contracts\Admin\Components\SubmenuFileResolverInterface;
+use Leonidas\Traits\CanBeRestrictedTrait;
 
 class MenuPage extends AbstractAdminPage implements MenuPageInterface
 {

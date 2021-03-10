@@ -1,9 +1,9 @@
 <?php
 
-namespace WebTheory\Leonidas\Contracts\Form;
+namespace Leonidas\Contracts\Form;
 
 use Psr\Http\Message\ServerRequestInterface;
-use WebTheory\Leonidas\Contracts\Extension\WpExtensionInterface;
+use Leonidas\Contracts\Extension\WpExtensionInterface;
 use WebTheory\Saveyour\Contracts\FormProcessingCacheInterface;
 
 interface FormInterface

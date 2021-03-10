@@ -1,6 +1,6 @@
 <?php
 
-namespace WebTheory\Leonidas\Plugin;
+namespace Leonidas\Plugin;
 
 use League\Container\Container;
 use Noodlehaus\Config;
@@ -10,13 +10,13 @@ use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
-use WebTheory\Leonidas\Contracts\Extension\WpExtensionInterface;
-use WebTheory\Leonidas\Enum\ExtensionType;
-use WebTheory\Leonidas\Framework\ModuleInitializer;
-use WebTheory\Leonidas\Framework\WpExtension;
-use WebTheory\Leonidas\Library\Admin\Loaders\AdminNoticeCollectionLoader;
-use WebTheory\Leonidas\Library\BaseObjectProxy;
-use WebTheory\Leonidas\Plugin\Exceptions\LeonidasAlreadyLoadedException;
+use Leonidas\Extension\WpExtensionInterface;
+use LeonidasnsionType;
+use Leonidas\ModuleInitializer;
+use Leonidas\WpExtension;
+use Leonidasdmin\Loaders\AdminNoticeCollectionLoader;
+use LeonidasaseObjectProxy;
+use Leonidasceptions\LeonidasAlreadyLoadedException;
 
 final class Leonidas
 {
@@ -36,7 +36,7 @@ final class Leonidas
     protected $uri;
 
     /**
-     * @var Container
+     * @var ContainerInterface
      */
     protected $container;
 
@@ -68,7 +68,7 @@ final class Leonidas
 
     private function bootstrapContainer(): ContainerInterface
     {
-        /** @var Container $container */
+        /** @var ContainerInterface $container */
         $container = require realpath($this->path . '/boot/container.php');
 
         return $container;

@@ -1,9 +1,9 @@
 <?php
 
-namespace WebTheory\Leonidas\Traits;
+namespace Leonidas\Traits;
 
 use Psr\Http\Message\ServerRequestInterface;
-use WebTheory\Leonidas\Contracts\Ui\ViewInterface;
+use Leonidas\Contracts\Ui\ViewInterface;
 
 trait RendersWithViewTrait
 {

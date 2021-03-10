@@ -1,12 +1,12 @@
 <?php
 
-namespace WebTheory\Leonidas\Library\Admin\Metabox\Components;
+namespace Leonidas\Library\Admin\Metabox\Components;
 
 use Psr\Http\Message\ServerRequestInterface;
-use WebTheory\Leonidas\Library\Admin\Forms\Controllers\AbstractWpAdminFormSubmissionManager;
-use WebTheory\Leonidas\Contracts\Admin\Components\MetaboxComponentInterface;
-use WebTheory\Leonidas\Contracts\Admin\Components\MetaboxFieldInterface;
-use WebTheory\Leonidas\Traits\CanBeRestrictedTrait;
+use Leonidas\Library\Admin\Forms\Controllers\AbstractWpAdminFormSubmissionManager;
+use Leonidas\Contracts\Admin\Components\MetaboxComponentInterface;
+use Leonidas\Contracts\Admin\Components\MetaboxFieldInterface;
+use Leonidas\Traits\CanBeRestrictedTrait;
 use WebTheory\Saveyour\Contracts\FormFieldControllerInterface;
 
 class Fieldset implements MetaboxComponentInterface

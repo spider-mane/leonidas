@@ -1,15 +1,15 @@
 <?php
 
-namespace WebTheory\Leonidas\Library\Admin\Term\Components;
+namespace Leonidas\Library\Admin\Term\Components;
 
 use Psr\Http\Message\ServerRequestInterface;
-use WebTheory\Leonidas\Library\Admin\AbstractAdminField;
-use WebTheory\Leonidas\Contracts\Admin\Components\TermFieldInterface;
-use WebTheory\Leonidas\Contracts\Admin\Components\ViewInterface;
-use WebTheory\Leonidas\Library\Admin\Term\Views\AddTermFieldView;
-use WebTheory\Leonidas\Library\Admin\Term\Views\EditTermFieldView;
-use WebTheory\Leonidas\Traits\CanBeRestrictedTrait;
-use WebTheory\Leonidas\Traits\RendersWithViewTrait;
+use Leonidas\Library\Admin\AbstractAdminField;
+use Leonidas\Contracts\Admin\Components\TermFieldInterface;
+use Leonidas\Contracts\Admin\Components\ViewInterface;
+use Leonidas\Library\Admin\Term\Views\AddTermFieldView;
+use Leonidas\Library\Admin\Term\Views\EditTermFieldView;
+use Leonidas\Traits\CanBeRestrictedTrait;
+use Leonidas\Traits\RendersWithViewTrait;
 
 class TermField extends AbstractAdminField implements TermFieldInterface
 {

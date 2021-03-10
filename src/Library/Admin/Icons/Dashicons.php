@@ -1,8 +1,8 @@
 <?php
 
-namespace WebTheory\Leonidas\Library\Admin\Icons;
+namespace Leonidas\Library\Admin\Icons;
 
-use WebTheory\Leonidas\Contracts\Admin\IconResolverInterface;
+use Leonidas\Contracts\Admin\IconResolverInterface;
 
 class Dashicons implements IconResolverInterface
 {

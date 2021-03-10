@@ -1,9 +1,9 @@
 <?php
 
-namespace WebTheory\Leonidas\Traits;
+namespace Leonidas\Traits;
 
 use Psr\Http\Message\ServerRequestInterface;
-use WebTheory\Leonidas\Contracts\Auth\ConstrainerInterface;
+use Leonidas\Contracts\Auth\ConstrainerInterface;
 
 trait CanBeRestrictedTrait
 {

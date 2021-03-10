@@ -1,8 +1,8 @@
 <?php
 
-namespace WebTheory\Leonidas\Library\Admin\Loaders;
+namespace Leonidas\Library\Admin\Loaders;
 
-use WebTheory\Leonidas\Contracts\Admin\Components\SubmenuPageInterface;
+use Leonidas\Contracts\Admin\Components\SubmenuPageInterface;
 
 class SubmenuPageLoader extends AbstractAdminPageLoader
 {

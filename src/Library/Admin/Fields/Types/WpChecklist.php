@@ -1,6 +1,6 @@
 <?php
 
-namespace WebTheory\Leonidas\Library\Admin\Fields\Types;
+namespace Leonidas\Library\Admin\Fields\Types;
 
 use WebTheory\Saveyour\Contracts\FormFieldInterface;
 use WebTheory\Saveyour\Fields\AbstractCompositeSelectionField;

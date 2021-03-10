@@ -1,16 +1,16 @@
 <?php
 
-namespace WebTheory\Leonidas\Framework\Modules;
+namespace Leonidas\Framework\Modules;
 
 use Closure;
 use WP_Screen;
-use WebTheory\Leonidas\Contracts\Auth\CsrfManagerInterface;
-use WebTheory\Leonidas\Contracts\Auth\CsrfManagerRepositoryInterface;
-use WebTheory\Leonidas\Contracts\Dashboard\ScreenInterface;
-use WebTheory\Leonidas\Contracts\Extension\ModuleInterface;
-use WebTheory\Leonidas\Library\Core\Auth\CsrfManagerRepository;
-use WebTheory\Leonidas\Traits\Hooks\TargetsInAdminHeaderHook;
-use WebTheory\Leonidas\Traits\LoadsCsrfFieldsTrait;
+use Leonidas\Contracts\Auth\CsrfManagerInterface;
+use Leonidas\Contracts\Auth\CsrfManagerRepositoryInterface;
+use Leonidas\Contracts\Dashboard\ScreenInterface;
+use Leonidas\Contracts\Extension\ModuleInterface;
+use Leonidas\Library\Core\Auth\CsrfManagerRepository;
+use Leonidas\Traits\Hooks\TargetsInAdminHeaderHook;
+use Leonidas\Traits\LoadsCsrfFieldsTrait;
 
 abstract class AbstractCsrfFieldLoaderModule extends AbstractModule implements ModuleInterface
 {

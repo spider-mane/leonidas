@@ -1,5 +1,5 @@
 {
-  "name": "webtheory/leonidas",
+  "name": "leonidas/leonidas",
   "description": "WordPress admin building framework",
   "type": "wordpress-plugin",
   "license": "GPL-3.0-or-later",
@@ -45,7 +45,7 @@
   },
   "autoload": {
     "psr-4": {
-      "WebTheory\\Leonidas\\": "src/"
+      "Leonidas\\": "src/"
     }
   },
   "autoload-dev": {

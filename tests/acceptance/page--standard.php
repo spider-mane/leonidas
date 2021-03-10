@@ -2,10 +2,10 @@
 
 use Respect\Validation\Validator as v;
 use WebTheory\GuctilityBelt\SelectOptions\UsStatesAndTerritories;
-use WebTheory\Leonidas\Library\Admin\Page\SettingsField;
-use WebTheory\Leonidas\Library\Admin\Page\SelfLoadingSettingsPage;
-use WebTheory\Leonidas\Library\Admin\Page\SettingsSection;
-use WebTheory\Leonidas\Library\Admin\Processing\SettingManager;
+use Leonidas\Library\Admin\Page\SettingsField;
+use Leonidas\Library\Admin\Page\SelfLoadingSettingsPage;
+use Leonidas\Library\Admin\Page\SettingsSection;
+use Leonidas\Library\Admin\Processing\SettingManager;
 use WebTheory\Saveyour\Fields\Email;
 use WebTheory\Saveyour\Fields\Select;
 use WebTheory\Saveyour\Fields\Tel;

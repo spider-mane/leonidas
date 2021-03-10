@@ -1,10 +1,10 @@
 <?php
 
-namespace WebTheory\Leonidas\Library\Admin\Metabox;
+namespace Leonidas\Library\Admin\Metabox;
 
 use Psr\Http\Message\ServerRequestInterface;
-use WebTheory\Leonidas\Contracts\Admin\Components\MetaboxContainerInterface;
-use WebTheory\Leonidas\Contracts\Admin\MetaboxCollectionInterface;
+use Leonidas\Contracts\Admin\Components\MetaboxContainerInterface;
+use Leonidas\Contracts\Admin\MetaboxCollectionInterface;
 
 class StandardMetaboxContainer implements MetaboxContainerInterface
 {

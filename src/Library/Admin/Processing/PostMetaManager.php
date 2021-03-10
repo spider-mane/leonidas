@@ -1,6 +1,6 @@
 <?php
 
-namespace WebTheory\Leonidas\Library\Admin\Processing;
+namespace Leonidas\Library\Admin\Processing;
 
 class PostMetaManager extends AbstractWpObjectMetaManager
 {

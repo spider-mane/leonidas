@@ -1,12 +1,12 @@
 <?php
 
-namespace WebTheory\Leonidas\Library\Admin\Forms\Controllers;
+namespace Leonidas\Library\Admin\Forms\Controllers;
 
 use Psr\Http\Message\ServerRequestInterface;
-use WebTheory\Leonidas\Contracts\Admin\Components\AdminNoticeInterface;
-use WebTheory\Leonidas\Library\Admin\Loaders\AdminNoticeCollectionLoader;
-use WebTheory\Leonidas\Library\Admin\Loaders\AdminNoticeCollectionLoaderInterface;
-use WebTheory\Leonidas\Library\Admin\Notices\Components\StandardAdminNotice;
+use Leonidas\Contracts\Admin\Components\AdminNoticeInterface;
+use Leonidas\Library\Admin\Loaders\AdminNoticeCollectionLoader;
+use Leonidas\Library\Admin\Loaders\AdminNoticeCollectionLoaderInterface;
+use Leonidas\Library\Admin\Notices\Components\StandardAdminNotice;
 use WebTheory\Saveyour\Controllers\FormProcessingCache;
 use WebTheory\Saveyour\Controllers\FormSubmissionManager;
 

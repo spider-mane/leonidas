@@ -1,8 +1,8 @@
 <?php
 
-namespace WebTheory\Leonidas\Library\Core\Asset;
+namespace Leonidas\Library\Core\Asset;
 
-use WebTheory\Leonidas\Contracts\Ui\AssetInterface;
+use Leonidas\Contracts\Ui\AssetInterface;
 
 abstract class AbstractAsset implements AssetInterface
 {

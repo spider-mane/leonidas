@@ -1,12 +1,12 @@
 <?php
 
-namespace WebTheory\Leonidas\Framework;
+namespace Leonidas\Framework;
 
 use InvalidArgumentException;
-use WebTheory\Leonidas\Contracts\Extension\ModuleInitializerInterface;
-use WebTheory\Leonidas\Contracts\Extension\ModuleInterface;
-use WebTheory\Leonidas\Framework\Exceptions\InvalidModuleException;
-use WebTheory\Leonidas\Framework\WpExtension;
+use Leonidas\Contracts\Extension\ModuleInitializerInterface;
+use Leonidas\Contracts\Extension\ModuleInterface;
+use Leonidas\Framework\Exceptions\InvalidModuleException;
+use Leonidas\Framework\WpExtension;
 
 class ModuleInitializer implements ModuleInitializerInterface
 {

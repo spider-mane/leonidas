@@ -1,6 +1,6 @@
 <?php
 
-use WebTheory\Leonidas\Library\Core\Taxonomy\OptionHandlers\MaintainMetaboxHierarchy;
+use Leonidas\Library\Core\Taxonomy\OptionHandlers\MaintainMetaboxHierarchy;
 
 return [
     'data_managers' => [],

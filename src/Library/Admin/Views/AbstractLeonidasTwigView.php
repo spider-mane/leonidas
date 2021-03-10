@@ -1,8 +1,8 @@
 <?php
 
-namespace WebTheory\Leonidas\Library\Admin\Views;
+namespace Leonidas\Library\Admin\Views;
 
-use WebTheory\Leonidas\Library\Admin\Proxies\TwigLoader;
+use Leonidas\Library\Admin\Proxies\TwigLoader;
 
 abstract class AbstractLeonidasTwigView
 {

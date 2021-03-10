@@ -1,6 +1,6 @@
 <?php
 
-namespace WebTheory\Leonidas\Library\Admin;
+namespace Leonidas\Library\Admin;
 
 use Psr\Http\Message\ServerRequestInterface;
 

@@ -1,11 +1,11 @@
 <?php
 
-namespace WebTheory\Leonidas\Library\Admin\Loaders;
+namespace Leonidas\Library\Admin\Loaders;
 
 use GuzzleHttp\Psr7\ServerRequest;
-use WebTheory\Leonidas\Contracts\Admin\Components\AdminNoticeCollectionLoaderInterface;
-use WebTheory\Leonidas\Contracts\Admin\Components\AdminNoticeInterface;
-use WebTheory\Leonidas\Contracts\Admin\Components\ComponentLoaderInterface;
+use Leonidas\Contracts\Admin\Components\AdminNoticeCollectionLoaderInterface;
+use Leonidas\Contracts\Admin\Components\AdminNoticeInterface;
+use Leonidas\Contracts\Admin\Components\ComponentLoaderInterface;
 
 class AdminNoticeCollectionLoader implements AdminNoticeCollectionLoaderInterface
 {

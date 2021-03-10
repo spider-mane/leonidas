@@ -1,6 +1,6 @@
 <?php
 
-namespace WebTheory\Leonidas\Library\Admin\Page;
+namespace Leonidas\Library\Admin\Page;
 
 use WebTheory\Html\Html;
 

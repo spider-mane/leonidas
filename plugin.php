@@ -16,7 +16,7 @@
  * Description: Theme and plugin framework with enhanced WordPress abstraction library.
  */
 
-use WebTheory\Leonidas\Plugin\Leonidas;
+use Leonidas\Plugin\Leonidas;
 
 // composer autoload
 if (file_exists($autoload = __DIR__ . '/vendor/autoload.php')) {

@@ -1,6 +1,6 @@
 <?php
 
-namespace WebTheory\Leonidas\Traits;
+namespace Leonidas\Traits;
 
 use Psr\Http\Message\ServerRequestInterface;
 use WP_Term;

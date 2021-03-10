@@ -1,6 +1,6 @@
 <?php
 
-namespace WebTheory\Leonidas\Contracts\Ui;
+namespace Leonidas\Contracts\Ui;
 
 interface ViewInterface
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace WebTheory\Leonidas\Contracts\Extension;
+namespace Leonidas\Contracts\Extension;
 
 interface ModuleInterface
 {

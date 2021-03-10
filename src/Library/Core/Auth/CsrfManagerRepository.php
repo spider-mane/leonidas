@@ -1,9 +1,9 @@
 <?php
 
-namespace WebTheory\Leonidas\Library\Core\Auth;
+namespace Leonidas\Library\Core\Auth;
 
-use WebTheory\Leonidas\Contracts\Auth\CsrfManagerInterface;
-use WebTheory\Leonidas\Contracts\Auth\CsrfManagerRepositoryInterface;
+use Leonidas\Contracts\Auth\CsrfManagerInterface;
+use Leonidas\Contracts\Auth\CsrfManagerRepositoryInterface;
 
 class CsrfManagerRepository implements CsrfManagerRepositoryInterface
 {

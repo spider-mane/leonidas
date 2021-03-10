@@ -1,9 +1,9 @@
 <?php
 
-namespace WebTheory\Leonidas\Library\Admin\Fields\Selections;
+namespace Leonidas\Library\Admin\Fields\Selections;
 
 use WP_Term;
-use WebTheory\Leonidas\Library\Core\Util\TermCollection;
+use Leonidas\Library\Core\Util\TermCollection;
 use WebTheory\Saveyour\Contracts\SelectionProviderInterface;
 
 abstract class AbstractTermCollectionSelection extends AbstractTermSelectionProvider implements SelectionProviderInterface

@@ -1,6 +1,6 @@
 <?php
 
-namespace WebTheory\Leonidas\Contracts\Options;
+namespace Leonidas\Contracts\Options;
 
 use WP_Post_Type;
 

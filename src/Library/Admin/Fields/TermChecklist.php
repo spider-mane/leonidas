@@ -1,10 +1,10 @@
 <?php
 
-namespace WebTheory\Leonidas\Library\Admin\Fields;
+namespace Leonidas\Library\Admin\Fields;
 
-use WebTheory\Leonidas\Library\Admin\Fields\Formatters\TermsToIdsDataFormatter;
-use WebTheory\Leonidas\Library\Admin\Fields\Managers\PostTermDataManager;
-use WebTheory\Leonidas\Library\Admin\Fields\Selections\TaxonomyChecklistItems;
+use Leonidas\Library\Admin\Fields\Formatters\TermsToIdsDataFormatter;
+use Leonidas\Library\Admin\Fields\Managers\PostTermDataManager;
+use Leonidas\Library\Admin\Fields\Selections\TaxonomyChecklistItems;
 use WebTheory\Saveyour\Contracts\ChecklistItemsProviderInterface;
 use WebTheory\Saveyour\Contracts\DataFormatterInterface;
 use WebTheory\Saveyour\Contracts\FieldDataManagerInterface;

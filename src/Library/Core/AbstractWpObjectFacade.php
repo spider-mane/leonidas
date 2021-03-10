@@ -1,6 +1,6 @@
 <?php
 
-namespace WebTheory\Leonidas\Library\Core;
+namespace Leonidas\Library\Core;
 
 abstract class AbstractWpObjectFacade
 {

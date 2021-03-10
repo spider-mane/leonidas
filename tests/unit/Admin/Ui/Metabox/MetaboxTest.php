@@ -5,11 +5,11 @@ namespace Leonidas\Tests\Admin\Ui\Metabox;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use WP_Screen;
-use WebTheory\Leonidas\Contracts\Admin\Components\MetaboxInterface;
-use WebTheory\Leonidas\Contracts\Admin\Components\MetaboxLayoutInterface;
-use WebTheory\Leonidas\Library\Admin\Enum\MetaboxContext;
-use WebTheory\Leonidas\Library\Admin\Enum\MetaboxPriority;
-use WebTheory\Leonidas\Library\Admin\Metabox\Metabox;
+use Leonidas\Contracts\Admin\Components\MetaboxInterface;
+use Leonidas\Contracts\Admin\Components\MetaboxLayoutInterface;
+use Leonidas\Library\Admin\Enum\MetaboxContext;
+use Leonidas\Library\Admin\Enum\MetaboxPriority;
+use Leonidas\Library\Admin\Metabox\Metabox;
 
 class MetaboxTest extends TestCase
 {

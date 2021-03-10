@@ -1,8 +1,8 @@
 <?php
 
-namespace WebTheory\Leonidas\Library\Core\Hook;
+namespace Leonidas\Library\Core\Hook;
 
-use WebTheory\Leonidas\Contracts\Hook\HookInterface;
+use Leonidas\Contracts\Hook\HookInterface;
 
 class Hook implements HookInterface
 {

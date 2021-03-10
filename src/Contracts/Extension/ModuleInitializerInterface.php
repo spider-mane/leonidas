@@ -1,8 +1,8 @@
 <?php
 
-namespace WebTheory\Leonidas\Contracts\Extension;
+namespace Leonidas\Contracts\Extension;
 
-use WebTheory\Leonidas\Framework\WpExtension;
+use Leonidas\Framework\WpExtension;
 
 interface ModuleInitializerInterface
 {

@@ -1,10 +1,10 @@
 <?php
 
-namespace WebTheory\Leonidas\Library\Admin\Metabox\Views;
+namespace Leonidas\Library\Admin\Metabox\Views;
 
 use WebTheory\Html\Traits\ElementConstructorTrait;
-use WebTheory\Leonidas\Contracts\Admin\Components\AdminComponentInterface;
-use WebTheory\Leonidas\Contracts\Admin\Components\ViewInterface;
+use Leonidas\Contracts\Admin\Components\AdminComponentInterface;
+use Leonidas\Contracts\Admin\Components\ViewInterface;
 
 class SectionView implements ViewInterface
 {

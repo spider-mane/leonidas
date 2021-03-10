@@ -1,10 +1,10 @@
 <?php
 
-namespace WebTheory\Leonidas\Library\Admin\Fields\Factory;
+namespace Leonidas\Library\Admin\Fields\Factory;
 
-use WebTheory\Leonidas\Library\Admin\Fields\Managers\PostMetaFieldManager;
-use WebTheory\Leonidas\Library\Admin\Fields\Managers\PostTermManager;
-use WebTheory\Leonidas\Library\Admin\Fields\Managers\TermMetaDataManager;
+use Leonidas\Library\Admin\Fields\Managers\PostMetaFieldManager;
+use Leonidas\Library\Admin\Fields\Managers\PostTermManager;
+use Leonidas\Library\Admin\Fields\Managers\TermMetaDataManager;
 use WebTheory\Saveyour\Contracts\FieldDataManagerResolverFactoryInterface;
 use WebTheory\Saveyour\Factories\DataManagerFactory;
 

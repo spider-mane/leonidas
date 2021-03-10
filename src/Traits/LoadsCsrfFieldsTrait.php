@@ -1,8 +1,8 @@
 <?php
 
-namespace WebTheory\Leonidas\Traits;
+namespace Leonidas\Traits;
 
-use WebTheory\Leonidas\Contracts\Auth\CsrfManagerRepositoryInterface;
+use Leonidas\Contracts\Auth\CsrfManagerRepositoryInterface;
 
 trait LoadsCsrfFieldsTrait
 {

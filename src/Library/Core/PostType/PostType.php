@@ -1,8 +1,8 @@
 <?php
 
-namespace WebTheory\Leonidas\Library\Core\PostType;
+namespace Leonidas\Library\Core\PostType;
 
-use WebTheory\Leonidas\Library\Core\AbstractWpObjectFacade;
+use Leonidas\Library\Core\AbstractWpObjectFacade;
 
 class PostType extends AbstractWpObjectFacade
 {

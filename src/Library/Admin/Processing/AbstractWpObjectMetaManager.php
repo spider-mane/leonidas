@@ -1,8 +1,8 @@
 <?php
 
-namespace WebTheory\Leonidas\Library\Admin\Processing;
+namespace Leonidas\Library\Admin\Processing;
 
-use WebTheory\Leonidas\Library\Admin\Notices\StandardAdminNotice;
+use Leonidas\Library\Admin\Notices\StandardAdminNotice;
 
 abstract class AbstractWpObjectMetaManager extends AbstractInputManager
 {

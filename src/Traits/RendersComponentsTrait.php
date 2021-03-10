@@ -1,9 +1,9 @@
 <?php
 
-namespace WebTheory\Leonidas\Traits;
+namespace Leonidas\Traits;
 
 use Psr\Http\Message\ServerRequestInterface;
-use WebTheory\Leonidas\Contracts\Admin\Components\AdminComponentInterface;
+use Leonidas\Contracts\Admin\Components\AdminComponentInterface;
 
 trait RendersComponentsTrait
 {

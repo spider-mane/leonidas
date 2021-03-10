@@ -1,7 +1,7 @@
 <?php
 
-use WebTheory\Leonidas\Library\Core\PostType\Factory as PostTypeFactory;
-use WebTheory\Leonidas\Library\Core\Taxonomy\Factory as TaxonomyFactory;
+use Leonidas\Library\Core\PostType\Factory as PostTypeFactory;
+use Leonidas\Library\Core\Taxonomy\Factory as TaxonomyFactory;
 
 ################################################################################
 

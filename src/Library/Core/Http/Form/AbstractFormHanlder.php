@@ -1,11 +1,11 @@
 <?php
 
-namespace WebTheory\Leonidas\Library\Core\Http\Form;
+namespace Leonidas\Library\Core\Http\Form;
 
 use Psr\Http\Message\ServerRequestInterface;
-use WebTheory\Leonidas\Library\Admin\Forms\Validators\WpNonceValidator;
-use WebTheory\Leonidas\Contracts\Form\FormInterface;
-use WebTheory\Leonidas\Library\Core\Auth\Nonce;
+use Leonidas\Contracts\Form\FormInterface;
+use Leonidas\Library\Admin\Forms\Validators\WpNonceValidator;
+use Leonidas\Library\Core\Auth\Nonce;
 use WebTheory\Saveyour\Contracts\FormDataProcessorInterface;
 use WebTheory\Saveyour\Contracts\FormFieldControllerInterface;
 use WebTheory\Saveyour\Contracts\FormProcessingCacheInterface;

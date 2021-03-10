@@ -1,6 +1,6 @@
 <?php
 
-namespace WebTheory\Leonidas\Library\Admin\Post;
+namespace Leonidas\Library\Admin\Post;
 
 use WebTheory\Html\Html;
 

@@ -1,9 +1,9 @@
 <?php
 
-namespace WebTheory\Leonidas\Contracts\Admin;
+namespace Leonidas\Contracts\Admin;
 
-use WebTheory\Leonidas\Contracts\Admin\Components\MetaboxInterface;
-use WebTheory\Leonidas\Contracts\Admin\ComponentLoaderInterface;
+use Leonidas\Contracts\Admin\Components\MetaboxInterface;
+use Leonidas\Contracts\Admin\ComponentLoaderInterface;
 
 interface MetaboxCollectionLoaderInterFace extends ComponentLoaderInterface
 {

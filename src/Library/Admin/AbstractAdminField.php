@@ -1,9 +1,9 @@
 <?php
 
-namespace WebTheory\Leonidas\Library\Admin;
+namespace Leonidas\Library\Admin;
 
 use Psr\Http\Message\ServerRequestInterface;
-use WebTheory\Leonidas\Contracts\Admin\Components\AdminFieldInterface;
+use Leonidas\Contracts\Admin\Components\AdminFieldInterface;
 use WebTheory\Saveyour\Contracts\FormFieldControllerInterface;
 use WebTheory\Saveyour\Contracts\FormFieldInterface;
 

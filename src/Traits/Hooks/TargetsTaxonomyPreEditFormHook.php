@@ -1,6 +1,6 @@
 <?php
 
-namespace WebTheory\Leonidas\Traits\Hooks;
+namespace Leonidas\Traits\Hooks;
 
 use Closure;
 use WP_Term;

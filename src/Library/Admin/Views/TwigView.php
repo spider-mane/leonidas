@@ -1,10 +1,10 @@
 <?php
 
-namespace WebTheory\Leonidas\Library\Admin;
+namespace Leonidas\Library\Admin;
 
 use Twig\Environment;
-use WebTheory\Leonidas\Contracts\Admin\Components\ViewInterface;
-use WebTheory\Leonidas\Library\Admin\Views\AbstractTwigView;
+use Leonidas\Contracts\Admin\Components\ViewInterface;
+use Leonidas\Library\Admin\Views\AbstractTwigView;
 
 class TwigView extends AbstractTwigView implements ViewInterface
 {

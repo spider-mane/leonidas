@@ -1,6 +1,6 @@
 <?php
 
-namespace WebTheory\Leonidas\Library\Admin\Fields\Selections\Traits;
+namespace Leonidas\Library\Admin\Fields\Selections\Traits;
 
 trait PostChecklistItemsTrait
 {

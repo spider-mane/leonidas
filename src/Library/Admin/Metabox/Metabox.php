@@ -1,14 +1,14 @@
 <?php
 
-namespace WebTheory\Leonidas\Library\Admin\Metabox;
+namespace Leonidas\Library\Admin\Metabox;
 
 use GuzzleHttp\Psr7\ServerRequest;
 use Psr\Http\Message\ServerRequestInterface;
 use WP_Post;
-use WebTheory\Leonidas\Contracts\Admin\Components\MetaboxInterface;
-use WebTheory\Leonidas\Contracts\Admin\Components\MetaboxLayoutInterface;
-use WebTheory\Leonidas\Traits\CanBeRestrictedTrait;
-use WebTheory\Leonidas\Traits\RendersWithViewTrait;
+use Leonidas\Contracts\Admin\Components\MetaboxInterface;
+use Leonidas\Contracts\Admin\Components\MetaboxLayoutInterface;
+use Leonidas\Traits\CanBeRestrictedTrait;
+use Leonidas\Traits\RendersWithViewTrait;
 
 class Metabox implements MetaboxInterface
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace WebTheory\Leonidas\Library\Admin\Fields\Factory;
+namespace Leonidas\Library\Admin\Fields\Factory;
 
 use WebTheory\Saveyour\Contracts\FieldDataManagerResolverFactoryInterface;
 use WebTheory\Saveyour\Contracts\FormFieldResolverFactoryInterface;

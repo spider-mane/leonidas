@@ -1,15 +1,15 @@
 <?php
 
-namespace WebTheory\Leonidas\Library\Admin\Metabox\Components;
+namespace Leonidas\Library\Admin\Metabox\Components;
 
 use Psr\Http\Message\ServerRequestInterface;
-use WebTheory\Leonidas\Contracts\Admin\Components\MetaboxComponentInterface;
-use WebTheory\Leonidas\Contracts\Admin\Components\MetaboxLayoutInterface;
-use WebTheory\Leonidas\Contracts\Admin\Components\ViewInterface;
-use WebTheory\Leonidas\Library\Admin\Metabox\Views\MetaboxLayoutView;
-use WebTheory\Leonidas\Traits\CanBeRestrictedTrait;
-use WebTheory\Leonidas\Traits\RendersWithViewTrait;
-use WebTheory\Leonidas\Traits\MaybeHandlesCsrfTrait;
+use Leonidas\Contracts\Admin\Components\MetaboxComponentInterface;
+use Leonidas\Contracts\Admin\Components\MetaboxLayoutInterface;
+use Leonidas\Contracts\Admin\Components\ViewInterface;
+use Leonidas\Library\Admin\Metabox\Views\MetaboxLayoutView;
+use Leonidas\Traits\CanBeRestrictedTrait;
+use Leonidas\Traits\RendersWithViewTrait;
+use Leonidas\Traits\MaybeHandlesCsrfTrait;
 
 class MetaboxLayout implements MetaboxLayoutInterface
 {

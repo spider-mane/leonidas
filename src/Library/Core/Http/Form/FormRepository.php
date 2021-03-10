@@ -1,8 +1,8 @@
 <?php
 
-namespace WebTheory\Leonidas\Library\Core\Http\Form;
+namespace Leonidas\Library\Core\Http\Form;
 
-use WebTheory\Leonidas\Contracts\Form\FormControllerInterface;
+use Leonidas\Contracts\Form\FormControllerInterface;
 
 class FormRepository
 {

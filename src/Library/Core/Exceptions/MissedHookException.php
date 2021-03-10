@@ -1,6 +1,6 @@
 <?php
 
-namespace WebTheory\Leonidas\Library\Core\Exceptions;
+namespace Leonidas\Library\Core\Exceptions;
 
 use Exception;
 

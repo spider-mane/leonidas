@@ -1,9 +1,9 @@
 <?php
 
-namespace WebTheory\Leonidas\Framework\Modules;
+namespace Leonidas\Framework\Modules;
 
-use WebTheory\Leonidas\Contracts\Extension\ModuleInterface;
-use WebTheory\Leonidas\Traits\Hooks\TargetsWpEnqueueScriptsHook;
+use Leonidas\Contracts\Extension\ModuleInterface;
+use Leonidas\Traits\Hooks\TargetsWpEnqueueScriptsHook;
 
 abstract class AbstractThemeAssetLoaderModule extends AbstractModule implements ModuleInterface
 {

@@ -1,10 +1,10 @@
 <?php
 
-namespace WebTheory\Leonidas\Library\Core\PostType;
+namespace Leonidas\Library\Core\PostType;
 
-use WebTheory\Leonidas\Library\Core\AbstractWpObjectFactory;
-use WebTheory\Leonidas\Contracts\Options\PostTypeOptionHandlerInterface;
-use WebTheory\Leonidas\Library\Core\PostType\PostType;
+use Leonidas\Library\Core\AbstractWpObjectFactory;
+use Leonidas\Contracts\Options\PostTypeOptionHandlerInterface;
+use Leonidas\Library\Core\PostType\PostType;
 
 class Factory extends AbstractWpObjectFactory
 {

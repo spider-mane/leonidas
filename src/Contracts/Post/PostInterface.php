@@ -1,6 +1,6 @@
 <?php
 
-namespace WebTheory\Leonidas\Contracts\Post;
+namespace Leonidas\Contracts\Post;
 
 use DateTime;
 use DateTimeZone;

@@ -1,6 +1,6 @@
 <?php
 
-namespace WebTheory\Leonidas\Contracts\Admin\Auth;
+namespace Leonidas\Contracts\Admin\Auth;
 
 interface CsrfFieldInterface
 {

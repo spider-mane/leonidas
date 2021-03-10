@@ -1,13 +1,13 @@
 <?php
 
-namespace WebTheory\Leonidas\Library\Admin\Notices\Components;
+namespace Leonidas\Library\Admin\Notices\Components;
 
 use Psr\Http\Message\ServerRequestInterface;
-use WebTheory\Leonidas\Contracts\Admin\Components\AdminNoticeInterface;
-use WebTheory\Leonidas\Contracts\Admin\Components\ViewInterface;
-use WebTheory\Leonidas\Library\Admin\Notices\Views\StandardAdminNoticeView;
-use WebTheory\Leonidas\Traits\CanBeRestrictedTrait;
-use WebTheory\Leonidas\Traits\RendersWithViewTrait;
+use Leonidas\Contracts\Admin\Components\AdminNoticeInterface;
+use Leonidas\Contracts\Admin\Components\ViewInterface;
+use Leonidas\Library\Admin\Notices\Views\StandardAdminNoticeView;
+use Leonidas\Traits\CanBeRestrictedTrait;
+use Leonidas\Traits\RendersWithViewTrait;
 
 class StandardAdminNotice implements AdminNoticeInterface
 {

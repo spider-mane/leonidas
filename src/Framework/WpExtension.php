@@ -1,6 +1,6 @@
 <?php
 
-namespace WebTheory\Leonidas\Framework;
+namespace Leonidas\Framework;
 
 use Exception;
 use InvalidArgumentException;
@@ -8,9 +8,9 @@ use League\Container\Container;
 use Noodlehaus\ConfigInterface;
 use Psr\Container\ContainerInterface;
 use Respect\Validation\Rules\File;
-use WebTheory\Leonidas\Contracts\Extension\ModuleInterface;
-use WebTheory\Leonidas\Contracts\Extension\WpExtensionInterface;
-use WebTheory\Leonidas\Enum\ExtensionType;
+use Leonidas\Contracts\Extension\ModuleInterface;
+use Leonidas\Contracts\Extension\WpExtensionInterface;
+use Leonidas\Enum\ExtensionType;
 
 class WpExtension implements WpExtensionInterface
 {

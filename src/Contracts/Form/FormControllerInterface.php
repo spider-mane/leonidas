@@ -1,6 +1,6 @@
 <?php
 
-namespace WebTheory\Leonidas\Contracts\Form;
+namespace Leonidas\Contracts\Form;
 
 interface FormControllerInterface
 {

@@ -1,11 +1,11 @@
 <?php
 
-namespace WebTheory\Leonidas\Plugin\Modules;
+namespace Leonidas\Plugin\Modules;
 
-use WebTheory\Leonidas\Library\Core\Asset\Script;
-use WebTheory\Leonidas\Library\Core\Asset\Style;
-use WebTheory\Leonidas\Contracts\Extension\ModuleInterface;
-use WebTheory\Leonidas\Framework\Modules\AbstractAdminAssetLoaderModule;
+use Leonidas\Library\Core\Asset\Script;
+use Leonidas\Library\Core\Asset\Style;
+use Leonidas\Contracts\Extension\ModuleInterface;
+use Leonidas\Framework\Modules\AbstractAdminAssetLoaderModule;
 
 final class LeonidasAssetLoaderModule extends AbstractAdminAssetLoaderModule implements ModuleInterface
 {

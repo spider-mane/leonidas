@@ -1,6 +1,6 @@
 <?php
 
-namespace WebTheory\Leonidas\Library\Admin\Views;
+namespace Leonidas\Library\Admin\Views;
 
 use Twig\Environment;
 

@@ -1,8 +1,8 @@
 <?php
 
-namespace WebTheory\Leonidas\Library\Admin\Views;
+namespace Leonidas\Library\Admin\Views;
 
-use WebTheory\Leonidas\Contracts\Admin\Components\ViewInterface;
+use Leonidas\Contracts\Admin\Components\ViewInterface;
 
 class PhpView implements ViewInterface
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace WebTheory\Leonidas\Contracts\Ui;
+namespace Leonidas\Contracts\Ui;
 
-use WebTheory\Leonidas\Contracts\Ui\AssetInterface;
+use Leonidas\Contracts\Ui\AssetInterface;
 
 interface StyleInterface extends AssetInterface
 {

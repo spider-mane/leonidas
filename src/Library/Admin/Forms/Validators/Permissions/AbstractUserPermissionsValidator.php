@@ -1,6 +1,6 @@
 <?php
 
-namespace WebTheory\Leonidas\Library\Admin\Forms\Validators\Permissions;
+namespace Leonidas\Library\Admin\Forms\Validators\Permissions;
 
 use Psr\Http\Message\ServerRequestInterface;
 use WebTheory\Saveyour\Contracts\FormValidatorInterface;

@@ -1,8 +1,8 @@
 <?php
 
-namespace WebTheory\Leonidas\Library\Core\Asset;
+namespace Leonidas\Library\Core\Asset;
 
-use WebTheory\Leonidas\Contracts\Ui\StyleInterface;
+use Leonidas\Contracts\Ui\StyleInterface;
 
 class Style extends AbstractAsset implements StyleInterface
 {

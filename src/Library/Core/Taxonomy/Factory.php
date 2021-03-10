@@ -1,10 +1,10 @@
 <?php
 
-namespace WebTheory\Leonidas\Library\Core\Taxonomy;
+namespace Leonidas\Library\Core\Taxonomy;
 
-use WebTheory\Leonidas\Library\Core\AbstractWpObjectFactory;
-use WebTheory\Leonidas\Contracts\Options\TaxonomyOptionHandlerInterface;
-use WebTheory\Leonidas\Library\Core\Taxonomy\Taxonomy;
+use Leonidas\Library\Core\AbstractWpObjectFactory;
+use Leonidas\Contracts\Options\TaxonomyOptionHandlerInterface;
+use Leonidas\Library\Core\Taxonomy\Taxonomy;
 
 class Factory extends AbstractWpObjectFactory
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace WebTheory\Leonidas\Library\Admin\Fields\Managers;
+namespace Leonidas\Library\Admin\Fields\Managers;
 
 use WebTheory\Saveyour\Contracts\FieldDataManagerInterface;
 

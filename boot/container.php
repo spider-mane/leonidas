@@ -7,8 +7,8 @@ use Twig\Loader\FilesystemLoader;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
 use WebTheory\GuctilityBelt\Config;
-use WebTheory\Leonidas\Library\Admin\Loaders\AdminNoticeCollectionLoader;
-use WebTheory\Leonidas\Contracts\Admin\Components\AdminNoticeInterface;
+use Leonidas\Library\Admin\Loaders\AdminNoticeCollectionLoader;
+use Leonidas\Contracts\Admin\Components\AdminNoticeInterface;
 
 $container = new Container();
 

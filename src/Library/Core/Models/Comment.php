@@ -1,6 +1,6 @@
 <?php
 
-namespace WebTheory\Leonidas\Library\Core\Models;
+namespace Leonidas\Library\Core\Models;
 
 use DateTimeInterface;
 

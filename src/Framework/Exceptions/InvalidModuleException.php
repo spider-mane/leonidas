@@ -1,9 +1,9 @@
 <?php
 
-namespace WebTheory\Leonidas\Framework\Exceptions;
+namespace Leonidas\Framework\Exceptions;
 
 use RuntimeException;
-use WebTheory\Leonidas\Contracts\Extension\ModuleInterface;
+use Leonidas\Contracts\Extension\ModuleInterface;
 
 class InvalidModuleException extends RuntimeException
 {

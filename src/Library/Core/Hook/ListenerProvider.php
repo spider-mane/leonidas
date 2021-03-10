@@ -1,10 +1,10 @@
 <?php
 
-namespace WebTheory\Leonidas\Library\Core\Hook;
+namespace Leonidas\Library\Core\Hook;
 
 use Psr\EventDispatcher\ListenerProviderInterface;
-use WebTheory\Leonidas\Contracts\Hook\HookInterface;
-use WebTheory\Leonidas\Contracts\Hook\ListenerInterface;
+use Leonidas\Contracts\Hook\HookInterface;
+use Leonidas\Contracts\Hook\ListenerInterface;
 
 class ListenerProvider implements ListenerProviderInterface
 {

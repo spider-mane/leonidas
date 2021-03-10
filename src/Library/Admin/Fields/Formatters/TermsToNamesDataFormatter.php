@@ -1,8 +1,8 @@
 <?php
 
-namespace WebTheory\Leonidas\Library\Admin\Fields\Formatters;
+namespace Leonidas\Library\Admin\Fields\Formatters;
 
-use WebTheory\Leonidas\Library\Core\Util\TermCollection;
+use Leonidas\Library\Core\Util\TermCollection;
 use WebTheory\Saveyour\Contracts\DataFormatterInterface;
 
 class TermsToNamesDataFormatter implements DataFormatterInterface

@@ -1,13 +1,13 @@
 <?php
 
-namespace WebTheory\Leonidas\Library\Admin\Loaders;
+namespace Leonidas\Library\Admin\Loaders;
 
 use GuzzleHttp\Psr7\ServerRequest;
 use Psr\Http\Message\ServerRequestInterface;
 use WP_Post;
-use WebTheory\Leonidas\Contracts\Admin\Components\ComponentLoaderInterface;
-use WebTheory\Leonidas\Contracts\Admin\Components\MetaboxInterface;
-use WebTheory\Leonidas\Traits\MaybeHandlesCsrfTrait;
+use Leonidas\Contracts\Admin\Components\ComponentLoaderInterface;
+use Leonidas\Contracts\Admin\Components\MetaboxInterface;
+use Leonidas\Traits\MaybeHandlesCsrfTrait;
 
 class PostMetaboxLoader implements ComponentLoaderInterface
 {

@@ -1,14 +1,14 @@
 <?php
 
-namespace WebTheory\Leonidas\Library\Admin\Metabox\Components;
+namespace Leonidas\Library\Admin\Metabox\Components;
 
 use Psr\Http\Message\ServerRequestInterface;
-use WebTheory\Leonidas\Library\Admin\AbstractAdminField;
-use WebTheory\Leonidas\Contracts\Admin\Components\MetaboxFieldInterface;
-use WebTheory\Leonidas\Contracts\Admin\Components\ViewInterface;
-use WebTheory\Leonidas\Library\Admin\Metabox\Views\FieldView;
-use WebTheory\Leonidas\Traits\CanBeRestrictedTrait;
-use WebTheory\Leonidas\Traits\RendersWithViewTrait;
+use Leonidas\Library\Admin\AbstractAdminField;
+use Leonidas\Contracts\Admin\Components\MetaboxFieldInterface;
+use Leonidas\Contracts\Admin\Components\ViewInterface;
+use Leonidas\Library\Admin\Metabox\Views\FieldView;
+use Leonidas\Traits\CanBeRestrictedTrait;
+use Leonidas\Traits\RendersWithViewTrait;
 
 class Field extends AbstractAdminField implements MetaboxFieldInterface
 {

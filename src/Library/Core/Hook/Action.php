@@ -1,6 +1,6 @@
 <?php
 
-namespace WebTheory\Leonidas\Library\Core\Hook;
+namespace Leonidas\Library\Core\Hook;
 
 class Action extends Filter
 {
