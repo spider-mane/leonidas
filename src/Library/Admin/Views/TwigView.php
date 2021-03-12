@@ -3,7 +3,7 @@
 namespace Leonidas\Library\Admin;
 
 use Twig\Environment;
-use Leonidas\Contracts\Admin\Components\ViewInterface;
+use Leonidas\Contracts\Ui\ViewInterface;
 use Leonidas\Library\Admin\Views\AbstractTwigView;
 
 class TwigView extends AbstractTwigView implements ViewInterface

@@ -1,6 +1,6 @@
 <?php
 
-namespace Leonidas\Framework;
+namespace Leonidas\Framework\Helpers;
 
 class SkyHooks
 {

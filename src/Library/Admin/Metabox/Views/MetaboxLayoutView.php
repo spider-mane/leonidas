@@ -4,7 +4,7 @@ namespace Leonidas\Library\Admin\Metabox\Views;
 
 use WebTheory\Html\Traits\ElementConstructorTrait;
 use Leonidas\Contracts\Admin\Components\MetaboxComponentInterface;
-use Leonidas\Contracts\Admin\Components\ViewInterface;
+use Leonidas\Contracts\Ui\ViewInterface;
 
 class MetaboxLayoutView implements ViewInterface
 {

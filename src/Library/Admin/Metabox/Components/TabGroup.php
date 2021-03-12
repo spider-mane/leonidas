@@ -4,7 +4,7 @@ namespace Leonidas\Library\Admin\Metabox\Components;
 
 use Psr\Http\Message\ServerRequestInterface;
 use Leonidas\Contracts\Admin\Components\MetaboxComponentInterface;
-use Leonidas\Contracts\Admin\Components\ViewInterface;
+use Leonidas\Contracts\Ui\ViewInterface;
 use Leonidas\Library\Admin\Metabox\Views\TabGroupView;
 use Leonidas\Traits\CanBeRestrictedTrait;
 use Leonidas\Traits\RendersWithViewTrait;

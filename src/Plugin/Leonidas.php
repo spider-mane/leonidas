@@ -2,21 +2,14 @@
 
 namespace Leonidas\Plugin;
 
-use League\Container\Container;
-use Noodlehaus\Config;
+use Leonidas\Contracts\Extension\WpExtensionInterface;
+use Leonidas\Enum\ExtensionType;
+use Leonidas\Framework\ModuleInitializer;
+use Leonidas\Framework\WpExtension;
+use Leonidas\Library\Core\BaseObjectProxy;
+use Leonidas\Plugin\Exceptions\LeonidasAlreadyLoadedException;
 use Noodlehaus\ConfigInterface;
 use Psr\Container\ContainerInterface;
-use Twig\Environment;
-use Twig\Loader\FilesystemLoader;
-use Twig\TwigFilter;
-use Twig\TwigFunction;
-use Leonidas\Extension\WpExtensionInterface;
-use LeonidasnsionType;
-use Leonidas\ModuleInitializer;
-use Leonidas\WpExtension;
-use Leonidasdmin\Loaders\AdminNoticeCollectionLoader;
-use LeonidasaseObjectProxy;
-use Leonidasceptions\LeonidasAlreadyLoadedException;
 
 final class Leonidas
 {
@@ -173,9 +166,7 @@ final class Leonidas
 
     private static function throwAlreadyLoadedException(string $method): void
     {
-        $message = "Leonidas should only be initiated internally. If you're seeing this Exception it's because the user, a plugin, or theme has made an illegitimate call to {$method}";
-
-        throw new LeonidasAlreadyLoadedException($message);
+        throw new LeonidasAlreadyLoadedException($method);
     }
 
     public static function supportExtension(ExtensionType $type, string $name): void

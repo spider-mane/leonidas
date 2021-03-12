@@ -7,7 +7,7 @@ use Leonidas\Library\Admin\Fields\TermSelect;
 use Leonidas\Library\Admin\Forms\Controllers\PostMetaboxFormSubmissionManager;
 use Leonidas\Library\Admin\Metabox\Components\Field;
 use Leonidas\Library\Admin\Metabox\AutoLoadingMetabox;
-use Leonidas\Library\Admin\Screen;
+use Leonidas\Library\Admin\Loaders\Screen;
 
 Screen::load('post', ['post_type' => 'wts_test_cpt_2'], function () {
     // exit(var_dump($_POST));

@@ -4,7 +4,7 @@ namespace Leonidas\Library\Admin\Notices\Components;
 
 use Psr\Http\Message\ServerRequestInterface;
 use Leonidas\Contracts\Admin\Components\AdminNoticeInterface;
-use Leonidas\Contracts\Admin\Components\ViewInterface;
+use Leonidas\Contracts\Ui\ViewInterface;
 use Leonidas\Library\Admin\Notices\Views\StandardAdminNoticeView;
 use Leonidas\Traits\CanBeRestrictedTrait;
 use Leonidas\Traits\RendersWithViewTrait;

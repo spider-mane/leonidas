@@ -6,9 +6,9 @@ use GuzzleHttp\Psr7\ServerRequest;
 use Leonidas\Contracts\Admin\Components\AdminPageLayoutInterface;
 use Leonidas\Contracts\Admin\Components\AdminPageLoadErrorInterface;
 use Leonidas\Contracts\Admin\Components\AdminTitleResolverInterface;
-use Leonidas\Contracts\Admin\Components\ParentFileResolverInterface;
-use Leonidas\Contracts\Admin\Components\SubmenuFileResolverInterface;
 use Leonidas\Contracts\Admin\Components\SubmenuPageInterface;
+use Leonidas\Contracts\Admin\ParentFileResolverInterface;
+use Leonidas\Contracts\Admin\SubmenuFileResolverInterface;
 use Leonidas\Traits\CanBeRestrictedTrait;
 
 class SubmenuPage extends AbstractAdminPage implements SubmenuPageInterface

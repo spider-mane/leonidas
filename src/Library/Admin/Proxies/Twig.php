@@ -2,11 +2,11 @@
 
 namespace Leonidas\Library\Admin\Proxies;
 
+use Leonidas\Library\Core\BaseObjectProxy;
 use Twig\Environment;
-use Leonidas\BaseObjectProxy;
 
 /** @method static string render($name, array $context = []) */
-class TwigLoader extends BaseObjectProxy
+class Twig extends BaseObjectProxy
 {
     public static function _getObjectRoot()
     {

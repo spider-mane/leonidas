@@ -3,7 +3,6 @@
 namespace Leonidas\Framework\Modules;
 
 use Closure;
-use WP_Screen;
 use Leonidas\Contracts\Auth\CsrfManagerInterface;
 use Leonidas\Contracts\Auth\CsrfManagerRepositoryInterface;
 use Leonidas\Contracts\Dashboard\ScreenInterface;
@@ -11,6 +10,7 @@ use Leonidas\Contracts\Extension\ModuleInterface;
 use Leonidas\Library\Core\Auth\CsrfManagerRepository;
 use Leonidas\Traits\Hooks\TargetsInAdminHeaderHook;
 use Leonidas\Traits\LoadsCsrfFieldsTrait;
+use WP_Screen;
 
 abstract class AbstractCsrfFieldLoaderModule extends AbstractModule implements ModuleInterface
 {
@@ -29,7 +29,7 @@ abstract class AbstractCsrfFieldLoaderModule extends AbstractModule implements M
 
     protected function getManagerRepository(): CsrfManagerRepositoryInterface
     {
-        return $this->extension->get(CsrfManagerRepositoryInterface::class);
+        return $this->getExtension()->get(CsrfManagerRepositoryInterface::class);
     }
 
     protected function getRequiredManagerTags(): array

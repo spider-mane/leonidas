@@ -2,8 +2,8 @@
 
 namespace Leonidas\Framework\Exceptions;
 
-use RuntimeException;
 use Leonidas\Contracts\Extension\ModuleInterface;
+use RuntimeException;
 
 class InvalidModuleException extends RuntimeException
 {
@@ -11,6 +11,6 @@ class InvalidModuleException extends RuntimeException
 
     public function __construct(string $module)
     {
-        "{$module} does not implement {$this->interface} interface.";
+        "\"{$module}\" does not implement \"{$this->interface}\" interface.";
     }
 }

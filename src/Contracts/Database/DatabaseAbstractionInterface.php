@@ -2,6 +2,6 @@
 
 namespace Leonidas\Contracts\Database;
 
-interface DatabaseConnectionInterface
+interface DatabaseAbstractionInterface
 {
 }

@@ -24,13 +24,13 @@ trait MaybeHandlesCsrfTrait
     /**
      * Set the value of csrfToken
      *
-     * @param CsrfManagerInterface $csrfToken
+     * @param CsrfManagerInterface $csrfTokenManager
      *
      * @return self
      */
-    public function setTokenManager(CsrfManagerInterface $csrfToken)
+    public function setTokenManager(CsrfManagerInterface $csrfTokenManager)
     {
-        $this->csrfManager = $csrfToken;
+        $this->csrfManager = $csrfTokenManager;
 
         return $this;
     }

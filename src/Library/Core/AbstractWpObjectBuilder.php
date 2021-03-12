@@ -2,7 +2,7 @@
 
 namespace Leonidas\Library\Core;
 
-abstract class AbstractWpObjectFacade
+abstract class AbstractWpObjectBuilder
 {
     /**
      * @var string

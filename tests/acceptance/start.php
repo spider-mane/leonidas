@@ -1,6 +1,6 @@
 <?php
 
-use Leonidas\Library\Admin\Screen;
+use Leonidas\Library\Admin\Loaders\Screen;
 use Leonidas\Library\Core\Helpers\SkyHooks;
 use Leonidas\Library\Core\Util\TermCollection;
 use Whoops\Handler\PrettyPageHandler;

@@ -2,7 +2,7 @@
 
 namespace Leonidas\Library\Admin\Views;
 
-use Leonidas\Library\Admin\Proxies\TwigLoader;
+use Leonidas\Library\Admin\Proxies\Twig;
 
 abstract class AbstractLeonidasTwigView
 {
@@ -13,7 +13,7 @@ abstract class AbstractLeonidasTwigView
 
     public function render(array $context = []): string
     {
-        return TwigLoader::render($this->getTemplate(), $context);
+        return Twig::render($this->getTemplate(), $context);
     }
 
     /**

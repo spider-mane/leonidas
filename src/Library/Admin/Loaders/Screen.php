@@ -1,6 +1,6 @@
 <?php
 
-namespace Leonidas\Library\Admin;
+namespace Leonidas\Library\Admin\Loaders;
 
 class Screen
 {

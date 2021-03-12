@@ -5,7 +5,7 @@ namespace Leonidas\Library\Admin\Term\Components;
 use Psr\Http\Message\ServerRequestInterface;
 use Leonidas\Library\Admin\AbstractAdminField;
 use Leonidas\Contracts\Admin\Components\TermFieldInterface;
-use Leonidas\Contracts\Admin\Components\ViewInterface;
+use Leonidas\Contracts\Ui\ViewInterface;
 use Leonidas\Library\Admin\Term\Views\AddTermFieldView;
 use Leonidas\Library\Admin\Term\Views\EditTermFieldView;
 use Leonidas\Traits\CanBeRestrictedTrait;

@@ -2,8 +2,8 @@
 
 namespace Leonidas\Library\Core\Database;
 
-use Leonidas\Contracts\Database\DatabaseConnectionInterface;
+use Leonidas\Contracts\Database\DatabaseAbstractionInterface;
 
-class Wpdb implements DatabaseConnectionInterface
+class Wpdb implements DatabaseAbstractionInterface
 {
 }

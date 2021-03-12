@@ -2,7 +2,7 @@
 
 namespace Leonidas\Library\Admin\Views;
 
-use Leonidas\Contracts\Admin\Components\ViewInterface;
+use Leonidas\Contracts\Ui\ViewInterface;
 
 class PhpView implements ViewInterface
 {
@@ -25,7 +25,6 @@ class PhpView implements ViewInterface
     public function render(array $context = []): string
     {
         ob_start();
-
         include $this->file;
 
         return ob_get_clean();

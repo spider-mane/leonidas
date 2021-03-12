@@ -2,7 +2,7 @@
 
 namespace Leonidas\Library\Admin\Page\Views;
 
-use Leonidas\Contracts\Admin\Components\ViewInterface;
+use Leonidas\Contracts\Ui\ViewInterface;
 use Leonidas\Library\Admin\Views\AbstractLeonidasTwigView;
 
 class SimpleAdminPageView extends AbstractLeonidasTwigView implements ViewInterface

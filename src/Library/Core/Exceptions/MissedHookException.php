@@ -2,12 +2,17 @@
 
 namespace Leonidas\Library\Core\Exceptions;
 
-use Exception;
+use RuntimeException;
 
-class MissedHookException extends Exception
+class MissedHookException extends RuntimeException
 {
     /**
      * @var string
      */
-    protected $message = 'The specified hook has already been executed.';
+    protected $message = 'The "%s" hook has already run.';
+
+    public function __construct(string $tag)
+    {
+        parent::__construct(sprintf($this->getMessage(), $tag));
+    }
 }

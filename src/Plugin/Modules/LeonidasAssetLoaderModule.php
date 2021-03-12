@@ -2,33 +2,34 @@
 
 namespace Leonidas\Plugin\Modules;
 
-use Leonidas\Library\Core\Asset\Script;
-use Leonidas\Library\Core\Asset\Style;
 use Leonidas\Contracts\Extension\ModuleInterface;
 use Leonidas\Framework\Modules\AbstractAdminAssetLoaderModule;
+use Leonidas\Library\Core\Asset\Script;
+use Leonidas\Library\Core\Asset\Style;
 
 final class LeonidasAssetLoaderModule extends AbstractAdminAssetLoaderModule implements ModuleInterface
 {
     protected function doAdminEnqueueScriptsAction(string $hookSuffix): void
     {
-        $ext = $this->getExtension();
-        $saveyourDeps = ['select2', 'trix'];
+        $extension = $this->getExtension();
+        $version = [$extension, 'vot'];
+        $asset = [$extension, 'asset'];
 
-        // wp included libraries
-        // wp_enqueue_script('jquery');
+        $saveyourDeps = ['select2', 'trix'];
+        $leonidasDeps = ['jquery'];
 
         // styles from dependency libraries
-        wp_register_style('select2', $ext->asset('/lib/select2.min.css'), null);
-        wp_register_style('trix', $ext->asset('/lib/trix.css'), null);
+        wp_register_style('select2', $asset('/lib/select2.min.css'), null);
+        wp_register_style('trix', $asset('/lib/trix.css'), null);
 
         // scripts from dependency libraries
-        wp_register_script('select2', $ext->asset('/lib/select2.full.min.js'), null, $ext->vot(), true);
-        wp_register_script('trix', $ext->asset("/lib/trix.js"), null, $ext->vot(), true);
-        wp_register_script('saveyour', $ext->asset("/lib/saveyour.js"), $saveyourDeps, $ext->vot(), true);
+        wp_register_script('select2', $asset('/lib/select2.full.min.js'), null, null, true);
+        wp_register_script('trix', $asset("/lib/trix.js"), null, null, true);
+        wp_register_script('saveyour', $asset("/lib/saveyour.js"), $saveyourDeps, null, true);
 
-        // plugin core assets
-        wp_register_style('leonidas', $ext->asset('/css/backalley-admin-styles.css'), null, $ext->vot());
-        wp_register_script('leonidas', $ext->asset('/js/backalley-admin.js'), null, $ext->vot(), true);
+        // leonidas assets
+        wp_register_style('leonidas', $asset('/css/backalley-admin-styles.css'), null, $version("1.0.0"));
+        wp_register_script('leonidas', $asset('/js/backalley-admin.js'), $leonidasDeps, $version("1.0.0"), true);
     }
 
     /**

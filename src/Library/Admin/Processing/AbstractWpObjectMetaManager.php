@@ -2,7 +2,7 @@
 
 namespace Leonidas\Library\Admin\Processing;
 
-use Leonidas\Library\Admin\Notices\StandardAdminNotice;
+use Leonidas\Library\Admin\Notices\Components\StandardAdminNotice;
 
 abstract class AbstractWpObjectMetaManager extends AbstractInputManager
 {
@@ -47,7 +47,7 @@ abstract class AbstractWpObjectMetaManager extends AbstractInputManager
     protected $showInRest;
 
     /**
-     * @var array
+     * @var string
      */
     protected $capability = 'edit_posts';
 

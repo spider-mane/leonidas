@@ -2,9 +2,9 @@
 
 namespace Leonidas\Library\Core\Taxonomy;
 
-use Leonidas\Library\Core\AbstractWpObjectFacade;
+use Leonidas\Library\Core\AbstractWpObjectBuilder;
 
-class Taxonomy extends AbstractWpObjectFacade
+class Taxonomy extends AbstractWpObjectBuilder
 {
     /**
      * @var string|array

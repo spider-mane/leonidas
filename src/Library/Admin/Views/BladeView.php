@@ -2,7 +2,7 @@
 
 namespace Leonidas\Library\Admin\Views;
 
-use Leonidas\Contracts\Admin\Components\ViewInterface;
+use Leonidas\Contracts\Ui\ViewInterface;
 
 class BladeView implements ViewInterface
 {

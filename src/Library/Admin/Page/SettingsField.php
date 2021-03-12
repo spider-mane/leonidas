@@ -316,7 +316,7 @@ class SettingsField
     {
         $this->displayArgs['description_attr']['class'][] = 'description';
 
-        return Html::tag('p', $this->displayArgs['description_attr'], $description);
+        return Html::tag('p', [$this->displayArgs['description_attr']], $description);
     }
 
     /**

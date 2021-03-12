@@ -2,9 +2,9 @@
 
 namespace Leonidas\Library\Core\PostType;
 
-use Leonidas\Library\Core\AbstractWpObjectFacade;
+use Leonidas\Library\Core\AbstractWpObjectBuilder;
 
-class PostType extends AbstractWpObjectFacade
+class PostType extends AbstractWpObjectBuilder
 {
     /**
      *

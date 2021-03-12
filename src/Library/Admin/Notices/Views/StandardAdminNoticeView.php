@@ -3,7 +3,7 @@
 namespace Leonidas\Library\Admin\Notices\Views;
 
 use WebTheory\Html\Traits\ElementConstructorTrait;
-use Leonidas\Contracts\Admin\Components\ViewInterface;
+use Leonidas\Contracts\Ui\ViewInterface;
 
 class StandardAdminNoticeView implements ViewInterface
 {
