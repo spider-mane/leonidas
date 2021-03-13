@@ -12,8 +12,8 @@ final class LeonidasAssetLoaderModule extends AbstractAdminAssetLoaderModule imp
     protected function doAdminEnqueueScriptsAction(string $hookSuffix): void
     {
         $extension = $this->getExtension();
-        $version = [$extension, 'vot'];
         $asset = [$extension, 'asset'];
+        $version = [$extension, 'vot'];
 
         $saveyourDeps = ['select2', 'trix'];
         $leonidasDeps = ['jquery'];
