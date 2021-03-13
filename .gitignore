@@ -1,7 +1,10 @@
 # Wordpress (included for code completion)
 /wordpress/
 
-# CI output
+# Dev and CI
+.lock
+.log
+.tmp
 /build/
 /coverage
 
@@ -25,5 +28,6 @@ composer.phar
 # Version Control
 .github
 
-# Apple hidden files
+# System files
 .DS_Store
+Thumbs.db
