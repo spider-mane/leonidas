@@ -5,12 +5,12 @@ namespace Leonidas\Framework;
 use Exception;
 use InvalidArgumentException;
 use League\Container\Container;
-use Noodlehaus\ConfigInterface;
-use Psr\Container\ContainerInterface;
-use Respect\Validation\Rules\File;
 use Leonidas\Contracts\Extension\ModuleInterface;
 use Leonidas\Contracts\Extension\WpExtensionInterface;
 use Leonidas\Enum\ExtensionType;
+use Noodlehaus\ConfigInterface;
+use Psr\Container\ContainerInterface;
+use Respect\Validation\Rules\File;
 
 class WpExtension implements WpExtensionInterface
 {
@@ -72,12 +72,9 @@ class WpExtension implements WpExtensionInterface
     protected $dependents;
 
     /**
-     * Name of a constant that will return true if the extension is in its
-     * development environment
-     *
-     * @var string
+     * @var bool
      */
-    protected $dev;
+    protected $isInDev;
 
     /**
      * @param string $name
@@ -97,7 +94,7 @@ class WpExtension implements WpExtensionInterface
         string $assetUri,
         ExtensionType $type,
         ContainerInterface $container,
-        string $dev
+        bool $isInDev
     ) {
         $this->name = $name;
         $this->prefix = $prefix;
@@ -108,7 +105,7 @@ class WpExtension implements WpExtensionInterface
         $this->type = $type;
         $this->assetUri = "{$this->uri}/{$assetUri}/";
         $this->container = $container;
-        $this->dev = $dev;
+        $this->isInDev = $isInDev;
     }
 
     /**
@@ -192,6 +189,14 @@ class WpExtension implements WpExtensionInterface
     /**
      * {@inheritDoc}
      */
+    public function isInDev(): bool
+    {
+        return $this->isInDev;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function get($id)
     {
         return $this->container->get($id);
@@ -262,12 +267,14 @@ class WpExtension implements WpExtensionInterface
     }
 
     /**
-     * {@inheritDoc}
+     * Allows user to define a boolean constant present only in a development
+     * environment. If the constant is present, returns the boolean value.
+     *
+     * @param string $const The name of a constant that should only be available
+     * during development
      */
-    public function isInDev(): bool
+    public static function getDevStatusFromConstant(string $const): bool
     {
-        $const = $this->dev;
-
         return !empty($const) && defined($const) && (constant($const) === true);
     }
 

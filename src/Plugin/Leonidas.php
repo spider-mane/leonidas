@@ -81,17 +81,17 @@ final class Leonidas
     private function buildExtension(): WpExtensionInterface
     {
         /** @var ConfigInterface $config */
-        $config = $this->container->get('config');
+        $config = [$this->container->get('config'), 'get'];
 
         return WpExtension::create([
-            'name' => $config->get('app.name'),
-            'prefix' => $config->get('app.prefix'),
+            'name' => $config('app.name'),
+            'prefix' => $config('app.prefix'),
             'path' => $this->path,
             'base' => $this->base,
             'uri' => $this->uri,
-            'assets' => $config->get('app.assets'),
-            'dev' => $config->get('app.dev'),
-            'type' => new ExtensionType($config->get('app.type')),
+            'assets' => $config('app.assets'),
+            'dev' => WpExtension::getDevStatusFromConstant($config('app.dev')),
+            'type' => new ExtensionType($config('app.type')),
             'container' => $this->container
         ]);
     }
@@ -135,7 +135,7 @@ final class Leonidas
 
     private function registerHookEmitter(): Leonidas
     {
-        do_action('leonidas.loaded');
+        do_action('leonidas_loaded');
 
         return $this;
     }

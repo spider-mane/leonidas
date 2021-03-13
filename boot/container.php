@@ -14,7 +14,7 @@ $container = new Container();
 
 // register config
 $container->add(ConfigInterface::class, function () {
-    return new Config(realpath('../config'));
+    return new Config('../config');
 })->setAlias('config')->setShared(true);
 
 

@@ -1,0 +1,39 @@
+dist: trusty
+language: php
+sudo: false
+
+php:
+  - 7.1
+  - 7.2
+  - 7.3
+  - 7.4
+  - hhvm
+
+cache:
+  directories:
+    - "$HOME/.composer/cache"
+
+matrix:
+  allow_failures:
+    - php: 7.1
+    - php: hhvm
+
+  fast_finish: true
+
+before_script:
+  - travis_retry composer update --no-interaction --prefer-dist
+
+script:
+  - vendor/bin/phpcs --standard=phpcs.xml.dist src
+  - vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover
+
+after_script:
+  - |
+    if [[ "$TRAVIS_PHP_VERSION" != 'hhvm' ]] || [[ "$TRAVIS_PHP_VERSION" != 7.1 ]]; then
+      wget https://scrutinizer-ci.com/ocular.phar
+      php ocular.phar code-coverage:upload --format=php-clover coverage.clover
+    fi
+
+env:
+  global:
+    secure: "DmPuPqNFbCKx2e+4xBMm47IZ8yHbIvRCkkHNoeyE7j2Y1PIjnFp1Vttq9A0TWsS/wUQbnMy2XsN173mn52rIk8roic2V4TxKTV/6vNKRDBVZnxga577vslLNoCbF/DO5BU+fXWDGFtwQkq0fGvpd3t34Sm7pRGOqDoGarouOITF1bPeu5dxWBFOyLVkhpCtyntgcg/G7MPIipz3xPmkV8A/hhzl63AwpUkkykja8ldmVDs1lP/dK4uaH0bUOrhxe6u65iZajlmtmvId9Q1r2wCnZ1JP50nhxx5qS5fOrm2HOg+F5W2g+mvW9da9Qqm+mxqyv1eMFL1XblTsP5ncpcyt5at++q1C0ZOfl+86gv3p6vb6ZqvJoDdyN/KIiib5Yu9TKLvIXAEepkkNZquSFlIP2lqTiWeiTFdYiXH5E9by9WemM71iuOWbTsWmxGghK/9ftsB4UwepFSRdh3T18k5wTBKS0WeluPLwbQEKIT1T38Q+r9Q5xmDz7bIV/A9MxW403q7FFHxvL2XrPn4zRtubqrVu6IHBPnkhHUt5xV+9MAIchVxxAsB+LYL6b1ue/EfN4sosbakAWFOxkaiJpMxnb3hCykUMwSW/sZBRPhnUsdS9uJJr4owt7/4UwzM9s3EfHXehOyWAMDCRU3y6ivKDCl2crXeySwsKWn/TMl/o="

@@ -22,5 +22,8 @@ composer.phar
 .vscode
 *.code-workspace
 
+# Version Control
+.github
+
 # Apple hidden files
 .DS_Store
