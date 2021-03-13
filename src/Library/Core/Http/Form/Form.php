@@ -3,8 +3,8 @@
 namespace Leonidas\Library\Core\Http\Form;
 
 use GuzzleHttp\Psr7\ServerRequest;
-use Leonidas\Contracts\Form\FormControllerInterface;
-use Leonidas\Contracts\Form\FormInterface;
+use Leonidas\Contracts\Http\Form\FormControllerInterface;
+use Leonidas\Contracts\Http\Form\FormInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use WebTheory\Saveyour\Contracts\FormProcessingCacheInterface;
 use WebTheory\Saveyour\Fields\Hidden;
@@ -57,7 +57,7 @@ class Form implements FormControllerInterface
         if (class_exists($handler) && in_array(FormInterface::class, class_implements($handler))) {
             $this->handler = $handler;
         } else {
-            $interface = FormInterface::class;
+            $interface = \Leonidas\Contracts\Http\Form\FormInterface::class;
             $message = "\$form argument must be a reference to an implementation of $interface";
 
             throw new \Exception($message);

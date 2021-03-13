@@ -4,9 +4,10 @@ namespace Leonidas\Plugin;
 
 use Leonidas\Contracts\Extension\WpExtensionInterface;
 use Leonidas\Enum\ExtensionType;
+use Leonidas\Framework\Exceptions\PluginAlreadyLoadedException;
 use Leonidas\Framework\ModuleInitializer;
 use Leonidas\Framework\WpExtension;
-use Leonidas\Library\Core\BaseObjectProxy;
+use Leonidas\Library\Core\Proxies\BaseStaticObjectProxy;
 use Leonidas\Plugin\Exceptions\LeonidasAlreadyLoadedException;
 use Noodlehaus\ConfigInterface;
 use Psr\Container\ContainerInterface;
@@ -59,10 +60,20 @@ final class Leonidas
         $this->extension = $this->buildExtension();
     }
 
+    /**
+     * Get the value of extension
+     *
+     * @return WpExtension
+     */
+    private function getExtension(): WpExtension
+    {
+        return $this->extension;
+    }
+
     private function bootstrapContainer(): ContainerInterface
     {
         /** @var ContainerInterface $container */
-        $container = require realpath($this->path . '/boot/container.php');
+        $container = require $this->path . '/boot/container.php';
 
         return $container;
     }
@@ -98,14 +109,14 @@ final class Leonidas
 
     private function bindContainerToBaseProxy(): Leonidas
     {
-        BaseObjectProxy::_setProxyContainer($this->container);
+        BaseStaticObjectProxy::_setProxyContainer($this->container);
 
         return $this;
     }
 
     private function requireFiles(): Leonidas
     {
-        require realpath($this->path . '/boot/files.php');
+        require $this->path . '/boot/files.php';
 
         return $this;
     }
@@ -136,9 +147,6 @@ final class Leonidas
         return $this;
     }
 
-    /**
-     *
-     */
     public static function init(array $root): void
     {
         if (!self::isLoaded()) {
@@ -150,47 +158,50 @@ final class Leonidas
 
     private static function isLoaded(): bool
     {
-        return isset(static::$instance);
+        return isset(self::$instance);
     }
 
     private static function reallyInit(array $root): void
     {
-        static::$instance = new self(
+        self::$instance = new self(
             $root['base'],
             $root['path'],
             $root['uri']
         );
 
-        static::$instance->reallyReallyInit();
+        self::$instance->reallyReallyInit();
     }
 
-    private static function throwAlreadyLoadedException(string $method): void
+    private static function throwAlreadyLoadedException(callable $method): void
     {
-        throw new LeonidasAlreadyLoadedException($method);
+        throw new PluginAlreadyLoadedException(
+            self::$instance->getExtension()->getName(),
+            $method
+        );
     }
 
     public static function supportExtension(ExtensionType $type, string $name): void
     {
-        static::$instance->registerSupportedExtension($type, $name);
+        self::$instance->registerSupportedExtension($type, $name);
     }
 
     public static function supportTheme(string $name): void
     {
-        static::supportExtension(new ExtensionType('theme'), $name);
+        self::supportExtension(new ExtensionType('theme'), $name);
     }
 
     public static function supportPlugin(string $name): void
     {
-        static::supportExtension(new ExtensionType('plugin'), $name);
+        self::supportExtension(new ExtensionType('plugin'), $name);
     }
 
     public static function supportMuPlugin(string $name): void
     {
-        static::supportExtension(new ExtensionType('mu-plugin'), $name);
+        self::supportExtension(new ExtensionType('mu-plugin'), $name);
     }
 
     public static function supportMixin(string $name): void
     {
-        static::supportExtension(new ExtensionType('mixin'), $name);
+        self::supportExtension(new ExtensionType('mixin'), $name);
     }
 }

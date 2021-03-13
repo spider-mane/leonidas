@@ -10,11 +10,12 @@
     }
   ],
   "require": {
-    "php": ">=7.2",
+    "php": "^7.3",
+    "composer/installers": "^1.10",
     "guzzlehttp/psr7": "^1.6",
     "hassankhan/config": "^2.1",
-    "jbzoo/utils": "^4.2",
     "league/container": "^3.3",
+    "league/flysystem": "^2.0",
     "myclabs/php-enum": "^1.8",
     "psr/cache": "^1.0",
     "psr/container": "^1.0",
@@ -31,6 +32,7 @@
   },
   "require-dev": {
     "commerceguys/addressing": "^1.0",
+    "johnpbloch/wordpress": "^5.7",
     "php-http/guzzle6-adapter": "^1.0",
     "egulias/email-validator": "^2.1",
     "filp/whoops": "^2.5",
@@ -50,7 +52,7 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "Leonidas\\Tests\\": "tests/unit/"
+      "Tests\\Unit\\": "tests/unit/"
     }
   },
   "config": {

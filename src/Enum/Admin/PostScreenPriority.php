@@ -1,10 +1,10 @@
 <?php
 
-namespace Leonidas\Library\Admin\Enum;
+namespace Leonidas\Enum\Admin;
 
 use MyCLabs\Enum\Enum;
 
-final class MetaboxPriority extends Enum
+final class PostScreenPriority extends Enum
 {
     protected const HIGH = 'high';
     protected const CORE = 'core';

@@ -1,10 +1,10 @@
 <?php
 
-namespace Leonidas\Library\Core;
+namespace Leonidas\Library\Core\Proxies;
 
 use WebTheory\GuctilityBelt\Traits\ObjectProxyBaseTrait;
 
-abstract class BaseObjectProxy
+abstract class BaseStaticObjectProxy
 {
     use ObjectProxyBaseTrait;
 }

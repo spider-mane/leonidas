@@ -3,7 +3,7 @@
 namespace Leonidas\Library\Core\Http\Form;
 
 use Psr\Http\Message\ServerRequestInterface;
-use Leonidas\Contracts\Form\FormInterface;
+use Leonidas\Contracts\Http\Form\FormInterface;
 use Leonidas\Library\Admin\Forms\Validators\WpNonceValidator;
 use Leonidas\Library\Core\Auth\Nonce;
 use WebTheory\Saveyour\Contracts\FormDataProcessorInterface;

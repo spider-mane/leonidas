@@ -19,7 +19,7 @@ if (file_exists($development = __DIR__ . '/boot/development.php')) {
 }
 
 /** @var ContainerInterface $container */
-$container = require 'boot/container.php';
+$container = require __DIR__ . '/boot/container.php';
 
 $base = WpExtension::create([
     'name' => 'Extension Name',

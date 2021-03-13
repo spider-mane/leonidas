@@ -12,8 +12,8 @@ use MyCLabs\Enum\Enum;
  */
 final class ExtensionType extends Enum
 {
-    private const PLUGIN = 'plugin';
-    private const THEME = 'theme';
-    private const MU_PLUGIN = 'mu-plugin';
-    private const MIXIN = 'mixin';
+    protected const PLUGIN = 'plugin';
+    protected const THEME = 'theme';
+    protected const MU_PLUGIN = 'mu-plugin';
+    protected const MIXIN = 'mixin';
 }

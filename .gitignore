@@ -1,17 +1,26 @@
-# Editor/ IDE
-.idea
-.project
-.vscode/
-*.code-workspace
+# Wordpress (included for code completion)
+/wordpress/
 
-# NPM
-node_modules/
-package-lock.json
+# CI output
+/build/
+/coverage
+
+# PHPUnit
+phpunit.result.cache
 
 # Composer
 vendor/
 composer.lock
 composer.phar
 
-# Misc
+# Env
+.env
+
+# Editor/ IDE
+.idea
+.project
+.vscode
+*.code-workspace
+
+# Apple hidden files
 .DS_Store

@@ -17,6 +17,6 @@ return [
     'filters' => [],
 
     'templates' => [
-        realpath('../templates')
+        '/templates'
     ]
 ];

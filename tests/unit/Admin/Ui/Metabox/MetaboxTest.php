@@ -1,15 +1,15 @@
 <?php
 
-namespace Leonidas\Tests\Admin\Ui\Metabox;
+namespace Tests\Unit\Admin\Ui\Metabox;
 
 use InvalidArgumentException;
-use PHPUnit\Framework\TestCase;
-use WP_Screen;
 use Leonidas\Contracts\Admin\Components\MetaboxInterface;
 use Leonidas\Contracts\Admin\Components\MetaboxLayoutInterface;
-use Leonidas\Library\Admin\Enum\MetaboxContext;
-use Leonidas\Library\Admin\Enum\MetaboxPriority;
+use Leonidas\Enum\Admin\PostScreenContext;
+use Leonidas\Enum\Admin\PostScreenPriority;
 use Leonidas\Library\Admin\Metabox\Metabox;
+use PHPUnit\Framework\TestCase;
+use WP_Screen;
 
 class MetaboxTest extends TestCase
 {

@@ -1,14 +1,14 @@
 <?php
 
 use League\Container\Container;
+use Leonidas\Contracts\Admin\Components\AdminNoticeInterface;
+use Leonidas\Library\Admin\Loaders\AdminNoticeCollectionLoader;
 use Noodlehaus\ConfigInterface;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
 use WebTheory\GuctilityBelt\Config;
-use Leonidas\Library\Admin\Loaders\AdminNoticeCollectionLoader;
-use Leonidas\Contracts\Admin\Components\AdminNoticeInterface;
 
 $container = new Container();
 
@@ -26,12 +26,12 @@ $container->add(Environment::class, function () use ($container) {
     $loader = new FilesystemLoader($config['templates']);
     $twig = new Environment($loader, $config['options']);
 
-    // define filters
+    // add filters
     foreach ($config['filters'] as $filter => $function) {
         $twig->addFilter(new TwigFilter($filter, $function));
     }
 
-    // define functions
+    // add functions
     foreach ($config['functions'] as $alias => $function) {
         $twig->addFunction(new TwigFunction($alias, $function));
     }
@@ -50,7 +50,7 @@ $container->add(AdminNoticeInterface::class, function () {
 })->setAlias('notice_loader')->setShared(true);
 
 
-// bootstrap providers
+// register service providers
 $providers = $container->get('config')->get('app.providers', []);
 
 foreach ($providers as $provider) {
