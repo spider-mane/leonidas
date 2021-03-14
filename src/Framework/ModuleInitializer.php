@@ -5,8 +5,14 @@ namespace Leonidas\Framework;
 use InvalidArgumentException;
 use Leonidas\Contracts\Extension\ModuleInitializerInterface;
 use Leonidas\Contracts\Extension\ModuleInterface;
+use Leonidas\Contracts\Extension\Plugin\PluginInterface;
+use Leonidas\Contracts\Extension\Plugin\PluginModuleInterface;
+use Leonidas\Contracts\Extension\Theme\ThemeInterface;
+use Leonidas\Contracts\Extension\Theme\ThemeModuleInterface;
 use Leonidas\Framework\Exceptions\InvalidModuleException;
 use Leonidas\Framework\WpExtension;
+use ReflectionClass;
+use ReflectionMethod;
 
 class ModuleInitializer implements ModuleInitializerInterface
 {
@@ -19,6 +25,15 @@ class ModuleInitializer implements ModuleInitializerInterface
      * @var array
      */
     protected $modules;
+
+    /**
+     * @var array
+     */
+    protected $validModules = [
+        ModuleInterface::class,
+        PluginModuleInterface::class,
+        ThemeModuleInterface::class
+    ];
 
     public function __construct(WpExtension $extension, array $modules)
     {
@@ -34,7 +49,6 @@ class ModuleInitializer implements ModuleInitializerInterface
     protected function hookInModules(): ModuleInitializer
     {
         foreach ($this->getModules() as $module) {
-
             if ($this->isValidModule($module)) {
                 /** @var ModuleInterface $module */
                 $module = new $module($this->getExtension());
@@ -50,15 +64,24 @@ class ModuleInitializer implements ModuleInitializerInterface
 
     protected function isValidModule($module): bool
     {
-        return in_array(
-            $this->getValidModuleInterface(),
-            class_implements($module)
-        );
+        if (!class_exists($module)) {
+            return false;
+        }
+
+        $valid = false;
+
+        foreach ($this->getValidModuleInterfaces() as $validModule) {
+            if (in_array($validModule, class_implements($module))) {
+                $valid = true;
+            }
+        }
+
+        return $valid;
     }
 
-    protected function getValidModuleInterface(): string
+    protected function getValidModuleInterfaces(): array
     {
-        return ModuleInterface::class;
+        return $this->validModules;
     }
 
     /**
