@@ -9,6 +9,7 @@ use Leonidas\Contracts\Extension\Plugin\PluginInterface;
 use Leonidas\Contracts\Extension\Plugin\PluginModuleInterface;
 use Leonidas\Contracts\Extension\Theme\ThemeInterface;
 use Leonidas\Contracts\Extension\Theme\ThemeModuleInterface;
+use Leonidas\Contracts\Extension\WpExtensionInterface;
 use Leonidas\Framework\Exceptions\InvalidModuleException;
 use Leonidas\Framework\WpExtension;
 use ReflectionClass;
@@ -17,7 +18,7 @@ use ReflectionMethod;
 class ModuleInitializer implements ModuleInitializerInterface
 {
     /**
-     * @var WpExtension
+     * @var WpExtensionInterface
      */
     protected $extension;
 
@@ -35,7 +36,7 @@ class ModuleInitializer implements ModuleInitializerInterface
         ThemeModuleInterface::class
     ];
 
-    public function __construct(WpExtension $extension, array $modules)
+    public function __construct(WpExtensionInterface $extension, array $modules)
     {
         $this->extension = $extension;
         $this->modules = $modules;
@@ -87,9 +88,9 @@ class ModuleInitializer implements ModuleInitializerInterface
     /**
      * Get the value of extension
      *
-     * @return WpExtension
+     * @return WpExtensionInterface
      */
-    public function getExtension(): WpExtension
+    public function getExtension(): WpExtensionInterface
     {
         return $this->extension;
     }

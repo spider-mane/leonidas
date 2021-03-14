@@ -10,7 +10,7 @@
     }
   ],
   "require": {
-    "php": "^7.3",
+    "php": "^7.3 || ^8.0",
     "composer/installers": "^1.10",
     "guzzlehttp/psr7": "^1.6",
     "hassankhan/config": "^2.1",
@@ -41,7 +41,7 @@
     "giggsey/libphonenumber-for-php": "^8.10",
     "monolog/monolog": "^1.24",
     "phpbench/phpbench": "@dev",
-    "phpunit/phpunit": "^8.4",
+    "phpunit/phpunit": "^9.0",
     "symfony/validator": "^4.3",
     "symfony/var-dumper": "^4.3"
   },

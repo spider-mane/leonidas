@@ -33,23 +33,24 @@
     </testsuite>
   </testsuites>
 
-  <!-- Filters -->
-  <filter>
-    <whitelist processUncoveredFilesFromWhitelist="true">
-      <directory suffix=".php">src/</directory>
-    </whitelist>
-  </filter>
+  <!-- Coverage -->
+  <coverage cacheDirectory="build/phpunit/coverage/.cache">
+    <include>
+      <directory suffix=".php">src</directory>
+    </include>
+    <report>
+      <html outputDirectory="build/phpunit/coverage/html"/>
+    </report>
+  </coverage>
 
   <!-- Logging -->
   <logging>
-    <log type="junit"
-      target="build/report.junit.xml"/>
-    <log type="coverage-html"
-      target="build/coverage"/>
-    <log type="coverage-text"
-      target="build/coverage.txt"/>
-    <log type="coverage-clover"
-      target="build/logs/clover.xml"/>
+    <junit outputFile="build/phpunit/log/report.junit.xml"/>
+    <teamcity outputFile="build/phpunit/log/teamcity.txt"/>
+    <testdoxHtml outputFile="build/phpunit/log/testdox.html"/>
+    <testdoxText outputFile="build/phpunit/log/testdox.txt"/>
+    <testdoxXml outputFile="build/phpunit/log/testdox.xml"/>
+    <text outputFile="build/phpunit/log/logfile.txt"/>
   </logging>
 
 </phpunit>
