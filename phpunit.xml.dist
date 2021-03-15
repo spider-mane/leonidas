@@ -11,25 +11,37 @@
   convertErrorsToExceptions="true"
   convertNoticesToExceptions="true"
   convertWarningsToExceptions="true"
+  defaultTestSuite="unit"
   executionOrder="depends,defects"
   forceCoversAnnotation="false"
   processIsolation="false"
+  stopOnFailure="true"
   testdox="true"
-  verbose="true"
-  stopOnFailure="false">
+  verbose="true">
 
   <!-- Testsuites -->
   <testsuites>
-    <testsuite name="default">
+    <!-- Unit Testing -->
+    <testsuite name="unit">
       <directory>tests/unit</directory>
     </testsuite>
 
-    <testsuite name="Admin">
+    <testsuite name="unit.admin">
       <directory>tests/unit/admin</directory>
     </testsuite>
 
-    <testsuite name="Ui">
+    <testsuite name="unit.admin.ui">
       <directory>tests/unit/admin/ui</directory>
+    </testsuite>
+
+    <!-- Integration Testing -->
+    <testsuite name="integration">
+      <directory>tests/integration</directory>
+    </testsuite>
+
+    <!-- Acceptance Testing -->
+    <testsuite name="acceptance">
+      <directory>tests/acceptance</directory>
     </testsuite>
   </testsuites>
 
@@ -45,12 +57,12 @@
 
   <!-- Logging -->
   <logging>
-    <junit outputFile="build/phpunit/log/report.junit.xml"/>
-    <teamcity outputFile="build/phpunit/log/teamcity.txt"/>
-    <testdoxHtml outputFile="build/phpunit/log/testdox.html"/>
-    <testdoxText outputFile="build/phpunit/log/testdox.txt"/>
-    <testdoxXml outputFile="build/phpunit/log/testdox.xml"/>
-    <text outputFile="build/phpunit/log/logfile.txt"/>
+    <junit outputFile="build/phpunit/logs/report.junit.xml"/>
+    <teamcity outputFile="build/phpunit/logs/teamcity.txt"/>
+    <testdoxHtml outputFile="build/phpunit/logs/testdox.html"/>
+    <testdoxText outputFile="build/phpunit/logs/testdox.txt"/>
+    <testdoxXml outputFile="build/phpunit/logs/testdox.xml"/>
+    <text outputFile="build/phpunit/logs/logfile.txt"/>
   </logging>
 
 </phpunit>
