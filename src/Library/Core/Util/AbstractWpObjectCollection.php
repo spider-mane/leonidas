@@ -148,13 +148,14 @@ abstract class AbstractWpObjectCollection
      * @param array $objectsArray
      * @param array $orderArray
      * @param string $orderKey
-     * @return array
+     *
+     * @return callable
      */
     protected function sortByMetaCallback(array $orderArray): callable
     {
         return function ($a, $b) use ($orderArray) {
 
-            foreach ([&$a, &$b] as &$obj) {
+            foreach ([$a, $b] as &$obj) {
                 $id = $obj->{static::ID_KEY};
 
                 //! Explain this sh*t!

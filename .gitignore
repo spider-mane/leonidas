@@ -11,8 +11,11 @@
 /vendor/
 composer.lock
 
-# Environment variables
+# Env files
 .env
+.env.*
+.*.env
+*.env
 
 # Editor/ IDE
 .idea/

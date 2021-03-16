@@ -9,7 +9,7 @@ function sort_objects_array(array $objects_array, array $order_array, string $or
 {
     usort($objects_array, function ($a, $b) use ($order_array, $order_key) {
 
-        foreach ([&$a, &$b] as &$obj) {
+        foreach ([$a, $b] as &$obj) {
             $obj = (int) $order_array[$obj->{$order_key}] >= 0 ? $order_array[$obj->{$order_key}] : 0;
         }
 

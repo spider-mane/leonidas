@@ -3,7 +3,7 @@ build:
     override: true
   tests:
     override:
-      - phpunit
+      - vendor/bin/phpunit
       - php-scrutinizer-run --enable-security-analysis
   nodes:
     php73:
