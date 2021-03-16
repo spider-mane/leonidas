@@ -134,7 +134,7 @@ class Form implements FormControllerInterface
      */
     protected function initHandler(): FormInterface
     {
-        return new $this->handler;
+        return new $this->handler();
     }
 
     /**
@@ -167,7 +167,7 @@ class Form implements FormControllerInterface
     protected function requestFields(ServerRequestInterface $request)
     {
         return [
-            'action' => (new Hidden)
+            'action' => (new Hidden())
                 ->setName('action')
                 ->setValue($this->action)
                 ->toHtml(),

@@ -54,7 +54,7 @@ class TermChecklist extends AbstractField implements FormFieldControllerInterfac
     {
         $options = $this->options;
 
-        return (new Checklist)
+        return (new Checklist())
             ->setSelectionProvider($this->createSelection())
             ->setId($options['id'])
             ->setClasslist($options['class'])

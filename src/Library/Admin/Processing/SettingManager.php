@@ -2,7 +2,6 @@
 
 namespace Leonidas\Library\Admin\Processing;
 
-
 class SettingManager extends AbstractInputManager
 {
     /**

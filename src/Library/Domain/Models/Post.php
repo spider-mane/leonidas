@@ -3,8 +3,9 @@
 namespace Leonidas\Library\Domain\Models;
 
 use DateTimeInterface;
+use Leonidas\Library\Domain\Interfaces\PostInterface;
 
-class Post
+class Post implements PostInterface
 {
     /**
      * @var string

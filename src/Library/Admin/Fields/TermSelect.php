@@ -55,7 +55,7 @@ class TermSelect extends AbstractField implements FormFieldControllerInterface
     {
         $options = $this->options;
 
-        return (new Select)
+        return (new Select())
             ->setSelectionProvider($this->createSelection())
             ->setMultiple($options['multiple'])
             ->setId($options['id'])

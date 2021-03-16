@@ -3,14 +3,14 @@
 namespace Leonidas\Library\Admin\Page;
 
 use GuzzleHttp\Psr7\ServerRequest;
-use Psr\Http\Message\ServerRequestInterface;
-use Leonidas\Traits\CanBeRestrictedTrait;
 use Leonidas\Contracts\Admin\AdminPageLoadErrorInterface;
 use Leonidas\Contracts\Admin\AdminTitleResolverInterface;
 use Leonidas\Contracts\Admin\Components\AdminPageInterface;
 use Leonidas\Contracts\Admin\Components\AdminPageLayoutInterface;
 use Leonidas\Contracts\Admin\ParentFileResolverInterface;
 use Leonidas\Contracts\Admin\SubmenuFileResolverInterface;
+use Leonidas\Traits\CanBeRestrictedTrait;
+use Psr\Http\Message\ServerRequestInterface;
 
 abstract class AbstractAdminPage
 {
@@ -43,11 +43,6 @@ abstract class AbstractAdminPage
      * @var null|int
      */
     protected $position;
-
-    /**
-     * @var null|string
-     */
-    protected $parentSlug;
 
     /**
      * @var bool
@@ -161,30 +156,6 @@ abstract class AbstractAdminPage
     public function setPosition(int $position)
     {
         $this->position = $position;
-
-        return $this;
-    }
-
-    /**
-     * Get parent_slug
-     *
-     * @return  string
-     */
-    public function getParentSlug()
-    {
-        return $this->parentSlug;
-    }
-
-    /**
-     * Set parent_slug
-     *
-     * @param   string  $parent_slug  parent_slug
-     *
-     * @return  self
-     */
-    public function SetParentSlug(string $parentSlug)
-    {
-        $this->parentSlug = $parentSlug;
 
         return $this;
     }

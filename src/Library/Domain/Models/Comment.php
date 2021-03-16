@@ -3,8 +3,9 @@
 namespace Leonidas\Library\Domain\Models;
 
 use DateTimeInterface;
+use Leonidas\Library\Domain\Interfaces\CommentInterface;
 
-class Comment
+class Comment implements CommentInterface
 {
     /**
      * @var string

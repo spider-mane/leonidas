@@ -304,7 +304,7 @@ class SettingsField
      */
     protected function createDefaultField(): FormFieldInterface
     {
-        return (new Text)
+        return (new Text())
             ->setClasslist($this->displayArgs['class'] ?? [])
             ->addClass('regular-text');
     }

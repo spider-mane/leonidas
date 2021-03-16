@@ -2,6 +2,9 @@
 
 namespace Leonidas\Library\Domain\Models;
 
-class Tag
+use Leonidas\Library\Domain\Interfaces\TagInterface;
+
+class Tag implements TagInterface
 {
+    //
 }

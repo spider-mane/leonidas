@@ -24,7 +24,7 @@ filter:
     - tests/
   dependency_paths:
     - vendor/
-    - assets/node_modules
+    - assets/node_modules/
 
 
 tools:

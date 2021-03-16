@@ -39,7 +39,7 @@ class SubmenuPage extends AbstractAdminPage implements SubmenuPageInterface
      *
      * @return  string
      */
-    public function getParentSlug()
+    public function getParentSlug(): string
     {
         return $this->parentSlug;
     }
@@ -51,7 +51,7 @@ class SubmenuPage extends AbstractAdminPage implements SubmenuPageInterface
      *
      * @return  self
      */
-    public function SetParentSlug(string $parentSlug): SubmenuPage
+    public function setParentSlug(string $parentSlug): SubmenuPage
     {
         $this->parentSlug = $parentSlug;
 

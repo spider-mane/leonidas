@@ -15,7 +15,7 @@ class TermSelect2 extends TermSelect implements FormFieldControllerInterface
     {
         $options = $this->options;
 
-        return (new Select2)
+        return (new Select2())
             ->setSelectionProvider($this->createSelection())
             ->setMultiple($options['multiple'])
             ->setId($options['id'])
