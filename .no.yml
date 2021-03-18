@@ -6,15 +6,16 @@ build:
     variables:
       - XDEBUG_MODE=coverage
 
+  after:
+    - vendor/bin/phpcs --standard=phpcs.xml.dist src
+    - php-scrutinizer-run --enable-security-analysis
+
   tests:
     override:
-      command:
-        - vendor/bin/phpcs --standard=phpcs.xml.dist src
-        - vendor/bin/phpunit
-        - php-scrutinizer-run --enable-security-analysis
-      coverage:
-        file: build/phpunit/coverage/coverage.clover.xml
-        format: clover
+      command: vendor/bin/phpunit
+    coverage:
+      file: build/phpunit/coverage/coverage.clover.xml
+      format: clover
 
   nodes:
     php73:
@@ -25,9 +26,9 @@ build:
       environment:
         php: 7.4
 
-    php80:
-      environment:
-        php: 8.0
+    # php80:
+    #   environment:
+    #     php: 8.0
 
 
 filter:
