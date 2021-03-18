@@ -1,10 +1,10 @@
 <?php
 
-namespace Leonidas\Library\Core\PostType;
+namespace Leonidas\Library\Core\Models\PostType;
 
-use Leonidas\Library\Core\AbstractWpObjectBuilder;
+use Leonidas\Library\Core\Models\AbstractWpConfigModelBuilder;
 
-class PostType extends AbstractWpObjectBuilder
+class PostType extends AbstractWpConfigModelBuilder
 {
     /**
      *

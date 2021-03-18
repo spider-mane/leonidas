@@ -2,7 +2,7 @@
 
 use Leonidas\Library\Admin\Loaders\Screen;
 use Leonidas\Library\Core\Helpers\SkyHooks;
-use Leonidas\Library\Core\Util\TermCollection;
+use Leonidas\Library\Core\Models\Term\TermCollection;
 use Whoops\Handler\PrettyPageHandler;
 use Whoops\Run;
 

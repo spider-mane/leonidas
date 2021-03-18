@@ -1,8 +1,8 @@
 <?php
 
-namespace Leonidas\Library\Core;
+namespace Leonidas\Library\Core\Models;
 
-abstract class AbstractWpObjectFactory
+abstract class AbstractWpConfigModelFactory
 {
     /**
      * @var array

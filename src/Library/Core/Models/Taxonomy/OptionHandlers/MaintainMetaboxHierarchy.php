@@ -1,6 +1,6 @@
 <?php
 
-namespace Leonidas\Library\Core\Taxonomy\OptionHandlers;
+namespace Leonidas\Library\Core\Models\Taxonomy\OptionHandlers;
 
 use WP_Taxonomy;
 use Leonidas\Contracts\Options\TaxonomyOptionHandlerInterface;

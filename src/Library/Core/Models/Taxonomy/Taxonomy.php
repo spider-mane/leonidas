@@ -1,10 +1,10 @@
 <?php
 
-namespace Leonidas\Library\Core\Taxonomy;
+namespace Leonidas\Library\Core\Models\Taxonomy;
 
-use Leonidas\Library\Core\AbstractWpObjectBuilder;
+use Leonidas\Library\Core\Models\AbstractWpConfigModelBuilder;
 
-class Taxonomy extends AbstractWpObjectBuilder
+class Taxonomy extends AbstractWpConfigModelBuilder
 {
     /**
      * @var string|array

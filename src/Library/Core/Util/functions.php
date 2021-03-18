@@ -1,6 +1,6 @@
 <?php
 
-namespace Leonidas\Library\Core\Helpers;
+namespace Leonidas\Library\Core\Util;
 
 use Leonidas\Library\Core\Exceptions\ScriptNotRegisteredException;
 use Leonidas\Library\Core\Exceptions\StyleNotRegisteredException;

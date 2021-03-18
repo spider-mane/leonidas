@@ -3,13 +3,13 @@
 namespace Leonidas\Library\Admin\Fields\Selections;
 
 use WP_Post;
-use Leonidas\Library\Core\Util\PostCollection;
+use Leonidas\Library\Core\Models\Post\PostCollection;
 use WebTheory\Saveyour\Contracts\SelectionProviderInterface;
 
 abstract class AbstractPostCollectionSelection extends AbstractPostSelectionProvider implements SelectionProviderInterface
 {
     /**
-     * @var PostCollection
+     * @var \Leonidas\Library\Core\Models\Post\PostCollection
      */
     protected $collection;
 

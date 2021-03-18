@@ -3,7 +3,7 @@
 namespace Leonidas\Library\Admin\Fields\Selections;
 
 use WP_Term;
-use Leonidas\Library\Core\Util\TermCollection;
+use Leonidas\Library\Core\Models\Term\TermCollection;
 use WebTheory\Saveyour\Contracts\SelectionProviderInterface;
 
 abstract class AbstractTermCollectionSelection extends AbstractTermSelectionProvider implements SelectionProviderInterface

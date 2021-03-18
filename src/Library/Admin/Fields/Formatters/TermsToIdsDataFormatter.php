@@ -3,7 +3,7 @@
 namespace Leonidas\Library\Admin\Fields\Formatters;
 
 use WP_Term;
-use Leonidas\Library\Core\Util\TermCollection;
+use Leonidas\Library\Core\Models\Term\TermCollection;
 use WebTheory\Saveyour\Contracts\DataFormatterInterface;
 
 class TermsToIdsDataFormatter implements DataFormatterInterface

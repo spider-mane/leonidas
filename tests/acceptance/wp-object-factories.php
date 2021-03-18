@@ -1,7 +1,7 @@
 <?php
 
-use Leonidas\Library\Core\PostType\Factory as PostTypeFactory;
-use Leonidas\Library\Core\Taxonomy\Factory as TaxonomyFactory;
+use Leonidas\Library\Core\Models\PostType\Factory as PostTypeFactory;
+use Leonidas\Library\Core\Models\Taxonomy\Factory as TaxonomyFactory;
 
 ################################################################################
 

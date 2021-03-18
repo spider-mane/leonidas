@@ -1,10 +1,11 @@
 <?php
 
-namespace Leonidas\Library\Core\Util;
+namespace Leonidas\Library\Core\Models\User;
 
+use Leonidas\Library\Core\Models\AbstractWpModelCollection;
 use WP_User;
 
-class UserCollection extends AbstractWpObjectCollection
+class UserCollection extends AbstractWpModelCollection
 {
     /**
      * @var WP_User

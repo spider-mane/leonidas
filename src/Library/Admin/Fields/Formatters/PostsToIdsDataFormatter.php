@@ -3,7 +3,7 @@
 namespace Leonidas\Library\Admin\Fields\Formatters;
 
 use WP_Post;
-use Leonidas\Library\Core\Util\PostCollection;
+use Leonidas\Library\Core\Models\Post\PostCollection;
 use WebTheory\Saveyour\Contracts\DataFormatterInterface;
 
 class PostsToIdsDataFormatter implements DataFormatterInterface

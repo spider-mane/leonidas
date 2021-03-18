@@ -1,12 +1,13 @@
 <?php
 
-namespace Leonidas\Library\Core\PostType;
+namespace Leonidas\Library\Core\Models\PostType;
 
-use Leonidas\Library\Core\AbstractWpObjectFactory;
 use Leonidas\Contracts\Options\PostTypeOptionHandlerInterface;
-use Leonidas\Library\Core\PostType\PostType;
+use Leonidas\Library\Core\Models\AbstractWpConfigModelFactory;
+use Leonidas\Library\Core\Models\PostType\PostType;
+use WP_Post_Type;
 
-class Factory extends AbstractWpObjectFactory
+class Factory extends AbstractWpConfigModelFactory
 {
     /**
      *
@@ -44,7 +45,7 @@ class Factory extends AbstractWpObjectFactory
     /**
      *
      */
-    protected function processOptions($options, \WP_Post_Type $postType)
+    protected function processOptions($options, WP_Post_Type $postType)
     {
         foreach ($options as $option => $args) {
             $handler = $this->optionHandlers[$option] ?? null;

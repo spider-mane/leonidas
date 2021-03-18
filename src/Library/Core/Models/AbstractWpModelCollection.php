@@ -1,8 +1,8 @@
 <?php
 
-namespace Leonidas\Library\Core\Util;
+namespace Leonidas\Library\Core\Models;
 
-abstract class AbstractWpObjectCollection
+abstract class AbstractWpModelCollection
 {
     /**
      *
@@ -117,7 +117,7 @@ abstract class AbstractWpObjectCollection
     /**
      *
      */
-    public function without(AbstractWpObjectCollection $collection)
+    public function without(AbstractWpModelCollection $collection)
     {
         return array_udiff(
             $this->getCollection(),

@@ -1,12 +1,13 @@
 <?php
 
-namespace Leonidas\Library\Core\Taxonomy;
+namespace Leonidas\Library\Core\Models\Taxonomy;
 
-use Leonidas\Library\Core\AbstractWpObjectFactory;
 use Leonidas\Contracts\Options\TaxonomyOptionHandlerInterface;
-use Leonidas\Library\Core\Taxonomy\Taxonomy;
+use Leonidas\Library\Core\Models\AbstractWpConfigModelFactory;
+use Leonidas\Library\Core\Models\Taxonomy\Taxonomy;
+use WP_Taxonomy;
 
-class Factory extends AbstractWpObjectFactory
+class Factory extends AbstractWpConfigModelFactory
 {
     /**
      *
@@ -45,7 +46,7 @@ class Factory extends AbstractWpObjectFactory
     /**
      *
      */
-    protected function processOptions($options, \WP_Taxonomy $taxonomy)
+    protected function processOptions($options, WP_Taxonomy $taxonomy)
     {
         foreach ($options as $option => $args) {
             $handler = $this->optionHandlers[$option] ?? null;
