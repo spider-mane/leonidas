@@ -145,21 +145,22 @@ abstract class AbstractWpObjectCollection
     }
 
     /**
-     * @param array $objectsArray
-     * @param array $orderArray
-     * @param string $orderKey
+     * @param array $orderArray Associative array with object ids as keys and desired order as values
      *
      * @return callable
      */
     protected function sortByMetaCallback(array $orderArray): callable
     {
         return function ($a, $b) use ($orderArray) {
+            $a = $a;
+            $b = $b;
 
             foreach ([$a, $b] as &$obj) {
                 $id = $obj->{static::ID_KEY};
 
-                //! Explain this sh*t!
-                $obj = (int) $orderArray[$id] >= 0 ? $orderArray[$id] : 0;
+                // Set value to 0 if one is not provided
+                $obj = (int) $orderArray[$id] ?? 0;
+                // $obj = (int) $orderArray[$id] >= 0 ? $orderArray[$id] : 0;
             }
 
             if ($a === $b) {
