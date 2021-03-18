@@ -155,7 +155,7 @@ abstract class AbstractWpObjectCollection
             $a = $a;
             $b = $b;
 
-            foreach ([$a, $b] as &$obj) {
+            foreach ([&$a, &$b] as &$obj) {
                 $id = $obj->{static::ID_KEY};
 
                 // Set value to 0 if one is not provided
