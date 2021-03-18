@@ -2,6 +2,10 @@
 
 return [
 
+    'paths' => [
+        '/templates'
+    ],
+
     'options' => [
         'autoescape' => false,
     ],
@@ -15,8 +19,4 @@ return [
     ],
 
     'filters' => [],
-
-    'templates' => [
-        '/templates'
-    ]
 ];

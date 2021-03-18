@@ -1,6 +1,6 @@
 {
   "name": "leonidas/leonidas",
-  "description": "WordPress admin building framework",
+  "description": "Framework for building WordPress plugins and themes",
   "type": "wordpress-plugin",
   "license": "GPL-3.0-or-later",
   "authors": [
@@ -70,6 +70,11 @@
     "watch": "phpunit-watcher watch",
     "check": "vendor/bin/phpcs --standard=phpcs.xml.dist src",
     "fix": "vendor/bin/phpcbf src",
-    "bench": "vendor/bin/phpbench"
+    "bench": "vendor/bin/phpbench",
+    "build": [
+      "@fix",
+      "@check",
+      "@test"
+    ]
   }
 }

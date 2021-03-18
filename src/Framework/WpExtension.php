@@ -275,7 +275,7 @@ class WpExtension implements WpExtensionInterface
      */
     public static function getDevStatusFromConstant(string $const): bool
     {
-        return !empty($const) && defined($const) && (constant($const) === true);
+        return !empty($const) && constant($const) === true;
     }
 
     /**

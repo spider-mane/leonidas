@@ -1,10 +1,21 @@
 build:
   project_setup:
     override: true
+
+  environment:
+    variables:
+      - XDEBUG_MODE=coverage
+
   tests:
     override:
-      - vendor/bin/phpunit
-      - php-scrutinizer-run --enable-security-analysis
+      command:
+        - vendor/bin/phpcs --standard=phpcs.xml.dist src
+        - vendor/bin/phpunit
+        - php-scrutinizer-run --enable-security-analysis
+      coverage:
+        file: build/phpunit/coverage/coverage.clover.xml
+        format: clover
+
   nodes:
     php73:
       environment:
@@ -27,7 +38,11 @@ filter:
     - assets/node_modules/
 
 
-tools:
-  external_code_coverage:
-    timeout: 600
-    runs: 3
+checks:
+  php: true
+
+
+# tools:
+  # external_code_coverage:
+  #   timeout: 600
+  #   runs: 3

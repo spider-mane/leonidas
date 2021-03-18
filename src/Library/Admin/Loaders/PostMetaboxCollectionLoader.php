@@ -3,11 +3,11 @@
 namespace Leonidas\Library\Admin\Loaders;
 
 use GuzzleHttp\Psr7\ServerRequest;
-use Psr\Http\Message\ServerRequestInterface;
-use WP_Post;
 use Leonidas\Contracts\Admin\Components\MetaboxCollectionLoaderInterFace;
 use Leonidas\Contracts\Admin\Components\MetaboxInterface;
 use Leonidas\Traits\MaybeHandlesCsrfTrait;
+use Psr\Http\Message\ServerRequestInterface;
+use WP_Post;
 
 class PostMetaboxCollectionLoader implements MetaboxCollectionLoaderInterFace
 {
@@ -84,7 +84,7 @@ class PostMetaboxCollectionLoader implements MetaboxCollectionLoaderInterFace
             ->withAttribute('post_type', $postType)
             ->withAttribute('post', $post);
 
-        foreach ($this->getMetaBoxes() as $metabox) {
+        foreach ($this->getMetaboxes() as $metabox) {
             if ($this->metaboxShouldBeRendered($metabox, $request)) {
                 add_meta_box(
                     $metabox->getId(),

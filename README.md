@@ -1,28 +1,35 @@
 # Leonidas
 
-[![Latest Version on Packagist][badge.version]][link.packagist]
+[![Latest Version on Packagist][badge.packagist.version]][link.packagist.home]
 [![Software License][badge.license]](LICENSE.md)
 [![Required PHP Version][badge.required-php]][link.php]
-[![Build Status][badge.travis]][link.travis]
-[![Coverage Status][badge.scrutinizer]][link.scrutinizer]
-[![Quality Score][badge.code-quality]][link.code-quality]
-[![Total Downloads][badge.downloads]][link.downloads]
+[![Build Status][badge.scrutinizer.build]][link.scrutinizer.inspections]
+[![Coverage Status][badge.scrutinizer.coverage]][link.scrutinizer.code-structure]
+[![Quality Score][badge.scrutinizer.code-quality]][link.scrutinizer.home]
+[![Total Downloads][badge.packagist.downloads]][link.packagist.downloads]
+<!-- [![Code Intelligence Status][badge.scrutinizer.code-intel]][link.scrutinizer.code-intel] -->
+<!-- [![Build Status][badge.travis.build]][link.travis.build] -->
 
 ## This project is still in early development
 
-[badge.version]: https://img.shields.io/packagist/v/leonidas/leonidas.svg?style=0flat-square
-[badge.license]: https://img.shields.io/badge/license-GPLv3-blue.svg?style=0flat-square
-[badge.travis]: https://img.shields.io/travis/spider-mane/leonidas/master.svg?style=0flat-square
-[badge.scrutinizer]: https://img.shields.io/scrutinizer/coverage/g/spider-mane/leonidas.svg?style=0flat-square
-[badge.code-quality]: https://img.shields.io/scrutinizer/g/spider-mane/leonidas.svg?style=0flat-square
-[badge.downloads]: https://img.shields.io/packagist/dt/leonidas/leonidas.svg?style=0flat-square
-[badge.required-php]: https://img.shields.io/packagist/php-v/leonidas/leonidas.svg?style=0flat-square&colorB=%238892BF
+[badge.license]: https://img.shields.io/badge/license-GPLv3-blue.svg
+[badge.packagist.downloads]: https://img.shields.io/packagist/dt/leonidas/leonidas.svg
+[badge.packagist.version]: https://img.shields.io/packagist/v/leonidas/leonidas.svg
+[badge.required-php]: https://img.shields.io/packagist/php-v/leonidas/leonidas.svg?colorB=%238892BF
+[badge.scrutinizer.build]: https://img.shields.io/scrutinizer/build/g/spider-mane/leonidas
+[badge.scrutinizer.code-intel]: https://scrutinizer-ci.com/g/spider-mane/leonidas/badges/code-intelligence.svg?b=master
+[badge.scrutinizer.code-quality]: https://img.shields.io/scrutinizer/g/spider-mane/leonidas.svg
+[badge.scrutinizer.coverage]: https://scrutinizer-ci.com/g/spider-mane/leonidas/badges/coverage.png?b=master
+<!-- [badge.scrutinizer.coverage]: https://img.shields.io/scrutinizer/coverage/g/spider-mane/leonidas.svg -->
+[badge.travis.build]: https://img.shields.io/travis/spider-mane/leonidas/master.svg
 
-[link.packagist]: https://packagist.org/packages/leonidas/leonidas
-[link.travis]: https://travis-ci.org/spider-mane/leonidas
-[link.scrutinizer]: https://scrutinizer-ci.com/g/spider-mane/leonidas/code-structure
-[link.code-quality]: https://scrutinizer-ci.com/g/spider-mane/leonidas
-[link.downloads]: https://packagist.org/packages/leonidas/leonidas/stats
 [link.author]: https://github.com/spider-mane
 [link.contributors]: ../../contributors
+[link.packagist.downloads]: https://packagist.org/packages/leonidas/leonidas/stats
+[link.packagist.home]: https://packagist.org/packages/leonidas/leonidas
 [link.php]: https://php.net
+[link.scrutinizer.code-intel]: https://scrutinizer-ci.com/code-intelligence
+[link.scrutinizer.code-structure]: https://scrutinizer-ci.com/g/spider-mane/leonidas/code-structure
+[link.scrutinizer.home]: https://scrutinizer-ci.com/g/spider-mane/leonidas
+[link.scrutinizer.inspections]: https://scrutinizer-ci.com/g/spider-mane/leonidas/inspections
+[link.travis.build]: https://travis-ci.org/spider-mane/leonidas

@@ -2,9 +2,31 @@
 
 namespace Leonidas\Library\Core\Helpers;
 
-/**
- *
- */
+use Leonidas\Library\Core\Exceptions\ScriptNotRegisteredException;
+use Leonidas\Library\Core\Exceptions\StyleNotRegisteredException;
+
+function load_scripts(string ...$scripts): void
+{
+    foreach ($scripts as $script) {
+        if (wp_script_is($script, 'registered')) {
+            wp_enqueue_script($script);
+        }
+
+        throw new ScriptNotRegisteredException($script);
+    }
+}
+
+function load_styles(string ...$styles): void
+{
+    foreach ($styles as $style) {
+        if (wp_style_is($style, 'registered')) {
+            wp_enqueue_style($style);
+        }
+
+        throw new StyleNotRegisteredException($style);
+    }
+}
+
 function sort_objects_array(array $objects_array, array $order_array, string $order_key)
 {
     usort($objects_array, function ($a, $b) use ($order_array, $order_key) {
@@ -31,9 +53,6 @@ function sort_objects_array(array $objects_array, array $order_array, string $or
     return $objects_array;
 }
 
-/**
- *
- */
 function sort_objects_by_meta(array $objects, string $object_type, string $meta_key)
 {
     $order_array = [];
@@ -49,9 +68,6 @@ function sort_objects_by_meta(array $objects, string $object_type, string $meta_
     return sort_objects_array($objects, $order_array, $object_id);
 }
 
-/**
- *
- */
 function infer_object_properties($object_type)
 {
     switch ($object_type) {
@@ -68,9 +84,6 @@ function infer_object_properties($object_type)
     return ['object_id' => $object_id, 'object_parent' => $object_parent];
 }
 
-/**
- *
- */
 function return_json($status)
 {
     $return = [
@@ -82,9 +95,6 @@ function return_json($status)
     wp_die();
 }
 
-/**
- *
- */
 function json_encode_wp_safe($input, bool $slashes = true)
 {
     $input = json_encode($input, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);

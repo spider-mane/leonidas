@@ -84,14 +84,14 @@ final class Leonidas
         $config = [$this->container->get('config'), 'get'];
 
         return WpExtension::create([
-            'name' => $config('app.name'),
-            'prefix' => $config('app.prefix'),
+            'name' => $config('plugin.name'),
+            'prefix' => $config('plugin.prefix.short'),
             'path' => $this->path,
             'base' => $this->base,
             'uri' => $this->uri,
-            'assets' => $config('app.assets'),
-            'dev' => WpExtension::getDevStatusFromConstant($config('app.dev')),
-            'type' => new ExtensionType($config('app.type')),
+            'assets' => $config('plugin.assets'),
+            'dev' => $config('plugin.dev'),
+            'type' => new ExtensionType($config('plugin.type')),
             'container' => $this->container
         ]);
     }
