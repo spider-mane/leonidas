@@ -3,11 +3,11 @@
 namespace Leonidas\Library\Admin\Loaders;
 
 use GuzzleHttp\Psr7\ServerRequest;
-use Psr\Http\Message\ServerRequestInterface;
-use WP_Post;
-use Leonidas\Contracts\Admin\Components\ComponentLoaderInterface;
+use Leonidas\Contracts\Admin\ComponentLoaderInterface;
 use Leonidas\Contracts\Admin\Components\MetaboxInterface;
 use Leonidas\Traits\MaybeHandlesCsrfTrait;
+use Psr\Http\Message\ServerRequestInterface;
+use WP_Post;
 
 class PostMetaboxLoader implements ComponentLoaderInterface
 {
