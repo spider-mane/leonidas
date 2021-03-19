@@ -16,6 +16,8 @@ composer.lock
 .env.*
 .*.env
 *.env
+!.env.example
+!.example.env
 
 # Editor/ IDE
 .idea/

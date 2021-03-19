@@ -68,8 +68,8 @@
     "test.admin": "@test --testsuite unit.admin",
     "test.admin.ui": "@test --testsuite unit.admin.ui",
     "watch": "phpunit-watcher watch",
-    "check": "vendor/bin/phpcs --standard=phpcs.xml.dist src",
-    "fix": "vendor/bin/phpcbf src",
+    "check": "vendor/bin/phpcs",
+    "fix": "vendor/bin/phpcbf",
     "bench": "vendor/bin/phpbench",
     "build": [
       "@fix",

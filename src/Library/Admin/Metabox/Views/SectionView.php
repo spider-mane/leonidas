@@ -2,9 +2,9 @@
 
 namespace Leonidas\Library\Admin\Metabox\Views;
 
-use WebTheory\Html\Traits\ElementConstructorTrait;
 use Leonidas\Contracts\Admin\Components\AdminComponentInterface;
 use Leonidas\Contracts\Ui\ViewInterface;
+use WebTheory\Html\Traits\ElementConstructorTrait;
 
 class SectionView implements ViewInterface
 {
@@ -31,7 +31,7 @@ class SectionView implements ViewInterface
 
         $html .= $this->open($container, $attributes);
 
-        if ($this->isFieldset && false) {
+        if ($isFieldset && false) {
             // temporarily disabled because legend elements are absolutely
             // positioned within their container, making padding not work
             // as desired

@@ -1,7 +1,9 @@
 <?xml version="1.0"?>
 <ruleset name="Leonidas">
-
   <description>Leonidas coding standard</description>
+
+  <!-- File paths -->
+  <file>./src</file>
 
   <!-- Args -->
   <arg value="p"/>

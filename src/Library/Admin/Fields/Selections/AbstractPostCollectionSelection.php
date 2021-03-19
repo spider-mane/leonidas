@@ -2,14 +2,14 @@
 
 namespace Leonidas\Library\Admin\Fields\Selections;
 
-use WP_Post;
 use Leonidas\Library\Core\Models\Post\PostCollection;
+use WP_Post;
 use WebTheory\Saveyour\Contracts\SelectionProviderInterface;
 
 abstract class AbstractPostCollectionSelection extends AbstractPostSelectionProvider implements SelectionProviderInterface
 {
     /**
-     * @var \Leonidas\Library\Core\Models\Post\PostCollection
+     * @var PostCollection
      */
     protected $collection;
 
