@@ -8,13 +8,13 @@ build:
         coverage:
           file: build/phpunit/coverage/coverage.clover.xml
           format: clover
-      - php-scrutinizer-run --enable-security-analysis
 
   nodes:
-    php-coding-style:
+    php-analysis:
       tests:
         override:
           - vendor/bin/phpcs
+          - php-scrutinizer-run --enable-security-analysis
     php-7.3:
       environment:
         php: 7.3
@@ -28,8 +28,10 @@ build:
 filter:
   excluded_paths:
     - tests/
+    - assets/tests/
   dependency_paths:
     - vendor/
+    - wordpress/
     - assets/node_modules/
 
 checks:

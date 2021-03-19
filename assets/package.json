@@ -1,11 +1,11 @@
 {
-  "name": "@webtheory/backalley",
-  "description": "Object oriented framework for working with wordpress api",
+  "name": "@webtheory/leonidas",
+  "description": "Framework for building WordPress plugins and themes",
   "author": {
     "name": "Chris Williams",
     "email": "spider.mane.web@gmail.com"
   },
-  "repository": "github:spider-mane/backalley",
+  "repository": "https://github.com/spider-mane/leonidas",
   "license": "GPL-3.0-or-later",
   "devDependencies": {
     "@babel/cli": "^7.2.3",

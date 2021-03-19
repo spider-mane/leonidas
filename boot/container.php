@@ -14,13 +14,12 @@ $root = dirname(__DIR__);
 $container = new Container();
 
 // register config
-$container->add(ConfigInterface::class, function () {
+$container->share(ConfigInterface::class, function () {
     return new Config('../config');
-})->setAlias('config')->setShared(true);
-
+})->setAlias('config');
 
 // register twig environment
-$container->add(Environment::class, function () use ($container, $root) {
+$container->share(Environment::class, function () use ($container, $root) {
     $config = $container->get('config')->get('twig');
     $loader = new FilesystemLoader($config['paths'], $root);
     $twig = new Environment($loader, $config['options']);
@@ -34,27 +33,22 @@ $container->add(Environment::class, function () use ($container, $root) {
     }
 
     return $twig;
-})->setAlias('twig')->setShared(true);
+})->setAlias('twig');
 
-
-// register admin loader
-$container->add(AdminNoticeInterface::class, function () use ($container) {
+// register admin notice loader
+$container->share(AdminNoticeInterface::class, function () use ($container) {
     $prefix = $container->get('config')->get('plugin.prefix.extended');
     $loader = new AdminNoticeCollectionLoader("{$prefix}.adminNotices");
     $loader->hook();
 
     return $loader;
-})->setAlias('notice_loader')->setShared(true);
-
+})->setAlias('notice_loader');
 
 // register service providers
-$providers = $container->get('config')->get('app.providers', []);
-
-foreach ($providers as $provider) {
-    $container->addServiceProvider($provider);
-}
-
-
+array_map(
+    [$container, 'addServiceProvider'],
+    $container->get('config')->get('app.providers', [])
+);
 
 // return bootstrapped container
 return $container;

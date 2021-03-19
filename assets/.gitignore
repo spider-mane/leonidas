@@ -1,5 +1,6 @@
-# Dist
-# /dist/
+# Distribution and build files
+/dist/
+/build/
 
 # NPM/ Yarn
 node_modules/

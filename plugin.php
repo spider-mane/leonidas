@@ -32,5 +32,5 @@ if (file_exists($development = __DIR__ . '/boot/development.php')) {
 Leonidas::init([
     'path' => __DIR__,
     'base' => plugin_basename(__DIR__),
-    'uri' => plugin_dir_url(__FILE__),
+    'uri' => plugin_dir_url(__DIR__),
 ]);
