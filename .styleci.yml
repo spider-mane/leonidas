@@ -1,6 +1,0 @@
-php:
-  preset: psr12
-
-js:
-
-css: true

@@ -1,11 +1,7 @@
 build:
-  project_setup:
-    override: true
-
   environment:
     variables:
       XDEBUG_MODE: coverage
-
   tests:
     override:
       - command: vendor/bin/phpunit
@@ -15,23 +11,19 @@ build:
       - php-scrutinizer-run --enable-security-analysis
 
   nodes:
-    coding-style:
+    php-coding-style:
       tests:
         override:
           - vendor/bin/phpcs
-
-    php73:
+    php-7.3:
       environment:
         php: 7.3
-
-    php74:
+    php-7.4:
       environment:
         php: 7.4
-
-    php80:
+    php-8.0:
       environment:
         php: 8.0
-
 
 filter:
   excluded_paths:
@@ -39,7 +31,6 @@ filter:
   dependency_paths:
     - vendor/
     - assets/node_modules/
-
 
 checks:
   php: true
