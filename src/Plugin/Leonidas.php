@@ -102,7 +102,7 @@ final class Leonidas
             ->bindContainerToBaseProxy()
             ->requireFiles()
             ->initializeModules()
-            ->registerHookEmitter();
+            ->registerHook();
 
         return $this;
     }
@@ -133,7 +133,7 @@ final class Leonidas
         return require $this->extension->config('app.modules');
     }
 
-    private function registerHookEmitter(): Leonidas
+    private function registerHook(): Leonidas
     {
         do_action('leonidas_loaded');
 

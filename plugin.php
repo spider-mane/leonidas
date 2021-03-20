@@ -18,17 +18,10 @@
 
 use Leonidas\Plugin\Leonidas;
 
-// composer autoload
 if (file_exists($autoload = __DIR__ . '/vendor/autoload.php')) {
     require $autoload;
 }
 
-// required during development only
-if (file_exists($development = __DIR__ . '/boot/development.php')) {
-    require $development;
-}
-
-// bootstrap
 Leonidas::init([
     'path' => __DIR__,
     'base' => plugin_basename(__DIR__),
