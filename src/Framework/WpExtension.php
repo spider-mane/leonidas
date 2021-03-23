@@ -5,6 +5,7 @@ namespace Leonidas\Framework;
 use Exception;
 use InvalidArgumentException;
 use League\Container\Container;
+use Leonidas\Contracts\Extension\DependentExtensionListInterface;
 use Leonidas\Contracts\Extension\ModuleInterface;
 use Leonidas\Contracts\Extension\WpExtensionInterface;
 use Leonidas\Enum\ExtensionType;
@@ -18,6 +19,11 @@ class WpExtension implements WpExtensionInterface
      * @var string
      */
     protected $name;
+
+    /**
+     * @var string
+     */
+    protected $version;
 
     /**
      * @var string
@@ -47,7 +53,7 @@ class WpExtension implements WpExtensionInterface
     /**
      * Asset base directory
      *
-     * @var string
+     * @var null|string
      */
     protected $assetUri;
 
@@ -60,16 +66,6 @@ class WpExtension implements WpExtensionInterface
      * @var ContainerInterface
      */
     protected $container;
-
-    /**
-     * @var ExtensionDependencyMap
-     */
-    protected $dependencies;
-
-    /**
-     * @var ExtensionDependentMap
-     */
-    protected $dependents;
 
     /**
      * @var bool
@@ -86,21 +82,23 @@ class WpExtension implements WpExtensionInterface
      */
     public function __construct(
         string $name,
+        string $version,
         string $prefix,
         string $description,
         string $base,
         string $path,
         string $uri,
-        string $assetUri,
+        string $assetUri = null,
         ExtensionType $type,
         ContainerInterface $container,
         bool $isInDev
     ) {
         $this->name = $name;
+        $this->version = $version;
         $this->prefix = $prefix;
         $this->description = $description;
         $this->base = $base;
-        $this->path = $path;
+        $this->path = rtrim($path, "/\\");
         $this->uri = rtrim($uri, '/');
         $this->type = $type;
         $this->assetUri = "{$this->uri}/{$assetUri}/";
@@ -116,6 +114,16 @@ class WpExtension implements WpExtensionInterface
     public function getName(): string
     {
         return $this->name;
+    }
+
+    /**
+     * Get the value of version
+     *
+     * @return string
+     */
+    public function getVersion(): string
+    {
+        return $this->version;
     }
 
     /**
@@ -267,18 +275,6 @@ class WpExtension implements WpExtensionInterface
     }
 
     /**
-     * Allows user to define a boolean constant present only in a development
-     * environment. If the constant is present, returns the boolean value.
-     *
-     * @param string $const The name of a constant that should only be available
-     * during development
-     */
-    public static function getDevStatusFromConstant(string $const): bool
-    {
-        return !empty($const) && constant($const) === true;
-    }
-
-    /**
      * Returns a new instance of WpExtension using values in the array passed.
      *
      * @param array $args
@@ -289,15 +285,16 @@ class WpExtension implements WpExtensionInterface
     {
         return new static(
             $args['name'],
+            $args['version'],
             $args['prefix'],
             $args['description'],
             $args['base'],
             $args['path'],
             $args['uri'],
-            $args['assets'],
+            $args['assets'] ?? null,
             $args['type'],
             $args['container'],
-            $args['dev']
+            $args['dev'] ?? false
         );
     }
 }

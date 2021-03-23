@@ -13,7 +13,10 @@
  *
  * @wordpress-plugin
  * Plugin Name: Leonidas
- * Description: Theme and plugin framework with enhanced WordPress abstraction library.
+ * Version: 0.1.0
+ * Text Domain: leonidas
+ * Github URI: spider-mane/leonidas
+ * Description: Theme and plugin framework with enhanced WordPress abstraction api.
  */
 
 use Leonidas\Plugin\Leonidas;
@@ -23,7 +26,7 @@ if (file_exists($autoload = __DIR__ . '/vendor/autoload.php')) {
 }
 
 Leonidas::init([
-    'path' => __DIR__,
-    'base' => plugin_basename(__DIR__),
+    'base' => plugin_basename(__FILE__),
+    'path' => plugin_dir_path(__DIR__),
     'uri' => plugin_dir_url(__DIR__),
 ]);

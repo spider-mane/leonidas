@@ -5,6 +5,23 @@ namespace Leonidas\Library\Core\Util;
 use Leonidas\Library\Core\Exceptions\ScriptNotRegisteredException;
 use Leonidas\Library\Core\Exceptions\StyleNotRegisteredException;
 
+function on_dependency_init(array $actions, callable $function): void
+{
+    $callback = function () use ($actions, $function) {
+        static $triggered;
+        $triggered = [];
+        $triggered[] = current_action();
+
+        if (!array_diff($actions, $triggered)) {
+            $function();
+        }
+    };
+
+    foreach ($actions as $action) {
+        add_action($action, $callback);
+    }
+}
+
 function load_scripts(string ...$scripts): void
 {
     foreach ($scripts as $script) {

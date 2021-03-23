@@ -7,11 +7,16 @@
 [![Coverage Status][badge.scrutinizer.coverage]][link.scrutinizer.code-structure]
 [![Quality Score][badge.scrutinizer.code-quality]][link.scrutinizer.home]
 [![Total Downloads][badge.packagist.downloads]][link.packagist.downloads]
+[![Average time to resolve an issue][badge.isitmaintained.resolution]][link.isitmaintained]
+[![Percentage of issues still open][badge.isitmaintained.issues]][link.isitmaintained]
+
 <!-- [![Code Intelligence Status][badge.scrutinizer.code-intel]][link.scrutinizer.code-intel] -->
 <!-- [![Build Status][badge.travis.build]][link.travis.build] -->
 
 ## This project is still in early development
 
+[badge.isitmaintained.resolution]: https://isitmaintained.com/badge/resolution/spider-mane/leonidas.svg
+[badge.isitmaintained.issues]: https://isitmaintained.com/badge/open/spider-mane/leonidas.svg
 [badge.license]: https://img.shields.io/badge/license-GPLv3-blue.svg
 [badge.packagist.downloads]: https://img.shields.io/packagist/dt/leonidas/leonidas.svg
 [badge.packagist.version]: https://img.shields.io/packagist/v/leonidas/leonidas.svg
@@ -25,6 +30,7 @@
 
 [link.author]: https://github.com/spider-mane
 [link.contributors]: ../../contributors
+[link.isitmaintained]: https://isitmaintained.com/project/spider-mane/leonidas
 [link.packagist.downloads]: https://packagist.org/packages/leonidas/leonidas/stats
 [link.packagist.home]: https://packagist.org/packages/leonidas/leonidas
 [link.php]: https://php.net

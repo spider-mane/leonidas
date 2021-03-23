@@ -12,6 +12,11 @@ interface WpExtensionInterface extends ContainerInterface
     public function getName(): string;
 
     /**
+     * Get the version of the extension
+     */
+    public function getVersion(): string;
+
+    /**
      * Return a short prefix for use in prefixing values that may be globally
      * accessible and/or collide with other values
      */
@@ -28,19 +33,14 @@ interface WpExtensionInterface extends ContainerInterface
     public function getType(): string;
 
     /**
+     * Get the plugin basename
+     */
+    public function getBase(): string;
+
+    /**
      * Get the base uri of the extension
      */
     public function getUri(): string;
-
-    /**
-     * @var null|array
-     */
-    public function getDependencies(): ?array;
-
-    /**
-     * @var null|array
-     */
-    public function getDependents(): ?array;
 
     /**
      * Get a configuration value

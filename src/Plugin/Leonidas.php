@@ -53,8 +53,8 @@ final class Leonidas
 
     private function __construct(string $base, string $path, string $uri)
     {
-        $this->path = $path;
         $this->base = $base;
+        $this->path = $path;
         $this->uri = $uri;
         $this->container = $this->bootstrapContainer();
         $this->extension = $this->buildExtension();
@@ -72,22 +72,19 @@ final class Leonidas
 
     private function bootstrapContainer(): ContainerInterface
     {
-        /** @var ContainerInterface $container */
-        $container = require $this->path . '/boot/container.php';
-
-        return $container;
+        return require $this->path . '/boot/container.php';
     }
 
     private function buildExtension(): WpExtensionInterface
     {
-        /** @var ConfigInterface $config */
         $config = [$this->container->get('config'), 'get'];
 
         return WpExtension::create([
             'name' => $config('plugin.name'),
             'prefix' => $config('plugin.prefix.short'),
-            'path' => $this->path,
+            'description' => $config('plugin.description'),
             'base' => $this->base,
+            'path' => $this->path,
             'uri' => $this->uri,
             'assets' => $config('plugin.assets'),
             'dev' => $config('plugin.dev'),
@@ -158,7 +155,7 @@ final class Leonidas
 
     private static function isLoaded(): bool
     {
-        return isset(self::$instance);
+        return isset(self::$instance) && (self::$instance instanceof self);
     }
 
     private static function reallyInit(array $root): void
