@@ -113,8 +113,6 @@ final class Leonidas
 
     private function requireFiles(): Leonidas
     {
-        require $this->path . '/boot/files.php';
-
         return $this;
     }
 
@@ -130,11 +128,9 @@ final class Leonidas
         return require $this->extension->config('app.modules');
     }
 
-    private function registerHook(): Leonidas
+    private function registerHook(): void
     {
         do_action('leonidas_loaded');
-
-        return $this;
     }
 
     private function registerSupportedExtension(ExtensionType $type, string $name): Leonidas
@@ -144,10 +140,10 @@ final class Leonidas
         return $this;
     }
 
-    public static function init(array $root): void
+    public static function init(string $base, string $path, string $uri): void
     {
         if (!self::isLoaded()) {
-            self::reallyInit($root);
+            self::reallyInit($base, $path, $uri);
         }
 
         self::throwAlreadyLoadedException(__METHOD__);
@@ -158,15 +154,9 @@ final class Leonidas
         return isset(self::$instance) && (self::$instance instanceof self);
     }
 
-    private static function reallyInit(array $root): void
+    private static function reallyInit(string $base, string $path, string $uri): void
     {
-        self::$instance = new self(
-            $root['base'],
-            $root['path'],
-            $root['uri']
-        );
-
-        self::$instance->reallyReallyInit();
+        self::$instance = (new self($base, $path, $uri))->reallyReallyInit();
     }
 
     private static function throwAlreadyLoadedException(callable $method): void

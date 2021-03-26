@@ -8,7 +8,12 @@ trait TargetsAdminTitleHook
 {
     protected function targetAdminTitleHook(): TargetsAdminTitleHook
     {
-        add_filter('admin_title', $this->getAdminTitleCallback(), null, PHP_INT_MAX);
+        add_filter(
+            'admin_title',
+            $this->getAdminTitleCallback(),
+            null,
+            PHP_INT_MAX
+        );
 
         return $this;
     }

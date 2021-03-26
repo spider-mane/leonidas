@@ -3,7 +3,7 @@
 return [
 
     'paths' => [
-        '/templates'
+        'templates'
     ],
 
     'options' => [

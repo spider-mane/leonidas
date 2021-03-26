@@ -2,6 +2,8 @@
 
 namespace Leonidas\Traits\Hooks;
 
+use Closure;
+
 trait TargetsDeactivatePluginHook
 {
     protected function targetDeactivatePluginHook()
@@ -14,7 +16,7 @@ trait TargetsDeactivatePluginHook
         );
     }
 
-    protected function getDeactivatePluginCallback()
+    protected function getDeactivatePluginCallback(): Closure
     {
         return function (string $plugin, bool $networkWide) {
             $this->doDeactivatePluginAction($plugin, $networkWide);

@@ -28,7 +28,7 @@ trait TargetsTaxonomyPreEditFormHook
         };
     }
 
-    abstract protected function getTaxonomy(): string;
-
     abstract protected function doTaxonomyPreEditFormHookAction(WP_Term $tag, string $taxonomy): void;
+
+    abstract protected function getTaxonomy(): string;
 }

@@ -8,7 +8,12 @@ trait TargetsInAdminHeaderHook
 {
     protected function targetInAdminHeaderHook(): TargetsInAdminHeaderHook
     {
-        add_action('in_admin_header', $this->getInAdminHeaderCallback(), null, PHP_INT_MAX);
+        add_action(
+            'in_admin_header',
+            $this->getInAdminHeaderCallback(),
+            null,
+            PHP_INT_MAX
+        );
 
         return $this;
     }

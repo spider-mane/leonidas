@@ -8,7 +8,12 @@ trait TargetsParentFileHook
 {
     protected function targetParentFileHook(): TargetsParentFileHook
     {
-        add_filter('parent_file', $this->getParentFileCallback(), null, PHP_INT_MAX);
+        add_filter(
+            'parent_file',
+            $this->getParentFileCallback(),
+            null,
+            PHP_INT_MAX
+        );
 
         return $this;
     }

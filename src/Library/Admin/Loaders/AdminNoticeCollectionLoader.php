@@ -3,9 +3,9 @@
 namespace Leonidas\Library\Admin\Loaders;
 
 use GuzzleHttp\Psr7\ServerRequest;
-use Leonidas\Contracts\Admin\Components\AdminNoticeCollectionLoaderInterface;
 use Leonidas\Contracts\Admin\Components\AdminNoticeInterface;
 use Leonidas\Contracts\Admin\Components\ComponentLoaderInterface;
+use Leonidas\Library\Admin\Loaders\AdminNoticeCollectionLoaderInterface;
 
 class AdminNoticeCollectionLoader implements AdminNoticeCollectionLoaderInterface
 {

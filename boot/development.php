@@ -1,3 +1,3 @@
 <?php
 
-define('LEONIDAS_DEVELOPMENT', true);
+define('LEONIDAS_DEVELOPMENT', 1);

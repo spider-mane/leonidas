@@ -8,7 +8,12 @@ trait TargetsAdminEnqueueScriptHook
 {
     protected function targetAdminEnqueueScriptsHook(): TargetsAdminEnqueueScriptHook
     {
-        add_action('admin_enqueue_scripts', $this->getAdminEnqueueScriptsCallback(), null, PHP_INT_MAX);
+        add_action(
+            'admin_enqueue_scripts',
+            $this->getAdminEnqueueScriptsCallback(),
+            null,
+            PHP_INT_MAX
+        );
 
         return $this;
     }

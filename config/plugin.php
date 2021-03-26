@@ -19,7 +19,7 @@ return [
 
     'dependencies' => [],
 
-    'assets' => '/assets/dist',
+    'assets' => 'assets/dist/',
 
-    'dev' => constant('LEONIDAS_DEVELOPMENT') === true,
+    'dev' => defined('LEONIDAS_DEVELOPMENT'),
 ];

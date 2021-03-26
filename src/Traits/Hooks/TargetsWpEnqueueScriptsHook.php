@@ -8,7 +8,12 @@ trait TargetsWpEnqueueScriptsHook
 {
     protected function targetWpEnqueueScriptsHook(): TargetsWpEnqueueScriptsHook
     {
-        add_action('wp_enqueue_scripts', $this->getWpEnqueueScriptsCallback(), null, PHP_INT_MAX);
+        add_action(
+            'wp_enqueue_scripts',
+            $this->getWpEnqueueScriptsCallback(),
+            null,
+            PHP_INT_MAX
+        );
 
         return $this;
     }

@@ -2,52 +2,82 @@
 
 use League\Container\Container;
 use Leonidas\Contracts\Admin\Components\AdminNoticeInterface;
+use Leonidas\Contracts\Container\ConfigReflectorInterface;
+use Leonidas\Contracts\Container\StaticProviderInterface;
+use Leonidas\Framework\ConfigReflector;
+use Leonidas\Framework\Providers\AdminNoticeCollectionLoaderProvider;
+use Leonidas\Framework\Providers\ConfigProvider;
+use Leonidas\Framework\Providers\TwigProvider;
 use Leonidas\Library\Admin\Loaders\AdminNoticeCollectionLoader;
+use Leonidas\Library\Admin\Loaders\AdminNoticeCollectionLoaderInterface;
 use Noodlehaus\ConfigInterface;
+use Psr\Container\ContainerInterface;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
 use WebTheory\GuctilityBelt\Config;
 
-$root = dirname(__DIR__);
+use function Leonidas\Framework\Providers\provide_admin_notice_collection_loader;
+use function Leonidas\Framework\Providers\provide_config;
+use function Leonidas\Framework\Providers\provide_twig_environment;
+
+defined('ABSPATH') || exit;
+
+// instantiate container
 $container = new Container();
 
+// add root directory for services that need it
+$container->share('root', function () {
+    return dirname(__FILE__, 1);
+});
+
 // register config
-$container->share(ConfigInterface::class, function () {
-    return new Config('../config');
+$container->share(ConfigInterface::class, function () use ($container) {
+    return ConfigProvider::provide([
+        'values' => $container->get('root') . '/config',
+    ], $container);
 })->setAlias('config');
 
-// register twig environment
-$container->share(Environment::class, function () use ($container, $root) {
-    $config = $container->get('config')->get('twig');
-    $loader = new FilesystemLoader($config['paths'], $root);
-    $twig = new Environment($loader, $config['options']);
+// register entries from config
+$staticProvider = StaticProviderInterface::class;
+$configReflector = ConfigReflectorInterface::class;
+$entries = $container->get('config')->get('app.container.entries');
 
-    foreach ($config['filters'] as $filter => $function) {
-        $twig->addFilter(new TwigFilter($filter, $function));
+foreach ($entries as $entry) {
+    /** @var StaticProviderInterface $provider */
+    $provider = $entry['provider'];
+    if (!class_exists($provider) || !in_array($staticProvider, class_implements($provider))) {
+        throw new RuntimeException("{$provider} must be an implementation of {$staticProvider}.");
     }
 
-    foreach ($config['functions'] as $alias => $function) {
-        $twig->addFunction(new TwigFunction($alias, $function));
+    /** @var ConfigReflector $args */
+    $args = $entry['args'];
+    if (!($args instanceof $configReflector)) {
+        throw new RuntimeException("args must be instance of {$configReflector}.");
     }
 
-    return $twig;
-})->setAlias('twig');
+    $name = $entry['name'];
+    // specify entries particular to DI container
+    $alias = $entry['alias'] ?? null;
+    $shared = $entry['shared'] ?? false;
 
-// register admin notice loader
-$container->share(AdminNoticeInterface::class, function () use ($container) {
-    $prefix = $container->get('config')->get('plugin.prefix.extended');
-    $loader = new AdminNoticeCollectionLoader("{$prefix}.adminNotices");
-    $loader->hook();
+    // continue building container
+    $entry = $container->add($name, function () use ($provider, $args, $container) {
+        $args = $args->reflect($container->get('config'));
 
-    return $loader;
-})->setAlias('notice_loader');
+        return $provider::provide($args, $container);
+    })->setShared($shared);
+
+    if (!empty($alias)) {
+        $entry->setAlias($alias);
+    }
+}
 
 // register service providers
 array_map(
     [$container, 'addServiceProvider'],
-    $container->get('config')->get('app.providers', [])
+    $container->get('config')->get('app.container.providers', [])
 );
 
 // return bootstrapped container

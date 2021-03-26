@@ -10,7 +10,7 @@ use Leonidas\Framework\Modules\AbstractModule;
 use Leonidas\Traits\Hooks\TargetsActivatePluginHook;
 use Leonidas\Traits\Hooks\TargetsDeactivatedPluginHook;
 
-class ComposerDependencyAssistantModule extends AbstractModule implements ModuleInterface
+class ManageComposerDependencies extends AbstractModule implements ModuleInterface
 {
     use TargetsActivatePluginHook;
     use TargetsDeactivatedPluginHook;

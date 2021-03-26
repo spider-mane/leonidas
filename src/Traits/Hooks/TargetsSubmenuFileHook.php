@@ -8,7 +8,12 @@ trait TargetsSubmenuFileHook
 {
     protected function targetSubmenuFileHook(): TargetsSubmenuFileHook
     {
-        add_filter('submenu_file', $this->getSubmenuFileCallback(), null, PHP_INT_MAX);
+        add_filter(
+            'submenu_file',
+            $this->getSubmenuFileCallback(),
+            null,
+            PHP_INT_MAX
+        );
 
         return $this;
     }

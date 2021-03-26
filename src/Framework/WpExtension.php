@@ -83,27 +83,27 @@ class WpExtension implements WpExtensionInterface
     public function __construct(
         string $name,
         string $version,
-        string $prefix,
         string $description,
+        string $prefix,
         string $base,
         string $path,
         string $uri,
-        string $assetUri = null,
         ExtensionType $type,
         ContainerInterface $container,
-        bool $isInDev
+        bool $isInDev,
+        ?string $assets = null
     ) {
         $this->name = $name;
         $this->version = $version;
         $this->prefix = $prefix;
         $this->description = $description;
         $this->base = $base;
-        $this->path = rtrim($path, "/\\");
-        $this->uri = rtrim($uri, '/');
+        $this->path = $path;
+        $this->uri = $uri;
         $this->type = $type;
-        $this->assetUri = "{$this->uri}/{$assetUri}/";
         $this->container = $container;
         $this->isInDev = $isInDev;
+        $assets && $this->assetUri = $this->uri . $assets;
     }
 
     /**
@@ -286,15 +286,15 @@ class WpExtension implements WpExtensionInterface
         return new static(
             $args['name'],
             $args['version'],
-            $args['prefix'],
             $args['description'],
+            $args['prefix'],
             $args['base'],
             $args['path'],
             $args['uri'],
-            $args['assets'] ?? null,
             $args['type'],
             $args['container'],
-            $args['dev'] ?? false
+            $args['dev'] ?? false,
+            $args['assets'] ?? null
         );
     }
 }

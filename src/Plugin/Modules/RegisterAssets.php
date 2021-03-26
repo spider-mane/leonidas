@@ -7,7 +7,7 @@ use Leonidas\Framework\Modules\AbstractAdminAssetLoaderModule;
 use Leonidas\Library\Core\Asset\Script;
 use Leonidas\Library\Core\Asset\Style;
 
-final class LeonidasAssetLoaderModule extends AbstractAdminAssetLoaderModule implements ModuleInterface
+final class RegisterAssets extends AbstractAdminAssetLoaderModule implements ModuleInterface
 {
     protected function doAdminEnqueueScriptsAction(string $hookSuffix): void
     {
