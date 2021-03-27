@@ -19,6 +19,7 @@
  * Description: Theme and plugin framework with enhanced WordPress abstraction api.
  */
 
+use Leonidas\Framework\Helpers\Plugin;
 use Leonidas\Plugin\Leonidas;
 
 defined('ABSPATH') || exit;
@@ -26,7 +27,7 @@ defined('ABSPATH') || exit;
 require __DIR__ . '/boot/init.php';
 
 Leonidas::init(
-    plugin_basename(__FILE__),
-    plugin_dir_path(__DIR__),
-    plugin_dir_url(__DIR__),
+    Plugin::base(__FILE__),
+    Plugin::path(__DIR__),
+    Plugin::url(__DIR__),
 );

@@ -13,7 +13,7 @@ class ConfigReflector implements ConfigReflectorInterface
      */
     protected $closure;
 
-    public function __construct(Closure $closure)
+    protected function __construct(Closure $closure)
     {
         $this->$closure = $closure;
     }
@@ -33,11 +33,11 @@ class ConfigReflector implements ConfigReflectorInterface
         return new static($closure);
     }
 
-    public static function key(string $key): ConfigReflector
+    public static function get(string $key, $default = null): ConfigReflector
     {
-        return new static(function () use ($key) {
+        return new static(function () use ($key, $default) {
             /** @var ConfigInterface $this */
-            return $this->get($key);
+            return $this->get($key, $default);
         });
     }
 

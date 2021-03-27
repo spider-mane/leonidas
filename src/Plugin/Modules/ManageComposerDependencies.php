@@ -34,7 +34,7 @@ class ManageComposerDependencies extends AbstractModule implements ModuleInterfa
 
     protected function createDependencyAssistant(): DependencyAssistantInterface
     {
-        return new DependencyAssistant;
+        return new DependencyAssistant();
     }
 
     protected function doActivatePluginAction(string $plugin, bool $networkWide): void
