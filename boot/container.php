@@ -33,32 +33,37 @@ $container->share('root', function () {
 });
 
 // register config
-$container->share(ConfigInterface::class, function () use ($container) {
+$container->share('config', function () use ($container) {
     return ConfigProvider::provide([
         'values' => $container->get('root') . '/config',
     ], $container);
-})->setAlias('config');
+});
 
 // register entries from config
 $staticProvider = StaticProviderInterface::class;
 $configReflector = ConfigReflectorInterface::class;
-$entries = $container->get('config')->get('app.container.entries');
+$entries = $container->get('config')->get('app.definitions');
 
 foreach ($entries as $entry) {
+    $name = $entry['name'];
+
     /** @var StaticProviderInterface $provider */
     $provider = $entry['provider'];
     if (!class_exists($provider) || !in_array($staticProvider, class_implements($provider))) {
-        throw new RuntimeException("{$provider} must be an implementation of {$staticProvider}.");
+        throw new RuntimeException(
+            "{$provider}, specified for {$name} is not an implementation of {$staticProvider}."
+        );
     }
 
     /** @var ConfigReflector $args */
     $args = $entry['args'];
     if (!($args instanceof $configReflector)) {
-        throw new RuntimeException("args must be instance of {$configReflector}.");
+        throw new RuntimeException(
+            "\"args\" provided for {$name} is not an instance of {$configReflector}."
+        );
     }
 
-    $name = $entry['name'];
-    // specify entries particular to DI container
+    // specify values particular to DI container
     $alias = $entry['alias'] ?? null;
     $shared = $entry['shared'] ?? false;
 
@@ -77,7 +82,7 @@ foreach ($entries as $entry) {
 // register service providers
 array_map(
     [$container, 'addServiceProvider'],
-    $container->get('config')->get('app.container.providers', [])
+    $container->get('config')->get('app.providers', [])
 );
 
 // return bootstrapped container

@@ -4,6 +4,7 @@ namespace Leonidas\Framework\Providers;
 
 use Leonidas\Contracts\Container\StaticProviderInterface;
 use Noodlehaus\ConfigInterface;
+use Noodlehaus\Parser\ParserInterface;
 use Psr\Container\ContainerInterface;
 use WebTheory\GuctilityBelt\Config;
 
@@ -11,10 +12,10 @@ class ConfigProvider implements StaticProviderInterface
 {
     public static function provide(array $args, ContainerInterface $container): ConfigInterface
     {
-        return new Config(
-            $args['values'],
-            $args['parser'] ?? null,
-            $args['string'] ?? false
-        );
+        $parser = $container->has(ParserInterface::class)
+            ? $container->get(ParserInterface::class)
+            : null;
+
+        return new Config($args['values'], $parser, $args['string'] ?? false);
     }
 }

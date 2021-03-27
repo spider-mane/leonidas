@@ -1,7 +1,7 @@
 {
-  "name": "",
+  "name": "Leonidas",
   "description": "",
-  "prefix": "",
-  "type": "",
+  "prefix": "leon",
+  "type": "plugin",
   "dependencies": ""
 }

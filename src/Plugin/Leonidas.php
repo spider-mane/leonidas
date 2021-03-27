@@ -17,22 +17,22 @@ final class Leonidas
     /**
      * @var string
      */
-    protected $base;
+    private $base;
 
     /**
      * @var string
      */
-    protected $path;
+    private $path;
 
     /**
      * @var string
      */
-    protected $uri;
+    private $uri;
 
     /**
      * @var ContainerInterface
      */
-    protected $container;
+    private $container;
 
     /**
      * @var WpExtension
