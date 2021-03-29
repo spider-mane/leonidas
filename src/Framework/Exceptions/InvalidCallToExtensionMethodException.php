@@ -4,7 +4,7 @@ namespace Leonidas\Framework\Exceptions;
 
 use RuntimeException;
 
-class ExtensionAlreadyLoadedException extends RuntimeException
+abstract class InvalidCallToExtensionMethodException extends RuntimeException
 {
     /**
      * {@inheritDoc}

@@ -2,7 +2,7 @@
 
 defined('ABSPATH') || exit;
 
-$root = dirname(__FILE__, 1);
+$root = dirname(__DIR__, 1);
 
 /**
  * The Composer vendor directory, definable by user so that a Composer-based

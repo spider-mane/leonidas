@@ -9,6 +9,7 @@ use Leonidas\Contracts\Extension\DependentExtensionListInterface;
 use Leonidas\Contracts\Extension\ModuleInterface;
 use Leonidas\Contracts\Extension\WpExtensionInterface;
 use Leonidas\Enum\ExtensionType;
+use Leonidas\Framework\Helpers\Plugin;
 use Noodlehaus\ConfigInterface;
 use Psr\Container\ContainerInterface;
 use Respect\Validation\Rules\File;
@@ -48,14 +49,14 @@ class WpExtension implements WpExtensionInterface
     /**
      * @var string
      */
-    protected $uri;
+    protected $url;
 
     /**
      * Asset base directory
      *
      * @var null|string
      */
-    protected $assetUri;
+    protected $assetUrl;
 
     /**
      * @var ExtensionType
@@ -75,7 +76,7 @@ class WpExtension implements WpExtensionInterface
     /**
      * @param string $name
      * @param string $path
-     * @param string $uri
+     * @param string $url
      * @param string $prefix
      * @param ExtensionType $type
      * @param ContainerInterface $container
@@ -87,7 +88,7 @@ class WpExtension implements WpExtensionInterface
         string $prefix,
         string $base,
         string $path,
-        string $uri,
+        string $url,
         ExtensionType $type,
         ContainerInterface $container,
         bool $isInDev,
@@ -99,11 +100,11 @@ class WpExtension implements WpExtensionInterface
         $this->description = $description;
         $this->base = $base;
         $this->path = $path;
-        $this->uri = $uri;
+        $this->url = $url;
         $this->type = $type;
         $this->container = $container;
         $this->isInDev = $isInDev;
-        $assets && $this->assetUri = $this->uri . $assets;
+        $assets && $this->assetUrl = $this->url . $assets;
     }
 
     /**
@@ -167,13 +168,13 @@ class WpExtension implements WpExtensionInterface
     }
 
     /**
-     * Get the value of uri
+     * Get the value of url
      *
      * @return string
      */
-    public function getUri(): string
+    public function getUrl(): string
     {
-        return $this->uri;
+        return $this->url;
     }
 
     /**
@@ -183,7 +184,7 @@ class WpExtension implements WpExtensionInterface
      */
     protected function getAssetDir(): string
     {
-        return $this->assetUri;
+        return $this->assetUrl;
     }
 
     /**
@@ -223,7 +224,7 @@ class WpExtension implements WpExtensionInterface
      */
     public function config(string $name, $default = null)
     {
-        return $this->get(ConfigInterface::class)->get($name, $default);
+        return $this->get('config')->get($name, $default);
     }
 
     /**
@@ -245,9 +246,9 @@ class WpExtension implements WpExtensionInterface
     /**
      * {@inheritDoc}
      */
-    public function uri(?string $route = null): string
+    public function url(?string $route = null): string
     {
-        return $this->getUri() . $route;
+        return $this->getUrl() . $route;
     }
 
     /**
@@ -290,11 +291,30 @@ class WpExtension implements WpExtensionInterface
             $args['prefix'],
             $args['base'],
             $args['path'],
-            $args['uri'],
+            $args['url'],
             $args['type'],
             $args['container'],
             $args['dev'] ?? false,
             $args['assets'] ?? null
+        );
+    }
+
+    public static function fromPluginHeaders(string $plugin, array $args)
+    {
+        $plugin = Plugin::headers($plugin);
+
+        return new static(
+            $plugin['name'] ?? $args['name'],
+            $plugin['version'] ?? $args['version'],
+            $plugin['description'] ?? $args['description'],
+            $plugin['prefix'] ?? $args['prefix'],
+            $args['base'],
+            $args['path'],
+            $args['url'],
+            $plugin['type'] ?? $args['type'] ?? 'plugin',
+            $args['container'],
+            $args['dev'] ?? false,
+            $plugin['assets'] ?? $args['assets'] ?? null
         );
     }
 }

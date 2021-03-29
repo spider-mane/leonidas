@@ -5,9 +5,9 @@ use Leonidas\Framework\ConfigReflector;
 return [
 
     'modules' => [
+        // Leonidas\Plugin\Modules\ManageComposerDependencies::class,
         Leonidas\Plugin\Modules\RegisterAssets::class,
-        Leonidas\Plugin\Modules\ManageComposerDependencies::class,
-        Leonidas\Plugin\Modules\Setup::class,
+        // Leonidas\Plugin\Modules\Setup::class,
     ],
 
     'services' => [
@@ -15,8 +15,8 @@ return [
             'id' => Twig\Environment::class,
             'provider' => Leonidas\Framework\Providers\TwigProvider::class,
             'args' => ConfigReflector::get('twig'),
-            'alias' => 'twig',
             'shared' => true,
+            'tags' => ['twig', 'template']
         ],
         [
             'id' => Leonidas\Library\Admin\Loaders\AdminNoticeCollectionLoaderInterface::class,
@@ -24,8 +24,8 @@ return [
             'args' => ConfigReflector::map([
                 'prefix' => 'plugin.prefix.extended'
             ]),
-            'alias' => 'notice_loader',
             'shared' => true,
+            'tags' => ['admin_notices']
         ]
     ],
 

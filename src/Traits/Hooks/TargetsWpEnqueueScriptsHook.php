@@ -6,7 +6,7 @@ use Closure;
 
 trait TargetsWpEnqueueScriptsHook
 {
-    protected function targetWpEnqueueScriptsHook(): TargetsWpEnqueueScriptsHook
+    protected function targetWpEnqueueScriptsHook()
     {
         add_action(
             'wp_enqueue_scripts',

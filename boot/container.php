@@ -1,63 +1,39 @@
 <?php
 
 use League\Container\Container;
-use Leonidas\Contracts\Container\ConfigReflectorInterface;
 use Leonidas\Contracts\Container\StaticProviderInterface;
-use Leonidas\Framework\ConfigReflector;
-use Leonidas\Framework\Providers\ConfigProvider;
+use WebTheory\GuctilityBelt\Config;
 
 defined('ABSPATH') || exit;
 
 # instantiate container
 $container = new Container();
 
-# add root directory for services that need it
+# provide root directory
 $container->share('root', function () {
-    return dirname(__FILE__, 1);
+    return dirname(__DIR__, 1);
 });
 
 # register config
 $container->share('config', function () use ($container) {
-    return ConfigProvider::provide([
-        'values' => $container->get('root') . '/config',
-    ], $container);
+    return new Config($container->get('root') . '/config');
 });
 
-# register entries from config
-$staticProvider = StaticProviderInterface::class;
-$configReflector = ConfigReflectorInterface::class;
+# register services from config
 foreach ($container->get('config')->get('app.services', []) as $service) {
-    $id = $service['id'];
-
     /** @var StaticProviderInterface $provider */
+
+    # extract service values
+    $id       = $service['id'];
     $provider = $service['provider'];
-    if (!class_exists($provider) || !in_array($staticProvider, class_implements($provider))) {
-        throw new RuntimeException(
-            "\"provider\", specified for {$id} is not an implementation of {$staticProvider}."
-        );
-    }
+    $args     = $service['args']->reflect($container->get('config')) ?? [];
+    $shared   = $service['shared'] ?? false;
+    $tags     = $service['tags'] ?? [];
 
-    /** @var ConfigReflector $args */
-    $args = $service['args'];
-    if (!($args instanceof $configReflector)) {
-        throw new RuntimeException(
-            "\"args\" provided for {$id} is not an instance of {$configReflector}."
-        );
-    }
-
-    $alias = $service['alias'] ?? null;
-    $shared = $service['shared'] ?? false;
-    $tags = $service['tags'] ?? [];
-
+    # register and configure service
     $service = $container->add($id, function () use ($provider, $args, $container) {
-        $args = $args->reflect($container->get('config'));
-
         return $provider::provide($args, $container);
     }, $shared);
-
-    if (!empty($alias)) {
-        $service->setAlias($alias);
-    }
 
     array_map([$service, 'addTag'], $tags);
 }

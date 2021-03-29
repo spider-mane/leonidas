@@ -6,7 +6,7 @@ use Closure;
 
 trait TargetsTaxonomyPreAddFormHook
 {
-    protected function targetTaxonomyPreAddFormHook(): TargetsTaxonomyPreAddFormHook
+    protected function targetTaxonomyPreAddFormHook()
     {
         $taxonomy = $this->getTaxonomy();
 

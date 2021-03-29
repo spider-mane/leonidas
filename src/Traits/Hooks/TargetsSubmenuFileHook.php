@@ -6,7 +6,7 @@ use Closure;
 
 trait TargetsSubmenuFileHook
 {
-    protected function targetSubmenuFileHook(): TargetsSubmenuFileHook
+    protected function targetSubmenuFileHook()
     {
         add_filter(
             'submenu_file',

@@ -38,9 +38,9 @@ interface WpExtensionInterface extends ContainerInterface
     public function getBase(): string;
 
     /**
-     * Get the base uri of the extension
+     * Get the base url of the extension
      */
-    public function getUri(): string;
+    public function getUrl(): string;
 
     /**
      * Get a configuration value
@@ -58,12 +58,12 @@ interface WpExtensionInterface extends ContainerInterface
     public function absPath(?string $file): ?string;
 
     /**
-     * Return a uri from the root uri
+     * Return a url from the root url
      */
-    public function uri(?string $route): string;
+    public function url(?string $route): string;
 
     /**
-     * Return the uri for the requested asset
+     * Return the url for the requested asset
      */
     public function asset(?string $asset = null): ?string;
 

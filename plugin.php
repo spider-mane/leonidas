@@ -20,14 +20,14 @@
  */
 
 use Leonidas\Framework\Helpers\Plugin;
-use Leonidas\Plugin\Leonidas;
+use Leonidas\Plugin\Launcher;
 
 defined('ABSPATH') || exit;
 
 require __DIR__ . '/boot/init.php';
 
-Leonidas::init(
+Launcher::init(
     Plugin::base(__FILE__),
-    Plugin::path(__DIR__),
-    Plugin::url(__DIR__),
+    Plugin::path(__FILE__),
+    Plugin::url(__FILE__),
 );

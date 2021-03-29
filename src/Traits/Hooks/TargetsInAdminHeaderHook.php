@@ -6,7 +6,7 @@ use Closure;
 
 trait TargetsInAdminHeaderHook
 {
-    protected function targetInAdminHeaderHook(): TargetsInAdminHeaderHook
+    protected function targetInAdminHeaderHook()
     {
         add_action(
             'in_admin_header',

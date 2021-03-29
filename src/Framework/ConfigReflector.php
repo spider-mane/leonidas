@@ -15,7 +15,7 @@ class ConfigReflector implements ConfigReflectorInterface
 
     protected function __construct(Closure $closure)
     {
-        $this->$closure = $closure;
+        $this->closure = $closure;
     }
 
     public function reflect(ConfigInterface $config)

@@ -6,7 +6,7 @@ use Closure;
 
 trait TargetsAdminEnqueueScriptHook
 {
-    protected function targetAdminEnqueueScriptsHook(): TargetsAdminEnqueueScriptHook
+    protected function targetAdminEnqueueScriptsHook()
     {
         add_action(
             'admin_enqueue_scripts',

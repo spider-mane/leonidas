@@ -2,151 +2,48 @@
 
 namespace Leonidas\Plugin;
 
+use Leonidas\Contracts\Extension\DependentExtensionListInterface;
 use Leonidas\Contracts\Extension\WpExtensionInterface;
 use Leonidas\Enum\ExtensionType;
-use Leonidas\Framework\Exceptions\PluginAlreadyLoadedException;
-use Leonidas\Framework\ModuleInitializer;
-use Leonidas\Framework\WpExtension;
-use Leonidas\Library\Core\Proxies\BaseStaticObjectProxy;
-use Leonidas\Plugin\Exceptions\LeonidasAlreadyLoadedException;
-use Noodlehaus\ConfigInterface;
-use Psr\Container\ContainerInterface;
+use Leonidas\Framework\Exceptions\InvalidCallToPluginMethodException;
 
 final class Leonidas
 {
     /**
-     * @var string
+     * @var WpExtensionInterface
      */
-    private $base;
+    protected $base;
 
     /**
-     * @var string
+     * @var DependentExtensionListInterface
      */
-    private $path;
-
-    /**
-     * @var string
-     */
-    private $uri;
-
-    /**
-     * @var ContainerInterface
-     */
-    private $container;
-
-    /**
-     * @var WpExtension
-     */
-    private $extension;
-
-    /**
-     * Array of extensions that depend on Leonidas for proper functioning
-     *
-     * @var string[]
-     */
-    private $supportedExtensions;
+    private $dependents;
 
     /**
      * @var Leonidas
      */
     private static $instance;
 
-    private function __construct(string $base, string $path, string $uri)
+    private function __construct(WpExtensionInterface $base)
     {
         $this->base = $base;
-        $this->path = $path;
-        $this->uri = $uri;
-        $this->container = $this->bootstrapContainer();
-        $this->extension = $this->buildExtension();
-    }
-
-    /**
-     * Get the value of extension
-     *
-     * @return WpExtension
-     */
-    private function getExtension(): WpExtension
-    {
-        return $this->extension;
-    }
-
-    private function bootstrapContainer(): ContainerInterface
-    {
-        return require $this->path . '/boot/container.php';
-    }
-
-    private function buildExtension(): WpExtensionInterface
-    {
-        $config = [$this->container->get('config'), 'get'];
-
-        return WpExtension::create([
-            'name' => $config('plugin.name'),
-            'prefix' => $config('plugin.prefix.short'),
-            'description' => $config('plugin.description'),
-            'base' => $this->base,
-            'path' => $this->path,
-            'uri' => $this->uri,
-            'assets' => $config('plugin.assets'),
-            'dev' => $config('plugin.dev'),
-            'type' => new ExtensionType($config('plugin.type')),
-            'container' => $this->container
-        ]);
-    }
-
-    private function reallyReallyInit(): Leonidas
-    {
-        $this
-            ->bindContainerToBaseProxy()
-            ->requireFiles()
-            ->initializeModules()
-            ->registerHook();
-
-        return $this;
-    }
-
-    private function bindContainerToBaseProxy(): Leonidas
-    {
-        BaseStaticObjectProxy::_setProxyContainer($this->container);
-
-        return $this;
-    }
-
-    private function requireFiles(): Leonidas
-    {
-        return $this;
-    }
-
-    private function initializeModules(): Leonidas
-    {
-        (new ModuleInitializer($this->extension, $this->getModules()))->init();
-
-        return $this;
-    }
-
-    private function getModules(): array
-    {
-        return require $this->extension->config('app.modules');
-    }
-
-    private function registerHook(): void
-    {
-        do_action('leonidas_loaded');
+        // $this->dependents = $base->get(DependentExtensionListInterface::class);
     }
 
     private function registerSupportedExtension(ExtensionType $type, string $name): Leonidas
     {
-        $this->supportedExtensions[$type->getValue()][] = $name;
+        $this->dependents->addDependency($type, $name);
 
         return $this;
     }
 
-    public static function init(string $base, string $path, string $uri): void
+    public static function launch(WpExtensionInterface $base): void
     {
         if (!self::isLoaded()) {
-            self::reallyInit($base, $path, $uri);
+            self::create($base);
+        } else {
+            self::throwInvalidCallException(__METHOD__);
         }
-
-        self::throwAlreadyLoadedException(__METHOD__);
     }
 
     private static function isLoaded(): bool
@@ -154,15 +51,15 @@ final class Leonidas
         return isset(self::$instance) && (self::$instance instanceof self);
     }
 
-    private static function reallyInit(string $base, string $path, string $uri): void
+    private static function create(WpExtensionInterface $base): void
     {
-        self::$instance = (new self($base, $path, $uri))->reallyReallyInit();
+        self::$instance = new self($base);
     }
 
-    private static function throwAlreadyLoadedException(callable $method): void
+    private static function throwInvalidCallException(callable $method): void
     {
-        throw new PluginAlreadyLoadedException(
-            self::$instance->getExtension()->getName(),
+        throw new InvalidCallToPluginMethodException(
+            self::$instance->base->getName(),
             $method
         );
     }

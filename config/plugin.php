@@ -6,6 +6,8 @@ return [
 
     'name' => $name,
 
+    'version' => '0.11.0',
+
     'prefix' => [
         'short' => 'leon',
         'extended' => 'leonidas'

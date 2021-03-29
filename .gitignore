@@ -1,5 +1,6 @@
 # Wordpress (included for code completion and reference)
 /wordpress/
+wp-config.php
 
 # Dev and CI builds
 /build/

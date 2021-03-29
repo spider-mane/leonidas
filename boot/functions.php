@@ -2,6 +2,6 @@
 
 defined('ABSPATH') || exit;
 
-$root = dirname(__FILE__, 1);
+$root = dirname(__DIR__, 1);
 
-require $root . '/src/Core/Helpers/functions.php';
+require $root . '/src/Library/Core/Util/functions.php';

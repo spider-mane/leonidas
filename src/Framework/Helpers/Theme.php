@@ -13,4 +13,9 @@ class Theme
     {
         return;
     }
+
+    public static function headers(string $theme): array
+    {
+        return;
+    }
 }

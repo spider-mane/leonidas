@@ -6,7 +6,7 @@ use Closure;
 
 trait TargetsParentFileHook
 {
-    protected function targetParentFileHook(): TargetsParentFileHook
+    protected function targetParentFileHook()
     {
         add_filter(
             'parent_file',

@@ -6,7 +6,7 @@ use Closure;
 
 trait TargetsAdminTitleHook
 {
-    protected function targetAdminTitleHook(): TargetsAdminTitleHook
+    protected function targetAdminTitleHook()
     {
         add_filter(
             'admin_title',

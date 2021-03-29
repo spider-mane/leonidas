@@ -7,7 +7,7 @@ use WP_Term;
 
 trait TargetsTaxonomyPreEditFormHook
 {
-    protected function targetTaxonomyPreEditFormHook(): TargetsTaxonomyPreEditFormHook
+    protected function targetTaxonomyPreEditFormHook()
     {
         $taxonomy = $this->getTaxonomy();
 

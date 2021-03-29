@@ -6,7 +6,7 @@ use Closure;
 
 trait RegistersDeactivatePluginHook
 {
-    protected function registerDeactivationHook(): RegistersDeactivatePluginHook
+    protected function registerDeactivationHook()
     {
         register_deactivation_hook(
             $this->getPlugin(),

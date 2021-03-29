@@ -6,7 +6,7 @@ use Closure;
 
 trait TargetsAdminMenuHook
 {
-    protected function targetAdminMenuHook(): TargetsAdminMenuHook
+    protected function targetAdminMenuHook()
     {
         add_action(
             'admin_menu',

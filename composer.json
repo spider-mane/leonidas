@@ -1,5 +1,6 @@
 {
   "name": "leonidas/leonidas",
+  "version": "0.11.0",
   "description": "Framework for building WordPress plugins and themes",
   "type": "wordpress-plugin",
   "license": "GPL-3.0-or-later",
@@ -9,8 +10,12 @@
       "email": "spider.mane.web@gmail.com"
     }
   ],
-  "minimum-stability": "dev",
-  "prefer-stable": true,
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://wpackagist.org"
+    }
+  ],
   "require": {
     "php": "^7.3 || ^8.0",
     "composer/installers": "^1.10",
@@ -49,10 +54,13 @@
     "php-http/guzzle6-adapter": "^1.0",
     "phpbench/phpbench": "@dev",
     "phpunit/phpunit": "^9.5",
+    "psy/psysh": "^0.10.7",
     "spatie/phpunit-watcher": "^1.23",
     "squizlabs/php_codesniffer": "^3.5",
     "symfony/validator": "^4.3",
-    "symfony/var-dumper": "^4.3"
+    "symfony/var-dumper": "^4.3",
+    "wpackagist-plugin/advanced-wp-reset": "^1.1",
+    "wpackagist-plugin/wp-reset": "^1.86"
   },
   "autoload": {
     "psr-4": {
@@ -61,17 +69,20 @@
   },
   "autoload-dev": {
     "psr-4": {
+      "Tests\\Fixtures\\": "tests/fixtures/",
       "Tests\\Unit\\": "tests/unit/"
     },
     "files": [
       "boot/development.php"
     ]
   },
-  "config": {
-    "sort-packages": true,
-    "process-timeout": 0
-  },
   "scripts": {
+    "post-install-cmd": [
+      "@link",
+      "@wp-config"
+    ],
+    "wp-config": "cp -n wordpress/wp-config-sample.php wp-config.php",
+    "link": "php bin/symlink-plugin",
     "test": "vendor/bin/phpunit",
     "test.admin": "@test --testsuite unit.admin",
     "test.admin.ui": "@test --testsuite unit.admin.ui",
@@ -79,10 +90,30 @@
     "check": "vendor/bin/phpcs",
     "fix": "vendor/bin/phpcbf",
     "bench": "vendor/bin/phpbench",
+    "debug": "vendor/bin/psych",
     "build": [
       "@fix",
       "@check",
       "@test"
     ]
-  }
+  },
+  "config": {
+    "sort-packages": true,
+    "process-timeout": 0
+  },
+  "extra": {
+    "installer-paths": {
+      "wordpress/wp-content/plugins/{$name}": [
+        "type:wordpress-plugin"
+      ],
+      "wordpress/app/mu-plugins/{$name}/": [
+        "type:wordpress-muplugin"
+      ],
+      "wordpress/app/themes/{$name}/": [
+        "type:wordpress-theme"
+      ]
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
 }
