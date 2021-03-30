@@ -3,4 +3,4 @@
 $root = dirname(__DIR__, 1);
 $link = $root . '/wordpress/wp-content/plugins/' . basename($root);
 
-symlink($root, $link);
+!file_exists($link) && symlink($root, $link);
