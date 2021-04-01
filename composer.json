@@ -69,20 +69,13 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "Tests\\Fixtures\\": "tests/fixtures/",
-      "Tests\\Unit\\": "tests/unit/"
+      "Tests\\": "tests/"
     },
     "files": [
       "boot/development.php"
     ]
   },
   "scripts": {
-    "post-install-cmd": [
-      "@link",
-      "@wp-config"
-    ],
-    "wp-config": "cp -n wordpress/wp-config-sample.php wp-config.php",
-    "link": "php bin/symlink-plugin",
     "test": "vendor/bin/phpunit",
     "test.admin": "@test --testsuite unit.admin",
     "test.admin.ui": "@test --testsuite unit.admin.ui",
@@ -90,29 +83,37 @@
     "check": "vendor/bin/phpcs",
     "fix": "vendor/bin/phpcbf",
     "bench": "vendor/bin/phpbench",
-    "debug": "vendor/bin/psych",
+    "play": "vendor/bin/psych",
     "build": [
       "@fix",
       "@check",
       "@test"
+    ],
+    "link": "php bin/symlink-plugin",
+    "wp-config": "cp -n wordpress/wp-config-sample.php wp-config.php",
+    "post-install-cmd": [
+      "@link"
+    ],
+    "post-update-cmd": [
+      "@link"
     ]
-  },
-  "config": {
-    "sort-packages": true,
-    "process-timeout": 0
   },
   "extra": {
     "installer-paths": {
       "wordpress/wp-content/plugins/{$name}": [
         "type:wordpress-plugin"
       ],
-      "wordpress/app/mu-plugins/{$name}/": [
+      "wordpress/wp-content/mu-plugins/{$name}/": [
         "type:wordpress-muplugin"
       ],
-      "wordpress/app/themes/{$name}/": [
+      "wordpress/wp-content/themes/{$name}/": [
         "type:wordpress-theme"
       ]
     }
+  },
+  "config": {
+    "sort-packages": true,
+    "process-timeout": 0
   },
   "minimum-stability": "dev",
   "prefer-stable": true

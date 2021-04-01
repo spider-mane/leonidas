@@ -1,3 +1,4 @@
+#!/usr/bin/env php
 <?php
 
 $root = dirname(__DIR__, 1);
