@@ -1,6 +1,5 @@
 {
   "name": "leonidas/leonidas",
-  "version": "0.11.0",
   "description": "Framework for building WordPress plugins and themes",
   "type": "wordpress-plugin",
   "license": "GPL-3.0-or-later",
@@ -83,6 +82,7 @@
     "watch": "phpunit-watcher watch",
     "check": "vendor/bin/phpcs",
     "fix": "vendor/bin/phpcbf",
+    "analyze": "vendor/bin/psalm",
     "bench": "vendor/bin/phpbench",
     "play": "vendor/bin/psych",
     "collect": "vendor/bin/var-dump-server",
