@@ -43,9 +43,14 @@ interface WpExtensionInterface extends ContainerInterface
     public function getUrl(): string;
 
     /**
-     * Get a configuration value
+     * Get a configuration or option from the database value
      */
     public function config(string $name, $default);
+
+    // /**
+    //  * Get an option from the database
+    //  */
+    // public function option(string $name, $default);
 
     /**
      * Get a directory relative to the base path

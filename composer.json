@@ -55,6 +55,7 @@
     "phpbench/phpbench": "@dev",
     "phpunit/phpunit": "^9.5",
     "psy/psysh": "^0.10.7",
+    "rarst/wps": "^1.2",
     "spatie/phpunit-watcher": "^1.23",
     "squizlabs/php_codesniffer": "^3.5",
     "symfony/validator": "^4.3",
@@ -84,6 +85,7 @@
     "fix": "vendor/bin/phpcbf",
     "bench": "vendor/bin/phpbench",
     "play": "vendor/bin/psych",
+    "collect": "vendor/bin/var-dump-server",
     "build": [
       "@fix",
       "@check",

@@ -1,6 +1,6 @@
 <?php
 
-namespace Leonidas\Contracts\Container;
+namespace Leonidas\Contracts\Config;
 
 use Noodlehaus\ConfigInterface;
 

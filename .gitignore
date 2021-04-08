@@ -1,27 +1,26 @@
-# Wordpress (included for code completion and reference)
+# Wordpress
 /wordpress/
 wp-config.php
 
 # Dev and CI builds
-/build/
-
-# PHPUnit
 .phpunit.result.cache
+/build/
+docker-compose.override.yml
+phpcs.xml
+phpunit.xml
 
 # Composer
 /vendor/
 composer.lock
 
-# Env files
+# Env
 .env
 .env.*
 .*.env
 *.env
 !.env.example
 !.example.env
-
-# Docker
-docker-compose.override.yml
+!example.env
 
 # Editor/ IDE
 .idea/

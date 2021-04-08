@@ -21,14 +21,14 @@ class SubmenuPage extends AbstractAdminPage implements SubmenuPageInterface
     protected $parentSlug;
 
     /**
-     * @see https://developer.wordpress.org/reference/hooks/submenu_file/
+     * @link https://developer.wordpress.org/reference/hooks/submenu_file/
      *
      * @var null|SubmenuFileResolverInterface
      */
     protected $submenuFileResolver;
 
     /**
-     * @see https://developer.wordpress.org/reference/hooks/parent_file/
+     * @link https://developer.wordpress.org/reference/hooks/parent_file/
      *
      * @var null|ParentFileResolverInterface
      */

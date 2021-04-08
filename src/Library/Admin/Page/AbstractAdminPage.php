@@ -62,7 +62,7 @@ abstract class AbstractAdminPage
     protected $layout;
 
     /**
-     * @see https://developer.wordpress.org/reference/hooks/admin_title/
+     * @link https://developer.wordpress.org/reference/hooks/admin_title/
      *
      * @var null|AdminTitleResolverInterface
      */

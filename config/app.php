@@ -1,6 +1,6 @@
 <?php
 
-use Leonidas\Framework\ConfigReflector;
+use Leonidas\Library\Core\Config\ConfigReflector;
 
 return [
 
@@ -22,7 +22,7 @@ return [
             'id' => Leonidas\Library\Admin\Loaders\AdminNoticeCollectionLoaderInterface::class,
             'provider' => Leonidas\Framework\Providers\AdminNoticeCollectionLoaderProvider::class,
             'args' => ConfigReflector::map([
-                'prefix' => 'plugin.prefix.extended'
+                'prefix' => 'plugin.slug'
             ]),
             'shared' => true,
             'tags' => ['admin_notices']

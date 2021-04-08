@@ -2,7 +2,7 @@
 
 use League\Container\Container;
 use Leonidas\Contracts\Container\StaticProviderInterface;
-use WebTheory\GuctilityBelt\Config;
+use Leonidas\Library\Core\Config\Config;
 
 defined('ABSPATH') || exit;
 
@@ -26,7 +26,7 @@ foreach ($container->get('config')->get('app.services', []) as $service) {
     # extract service values
     $id       = $service['id'];
     $provider = $service['provider'];
-    $args     = $service['args']->reflect($container->get('config')) ?? [];
+    $args     = $service['args'] ?? [];
     $shared   = $service['shared'] ?? false;
     $tags     = $service['tags'] ?? [];
 

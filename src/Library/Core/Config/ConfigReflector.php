@@ -1,9 +1,9 @@
 <?php
 
-namespace Leonidas\Framework;
+namespace Leonidas\Library\Core\Config;
 
 use Closure;
-use Leonidas\Contracts\Container\ConfigReflectorInterface;
+use Leonidas\Contracts\Config\ConfigReflectorInterface;
 use Noodlehaus\ConfigInterface;
 
 class ConfigReflector implements ConfigReflectorInterface
