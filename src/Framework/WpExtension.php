@@ -83,7 +83,7 @@ class WpExtension implements WpExtensionInterface
      * @param string $path
      * @param string $url
      * @param string $prefix
-     * @param ExtensionType $type
+     * @param string $type
      * @param ContainerInterface $container
      */
     public function __construct(

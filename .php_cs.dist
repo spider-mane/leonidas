@@ -33,13 +33,13 @@ return (new Config('leonidas'))
     ],
     // 'lambda_not_used_import' => true,
     'method_argument_space' => [
-      'after_heredoc' => 'true',
+      'after_heredoc' => true,
       'on_multiline' => 'ensure_fully_multiline',
     ],
     'no_unused_imports' => true,
     'not_operator_with_successor_space' => true,
     'ordered_imports' => [
-      'sortAlgorithm' => 'alpha'
+      'sort_algorithm' => 'alpha'
     ],
     'phpdoc_scalar' => [
       'types' => ['boolean', 'callback', 'double', 'integer', 'real', 'str'],
