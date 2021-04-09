@@ -82,7 +82,7 @@
     "test.admin.ui": "@test --testsuite unit.admin.ui",
     "watch": "phpunit-watcher watch",
     "check": "vendor/bin/phpcs",
-    "fix": "vendor/bin/php-cs-fixer fix",
+    "fix": "vendor/bin/php-cs-fixer fix --verbose",
     "analyze": "vendor/bin/psalm",
     "bench": "vendor/bin/phpbench",
     "play": "vendor/bin/psych",

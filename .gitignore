@@ -3,11 +3,9 @@
 wp-config.php
 
 # Dev and CI builds
-.phpunit.result.cache
+*.cache
 /build/
 docker-compose.override.yml
-phpcs.xml
-phpunit.xml
 
 # Composer
 /vendor/
