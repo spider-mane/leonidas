@@ -17,6 +17,11 @@ interface WpExtensionInterface extends ContainerInterface
     public function getVersion(): string;
 
     /**
+     * Get the slug/textdomain of the extension
+     */
+    public function getSlug(): string;
+
+    /**
      * Return a short prefix for use in prefixing values that may be globally
      * accessible and/or collide with other values
      */
@@ -45,7 +50,7 @@ interface WpExtensionInterface extends ContainerInterface
     /**
      * Get a configuration or option from the database value
      */
-    public function config(string $name, $default);
+    public function config(string $name, $default = null);
 
     // /**
     //  * Get an option from the database
@@ -82,13 +87,14 @@ interface WpExtensionInterface extends ContainerInterface
      * Returns the version if in the context of production and returns current
      * timestamp if in the context of app development. Useful as an automatic
      * cache busting mechanism when developing scripts and stylesheets as part
-     * of an extension.
+     * of an extension. If version is not provided and the extension is not in
+     * development, this method must return the extension version.
      *
      * @param string $version The actual version of the asset
      *
      * @return string Either the original version passed or a unix timestamp
      */
-    public function vot(?string $version = null): ?string;
+    public function vot(?string $version = null): string;
 
     /**
      * Determine whether or not the extension is in its development environment

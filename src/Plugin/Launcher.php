@@ -75,6 +75,7 @@ final class Launcher
         return WpExtension::create([
             'name' => $config('plugin.name'),
             'version' => $config('plugin.version'),
+            'slug' => $config('plugin.slug'),
             // 'prefix' => $config('plugin.prefix.short'), // undefined property not triggering proper error in Noodlehaus\AbstractConfig::get()
             'prefix' => $config('plugin.prefix'),
             'description' => $config('plugin.description'),

@@ -22,3 +22,4 @@
 /phpunit.xml*                   export-ignore
 /psalm.xml*                     export-ignore
 /tests/                         export-ignore
+/wp-config-sample.php_cs        export-ignore

@@ -29,6 +29,11 @@ class WpExtension implements WpExtensionInterface
     /**
      * @var string
      */
+    protected $slug;
+
+    /**
+     * @var string
+     */
     protected $prefix;
 
     /**
@@ -84,18 +89,20 @@ class WpExtension implements WpExtensionInterface
     public function __construct(
         string $name,
         string $version,
-        string $description,
+        string $slug,
         string $prefix,
+        string $description,
         string $base,
         string $path,
         string $url,
-        ExtensionType $type,
+        string $type,
         ContainerInterface $container,
         bool $isInDev,
         ?string $assets = null
     ) {
         $this->name = $name;
         $this->version = $version;
+        $this->slug = $slug;
         $this->prefix = $prefix;
         $this->description = $description;
         $this->base = $base;
@@ -125,6 +132,11 @@ class WpExtension implements WpExtensionInterface
     public function getVersion(): string
     {
         return $this->version;
+    }
+
+    public function getSlug(): string
+    {
+        return $this->slug;
     }
 
     /**
@@ -270,9 +282,9 @@ class WpExtension implements WpExtensionInterface
     /**
      * {@inheritDoc}
      */
-    public function vot(?string $version = null): ?string
+    public function vot(?string $version = null): string
     {
-        return $this->isInDev() ? time() : $version;
+        return $this->isInDev() ? time() : ($version ?? $this->getVersion());
     }
 
     /**
@@ -287,8 +299,9 @@ class WpExtension implements WpExtensionInterface
         return new static(
             $args['name'],
             $args['version'],
-            $args['description'],
+            $args['textdomain'] ?? $args['slug'],
             $args['prefix'],
+            $args['description'],
             $args['base'],
             $args['path'],
             $args['url'],
@@ -296,25 +309,6 @@ class WpExtension implements WpExtensionInterface
             $args['container'],
             $args['dev'] ?? false,
             $args['assets'] ?? null
-        );
-    }
-
-    public static function fromPluginHeaders(string $plugin, array $args)
-    {
-        $plugin = Plugin::headers($plugin);
-
-        return new static(
-            $plugin['name'] ?? $args['name'],
-            $plugin['version'] ?? $args['version'],
-            $plugin['description'] ?? $args['description'],
-            $plugin['prefix'] ?? $args['prefix'],
-            $args['base'],
-            $args['path'],
-            $args['url'],
-            $plugin['type'] ?? $args['type'] ?? 'plugin',
-            $args['container'],
-            $args['dev'] ?? false,
-            $plugin['assets'] ?? $args['assets'] ?? null
         );
     }
 }

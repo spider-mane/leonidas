@@ -8,9 +8,9 @@ return [
 
     'version' => '0.11.0',
 
-    'prefix' => 'leon',
-
     'slug' => 'leonidas',
+
+    'prefix' => 'leon',
 
     'type' => 'plugin',
 

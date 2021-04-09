@@ -13,7 +13,7 @@ final class RegisterAssets extends AbstractAdminAssetLoaderModule implements Mod
     {
         $extension = $this->getExtension();
         $assets = [$extension, 'asset'];
-        $vot = [$extension, 'vot'];
+        $version = [$extension, 'vot'];
 
         $saveyourJsDeps = ['select2', 'trix'];
         $leonidasJsDeps = ['jquery'];
@@ -28,8 +28,8 @@ final class RegisterAssets extends AbstractAdminAssetLoaderModule implements Mod
         wp_enqueue_script('saveyour', $assets('lib/saveyour/saveyour.js'), $saveyourJsDeps, null, true);
 
         // plugin assets
-        wp_enqueue_style('leonidas', $assets('css/backalley-admin-styles.css'), null, $vot("1.0.0"));
-        wp_enqueue_script('leonidas', $assets('js/backalley-admin.js'), $leonidasJsDeps, $vot("1.0.0"), true);
+        wp_enqueue_style('leonidas', $assets('css/backalley-admin-styles.css'), null, $version());
+        wp_enqueue_script('leonidas', $assets('js/backalley-admin.js'), $leonidasJsDeps, $version(), true);
     }
 
     /**

@@ -13,20 +13,20 @@ use Whoops\Run;
 define('LEONIDAS_DEVELOPMENT', 1);
 
 ini_set('display_errors', '1');
-ini_set('xdebug.var_display_max_depth', 10);
 ini_set('xdebug.var_display_max_children', 256);
 ini_set('xdebug.var_display_max_data', 1024);
+ini_set('xdebug.var_display_max_depth', 10);
 
 // whoops error handling
-(function () {
-    $run = new Run();
+call_user_func(function () {
     $htmlHandler = new PrettyPageHandler();
+    $run = new Run();
 
     $run->prependHandler($htmlHandler)->register();
-})();
+});
 
 // symfony var dump server
-(function () {
+call_user_func(function () {
     $cloner = new VarCloner();
     $fallbackDumper = in_array(PHP_SAPI, ['cli', 'phpdbg']) ? new CliDumper() : new HtmlDumper();
     $dumper = new ServerDumper('tcp://127.0.0.1:9912', $fallbackDumper, [
@@ -34,9 +34,9 @@ ini_set('xdebug.var_display_max_data', 1024);
         'source' => new SourceContextProvider(),
     ]);
 
-    VarDumper::setHandler(function ($var) use ($cloner, $dumper) {
+    VarDumper::setHandler(function ($var) use ($dumper, $cloner) {
         $dumper->dump($cloner->cloneVar($var));
     });
-})();
+});
 
-ob_start(); // required for proper error handling in some wp-admin contexts
+ob_start(); // required to make errors and var dumps display properly some wp-admin contexts
