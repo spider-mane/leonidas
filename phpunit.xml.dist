@@ -23,25 +23,25 @@
   <testsuites>
     <!-- Unit Testing -->
     <testsuite name="unit">
-      <directory>tests/unit</directory>
+      <directory>tests/suites/unit</directory>
     </testsuite>
 
     <testsuite name="unit.admin">
-      <directory>tests/unit/admin</directory>
+      <directory>tests/suites/unit/admin</directory>
     </testsuite>
 
     <testsuite name="unit.admin.ui">
-      <directory>tests/unit/admin/ui</directory>
+      <directory>tests/suites/unit/admin/ui</directory>
     </testsuite>
 
     <!-- Integration Testing -->
     <testsuite name="integration">
-      <directory>tests/integration</directory>
+      <directory>tests/suites/integration</directory>
     </testsuite>
 
     <!-- Acceptance Testing -->
     <testsuite name="acceptance">
-      <directory>tests/acceptance</directory>
+      <directory>tests/suites/acceptance</directory>
     </testsuite>
   </testsuites>
 
