@@ -50,10 +50,12 @@ function infer_object_properties($object_type)
         case 'post':
             $object_id = 'ID';
             $object_parent = 'post_parent';
+
             break;
         case 'term':
             $object_id = 'term_id';
             $object_parent = 'parent';
+
             break;
     }
 

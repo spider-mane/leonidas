@@ -2,9 +2,9 @@
 
 namespace Leonidas\Library\Admin\Metabox\Views;
 
-use WebTheory\Html\Traits\ElementConstructorTrait;
 use Leonidas\Contracts\Admin\Components\MetaboxComponentInterface;
 use Leonidas\Contracts\Ui\ViewInterface;
+use WebTheory\Html\Traits\ElementConstructorTrait;
 
 class MetaboxLayoutView implements ViewInterface
 {
@@ -29,7 +29,6 @@ class MetaboxLayoutView implements ViewInterface
             $i--;
 
             if ($component->shouldBeRendered($request)) {
-
                 $html .= $component->renderComponent($request);
 
                 if ($i > 0) {

@@ -3,11 +3,11 @@
 namespace Leonidas\Library\Admin\Loaders;
 
 use GuzzleHttp\Psr7\ServerRequest;
-use Psr\Http\Message\ServerRequestInterface;
-use WP_Term;
 use Leonidas\Contracts\Admin\Components\ComponentLoaderInterface;
 use Leonidas\Contracts\Admin\Components\TermFieldInterface;
 use Leonidas\Traits\MaybeHandlesCsrfTrait;
+use Psr\Http\Message\ServerRequestInterface;
+use WP_Term;
 
 class TermFieldCollectionLoader implements ComponentLoaderInterface
 {
@@ -28,7 +28,7 @@ class TermFieldCollectionLoader implements ComponentLoaderInterface
      */
     protected $screens = [
         'edit' => true,
-        'add' => true
+        'add' => true,
     ];
 
     /**

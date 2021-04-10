@@ -2,8 +2,8 @@
 
 namespace Leonidas\Contracts\Http\Form;
 
-use Psr\Http\Message\ServerRequestInterface;
 use Leonidas\Contracts\Extension\WpExtensionInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use WebTheory\Saveyour\Contracts\FormProcessingCacheInterface;
 
 interface FormInterface

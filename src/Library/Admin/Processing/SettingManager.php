@@ -189,7 +189,7 @@ class SettingManager extends AbstractInputManager
     /**
      * Get sanitizeCallback
      *
-     * @return  callback|null
+     * @return  callable|null
      */
     public function getSanitizeCallback()
     {

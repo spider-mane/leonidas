@@ -2,12 +2,12 @@
 
 namespace Leonidas\Library\Admin\Metabox\Components;
 
-use Psr\Http\Message\ServerRequestInterface;
 use Leonidas\Contracts\Admin\Components\MetaboxComponentInterface;
 use Leonidas\Contracts\Ui\ViewInterface;
 use Leonidas\Library\Admin\Metabox\Views\SectionView;
 use Leonidas\Traits\CanBeRestrictedTrait;
 use Leonidas\Traits\RendersWithViewTrait;
+use Psr\Http\Message\ServerRequestInterface;
 
 class Section implements MetaboxComponentInterface
 {
@@ -158,7 +158,7 @@ class Section implements MetaboxComponentInterface
             'title' => $this->title,
             'is_fieldset' => $this->isFieldset,
             'components' => $this->components,
-            'request' => $request
+            'request' => $request,
         ];
     }
 }

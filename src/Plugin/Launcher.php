@@ -8,8 +8,6 @@ use Leonidas\Framework\Exceptions\InvalidCallToPluginMethodException;
 use Leonidas\Framework\ModuleInitializer;
 use Leonidas\Framework\WpExtension;
 use Leonidas\Library\Core\Proxies\BaseStaticObjectProxy;
-use Leonidas\Plugin\Exceptions\LeonidasAlreadyLoadedException;
-use Noodlehaus\ConfigInterface;
 use Psr\Container\ContainerInterface;
 
 final class Launcher
@@ -85,7 +83,7 @@ final class Launcher
             'assets' => $config('plugin.assets'),
             'dev' => $config('plugin.dev'),
             'type' => new ExtensionType($config('plugin.type')),
-            'container' => $this->container
+            'container' => $this->container,
         ]);
     }
 

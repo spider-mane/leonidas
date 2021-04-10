@@ -2,8 +2,8 @@
 
 namespace Leonidas\Library\Core\Models\Taxonomy\OptionHandlers;
 
-use WP_Taxonomy;
 use Leonidas\Contracts\Options\TaxonomyOptionHandlerInterface;
+use WP_Taxonomy;
 
 class MaintainMetaboxHierarchy implements TaxonomyOptionHandlerInterface
 {

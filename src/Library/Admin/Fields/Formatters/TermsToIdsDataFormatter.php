@@ -2,9 +2,9 @@
 
 namespace Leonidas\Library\Admin\Fields\Formatters;
 
-use WP_Term;
 use Leonidas\Library\Core\Models\Term\TermCollection;
 use WebTheory\Saveyour\Contracts\DataFormatterInterface;
+use WP_Term;
 
 class TermsToIdsDataFormatter implements DataFormatterInterface
 {

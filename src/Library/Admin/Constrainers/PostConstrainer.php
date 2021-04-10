@@ -2,10 +2,9 @@
 
 namespace Leonidas\Library\Admin\Constrainers;
 
-use Psr\Http\Message\ServerRequestInterface;
-use WP_Post;
-use Leonidas\Traits\ExpectsPostTrait;
 use Leonidas\Contracts\Auth\ConstrainerInterface;
+use Leonidas\Traits\ExpectsPostTrait;
+use Psr\Http\Message\ServerRequestInterface;
 
 class PostConstrainer implements ConstrainerInterface
 {

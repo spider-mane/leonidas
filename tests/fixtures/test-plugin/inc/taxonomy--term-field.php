@@ -1,11 +1,11 @@
 <?php
 
-use Respect\Validation\Validator;
 use Leonidas\Library\Admin\Fields\Managers\TermMetaDataManager;
 use Leonidas\Library\Admin\Forms\Controllers\TermFieldFormSubmissionManager;
 use Leonidas\Library\Admin\Loaders\TermFieldCollectionLoader;
 use Leonidas\Library\Admin\Term\Components\TermField;
 use Leonidas\Library\Core\Auth\Nonce;
+use Respect\Validation\Validator;
 use WebTheory\Saveyour\Controllers\FormFieldControllerBuilder;
 use WebTheory\Saveyour\Fields\Select;
 use WebTheory\Saveyour\Fields\Text;
@@ -16,7 +16,7 @@ use WebTheory\Saveyour\Selections\StateSelectOptions;
 $taxonomy = 'wts_test_tax';
 $nonce = new Nonce('wts-nonce--term', 'save-wts-term-fields');
 
-$field = (new Select)
+$field = (new Select())
     ->setSelectionProvider(new StateSelectOptions())
     ->setLabel('Test Label')
     ->setClasslist(['regular-text']);
@@ -32,7 +32,7 @@ $state = (new FormFieldControllerBuilder('test-1'))
 #
 ################################################################################
 
-$field = (new Text)
+$field = (new Text())
     ->setLabel('Test 2')
     ->setClasslist(['regular-text']);
 

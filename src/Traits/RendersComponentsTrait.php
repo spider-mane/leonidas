@@ -2,8 +2,8 @@
 
 namespace Leonidas\Traits;
 
-use Psr\Http\Message\ServerRequestInterface;
 use Leonidas\Contracts\Admin\Components\AdminComponentInterface;
+use Psr\Http\Message\ServerRequestInterface;
 
 trait RendersComponentsTrait
 {

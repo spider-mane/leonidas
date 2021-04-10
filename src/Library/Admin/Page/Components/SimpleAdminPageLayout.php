@@ -2,14 +2,14 @@
 
 namespace Leonidas\Library\Admin\Page\Components;
 
-use Psr\Http\Message\ServerRequestInterface;
 use Leonidas\Contracts\Admin\Components\AdminPageComponentInterface;
 use Leonidas\Contracts\Admin\Components\AdminPageLayoutInterface;
 use Leonidas\Contracts\Ui\ViewInterface;
 use Leonidas\Library\Admin\Page\Views\SimpleAdminPageView;
 use Leonidas\Traits\CanBeRestrictedTrait;
-use Leonidas\Traits\RendersWithViewTrait;
 use Leonidas\Traits\MaybeHandlesCsrfTrait;
+use Leonidas\Traits\RendersWithViewTrait;
+use Psr\Http\Message\ServerRequestInterface;
 
 class SimpleAdminPageLayout extends AbstractPageLayout implements AdminPageLayoutInterface
 {

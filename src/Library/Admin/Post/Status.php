@@ -101,7 +101,7 @@ class Status
             'exclude_from_search' => false,
             'show_in_admin_all_list' => true,
             'show_in_admin_status_list' => true,
-            'post_type' => array('post', 'movie'),
+            'post_type' => ['post', 'movie'],
             'publish_text' => __('Apply Changes'),
             'label_count' => _n_noop("{$title} {$tag}", "{$title} {$tag}"),
         ];

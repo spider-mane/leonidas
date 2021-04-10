@@ -2,18 +2,12 @@
 
 namespace Leonidas\Framework;
 
-use InvalidArgumentException;
 use Leonidas\Contracts\Extension\ModuleInitializerInterface;
 use Leonidas\Contracts\Extension\ModuleInterface;
-use Leonidas\Contracts\Extension\Plugin\PluginInterface;
 use Leonidas\Contracts\Extension\Plugin\PluginModuleInterface;
-use Leonidas\Contracts\Extension\Theme\ThemeInterface;
 use Leonidas\Contracts\Extension\Theme\ThemeModuleInterface;
 use Leonidas\Contracts\Extension\WpExtensionInterface;
 use Leonidas\Framework\Exceptions\InvalidModuleException;
-use Leonidas\Framework\WpExtension;
-use ReflectionClass;
-use ReflectionMethod;
 
 class ModuleInitializer implements ModuleInitializerInterface
 {
@@ -33,7 +27,7 @@ class ModuleInitializer implements ModuleInitializerInterface
     protected $validModules = [
         ModuleInterface::class,
         PluginModuleInterface::class,
-        ThemeModuleInterface::class
+        ThemeModuleInterface::class,
     ];
 
     public function __construct(WpExtensionInterface $extension, array $modules)

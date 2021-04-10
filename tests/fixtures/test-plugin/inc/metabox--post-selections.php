@@ -1,13 +1,13 @@
 <?php
 
-use Leonidas\Library\Core\Auth\Nonce;
 use Leonidas\Library\Admin\Fields\TermChecklist;
-use Leonidas\Library\Admin\Fields\TermSelect2;
 use Leonidas\Library\Admin\Fields\TermSelect;
+use Leonidas\Library\Admin\Fields\TermSelect2;
 use Leonidas\Library\Admin\Forms\Controllers\PostMetaboxFormSubmissionManager;
-use Leonidas\Library\Admin\Metabox\Components\Field;
-use Leonidas\Library\Admin\Metabox\AutoLoadingMetabox;
 use Leonidas\Library\Admin\Loaders\Screen;
+use Leonidas\Library\Admin\Metabox\AutoLoadingMetabox;
+use Leonidas\Library\Admin\Metabox\Components\Field;
+use Leonidas\Library\Core\Auth\Nonce;
 
 Screen::load('post', ['post_type' => 'wts_test_cpt_2'], function () {
     // exit(var_dump($_POST));
@@ -44,7 +44,7 @@ Screen::load('post', ['post_type' => 'wts_test_cpt_2'], function () {
     ################################################################################
     $options = [
         'multiple' => true,
-        'class' => ['regular-text']
+        'class' => ['regular-text'],
     ];
 
     $select = new TermSelect($taxonomy, 'wts_tax_input_2', $options);

@@ -2,6 +2,7 @@
 
 namespace Leonidas\Library\Core\Http\Form;
 
+use Exception;
 use GuzzleHttp\Psr7\ServerRequest;
 use Leonidas\Contracts\Http\Form\FormControllerInterface;
 use Leonidas\Contracts\Http\Form\FormInterface;
@@ -60,7 +61,7 @@ class Form implements FormControllerInterface
             $interface = \Leonidas\Contracts\Http\Form\FormInterface::class;
             $message = "\$form argument must be a reference to an implementation of $interface";
 
-            throw new \Exception($message);
+            throw new Exception($message);
         }
 
         return $this;
@@ -96,7 +97,7 @@ class Form implements FormControllerInterface
             'method' => $this->method(),
             'action' => $this->action(),
             'fields' => $handler->formFields($request),
-            'checks' => implode("\n", $verification)
+            'checks' => implode("\n", $verification),
         ];
     }
 
@@ -172,7 +173,7 @@ class Form implements FormControllerInterface
                 ->setValue($this->action)
                 ->toHtml(),
 
-            'referer' => wp_referer_field(false)
+            'referer' => wp_referer_field(false),
         ];
     }
 

@@ -2,17 +2,9 @@
 
 namespace Leonidas\Framework;
 
-use Exception;
-use InvalidArgumentException;
-use League\Container\Container;
-use Leonidas\Contracts\Extension\DependentExtensionListInterface;
-use Leonidas\Contracts\Extension\ModuleInterface;
 use Leonidas\Contracts\Extension\WpExtensionInterface;
 use Leonidas\Enum\ExtensionType;
-use Leonidas\Framework\Helpers\Plugin;
-use Noodlehaus\ConfigInterface;
 use Psr\Container\ContainerInterface;
-use Respect\Validation\Rules\File;
 
 class WpExtension implements WpExtensionInterface
 {
@@ -64,7 +56,7 @@ class WpExtension implements WpExtensionInterface
     protected $assetUrl;
 
     /**
-     * @var ExtensionType
+     * @var string
      */
     protected $type;
 

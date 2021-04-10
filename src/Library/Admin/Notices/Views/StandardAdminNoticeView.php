@@ -2,8 +2,8 @@
 
 namespace Leonidas\Library\Admin\Notices\Views;
 
-use WebTheory\Html\Traits\ElementConstructorTrait;
 use Leonidas\Contracts\Ui\ViewInterface;
+use WebTheory\Html\Traits\ElementConstructorTrait;
 
 class StandardAdminNoticeView implements ViewInterface
 {
@@ -19,7 +19,7 @@ class StandardAdminNoticeView implements ViewInterface
         $isDismissible = $context['is_dismissible'];
 
         $noticeAttr = [
-            'class' => ['notice', "notice-{$type}", $isDismissible ? 'is-dismissible' : null]
+            'class' => ['notice', "notice-{$type}", $isDismissible ? 'is-dismissible' : null],
         ];
 
         $noticeBody = $this->tag('p', [], htmlspecialchars($message));

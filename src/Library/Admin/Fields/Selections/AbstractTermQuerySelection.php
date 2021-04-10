@@ -2,9 +2,9 @@
 
 namespace Leonidas\Library\Admin\Fields\Selections;
 
+use WebTheory\Saveyour\Contracts\SelectionProviderInterface;
 use WP_Term;
 use WP_Term_Query;
-use WebTheory\Saveyour\Contracts\SelectionProviderInterface;
 
 class AbstractTermQuerySelection extends AbstractTermSelectionProvider implements SelectionProviderInterface
 {

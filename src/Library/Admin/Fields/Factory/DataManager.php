@@ -11,7 +11,7 @@ use WebTheory\Saveyour\Factories\DataManagerFactory;
 class DataManager extends DataManagerFactory implements FieldDataManagerResolverFactoryInterface
 {
     public const NAMESPACES = [
-        'webtheory.leonidas' => __NAMESPACE__
+        'webtheory.leonidas' => __NAMESPACE__,
     ] + parent::NAMESPACES;
 
     public const MANAGERS = [

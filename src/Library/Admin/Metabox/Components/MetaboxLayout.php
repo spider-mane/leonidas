@@ -2,14 +2,14 @@
 
 namespace Leonidas\Library\Admin\Metabox\Components;
 
-use Psr\Http\Message\ServerRequestInterface;
 use Leonidas\Contracts\Admin\Components\MetaboxComponentInterface;
 use Leonidas\Contracts\Admin\Components\MetaboxLayoutInterface;
 use Leonidas\Contracts\Ui\ViewInterface;
 use Leonidas\Library\Admin\Metabox\Views\MetaboxLayoutView;
 use Leonidas\Traits\CanBeRestrictedTrait;
-use Leonidas\Traits\RendersWithViewTrait;
 use Leonidas\Traits\MaybeHandlesCsrfTrait;
+use Leonidas\Traits\RendersWithViewTrait;
+use Psr\Http\Message\ServerRequestInterface;
 
 class MetaboxLayout implements MetaboxLayoutInterface
 {
@@ -85,7 +85,7 @@ class MetaboxLayout implements MetaboxLayoutInterface
             'components' => $this->getComponents(),
             'auth_field' => $this->maybeRenderTokenField(),
             'separator' => $this->getComponentSeparator(),
-            'request' => $request
+            'request' => $request,
         ];
     }
 

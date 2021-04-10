@@ -2,10 +2,10 @@
 
 namespace Leonidas\Library\Admin\Table;
 
-use Psr\Http\Message\ServerRequestInterface;
-use WebTheory\Html\Traits\ElementConstructorTrait;
 use Leonidas\Contracts\Admin\Components\ColumnRowActionInterface;
 use Leonidas\Traits\CanBeRestrictedTrait;
+use Psr\Http\Message\ServerRequestInterface;
+use WebTheory\Html\Traits\ElementConstructorTrait;
 
 class ColumnRowAction implements ColumnRowActionInterface
 {
@@ -118,7 +118,7 @@ class ColumnRowAction implements ColumnRowActionInterface
 
         $attributes = [
             'href' => sprintf($this->link, $object->slug),
-            'aria-label' => sprintf($this->ariaLabel, "&#8220;{$object->name}&#8221;")
+            'aria-label' => sprintf($this->ariaLabel, "&#8220;{$object->name}&#8221;"),
         ];
 
         return $this->tag('a', $attributes + $this->attributes, $this->title);

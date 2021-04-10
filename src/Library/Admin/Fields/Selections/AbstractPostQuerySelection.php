@@ -2,9 +2,9 @@
 
 namespace Leonidas\Library\Admin\Fields\Selections;
 
+use WebTheory\Saveyour\Contracts\SelectionProviderInterface;
 use WP_Post;
 use WP_Query;
-use WebTheory\Saveyour\Contracts\SelectionProviderInterface;
 
 abstract class AbstractPostQuerySelection extends AbstractPostSelectionProvider implements SelectionProviderInterface
 {

@@ -2,11 +2,8 @@
 
 namespace Tests\Unit\Admin\Ui\Metabox;
 
-use InvalidArgumentException;
 use Leonidas\Contracts\Admin\Components\MetaboxInterface;
 use Leonidas\Contracts\Admin\Components\MetaboxLayoutInterface;
-use Leonidas\Enum\Admin\PostScreenContext;
-use Leonidas\Enum\Admin\PostScreenPriority;
 use Leonidas\Library\Admin\Metabox\Metabox;
 use PHPUnit\Framework\TestCase;
 use WP_Screen;

@@ -89,7 +89,7 @@ class Taxonomy extends AbstractWpConfigModelBuilder
             'no_terms' => "No {$pluralLower}",
             'items_list_navigation' => "{$plural} list navigation",
             'items_list' => "{$plural} list",
-            'back_to_items' => "&larr; Back to {$plural}"
+            'back_to_items' => "&larr; Back to {$plural}",
         ];
     }
 }

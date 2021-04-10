@@ -3,9 +3,9 @@
 namespace Leonidas\Library\Admin\Table;
 
 use GuzzleHttp\Psr7\ServerRequest;
-use WebTheory\Html\Traits\ElementConstructorTrait;
 use Leonidas\Contracts\Admin\Components\ColumnRowActionInterface;
 use Leonidas\Traits\CanBeRestrictedTrait;
+use WebTheory\Html\Traits\ElementConstructorTrait;
 
 class ColumnRowAction
 {

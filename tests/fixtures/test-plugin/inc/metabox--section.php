@@ -1,20 +1,16 @@
 <?php
 
-use Respect\Validation\Validator;
 use Leonidas\Library\Admin\Constrainers\PostConstrainer;
 use Leonidas\Library\Admin\Fields\Managers\PostMetaFieldManager;
-use Leonidas\Library\Admin\Fields\WpAdminField;
 use Leonidas\Library\Admin\Forms\Controllers\PostMetaboxFormSubmissionManager;
-use Leonidas\Library\Admin\Metabox\Components\Field;
-use Leonidas\Library\Admin\Metabox\Components\Fieldset;
-use Leonidas\Library\Admin\Metabox\Components\Section;
 use Leonidas\Library\Admin\Metabox\AutoLoadingMetabox;
+use Leonidas\Library\Admin\Metabox\Components\Field;
+use Leonidas\Library\Admin\Metabox\Components\Section;
 use Leonidas\Library\Core\Auth\Nonce;
-use Leonidas\Library\Core\Helpers\SkyHooks;
+use Respect\Validation\Validator;
 use WebTheory\Saveyour\Controllers\FormFieldController;
 use WebTheory\Saveyour\Fields\Email;
 use WebTheory\Saveyour\Fields\Input;
-use WebTheory\Saveyour\Fields\Tel;
 
 ################################################################################
 # Base
@@ -26,7 +22,7 @@ $postType = 'wts_test_cpt';
 ################################################################################
 
 // phone
-$field = (new Input)
+$field = (new Input())
     ->setPlaceholder('Phone')
     ->setId('wts-phone');
 $phoneData = (new PostMetaFieldManager('wts-phone'));
@@ -36,7 +32,7 @@ $phoneField = (new Field($phone))
     ->setLabel('phone');
 
 // fax
-$field = (new Input)
+$field = (new Input())
     ->setPlaceholder('Fax')
     ->setId('wts-fax');
 $data = (new PostMetaFieldManager('wts-fax'));
@@ -47,7 +43,7 @@ $faxField = (new Field($fax))
     ->setConstraints(new PostConstrainer(4));
 
 // email
-$field = (new Input)
+$field = (new Input())
     ->setPlaceholder('Email')
     ->setId('wts-email');
 $data = (new PostMetaFieldManager('wts-email'));

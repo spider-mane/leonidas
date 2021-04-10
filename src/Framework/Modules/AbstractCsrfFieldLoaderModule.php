@@ -2,12 +2,8 @@
 
 namespace Leonidas\Framework\Modules;
 
-use Closure;
-use Leonidas\Contracts\Auth\CsrfManagerInterface;
 use Leonidas\Contracts\Auth\CsrfManagerRepositoryInterface;
-use Leonidas\Contracts\Dashboard\ScreenInterface;
 use Leonidas\Contracts\Extension\ModuleInterface;
-use Leonidas\Library\Core\Auth\CsrfManagerRepository;
 use Leonidas\Traits\Hooks\TargetsInAdminHeaderHook;
 use Leonidas\Traits\LoadsCsrfFieldsTrait;
 use WP_Screen;

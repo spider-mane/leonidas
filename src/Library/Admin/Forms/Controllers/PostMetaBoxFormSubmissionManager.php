@@ -3,12 +3,11 @@
 namespace Leonidas\Library\Admin\Forms\Controllers;
 
 use GuzzleHttp\Psr7\ServerRequest;
-use WP_Post_Type;
-use Leonidas\Library\Admin\Forms\Controllers\AbstractWpAdminFormSubmissionManager;
 use Leonidas\Library\Admin\Forms\Validators\NoAutosaveValidator;
 use Leonidas\Library\Admin\Forms\Validators\Permissions\EditPost;
 use Leonidas\Library\Admin\Forms\Validators\WpNonceValidator;
 use Leonidas\Traits\MaybeHandlesCsrfTrait;
+use WP_Post_Type;
 
 class PostMetaboxFormSubmissionManager extends AbstractWpAdminFormSubmissionManager
 {

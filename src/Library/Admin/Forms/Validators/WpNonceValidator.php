@@ -2,8 +2,8 @@
 
 namespace Leonidas\Library\Admin\Forms\Validators;
 
-use Psr\Http\Message\ServerRequestInterface;
 use Leonidas\Library\Core\Auth\Nonce;
+use Psr\Http\Message\ServerRequestInterface;
 use WebTheory\Saveyour\Contracts\FormValidatorInterface;
 
 class WpNonceValidator implements FormValidatorInterface

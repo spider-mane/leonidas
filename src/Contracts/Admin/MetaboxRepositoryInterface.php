@@ -3,7 +3,6 @@
 namespace Leonidas\Contracts\Admin;
 
 use Leonidas\Contracts\Admin\Components\MetaboxInterface;
-use Leonidas\Contracts\Admin\MetaboxCollectionInterface;
 
 interface MetaboxRepositoryInterface
 {

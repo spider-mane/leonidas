@@ -1,11 +1,10 @@
 <?php
 
-use Respect\Validation\Validator as v;
-use WebTheory\GuctilityBelt\SelectOptions\UsStatesAndTerritories;
-use Leonidas\Library\Admin\Page\SettingsField;
 use Leonidas\Library\Admin\Page\SelfLoadingSettingsPage;
+use Leonidas\Library\Admin\Page\SettingsField;
 use Leonidas\Library\Admin\Page\SettingsSection;
 use Leonidas\Library\Admin\Processing\SettingManager;
+use Respect\Validation\Validator as v;
 use WebTheory\Saveyour\Fields\Email;
 use WebTheory\Saveyour\Fields\Select;
 use WebTheory\Saveyour\Fields\Tel;
@@ -62,18 +61,18 @@ $section1 = (new SettingsSection('test-section-1', 'Test Section', $page1))
  */
 $settingField1 = (new SettingsField('ba-test-one', 'Test Setting 1', $page1))
     ->setSetting($setting1->getOptionName())
-    ->setField((new Email)->addClass('regular-text'))
+    ->setField((new Email())->addClass('regular-text'))
     ->setSection($section1->getId())
     ->hook();
 
 $settingField2 = (new SettingsField('ba-test-two', 'Test Setting 2', $page1))
     ->setSetting($setting2->getOptionName())
     ->setSection($section1->getId())
-    ->setField((new Tel))
+    ->setField((new Tel()))
     ->hook();
 
 $settingField3 = (new SettingsField('ba-test-three', 'Test Setting 3', $page1))
     ->setSetting($setting3->getOptionName())
     ->setSection($section1->getId())
-    ->setField((new Select)->setSelectionProvider(new StateSelectOptions()))
+    ->setField((new Select())->setSelectionProvider(new StateSelectOptions()))
     ->hook();

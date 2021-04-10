@@ -4,8 +4,6 @@ namespace Leonidas\Library\Admin\Loaders;
 
 use GuzzleHttp\Psr7\ServerRequest;
 use Leonidas\Contracts\Admin\Components\AdminNoticeInterface;
-use Leonidas\Contracts\Admin\Components\ComponentLoaderInterface;
-use Leonidas\Library\Admin\Loaders\AdminNoticeCollectionLoaderInterface;
 
 class AdminNoticeCollectionLoader implements AdminNoticeCollectionLoaderInterface
 {
@@ -138,8 +136,9 @@ class AdminNoticeCollectionLoader implements AdminNoticeCollectionLoaderInterfac
             $request = ServerRequest::fromGlobals();
 
             foreach ($notices as $notice) {
-                if ($notice->shouldBeRendered($request))
+                if ($notice->shouldBeRendered($request)) {
                     $output .= $notice->renderComponent($request);
+                }
             }
 
             delete_transient($this->getCacheKey());

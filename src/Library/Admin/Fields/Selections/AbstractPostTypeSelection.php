@@ -2,8 +2,8 @@
 
 namespace Leonidas\Library\Admin\Fields\Selections;
 
-use WP_Post;
 use WebTheory\Saveyour\Contracts\SelectionProviderInterface;
+use WP_Post;
 
 abstract class AbstractPostTypeSelection extends AbstractPostSelectionProvider implements SelectionProviderInterface
 {
@@ -27,7 +27,7 @@ abstract class AbstractPostTypeSelection extends AbstractPostSelectionProvider i
     {
         return get_posts([
             'post_type' => $this->postType,
-            'posts_per_page' => -1
+            'posts_per_page' => -1,
         ]);
     }
 }

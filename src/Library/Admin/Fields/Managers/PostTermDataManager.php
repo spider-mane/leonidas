@@ -2,9 +2,9 @@
 
 namespace Leonidas\Library\Admin\Fields\Managers;
 
-use Psr\Http\Message\ServerRequestInterface;
-use Leonidas\Traits\ExpectsPostTrait;
 use Leonidas\Library\Core\Models\Term\TermCollection;
+use Leonidas\Traits\ExpectsPostTrait;
+use Psr\Http\Message\ServerRequestInterface;
 use WebTheory\Saveyour\Contracts\FieldDataManagerInterface;
 
 class PostTermDataManager implements FieldDataManagerInterface

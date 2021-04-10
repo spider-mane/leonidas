@@ -2,9 +2,9 @@
 
 namespace Leonidas\Library\Admin;
 
-use Twig\Environment;
 use Leonidas\Contracts\Ui\ViewInterface;
 use Leonidas\Library\Admin\Views\AbstractTwigView;
+use Twig\Environment;
 
 class TwigView extends AbstractTwigView implements ViewInterface
 {

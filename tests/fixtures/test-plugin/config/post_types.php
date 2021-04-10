@@ -58,14 +58,14 @@ return [
         "labels" => [
             "name" => "Menu Items",
             "singular_name" => "Menu Item",
-            "menu_name" => "Menu"
+            "menu_name" => "Menu",
         ],
 
         "rewrite" => [
             "slug" => "menu",
             "with_front" => true,
             "pages" => false,
-            "feeds" => true
+            "feeds" => true,
         ],
     ],
 
@@ -92,14 +92,14 @@ return [
 
         "labels" => [
             "name" => "Locations",
-            "singular_name" => "Location"
+            "singular_name" => "Location",
         ],
 
         "rewrite" => [
             "slug" => "locations",
             "with_front" => true,
             "pages" => true,
-            "feeds" => true
+            "feeds" => true,
         ],
 
     ],

@@ -3,7 +3,6 @@
 namespace Leonidas\Library\Admin\Forms\Validators\Permissions;
 
 use Psr\Http\Message\ServerRequestInterface;
-use Leonidas\Library\Admin\Forms\Validators\Permissions\AbstractUserPermissionsValidator;
 use WebTheory\Saveyour\Contracts\FormValidatorInterface;
 
 class UserPermissionsValidator extends AbstractUserPermissionsValidator implements FormValidatorInterface

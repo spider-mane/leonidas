@@ -44,7 +44,7 @@ class TermSelect extends AbstractField implements FormFieldControllerInterface
         return [
             'id' => $options['id'] ?? "wts--{$this->taxonomy}-select",
             'class' => $options['class'] ?? [],
-            'multiple' => $options['multiple'] ?? false
+            'multiple' => $options['multiple'] ?? false,
         ];
     }
 

@@ -2,9 +2,9 @@
 
 namespace Leonidas\Library\Admin\Fields\Selections;
 
+use WebTheory\Saveyour\Contracts\SelectionProviderInterface;
 use WP_Taxonomy;
 use WP_Term;
-use WebTheory\Saveyour\Contracts\SelectionProviderInterface;
 
 abstract class AbstractTaxonomySelection extends AbstractTermSelectionProvider implements SelectionProviderInterface
 {
@@ -28,7 +28,7 @@ abstract class AbstractTaxonomySelection extends AbstractTermSelectionProvider i
     {
         return get_terms([
             'taxonomy' => $this->taxonomy,
-            'hide_empty' => false
+            'hide_empty' => false,
         ]);
     }
 }

@@ -100,7 +100,6 @@ abstract class AbstractInputManager
         $this->rules = [];
 
         foreach ($rules as $rule => $validator) {
-
             if (is_array($validator)) {
                 $alert = $validator['alert'] ?? null;
                 $validator = $validator['validator'];
@@ -202,9 +201,9 @@ abstract class AbstractInputManager
         /** @var Validatable $validator */
         foreach ($this->rules as $rule => $validator) {
             foreach ($input as $value) {
-
                 if (true !== $validator->validate($value)) {
                     $this->handleRuleViolation($rule);
+
                     return false;
                 }
             }
@@ -222,7 +221,6 @@ abstract class AbstractInputManager
         $input = (array) $input; // cast input to array for simplicity
 
         foreach ($this->filters as $filter) {
-
             foreach ($input as &$value) {
                 $value = $filter($value);
             }

@@ -2,9 +2,9 @@
 
 namespace Leonidas\Library\Core\Models\Taxonomy;
 
+use Exception;
 use Leonidas\Contracts\Options\TaxonomyOptionHandlerInterface;
 use Leonidas\Library\Core\Models\AbstractWpConfigModelFactory;
-use Leonidas\Library\Core\Models\Taxonomy\Taxonomy;
 use WP_Taxonomy;
 
 class Factory extends AbstractWpConfigModelFactory
@@ -52,13 +52,13 @@ class Factory extends AbstractWpConfigModelFactory
             $handler = $this->optionHandlers[$option] ?? null;
 
             if (!$handler) {
-                throw new \Exception("There is no registered handler for the {$option} option provided");
+                throw new Exception("There is no registered handler for the {$option} option provided");
             }
 
             if ($handler && in_array(TaxonomyOptionHandlerInterface::class, class_implements($handler))) {
                 $handler::handle($taxonomy, $args);
             } else {
-                throw new \Exception("{$handler} is not a valid option handler");
+                throw new Exception("{$handler} is not a valid option handler");
             }
         }
     }

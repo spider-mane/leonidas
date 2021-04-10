@@ -43,7 +43,7 @@ class TermChecklist extends AbstractField implements FormFieldControllerInterfac
     {
         return [
             'id' => $options['id'] ?? "wts--{$this->taxonomy}-checklist",
-            'class' => $options['class'] ?? []
+            'class' => $options['class'] ?? [],
         ];
     }
 

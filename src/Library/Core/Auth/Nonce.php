@@ -2,8 +2,8 @@
 
 namespace Leonidas\Library\Core\Auth;
 
-use Psr\Http\Message\ServerRequestInterface;
 use Leonidas\Contracts\Auth\CsrfManagerInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use WebTheory\Saveyour\Request;
 
 class Nonce implements CsrfManagerInterface

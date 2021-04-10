@@ -1,11 +1,11 @@
 <?php
 
-use Leonidas\Library\Core\Auth\Nonce;
 use Leonidas\Library\Admin\Fields\Managers\PostMetaFieldManager;
 use Leonidas\Library\Admin\Forms\Controllers\PostMetaboxFormSubmissionManager;
-use Leonidas\Library\Admin\Metabox\Components\FieldGrid;
 use Leonidas\Library\Admin\Metabox\AutoLoadingMetabox;
+use Leonidas\Library\Admin\Metabox\Components\FieldGrid;
 use Leonidas\Library\Admin\Metabox\Components\Section;
+use Leonidas\Library\Core\Auth\Nonce;
 use WebTheory\Saveyour\Controllers\FormFieldController;
 use WebTheory\Saveyour\Fields\Time;
 
@@ -30,13 +30,13 @@ $days = [
     'Wednesday',
     'Thursday',
     'Friday',
-    'Saturday'
+    'Saturday',
 ];
 
 // columns
 $times = ['Open', 'Close'];
 
-$fieldGrid = (new FieldGrid)->setColumnWidth(2);
+$fieldGrid = (new FieldGrid())->setColumnWidth(2);
 
 /**
  * populate $fieldGrid and
@@ -53,7 +53,7 @@ foreach ($days as $day) {
         $timeSlug = strtolower($time);
         $slug = "{$daySlug}_{$timeSlug}";
 
-        $element = (new Time)
+        $element = (new Time())
             ->setId("ba--{$daySlug}--{$timeSlug}")
             ->setName($slug);
 

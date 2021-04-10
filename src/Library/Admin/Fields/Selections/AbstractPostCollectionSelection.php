@@ -3,8 +3,8 @@
 namespace Leonidas\Library\Admin\Fields\Selections;
 
 use Leonidas\Library\Core\Models\Post\PostCollection;
-use WP_Post;
 use WebTheory\Saveyour\Contracts\SelectionProviderInterface;
+use WP_Post;
 
 abstract class AbstractPostCollectionSelection extends AbstractPostSelectionProvider implements SelectionProviderInterface
 {

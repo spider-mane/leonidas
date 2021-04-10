@@ -2,9 +2,9 @@
 
 namespace Leonidas\Library\Admin\Metabox;
 
-use Psr\Http\Message\ServerRequestInterface;
 use Leonidas\Contracts\Admin\Components\MetaboxContainerInterface;
 use Leonidas\Contracts\Admin\MetaboxCollectionInterface;
+use Psr\Http\Message\ServerRequestInterface;
 
 class StandardMetaboxContainer implements MetaboxContainerInterface
 {

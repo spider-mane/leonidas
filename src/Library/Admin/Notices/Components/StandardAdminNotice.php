@@ -2,12 +2,12 @@
 
 namespace Leonidas\Library\Admin\Notices\Components;
 
-use Psr\Http\Message\ServerRequestInterface;
 use Leonidas\Contracts\Admin\Components\AdminNoticeInterface;
 use Leonidas\Contracts\Ui\ViewInterface;
 use Leonidas\Library\Admin\Notices\Views\StandardAdminNoticeView;
 use Leonidas\Traits\CanBeRestrictedTrait;
 use Leonidas\Traits\RendersWithViewTrait;
+use Psr\Http\Message\ServerRequestInterface;
 
 class StandardAdminNotice implements AdminNoticeInterface
 {
@@ -162,7 +162,7 @@ class StandardAdminNotice implements AdminNoticeInterface
         return [
             'type' => $this->type,
             'is_dismissible' => $this->dismissible,
-            'message' => $this->message
+            'message' => $this->message,
         ];
     }
 }

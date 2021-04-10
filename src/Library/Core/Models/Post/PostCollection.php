@@ -176,7 +176,7 @@ class PostCollection
         return static::create([
             'post_type' => 'any',
             'post__in' => $ids,
-            'posts_per_page' => -1
+            'posts_per_page' => -1,
         ]);
     }
 }

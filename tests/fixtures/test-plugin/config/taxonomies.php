@@ -25,13 +25,13 @@ return [
 
         'labels' => [
             'name' => 'Delivery Platforms',
-            'singular_name' => 'Delivery Platform'
+            'singular_name' => 'Delivery Platform',
         ],
 
         'rewrite' => [
             'slug' => 'delivery-platforms',
             'with_front' => true,
-            'hierarchical' => false
+            'hierarchical' => false,
         ],
     ],
 
@@ -58,13 +58,13 @@ return [
 
         'labels' => [
             'name' => 'Menu Categories',
-            'singular_name' => 'Menu Category'
+            'singular_name' => 'Menu Category',
         ],
 
         'rewrite' => [
             'slug' => 'menu-categories',
             'with_front' => true,
-            'hierarchical' => true
+            'hierarchical' => true,
         ],
     ],
 ];

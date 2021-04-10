@@ -2,14 +2,14 @@
 
 namespace Leonidas\Library\Admin\Term\Components;
 
-use Psr\Http\Message\ServerRequestInterface;
-use Leonidas\Library\Admin\AbstractAdminField;
 use Leonidas\Contracts\Admin\Components\TermFieldInterface;
 use Leonidas\Contracts\Ui\ViewInterface;
+use Leonidas\Library\Admin\AbstractAdminField;
 use Leonidas\Library\Admin\Term\Views\AddTermFieldView;
 use Leonidas\Library\Admin\Term\Views\EditTermFieldView;
 use Leonidas\Traits\CanBeRestrictedTrait;
 use Leonidas\Traits\RendersWithViewTrait;
+use Psr\Http\Message\ServerRequestInterface;
 
 class TermField extends AbstractAdminField implements TermFieldInterface
 {
@@ -35,10 +35,12 @@ class TermField extends AbstractAdminField implements TermFieldInterface
 
             case static::ADD_TERM_SCREEN:
                 $view = $this->getAddTermFieldView();
+
                 break;
 
             case static::EDIT_TERM_SCREEN:
                 $view = $this->getEditTermFieldView();
+
                 break;
         }
 
@@ -69,7 +71,7 @@ class TermField extends AbstractAdminField implements TermFieldInterface
         return [
             'label' => $this->getLabel(),
             'description' => $this->getDescription(),
-            'field' => $this->renderFormField($request)
+            'field' => $this->renderFormField($request),
         ];
     }
 }

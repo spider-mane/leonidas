@@ -2,13 +2,10 @@
 
 namespace Leonidas\Library\Admin\Metabox;
 
-use GuzzleHttp\Psr7\ServerRequest;
 use Leonidas\Contracts\Admin\Components\MetaboxInterface;
 use Leonidas\Contracts\Admin\Components\MetaboxLayoutInterface;
 use Leonidas\Traits\CanBeRestrictedTrait;
-use Leonidas\Traits\RendersWithViewTrait;
 use Psr\Http\Message\ServerRequestInterface;
-use WP_Post;
 
 class Metabox implements MetaboxInterface
 {

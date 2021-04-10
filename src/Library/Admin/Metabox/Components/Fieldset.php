@@ -2,11 +2,11 @@
 
 namespace Leonidas\Library\Admin\Metabox\Components;
 
-use Psr\Http\Message\ServerRequestInterface;
-use Leonidas\Library\Admin\Forms\Controllers\AbstractWpAdminFormSubmissionManager;
 use Leonidas\Contracts\Admin\Components\MetaboxComponentInterface;
 use Leonidas\Contracts\Admin\Components\MetaboxFieldInterface;
+use Leonidas\Library\Admin\Forms\Controllers\AbstractWpAdminFormSubmissionManager;
 use Leonidas\Traits\CanBeRestrictedTrait;
+use Psr\Http\Message\ServerRequestInterface;
 use WebTheory\Saveyour\Contracts\FormFieldControllerInterface;
 
 class Fieldset implements MetaboxComponentInterface
@@ -52,7 +52,7 @@ class Fieldset implements MetaboxComponentInterface
      * @var array
      */
     protected $containerOptions = [
-        'padding' => 2
+        'padding' => 2,
     ];
 
     /**
@@ -203,7 +203,6 @@ class Fieldset implements MetaboxComponentInterface
     public function addFields(array $fields)
     {
         foreach ($fields as $slug => $options) {
-
             $field = $options['field'];
 
             unset($options['field']);

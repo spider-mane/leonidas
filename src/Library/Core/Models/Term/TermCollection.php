@@ -163,7 +163,7 @@ class TermCollection
     {
         return static::create([
             'include' => $ids,
-            'hide_empty' => false
+            'hide_empty' => false,
         ]);
     }
 }

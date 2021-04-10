@@ -11,5 +11,5 @@ return [
         'taxonomy' => [
             'maintain_mb_hierarchy' => MaintainMetaboxHierarchy::class,
         ],
-    ]
+    ],
 ];
