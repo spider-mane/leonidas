@@ -92,8 +92,8 @@
       "@check",
       "@test"
     ],
-    "link": "php bin/symlink-plugin",
-    "wp-config": "cp -n wordpress/wp-config-sample.php wp-config.php",
+    "link": "bin/symlink-plugin",
+    "wp-config": "cp -n wp-config-sample.php wp-config.php",
     "post-install-cmd": [
       "@link"
     ],

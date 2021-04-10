@@ -5,7 +5,7 @@ use PhpCsFixer\Finder;
 
 $finder = Finder::create()
   ->in(['src', 'tests'])
-  ->exclude(['bin', 'vendor', 'assets'])
+  ->exclude(['assets', 'bin', 'build', 'config', 'vendor', 'wordpress'])
   ->name('*.php')
   ->ignoreDotFiles(true)
   ->ignoreVCS(true);
@@ -37,10 +37,11 @@ return (new Config('leonidas'))
     // 'lambda_not_used_import' => true,
     'method_argument_space' => [
       'after_heredoc' => true,
-      'on_multiline' => 'ensure_fully_multiline',
     ],
     'no_unused_imports' => true,
-    'not_operator_with_successor_space' => true,
+    'not_operator_with_space' => false,
+    'not_operator_with_successor_space' => false,
+    'object_operator_without_whitespace' => true,
     'ordered_imports' => [
       'sort_algorithm' => 'alpha'
     ],
