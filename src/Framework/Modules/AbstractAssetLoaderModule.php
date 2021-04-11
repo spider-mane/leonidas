@@ -6,7 +6,7 @@ use Leonidas\Contracts\Extension\ModuleInterface;
 use Leonidas\Traits\Hooks\TargetsAdminEnqueueScriptHook;
 use Leonidas\Traits\Hooks\TargetsWpEnqueueScriptsHook;
 
-abstract class AbstractExtensionAssetLoaderModule extends AbstractModule implements ModuleInterface
+abstract class AbstractAssetLoaderModule extends AbstractModule implements ModuleInterface
 {
     use TargetsWpEnqueueScriptsHook;
     use TargetsAdminEnqueueScriptHook;
