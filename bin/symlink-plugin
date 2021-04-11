@@ -2,6 +2,24 @@
 <?php
 
 $root = dirname(__DIR__, 1);
-$link = $root . '/wordpress/wp-content/plugins/' . basename($root);
+$composer = json_decode(file_get_contents($root . '/composer.json'), true);
 
-!file_exists($link) && symlink($root, $link);
+$paths = [
+  'wordpress-plugin' => 'plugins',
+  'wordpress-muplugin' => 'mu-plugins',
+];
+$default = 'wordpress-plugin';
+$type = $composer['type'] ?? $default;
+$path = isset($paths[$type]) ? $paths[$type] : $paths[$default];
+
+$wordpress = $composer['extra']['wordpress-install-dir'] ?? 'wordpress';
+$content = "wp-content/$path";
+
+$link = preg_replace(
+  '/\/+/',
+  DIRECTORY_SEPARATOR,
+  "$root/$wordpress/$content/" . basename($root)
+);
+
+shell_exec("rm -f $link");
+symlink($root, $link); // running this on windows requires administrator permissions
