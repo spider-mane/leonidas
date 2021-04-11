@@ -2,6 +2,9 @@ build:
   environment:
     variables:
       XDEBUG_MODE: coverage
+  dependencies:
+    override:
+      - composer install --no-interaction --no-scripts
   tests:
     override:
       - command: vendor/bin/phpunit
