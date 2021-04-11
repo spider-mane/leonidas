@@ -8,11 +8,8 @@ indent_style = space
 insert_final_newline = true
 trim_trailing_whitespace = true
 
-[*.{php,twig}]
+[*.php]
 indent_size = 4
-
-[*.{html,twig,json}]
-insert_final_newline = false
 
 [*.md]
 trim_trailing_whitespace = false
