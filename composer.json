@@ -72,10 +72,7 @@
       "Tests\\Unit\\": "tests/suites/unit",
       "Tests\\Acceptance\\": "tests/suites/acceptance",
       "Tests\\Support\\": "tests/support"
-    },
-    "files": [
-      "boot/development.php"
-    ]
+    }
   },
   "scripts": {
     "test": "vendor/bin/phpunit",
