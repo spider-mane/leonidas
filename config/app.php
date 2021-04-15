@@ -5,9 +5,7 @@ use Leonidas\Library\Core\Config\ConfigReflector;
 return [
 
     'modules' => [
-        // Leonidas\Plugin\Modules\ManageComposerDependencies::class,
-        Leonidas\Plugin\Modules\RegisterAssets::class,
-        // Leonidas\Plugin\Modules\Setup::class,
+        Leonidas\Plugin\Modules\ProvisionAdminAssets::class,
     ],
 
     'services' => [

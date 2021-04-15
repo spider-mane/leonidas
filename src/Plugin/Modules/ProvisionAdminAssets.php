@@ -3,11 +3,11 @@
 namespace Leonidas\Plugin\Modules;
 
 use Leonidas\Contracts\Extension\ModuleInterface;
-use Leonidas\Framework\Modules\AbstractAdminAssetLoaderModule;
+use Leonidas\Framework\Modules\AbstractAdminAssetProvisionModule;
 use Leonidas\Library\Core\Asset\Script;
 use Leonidas\Library\Core\Asset\Style;
 
-final class RegisterAssets extends AbstractAdminAssetLoaderModule implements ModuleInterface
+final class ProvisionAdminAssets extends AbstractAdminAssetProvisionModule implements ModuleInterface
 {
     protected function doAdminEnqueueScriptsAction(string $hookSuffix): void
     {
