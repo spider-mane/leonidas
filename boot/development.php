@@ -1,5 +1,10 @@
 <?php
 
+use Leonidas\Library\Core\Config\Config;
+use Monolog\Formatter\LineFormatter;
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\VarDumper\Cloner\VarCloner;
 use Symfony\Component\VarDumper\Dumper\CliDumper;
 use Symfony\Component\VarDumper\Dumper\ContextProvider\CliContextProvider;
@@ -7,11 +12,14 @@ use Symfony\Component\VarDumper\Dumper\ContextProvider\SourceContextProvider;
 use Symfony\Component\VarDumper\Dumper\HtmlDumper;
 use Symfony\Component\VarDumper\Dumper\ServerDumper;
 use Symfony\Component\VarDumper\VarDumper;
+use Whoops\Handler\PlainTextHandler;
 use Whoops\Handler\PrettyPageHandler;
 use Whoops\Run;
 
+defined('ABSPATH') || exit;
+
 $root = dirname(__DIR__, 1);
-$errorLog = "$root/build/logs/wordpress.log";
+$errorLog = "$root/wordpress.log";
 
 /**
  * Begin output buffering here to ensure proper display of errors and var dumps
@@ -56,17 +64,39 @@ ini_set('xdebug.var_display_max_depth', 10);
  */
 require_once "$root/vendor/autoload.php";
 
+$config = new Config("$root/config");
+
+/**
+ * Monolog logging
+ *
+ * @link https://seldaek.github.io/monolog/
+ */
+$logger = call_user_func(function (string $errorLog): LoggerInterface {
+    $streamHandler = new StreamHandler($errorLog, Logger::DEBUG);
+    $streamFormatter = new LineFormatter(null, null, true, true);
+    $logger = new Logger('stderr');
+
+    $streamHandler->setFormatter($streamFormatter);
+    $logger->pushHandler($streamHandler);
+
+    return $logger;
+}, $errorLog);
+
 /**
  * Whoops error handling
  *
  * @link http://filp.github.io/whoops/
  */
-call_user_func(function () {
+call_user_func(function (LoggerInterface $logger) {
     $htmlHandler = new PrettyPageHandler();
+    $logHandler = new PlainTextHandler($logger);
     $run = new Run();
 
-    $run->prependHandler($htmlHandler)->register();
-});
+    $logHandler->setDumper('dump')->loggerOnly(true);
+    $run->pushHandler($htmlHandler)
+        ->pushHandler($logHandler)
+        ->register();
+}, $logger);
 
 /**
  * Symfony Dump Server

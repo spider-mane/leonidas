@@ -11,6 +11,8 @@ class InvalidModuleException extends RuntimeException
 
     public function __construct(string $module)
     {
-        "\"{$module}\" does not implement \"{$this->interface}\" interface.";
+        $message = "\"{$module}\" does not implement \"{$this->interface}\" interface.";
+
+        parent::__construct($message);
     }
 }

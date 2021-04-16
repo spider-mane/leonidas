@@ -3,7 +3,6 @@
 namespace Leonidas\Framework;
 
 use Leonidas\Contracts\Extension\WpExtensionInterface;
-use Leonidas\Enum\ExtensionType;
 use Psr\Container\ContainerInterface;
 
 class WpExtension implements WpExtensionInterface
