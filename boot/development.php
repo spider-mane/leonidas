@@ -18,9 +18,6 @@ use Whoops\Run;
 
 defined('ABSPATH') || exit;
 
-$root = dirname(__DIR__, 1);
-$errorLog = "$root/wordpress.log";
-
 /**
  * Begin output buffering here to ensure proper display of errors and var dumps
  */
@@ -30,6 +27,9 @@ ob_start();
  * Establish that plugin is in a development environment via constant
  */
 define('LEONIDAS_DEVELOPMENT', true);
+
+$root = dirname(__DIR__, 1);
+$errorLog = "$root/logs/wordpress.log";
 
 /**
  * Set WordPress debug settings
@@ -59,8 +59,8 @@ ini_set('xdebug.var_display_max_data', 1024);
 ini_set('xdebug.var_display_max_depth', 10);
 
 /**
- * Initiate vendor development dependencies. Encapsulate each in an anonymous
- * function to keep variables scoped
+ * Initiate vendor development dependencies. Each is encapsulated in an
+ * anonymous function to keep variables scoped
  */
 require_once "$root/vendor/autoload.php";
 

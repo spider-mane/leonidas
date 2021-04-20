@@ -4,8 +4,8 @@ wp-config.php
 
 # Dev and CI builds
 *.cache
-*.log
 /build/
+/logs/
 docker-compose.override.yml
 
 # Composer
