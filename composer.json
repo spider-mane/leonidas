@@ -92,8 +92,9 @@
     ],
     "link": "bin/symlink-plugin",
     "wpconfig": "cp -n wp-config-sample.php wp-config.php",
-    "post-root-package-install": [
-      "@wpconfig"
+    "post-autoload-dump": [
+      "@wpconfig",
+      "@link"
     ]
   },
   "extra": {
