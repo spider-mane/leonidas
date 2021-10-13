@@ -18,21 +18,32 @@ class ConfigReflector implements ConfigReflectorInterface
         $this->closure = $closure;
     }
 
-    public function reflect(ConfigInterface $config)
-    {
-        return $this->closure->call($config);
-    }
-
     public function __invoke(ConfigInterface $config)
     {
         return $this->reflect($config);
     }
 
+    /**
+     * Returns the value of the properties sought by the instance
+     */
+    public function reflect(ConfigInterface $config)
+    {
+        return $this->closure->call($config);
+    }
+
+    /**
+     * Creates a new instance from a custom closure. An instance of
+     * ConfigInterface will be bound to it in order to retrieve desired values.
+     */
     public static function from(Closure $closure): ConfigReflector
     {
         return new static($closure);
     }
 
+    /**
+     * Create a new instance that will retrieve a value from a ConfigInterface
+     * instance.
+     */
     public static function get(string $key, $default = null): ConfigReflector
     {
         return new static(function () use ($key, $default) {
@@ -41,6 +52,10 @@ class ConfigReflector implements ConfigReflectorInterface
         });
     }
 
+    /**
+     * Create a new instance that will retrieve multiple values from a
+     * ConfigInterface instance as a new set of key, value pairs.
+     */
     public static function map(array $map): ConfigReflector
     {
         return new static(function () use ($map) {
@@ -49,6 +64,12 @@ class ConfigReflector implements ConfigReflectorInterface
         });
     }
 
+    /**
+     * Create a new instance that will retrieve multiple values from a
+     * ConfigInterface instance as a new set of key, value pairs. Only keys
+     * starting with the provided symbol will have their values retrieved from
+     * the ConfigInterface instance.
+     */
     public static function mix(array $map, string $symbol = '@'): ConfigReflector
     {
         return new static(function () use ($map, $symbol) {
@@ -65,6 +86,12 @@ class ConfigReflector implements ConfigReflectorInterface
         });
     }
 
+    /**
+     * Creates a new instance that retrieves multiple values from a
+     * ConfigInterface instance as a new set of key, value pairs. Original value
+     * must be a non-associative array with the desired ConfigInterface property
+     * as the first entry and a default value as the second.
+     */
     public static function defaultMap(array $map): ConfigReflector
     {
         return new static(function () use ($map) {
@@ -77,7 +104,15 @@ class ConfigReflector implements ConfigReflectorInterface
         });
     }
 
-    public static function defaultMix(array $map, string $symbol = '#'): ConfigReflector
+    /**
+     * Creates a new instance that retrieves multiple values from a
+     * ConfigInterface instance as a new set of key, value pairs. Original value
+     * must be a non-associative array with the desired ConfigInterface property
+     * as the first entry and a default value as the second. Only keys
+     * starting with the provided symbol will have their values retrieved from
+     * the ConfigInterface instance.
+     */
+    public static function defaultMix(array $map, string $symbol = '@'): ConfigReflector
     {
         return new static(function () use ($map, $symbol) {
             /** @var ConfigInterface $this */
