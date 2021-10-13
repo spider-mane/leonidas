@@ -3,48 +3,69 @@
 namespace Leonidas\Plugin\Modules;
 
 use Leonidas\Contracts\Extension\ModuleInterface;
+use Leonidas\Contracts\Ui\Asset\ScriptCollectionInterface;
+use Leonidas\Contracts\Ui\Asset\StyleCollectionInterface;
 use Leonidas\Framework\Modules\AbstractAdminAssetProvisionModule;
-use Leonidas\Library\Core\Asset\Script;
-use Leonidas\Library\Core\Asset\Style;
+use Leonidas\Library\Core\Asset\ScriptBuilder;
+use Leonidas\Library\Core\Asset\ScriptCollection;
+use Leonidas\Library\Core\Asset\StyleBuilder;
+use Leonidas\Library\Core\Asset\StyleCollection;
 
 final class ProvisionAdminAssets extends AbstractAdminAssetProvisionModule implements ModuleInterface
 {
-    protected function doAdminEnqueueScriptsAction(string $hookSuffix): void
+    protected function getScriptsToProvision(): ?ScriptCollectionInterface
     {
-        $extension = $this->getExtension();
-        $assets = [$extension, 'asset'];
-        $version = [$extension, 'vot'];
+        $ext = $this->getExtension();
+        $assets = [$ext, 'asset'];
+        $vot = [$ext, 'vot'];
 
-        $saveyourJsDeps = ['select2', 'trix'];
-        $leonidasJsDeps = ['jquery'];
+        return new ScriptCollection(
+            ScriptBuilder::start('leonidas')
+                ->setSrc($assets('js/backalley-admin.js'))
+                ->setVersion($vot())
+                ->setDependencies('jquery')
+                ->setLoadInFooter(true)
+                ->create(),
 
-        // styles from dependency libraries
-        wp_enqueue_style('select2', $assets('lib/select2/select2.min.css'), null);
-        wp_enqueue_style('trix', $assets('lib/trix/trix.css'), null);
+            // 3rd party
+            ScriptBuilder::start('select2')
+                ->setSrc($assets('lib/select2/select2.full.min.js'))
+                ->setLoadInFooter(true)
+                ->create(),
 
-        // scripts from dependency libraries
-        wp_enqueue_script('select2', $assets('lib/select2/select2.full.min.js'), null, null, true);
-        wp_enqueue_script('trix', $assets('lib/trix/trix.js'), null, null, true);
-        wp_enqueue_script('saveyour', $assets('lib/saveyour/saveyour.js'), $saveyourJsDeps, null, true);
+            ScriptBuilder::start('trix')
+                ->setSrc($assets('lib/trix/trix.js'))
+                ->setLoadInFooter(true)
+                ->create(),
 
-        // plugin assets
-        wp_enqueue_style('leonidas', $assets('css/backalley-admin-styles.css'), null, $version());
-        wp_enqueue_script('leonidas', $assets('js/backalley-admin.js'), $leonidasJsDeps, $version(), true);
+            ScriptBuilder::start('saveyour')
+                ->setSrc($assets('lib/saveyour/saveyour.js'))
+                ->setDependencies('select2', 'trix')
+                ->setLoadInFooter(true)
+                ->create(),
+        );
     }
 
-    /**
-     * @return Script[]
-     */
-    protected function getScriptsToRegister(): array
+    protected function getStylesToProvision(): ?StyleCollectionInterface
     {
-        return [];
-    }
+        $ext = $this->getExtension();
+        $assets = [$ext, 'asset'];
+        $vot = [$ext, 'vot'];
 
-    /**
-     * @return Style[]
-     */
-    protected function getStylesToRegister(): array
-    {
-        return [];
+        return new StyleCollection(
+            StyleBuilder::start('leonidas')
+                ->setSrc($assets('css/backalley-admin-styles.css'))
+                ->setVersion($vot())
+                ->create(),
+
+            // 3rd party
+            StyleBuilder::start('select2')
+                ->setSrc($assets('lib/select2/select2.min.css'))
+                ->create(),
+
+            StyleBuilder::start('trix')
+                ->setSrc($assets('lib/trix/trix.css'))
+                ->create(),
+        );
     }
 }

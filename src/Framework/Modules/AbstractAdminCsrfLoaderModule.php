@@ -8,7 +8,7 @@ use Leonidas\Traits\Hooks\TargetsInAdminHeaderHook;
 use Leonidas\Traits\LoadsCsrfFieldsTrait;
 use WP_Screen;
 
-abstract class AbstractCsrfFieldLoaderModule extends AbstractModule implements ModuleInterface
+abstract class AbstractAdminCsrfLoaderModule extends AbstractModule implements ModuleInterface
 {
     use LoadsCsrfFieldsTrait;
     use TargetsInAdminHeaderHook;

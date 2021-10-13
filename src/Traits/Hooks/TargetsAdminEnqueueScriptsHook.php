@@ -4,7 +4,7 @@ namespace Leonidas\Traits\Hooks;
 
 use Closure;
 
-trait TargetsAdminEnqueueScriptHook
+trait TargetsAdminEnqueueScriptsHook
 {
     protected function targetAdminEnqueueScriptsHook()
     {
