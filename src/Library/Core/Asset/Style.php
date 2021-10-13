@@ -2,36 +2,78 @@
 
 namespace Leonidas\Library\Core\Asset;
 
-use Leonidas\Contracts\Ui\StyleInterface;
+use Leonidas\Contracts\Ui\Asset\StyleInterface;
+use Leonidas\Library\Core\Asset\Traits\HasStyleDataTrait;
+use WebTheory\Html\Html;
 
 class Style extends AbstractAsset implements StyleInterface
 {
+    use HasStyleDataTrait;
+
     /**
      * @var string
      */
-    protected $media;
+    protected $media = 'all';
 
     /**
-     * Get the value of media
-     *
-     * @return string
+     * @var bool
      */
-    public function getMedia(): ?string
-    {
-        return $this->media;
+    protected $isDisabled;
+
+    /**
+     * @var string
+     */
+    protected $hrefLang;
+
+    /**
+     * @var string
+     */
+    protected $title;
+
+    public function __construct(
+        string $handle,
+        string $src,
+        ?array $dependencies = null,
+        $version = null,
+        ?string $media = null,
+        ?array $globalConstraints = null,
+        ?array $registrationConstraints = null,
+        ?array $enqueueConstraints = null,
+        ?array $attributes = null,
+        ?string $crossorigin = null,
+        ?bool $isDisabled = null,
+        ?string $hrefLang = null,
+        ?string $title = null
+    ) {
+        parent::__construct(
+            $handle,
+            $src,
+            $dependencies,
+            $version,
+            $globalConstraints,
+            $registrationConstraints,
+            $enqueueConstraints,
+            $attributes,
+            $crossorigin
+        );
+
+        $media && $this->media = $media;
+        $isDisabled && $this->isDisabled = $isDisabled;
+        $hrefLang && $this->hrefLang = $hrefLang;
+        $title && $this->title = $title;
     }
 
-    /**
-     * Set the value of media
-     *
-     * @param string $media
-     *
-     * @return self
-     */
-    public function setMedia(?string $media)
+    public function toHtml(): string
     {
-        $this->media = $media;
-
-        return $this;
+        return Html::tag('link', [
+            'rel' => 'stylesheet',
+            'id' => "{$this->getHandle()}-css",
+            'href' => $this->getSrcAttribute(),
+            'media' => $this->getMedia(),
+            'crossorigin' => $this->getCrossorigin(),
+            'disabled' => $this->isDisabled(),
+            'hreflang' => $this->getHrefLang(),
+            'title' => $this->getTitle()
+        ] + $this->getAttributes()) . "\n";
     }
 }

@@ -2,10 +2,16 @@
 
 namespace Leonidas\Library\Core\Asset;
 
-use Leonidas\Contracts\Ui\AssetInterface;
+use Leonidas\Contracts\Http\ConstrainerInterface;
+use Leonidas\Contracts\Ui\Asset\AssetInterface;
+use Leonidas\Library\Core\Asset\Traits\HasAssetDataTrait;
+use Leonidas\Library\Core\Http\ConstrainerCollection;
+use Psr\Http\Message\ServerRequestInterface;
 
 abstract class AbstractAsset implements AssetInterface
 {
+    use HasAssetDataTrait;
+
     /**
      * @var string
      */
@@ -17,9 +23,9 @@ abstract class AbstractAsset implements AssetInterface
     protected $src;
 
     /**
-     * @var string[]
+     * @var string[]|null
      */
-    protected $deps;
+    protected $dependencies;
 
     /**
      * @var string|bool|null
@@ -27,98 +33,73 @@ abstract class AbstractAsset implements AssetInterface
     protected $version;
 
     /**
-     * Get the value of handle
-     *
-     * @return string
+     * @var array
      */
-    public function getHandle(): string
-    {
-        return $this->handle;
-    }
+    protected $attributes = [];
 
     /**
-     * Set the value of handle
-     *
-     * @param string $handle
-     *
-     * @return self
+     * @var null|string
      */
-    public function setHandle(string $handle)
-    {
+    public $crossorigin;
+
+    /**
+     * @var ConstrainerInterface[]
+     */
+    protected $globalConstraints = [];
+
+    /**
+     * @var ConstrainerInterface[]
+     */
+    protected $registrationConstraints = [];
+
+    /**
+     * @var ConstrainerInterface[]
+     */
+    protected $enqueueConstraints = [];
+
+    public function __construct(
+        string $handle,
+        string $src,
+        ?array $dependencies = null,
+        $version = null,
+        ?array $globalConstraints = null,
+        ?array $registrationConstraints = null,
+        ?array $enqueueConstraints = null,
+        ?array $attributes = null,
+        ?string $crossorigin = null
+    ) {
         $this->handle = $handle;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of src
-     *
-     * @return string|bool
-     */
-    public function getSrc()
-    {
-        return $this->src;
-    }
-
-    /**
-     * Set the value of src
-     *
-     * @param string|bool $src
-     *
-     * @return self
-     */
-    public function setSrc($src)
-    {
         $this->src = $src;
 
-        return $this;
+        $dependencies && $this->dependencies = $dependencies;
+        $version && $this->version = $version;
+        $globalConstraints && $this->globalConstraints = $globalConstraints;
+        $registrationConstraints && $this->registrationConstraints = $registrationConstraints;
+        $enqueueConstraints && $this->enqueueConstraints = $enqueueConstraints;
+        $attributes && $this->attributes = $attributes;
+        $crossorigin && $this->crossorigin = $crossorigin;
     }
 
-    /**
-     * Get the value of deps
-     *
-     * @return string[]
-     */
-    public function getDeps(): ?array
+    public function shouldBeRegistered(ServerRequestInterface $request): bool
     {
-        return $this->deps;
+        $collection = new ConstrainerCollection(
+            ...$this->getGlobalConstraints() + $this->getRegistrationConstraints()
+        );
+
+        return !$collection->constrains($request);
     }
 
-    /**
-     * Set the value of deps
-     *
-     * @param string[] $deps
-     *
-     * @return self
-     */
-    public function setDeps(?array $deps)
+    public function shouldBeEnqueued(ServerRequestInterface $request): bool
     {
-        $this->deps = $deps;
+        $collection = new ConstrainerCollection(
+            ...$this->getGlobalConstraints() + $this->getEnqueueConstraints()
+        );
 
-        return $this;
+        return !$collection->constrains($request);
     }
 
-    /**
-     * Get the value of version
-     *
-     * @return string|bool|null
-     */
-    public function getVersion()
+    public function getSrcAttribute()
     {
-        return $this->version;
-    }
-
-    /**
-     * Set the value of version
-     *
-     * @param string|bool|null $version
-     *
-     * @return self
-     */
-    public function setVersion($version)
-    {
-        $this->version = $version;
-
-        return $this;
+        return null !== $this->getVersion() ? "{$this->getSrc()}?ver={$this->getVersion()}" : $this->getSrc();
     }
 }

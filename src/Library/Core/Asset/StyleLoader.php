@@ -2,16 +2,18 @@
 
 namespace Leonidas\Library\Core\Asset;
 
-use Leonidas\Contracts\Ui\StyleInterface;
+use Leonidas\Contracts\Ui\Asset\StyleCollectionInterface;
+use Leonidas\Contracts\Ui\Asset\StyleInterface;
+use Psr\Http\Message\ServerRequestInterface;
 
 class StyleLoader
 {
     /**
-     * @var \WebTheory\Leonidas\Contracts\Ui\StyleInterface[]
+     * @var StyleCollectionInterface
      */
-    protected $styles = [];
+    protected $styles;
 
-    public function __construct(StyleInterface ...$styles)
+    public function __construct(StyleCollectionInterface $styles)
     {
         $this->styles = $styles;
     }
@@ -21,32 +23,65 @@ class StyleLoader
      */
     protected function getStyles(): array
     {
-        return $this->styles;
+        return $this->styles->getStyles();
     }
 
-    public function enqueue(): void
+    public function registerStyle(StyleInterface $style)
     {
-        foreach ($this->getStyles() as $style) {
-            wp_enqueue_style(
-                $style->getHandle(),
-                $style->getSrc(),
-                $style->getDeps(),
-                $style->getVersion(),
-                $style->getMedia()
-            );
-        }
+        wp_register_style(
+            $style->getHandle(),
+            $style->getSrc(),
+            $style->getDependencies(),
+            $style->getVersion(),
+            $style->getMedia()
+        );
     }
 
     public function register(): void
     {
         foreach ($this->getStyles() as $style) {
-            wp_register_style(
-                $style->getHandle(),
-                $style->getSrc(),
-                $style->getDeps(),
-                $style->getVersion(),
-                $style->getMedia()
-            );
+            $this->registerStyle($style);
         }
+    }
+
+    public function registerIf(ServerRequestInterface $request)
+    {
+        foreach ($this->getStyles() as $style) {
+            if ($style->shouldBeRegistered($request)) {
+                $this->registerStyle($style);
+            }
+        }
+    }
+
+    public function enqueueStyle(StyleInterface $style)
+    {
+        wp_enqueue_style(
+            $style->getHandle(),
+            $style->getSrc(),
+            $style->getDependencies(),
+            $style->getVersion(),
+            $style->getMedia()
+        );
+    }
+
+    public function enqueue(): void
+    {
+        foreach ($this->getStyles() as $style) {
+            $this->enqueueStyle($style);
+        }
+    }
+
+    public function enqueueIf(ServerRequestInterface $request)
+    {
+        foreach ($this->getStyles() as $style) {
+            if ($style->shouldBeRegistered($request)) {
+                $this->enqueueStyle($style);
+            }
+        }
+    }
+
+    public function createStyleTag(string $style)
+    {
+        return $this->styles->getStyle($style)->toHtml();
     }
 }
