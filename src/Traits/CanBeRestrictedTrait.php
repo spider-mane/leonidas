@@ -2,7 +2,7 @@
 
 namespace Leonidas\Traits;
 
-use Leonidas\Contracts\Auth\ConstrainerInterface;
+use Leonidas\Contracts\Http\ConstrainerInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 trait CanBeRestrictedTrait

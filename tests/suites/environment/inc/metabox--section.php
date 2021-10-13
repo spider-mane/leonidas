@@ -1,6 +1,6 @@
 <?php
 
-use Leonidas\Library\Admin\Constrainers\PostConstrainer;
+use Leonidas\Library\Core\Http\Constrainers\PostConstrainer;
 use Leonidas\Library\Admin\Fields\Managers\PostMetaFieldManager;
 use Leonidas\Library\Admin\Forms\Controllers\PostMetaboxFormSubmissionManager;
 use Leonidas\Library\Admin\Metabox\AutoLoadingMetabox;
