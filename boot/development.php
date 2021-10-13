@@ -31,6 +31,7 @@ define('LEONIDAS_DEVELOPMENT', true);
 $root = dirname(__DIR__, 1);
 $errorLog = "$root/logs/wordpress.log";
 
+
 /**
  * Set WordPress debug settings
  *
@@ -50,8 +51,8 @@ define('SAVEQUERIES', true);
  * @link https://www.php.net/manual/en/errorfunc.configuration.php
  * @link https://xdebug.org/docs/all_settings
  */
+ini_set('error_reporting', E_ALL);
 ini_set('display_errors', true);
-ini_set('error_reporting ', E_ALL);
 ini_set('log_errors', true);
 ini_set('error_log', $errorLog);
 ini_set('xdebug.var_display_max_children', 256);
@@ -123,16 +124,18 @@ call_user_func(function () {
  * @link https://developer.wordpress.org/reference/hooks/enable_wp_debug_mode_checks/
  */
 call_user_func(function () {
-    $GLOBALS['wp_filter'] = [
-        'enable_wp_debug_mode_checks' => [
-            10 => [
-                [
-                    'accepted_args' => 0,
-                    'function' => function () {
-                        return false; // this is where it happens 😒
-                    },
+    if (defined("WP_DEBUG_MODE_CHECKS") && false === WP_DEBUG_MODE_CHECKS) {
+        $GLOBALS['wp_filter'] = [
+            'enable_wp_debug_mode_checks' => [
+                10 => [
+                    [
+                        'accepted_args' => 0,
+                        'function' => function () {
+                            return false; // this is where it happens 😒
+                        },
+                    ],
                 ],
             ],
-        ],
-    ];
+        ];
+    }
 });
