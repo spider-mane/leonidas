@@ -48,7 +48,7 @@
     "geocoder-php/google-maps-provider": "^4.4",
     "giggsey/libphonenumber-for-php": "^8.10",
     "humbug/php-scoper": "^0.14.0",
-    "johnpbloch/wordpress": "^5.7",
+    "johnpbloch/wordpress": "^5.8",
     "lucatume/wp-browser": "3.0.5.1",
     "monolog/monolog": "^2.0",
     "php-http/guzzle6-adapter": "^1.0",
