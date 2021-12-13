@@ -5,15 +5,15 @@ namespace Leonidas\Library\Core\Asset\Traits;
 trait SetsScriptDataTrait
 {
     /**
-     * Set the value of isInFooter
+     * Set the value of shouldLoadInFooter
      *
-     * @param bool $isInFooter
+     * @param bool $shouldLoadInFooter
      *
      * @return self
      */
-    public function setLoadInFooter(?bool $isInFooter)
+    public function setShouldLoadInFooter(?bool $shouldLoadInFooter)
     {
-        $this->loadInFooter = $isInFooter;
+        $this->shouldLoadInFooter = $shouldLoadInFooter;
 
         return $this;
     }

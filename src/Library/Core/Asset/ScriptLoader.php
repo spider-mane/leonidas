@@ -4,84 +4,87 @@ namespace Leonidas\Library\Core\Asset;
 
 use Leonidas\Contracts\Ui\Asset\ScriptCollectionInterface;
 use Leonidas\Contracts\Ui\Asset\ScriptInterface;
+use Leonidas\Contracts\Ui\Asset\ScriptLoaderInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use WebTheory\Html\Html;
 
-class ScriptLoader
+class ScriptLoader implements ScriptLoaderInterface
 {
     /**
      * @var ScriptCollectionInterface
      */
-    protected $scripts = [];
+    protected $scripts;
 
     public function __construct(ScriptCollectionInterface $scripts)
     {
         $this->scripts = $scripts;
     }
 
-    /**
-     * @return array
-     */
-    protected function getScripts(): array
+    protected function getScripts(): ScriptCollectionInterface
     {
-        return $this->scripts->getScripts();
+        return $this->scripts;
     }
 
-    public function registerScript(ScriptInterface $script)
+    public function load(ServerRequestInterface $request)
+    {
+        foreach ($this->getScripts()->getScripts() as $script) {
+            if ($script->shouldBeEnqueued()) {
+                if ($script->shouldBeLoaded($request)) {
+                    $this->enqueueScript($script);
+                }
+            } else {
+                $this->registerScript($script);
+            }
+        }
+    }
+
+    public static function registerScript(ScriptInterface $script)
     {
         wp_register_script(
             $script->getHandle(),
             $script->getSrc(),
             $script->getDependencies(),
             $script->getVersion(),
-            $script->loadInFooter()
+            $script->shouldLoadInFooter()
         );
     }
 
-    public function register(): void
-    {
-        foreach ($this->getScripts() as $script) {
-            $this->registerScript($script);
-        }
-    }
-
-    public function registerIf(ServerRequestInterface $request)
-    {
-        foreach ($this->getScripts() as $script) {
-            if ($script->shouldBeRegistered($request)) {
-                $this->registerScript($script);
-            }
-        }
-    }
-
-    public function enqueueScript(ScriptInterface $script)
+    public static function enqueueScript(ScriptInterface $script)
     {
         wp_enqueue_script(
             $script->getHandle(),
             $script->getSrc(),
             $script->getDependencies(),
             $script->getVersion(),
-            $script->loadInFooter()
+            $script->shouldLoadInFooter()
         );
     }
 
-    public function enqueue(): void
+    public static function createScriptTag(ScriptInterface $script): string
     {
-        foreach ($this->getScripts() as $script) {
-            $this->enqueueScript($script);
-        }
+        return Html::tag('script', [
+            'src' => static::getSrcAttribute($script),
+            'id' => "{$script->getHandle()}-js",
+            'async' => $script->isAsync(),
+            'crossorigin' => $script->getCrossorigin(),
+            'defer' => $script->isDeferred(),
+            'integrity' => $script->getIntegrity(),
+            'nomodule' => $script->isNoModule(),
+            'nonce' => $script->getNonce(),
+            'rererrerpolicy' => $script->getReferrerPolicy(),
+            'type' => $script->getType(),
+        ] + $script->getAttributes()) . "\n";
     }
 
-    public function enqueueIf(ServerRequestInterface $request)
+    public static function mergeScriptTag(string $tag, ScriptInterface $script): string
     {
-        foreach ($this->getScripts() as $script) {
-            if ($script->shouldBeRegistered($request)) {
-                $this->registerScript($script);
-            }
-        }
+        return static::createScriptTag($script);
     }
 
-    public function createScriptTag(string $script)
+    public static function getSrcAttribute(ScriptInterface $script)
     {
-        return $this->scripts->getScript($script)->toHtml();
+        return (null !== $script->getVersion())
+            ? "{$script->getSrc()}?ver={$script->getVersion()}"
+            : $script->getSrc();
     }
 }

@@ -14,54 +14,53 @@ class ScriptBuilder extends AbstractAssetBuilder
     /**
      * @var bool
      */
-    protected $loadInFooter;
+    protected $shouldLoadInFooter;
 
     /**
      * @var null|bool
      */
-    public $isAsync;
+    protected $isAsync;
 
     /**
      * @var null|bool
      */
-    public $isDeferred;
+    protected $isDeferred;
 
     /**
      * @var null|string
      */
-    public $integrity;
+    protected $integrity;
 
     /**
      * @var null|bool
      */
-    public $isNoModule;
+    protected $isNoModule;
 
     /**
      * @var null|string
      */
-    public $nonce;
+    protected $nonce;
 
     /**
      * @var null|string
      */
-    public $referrerPolicy;
+    protected $referrerPolicy;
 
     /**
      * @var null|string
      */
-    public $type;
+    protected $type;
 
-    public function create(): ScriptInterface
+    public function build(): ScriptInterface
     {
         return new Script(
             $this->getHandle(),
             $this->getSrc(),
             $this->getDependencies(),
             $this->getVersion(),
-            $this->loadInFooter(),
-            $this->getGlobalConstraints(),
-            $this->getRegistrationConstraints(),
-            $this->getEnqueueConstraints(),
+            $this->shouldLoadInFooter(),
+            $this->shouldBeEnqueued(),
+            $this->getConstraints(),
             $this->getAttributes(),
             $this->isAsync(),
             $this->getCrossorigin(),
@@ -74,7 +73,7 @@ class ScriptBuilder extends AbstractAssetBuilder
         );
     }
 
-    public static function start(string $handle): ScriptBuilder
+    public static function prepare(string $handle): ScriptBuilder
     {
         return new static($handle);
     }

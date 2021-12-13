@@ -9,9 +9,9 @@ trait HasScriptDataTrait
      *
      * @return bool
      */
-    public function loadInFooter(): ?bool
+    public function shouldLoadInFooter(): ?bool
     {
-        return $this->loadInFooter;
+        return $this->shouldLoadInFooter;
     }
 
     /**

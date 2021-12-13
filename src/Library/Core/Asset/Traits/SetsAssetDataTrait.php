@@ -2,7 +2,7 @@
 
 namespace Leonidas\Library\Core\Asset\Traits;
 
-use Leonidas\Contracts\Http\ConstrainerInterface;
+use Leonidas\Contracts\Http\ConstrainerCollectionInterface;
 
 trait SetsAssetDataTrait
 {
@@ -37,7 +37,7 @@ trait SetsAssetDataTrait
     /**
      * Set the value of dependencies
      *
-     * @param string[] $dependencies
+     * @param string ...$dependencies
      *
      * @return self
      */
@@ -63,43 +63,15 @@ trait SetsAssetDataTrait
     }
 
     /**
-     * Set the value of globalConstraints
+     * Set the value of constraints
      *
-     * @param array $globalConstraints
-     *
-     * @return self
-     */
-    public function setGlobalConstraints(ConstrainerInterface ...$globalConstraints)
-    {
-        $this->globalConstraints = $globalConstraints;
-
-        return $this;
-    }
-
-    /**
-     * Set the value of registrationConstraints
-     *
-     * @param array $registrationConstraints
+     * @param ConstrainerCollectionInterface $constraints
      *
      * @return self
      */
-    public function setRegistrationConstraints(ConstrainerInterface ...$registrationConstraints)
+    public function setConstraints(ConstrainerCollectionInterface $constraints)
     {
-        $this->registrationConstraints = $registrationConstraints;
-
-        return $this;
-    }
-
-    /**
-     * Set the value of enqueueConstraints
-     *
-     * @param array $enqueueConstraints
-     *
-     * @return self
-     */
-    public function setEnqueueConstraints(ConstrainerInterface ...$enqueueConstraints)
-    {
-        $this->enqueueConstraints = $enqueueConstraints;
+        $this->constraints = $constraints;
 
         return $this;
     }
@@ -107,11 +79,11 @@ trait SetsAssetDataTrait
     /**
      * Set the value of attributes
      *
-     * @param array $attributes
+     * @param array|null $attributes
      *
      * @return self
      */
-    public function setAttributes(array $attributes)
+    public function setAttributes(?array $attributes)
     {
         $this->attributes = $attributes;
 
@@ -128,6 +100,20 @@ trait SetsAssetDataTrait
     public function setCrossorigin(?string $crossorigin)
     {
         $this->crossorigin = $crossorigin;
+
+        return $this;
+    }
+
+    /**
+     * Set the value of attributes
+     *
+     * @param bool $attributes
+     *
+     * @return self
+     */
+    public function setShouldBeEnqueued(bool $shouldBeEnqueued)
+    {
+        $this->shouldBeEnqueued = $shouldBeEnqueued;
 
         return $this;
     }

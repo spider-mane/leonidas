@@ -2,10 +2,9 @@
 
 namespace Leonidas\Library\Core\Asset;
 
-use Leonidas\Contracts\Http\ConstrainerInterface;
+use Leonidas\Contracts\Http\ConstrainerCollectionInterface;
 use Leonidas\Contracts\Ui\Asset\AssetInterface;
 use Leonidas\Library\Core\Asset\Traits\HasAssetDataTrait;
-use Leonidas\Library\Core\Http\ConstrainerCollection;
 use Psr\Http\Message\ServerRequestInterface;
 
 abstract class AbstractAsset implements AssetInterface
@@ -33,6 +32,16 @@ abstract class AbstractAsset implements AssetInterface
     protected $version;
 
     /**
+     * @var bool
+     */
+    protected $shouldBeEnqueued = false;
+
+    /**
+     * @var null|ConstrainerCollectionInterface
+     */
+    protected $constraints;
+
+    /**
      * @var array
      */
     protected $attributes = [];
@@ -42,29 +51,13 @@ abstract class AbstractAsset implements AssetInterface
      */
     public $crossorigin;
 
-    /**
-     * @var ConstrainerInterface[]
-     */
-    protected $globalConstraints = [];
-
-    /**
-     * @var ConstrainerInterface[]
-     */
-    protected $registrationConstraints = [];
-
-    /**
-     * @var ConstrainerInterface[]
-     */
-    protected $enqueueConstraints = [];
-
     public function __construct(
         string $handle,
         string $src,
         ?array $dependencies = null,
         $version = null,
-        ?array $globalConstraints = null,
-        ?array $registrationConstraints = null,
-        ?array $enqueueConstraints = null,
+        ?bool $shouldBeEnqueued,
+        ?ConstrainerCollectionInterface $constraints = null,
         ?array $attributes = null,
         ?string $crossorigin = null
     ) {
@@ -73,29 +66,15 @@ abstract class AbstractAsset implements AssetInterface
 
         $dependencies && $this->dependencies = $dependencies;
         $version && $this->version = $version;
-        $globalConstraints && $this->globalConstraints = $globalConstraints;
-        $registrationConstraints && $this->registrationConstraints = $registrationConstraints;
-        $enqueueConstraints && $this->enqueueConstraints = $enqueueConstraints;
+        $constraints && $this->constraints = $constraints;
+        $shouldBeEnqueued && $this->shouldBeEnqueued = $shouldBeEnqueued;
         $attributes && $this->attributes = $attributes;
         $crossorigin && $this->crossorigin = $crossorigin;
     }
 
-    public function shouldBeRegistered(ServerRequestInterface $request): bool
+    public function shouldBeLoaded(ServerRequestInterface $request): bool
     {
-        $collection = new ConstrainerCollection(
-            ...$this->getGlobalConstraints() + $this->getRegistrationConstraints()
-        );
-
-        return !$collection->constrains($request);
-    }
-
-    public function shouldBeEnqueued(ServerRequestInterface $request): bool
-    {
-        $collection = new ConstrainerCollection(
-            ...$this->getGlobalConstraints() + $this->getEnqueueConstraints()
-        );
-
-        return !$collection->constrains($request);
+        return !$this->constraints->constrains($request);
     }
 
     public function getSrcAttribute()

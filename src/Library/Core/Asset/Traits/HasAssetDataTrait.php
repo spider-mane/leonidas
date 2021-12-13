@@ -2,7 +2,7 @@
 
 namespace Leonidas\Library\Core\Asset\Traits;
 
-use Leonidas\Contracts\Http\ConstrainerInterface;
+use Leonidas\Contracts\Http\ConstrainerCollectionInterface;
 
 trait HasAssetDataTrait
 {
@@ -47,33 +47,23 @@ trait HasAssetDataTrait
     }
 
     /**
+     * Get the value of shouldBeEnqueued
+     *
+     * @return bool
+     */
+    public function shouldBeEnqueued(): bool
+    {
+        return $this->shouldBeEnqueued;
+    }
+
+    /**
      * Get the value of globalConstraints
      *
-     * @return ConstrainerInterface[]
+     * @return ConstrainerCollectionInterface
      */
-    public function getGlobalConstraints(): array
+    public function getConstraints(): ?ConstrainerCollectionInterface
     {
-        return $this->globalConstraints;
-    }
-
-    /**
-     * Get the value of registrationConstraints
-     *
-     * @return ConstrainerInterface[]
-     */
-    public function getRegistrationConstraints(): array
-    {
-        return $this->registrationConstraints;
-    }
-
-    /**
-     * Get the value of enqueueConstraints
-     *
-     * @return ConstrainerInterface[]
-     */
-    public function getEnqueueConstraints(): array
-    {
-        return $this->enqueueConstraints;
+        return $this->constraints;
     }
 
     /**

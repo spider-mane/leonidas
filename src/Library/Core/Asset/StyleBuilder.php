@@ -31,7 +31,7 @@ class StyleBuilder extends AbstractAssetBuilder
      */
     protected $title;
 
-    public function create(): StyleInterface
+    public function build(): StyleInterface
     {
         return new Style(
             $this->getHandle(),
@@ -39,9 +39,8 @@ class StyleBuilder extends AbstractAssetBuilder
             $this->getDependencies(),
             $this->getVersion(),
             $this->getMedia(),
-            $this->getGlobalConstraints(),
-            $this->getRegistrationConstraints(),
-            $this->getEnqueueConstraints(),
+            $this->shouldBeEnqueued(),
+            $this->getConstraints(),
             $this->getAttributes(),
             $this->getCrossorigin(),
             $this->isDisabled(),
@@ -50,7 +49,7 @@ class StyleBuilder extends AbstractAssetBuilder
         );
     }
 
-    public static function start(string $handle): StyleBuilder
+    public static function prepare(string $handle): StyleBuilder
     {
         return new static($handle);
     }

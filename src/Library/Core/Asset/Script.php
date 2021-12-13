@@ -2,9 +2,9 @@
 
 namespace Leonidas\Library\Core\Asset;
 
+use Leonidas\Contracts\Http\ConstrainerCollectionInterface;
 use Leonidas\Contracts\Ui\Asset\ScriptInterface;
 use Leonidas\Library\Core\Asset\Traits\HasScriptDataTrait;
-use WebTheory\Html\Html;
 
 class Script extends AbstractAsset implements ScriptInterface
 {
@@ -13,52 +13,51 @@ class Script extends AbstractAsset implements ScriptInterface
     /**
      * @var bool
      */
-    protected $loadInFooter;
+    protected $shouldLoadInFooter;
 
     /**
      * @var null|bool
      */
-    public $isAsync;
+    protected $isAsync;
 
     /**
      * @var null|bool
      */
-    public $isDeferred;
+    protected $isDeferred;
 
     /**
      * @var null|string
      */
-    public $integrity;
+    protected $integrity;
 
     /**
      * @var null|bool
      */
-    public $isNoModule;
+    protected $isNoModule;
 
     /**
      * @var null|string
      */
-    public $nonce;
+    protected $nonce;
 
     /**
      * @var null|string
      */
-    public $referrerPolicy;
+    protected $referrerPolicy;
 
     /**
      * @var null|string
      */
-    public $type;
+    protected $type;
 
     public function __construct(
         string $handle,
         string $src,
         ?array $dependencies,
-        $version,
-        ?bool $loadInFooter = null,
-        ?array $globalConstraints = null,
-        ?array $registrationConstraints = null,
-        ?array $enqueueConstraints = null,
+        $version = null,
+        ?bool $shouldLoadInFooter = null,
+        ?bool $shouldBeEnqueued = null,
+        ?ConstrainerCollectionInterface $constraints = null,
         ?array $attributes = null,
         ?bool $isAsync = null,
         ?string $crossorigin,
@@ -74,14 +73,13 @@ class Script extends AbstractAsset implements ScriptInterface
             $src,
             $dependencies,
             $version,
-            $globalConstraints,
-            $registrationConstraints,
-            $enqueueConstraints,
+            $shouldBeEnqueued,
+            $constraints,
             $attributes,
             $crossorigin
         );
 
-        $loadInFooter && $this->loadInFooter = $loadInFooter;
+        $shouldLoadInFooter && $this->shouldLoadInFooter = $shouldLoadInFooter;
         $isAsync && $this->isAsync = $isAsync;
         $isDeferred && $this->isDeferred = $isDeferred;
         $integrity && $this->integrity = $integrity;
@@ -89,21 +87,5 @@ class Script extends AbstractAsset implements ScriptInterface
         $nonce && $this->nonce = $nonce;
         $referrerPolicy && $this->referrerPolicy = $referrerPolicy;
         $type && $this->type = $type;
-    }
-
-    public function toHtml(): string
-    {
-        return Html::tag('script', [
-            'src' => $this->getSrcAttribute(),
-            'id' => "{$this->getHandle()}-js",
-            'async' => $this->isAsync(),
-            'crossorigin' => $this->getCrossorigin(),
-            'defer' => $this->isDeferred(),
-            'integrity' => $this->getIntegrity(),
-            'nomodule' => $this->isNoModule(),
-            'nonce' => $this->getNonce(),
-            'rererrerpolicy' => $this->getReferrerPolicy(),
-            'type' => $this->getType()
-        ] + $this->getAttributes()) . "\n";
     }
 }

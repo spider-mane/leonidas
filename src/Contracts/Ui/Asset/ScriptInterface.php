@@ -7,7 +7,7 @@ interface ScriptInterface extends AssetInterface
     /**
      * @return bool
      */
-    public function loadInFooter(): ?bool;
+    public function shouldLoadInFooter(): ?bool;
 
     public function isAsync(): ?bool;
 

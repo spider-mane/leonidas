@@ -2,7 +2,6 @@
 
 namespace Leonidas\Contracts\Ui\Asset;
 
-use Leonidas\Contracts\Http\ConstrainerInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 interface AssetInterface
@@ -31,9 +30,7 @@ interface AssetInterface
 
     public function getCrossorigin(): ?string;
 
-    public function shouldBeRegistered(ServerRequestInterface $request): bool;
+    public function shouldBeEnqueued(): bool;
 
-    public function shouldBeEnqueued(ServerRequestInterface $request): bool;
-
-    public function toHtml(): string;
+    public function shouldBeLoaded(ServerRequestInterface $request): bool;
 }

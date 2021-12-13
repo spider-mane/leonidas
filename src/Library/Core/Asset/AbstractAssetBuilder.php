@@ -2,8 +2,7 @@
 
 namespace Leonidas\Library\Core\Asset;
 
-use Leonidas\Contracts\Http\ConstrainerInterface;
-use Leonidas\Contracts\Ui\Asset\AssetInterface;
+use Leonidas\Contracts\Http\ConstrainerCollectionInterface;
 use Leonidas\Library\Core\Asset\Traits\HasAssetDataTrait;
 use Leonidas\Library\Core\Asset\Traits\SetsAssetDataTrait;
 
@@ -33,19 +32,14 @@ abstract class AbstractAssetBuilder
     protected $version;
 
     /**
-     * @var ConstrainerInterface[]
+     * @var bool
      */
-    protected $globalConstraints = [];
+    protected $shouldBeEnqueued = false;
 
     /**
-     * @var ConstrainerInterface[]
+     * @var ConstrainerCollectionInterface
      */
-    protected $registrationConstraints = [];
-
-    /**
-     * @var ConstrainerInterface[]
-     */
-    protected $enqueueConstraints = [];
+    protected $constraints;
 
     /**
      * @var array
@@ -55,7 +49,7 @@ abstract class AbstractAssetBuilder
     /**
      * @var null|string
      */
-    public $crossorigin;
+    protected $crossorigin;
 
     public function __construct(string $handle)
     {
