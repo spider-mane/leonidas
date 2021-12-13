@@ -1,6 +1,6 @@
 <?php
 
-namespace Leonidas\Library\Admin\Notices\Views;
+namespace Leonidas\Library\Admin\Notice\Views;
 
 use Leonidas\Contracts\Ui\ViewInterface;
 use WebTheory\Html\Traits\ElementConstructorTrait;

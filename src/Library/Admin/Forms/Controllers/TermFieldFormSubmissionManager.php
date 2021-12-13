@@ -3,9 +3,9 @@
 namespace Leonidas\Library\Admin\Forms\Controllers;
 
 use GuzzleHttp\Psr7\ServerRequest;
-use Leonidas\Library\Admin\Forms\Validators\NoAutosaveValidator;
+use Leonidas\Library\Admin\Forms\Validators\NoAutosave;
 use Leonidas\Library\Admin\Forms\Validators\Permissions\EditTerm;
-use Leonidas\Library\Admin\Forms\Validators\WpNonceValidator;
+use Leonidas\Library\Admin\Forms\Validators\CsrfCheck;
 use Leonidas\Traits\MaybeHandlesCsrfTrait;
 use WP_Taxonomy;
 
@@ -68,7 +68,7 @@ class TermFieldFormSubmissionManager extends AbstractWpAdminFormSubmissionManage
      */
     public function processTermFields($termId, $ttId)
     {
-        $this->addDefaultFormValidators();
+        // $this->addDefaultFormValidators();
 
         $request = ServerRequest::fromGlobals()
             ->withAttribute('term', get_term($termId, $this->taxonomy->name, 'OBJECT'))
@@ -83,11 +83,11 @@ class TermFieldFormSubmissionManager extends AbstractWpAdminFormSubmissionManage
      */
     protected function addDefaultFormValidators()
     {
-        $this->addValidator('no_autosave', new NoAutosaveValidator());
-        $this->addValidator('user_cannot_edit', new EditTerm());
+        $this->addValidator('no_autosave', new NoAutosave());
+        $this->addValidator('user_can_edit', new EditTerm());
 
         if (isset($this->csrfManager)) {
-            $this->addValidator('invalid_request', new WpNonceValidator($this->csrfManager));
+            $this->addValidator('invalid_request', new CsrfCheck($this->csrfManager));
         }
     }
 }

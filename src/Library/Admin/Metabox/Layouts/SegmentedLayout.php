@@ -1,17 +1,18 @@
 <?php
 
-namespace Leonidas\Library\Admin\Page\Components;
+namespace Leonidas\Library\Admin\Metabox\Layouts;
 
-use Leonidas\Contracts\Admin\Components\AdminPageComponentInterface;
-use Leonidas\Contracts\Admin\Components\AdminPageLayoutInterface;
+use Leonidas\Contracts\Admin\Components\MetaboxComponentInterface;
+use Leonidas\Contracts\Admin\Components\MetaboxLayoutInterface;
 use Leonidas\Contracts\Ui\ViewInterface;
-use Leonidas\Library\Admin\Page\Views\SimpleAdminPageView;
+use Leonidas\Library\Admin\Metabox\Views\MetaboxLayoutView;
 use Leonidas\Traits\CanBeRestrictedTrait;
 use Leonidas\Traits\MaybeHandlesCsrfTrait;
 use Leonidas\Traits\RendersWithViewTrait;
 use Psr\Http\Message\ServerRequestInterface;
+use Stringable;
 
-class SimpleAdminPageLayout extends AbstractPageLayout implements AdminPageLayoutInterface
+class SegmentedLayout implements MetaboxLayoutInterface
 {
     use CanBeRestrictedTrait;
     use MaybeHandlesCsrfTrait;
@@ -20,19 +21,16 @@ class SimpleAdminPageLayout extends AbstractPageLayout implements AdminPageLayou
     /**
      * Collection of components that fill the layout
      *
-     * @var AdminPageComponentInterface[]
+     * @var MetaboxComponentInterface[]
      */
     protected $components = [];
 
-    /**
-     * @var string
-     */
-    protected $template = 'page/admin-page.twig';
+    protected string|Stringable $separator = '<hr>';
 
     /**
      *
      */
-    public function __construct(AdminPageComponentInterface ...$components)
+    public function __construct(MetaboxComponentInterface ...$components)
     {
         $this->components = $components;
     }
@@ -40,7 +38,7 @@ class SimpleAdminPageLayout extends AbstractPageLayout implements AdminPageLayou
     /**
      * Get components
      *
-     * @return AdminPageComponentInterface[]
+     * @return MetaboxComponentInterface[]
      */
     public function getComponents(): array
     {
@@ -50,7 +48,7 @@ class SimpleAdminPageLayout extends AbstractPageLayout implements AdminPageLayou
     /**
      * Add components
      *
-     * @param AdminPageComponentInterface[] $components
+     * @param MetaboxComponentInterface[] $components
      */
     public function addComponents(array $components)
     {
@@ -64,9 +62,9 @@ class SimpleAdminPageLayout extends AbstractPageLayout implements AdminPageLayou
     /**
      * Add single component
      *
-     * @param AdminPageComponentInterface $component
+     * @param MetaboxComponentInterface $component
      */
-    public function addComponent(AdminPageComponentInterface $component)
+    public function addComponent(MetaboxComponentInterface $component)
     {
         $this->components[] = $component;
 
@@ -78,7 +76,7 @@ class SimpleAdminPageLayout extends AbstractPageLayout implements AdminPageLayou
      */
     protected function defineView(ServerRequestInterface $request): ViewInterface
     {
-        return new SimpleAdminPageView();
+        return new MetaboxLayoutView();
     }
 
     /**
@@ -87,9 +85,18 @@ class SimpleAdminPageLayout extends AbstractPageLayout implements AdminPageLayou
     protected function defineViewContext(ServerRequestInterface $request): array
     {
         return [
-            'title' => $this->title,
-            'page' => $this->page,
-            'description' => $this->description,
+            'components' => $this->getComponents(),
+            'auth_field' => $this->maybeRenderTokenField(),
+            'separator' => $this->getComponentSeparator(),
+            'request' => $request,
         ];
+    }
+
+    /**
+     *
+     */
+    protected function getComponentSeparator()
+    {
+        return $this->separator;
     }
 }

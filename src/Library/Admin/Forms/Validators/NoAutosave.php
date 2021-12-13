@@ -5,7 +5,7 @@ namespace Leonidas\Library\Admin\Forms\Validators;
 use Psr\Http\Message\ServerRequestInterface;
 use WebTheory\Saveyour\Contracts\FormValidatorInterface;
 
-class NoAutosaveValidator implements FormValidatorInterface
+class NoAutosave implements FormValidatorInterface
 {
     /**
      *

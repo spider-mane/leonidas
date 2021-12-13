@@ -1,6 +1,6 @@
 <?php
 
-namespace Leonidas\Library\Admin\Page\Components;
+namespace Leonidas\Library\Admin\Page\Layouts;
 
 use Leonidas\Contracts\Admin\Components\AdminPageLayoutInterface;
 use Leonidas\Contracts\Ui\ViewInterface;
@@ -9,7 +9,7 @@ use Leonidas\Traits\CanBeRestrictedTrait;
 use Leonidas\Traits\RendersWithViewTrait;
 use Psr\Http\Message\ServerRequestInterface;
 
-class StandardSettingsPageLayout extends AbstractPageLayout implements AdminPageLayoutInterface
+class StandardSettingsPage extends AbstractPageLayout implements AdminPageLayoutInterface
 {
     use CanBeRestrictedTrait;
     use RendersWithViewTrait;

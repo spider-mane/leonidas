@@ -1,6 +1,6 @@
 <?php
 
-namespace Leonidas\Library\Admin\Notices\Components;
+namespace Leonidas\Library\Admin\Notice\Components;
 
 use Leonidas\Contracts\Admin\Components\AdminNoticeInterface;
 use Leonidas\Contracts\Ui\ViewInterface;

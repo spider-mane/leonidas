@@ -3,10 +3,12 @@
 namespace Leonidas\Library\Admin\Forms\Controllers;
 
 use GuzzleHttp\Psr7\ServerRequest;
-use Leonidas\Library\Admin\Forms\Validators\NoAutosaveValidator;
+use Leonidas\Library\Admin\Forms\Validators\NoAutosave;
 use Leonidas\Library\Admin\Forms\Validators\Permissions\EditPost;
-use Leonidas\Library\Admin\Forms\Validators\WpNonceValidator;
+use Leonidas\Library\Admin\Forms\Validators\CsrfCheck;
 use Leonidas\Traits\MaybeHandlesCsrfTrait;
+use Psr\Http\Message\ServerRequestInterface;
+use WebTheory\Saveyour\Contracts\FormProcessingCacheInterface;
 use WP_Post_Type;
 
 class PostMetaboxFormSubmissionManager extends AbstractWpAdminFormSubmissionManager
@@ -66,11 +68,11 @@ class PostMetaboxFormSubmissionManager extends AbstractWpAdminFormSubmissionMana
      */
     protected function addDefaultFormValidators()
     {
-        $this->addValidator('no_autosave', new NoAutosaveValidator());
+        $this->addValidator('no_autosave', new NoAutosave());
         $this->addValidator('user_cannot_edit', new EditPost());
 
         if (isset($this->csrfManager)) {
-            $this->addValidator('invalid_request', new WpNonceValidator($this->csrfManager));
+            $this->addValidator('invalid_request', new CsrfCheck($this->csrfManager));
         }
     }
 }

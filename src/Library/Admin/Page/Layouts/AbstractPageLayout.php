@@ -1,6 +1,6 @@
 <?php
 
-namespace Leonidas\Library\Admin\Page\Components;
+namespace Leonidas\Library\Admin\Page\Layouts;
 
 use Leonidas\Contracts\Admin\Components\AdminPageLayoutInterface;
 

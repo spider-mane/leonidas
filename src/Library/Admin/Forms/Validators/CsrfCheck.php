@@ -2,23 +2,23 @@
 
 namespace Leonidas\Library\Admin\Forms\Validators;
 
-use Leonidas\Library\Core\Auth\Nonce;
+use Leonidas\Contracts\Auth\CsrfManagerInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use WebTheory\Saveyour\Contracts\FormValidatorInterface;
 
-class WpNonceValidator implements FormValidatorInterface
+class CsrfCheck implements FormValidatorInterface
 {
     /**
-     * @var Nonce
+     * @var CsrfManagerInterface
      */
-    protected $nonce;
+    protected $token;
 
     /**
      *
      */
-    public function __construct(Nonce $nonce)
+    public function __construct(CsrfManagerInterface $token)
     {
-        $this->nonce = $nonce;
+        $this->token = $token;
     }
 
     /**
@@ -26,6 +26,6 @@ class WpNonceValidator implements FormValidatorInterface
      */
     public function isValid(ServerRequestInterface $request): bool
     {
-        return $this->nonce->validate($request);
+        return $this->token->validate($request);
     }
 }

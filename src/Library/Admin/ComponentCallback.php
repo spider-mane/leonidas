@@ -4,7 +4,7 @@ namespace Leonidas\Library\Admin;
 
 use Psr\Http\Message\ServerRequestInterface;
 
-class AbstractLazyLoadedAdminComponent
+class ComponentCallback
 {
     /**
      * @var callable

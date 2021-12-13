@@ -17,22 +17,23 @@ class MetaboxLayoutView implements ViewInterface
     {
         /** @var MetaboxComponentInterface[] $components */
         $components = $context['components'];
+        $separator = $context['separator'];
         $request = $context['request'];
 
         $html = '';
         $html .= $context['auth_field'];
         $html .= $this->open('div', ['class' => 'backalley-wrap']);
 
-        $i = count($components);
+        $count = count($components);
 
         foreach ($components as $component) {
-            $i--;
+            $count--;
 
             if ($component->shouldBeRendered($request)) {
                 $html .= $component->renderComponent($request);
 
-                if ($i > 0) {
-                    $html .= $context['separator'];
+                if ($count > 0) {
+                    $html .= $separator;
                 }
             }
         }

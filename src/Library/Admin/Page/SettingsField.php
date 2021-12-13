@@ -348,11 +348,11 @@ class SettingsField
      */
     protected function escapeValue($value)
     {
-        $value = isset($this->displayFilter)
-            ? !is_array($value)
-            ? call_user_func($this->displayFilter, $value)
-            : array_filter($value, $this->displayFilter)
-            : $value;
+        if (isset($this->displayFilter)) {
+            $value = !is_array($value)
+                ? call_user_func($this->displayFilter, $value)
+                : array_filter($value, $this->displayFilter);
+        }
 
         return $value;
     }

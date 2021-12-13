@@ -1,17 +1,17 @@
 <?php
 
-namespace Leonidas\Library\Admin\Metabox\Components;
+namespace Leonidas\Library\Admin\Page\Layouts;
 
-use Leonidas\Contracts\Admin\Components\MetaboxComponentInterface;
-use Leonidas\Contracts\Admin\Components\MetaboxLayoutInterface;
+use Leonidas\Contracts\Admin\Components\AdminPageComponentInterface;
+use Leonidas\Contracts\Admin\Components\AdminPageLayoutInterface;
 use Leonidas\Contracts\Ui\ViewInterface;
-use Leonidas\Library\Admin\Metabox\Views\MetaboxLayoutView;
+use Leonidas\Library\Admin\Page\Views\SimpleAdminPageView;
 use Leonidas\Traits\CanBeRestrictedTrait;
 use Leonidas\Traits\MaybeHandlesCsrfTrait;
 use Leonidas\Traits\RendersWithViewTrait;
 use Psr\Http\Message\ServerRequestInterface;
 
-class MetaboxLayout implements MetaboxLayoutInterface
+class SimpleAdminPage extends AbstractPageLayout implements AdminPageLayoutInterface
 {
     use CanBeRestrictedTrait;
     use MaybeHandlesCsrfTrait;
@@ -20,14 +20,19 @@ class MetaboxLayout implements MetaboxLayoutInterface
     /**
      * Collection of components that fill the layout
      *
-     * @var MetaboxComponentInterface[]
+     * @var AdminPageComponentInterface[]
      */
     protected $components = [];
 
     /**
+     * @var string
+     */
+    protected $template = 'page/admin-page.twig';
+
+    /**
      *
      */
-    public function __construct(MetaboxComponentInterface ...$components)
+    public function __construct(AdminPageComponentInterface ...$components)
     {
         $this->components = $components;
     }
@@ -35,7 +40,7 @@ class MetaboxLayout implements MetaboxLayoutInterface
     /**
      * Get components
      *
-     * @return MetaboxComponentInterface[]
+     * @return AdminPageComponentInterface[]
      */
     public function getComponents(): array
     {
@@ -45,7 +50,7 @@ class MetaboxLayout implements MetaboxLayoutInterface
     /**
      * Add components
      *
-     * @param MetaboxComponentInterface[] $components
+     * @param AdminPageComponentInterface[] $components
      */
     public function addComponents(array $components)
     {
@@ -59,9 +64,9 @@ class MetaboxLayout implements MetaboxLayoutInterface
     /**
      * Add single component
      *
-     * @param MetaboxComponentInterface $component
+     * @param AdminPageComponentInterface $component
      */
-    public function addComponent(MetaboxComponentInterface $component)
+    public function addComponent(AdminPageComponentInterface $component)
     {
         $this->components[] = $component;
 
@@ -73,7 +78,7 @@ class MetaboxLayout implements MetaboxLayoutInterface
      */
     protected function defineView(ServerRequestInterface $request): ViewInterface
     {
-        return new MetaboxLayoutView();
+        return new SimpleAdminPageView();
     }
 
     /**
@@ -82,18 +87,9 @@ class MetaboxLayout implements MetaboxLayoutInterface
     protected function defineViewContext(ServerRequestInterface $request): array
     {
         return [
-            'components' => $this->getComponents(),
-            'auth_field' => $this->maybeRenderTokenField(),
-            'separator' => $this->getComponentSeparator(),
-            'request' => $request,
+            'title' => $this->title,
+            'page' => $this->page,
+            'description' => $this->description,
         ];
-    }
-
-    /**
-     *
-     */
-    protected function getComponentSeparator()
-    {
-        return '<hr>';
     }
 }

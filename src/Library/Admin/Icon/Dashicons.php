@@ -1,6 +1,6 @@
 <?php
 
-namespace Leonidas\Library\Admin\Icons;
+namespace Leonidas\Library\Admin\Icon;
 
 use Leonidas\Contracts\Admin\IconResolverInterface;
 
