@@ -55,9 +55,9 @@ class CsrfManagerRepository implements CsrfManagerRepositoryInterface
     /**
      *
      */
-    public function addManager(CsrfManagerInterface $manager)
+    public function addManager(string $tag, CsrfManagerInterface $manager)
     {
-        $this->managers[$manager->getTag()] = $manager;
+        $this->managers[$tag] = $manager;
 
         return $this;
     }

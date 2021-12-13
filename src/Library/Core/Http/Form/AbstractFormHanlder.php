@@ -2,8 +2,9 @@
 
 namespace Leonidas\Library\Core\Http\Form;
 
+use Leonidas\Contracts\Auth\CsrfManagerInterface;
 use Leonidas\Contracts\Http\Form\FormInterface;
-use Leonidas\Library\Admin\Forms\Validators\WpNonceValidator;
+use Leonidas\Library\Admin\Forms\Validators\CsrfCheck;
 use Leonidas\Library\Core\Auth\Nonce;
 use Psr\Http\Message\ServerRequestInterface;
 use WebTheory\Saveyour\Contracts\FormDataProcessorInterface;
@@ -59,7 +60,7 @@ abstract class AbstractFormHandler implements FormInterface
      */
     public function verificationFields(ServerRequestInterface $request): array
     {
-        return ['nonce' => $this->createNonce()->field()];
+        return ['nonce' => $this->createCsrfManager()->renderField()];
     }
 
     /**
@@ -78,13 +79,13 @@ abstract class AbstractFormHandler implements FormInterface
      */
     protected function formRequestValidators(): array
     {
-        return ['nonce' => new WpNonceValidator($this->createNonce())];
+        return ['nonce' => new CsrfCheck($this->createCsrfManager())];
     }
 
     /**
      *
      */
-    protected function createNonce(): Nonce
+    protected function createCsrfManager(): CsrfManagerInterface
     {
         $nonce = $this->config['nonce'];
 

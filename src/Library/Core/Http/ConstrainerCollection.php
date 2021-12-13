@@ -2,10 +2,11 @@
 
 namespace Leonidas\Library\Core\Http;
 
+use Leonidas\Contracts\Http\ConstrainerCollectionInterface;
 use Leonidas\Contracts\Http\ConstrainerInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
-class ConstrainerCollection
+class ConstrainerCollection implements ConstrainerCollectionInterface
 {
     /**
      * @var ConstrainerInterface[]
@@ -22,7 +23,7 @@ class ConstrainerCollection
         $this->constrainers[] = $constrainer;
     }
 
-    public function constrains(ServerRequestInterface $request)
+    public function constrains(ServerRequestInterface $request): bool
     {
         foreach ($this->constrainers as $constraint) {
             if (!$constraint->requestMeetsCriteria($request)) {
