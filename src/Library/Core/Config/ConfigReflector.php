@@ -53,6 +53,18 @@ class ConfigReflector implements ConfigReflectorInterface
     }
 
     /**
+     * Virtually the same as get(), but handles dynamic selection of an endpoint
+     * for the user
+     */
+    public static function select(string $key, string $selection, $default = null): ConfigReflector
+    {
+        return new static(function () use ($key, $selection, $default) {
+            /** @var ConfigInterface $this */
+            return $this->get("$key.{$selection}", $default);
+        });
+    }
+
+    /**
      * Create a new instance that will retrieve multiple values from a
      * ConfigInterface instance as a new set of key, value pairs.
      */

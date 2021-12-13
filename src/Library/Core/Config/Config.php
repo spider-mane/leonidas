@@ -23,4 +23,30 @@ class Config extends GuctilityBeltConfig implements ConfigInterface
             }
         });
     }
+
+    // public function get($key, $default = null)
+    // {
+    //     if ($this->has($key)) {
+    //         $this->resolveDeferredValues($key, $this->cache[$key]);
+
+    //         return $this->cache[$key];
+    //     }
+
+    //     return $default;
+    // }
+
+    // protected function resolveDeferredValues($key, &$value)
+    // {
+    //     if ($value instanceof ConfigReflectorInterface) {
+    //         $value = $value->reflect($this);
+    //     }
+
+    //     if (is_array($value)) {
+    //         foreach ($value as $nested => &$value) {
+    //             $this->resolveDeferredValues("$key.$nested", $value);
+    //         }
+    //     }
+
+    //     $this->resolved[] = $key;
+    // }
 }
