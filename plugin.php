@@ -34,8 +34,8 @@ defined('ABSPATH') || exit;
 
 require __DIR__ . '/boot/init.php';
 
-Launcher::init(
-    Plugin::base(__FILE__),
-    Plugin::path(__FILE__),
-    Plugin::url(__FILE__),
-);
+// Launcher::init(
+//     Plugin::base(__FILE__),
+//     Plugin::path(__FILE__),
+//     Plugin::url(__FILE__),
+// );

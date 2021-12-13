@@ -5,6 +5,8 @@
 .gitkeep                        export-ignore
 /.circleci/                     export-ignore
 /.editorconfig                  export-ignore
+/.env                           export-ignore
+/.env.*                         export-ignore
 /.gitattributes                 export-ignore
 /.github/                       export-ignore
 /.gitignore                     export-ignore
@@ -18,12 +20,14 @@
 /ISSUE_TEMPLATE.md              export-ignore
 /PULL_REQUEST_TEMPLATE.md       export-ignore
 /assets/src                     export-ignore
-/boot/development.php           export-ignore
-# /docs/                          export-ignore
+/boot/development/              export-ignore
+/config/development/            export-ignore
+/docs/                          export-ignore
 /phpbench.json*                 export-ignore
 /phpcs.xml*                     export-ignore
 /phpunit.xml*                   export-ignore
 /phpunit-watcher.yml*           export-ignore
 /psalm.xml*                     export-ignore
 /tests/                         export-ignore
-/wp-config-sample.php           export-ignore
+/wp-cli.yml                     export-ignore
+/wp-config.php                  export-ignore

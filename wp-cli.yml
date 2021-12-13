@@ -1,0 +1,23 @@
+path: wordpress
+color: true
+disabled_commands:
+  - scaffold
+
+apache_modules:
+  - mod_rewrite
+
+core download:
+  locale: en_US
+  version: latest
+  skip-content: true
+
+core install:
+  url: http://leonidas.test
+  title: Leonidas
+  admin_user: chris
+  admin_password: chris
+  admin_email: user@example.org
+  skip-email: true
+
+db export:
+  file: build/wp-cli/database.sql
