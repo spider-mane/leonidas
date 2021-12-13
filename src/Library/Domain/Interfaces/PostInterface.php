@@ -1,8 +1,8 @@
 <?php
 
-namespace Leonidas\Library\Domain\Interfaces;
+namespace Leonidas\Library\Wp\Domain\Interfaces;
 
-interface PostInterface
+interface PostInterface extends PostDataProviderInterface
 {
     //
 }

@@ -3,10 +3,17 @@
 namespace Leonidas\Library\Domain\Models;
 
 use DateTimeInterface;
-use Leonidas\Library\Domain\Interfaces\PostInterface;
+use Exception;
+use Leonidas\Library\Wp\Domain\Interfaces\PostDataProviderInterface;
+use Leonidas\Library\Wp\Domain\Interfaces\PostInterface;
+use Library\Wp\Domain\Traits\DefersResolutionTrait;
 
 class Post implements PostInterface
 {
+    use DefersResolutionTrait;
+
+    protected PostDataProviderInterface $provider;
+
     /**
      * @var string
      */
@@ -40,24 +47,24 @@ class Post implements PostInterface
     /**
      * @var DateTimeInterface
      */
-    protected $dateCreated;
+    protected DateTimeInterface $dateCreated;
 
     /**
      * @var DateTimeInterface
      */
-    protected $dateModified;
+    protected DateTimeInterface $dateModified;
 
     /**
      * @var null|Post
      */
-    protected $parent;
+    protected Post $parent;
 
     /**
      *
      */
-    public function __construct()
+    public function __construct(PostDataProviderInterface $provider)
     {
-        //
+        $this->provider = $provider;
     }
 
     /**
@@ -67,7 +74,7 @@ class Post implements PostInterface
      */
     public function getTitle(): string
     {
-        return $this->title;
+        return $this->resolveValue('title');
     }
 
     /**
@@ -274,5 +281,16 @@ class Post implements PostInterface
         $this->parent = $parent;
 
         return $this;
+    }
+
+    public function __get($name)
+    {
+        $getter = 'get' . ucfirst($name);
+
+        try {
+            return ($this->$getter)($name);
+        } catch (Exception $e) {
+            return;
+        }
     }
 }
