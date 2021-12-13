@@ -3,59 +3,103 @@
 namespace Leonidas\Traits;
 
 use Leonidas\Contracts\Ui\Asset\ScriptCollectionInterface;
+use Leonidas\Contracts\Ui\Asset\ScriptLoaderInterface;
 use Leonidas\Contracts\Ui\Asset\StyleCollectionInterface;
+use Leonidas\Contracts\Ui\Asset\StyleLoaderInterface;
 use Leonidas\Library\Core\Asset\ScriptLoader;
 use Leonidas\Library\Core\Asset\StyleLoader;
-use Psr\Http\Message\ServerRequestFactoryInterface;
+use Psr\Http\Message\ServerRequestInterface;
 
 trait ProvisionsAssetsTrait
 {
-    protected function provisionAssets(?string $hookSuffix = null): void
+    protected function getScriptCollection(): ?ScriptCollectionInterface
     {
-        $this->init();
+        return $this->scripts;
+    }
 
-        if (isset($this->scripts)) {
-            $scriptLoader = new ScriptLoader($this->scripts);
-            $scriptLoader->enqueue();
-        }
+    protected function getStyleCollection(): ?StyleCollectionInterface
+    {
+        return $this->styles;
+    }
 
-        if (isset($this->styles)) {
-            $styleLoader = new StyleLoader($this->styles);
-            $styleLoader->enqueue();
-        }
+    protected function getScriptLoader(): ScriptLoaderInterface
+    {
+        return $this->scriptsLoader;
+    }
+
+    protected function getStyleLoader(): StyleLoaderInterface
+    {
+        return $this->stylesLoader;
     }
 
     protected function init()
     {
-        $this->scripts = $this->getScriptsToProvision();
-        $this->styles = $this->getStylesToProvision();
+        $this->scripts = $this->scripts();
+        $this->styles = $this->styles();
+        $this->scriptLoader = new ScriptLoader($this->getScriptCollection());
+        $this->styleLoader = new StyleLoader($this->getStyleCollection());
     }
 
-    protected function getScriptsToProvision(): ?ScriptCollectionInterface
+    protected function hasScripts(): bool
     {
-        return null;
+        return !empty($this->getScriptCollection());
     }
 
-    protected function getStylesToProvision(): ?StyleCollectionInterface
+    public function hasStyles(): bool
     {
-        return null;
+        return !empty($this->getStyleCollection());
+    }
+
+    protected function provisionAssets(?string $hookSuffix = null): void
+    {
+        $this->init();
+
+        if ($this->hasScripts()) {
+            $this->getScriptLoader()->load($this->getServerRequest());
+        }
+
+        if ($this->hasStyles()) {
+            $this->getStyleLoader()->load($this->getServerRequest());
+        }
     }
 
     protected function filterScriptLoaderTag(string $tag, string $handle, string $src): string
     {
-        if (!$this->scripts->hasScript($handle)) {
+        if (!$this->hasScripts() || !$this->getScriptCollection()->hasScript($handle)) {
             return $tag;
         }
 
-        return $this->scripts->getScript($handle)->toHtml();
+        return $this->getScriptLoader()->createScriptTag($this->getScriptCollection()->getScript($handle));
     }
 
     protected function filterStyleLoaderTag(string $tag, string $handle, string $href, string $media): string
     {
-        if (!$this->styles->hasStyle($handle)) {
+        if (!$this->hasStyles() || !$this->getStyleCollection()->hasStyle($handle)) {
             return $tag;
         }
 
-        return $this->styles->getStyle($handle)->toHtml();
+        return $this->getStyleLoader()->createStyleTag($handle);
     }
+
+    protected function asset(?string $asset = null)
+    {
+        return $this->extension->asset($asset);
+    }
+
+    protected function vot(?string $version = null)
+    {
+        return $this->extension->vot($version);
+    }
+
+    protected function scripts(): ?ScriptCollectionInterface
+    {
+        return null;
+    }
+
+    protected function styles(): ?StyleCollectionInterface
+    {
+        return null;
+    }
+
+    abstract protected function getServerRequest(): ServerRequestInterface;
 }
