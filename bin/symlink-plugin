@@ -10,7 +10,7 @@ $paths = [
 ];
 $default = 'wordpress-plugin';
 $type = $composer['type'] ?? $default;
-$path = isset($paths[$type]) ? $paths[$type] : $paths[$default];
+$path = $paths[$type] ?? $paths[$default];
 
 $wordpress = $composer['extra']['wordpress-install-dir'] ?? 'wordpress';
 $content = "wp-content/$path";

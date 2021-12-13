@@ -11,6 +11,7 @@ $finder = Finder::create()
   ->ignoreVCS(true);
 
 return (new Config('leonidas'))
+  ->setCacheFile(__DIR__ . '/build/phpcs/.cache')
   ->setFinder($finder)
   ->setRules([
     '@PSR12' => true,
