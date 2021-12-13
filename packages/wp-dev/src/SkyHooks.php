@@ -1,6 +1,6 @@
 <?php
 
-namespace Leonidas\Framework\Helpers;
+namespace WebTheory\WpDev;
 
 class SkyHooks
 {
