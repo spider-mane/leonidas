@@ -20,7 +20,7 @@ $container->share('config', function () use ($container) {
 });
 
 # register services from config
-foreach ($container->get('config')->get('app.services', []) as $service) {
+foreach ($container->get('config')->get('container.services', []) as $service) {
     /** @var StaticProviderInterface $provider */
 
     # extract service values
@@ -41,7 +41,7 @@ foreach ($container->get('config')->get('app.services', []) as $service) {
 # register service providers
 array_map(
     [$container, 'addServiceProvider'],
-    $container->get('config')->get('app.providers', [])
+    $container->get('config')->get('container.providers', [])
 );
 
 # return bootstrapped container
