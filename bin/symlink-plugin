@@ -1,24 +1,28 @@
 #!/usr/bin/env php
 <?php
 
+use WebTheory\WpCliUtil\WpCliUtil;
+
 $root = dirname(__DIR__, 1);
+
+require_once $root . '/vendor/autoload.php';
+
 $composer = json_decode(file_get_contents($root . '/composer.json'), true);
 
 $paths = [
-  'wordpress-plugin' => 'plugins',
+  'wordpress-mixin' => '',
   'wordpress-muplugin' => 'mu-plugins',
+  'wordpress-plugin' => 'plugins',
+  'wordpress-theme' => 'themes',
 ];
-$default = 'wordpress-plugin';
-$type = $composer['type'] ?? $default;
-$path = $paths[$type] ?? $paths[$default];
 
-$wordpress = $composer['extra']['wordpress-install-dir'] ?? 'wordpress';
-$content = "wp-content/$path";
+$wordpress = WpCliUtil::getInstallPath() ?? 'wordpress';
+$destination = "wp-content/" . $paths[$composer['type'] ?? 'wordpress-plugin'];
 
 $link = preg_replace(
   '/\/+/',
   DIRECTORY_SEPARATOR,
-  "$root/$wordpress/$content/" . basename($root)
+  "$root/$wordpress/$destination/" . basename($root)
 );
 
 shell_exec("rm -f $link");

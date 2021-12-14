@@ -14,9 +14,9 @@ core download:
 core install:
   url: http://leonidas.test
   title: Leonidas
-  admin_user: chris
-  admin_password: chris
-  admin_email: user@example.org
+  admin_user: admin
+  admin_password: password
+  admin_email: user@example.com
   skip-email: true
 
 db export:
