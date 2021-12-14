@@ -10,11 +10,16 @@ use Leonidas\Traits\Hooks\TargetsAdminTitleHook;
 use Leonidas\Traits\Hooks\TargetsParentFileHook;
 use Leonidas\Traits\Hooks\TargetsSubmenuFileHook;
 use Leonidas\Traits\Hooks\TargetsWpRedirectHook;
+use Leonidas\Traits\Registrars\RegistersSubmenuPage;
 
 abstract class AbstractSubmenuPageModule extends AbstractAdminPageModule implements ModuleInterface
 {
     use TargetsSubmenuFileHook;
     use TargetsParentFileHook;
+    use RegistersSubmenuPage {
+        registerSubmenuPage as addPage;
+        unregisterSubmenuPage as removePage;
+    }
 
     protected SubmenuPageInterface $definition;
 
@@ -36,27 +41,13 @@ abstract class AbstractSubmenuPageModule extends AbstractAdminPageModule impleme
         return $this->definition->defineParentFile($parentFile);
     }
 
-    protected function addPage(): AbstractSubmenuPageModule
+    protected function getSubmenuPage(): SubmenuPageInterface
     {
-        add_submenu_page(
-            htmlspecialchars($this->definition->getParentSlug()),
-            $this->definition->getPageTitle(),
-            $this->definition->getMenuTitle(),
-            $this->definition->getCapability(),
-            htmlspecialchars($this->definition->getMenuSlug()),
-            fn (array $args) => $this->renderPage($args),
-        );
-
-        return $this;
+        return $this->definition;
     }
 
-    protected function removePage(): AbstractSubmenuPageModule
+    protected function renderSubmenuPage(array $args): void
     {
-        remove_submenu_page(
-            $this->definition->getParentSlug(),
-            $this->definition->getMenuSlug()
-        );
-
-        return $this;
+        $this->renderPage($args);
     }
 }
