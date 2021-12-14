@@ -19,7 +19,7 @@ class Plugin
         return plugin_dir_url($path);
     }
 
-    public static function headers(string $plugin): array
+    public static function data(string $plugin): array
     {
         return get_plugin_data($plugin);
     }
