@@ -17,16 +17,6 @@ abstract class AbstractLoginAssetProviderModule extends AbstractModule implement
     use TargetsStyleLoaderTagHook;
     use ProvisionsAssetsTrait;
 
-    /**
-     * @var ScriptCollectionInterface
-     */
-    protected $scripts;
-
-    /**
-     * @var StyleCollectionInterface
-     */
-    protected $styles;
-
     public function hook(): void
     {
         $this->targetLoginEnqueueScriptsHook();

@@ -17,16 +17,6 @@ abstract class AbstractPublicAssetProviderModule extends AbstractModule implemen
     use TargetsStyleLoaderTagHook;
     use ProvisionsAssetsTrait;
 
-    /**
-     * @var ScriptCollectionInterface
-     */
-    protected $scripts;
-
-    /**
-     * @var StyleCollectionInterface
-     */
-    protected $styles;
-
     public function hook(): void
     {
         $this->targetWpEnqueueScriptsHook();

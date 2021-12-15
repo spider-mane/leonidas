@@ -7,13 +7,19 @@ use Leonidas\Contracts\Ui\Asset\ScriptCollectionInterface;
 use Leonidas\Contracts\Ui\Asset\ScriptLoaderInterface;
 use Leonidas\Contracts\Ui\Asset\StyleCollectionInterface;
 use Leonidas\Contracts\Ui\Asset\StyleLoaderInterface;
+use Leonidas\Library\Core\Asset\ScriptCollection;
 use Leonidas\Library\Core\Asset\ScriptLoader;
+use Leonidas\Library\Core\Asset\StyleCollection;
 use Leonidas\Library\Core\Asset\StyleLoader;
 use Psr\Http\Message\ServerRequestInterface;
 
 trait ProvisionsAssetsTrait
 {
     protected WpExtensionInterface $extension;
+
+    protected ScriptCollectionInterface $scripts;
+
+    protected StyleCollectionInterface $styles;
 
     protected function getScriptCollection(): ?ScriptCollectionInterface
     {
@@ -45,24 +51,30 @@ trait ProvisionsAssetsTrait
 
     protected function hasScripts(): bool
     {
-        return !empty($this->getScriptCollection());
+        return !empty($this->getScriptCollection()->getScripts());
     }
 
     public function hasStyles(): bool
     {
-        return !empty($this->getStyleCollection());
+        return !empty($this->getStyleCollection()->getStyles());
     }
 
     protected function provisionAssets(?string $hookSuffix = null): void
     {
         $this->init();
 
+        $request = $this->getServerRequest();
+
+        if ($hookSuffix) {
+            $request = $request->withAttribute('hook_suffix', $hookSuffix);
+        }
+
         if ($this->hasScripts()) {
-            $this->getScriptLoader()->load($this->getServerRequest());
+            $this->getScriptLoader()->load($request);
         }
 
         if ($this->hasStyles()) {
-            $this->getStyleLoader()->load($this->getServerRequest());
+            $this->getStyleLoader()->load($request);
         }
     }
 
@@ -90,12 +102,12 @@ trait ProvisionsAssetsTrait
         );
     }
 
-    protected function asset(?string $asset = null)
+    protected function asset(?string $asset = null): string
     {
         return $this->extension->asset($asset);
     }
 
-    protected function version(?string $version = null)
+    protected function version(?string $version = null): string
     {
         if ($this->extension->isInDev()) {
             return time();
@@ -104,14 +116,14 @@ trait ProvisionsAssetsTrait
         return $version ?? $this->extension->getVersion();
     }
 
-    protected function scripts(): ?ScriptCollectionInterface
+    protected function scripts(): ScriptCollectionInterface
     {
-        return null;
+        return new ScriptCollection();
     }
 
-    protected function styles(): ?StyleCollectionInterface
+    protected function styles(): StyleCollectionInterface
     {
-        return null;
+        return new StyleCollection();
     }
 
     abstract protected function getServerRequest(): ServerRequestInterface;
