@@ -64,7 +64,7 @@ class ScriptLoader implements ScriptLoaderInterface
     {
         return Html::tag('script', [
             'src' => static::getSrcAttribute($script),
-            'id' => "{$script->getHandle()}-js",
+            'id' => static::getIdAttribute($script),
             'async' => $script->isAsync(),
             'crossorigin' => $script->getCrossorigin(),
             'defer' => $script->isDeferred(),
@@ -81,7 +81,12 @@ class ScriptLoader implements ScriptLoaderInterface
         return static::createScriptTag($script);
     }
 
-    public static function getSrcAttribute(ScriptInterface $script)
+    public static function getIdAttribute(ScriptInterface $script): string
+    {
+        return "{$script->getHandle()}-js";
+    }
+
+    public static function getSrcAttribute(ScriptInterface $script): string
     {
         return (null !== $script->getVersion())
             ? "{$script->getSrc()}?ver={$script->getVersion()}"

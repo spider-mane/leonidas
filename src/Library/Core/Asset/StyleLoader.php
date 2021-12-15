@@ -83,8 +83,8 @@ class StyleLoader implements StyleLoaderInterface
     {
         return Html::tag('link', [
             'rel' => 'stylesheet',
-            'href' => static::getHrefAttribute($style),
             'id' => static::getIdAttribute($style),
+            'href' => static::getHrefAttribute($style),
             'media' => $style->getMedia(),
             'hreflang' => $style->getHrefLang(),
             'title' => $style->getTitle(),
@@ -98,12 +98,12 @@ class StyleLoader implements StyleLoaderInterface
         return static::createStyleTag($style);
     }
 
-    protected static function getIdAttribute(StyleInterface $style)
+    protected static function getIdAttribute(StyleInterface $style): string
     {
-        return "{$style->getHandle()}-js";
+        return "{$style->getHandle()}-css";
     }
 
-    public static function getHrefAttribute(StyleInterface $style)
+    public static function getHrefAttribute(StyleInterface $style): string
     {
         return null !== $style->getVersion()
             ? "{$style->getSrc()}?ver={$style->getVersion()}"
