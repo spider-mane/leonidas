@@ -6,7 +6,7 @@ class Plugin
 {
     public static function base(string $file): string
     {
-        return basename($file);
+        return plugin_basename($file);
     }
 
     public static function path(string $path): string
