@@ -28,12 +28,12 @@ class ScriptLoader implements ScriptLoaderInterface
     public function load(ServerRequestInterface $request)
     {
         foreach ($this->getScripts()->getScripts() as $script) {
-            if ($script->shouldBeEnqueued()) {
-                if ($script->shouldBeLoaded($request)) {
+            if ($script->shouldBeLoaded($request)) {
+                if ($script->shouldBeEnqueued()) {
                     $this->enqueueScript($script);
+                } else {
+                    $this->registerScript($script);
                 }
-            } else {
-                $this->registerScript($script);
             }
         }
     }

@@ -20,9 +20,6 @@ class StyleLoader implements StyleLoaderInterface
         $this->styles = $styles;
     }
 
-    /**
-     * @return StyleCollectionInterface
-     */
     protected function getStyles(): StyleCollectionInterface
     {
         return $this->styles;
@@ -31,12 +28,12 @@ class StyleLoader implements StyleLoaderInterface
     public function load(ServerRequestInterface $request)
     {
         foreach ($this->getStyles()->getStyles() as $style) {
-            if ($style->shouldBeEnqueued()) {
-                if ($style->shouldBeLoaded($request)) {
+            if ($style->shouldBeLoaded($request)) {
+                if ($style->shouldBeEnqueued()) {
                     $this->enqueueStyle($style);
+                } else {
+                    $this->registerStyle($style);
                 }
-            } else {
-                $this->registerStyle($style);
             }
         }
     }
@@ -61,22 +58,6 @@ class StyleLoader implements StyleLoaderInterface
             $style->getVersion(),
             $style->getMedia()
         );
-    }
-
-    public function enqueue(): void
-    {
-        foreach ($this->getStyles() as $style) {
-            $this->enqueueStyle($style);
-        }
-    }
-
-    public function enqueueIf(ServerRequestInterface $request)
-    {
-        foreach ($this->getStyles() as $style) {
-            if ($style->shouldBeRegistered($request)) {
-                $this->enqueueStyle($style);
-            }
-        }
     }
 
     public static function createStyleTag(StyleInterface $style): string
