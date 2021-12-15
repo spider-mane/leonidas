@@ -4,11 +4,6 @@ namespace Leonidas\Framework\Helpers;
 
 class Theme
 {
-    public static function base(string $file): string
-    {
-        return basename($file);
-    }
-
     public static function path(string $path): string
     {
         return get_theme_file_path($path);
