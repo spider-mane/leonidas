@@ -3,17 +3,19 @@
 namespace Leonidas\Framework\Modules;
 
 use Leonidas\Contracts\Extension\ModuleInterface;
+use Leonidas\Contracts\Ui\Asset\ScriptCollectionInterface;
+use Leonidas\Contracts\Ui\Asset\StyleCollectionInterface;
+use Leonidas\Traits\Hooks\TargetsAdminEnqueueScriptsHook;
 use Leonidas\Traits\Hooks\TargetsScriptLoaderTagHook;
 use Leonidas\Traits\Hooks\TargetsStyleLoaderTagHook;
-use Leonidas\Traits\Hooks\TargetsWpEnqueueScriptsHook;
 use Leonidas\Traits\ProvisionsAssetsTrait;
 
-abstract class AbstractAssetProvisionModule extends AbstractModule implements ModuleInterface
+abstract class AbstractAdminAssetProviderModule extends AbstractModule implements ModuleInterface
 {
-    use ProvisionsAssetsTrait;
+    use TargetsAdminEnqueueScriptsHook;
     use TargetsScriptLoaderTagHook;
     use TargetsStyleLoaderTagHook;
-    use TargetsWpEnqueueScriptsHook;
+    use ProvisionsAssetsTrait;
 
     /**
      * @var ScriptCollectionInterface
@@ -27,12 +29,12 @@ abstract class AbstractAssetProvisionModule extends AbstractModule implements Mo
 
     public function hook(): void
     {
-        $this->targetWpEnqueueScriptsHook();
+        $this->targetAdminEnqueueScriptsHook();
         $this->targetScriptLoaderTagHook();
         $this->targetStyleLoaderTagHook();
     }
 
-    public function doWpEnqueueScriptAction(string $hookSuffix)
+    protected function doAdminEnqueueScriptsAction(string $hookSuffix): void
     {
         $this->provisionAssets($hookSuffix);
     }

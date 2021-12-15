@@ -5,13 +5,13 @@ namespace Leonidas\Plugin\Modules;
 use Leonidas\Contracts\Extension\ModuleInterface;
 use Leonidas\Contracts\Ui\Asset\ScriptCollectionInterface;
 use Leonidas\Contracts\Ui\Asset\StyleCollectionInterface;
-use Leonidas\Framework\Modules\AbstractAdminAssetProvisionModule;
+use Leonidas\Framework\Modules\AbstractAdminAssetProviderModule;
 use Leonidas\Library\Core\Asset\ScriptBuilder;
 use Leonidas\Library\Core\Asset\ScriptCollection;
 use Leonidas\Library\Core\Asset\StyleBuilder;
 use Leonidas\Library\Core\Asset\StyleCollection;
 
-final class AdminAssets extends AbstractAdminAssetProvisionModule implements ModuleInterface
+final class AdminAssets extends AbstractAdminAssetProviderModule implements ModuleInterface
 {
     protected function scripts(): ?ScriptCollectionInterface
     {
