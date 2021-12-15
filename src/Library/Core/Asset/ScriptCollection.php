@@ -41,4 +41,9 @@ class ScriptCollection implements ScriptCollectionInterface
     {
         return isset($this->scripts[$script]);
     }
+
+    public static function with(ScriptInterface ...$scripts)
+    {
+        return new static(...$scripts);
+    }
 }

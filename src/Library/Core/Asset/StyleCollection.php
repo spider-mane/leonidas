@@ -41,4 +41,9 @@ class StyleCollection implements StyleCollectionInterface
     {
         return isset($this->styles[$style]);
     }
+
+    public static function with(StyleInterface ...$styles)
+    {
+        return new static(...$styles);
+    }
 }
