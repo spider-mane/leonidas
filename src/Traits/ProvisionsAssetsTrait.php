@@ -2,6 +2,7 @@
 
 namespace Leonidas\Traits;
 
+use Leonidas\Contracts\Extension\WpExtensionInterface;
 use Leonidas\Contracts\Ui\Asset\ScriptCollectionInterface;
 use Leonidas\Contracts\Ui\Asset\ScriptLoaderInterface;
 use Leonidas\Contracts\Ui\Asset\StyleCollectionInterface;
@@ -12,6 +13,8 @@ use Psr\Http\Message\ServerRequestInterface;
 
 trait ProvisionsAssetsTrait
 {
+    protected WpExtensionInterface $extension;
+
     protected function getScriptCollection(): ?ScriptCollectionInterface
     {
         return $this->scripts;
@@ -24,12 +27,12 @@ trait ProvisionsAssetsTrait
 
     protected function getScriptLoader(): ScriptLoaderInterface
     {
-        return $this->scriptsLoader;
+        return $this->scriptLoader;
     }
 
     protected function getStyleLoader(): StyleLoaderInterface
     {
-        return $this->stylesLoader;
+        return $this->styleLoader;
     }
 
     protected function init()
@@ -69,7 +72,10 @@ trait ProvisionsAssetsTrait
             return $tag;
         }
 
-        return $this->getScriptLoader()->createScriptTag($this->getScriptCollection()->getScript($handle));
+        return $this->getScriptLoader()->mergeScriptTag(
+            $tag,
+            $this->getScriptCollection()->getScript($handle)
+        );
     }
 
     protected function filterStyleLoaderTag(string $tag, string $handle, string $href, string $media): string
@@ -78,7 +84,10 @@ trait ProvisionsAssetsTrait
             return $tag;
         }
 
-        return $this->getStyleLoader()->createStyleTag($handle);
+        return $this->getStyleLoader()->mergeStyleTag(
+            $tag,
+            $this->getStyleCollection()->getStyle($handle)
+        );
     }
 
     protected function asset(?string $asset = null)
@@ -86,9 +95,13 @@ trait ProvisionsAssetsTrait
         return $this->extension->asset($asset);
     }
 
-    protected function vot(?string $version = null)
+    protected function version(?string $version = null)
     {
-        return $this->extension->vot($version);
+        if ($this->extension->isInDev()) {
+            return time();
+        }
+
+        return $version ?? $this->extension->getVersion();
     }
 
     protected function scripts(): ?ScriptCollectionInterface

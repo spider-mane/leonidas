@@ -12,7 +12,7 @@ abstract class AbstractModule implements ModuleInterface
     /**
      * @var WpExtensionInterface
      */
-    protected $extension;
+    protected WpExtensionInterface $extension;
 
     /**
      * @param WpExtensionInterface $extension

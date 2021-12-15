@@ -5,6 +5,7 @@ namespace Leonidas\Library\Core\Asset;
 use Leonidas\Contracts\Http\ConstrainerCollectionInterface;
 use Leonidas\Contracts\Ui\Asset\AssetInterface;
 use Leonidas\Library\Core\Asset\Traits\HasAssetDataTrait;
+use Leonidas\Library\Core\Http\ConstrainerCollection;
 use Psr\Http\Message\ServerRequestInterface;
 
 abstract class AbstractAsset implements AssetInterface
@@ -66,10 +67,11 @@ abstract class AbstractAsset implements AssetInterface
 
         $dependencies && $this->dependencies = $dependencies;
         $version && $this->version = $version;
-        $constraints && $this->constraints = $constraints;
         $shouldBeEnqueued && $this->shouldBeEnqueued = $shouldBeEnqueued;
         $attributes && $this->attributes = $attributes;
         $crossorigin && $this->crossorigin = $crossorigin;
+
+        $this->constraints = $constraints ?? new ConstrainerCollection();
     }
 
     public function shouldBeLoaded(ServerRequestInterface $request): bool
