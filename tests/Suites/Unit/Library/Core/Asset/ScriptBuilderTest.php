@@ -31,7 +31,7 @@ class ScriptBuilderTest extends TestCase
     protected function getScriptBuilderMinimallyConfiguredForScriptCreation(): ScriptBuilder
     {
         $builder = $this->getScriptBuilder();
-        $builder->setSrc($this->getProvidedSrc());
+        $builder->src($this->getProvidedSrc());
 
         return $builder;
     }
@@ -142,7 +142,7 @@ class ScriptBuilderTest extends TestCase
         $builder = $this->scriptBuilder;
         $handle = 'post-constructed-handle';
 
-        $builder->setHandle($handle);
+        $builder->handle($handle);
 
         $this->assertNotEquals($handle, $this->getConstructedHandle());
         $this->assertEquals($handle, $builder->getHandle());
@@ -156,7 +156,7 @@ class ScriptBuilderTest extends TestCase
         $builder = $this->scriptBuilder;
         $src = 'assets/js/script.js';
 
-        $builder->setSrc($src);
+        $builder->src($src);
 
         $this->assertEquals($src, $builder->getSrc());
     }
@@ -169,7 +169,7 @@ class ScriptBuilderTest extends TestCase
         $builder = $this->scriptBuilder;
         $dependencies = ['svelte'];
 
-        $builder->setDependencies(...$dependencies);
+        $builder->dependencies(...$dependencies);
 
         $this->assertEquals($dependencies, $builder->getDependencies());
     }
@@ -182,7 +182,7 @@ class ScriptBuilderTest extends TestCase
         $builder = $this->scriptBuilder;
         $version = '4.2.9';
 
-        $builder->setVersion($version);
+        $builder->version($version);
 
         $this->assertEquals($version, $builder->getVersion());
     }
@@ -195,7 +195,7 @@ class ScriptBuilderTest extends TestCase
         $builder = $this->scriptBuilder;
         $shouldBeEnqueued = true;
 
-        $builder->setShouldBeEnqueued($shouldBeEnqueued);
+        $builder->enqueue($shouldBeEnqueued);
 
         $this->assertEquals($shouldBeEnqueued, $builder->shouldBeEnqueued());
     }
@@ -209,7 +209,7 @@ class ScriptBuilderTest extends TestCase
         $constraints = $this->getMockBuilder(ConstrainerCollectionInterface::class)
             ->getMock();
 
-        $builder->setConstraints($constraints);
+        $builder->constraints($constraints);
 
         $this->assertEquals($constraints, $builder->getConstraints());
     }
@@ -225,7 +225,7 @@ class ScriptBuilderTest extends TestCase
             'data-test-2' => 'test-value-2',
         ];
 
-        $builder->setAttributes($attributes);
+        $builder->attributes($attributes);
 
         $this->assertEquals($attributes, $builder->getAttributes());
     }
@@ -238,7 +238,7 @@ class ScriptBuilderTest extends TestCase
         $builder = $this->scriptBuilder;
         $crossorigin = 'huh.com';
 
-        $builder->setCrossorigin($crossorigin);
+        $builder->crossorigin($crossorigin);
 
         $this->assertEquals($crossorigin, $builder->getCrossorigin());
     }
@@ -251,7 +251,7 @@ class ScriptBuilderTest extends TestCase
         $builder = $this->scriptBuilder;
         $shouldLoadInFooter = true;
 
-        $builder->setShouldLoadInFooter($shouldLoadInFooter);
+        $builder->inFooter($shouldLoadInFooter);
 
         $this->assertEquals($shouldLoadInFooter, $builder->shouldLoadInFooter());
     }
@@ -264,7 +264,7 @@ class ScriptBuilderTest extends TestCase
         $builder = $this->scriptBuilder;
         $isAsync = false;
 
-        $builder->setIsAsync($isAsync);
+        $builder->async($isAsync);
 
         $this->assertEquals($isAsync, $builder->isAsync());
     }
@@ -277,7 +277,7 @@ class ScriptBuilderTest extends TestCase
         $builder = $this->scriptBuilder;
         $isDeferred = false;
 
-        $builder->setIsDeferred($isDeferred);
+        $builder->deferred($isDeferred);
 
         $this->assertEquals($isDeferred, $builder->isDeferred());
     }
@@ -290,7 +290,7 @@ class ScriptBuilderTest extends TestCase
         $builder = $this->scriptBuilder;
         $integrity = 'what?';
 
-        $builder->setIntegrity($integrity);
+        $builder->integrity($integrity);
 
         $this->assertEquals($integrity, $builder->getIntegrity());
     }
@@ -303,7 +303,7 @@ class ScriptBuilderTest extends TestCase
         $builder = $this->scriptBuilder;
         $isNoModule = false;
 
-        $builder->setIsNoModule($isNoModule);
+        $builder->nomodule($isNoModule);
 
         $this->assertEquals($isNoModule, $builder->isNoModule());
     }
@@ -316,7 +316,7 @@ class ScriptBuilderTest extends TestCase
         $builder = $this->scriptBuilder;
         $nonce = 'fgasgfafhslgahfla';
 
-        $builder->setNonce($nonce);
+        $builder->nonce($nonce);
 
         $this->assertEquals($nonce, $builder->getNonce());
     }
@@ -329,7 +329,7 @@ class ScriptBuilderTest extends TestCase
         $builder = $this->scriptBuilder;
         $refererPolicy = '';
 
-        $builder->setReferrerPolicy($refererPolicy);
+        $builder->referrerpolicy($refererPolicy);
 
         $this->assertEquals($refererPolicy, $builder->getReferrerPolicy());
     }
@@ -342,7 +342,7 @@ class ScriptBuilderTest extends TestCase
         $builder = $this->scriptBuilder;
         $type = '';
 
-        $builder->setType($type);
+        $builder->type($type);
 
         $this->assertEquals($type, $builder->getType());
     }
@@ -353,7 +353,7 @@ class ScriptBuilderTest extends TestCase
     public function creates_Script_object_with_only_required_properties_set()
     {
         $builder = (new ScriptBuilder($this->getConstructedHandle()))
-            ->setSrc($this->getProvidedSrc());
+            ->src($this->getProvidedSrc());
 
         $this->assertInstanceOf(Script::class, $builder->build());
     }
@@ -365,21 +365,21 @@ class ScriptBuilderTest extends TestCase
     {
         $builder = $this->getScriptBuilder();
 
-        $this->assertEquals($builder, $builder->setHandle($this->getConstructedHandle()));
-        $this->assertEquals($builder, $builder->setSrc($this->getProvidedSrc()));
-        $this->assertEquals($builder, $builder->setDependencies(...$this->getProvidedDependencies()));
-        $this->assertEquals($builder, $builder->setVersion($this->getProvidedVersion()));
-        $this->assertEquals($builder, $builder->setShouldBeEnqueued($this->getProvidedEnqueueFlag()));
-        $this->assertEquals($builder, $builder->setConstraints($this->getProvidedConstrainers()));
-        $this->assertEquals($builder, $builder->setAttributes($this->getProvidedAttributes()));
-        $this->assertEquals($builder, $builder->setCrossorigin($this->getProvidedCrossoriginAttribute()));
-        $this->assertEquals($builder, $builder->setShouldLoadInFooter($this->getProvidedLoadInFooterFlag()));
-        $this->assertEquals($builder, $builder->setIsAsync($this->getProvidedAsyncAttribute()));
-        $this->assertEquals($builder, $builder->setIsDeferred($this->getProvidedDeferredAttribute()));
-        $this->assertEquals($builder, $builder->setIntegrity($this->getProvidedIntegrityAttribute()));
-        $this->assertEquals($builder, $builder->setIsNoModule($this->getProvidedNomoduleAttribute()));
-        $this->assertEquals($builder, $builder->setNonce($this->getProvidedNonceAttribute()));
-        $this->assertEquals($builder, $builder->setReferrerPolicy($this->getProvidedReferrerpolicyAttribute()));
-        $this->assertEquals($builder, $builder->setType($this->getProvidedTypeAttribute()));
+        $this->assertEquals($builder, $builder->handle($this->getConstructedHandle()));
+        $this->assertEquals($builder, $builder->src($this->getProvidedSrc()));
+        $this->assertEquals($builder, $builder->dependencies(...$this->getProvidedDependencies()));
+        $this->assertEquals($builder, $builder->version($this->getProvidedVersion()));
+        $this->assertEquals($builder, $builder->enqueue($this->getProvidedEnqueueFlag()));
+        $this->assertEquals($builder, $builder->constraints($this->getProvidedConstrainers()));
+        $this->assertEquals($builder, $builder->attributes($this->getProvidedAttributes()));
+        $this->assertEquals($builder, $builder->crossorigin($this->getProvidedCrossoriginAttribute()));
+        $this->assertEquals($builder, $builder->inFooter($this->getProvidedLoadInFooterFlag()));
+        $this->assertEquals($builder, $builder->async($this->getProvidedAsyncAttribute()));
+        $this->assertEquals($builder, $builder->deferred($this->getProvidedDeferredAttribute()));
+        $this->assertEquals($builder, $builder->integrity($this->getProvidedIntegrityAttribute()));
+        $this->assertEquals($builder, $builder->nomodule($this->getProvidedNomoduleAttribute()));
+        $this->assertEquals($builder, $builder->nonce($this->getProvidedNonceAttribute()));
+        $this->assertEquals($builder, $builder->referrerpolicy($this->getProvidedReferrerpolicyAttribute()));
+        $this->assertEquals($builder, $builder->type($this->getProvidedTypeAttribute()));
     }
 }

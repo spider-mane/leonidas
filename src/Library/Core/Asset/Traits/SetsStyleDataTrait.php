@@ -11,7 +11,7 @@ trait SetsStyleDataTrait
      *
      * @return self
      */
-    public function setMedia(?string $media)
+    public function media(?string $media)
     {
         $this->media = $media;
 
@@ -25,7 +25,7 @@ trait SetsStyleDataTrait
      *
      * @return self
      */
-    public function setIsDisabled(?bool $isDisabled)
+    public function disabled(?bool $isDisabled)
     {
         $this->isDisabled = $isDisabled;
 
@@ -39,7 +39,7 @@ trait SetsStyleDataTrait
      *
      * @return self
      */
-    public function setHrefLang(?string $hrefLang)
+    public function hreflang(?string $hrefLang)
     {
         $this->hrefLang = $hrefLang;
 
@@ -53,7 +53,7 @@ trait SetsStyleDataTrait
      *
      * @return self
      */
-    public function setTitle(?string $title)
+    public function title(?string $title)
     {
         $this->title = $title;
 

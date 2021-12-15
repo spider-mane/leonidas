@@ -11,7 +11,7 @@ trait SetsScriptDataTrait
      *
      * @return self
      */
-    public function setShouldLoadInFooter(?bool $shouldLoadInFooter)
+    public function inFooter(?bool $shouldLoadInFooter)
     {
         $this->shouldLoadInFooter = $shouldLoadInFooter;
 
@@ -25,7 +25,7 @@ trait SetsScriptDataTrait
      *
      * @return self
      */
-    public function setIsAsync(bool $isAsync)
+    public function async(bool $isAsync)
     {
         $this->isAsync = $isAsync;
 
@@ -39,7 +39,7 @@ trait SetsScriptDataTrait
      *
      * @return self
      */
-    public function setIsDeferred(bool $isDeferred)
+    public function deferred(bool $isDeferred)
     {
         $this->isDeferred = $isDeferred;
 
@@ -53,7 +53,7 @@ trait SetsScriptDataTrait
      *
      * @return self
      */
-    public function setIntegrity(string $integrity)
+    public function integrity(string $integrity)
     {
         $this->integrity = $integrity;
 
@@ -67,7 +67,7 @@ trait SetsScriptDataTrait
      *
      * @return self
      */
-    public function setIsNoModule(bool $isNoModule)
+    public function nomodule(bool $isNoModule)
     {
         $this->isNoModule = $isNoModule;
 
@@ -81,7 +81,7 @@ trait SetsScriptDataTrait
      *
      * @return self
      */
-    public function setNonce(string $nonce)
+    public function nonce(string $nonce)
     {
         $this->nonce = $nonce;
 
@@ -95,7 +95,7 @@ trait SetsScriptDataTrait
      *
      * @return self
      */
-    public function setReferrerPolicy(string $referrerPolicy)
+    public function referrerpolicy(string $referrerPolicy)
     {
         $this->referrerPolicy = $referrerPolicy;
 
@@ -109,7 +109,7 @@ trait SetsScriptDataTrait
      *
      * @return self
      */
-    public function setType(string $type)
+    public function type(string $type)
     {
         $this->type = $type;
 

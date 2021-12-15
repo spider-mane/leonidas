@@ -31,7 +31,7 @@ class StyleBuilderTest extends TestCase
     protected function getStyleBuilderMinimallyConfiguredForStyleCreation(): StyleBuilder
     {
         $builder = $this->getStyleBuilder();
-        $builder->setSrc($this->getProvidedSrc());
+        $builder->src($this->getProvidedSrc());
 
         return $builder;
     }
@@ -116,7 +116,7 @@ class StyleBuilderTest extends TestCase
         $builder = $this->styleBuilder;
         $handle = 'post-constructed-handle';
 
-        $builder->setHandle($handle);
+        $builder->handle($handle);
 
         $this->assertNotEquals($handle, $this->getConstructedHandle());
         $this->assertEquals($handle, $builder->getHandle());
@@ -127,7 +127,7 @@ class StyleBuilderTest extends TestCase
         $builder = $this->styleBuilder;
         $src = 'assets/js/script.js';
 
-        $builder->setSrc($src);
+        $builder->src($src);
 
         $this->assertEquals($src, $builder->getSrc());
     }
@@ -137,7 +137,7 @@ class StyleBuilderTest extends TestCase
         $builder = $this->styleBuilder;
         $dependencies = ['svelte'];
 
-        $builder->setDependencies(...$dependencies);
+        $builder->dependencies(...$dependencies);
 
         $this->assertEquals($dependencies, $builder->getDependencies());
     }
@@ -147,7 +147,7 @@ class StyleBuilderTest extends TestCase
         $builder = $this->styleBuilder;
         $version = '4.2.9';
 
-        $builder->setVersion($version);
+        $builder->version($version);
 
         $this->assertEquals($version, $builder->getVersion());
     }
@@ -158,7 +158,7 @@ class StyleBuilderTest extends TestCase
         $constraints = $this->getMockBuilder(ConstrainerCollectionInterface::class)
             ->getMock();
 
-        $builder->setConstraints($constraints);
+        $builder->constraints($constraints);
 
         $this->assertEquals($constraints, $builder->getConstraints());
     }
@@ -171,7 +171,7 @@ class StyleBuilderTest extends TestCase
             'data-test-2' => 'test-value-2',
         ];
 
-        $builder->setAttributes($attributes);
+        $builder->attributes($attributes);
 
         $this->assertEquals($attributes, $builder->getAttributes());
     }
@@ -181,7 +181,7 @@ class StyleBuilderTest extends TestCase
         $builder = $this->styleBuilder;
         $crossorigin = 'huh.com';
 
-        $builder->setCrossorigin($crossorigin);
+        $builder->crossorigin($crossorigin);
 
         $this->assertEquals($crossorigin, $builder->getCrossorigin());
     }
@@ -191,7 +191,7 @@ class StyleBuilderTest extends TestCase
         $builder = $this->styleBuilder;
         $media = 'print';
 
-        $builder->setMedia($media);
+        $builder->media($media);
 
         $this->assertEquals($media, $builder->getMedia());
     }
@@ -201,7 +201,7 @@ class StyleBuilderTest extends TestCase
         $builder = $this->styleBuilder;
         $isDisabled = false;
 
-        $builder->setIsDisabled($isDisabled);
+        $builder->disabled($isDisabled);
 
         $this->assertEquals($isDisabled, $builder->isDisabled());
     }
@@ -211,7 +211,7 @@ class StyleBuilderTest extends TestCase
         $builder = $this->styleBuilder;
         $hrefLang = 'jpn';
 
-        $builder->setHrefLang($hrefLang);
+        $builder->hreflang($hrefLang);
 
         $this->assertEquals($hrefLang, $builder->getHrefLang());
     }
@@ -221,7 +221,7 @@ class StyleBuilderTest extends TestCase
         $builder = $this->styleBuilder;
         $title = 'title';
 
-        $builder->setTitle($title);
+        $builder->title($title);
 
         $this->assertEquals($title, $builder->getTitle());
     }
@@ -232,7 +232,7 @@ class StyleBuilderTest extends TestCase
     public function creates_Style_object_with_only_required_properties_set()
     {
         $style = (new StyleBuilder($this->getConstructedHandle()))
-            ->setSrc($this->getProvidedSrc());
+            ->src($this->getProvidedSrc());
 
         $this->assertInstanceOf(Style::class, $style->build());
     }
@@ -244,18 +244,18 @@ class StyleBuilderTest extends TestCase
     {
         $builder = $this->getStyleBuilder();
 
-        $this->assertEquals($builder, $builder->setHandle($this->getConstructedHandle()));
-        $this->assertEquals($builder, $builder->setSrc($this->getProvidedSrc()));
-        $this->assertEquals($builder, $builder->setDependencies(...$this->getProvidedDependencies()));
-        $this->assertEquals($builder, $builder->setVersion($this->getProvidedVersion()));
-        $this->assertEquals($builder, $builder->setShouldBeEnqueued($this->getProvidedEnqueueFlag()));
-        $this->assertEquals($builder, $builder->setConstraints($this->getProvidedConstrainers()));
-        $this->assertEquals($builder, $builder->setAttributes($this->getProvidedAttributes()));
-        $this->assertEquals($builder, $builder->setCrossorigin($this->getProvidedCrossoriginAttribute()));
+        $this->assertEquals($builder, $builder->handle($this->getConstructedHandle()));
+        $this->assertEquals($builder, $builder->src($this->getProvidedSrc()));
+        $this->assertEquals($builder, $builder->dependencies(...$this->getProvidedDependencies()));
+        $this->assertEquals($builder, $builder->version($this->getProvidedVersion()));
+        $this->assertEquals($builder, $builder->enqueue($this->getProvidedEnqueueFlag()));
+        $this->assertEquals($builder, $builder->constraints($this->getProvidedConstrainers()));
+        $this->assertEquals($builder, $builder->attributes($this->getProvidedAttributes()));
+        $this->assertEquals($builder, $builder->crossorigin($this->getProvidedCrossoriginAttribute()));
 
-        $this->assertEquals($builder, $builder->setMedia($this->getProvidedMediaAttribute()));
-        $this->assertEquals($builder, $builder->setIsDisabled($this->getProvidedDisabledAttribute()));
-        $this->assertEquals($builder, $builder->setHrefLang($this->getProvidedHreflangAttribute()));
-        $this->assertEquals($builder, $builder->setTitle($this->getProvidedTitleAttribute()));
+        $this->assertEquals($builder, $builder->media($this->getProvidedMediaAttribute()));
+        $this->assertEquals($builder, $builder->disabled($this->getProvidedDisabledAttribute()));
+        $this->assertEquals($builder, $builder->hreflang($this->getProvidedHreflangAttribute()));
+        $this->assertEquals($builder, $builder->title($this->getProvidedTitleAttribute()));
     }
 }

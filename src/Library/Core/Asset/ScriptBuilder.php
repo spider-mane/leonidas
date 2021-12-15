@@ -51,7 +51,7 @@ class ScriptBuilder extends AbstractAssetBuilder
      */
     protected $type;
 
-    public function build(): ScriptInterface
+    public function done(): ScriptInterface
     {
         return new Script(
             $this->getHandle(),
@@ -73,7 +73,7 @@ class ScriptBuilder extends AbstractAssetBuilder
         );
     }
 
-    public static function prepare(string $handle): ScriptBuilder
+    public static function for(string $handle): ScriptBuilder
     {
         return new static($handle);
     }

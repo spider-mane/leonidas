@@ -16,48 +16,53 @@ final class AdminAssets extends AbstractAdminAssetProvisionModule implements Mod
     protected function scripts(): ?ScriptCollectionInterface
     {
         return new ScriptCollection(
-            ScriptBuilder::prepare('leonidas')
-                ->setSrc($this->asset('js/backalley-admin.js'))
-                ->setVersion($this->vot())
-                ->setDependencies('jquery')
-                ->setShouldLoadInFooter(true)
-                ->build(),
+            ScriptBuilder::for('leonidas')
+                ->src($this->asset('js/backalley-admin.js'))
+                ->version($this->version())
+                ->dependencies('jquery')
+                ->inFooter(true)
+                ->enqueue(true)
+                ->done(),
 
             // 3rd party
-            ScriptBuilder::prepare('select2')
-                ->setSrc($this->asset('lib/select2/select2.full.min.js'))
-                ->setShouldLoadInFooter(true)
-                ->build(),
+            ScriptBuilder::for('saveyour')
+                ->src($this->asset('lib/saveyour/saveyour.js'))
+                ->dependencies('select2', 'trix')
+                ->inFooter(true)
+                ->enqueue(true)
+                ->done(),
 
-            ScriptBuilder::prepare('trix')
-                ->setSrc($this->asset('lib/trix/trix.js'))
-                ->setShouldLoadInFooter(true)
-                ->build(),
+            ScriptBuilder::for('select2')
+                ->src($this->asset('lib/select2/select2.full.min.js'))
+                ->inFooter(true)
+                ->done(),
 
-            ScriptBuilder::prepare('saveyour')
-                ->setSrc($this->asset('lib/saveyour/saveyour.js'))
-                ->setDependencies('select2', 'trix')
-                ->setShouldLoadInFooter(true)
-                ->build(),
+            ScriptBuilder::for('trix')
+                ->src($this->asset('lib/trix/trix.js'))
+                ->inFooter(true)
+                ->done(),
         );
     }
 
     protected function styles(): ?StyleCollectionInterface
     {
         return new StyleCollection(
-            StyleBuilder::prepare('leonidas')
-                ->setSrc($this->asset('css/backalley-admin-styles.css'))
-                ->setVersion($this->vot())
-                ->build(),
+            StyleBuilder::for('leonidas')
+                ->src($this->asset('css/backalley-admin-styles.css'))
+                ->version($this->version())
+                ->enqueue(true)
+                ->done(),
 
             // 3rd party
-            StyleBuilder::prepare('select2')
-                ->setSrc($this->asset('lib/select2/select2.min.css'))
-                ->build(),
+            StyleBuilder::for('select2')
+                ->src($this->asset('lib/select2/select2.min.css'))
+                ->enqueue(true)
+                ->done(),
 
-            StyleBuilder::prepare('trix')
-                ->setSrc($this->asset('lib/trix/trix.css'))
-                ->build(),
+            StyleBuilder::for('trix')
+                ->src($this->asset('lib/trix/trix.css'))
+                ->enqueue(true)
+                ->done(),
         );
     }
 }

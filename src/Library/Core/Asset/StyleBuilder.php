@@ -31,7 +31,7 @@ class StyleBuilder extends AbstractAssetBuilder
      */
     protected $title;
 
-    public function build(): StyleInterface
+    public function done(): StyleInterface
     {
         return new Style(
             $this->getHandle(),
@@ -49,7 +49,7 @@ class StyleBuilder extends AbstractAssetBuilder
         );
     }
 
-    public static function prepare(string $handle): StyleBuilder
+    public static function for(string $handle): StyleBuilder
     {
         return new static($handle);
     }

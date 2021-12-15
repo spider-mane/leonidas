@@ -13,7 +13,7 @@ trait SetsAssetDataTrait
      *
      * @return self
      */
-    public function setHandle(string $handle)
+    public function handle(string $handle)
     {
         $this->handle = $handle;
 
@@ -27,7 +27,7 @@ trait SetsAssetDataTrait
      *
      * @return self
      */
-    public function setSrc($src)
+    public function src($src)
     {
         $this->src = $src;
 
@@ -41,7 +41,7 @@ trait SetsAssetDataTrait
      *
      * @return self
      */
-    public function setDependencies(string ...$dependencies)
+    public function dependencies(string ...$dependencies)
     {
         $this->dependencies = $dependencies;
 
@@ -55,7 +55,7 @@ trait SetsAssetDataTrait
      *
      * @return self
      */
-    public function setVersion($version)
+    public function version($version)
     {
         $this->version = $version;
 
@@ -69,7 +69,7 @@ trait SetsAssetDataTrait
      *
      * @return self
      */
-    public function setConstraints(ConstrainerCollectionInterface $constraints)
+    public function constraints(ConstrainerCollectionInterface $constraints)
     {
         $this->constraints = $constraints;
 
@@ -83,7 +83,7 @@ trait SetsAssetDataTrait
      *
      * @return self
      */
-    public function setAttributes(?array $attributes)
+    public function attributes(?array $attributes)
     {
         $this->attributes = $attributes;
 
@@ -97,7 +97,7 @@ trait SetsAssetDataTrait
      *
      * @return self
      */
-    public function setCrossorigin(?string $crossorigin)
+    public function crossorigin(?string $crossorigin)
     {
         $this->crossorigin = $crossorigin;
 
@@ -111,7 +111,7 @@ trait SetsAssetDataTrait
      *
      * @return self
      */
-    public function setShouldBeEnqueued(bool $shouldBeEnqueued)
+    public function enqueue(bool $shouldBeEnqueued)
     {
         $this->shouldBeEnqueued = $shouldBeEnqueued;
 
