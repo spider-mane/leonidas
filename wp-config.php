@@ -27,10 +27,6 @@ if (!defined('ABSPATH')) {
     define('ABSPATH', __DIR__ . '/' . WpCliUtil::getInstallPath() . '/');
 }
 
-if (Env::get('RUNNING_TESTS')) {
-    // require_once __DIR__ . '/boot/development/database.php';
-}
-
 $table_prefix = Env::get('DB_TABLE_PREFIX') ?? 'wp_';
 
 require_once ABSPATH . 'wp-settings.php';
