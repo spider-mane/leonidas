@@ -4,8 +4,9 @@
 # Dev and CI builds
 *.cache
 /build/
+/dist/
 /logs/
-# cghooks.lock
+cghooks.lock
 docker-compose.override.yml
 
 # Composer
@@ -13,10 +14,9 @@ docker-compose.override.yml
 composer.lock
 
 # Env
-.env
+*.env
 .env.*
 .*.env
-*.env
 !.env.example
 
 # Editor/ IDE

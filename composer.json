@@ -16,7 +16,7 @@
     }
   ],
   "require": {
-    "php": "^8.0",
+    "php": "^7.4 | ^8.0",
     "captainhook/captainhook": "^5.10",
     "composer/installers": "^1.10",
     "guzzlehttp/psr7": "^1.6",
