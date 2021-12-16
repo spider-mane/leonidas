@@ -8,7 +8,7 @@ trait TargetsStyleLoaderTagHook
 {
     protected function targetStyleLoaderTagHook()
     {
-        add_action(
+        add_filter(
             'style_loader_tag',
             $this->getStyleLoaderTagCallback(),
             null,

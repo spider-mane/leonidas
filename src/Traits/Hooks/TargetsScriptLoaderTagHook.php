@@ -8,7 +8,7 @@ trait TargetsScriptLoaderTagHook
 {
     protected function targetScriptLoaderTagHook()
     {
-        add_action(
+        add_filter(
             'script_loader_tag',
             $this->getScriptLoaderTagCallback(),
             null,
