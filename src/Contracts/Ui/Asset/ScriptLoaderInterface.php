@@ -8,6 +8,8 @@ interface ScriptLoaderInterface
 {
     public function load(ServerRequestInterface $request);
 
+    public function loadInline(ServerRequestInterface $request);
+
     public static function createScriptTag(ScriptInterface $script): string;
 
     public static function mergeScriptTag(string $tag, ScriptInterface $script): string;

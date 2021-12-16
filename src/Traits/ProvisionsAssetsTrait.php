@@ -3,10 +3,14 @@
 namespace Leonidas\Traits;
 
 use Leonidas\Contracts\Extension\WpExtensionInterface;
+use Leonidas\Contracts\Ui\Asset\InlineScriptCollectionInterface;
+use Leonidas\Contracts\Ui\Asset\InlineStyleCollectionInterface;
 use Leonidas\Contracts\Ui\Asset\ScriptCollectionInterface;
 use Leonidas\Contracts\Ui\Asset\ScriptLoaderInterface;
 use Leonidas\Contracts\Ui\Asset\StyleCollectionInterface;
 use Leonidas\Contracts\Ui\Asset\StyleLoaderInterface;
+use Leonidas\Library\Core\Asset\InlineScriptCollection;
+use Leonidas\Library\Core\Asset\InlineStyleCollection;
 use Leonidas\Library\Core\Asset\ScriptCollection;
 use Leonidas\Library\Core\Asset\ScriptLoader;
 use Leonidas\Library\Core\Asset\StyleCollection;
@@ -21,14 +25,28 @@ trait ProvisionsAssetsTrait
 
     protected StyleCollectionInterface $styles;
 
-    protected function getScriptCollection(): ?ScriptCollectionInterface
+    protected InlineScriptCollectionInterface $inlineScripts;
+
+    protected InlineStyleCollectionInterface $inlineStyles;
+
+    protected function getScriptCollection(): ScriptCollectionInterface
     {
         return $this->scripts;
     }
 
-    protected function getStyleCollection(): ?StyleCollectionInterface
+    protected function getStyleCollection(): StyleCollectionInterface
     {
         return $this->styles;
+    }
+
+    protected function getInlineScriptCollection(): InlineScriptCollectionInterface
+    {
+        return $this->inlineScripts;
+    }
+
+    protected function getInlineStyleColleccion(): InlineStyleCollectionInterface
+    {
+        return $this->inlineStyles;
     }
 
     protected function getScriptLoader(): ScriptLoaderInterface
@@ -45,8 +63,11 @@ trait ProvisionsAssetsTrait
     {
         $this->scripts = $this->scripts();
         $this->styles = $this->styles();
-        $this->scriptLoader = new ScriptLoader($this->getScriptCollection());
-        $this->styleLoader = new StyleLoader($this->getStyleCollection());
+        $this->inlineScripts = $this->inlineScripts();
+        $this->inlineStyles = $this->inlineStyles();
+
+        $this->scriptLoader = new ScriptLoader($this->getScriptCollection(), $this->getInlineScriptCollection());
+        $this->styleLoader = new StyleLoader($this->getStyleCollection(), $this->getInlineStyleColleccion());
     }
 
     protected function hasScripts(): bool
@@ -57,6 +78,16 @@ trait ProvisionsAssetsTrait
     public function hasStyles(): bool
     {
         return !empty($this->getStyleCollection()->getStyles());
+    }
+
+    protected function hasInlineScripts(): bool
+    {
+        return !empty($this->getInlineScriptCollection()->getScripts());
+    }
+
+    public function hasInlineStyles(): bool
+    {
+        return !empty($this->getInlineStyleCollection()->getStyles());
     }
 
     protected function provisionAssets(?string $hookSuffix = null): void
@@ -75,6 +106,14 @@ trait ProvisionsAssetsTrait
 
         if ($this->hasStyles()) {
             $this->getStyleLoader()->load($request);
+        }
+
+        if ($this->hasInlineScripts()) {
+            $this->getScriptLoader()->loadInline($request);
+        }
+
+        if ($this->hasInlineStyles()) {
+            $this->getStyleLoader()->loadInline($request);
         }
     }
 
@@ -124,6 +163,16 @@ trait ProvisionsAssetsTrait
     protected function styles(): StyleCollectionInterface
     {
         return new StyleCollection();
+    }
+
+    protected function inlineScripts(): InlineScriptCollectionInterface
+    {
+        return new InlineScriptCollection();
+    }
+
+    protected function inlineStyles(): InlineStyleCollectionInterface
+    {
+        return new InlineStyleCollection();
     }
 
     abstract protected function getServerRequest(): ServerRequestInterface;

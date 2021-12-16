@@ -2,6 +2,8 @@
 
 namespace Leonidas\Library\Core\Asset;
 
+use Leonidas\Contracts\Ui\Asset\InlineScriptCollectionInterface;
+use Leonidas\Contracts\Ui\Asset\InlineScriptInterface;
 use Leonidas\Contracts\Ui\Asset\ScriptCollectionInterface;
 use Leonidas\Contracts\Ui\Asset\ScriptInterface;
 use Leonidas\Contracts\Ui\Asset\ScriptLoaderInterface;
@@ -10,19 +12,24 @@ use WebTheory\Html\Html;
 
 class ScriptLoader implements ScriptLoaderInterface
 {
-    /**
-     * @var ScriptCollectionInterface
-     */
-    protected $scripts;
+    protected ScriptCollectionInterface $scripts;
 
-    public function __construct(ScriptCollectionInterface $scripts)
+    protected InlineScriptCollectionInterface $inlineScripts;
+
+    public function __construct(ScriptCollectionInterface $scripts, InlineScriptCollectionInterface $inlineScripts)
     {
         $this->scripts = $scripts;
+        $this->inlineScripts = $inlineScripts;
     }
 
     protected function getScripts(): ScriptCollectionInterface
     {
         return $this->scripts;
+    }
+
+    protected function getInlineScripts(): InlineScriptCollectionInterface
+    {
+        return $this->inlineScripts;
     }
 
     public function load(ServerRequestInterface $request)
@@ -34,6 +41,15 @@ class ScriptLoader implements ScriptLoaderInterface
                 } else {
                     $this->registerScript($script);
                 }
+            }
+        }
+    }
+
+    public function loadInline(ServerRequestInterface $request)
+    {
+        foreach ($this->getInlineScripts()->getScripts() as $script) {
+            if ($script->shouldBeLoaded($request)) {
+                $this->addInlineScript($script);
             }
         }
     }
@@ -57,6 +73,15 @@ class ScriptLoader implements ScriptLoaderInterface
             $script->getDependencies(),
             $script->getVersion(),
             $script->shouldLoadInFooter()
+        );
+    }
+
+    public static function addInlineScript(InlineScriptInterface $script)
+    {
+        wp_add_inline_script(
+            $script->getHandle(),
+            $script->getData(),
+            $script->getPosition()
         );
     }
 

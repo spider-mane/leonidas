@@ -3,11 +3,15 @@
 namespace Leonidas\Framework\Modules;
 
 use Leonidas\Contracts\Extension\ModuleInterface;
+use Leonidas\Contracts\Ui\Asset\InlineScriptCollectionInterface;
+use Leonidas\Contracts\Ui\Asset\InlineStyleCollectionInterface;
 use Leonidas\Contracts\Ui\Asset\ScriptCollectionInterface;
 use Leonidas\Contracts\Ui\Asset\ScriptInterface;
 use Leonidas\Contracts\Ui\Asset\StyleCollectionInterface;
 use Leonidas\Contracts\Ui\Asset\StyleInterface;
 use Leonidas\Framework\Modules\AbstractModule;
+use Leonidas\Library\Core\Asset\InlineScriptCollection;
+use Leonidas\Library\Core\Asset\InlineStyleCollection;
 use Leonidas\Library\Core\Asset\ScriptCollection;
 use Leonidas\Library\Core\Asset\StyleCollection;
 use Leonidas\Traits\Hooks\TargetsAdminEnqueueScriptsHook;
@@ -75,6 +79,16 @@ abstract class AbstractGlobalAssetProviderModule extends AbstractModule implemen
         return $this->getContextAssetsMethod('Styles')();
     }
 
+    protected function inlineScripts(): InlineScriptCollectionInterface
+    {
+        return $this->getContextAssetsMethod('InlineScripts')();
+    }
+
+    protected function inlineStyles(): InlineStyleCollectionInterface
+    {
+        return $this->getContextAssetsMethod('InlineStyles')();
+    }
+
     protected function getContextAssetsMethod(string $type): array
     {
         return [$this, static::CONTEXTS[current_action()] . $type];
@@ -118,5 +132,45 @@ abstract class AbstractGlobalAssetProviderModule extends AbstractModule implemen
     protected function publicStyles(): StyleCollectionInterface
     {
         return new StyleCollection();
+    }
+
+    protected function adminInlineScripts(): InlineScriptCollectionInterface
+    {
+        return new InlineScriptCollection();
+    }
+
+    protected function adminInlineStyles(): InlineStyleCollectionInterface
+    {
+        return new InlineStyleCollection();
+    }
+
+    protected function blockEditorInlineScripts(): InlineScriptCollectionInterface
+    {
+        return new InlineScriptCollection();
+    }
+
+    protected function blockEditorInlineStyles(): InlineStyleCollectionInterface
+    {
+        return new InlineStyleCollection();
+    }
+
+    protected function loginInlineScripts(): InlineScriptCollectionInterface
+    {
+        return new InlineScriptCollection();
+    }
+
+    protected function loginInlineStyles(): InlineStyleCollectionInterface
+    {
+        return new InlineStyleCollection();
+    }
+
+    protected function publicInlineScripts(): InlineScriptCollectionInterface
+    {
+        return new InlineScriptCollection();
+    }
+
+    protected function publicInlineStyles(): InlineStyleCollectionInterface
+    {
+        return new InlineStyleCollection();
     }
 }

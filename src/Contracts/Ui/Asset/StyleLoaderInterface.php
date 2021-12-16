@@ -8,6 +8,8 @@ interface StyleLoaderInterface
 {
     public function load(ServerRequestInterface $request);
 
+    public function loadInline(ServerRequestInterface $request);
+
     public static function createStyleTag(StyleInterface $style): string;
 
     public static function mergeStyleTag(string $tag, StyleInterface $style): string;

@@ -77,4 +77,22 @@ class ScriptBuilder extends AbstractAssetBuilder
     {
         return new static($handle);
     }
+
+    public static function inlineFoundationInHeader(string $handle): ScriptInterface
+    {
+        return static::for($handle)
+            ->src(false)
+            ->enqueue(true)
+            ->inFooter(false)
+            ->done();
+    }
+
+    public static function inlineFoundationInFooter(string $handle): ScriptInterface
+    {
+        return static::for($handle)
+            ->src(false)
+            ->enqueue(true)
+            ->inFooter(true)
+            ->done();
+    }
 }

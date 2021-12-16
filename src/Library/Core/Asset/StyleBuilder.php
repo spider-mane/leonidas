@@ -53,4 +53,12 @@ class StyleBuilder extends AbstractAssetBuilder
     {
         return new static($handle);
     }
+
+    public static function inlineFoundation(string $handle): StyleInterface
+    {
+        return static::for($handle)
+            ->src(false)
+            ->enqueue(true)
+            ->done();
+    }
 }

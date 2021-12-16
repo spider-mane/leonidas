@@ -4,9 +4,6 @@ namespace Leonidas\Contracts\Ui\Asset;
 
 interface ScriptInterface extends AssetInterface
 {
-    /**
-     * @return bool
-     */
     public function shouldLoadInFooter(): ?bool;
 
     public function isAsync(): ?bool;

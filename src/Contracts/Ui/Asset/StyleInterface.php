@@ -4,9 +4,6 @@ namespace Leonidas\Contracts\Ui\Asset;
 
 interface StyleInterface extends AssetInterface
 {
-    /**
-     * @return string
-     */
     public function getMedia(): ?string;
 
     public function isDisabled(): ?bool;

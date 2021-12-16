@@ -17,7 +17,7 @@ interface AssetInterface
     public function getSrc();
 
     /**
-     * @return string[]
+     * @return null|string[]
      */
     public function getDependencies(): ?array;
 

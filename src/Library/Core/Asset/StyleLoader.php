@@ -2,6 +2,7 @@
 
 namespace Leonidas\Library\Core\Asset;
 
+use Leonidas\Contracts\Ui\Asset\InlineStyleCollectionInterface;
 use Leonidas\Contracts\Ui\Asset\StyleCollectionInterface;
 use Leonidas\Contracts\Ui\Asset\StyleInterface;
 use Leonidas\Contracts\Ui\Asset\StyleLoaderInterface;
@@ -10,19 +11,24 @@ use WebTheory\Html\Html;
 
 class StyleLoader implements StyleLoaderInterface
 {
-    /**
-     * @var StyleCollectionInterface
-     */
-    protected $styles;
+    protected StyleCollectionInterface $styles;
 
-    public function __construct(StyleCollectionInterface $styles)
+    protected InlineStyleCollectionInterface $inlineStyles;
+
+    public function __construct(StyleCollectionInterface $styles, InlineStyleCollectionInterface $inlineStyles)
     {
         $this->styles = $styles;
+        $this->inlineStyles = $inlineStyles;
     }
 
     protected function getStyles(): StyleCollectionInterface
     {
         return $this->styles;
+    }
+
+    protected function getInlineStyles(): InlineStyleCollectionInterface
+    {
+        return $this->inlineStyles;
     }
 
     public function load(ServerRequestInterface $request)
@@ -34,6 +40,15 @@ class StyleLoader implements StyleLoaderInterface
                 } else {
                     $this->registerStyle($style);
                 }
+            }
+        }
+    }
+
+    public function loadInline(ServerRequestInterface $request)
+    {
+        foreach ($this->getInlineStyles()->getStyles() as $style) {
+            if ($style->shouldBeLoaded($request)) {
+                $this->addInlineStyle($style);
             }
         }
     }
@@ -57,6 +72,15 @@ class StyleLoader implements StyleLoaderInterface
             $style->getDependencies(),
             $style->getVersion(),
             $style->getMedia()
+        );
+    }
+
+    public static function addInlineStyle($style)
+    {
+        wp_add_inline_style(
+            $style->getHandle(),
+            $style->getData(),
+            $style->getPosition()
         );
     }
 

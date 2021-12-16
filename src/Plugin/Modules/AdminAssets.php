@@ -13,9 +13,12 @@ use Leonidas\Library\Core\Asset\StyleCollection;
 
 final class AdminAssets extends AbstractAdminAssetProviderModule implements ModuleInterface
 {
-    protected function scripts(): ?ScriptCollectionInterface
+    protected function scripts(): ScriptCollectionInterface
     {
-        return new ScriptCollection(
+        return ScriptCollection::with(
+            ScriptBuilder::inlineFoundationInHeader('@inline:header'),
+            ScriptBuilder::inlineFoundationInFooter('@inline:footer'),
+
             ScriptBuilder::for('leonidas')
                 ->src($this->asset('js/backalley-admin.js'))
                 ->version($this->version())
@@ -44,9 +47,11 @@ final class AdminAssets extends AbstractAdminAssetProviderModule implements Modu
         );
     }
 
-    protected function styles(): ?StyleCollectionInterface
+    protected function styles(): StyleCollectionInterface
     {
-        return new StyleCollection(
+        return StyleCollection::with(
+            StyleBuilder::inlineFoundation('@inline'),
+
             StyleBuilder::for('leonidas')
                 ->src($this->asset('css/backalley-admin-styles.css'))
                 ->version($this->version())
