@@ -19,4 +19,8 @@ interface ScriptInterface extends AssetInterface
     public function getReferrerPolicy(): ?string;
 
     public function getType(): ?string;
+
+    public function getLocalization(): ?ScriptLocalizationInterface;
+
+    public function hasLocalization(): bool;
 }

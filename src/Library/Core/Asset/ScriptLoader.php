@@ -7,6 +7,7 @@ use Leonidas\Contracts\Ui\Asset\InlineScriptInterface;
 use Leonidas\Contracts\Ui\Asset\ScriptCollectionInterface;
 use Leonidas\Contracts\Ui\Asset\ScriptInterface;
 use Leonidas\Contracts\Ui\Asset\ScriptLoaderInterface;
+use Leonidas\Contracts\Ui\Asset\ScriptLocalizationInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use WebTheory\Html\Html;
 
@@ -16,8 +17,10 @@ class ScriptLoader implements ScriptLoaderInterface
 
     protected InlineScriptCollectionInterface $inlineScripts;
 
-    public function __construct(ScriptCollectionInterface $scripts, InlineScriptCollectionInterface $inlineScripts)
-    {
+    public function __construct(
+        ScriptCollectionInterface $scripts,
+        InlineScriptCollectionInterface $inlineScripts
+    ) {
         $this->scripts = $scripts;
         $this->inlineScripts = $inlineScripts;
     }
@@ -40,6 +43,10 @@ class ScriptLoader implements ScriptLoaderInterface
                     $this->enqueueScript($script);
                 } else {
                     $this->registerScript($script);
+                }
+
+                if ($script->hasLocalization()) {
+                    $this->localizeScript($script->getLocalization());
                 }
             }
         }
@@ -82,6 +89,15 @@ class ScriptLoader implements ScriptLoaderInterface
             $script->getHandle(),
             $script->getData(),
             $script->getPosition()
+        );
+    }
+
+    protected function localizeScript(ScriptLocalizationInterface $localization)
+    {
+        wp_localize_script(
+            $localization->getHandle(),
+            $localization->getVariable(),
+            $localization->getData()
         );
     }
 

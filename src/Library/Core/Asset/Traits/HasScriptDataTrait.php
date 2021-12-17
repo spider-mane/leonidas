@@ -2,6 +2,8 @@
 
 namespace Leonidas\Library\Core\Asset\Traits;
 
+use Leonidas\Contracts\Ui\Asset\ScriptLocalizationInterface;
+
 trait HasScriptDataTrait
 {
     /**
@@ -82,5 +84,10 @@ trait HasScriptDataTrait
     public function getType(): ?string
     {
         return $this->type;
+    }
+
+    public function getLocalization(): ScriptLocalizationInterface
+    {
+        return $this->localization;
     }
 }

@@ -3,13 +3,13 @@
 namespace Leonidas\Library\Core\Asset;
 
 use Leonidas\Contracts\Ui\Asset\ScriptInterface;
+use Leonidas\Contracts\Ui\Asset\ScriptLocalizationInterface;
 use Leonidas\Library\Core\Asset\Traits\HasScriptDataTrait;
 use Leonidas\Library\Core\Asset\Traits\SetsScriptDataTrait;
 
 class ScriptBuilder extends AbstractAssetBuilder
 {
     use HasScriptDataTrait;
-    use SetsScriptDataTrait;
 
     /**
      * @var bool
@@ -51,6 +51,81 @@ class ScriptBuilder extends AbstractAssetBuilder
      */
     protected $type;
 
+    protected ?ScriptLocalizationInterface $localization;
+
+    protected ?array $localizationData;
+
+    public function inFooter(?bool $shouldLoadInFooter)
+    {
+        $this->shouldLoadInFooter = $shouldLoadInFooter;
+
+        return $this;
+    }
+
+    public function async(bool $isAsync)
+    {
+        $this->isAsync = $isAsync;
+
+        return $this;
+    }
+
+    public function deferred(bool $isDeferred)
+    {
+        $this->isDeferred = $isDeferred;
+
+        return $this;
+    }
+
+    public function integrity(string $integrity)
+    {
+        $this->integrity = $integrity;
+
+        return $this;
+    }
+
+    public function nomodule(bool $isNoModule)
+    {
+        $this->isNoModule = $isNoModule;
+
+        return $this;
+    }
+
+    public function nonce(string $nonce)
+    {
+        $this->nonce = $nonce;
+
+        return $this;
+    }
+
+    public function referrerpolicy(string $referrerPolicy)
+    {
+        $this->referrerPolicy = $referrerPolicy;
+
+        return $this;
+    }
+
+    public function type(string $type)
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    public function localization(ScriptLocalizationInterface $localization)
+    {
+        $this->localization = $localization;
+    }
+
+    public function localizeWith(string $variable, array $data)
+    {
+        $this->localizationData = ['variable' => $variable, 'data' => $data];
+    }
+
+    public function getLocalizationData(): array
+    {
+        return $this->localizationData;
+    }
+
     public function done(): ScriptInterface
     {
         return new Script(
@@ -61,6 +136,7 @@ class ScriptBuilder extends AbstractAssetBuilder
             $this->shouldLoadInFooter(),
             $this->shouldBeEnqueued(),
             $this->getConstraints(),
+            $this->getLocalization() ?? $this->getLocalizationData(),
             $this->getAttributes(),
             $this->isAsync(),
             $this->getCrossorigin(),
