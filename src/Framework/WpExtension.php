@@ -225,9 +225,17 @@ class WpExtension implements WpExtensionInterface
     /**
      * {@inheritDoc}
      */
-    public function config(string $name, $default = null)
+    public function config(string $key, $default = null)
     {
-        return $this->get('config')->get($name, $default);
+        return $this->get('config')->get($key, $default);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function hasConfig(string $key): bool
+    {
+        return $this->get('config')->has($key);
     }
 
     /**

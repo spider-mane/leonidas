@@ -50,12 +50,12 @@ interface WpExtensionInterface extends ContainerInterface
     /**
      * Get a configuration or option from the database value
      */
-    public function config(string $name, $default = null);
+    public function config(string $key, $default = null);
 
-    // /**
-    //  * Get an option from the database
-    //  */
-    // public function option(string $name, $default);
+    /**
+     * Return whether or not a config value is present
+     */
+    public function hasConfig(string $key): bool;
 
     /**
      * Get a directory relative to the base path
