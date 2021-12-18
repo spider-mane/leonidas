@@ -279,14 +279,6 @@ class WpExtension implements WpExtensionInterface
     }
 
     /**
-     * {@inheritDoc}
-     */
-    public function vot(?string $version = null): string
-    {
-        return $this->isInDev() ? time() : ($version ?? $this->getVersion());
-    }
-
-    /**
      * Returns a new instance of WpExtension using values in the array passed.
      *
      * @param array $args

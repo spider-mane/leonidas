@@ -84,19 +84,6 @@ interface WpExtensionInterface extends ContainerInterface
     public function prefix(string $value, string $separator): string;
 
     /**
-     * Returns the version if in the context of production and returns current
-     * timestamp if in the context of app development. Useful as an automatic
-     * cache busting mechanism when developing scripts and stylesheets as part
-     * of an extension. If version is not provided and the extension is not in
-     * development, this method must return the extension version.
-     *
-     * @param string $version The actual version of the asset
-     *
-     * @return string Either the original version passed or a unix timestamp
-     */
-    public function vot(?string $version = null): string;
-
-    /**
      * Determine whether or not the extension is in its development environment
      */
     public function isInDev(): bool;

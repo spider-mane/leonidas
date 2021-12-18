@@ -161,7 +161,7 @@ trait ProvisionsAssetsTrait
             return time();
         }
 
-        return $version ?? $this->extension->getVersion();
+        return $version ?: $this->extension->getVersion();
     }
 
     protected function scripts(): ScriptCollectionInterface
