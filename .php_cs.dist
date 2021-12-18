@@ -35,7 +35,7 @@ return (new Config('leonidas'))
     'global_namespace_import' => [
       'import_classes' => true
     ],
-    // 'lambda_not_used_import' => true,
+    'lambda_not_used_import' => true,
     'method_argument_space' => [
       'after_heredoc' => true,
     ],
@@ -50,7 +50,7 @@ return (new Config('leonidas'))
       'types' => ['boolean', 'callback', 'double', 'integer', 'real', 'str'],
     ],
     'phpdoc_single_line_var_spacing' => true,
-    // 'phpdoc_var_without_name' => true,
+    'phpdoc_var_without_name' => true,
     'single_space_after_construct' => true,
     'ternary_to_null_coalescing' => true,
     'trailing_comma_in_multiline_array' => true,
