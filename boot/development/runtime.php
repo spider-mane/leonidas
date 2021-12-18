@@ -1,6 +1,6 @@
 <?php
 
-// ob_start();
+ob_start();
 
 require_once __DIR__ . '/setup.php';
 
