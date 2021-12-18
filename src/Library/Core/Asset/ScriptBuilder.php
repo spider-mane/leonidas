@@ -51,9 +51,9 @@ class ScriptBuilder extends AbstractAssetBuilder
      */
     protected $type;
 
-    protected ?ScriptLocalizationInterface $localization;
+    protected ?ScriptLocalizationInterface $localization = null;
 
-    protected ?array $localizationData;
+    protected ?array $localizationData = null;
 
     public function inFooter(?bool $shouldLoadInFooter)
     {
@@ -121,7 +121,7 @@ class ScriptBuilder extends AbstractAssetBuilder
         $this->localizationData = ['variable' => $variable, 'data' => $data];
     }
 
-    public function getLocalizationData(): array
+    public function getLocalizationData(): ?array
     {
         return $this->localizationData;
     }

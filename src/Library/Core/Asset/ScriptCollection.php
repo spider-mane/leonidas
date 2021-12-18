@@ -10,7 +10,7 @@ class ScriptCollection implements ScriptCollectionInterface
     /**
      * @var ScriptInterface[]
      */
-    protected $scripts;
+    protected array $scripts = [];
 
     public function __construct(ScriptInterface ...$scripts)
     {

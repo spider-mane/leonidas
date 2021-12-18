@@ -16,6 +16,11 @@ trait HasScriptDataTrait
         return $this->shouldLoadInFooter;
     }
 
+    public function getLocalization(): ?ScriptLocalizationInterface
+    {
+        return $this->localization;
+    }
+
     /**
      * Get the value of isAsync
      *
@@ -84,10 +89,5 @@ trait HasScriptDataTrait
     public function getType(): ?string
     {
         return $this->type;
-    }
-
-    public function getLocalization(): ScriptLocalizationInterface
-    {
-        return $this->localization;
     }
 }

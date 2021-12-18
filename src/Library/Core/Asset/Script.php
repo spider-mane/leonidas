@@ -51,7 +51,7 @@ class Script extends AbstractAsset implements ScriptInterface
      */
     protected $type;
 
-    protected ScriptLocalizationInterface $localization;
+    protected ?ScriptLocalizationInterface $localization = null;
 
     public function __construct(
         string $handle,

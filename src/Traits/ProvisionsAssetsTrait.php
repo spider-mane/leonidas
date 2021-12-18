@@ -19,15 +19,17 @@ use Psr\Http\Message\ServerRequestInterface;
 
 trait ProvisionsAssetsTrait
 {
+    protected bool $initiated = false;
+
     protected WpExtensionInterface $extension;
 
-    protected ScriptCollectionInterface $scripts;
+    protected ?ScriptCollectionInterface $scripts = null;
 
-    protected StyleCollectionInterface $styles;
+    protected ?StyleCollectionInterface $styles = null;
 
-    protected InlineScriptCollectionInterface $inlineScripts;
+    protected ?InlineScriptCollectionInterface $inlineScripts = null;
 
-    protected InlineStyleCollectionInterface $inlineStyles;
+    protected ?InlineStyleCollectionInterface $inlineStyles = null;
 
     protected function getScriptCollection(): ScriptCollectionInterface
     {
@@ -44,7 +46,7 @@ trait ProvisionsAssetsTrait
         return $this->inlineScripts;
     }
 
-    protected function getInlineStyleColleccion(): InlineStyleCollectionInterface
+    protected function getInlineStyleCollection(): InlineStyleCollectionInterface
     {
         return $this->inlineStyles;
     }
@@ -67,7 +69,14 @@ trait ProvisionsAssetsTrait
         $this->inlineStyles = $this->inlineStyles();
 
         $this->scriptLoader = new ScriptLoader($this->getScriptCollection(), $this->getInlineScriptCollection());
-        $this->styleLoader = new StyleLoader($this->getStyleCollection(), $this->getInlineStyleColleccion());
+        $this->styleLoader = new StyleLoader($this->getStyleCollection(), $this->getInlineStyleCollection());
+
+        $this->initiated = true;
+    }
+
+    protected function hasInitiated(): bool
+    {
+        return $this->initiated;
     }
 
     protected function hasScripts(): bool
@@ -119,7 +128,7 @@ trait ProvisionsAssetsTrait
 
     protected function filterScriptLoaderTag(string $tag, string $handle, string $src): string
     {
-        if (!$this->hasScripts() || !$this->getScriptCollection()->hasScript($handle)) {
+        if (!$this->hasInitiated() || !$this->hasScripts() || !$this->getScriptCollection()->hasScript($handle)) {
             return $tag;
         }
 
@@ -131,7 +140,7 @@ trait ProvisionsAssetsTrait
 
     protected function filterStyleLoaderTag(string $tag, string $handle, string $href, string $media): string
     {
-        if (!$this->hasStyles() || !$this->getStyleCollection()->hasStyle($handle)) {
+        if (!$this->hasInitiated() || !$this->hasStyles() || !$this->getStyleCollection()->hasStyle($handle)) {
             return $tag;
         }
 

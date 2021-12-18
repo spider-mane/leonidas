@@ -13,9 +13,9 @@ use WebTheory\Html\Html;
 
 class ScriptLoader implements ScriptLoaderInterface
 {
-    protected ScriptCollectionInterface $scripts;
+    protected ?ScriptCollectionInterface $scripts = null;
 
-    protected InlineScriptCollectionInterface $inlineScripts;
+    protected ?InlineScriptCollectionInterface $inlineScripts = null;
 
     public function __construct(
         ScriptCollectionInterface $scripts,

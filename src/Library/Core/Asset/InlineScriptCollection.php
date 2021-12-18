@@ -12,7 +12,7 @@ class InlineScriptCollection implements InlineScriptCollectionInterface
     /**
      * @var InlineScriptInterface[]
      */
-    protected $scripts;
+    protected array $scripts = [];
 
     public function __construct(InlineScriptInterface ...$scripts)
     {

@@ -12,7 +12,7 @@ class InlineStyleCollection implements InlineStyleCollectionInterface
     /**
      * @var InlineStyleInterface[]
      */
-    protected $styles;
+    protected array $styles = [];
 
     public function __construct(InlineStyleInterface ...$styles)
     {

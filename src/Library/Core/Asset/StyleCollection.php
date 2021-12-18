@@ -10,7 +10,7 @@ class StyleCollection implements StyleCollectionInterface
     /**
      * @var StyleInterface[]
      */
-    protected $styles;
+    protected array $styles = [];
 
     public function __construct(StyleInterface ...$styles)
     {

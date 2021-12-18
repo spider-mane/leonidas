@@ -10,7 +10,7 @@ abstract class AbstractInlineAssetBuilder
 
     protected string $data;
 
-    protected ConstrainerCollectionInterface $constraints;
+    protected ?ConstrainerCollectionInterface $constraints = null;
 
     public function __construct(string $handle)
     {

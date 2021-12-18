@@ -11,9 +11,9 @@ use WebTheory\Html\Html;
 
 class StyleLoader implements StyleLoaderInterface
 {
-    protected StyleCollectionInterface $styles;
+    protected ?StyleCollectionInterface $styles = null;
 
-    protected InlineStyleCollectionInterface $inlineStyles;
+    protected ?InlineStyleCollectionInterface $inlineStyles = null;
 
     public function __construct(StyleCollectionInterface $styles, InlineStyleCollectionInterface $inlineStyles)
     {
