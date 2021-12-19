@@ -44,7 +44,7 @@ class InlineStyleCollection implements InlineStyleCollectionInterface
         return isset($this->styles[$style]);
     }
 
-    public static function with(InlineStyleInterface ...$styles)
+    public static function with(InlineStyleInterface ...$styles): InlineStyleCollection
     {
         return new static(...$styles);
     }

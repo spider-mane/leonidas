@@ -40,7 +40,7 @@ class ScriptLocalizationCollection implements ScriptLocalizationCollectionInterf
         return isset($this->localizations[$localization]);
     }
 
-    public static function with(ScriptLocalizationInterface ...$localizations)
+    public static function with(ScriptLocalizationInterface ...$localizations): ScriptLocalizationCollection
     {
         return new static(...$localizations);
     }

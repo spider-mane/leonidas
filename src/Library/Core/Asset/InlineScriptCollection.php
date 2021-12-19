@@ -44,7 +44,7 @@ class InlineScriptCollection implements InlineScriptCollectionInterface
         return isset($this->scripts[$script]);
     }
 
-    public static function with(InlineScriptInterface ...$scripts)
+    public static function with(InlineScriptInterface ...$scripts): InlineScriptCollection
     {
         return new static(...$scripts);
     }
