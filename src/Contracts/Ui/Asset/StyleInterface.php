@@ -11,4 +11,8 @@ interface StyleInterface extends AssetInterface
     public function getHrefLang(): ?string;
 
     public function getTitle(): ?string;
+
+    // public function getInlineSupport(): ?InlineStyleCollectionInterface;
+
+    // public function hasInlineSupport(): bool;
 }

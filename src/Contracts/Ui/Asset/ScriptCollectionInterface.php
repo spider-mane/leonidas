@@ -12,4 +12,6 @@ interface ScriptCollectionInterface
     public function getScript(string $script): ScriptInterface;
 
     public function hasScript(string $script): bool;
+
+    public function addScript(ScriptInterface $script);
 }

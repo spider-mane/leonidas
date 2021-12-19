@@ -7,6 +7,7 @@ use Leonidas\Contracts\Ui\Asset\InlineScriptCollectionInterface;
 use Leonidas\Contracts\Ui\Asset\InlineStyleCollectionInterface;
 use Leonidas\Contracts\Ui\Asset\ScriptCollectionInterface;
 use Leonidas\Contracts\Ui\Asset\ScriptInterface;
+use Leonidas\Contracts\Ui\Asset\ScriptLocalizationCollectionInterface;
 use Leonidas\Contracts\Ui\Asset\StyleCollectionInterface;
 use Leonidas\Contracts\Ui\Asset\StyleInterface;
 use Leonidas\Framework\Modules\AbstractModule;
@@ -69,24 +70,29 @@ abstract class AbstractGlobalAssetProviderModule extends AbstractModule implemen
         $this->provisionAssets();
     }
 
-    protected function scripts(): ScriptCollectionInterface
+    protected function scripts(): ?ScriptCollectionInterface
     {
         return $this->getContextAssetsMethod('Scripts')();
     }
 
-    protected function styles(): StyleCollectionInterface
+    protected function styles(): ?StyleCollectionInterface
     {
         return $this->getContextAssetsMethod('Styles')();
     }
 
-    protected function inlineScripts(): InlineScriptCollectionInterface
+    protected function inlineScripts(): ?InlineScriptCollectionInterface
     {
         return $this->getContextAssetsMethod('InlineScripts')();
     }
 
-    protected function inlineStyles(): InlineStyleCollectionInterface
+    protected function inlineStyles(): ?InlineStyleCollectionInterface
     {
         return $this->getContextAssetsMethod('InlineStyles')();
+    }
+
+    protected function scriptLocalizations(): ?ScriptLocalizationCollectionInterface
+    {
+        return $this->getContextAssetsMethod('ScriptLocalizations')();
     }
 
     protected function getContextAssetsMethod(string $type): array
@@ -94,83 +100,103 @@ abstract class AbstractGlobalAssetProviderModule extends AbstractModule implemen
         return [$this, static::CONTEXTS[current_action()] . $type];
     }
 
-    protected function adminScripts(): ScriptCollectionInterface
+    protected function adminScripts(): ?ScriptCollectionInterface
     {
-        return new ScriptCollection();
+        return null;
     }
 
-    protected function adminStyles(): StyleCollectionInterface
+    protected function adminStyles(): ?StyleCollectionInterface
     {
-        return new StyleCollection();
+        return null;
     }
 
-    protected function blockEditorScripts(): ScriptCollectionInterface
+    protected function blockEditorScripts(): ?ScriptCollectionInterface
     {
-        return new ScriptCollection();
+        return null;
     }
 
-    protected function blockEditorStyles(): StyleCollectionInterface
+    protected function blockEditorStyles(): ?StyleCollectionInterface
     {
-        return new StyleCollection();
+        return null;
     }
 
-    protected function loginScripts(): ScriptCollectionInterface
+    protected function loginScripts(): ?ScriptCollectionInterface
     {
-        return new ScriptCollection();
+        return null;
     }
 
-    protected function loginStyles(): StyleCollectionInterface
+    protected function loginStyles(): ?StyleCollectionInterface
     {
-        return new StyleCollection();
+        return null;
     }
 
-    protected function publicScripts(): ScriptCollectionInterface
+    protected function publicScripts(): ?ScriptCollectionInterface
     {
-        return new ScriptCollection();
+        return null;
     }
 
-    protected function publicStyles(): StyleCollectionInterface
+    protected function publicStyles(): ?StyleCollectionInterface
     {
-        return new StyleCollection();
+        return null;
     }
 
-    protected function adminInlineScripts(): InlineScriptCollectionInterface
+    protected function adminInlineScripts(): ?InlineScriptCollectionInterface
     {
-        return new InlineScriptCollection();
+        return null;
     }
 
-    protected function adminInlineStyles(): InlineStyleCollectionInterface
+    protected function adminInlineStyles(): ?InlineStyleCollectionInterface
     {
-        return new InlineStyleCollection();
+        return null;
     }
 
-    protected function blockEditorInlineScripts(): InlineScriptCollectionInterface
+    protected function blockEditorInlineScripts(): ?InlineScriptCollectionInterface
     {
-        return new InlineScriptCollection();
+        return null;
     }
 
-    protected function blockEditorInlineStyles(): InlineStyleCollectionInterface
+    protected function blockEditorInlineStyles(): ?InlineStyleCollectionInterface
     {
-        return new InlineStyleCollection();
+        return null;
     }
 
-    protected function loginInlineScripts(): InlineScriptCollectionInterface
+    protected function loginInlineScripts(): ?InlineScriptCollectionInterface
     {
-        return new InlineScriptCollection();
+        return null;
     }
 
-    protected function loginInlineStyles(): InlineStyleCollectionInterface
+    protected function loginInlineStyles(): ?InlineStyleCollectionInterface
     {
-        return new InlineStyleCollection();
+        return null;
     }
 
-    protected function publicInlineScripts(): InlineScriptCollectionInterface
+    protected function publicInlineScripts(): ?InlineScriptCollectionInterface
     {
-        return new InlineScriptCollection();
+        return null;
     }
 
-    protected function publicInlineStyles(): InlineStyleCollectionInterface
+    protected function publicInlineStyles(): ?InlineStyleCollectionInterface
     {
-        return new InlineStyleCollection();
+        return null;
+    }
+
+    protected function adminScriptLocalizations(): ?ScriptLocalizationCollectionInterface
+    {
+        return null;
+    }
+
+    protected function blockEditorScriptLocalizations(): ?ScriptLocalizationCollectionInterface
+    {
+        return null;
+    }
+
+    protected function loginScriptLocalizations(): ?ScriptLocalizationCollectionInterface
+    {
+        return null;
+    }
+
+    protected function publicScriptLocalizations(): ?ScriptLocalizationCollectionInterface
+    {
+        return null;
     }
 }

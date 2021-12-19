@@ -3,7 +3,11 @@
 namespace Leonidas\Library\Core\Asset;
 
 use Leonidas\Contracts\Http\ConstrainerCollectionInterface;
+use Leonidas\Contracts\Ui\Asset\InlineScriptBuilderInterface;
+use Leonidas\Contracts\Ui\Asset\InlineScriptCollectionInterface;
+use Leonidas\Contracts\Ui\Asset\InlineScriptInterface;
 use Leonidas\Contracts\Ui\Asset\ScriptInterface;
+use Leonidas\Contracts\Ui\Asset\ScriptLocalizationCollectionInterface;
 use Leonidas\Contracts\Ui\Asset\ScriptLocalizationInterface;
 use Leonidas\Library\Core\Asset\Traits\HasScriptDataTrait;
 
@@ -51,8 +55,6 @@ class Script extends AbstractAsset implements ScriptInterface
      */
     protected $type;
 
-    protected ?ScriptLocalizationInterface $localization = null;
-
     public function __construct(
         string $handle,
         string $src,
@@ -61,7 +63,6 @@ class Script extends AbstractAsset implements ScriptInterface
         ?bool $shouldLoadInFooter = null,
         ?bool $shouldBeEnqueued = null,
         ?ConstrainerCollectionInterface $constraints = null,
-        $localization = null,
         ?array $attributes = null,
         ?bool $isAsync = null,
         ?string $crossorigin,
@@ -91,25 +92,5 @@ class Script extends AbstractAsset implements ScriptInterface
         $nonce && $this->nonce = $nonce;
         $referrerPolicy && $this->referrerPolicy = $referrerPolicy;
         $type && $this->type = $type;
-
-        if ($localization) {
-            $this->localization = $localization instanceof ScriptLocalizationInterface
-                ? $localization
-                : $this->createLocalization($localization);
-        }
-    }
-
-    public function hasLocalization(): bool
-    {
-        return !empty($this->getLocalization());
-    }
-
-    protected function createLocalization(array $localization): ScriptLocalizationInterface
-    {
-        return new ScriptLocalization(
-            $this->getHandle(),
-            $localization['variable'],
-            $localization['data']
-        );
     }
 }

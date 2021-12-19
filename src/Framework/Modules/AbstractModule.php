@@ -10,9 +10,6 @@ use Psr\Http\Message\ServerRequestInterface;
 
 abstract class AbstractModule implements ModuleInterface
 {
-    /**
-     * @var WpExtensionInterface
-     */
     protected WpExtensionInterface $extension;
 
     public function __construct(WpExtensionInterface $extension)

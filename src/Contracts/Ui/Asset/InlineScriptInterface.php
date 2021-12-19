@@ -8,7 +8,7 @@ interface InlineScriptInterface
 {
     public function getHandle(): string;
 
-    public function getData(): string;
+    public function getCode(): string;
 
     public function getPosition(): string;
 

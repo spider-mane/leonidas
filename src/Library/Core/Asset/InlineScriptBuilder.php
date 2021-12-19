@@ -2,9 +2,10 @@
 
 namespace Leonidas\Library\Core\Asset;
 
+use Leonidas\Contracts\Ui\Asset\InlineScriptBuilderInterface;
 use Leonidas\Contracts\Ui\Asset\InlineScriptInterface;
 
-class InlineScriptBuilder extends AbstractInlineAssetBuilder
+class InlineScriptBuilder extends AbstractInlineAssetBuilder implements InlineScriptBuilderInterface
 {
     protected string $position;
 
@@ -24,7 +25,7 @@ class InlineScriptBuilder extends AbstractInlineAssetBuilder
     {
         return new InlineScript(
             $this->getHandle(),
-            $this->getData(),
+            $this->getCode(),
             $this->getPosition(),
             $this->getConstraints(),
         );

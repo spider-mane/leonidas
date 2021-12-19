@@ -6,15 +6,18 @@ use Psr\Http\Message\ServerRequestInterface;
 
 interface ScriptLoaderInterface
 {
-    public function load(ServerRequestInterface $request);
+    public function load(
+        ScriptCollectionInterface $scripts,
+        ServerRequestInterface $request
+    );
 
-    public function loadInline(ServerRequestInterface $request);
+    public function support(
+        InlineScriptCollectionInterface $scripts,
+        ServerRequestInterface $request
+    );
 
-    public static function createScriptTag(ScriptInterface $script): string;
-
-    public static function mergeScriptTag(string $tag, ScriptInterface $script): string;
-
-    public static function registerScript(ScriptInterface $script);
-
-    public static function enqueueScript(ScriptInterface $script);
+    public function localize(
+        ScriptLocalizationCollectionInterface $localizations,
+        ServerRequestInterface $request
+    );
 }

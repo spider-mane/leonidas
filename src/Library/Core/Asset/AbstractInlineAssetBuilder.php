@@ -8,7 +8,7 @@ abstract class AbstractInlineAssetBuilder
 {
     protected string $handle;
 
-    protected string $data;
+    protected string $code;
 
     protected ?ConstrainerCollectionInterface $constraints = null;
 
@@ -29,26 +29,26 @@ abstract class AbstractInlineAssetBuilder
         return $this->handle;
     }
 
-    public function data(string $data): AbstractInlineAssetBuilder
+    public function code(string $code): AbstractInlineAssetBuilder
     {
-        $this->data = $data;
+        $this->code = $code;
 
         return $this;
     }
 
-    public function getData(): string
+    public function getCode(): string
     {
-        return $this->data;
+        return $this->code;
     }
 
-    public function constraints(ConstrainerCollectionInterface $constraints): AbstractInlineAssetBuilder
+    public function constraints(?ConstrainerCollectionInterface $constraints): AbstractInlineAssetBuilder
     {
         $this->constraints = $constraints;
 
         return $this;
     }
 
-    public function getConstraints(): ConstrainerCollectionInterface
+    public function getConstraints(): ?ConstrainerCollectionInterface
     {
         return $this->constraints;
     }

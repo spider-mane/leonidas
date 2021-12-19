@@ -10,7 +10,7 @@ class InlineStyleBuilder extends AbstractInlineAssetBuilder
     {
         return new InlineStyle(
             $this->getHandle(),
-            $this->getData(),
+            $this->getCode(),
             $this->getConstraints()
         );
     }

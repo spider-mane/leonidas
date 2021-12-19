@@ -51,10 +51,6 @@ class ScriptBuilder extends AbstractAssetBuilder
      */
     protected $type;
 
-    protected ?ScriptLocalizationInterface $localization = null;
-
-    protected ?array $localizationData = null;
-
     public function inFooter(?bool $shouldLoadInFooter)
     {
         $this->shouldLoadInFooter = $shouldLoadInFooter;
@@ -110,22 +106,6 @@ class ScriptBuilder extends AbstractAssetBuilder
 
         return $this;
     }
-
-    public function localization(ScriptLocalizationInterface $localization)
-    {
-        $this->localization = $localization;
-    }
-
-    public function localizeWith(string $variable, array $data)
-    {
-        $this->localizationData = ['variable' => $variable, 'data' => $data];
-    }
-
-    public function getLocalizationData(): ?array
-    {
-        return $this->localizationData;
-    }
-
     public function done(): ScriptInterface
     {
         return new Script(
@@ -136,7 +116,6 @@ class ScriptBuilder extends AbstractAssetBuilder
             $this->shouldLoadInFooter(),
             $this->shouldBeEnqueued(),
             $this->getConstraints(),
-            $this->getLocalization() ?? $this->getLocalizationData(),
             $this->getAttributes(),
             $this->isAsync(),
             $this->getCrossorigin(),

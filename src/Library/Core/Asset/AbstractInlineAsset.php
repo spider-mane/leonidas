@@ -9,14 +9,16 @@ class AbstractInlineAsset
 {
     protected string $handle;
 
-    protected string $data;
+    protected string $code;
 
     protected ?ConstrainerCollectionInterface $constraints = null;
 
-    public function __construct(string $handle, string $data, ConstrainerCollectionInterface $constraints)
+    public function __construct(string $handle, string $code, ?ConstrainerCollectionInterface $constraints = null)
     {
         $this->handle = $handle;
-        $this->data = $data;
+        $this->code = $code;
+
+        $constraints && $this->constraints = $constraints;
     }
 
     public function getHandle(): string
@@ -24,9 +26,14 @@ class AbstractInlineAsset
         return $this->handle;
     }
 
-    public function getData(): string
+    public function getCode(): string
     {
-        return $this->data;
+        return $this->code;
+    }
+
+    public function getConstraints(): ConstrainerCollectionInterface
+    {
+        return $this->constraints;
     }
 
     public function shouldBeLoaded(ServerRequestInterface $request): bool

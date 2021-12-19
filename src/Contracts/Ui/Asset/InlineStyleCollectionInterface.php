@@ -12,4 +12,6 @@ interface InlineStyleCollectionInterface
     public function getStyle(string $style): InlineStyleInterface;
 
     public function hasStyle(string $style): bool;
+
+    public function addStyle(InlineStyleInterface $style);
 }

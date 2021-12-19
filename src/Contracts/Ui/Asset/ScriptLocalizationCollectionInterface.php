@@ -12,4 +12,6 @@ interface ScriptLocalizationCollectionInterface
     public function getLocalization(string $variable): ScriptLocalizationInterface;
 
     public function hasLocalization(string $variable): bool;
+
+    public function addLocalization(ScriptLocalizationInterface $localization);
 }

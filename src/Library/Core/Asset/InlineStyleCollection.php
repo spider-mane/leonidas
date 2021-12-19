@@ -31,7 +31,7 @@ class InlineStyleCollection implements InlineStyleCollectionInterface
 
     public function addStyle(InlineStyleInterface $style)
     {
-        $this->styles[$style->getHandle()] = $style;
+        $this->styles[] = $style;
     }
 
     public function getStyle(string $style): InlineStyleInterface

@@ -7,6 +7,8 @@ use Psr\Http\Message\ServerRequestInterface;
 
 trait AbstractModuleTraitTrait
 {
+    protected WpExtensionInterface $extension;
+
     abstract protected function getServerRequest(): ServerRequestInterface;
 
     abstract protected function getExtension(): WpExtensionInterface;

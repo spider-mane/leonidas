@@ -3,6 +3,8 @@
 namespace Leonidas\Library\Core\Asset;
 
 use Leonidas\Contracts\Http\ConstrainerCollectionInterface;
+use Leonidas\Contracts\Ui\Asset\InlineScriptInterface;
+use Leonidas\Contracts\Ui\Asset\InlineStyleInterface;
 use Leonidas\Contracts\Ui\Asset\StyleInterface;
 use Leonidas\Library\Core\Asset\Traits\HasStyleDataTrait;
 

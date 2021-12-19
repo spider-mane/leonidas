@@ -13,7 +13,7 @@ class InlineScript extends AbstractInlineAsset implements InlineScriptInterface
         string $handle,
         string $data,
         ?string $position = null,
-        ConstrainerCollectionInterface $constraints
+        ?ConstrainerCollectionInterface $constraints = null
     ) {
         parent::__construct($handle, $data, $constraints);
 

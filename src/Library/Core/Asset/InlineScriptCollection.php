@@ -31,7 +31,7 @@ class InlineScriptCollection implements InlineScriptCollectionInterface
 
     public function addScript(InlineScriptInterface $script)
     {
-        $this->scripts[$script->getHandle()] = $script;
+        $this->scripts[] = $script;
     }
 
     public function getScript(string $script): InlineScriptInterface

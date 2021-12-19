@@ -118,7 +118,7 @@ abstract class AbstractAssetBuilder
      *
      * @return self
      */
-    public function constraints(ConstrainerCollectionInterface $constraints)
+    public function constraints(?ConstrainerCollectionInterface $constraints)
     {
         $this->constraints = $constraints;
 

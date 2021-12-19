@@ -2,8 +2,6 @@
 
 namespace Leonidas\Library\Core\Asset\Traits;
 
-use Leonidas\Contracts\Ui\Asset\ScriptLocalizationInterface;
-
 trait HasScriptDataTrait
 {
     /**
@@ -14,11 +12,6 @@ trait HasScriptDataTrait
     public function shouldLoadInFooter(): ?bool
     {
         return $this->shouldLoadInFooter;
-    }
-
-    public function getLocalization(): ?ScriptLocalizationInterface
-    {
-        return $this->localization;
     }
 
     /**

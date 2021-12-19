@@ -7,61 +7,45 @@ use Leonidas\Contracts\Ui\Asset\InlineScriptInterface;
 use Leonidas\Contracts\Ui\Asset\ScriptCollectionInterface;
 use Leonidas\Contracts\Ui\Asset\ScriptInterface;
 use Leonidas\Contracts\Ui\Asset\ScriptLoaderInterface;
+use Leonidas\Contracts\Ui\Asset\ScriptLocalizationCollectionInterface;
 use Leonidas\Contracts\Ui\Asset\ScriptLocalizationInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use WebTheory\Html\Html;
 
 class ScriptLoader implements ScriptLoaderInterface
 {
-    protected ?ScriptCollectionInterface $scripts = null;
-
-    protected ?InlineScriptCollectionInterface $inlineScripts = null;
-
-    public function __construct(
-        ScriptCollectionInterface $scripts,
-        InlineScriptCollectionInterface $inlineScripts
-    ) {
-        $this->scripts = $scripts;
-        $this->inlineScripts = $inlineScripts;
-    }
-
-    protected function getScripts(): ScriptCollectionInterface
+    public function load(ScriptCollectionInterface $scripts, ServerRequestInterface $request)
     {
-        return $this->scripts;
-    }
-
-    protected function getInlineScripts(): InlineScriptCollectionInterface
-    {
-        return $this->inlineScripts;
-    }
-
-    public function load(ServerRequestInterface $request)
-    {
-        foreach ($this->getScripts()->getScripts() as $script) {
+        foreach ($scripts->getScripts() as $script) {
             if ($script->shouldBeLoaded($request)) {
                 if ($script->shouldBeEnqueued()) {
                     $this->enqueueScript($script);
                 } else {
                     $this->registerScript($script);
                 }
-
-                if ($script->hasLocalization()) {
-                    $this->localizeScript($script->getLocalization());
-                }
             }
         }
     }
 
-    public function loadInline(ServerRequestInterface $request)
+    public function support(InlineScriptCollectionInterface $scripts, ServerRequestInterface $request)
     {
-        foreach ($this->getInlineScripts()->getScripts() as $script) {
+        foreach ($scripts->getScripts() as $script) {
             if ($script->shouldBeLoaded($request)) {
                 $this->addInlineScript($script);
             }
         }
     }
 
-    public static function registerScript(ScriptInterface $script)
+    public function localize(ScriptLocalizationCollectionInterface $localizations, ServerRequestInterface $request)
+    {
+        foreach ($localizations->getLocalizations() as $localization) {
+            if ($localization->shouldBeLoaded($request)) {
+                $this->localizeScript($localization);
+            }
+        }
+    }
+
+    protected function registerScript(ScriptInterface $script)
     {
         wp_register_script(
             $script->getHandle(),
@@ -70,9 +54,11 @@ class ScriptLoader implements ScriptLoaderInterface
             $script->getVersion(),
             $script->shouldLoadInFooter()
         );
+
+        // $this->loadScriptAddons($script);
     }
 
-    public static function enqueueScript(ScriptInterface $script)
+    protected function enqueueScript(ScriptInterface $script)
     {
         wp_enqueue_script(
             $script->getHandle(),
@@ -81,13 +67,15 @@ class ScriptLoader implements ScriptLoaderInterface
             $script->getVersion(),
             $script->shouldLoadInFooter()
         );
+
+        // $this->loadScriptAddons($script);
     }
 
-    public static function addInlineScript(InlineScriptInterface $script)
+    protected function addInlineScript(InlineScriptInterface $script)
     {
         wp_add_inline_script(
             $script->getHandle(),
-            $script->getData(),
+            $script->getCode(),
             $script->getPosition()
         );
     }
@@ -101,36 +89,18 @@ class ScriptLoader implements ScriptLoaderInterface
         );
     }
 
-    public static function createScriptTag(ScriptInterface $script): string
-    {
-        return Html::tag('script', [
-            'src' => static::getSrcAttribute($script),
-            'id' => static::getIdAttribute($script),
-            'async' => $script->isAsync(),
-            'crossorigin' => $script->getCrossorigin(),
-            'defer' => $script->isDeferred(),
-            'integrity' => $script->getIntegrity(),
-            'nomodule' => $script->isNoModule(),
-            'nonce' => $script->getNonce(),
-            'rererrerpolicy' => $script->getReferrerPolicy(),
-            'type' => $script->getType(),
-        ] + $script->getAttributes()) . "\n";
-    }
+    // protected function loadScriptAddons(ScriptInterface $script)
+    // {
+    //     if ($script->hasLocalizations()) {
+    //         foreach ($script->getLocalizations()->getLocalizations() as $localization) {
+    //             $this->localizeScript($localization);
+    //         }
+    //     }
 
-    public static function mergeScriptTag(string $tag, ScriptInterface $script): string
-    {
-        return static::createScriptTag($script);
-    }
-
-    public static function getIdAttribute(ScriptInterface $script): string
-    {
-        return "{$script->getHandle()}-js";
-    }
-
-    public static function getSrcAttribute(ScriptInterface $script): string
-    {
-        return (null !== $script->getVersion())
-            ? "{$script->getSrc()}?ver={$script->getVersion()}"
-            : $script->getSrc();
-    }
+    //     if ($script->hasInlineSupport()) {
+    //         foreach ($script->getInlineSupport()->getScripts() as $inlineScript) {
+    //             $this->addInlineScript($inlineScript);
+    //         }
+    //     }
+    // }
 }

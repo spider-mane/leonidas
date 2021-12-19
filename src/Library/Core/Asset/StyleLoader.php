@@ -11,29 +11,9 @@ use WebTheory\Html\Html;
 
 class StyleLoader implements StyleLoaderInterface
 {
-    protected ?StyleCollectionInterface $styles = null;
-
-    protected ?InlineStyleCollectionInterface $inlineStyles = null;
-
-    public function __construct(StyleCollectionInterface $styles, InlineStyleCollectionInterface $inlineStyles)
+    public function load(StyleCollectionInterface $styles, ServerRequestInterface $request)
     {
-        $this->styles = $styles;
-        $this->inlineStyles = $inlineStyles;
-    }
-
-    protected function getStyles(): StyleCollectionInterface
-    {
-        return $this->styles;
-    }
-
-    protected function getInlineStyles(): InlineStyleCollectionInterface
-    {
-        return $this->inlineStyles;
-    }
-
-    public function load(ServerRequestInterface $request)
-    {
-        foreach ($this->getStyles()->getStyles() as $style) {
+        foreach ($styles->getStyles() as $style) {
             if ($style->shouldBeLoaded($request)) {
                 if ($style->shouldBeEnqueued()) {
                     $this->enqueueStyle($style);
@@ -44,16 +24,16 @@ class StyleLoader implements StyleLoaderInterface
         }
     }
 
-    public function loadInline(ServerRequestInterface $request)
+    public function support(InlineStyleCollectionInterface $styles, ServerRequestInterface $request)
     {
-        foreach ($this->getInlineStyles()->getStyles() as $style) {
+        foreach ($styles->getStyles() as $style) {
             if ($style->shouldBeLoaded($request)) {
                 $this->addInlineStyle($style);
             }
         }
     }
 
-    public static function registerStyle(StyleInterface $style)
+    protected function registerStyle(StyleInterface $style)
     {
         wp_register_style(
             $style->getHandle(),
@@ -62,9 +42,11 @@ class StyleLoader implements StyleLoaderInterface
             $style->getVersion(),
             $style->getMedia()
         );
+
+        // $this->loadStyleAddons($style);
     }
 
-    public static function enqueueStyle(StyleInterface $style)
+    protected function enqueueStyle(StyleInterface $style)
     {
         wp_enqueue_style(
             $style->getHandle(),
@@ -73,9 +55,11 @@ class StyleLoader implements StyleLoaderInterface
             $style->getVersion(),
             $style->getMedia()
         );
+
+        // $this->loadStyleAddons($style);
     }
 
-    public static function addInlineStyle($style)
+    protected function addInlineStyle($style)
     {
         wp_add_inline_style(
             $style->getHandle(),
@@ -84,34 +68,10 @@ class StyleLoader implements StyleLoaderInterface
         );
     }
 
-    public static function createStyleTag(StyleInterface $style): string
-    {
-        return Html::tag('link', [
-            'rel' => 'stylesheet',
-            'id' => static::getIdAttribute($style),
-            'href' => static::getHrefAttribute($style),
-            'media' => $style->getMedia(),
-            'hreflang' => $style->getHrefLang(),
-            'title' => $style->getTitle(),
-            'disabled' => $style->isDisabled(),
-            'crossorigin' => $style->getCrossorigin(),
-        ] + $style->getAttributes()) . "\n";
-    }
-
-    public static function mergeStyleTag(string $tag, StyleInterface $style): string
-    {
-        return static::createStyleTag($style);
-    }
-
-    protected static function getIdAttribute(StyleInterface $style): string
-    {
-        return "{$style->getHandle()}-css";
-    }
-
-    public static function getHrefAttribute(StyleInterface $style): string
-    {
-        return null !== $style->getVersion()
-            ? "{$style->getSrc()}?ver={$style->getVersion()}"
-            : $style->getSrc();
-    }
+    // protected function loadStyleAddons(StyleInterface $style)
+    // {
+    //     if ($style->hasInlineAfter()) {
+    //         $this->addInlineStyle($style->getInlineAfter());
+    //     }
+    // }
 }

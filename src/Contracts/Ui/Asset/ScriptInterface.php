@@ -20,7 +20,11 @@ interface ScriptInterface extends AssetInterface
 
     public function getType(): ?string;
 
-    public function getLocalization(): ?ScriptLocalizationInterface;
+    // public function getLocalizations(): ?ScriptLocalizationCollectionInterface;
 
-    public function hasLocalization(): bool;
+    // public function hasLocalizations(): bool;
+
+    // public function getInlineSupport(): ?InlineScriptCollectionInterface;
+
+    // public function hasInlineSupport(): bool;
 }
