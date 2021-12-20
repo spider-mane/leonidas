@@ -43,8 +43,8 @@
     "symfony/polyfill-php81": "^1.23",
     "symfony/string": "^5.4",
     "twig/twig": "^2.0",
+    "webtheory/config": "@stable",
     "webtheory/facade": "@stable",
-    "webtheory/guctilitybelt": "@stable",
     "webtheory/html": "@stable",
     "webtheory/saveyour": "@stable"
   },
@@ -84,7 +84,7 @@
     "webtheory/exterminate": "@stable",
     "webtheory/wp-cli-util": "@stable",
     "webtheory/wp-test": "@stable",
-    "wp-cli/wp-cli-bundle": "*",
+    "wp-cli/wp-cli-bundle": "@stable",
     "wpackagist-plugin/wp-native-php-sessions": "^1.2"
   },
   "autoload": {

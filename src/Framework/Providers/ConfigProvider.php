@@ -3,10 +3,10 @@
 namespace Leonidas\Framework\Providers;
 
 use Leonidas\Contracts\Container\StaticProviderInterface;
-use Leonidas\Library\Core\Config\Config;
-use Noodlehaus\ConfigInterface;
 use Noodlehaus\Parser\ParserInterface;
 use Psr\Container\ContainerInterface;
+use WebTheory\Config\Config;
+use WebTheory\Config\Interfaces\ConfigInterface;
 
 class ConfigProvider implements StaticProviderInterface
 {

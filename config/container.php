@@ -1,6 +1,6 @@
 <?php
 
-use Leonidas\Library\Core\Config\ConfigReflector;
+use WebTheory\Config\Deferred\Reflection;
 
 return [
 
@@ -10,14 +10,14 @@ return [
         [
             'id' => Twig\Environment::class,
             'provider' => Leonidas\Framework\Providers\TwigProvider::class,
-            'args' => ConfigReflector::get('twig'),
+            'args' => Reflection::get('twig'),
             'shared' => true,
             'tags' => ['twig', 'template', 'view']
         ],
         [
             'id' => Leonidas\Library\Admin\Loaders\AdminNoticeCollectionLoaderInterface::class,
             'provider' => Leonidas\Framework\Providers\AdminNoticeCollectionLoaderProvider::class,
-            'args' => ConfigReflector::map([
+            'args' => Reflection::map([
                 'prefix' => 'plugin.slug'
             ]),
             'shared' => true,
