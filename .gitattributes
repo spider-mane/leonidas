@@ -5,8 +5,7 @@
 .gitkeep                        export-ignore
 /.circleci/                     export-ignore
 /.editorconfig                  export-ignore
-/.env                           export-ignore
-/.env.*                         export-ignore
+/.env*                          export-ignore
 /.gitattributes                 export-ignore
 /.github/                       export-ignore
 /.gitignore                     export-ignore
