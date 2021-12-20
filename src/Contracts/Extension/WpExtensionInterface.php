@@ -60,17 +60,17 @@ interface WpExtensionInterface extends ContainerInterface
     /**
      * Get a directory relative to the base path
      */
-    public function relPath(?string $file): ?string;
+    public function relPath(?string $file = null): ?string;
 
     /**
      * Get the absolute path of a file
      */
-    public function absPath(?string $file): ?string;
+    public function absPath(?string $file = null): ?string;
 
     /**
      * Return a url from the root url
      */
-    public function url(?string $route): string;
+    public function url(?string $route = null): string;
 
     /**
      * Return the url for the requested asset
