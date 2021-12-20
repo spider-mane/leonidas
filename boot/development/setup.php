@@ -2,26 +2,17 @@
 
 use Dotenv\Dotenv;
 use Env\Env;
-use WebTheory\Debug\DebugHelper;
+use WebTheory\Exterminate\Exterminator;
 use WebTheory\GuctilityBelt\Config;
 
 $root = dirname(__DIR__, 2);
 
 require_once "$root/vendor/autoload.php";
 
-/**
- * Capture environment variables from .env file
- */
 Dotenv::createUnsafeImmutable($root)->load();
 
-/**
- * Establish that plugin is in a development environment via constant
- */
 define('LEONIDAS_DEVELOPMENT', true);
 
-/**
- * Define global development variables
- */
 $debug = Env::get('DEBUG_ENABLE');
 $config = new Config("$root/config/development");
 $errorLog = realpath($root . '/' . $config->get('debug.error_log.file'));
@@ -30,10 +21,7 @@ $linkFormat = $config->get("debug.file_link.formats.{$editor}")
     ?: ini_get('xdebug.file_link_format')
     ?: get_cfg_var('xdebug.file_link_format');
 
-/**
- * Define debug settings
- */
-DebugHelper::init([
+Exterminator::init([
 
     'ini' => [
         'error_reporting' => E_ALL,

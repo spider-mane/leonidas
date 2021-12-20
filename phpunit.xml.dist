@@ -39,10 +39,6 @@
       <directory>tests/Suites/Integration</directory>
     </testsuite>
 
-    <testsuite name="extension">
-      <directory>tests/Suites/Extension</directory>
-    </testsuite>
-
     <!-- Functional Testing -->
     <testsuite name="functional">
       <directory>tests/Suites/Functional</directory>
@@ -75,11 +71,6 @@
     <testdoxXml outputFile="build/phpunit/logs/testdox.xml"/>
     <text outputFile="build/phpunit/logs/logfile.txt"/>
   </logging>
-
-  <!-- Extentions -->
-  <!-- <extensions>
-    <extension class="Tests\Ext\WpLoader"></extension>
-  </extensions> -->
 
   <!-- Php -->
   <php>

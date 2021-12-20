@@ -43,9 +43,9 @@
     "symfony/polyfill-php81": "^1.23",
     "symfony/string": "^5.4",
     "twig/twig": "^2.0",
-    "webtheory/guctilitybelt": "^0.2.0",
-    "webtheory/html": "^0.2.0",
-    "webtheory/saveyour": "^0.2.5"
+    "webtheory/guctilitybelt": "@stable",
+    "webtheory/html": "@stable",
+    "webtheory/saveyour": "@stable"
   },
   "require-dev": {
     "10up/wp_mock": "0.4.2",
@@ -80,6 +80,9 @@
     "symfony/var-dumper": "^5.3",
     "symfony/yaml": "^5.3",
     "vlucas/phpdotenv": "^5.3",
+    "webtheory/exterminate": "@stable",
+    "webtheory/wp-cli-util": "@stable",
+    "webtheory/wp-test": "@stable",
     "wp-cli/wp-cli-bundle": "*",
     "wpackagist-plugin/wp-native-php-sessions": "^1.2"
   },
@@ -90,15 +93,8 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "Tests\\": "tests/",
-      "WebTheory\\Debug\\": "packages/debug/src",
-      "WebTheory\\WpDev\\": "packages/wp-dev/src",
-      "WebTheory\\WpTest\\": "packages/wp-test/src",
-      "WebTheory\\WpCliUtil\\": "packages/wp-cli-util/src"
-    },
-    "files": [
-      "packages/wp-dev/src/wp-dmc.php"
-    ]
+      "Tests\\": "tests/"
+    }
   },
   "scripts": {
     "bench": "vendor/bin/phpbench",

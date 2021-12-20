@@ -8,7 +8,7 @@ use Leonidas\Library\Core\Asset\ScriptLoader;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Prophecy\ObjectProphecy;
 use Psr\Http\Message\ServerRequestInterface;
-use Tests\Ext\WpLoadedTestCase;
+use WebTheory\WpTest\WpLoadedTestCase;
 
 class ScriptLoaderTest extends WpLoadedTestCase
 {
