@@ -2,13 +2,13 @@
 
 namespace Leonidas\Library\Admin\Proxies;
 
-use Leonidas\Library\Core\Proxies\BaseStaticObjectProxy;
+use Leonidas\Library\Core\Facades\_Facade;
 use Twig\Environment;
 
 /** @method static string render($name, array $context = []) */
-class Twig extends BaseStaticObjectProxy
+class Twig extends _Facade
 {
-    public static function _getObjectRoot()
+    protected static function _getFacadeAccessor()
     {
         return Environment::class;
     }

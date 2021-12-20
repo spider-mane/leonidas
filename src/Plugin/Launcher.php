@@ -7,7 +7,7 @@ use Leonidas\Enum\ExtensionType;
 use Leonidas\Framework\Exceptions\InvalidCallToPluginMethodException;
 use Leonidas\Framework\ModuleInitializer;
 use Leonidas\Framework\WpExtension;
-use Leonidas\Library\Core\Proxies\BaseStaticObjectProxy;
+use Leonidas\Library\Core\Facades\_Facade;
 use Psr\Container\ContainerInterface;
 
 final class Launcher
@@ -99,7 +99,7 @@ final class Launcher
 
     private function bindContainerToBaseProxy(): Launcher
     {
-        BaseStaticObjectProxy::_setProxyContainer($this->container);
+        _Facade::_setFacadeContainer($this->container);
 
         return $this;
     }
