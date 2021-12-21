@@ -20,7 +20,7 @@
     "captainhook/captainhook": "^5.10",
     "guzzlehttp/psr7": "^1.6",
     "hassankhan/config": "^2.1",
-    "league/container": "^3.3",
+    "league/container": "^4.2",
     "league/flysystem": "^2.0",
     "myclabs/php-enum": "^1.8",
     "nesbot/carbon": "^2.54",

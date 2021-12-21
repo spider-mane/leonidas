@@ -13,10 +13,10 @@ abstract class _Facade
     /**
      * @var Container
      */
-    protected static ContainerInterface $container;
+    protected static $container;
 
     protected function _updateContainer(string $name, object $instance): void
     {
-        static::$container->share($name, $instance);
+        static::$container->addShared($name, $instance);
     }
 }
