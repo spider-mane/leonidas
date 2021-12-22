@@ -9,7 +9,9 @@
 use Env\Env;
 use WebTheory\WpCliUtil\WpCliUtil;
 
-require_once __DIR__ . '/boot/development/runtime.php';
+call_user_func(function () {
+    require_once __DIR__ . '/boot/development/runtime.php';
+});
 
 define('DB_NAME', Env::get('DB_NAME'));
 define('DB_USER', Env::get('DB_USER'));
