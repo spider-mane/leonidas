@@ -1,8 +1,8 @@
 <?php
 
 use Dotenv\Dotenv;
+use WebTheory\Config\Config;
 use WebTheory\Exterminate\Exterminator;
-use WebTheory\GuctilityBelt\Config;
 
 $root = dirname(__DIR__, 2);
 

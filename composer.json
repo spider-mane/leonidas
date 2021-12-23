@@ -45,7 +45,8 @@
     "webtheory/config": "@stable",
     "webtheory/facade": "@stable",
     "webtheory/html": "@stable",
-    "webtheory/saveyour": "@stable"
+    "webtheory/saveyour": "@stable",
+    "webtheory/wpdmc": "@stable"
   },
   "require-dev": {
     "10up/wp_mock": "0.4.2",
@@ -82,7 +83,7 @@
     "vlucas/phpdotenv": "^5.3",
     "webtheory/exterminate": "@stable",
     "webtheory/wp-cli-util": "@stable",
-    "webtheory/wp-test": "@stable",
+    "webtheory/wpunit": "@stable",
     "wp-cli/wp-cli-bundle": "@stable",
     "wpackagist-plugin/wp-native-php-sessions": "@stable",
     "wpackagist-theme/twentytwentyone": "@stable"
