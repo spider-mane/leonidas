@@ -10,12 +10,12 @@ class Theme
         'search', 'single', 'singular', 'tag', 'taxonomy'
     ];
 
-    public static function path(string $path): string
+    public static function path(string $path = ''): string
     {
         return get_theme_file_path($path);
     }
 
-    public static function url(string $path): string
+    public static function url(string $path = ''): string
     {
         return get_theme_file_uri($path);
     }
