@@ -24,7 +24,7 @@ abstract class AbstractPublicAssetProviderModule extends AbstractModule implemen
         $this->targetStyleLoaderTagHook();
     }
 
-    public function doWpEnqueueScriptAction(): void
+    public function doWpEnqueueScriptsAction(): void
     {
         $this->provisionAssets();
     }
