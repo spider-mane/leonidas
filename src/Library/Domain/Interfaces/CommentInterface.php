@@ -1,6 +1,6 @@
 <?php
 
-namespace Leonidas\Library\Wp\Domain\Interfaces;
+namespace Leonidas\Library\Domain\Interfaces;
 
 interface CommentInterface
 {

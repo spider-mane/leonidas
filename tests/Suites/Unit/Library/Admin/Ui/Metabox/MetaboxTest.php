@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Suite\Unit\Library\Admin\Ui\Metabox;
+namespace Tests\Suites\Unit\Library\Admin\Ui\Metabox;
 
 use Leonidas\Contracts\Admin\Components\MetaboxInterface;
 use Leonidas\Contracts\Admin\Components\MetaboxLayoutInterface;

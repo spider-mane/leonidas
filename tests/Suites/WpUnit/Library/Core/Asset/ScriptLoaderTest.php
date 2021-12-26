@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\WpUnit\Library\Core\Asset;
+namespace Tests\Suites\WpUnit\Library\Core\Asset;
 
 use Leonidas\Contracts\Ui\Asset\ScriptCollectionInterface;
 use Leonidas\Contracts\Ui\Asset\ScriptInterface;

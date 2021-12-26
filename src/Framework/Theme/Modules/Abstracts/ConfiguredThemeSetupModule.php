@@ -1,6 +1,6 @@
 <?php
 
-namespace Leonidas\Framework\Theme\Modules;
+namespace Leonidas\Framework\Theme\Modules\Abstracts;
 
 use Leonidas\Framework\Theme\Modules\Abstracts\ThemeSetupModule;
 

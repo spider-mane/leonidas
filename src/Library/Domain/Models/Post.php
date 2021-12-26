@@ -4,8 +4,8 @@ namespace Leonidas\Library\Domain\Models;
 
 use DateTimeInterface;
 use Exception;
-use Leonidas\Library\Wp\Domain\Interfaces\PostDataProviderInterface;
-use Leonidas\Library\Wp\Domain\Interfaces\PostInterface;
+use Leonidas\Library\Domain\Interfaces\PostDataProviderInterface;
+use Leonidas\Library\Domain\Interfaces\PostInterface;
 use Library\Wp\Domain\Traits\DefersResolutionTrait;
 
 class Post implements PostInterface

@@ -1,6 +1,6 @@
 <?php
 
-namespace Leonidas\Library\Admin\Table;
+namespace Leonidas\Library\Admin\Table\Components;
 
 use Leonidas\Contracts\Admin\Components\ColumnRowActionInterface;
 use Leonidas\Traits\CanBeRestrictedTrait;

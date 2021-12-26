@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Suite\Unit\Library\Core\Asset;
+namespace Tests\Suites\Unit\Library\Core\Asset;
 
 use Leonidas\Contracts\Http\ConstrainerCollectionInterface;
 use Leonidas\Library\Core\Asset\Style;

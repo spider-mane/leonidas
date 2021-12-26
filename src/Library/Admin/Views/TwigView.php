@@ -1,6 +1,6 @@
 <?php
 
-namespace Leonidas\Library\Admin;
+namespace Leonidas\Library\Admin\Views;
 
 use Leonidas\Contracts\Ui\ViewInterface;
 use Leonidas\Library\Admin\Views\AbstractTwigView;

@@ -11,7 +11,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use WebTheory\Saveyour\Contracts\FormProcessingCacheInterface;
 use WP_Post_Type;
 
-class PostMetaboxFormSubmissionManager extends AbstractWpAdminFormSubmissionManager
+class PostMetaBoxFormSubmissionManager extends AbstractWpAdminFormSubmissionManager
 {
     use MaybeHandlesCsrfTrait;
 
