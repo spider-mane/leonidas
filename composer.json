@@ -15,8 +15,10 @@
       "url": "https://wpackagist.org"
     }
   ],
+  "minimum-stability": "dev",
+  "prefer-stable": true,
   "require": {
-    "php": "^7.4 | ^8.0",
+    "php": "^7.4 || ^8.0",
     "captainhook/captainhook": "^5.10",
     "guzzlehttp/psr7": "^1.6",
     "hassankhan/config": "^2.1",
@@ -53,7 +55,7 @@
     "brain/monkey": "^2.6",
     "brainmaestro/composer-git-hooks": "^2.8",
     "commerceguys/addressing": "^1.0",
-    "composer/installers": "^2.0",
+    "composer/installers": "^1.0 || ^2.0",
     "egulias/email-validator": "^2.1",
     "fakerphp/faker": "^1.16",
     "filp/whoops": "^2.5",
@@ -115,19 +117,25 @@
     "test:wpunit": "vendor/bin/phpunit --testsuite wpunit",
     "watch": "phpunit-watcher watch",
     "wp": "vendor/bin/wp",
+    "wp:init": [
+      "@wp core download",
+      "@link"
+    ],
     "wp:refresh": [
       "@wp db export",
       "@wp db clean --yes",
       "@wp core install"
-    ],
-    "setup": [
-      "@wp core download",
-      "@link"
-    ],
-    "post-root-package-install": [
-      "@env",
-      "@setup"
     ]
+  },
+  "config": {
+    "optimize-autoloader": true,
+    "apcu-autoloader": true,
+    "sort-packages": true,
+    "process-timeout": 0,
+    "allow-plugins": {
+      "composer/installers": true,
+      "koodimonni/composer-dropin-installer": true
+    }
   },
   "extra": {
     "installer-paths": {
@@ -145,16 +153,7 @@
       ]
     },
     "dropin-paths": {
-      "wordpress/wp-content/": [
-        "package:0aaemnnosttv/wp-sqlite-db:src/db.php"
-      ]
-    },
-    "hooks": {}
-  },
-  "config": {
-    "sort-packages": true,
-    "process-timeout": 0
-  },
-  "minimum-stability": "dev",
-  "prefer-stable": true
+      "wordpress/wp-content/": []
+    }
+  }
 }
