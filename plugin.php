@@ -27,17 +27,6 @@
  * Domain Path: /languages
  */
 
-use Leonidas\Framework\Helpers\Plugin;
-use Leonidas\Plugin\Launcher;
-
 defined('ABSPATH') || exit;
 
-call_user_func(function () {
-    require __DIR__ . '/boot/init.php';
-
-    Launcher::init(
-        Plugin::base(__FILE__),
-        Plugin::path(__FILE__),
-        Plugin::url(__FILE__),
-    );
-});
+Leonidas\Plugin\Launcher::init(__FILE__);

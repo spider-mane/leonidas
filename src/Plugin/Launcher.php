@@ -6,6 +6,7 @@ use Leonidas\Contracts\Extension\WpExtensionInterface;
 use Leonidas\Enum\ExtensionType;
 use Leonidas\Framework\Exceptions\InvalidCallToPluginMethodException;
 use Leonidas\Framework\ModuleInitializer;
+use Leonidas\Framework\Plugin\Plugin;
 use Leonidas\Framework\WpExtension;
 use Leonidas\Library\Core\Facades\_Facade;
 use Psr\Container\ContainerInterface;
@@ -93,7 +94,7 @@ final class Launcher
             ->requireFiles()
             ->initializeModules()
             ->getFurtherAssistance()
-            ->launchLeonidas()
+            ->bootLeonidas()
             ->registerLoadedHook();
     }
 
@@ -125,7 +126,7 @@ final class Launcher
         return $this;
     }
 
-    private function launchLeonidas(): Launcher
+    private function bootLeonidas(): Launcher
     {
         Leonidas::launch($this->extension);
 
@@ -142,10 +143,10 @@ final class Launcher
         return $this->extension->config('app.modules');
     }
 
-    public static function init(string $base, string $path, string $url): void
+    public static function init(string $base): void
     {
         if (!self::isLoaded()) {
-            self::reallyInit($base, $path, $url);
+            self::reallyInit($base);
         } else {
             self::throwInvalidCallException(__METHOD__);
         }
@@ -156,10 +157,22 @@ final class Launcher
         return isset(self::$instance) && (self::$instance instanceof self);
     }
 
-    private static function reallyInit(string $base, string $path, string $url): void
+    private static function reallyInit(string $base): void
     {
-        self::$instance = new self($base, $path, $url);
+        self::preLaunch($base);
+
+        self::$instance = new self(
+            Plugin::base($base),
+            Plugin::path($base),
+            Plugin::url($base),
+        );
+
         static::$instance->reallyReallyInit();
+    }
+
+    private static function preLaunch(string $base)
+    {
+        require dirname($base) . '/boot/init.php';
     }
 
     private static function throwInvalidCallException(callable $method): void

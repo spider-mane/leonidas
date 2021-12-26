@@ -1,6 +1,6 @@
 <?php
 
-namespace Leonidas\Framework\Helpers;
+namespace Leonidas\Framework\Theme;
 
 class Theme
 {
