@@ -3,7 +3,7 @@
 return [
 
     'modules' => [
-        Leonidas\Plugin\Modules\AdminAssets::class,
+        // Leonidas\Plugin\Modules\AdminAssets::class,
     ],
 
     'bootstrap' => [],
