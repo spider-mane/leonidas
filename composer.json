@@ -115,7 +115,7 @@
     "test:integration": "vendor/bin/phpunit --testsuite integration",
     "test:unit": "vendor/bin/phpunit --testsuite unit",
     "test:wpunit": "vendor/bin/phpunit --testsuite wpunit",
-    "watch": "phpunit-watcher watch",
+    "watch": "vendor/bin/phpunit-watcher watch",
     "wp": "vendor/bin/wp",
     "build": [
       "@fix",

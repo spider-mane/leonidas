@@ -12,7 +12,7 @@ core download:
   skip-content: true
 
 core install:
-  url: http://leonidas.test
+  url: https://leonidas.test
   title: Leonidas
   admin_user: admin
   admin_password: password
