@@ -117,6 +117,12 @@
     "test:wpunit": "vendor/bin/phpunit --testsuite wpunit",
     "watch": "phpunit-watcher watch",
     "wp": "vendor/bin/wp",
+    "build": [
+      "@fix",
+      "@check",
+      "@inspect",
+      "@test"
+    ],
     "wp:init": [
       "@wp core download",
       "@link"
@@ -134,6 +140,7 @@
     "process-timeout": 0,
     "allow-plugins": {
       "composer/installers": true,
+      "composer/package-versions-deprecated": true,
       "koodimonni/composer-dropin-installer": true
     }
   },
@@ -153,7 +160,8 @@
       ]
     },
     "dropin-paths": {
-      "wordpress/wp-content/": []
+      "wordpress/wp-content/": [],
+      "wordpress/wp-content/mu-plugins": []
     }
   }
 }

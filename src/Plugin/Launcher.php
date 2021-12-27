@@ -159,8 +159,6 @@ final class Launcher
 
     private static function reallyInit(string $base): void
     {
-        self::preLaunch($base);
-
         self::$instance = new self(
             Plugin::base($base),
             Plugin::path($base),
@@ -168,11 +166,6 @@ final class Launcher
         );
 
         static::$instance->reallyReallyInit();
-    }
-
-    private static function preLaunch(string $base)
-    {
-        require dirname($base) . '/boot/init.php';
     }
 
     private static function throwInvalidCallException(callable $method): void
