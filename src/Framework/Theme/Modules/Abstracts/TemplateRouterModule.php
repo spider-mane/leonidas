@@ -5,7 +5,7 @@ namespace Leonidas\Framework\Theme\Modules\Abstracts;
 use Closure;
 use Leonidas\Contracts\Extension\ModuleInterface;
 use Leonidas\Framework\Modules\AbstractModule;
-use Leonidas\Framework\Theme\Library\Theme;
+use Leonidas\Framework\Theme\Theme;
 
 abstract class TemplateRouterModule extends AbstractModule implements ModuleInterface
 {
