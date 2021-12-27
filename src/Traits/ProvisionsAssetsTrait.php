@@ -47,6 +47,10 @@ trait ProvisionsAssetsTrait
 
     protected ?ScriptLocalizationCollectionInterface $scriptLocalizations = null;
 
+    public const ASSET_DIR_CASCADE = [
+        'view.assets.path', 'view.assets', 'theme.assets'
+    ];
+
     protected function getScriptLoader(): ScriptLoaderInterface
     {
         return $this->scriptLoader;
@@ -188,7 +192,9 @@ trait ProvisionsAssetsTrait
 
     protected function asset(?string $asset = null): string
     {
-        return $this->extension->asset($asset);
+        return $this->extension->url(
+            $this->configCascade(static::ASSET_DIR_CASCADE) . $asset
+        );
     }
 
     protected function version(?string $version = null): string

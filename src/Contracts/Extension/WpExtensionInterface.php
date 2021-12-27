@@ -38,11 +38,6 @@ interface WpExtensionInterface extends ContainerInterface
     public function getType(): string;
 
     /**
-     * Get the plugin basename
-     */
-    public function getBase(): string;
-
-    /**
      * Get the base url of the extension
      */
     public function getUrl(): string;
@@ -71,11 +66,6 @@ interface WpExtensionInterface extends ContainerInterface
      * Return a url from the root url
      */
     public function url(?string $route = null): string;
-
-    /**
-     * Return the url for the requested asset
-     */
-    public function asset(?string $asset = null): ?string;
 
     /**
      * Return a string that includes the extension prefix followed by the passed

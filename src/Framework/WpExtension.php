@@ -35,24 +35,12 @@ class WpExtension implements WpExtensionInterface
     /**
      * @var string
      */
-    protected $base;
-
-    /**
-     * @var string
-     */
     protected $path;
 
     /**
      * @var string
      */
     protected $url;
-
-    /**
-     * Asset base directory
-     *
-     * @var null|string
-     */
-    protected $assetUrl;
 
     /**
      * @var string
@@ -69,40 +57,28 @@ class WpExtension implements WpExtensionInterface
      */
     protected $isInDev;
 
-    /**
-     * @param string $name
-     * @param string $path
-     * @param string $url
-     * @param string $prefix
-     * @param string $type
-     * @param ContainerInterface $container
-     */
     public function __construct(
         string $name,
         string $version,
         string $slug,
         string $prefix,
         string $description,
-        string $base,
         string $path,
         string $url,
         string $type,
         ContainerInterface $container,
-        bool $isInDev,
-        ?string $assets = null
+        bool $isInDev
     ) {
         $this->name = $name;
         $this->version = $version;
         $this->slug = $slug;
         $this->prefix = $prefix;
         $this->description = $description;
-        $this->base = $base;
         $this->path = $path;
         $this->url = $url;
         $this->type = $type;
         $this->container = $container;
         $this->isInDev = $isInDev;
-        $assets && $this->assetUrl = $this->url . $assets;
     }
 
     /**
@@ -151,16 +127,6 @@ class WpExtension implements WpExtensionInterface
     }
 
     /**
-     * Get the value of base
-     *
-     * @return string
-     */
-    public function getBase(): string
-    {
-        return $this->base;
-    }
-
-    /**
      * Get the value of path
      *
      * @return string
@@ -178,16 +144,6 @@ class WpExtension implements WpExtensionInterface
     public function getUrl(): string
     {
         return $this->url;
-    }
-
-    /**
-     * Get the value of assetDir
-     *
-     * @return string
-     */
-    protected function getAssetDir(): string
-    {
-        return $this->assetUrl;
     }
 
     /**
@@ -243,7 +199,7 @@ class WpExtension implements WpExtensionInterface
      */
     public function relPath(?string $file = null): ?string
     {
-        return $this->getBase() . $file;
+        return null;
     }
 
     /**
@@ -260,14 +216,6 @@ class WpExtension implements WpExtensionInterface
     public function url(?string $route = null): string
     {
         return $this->getUrl() . $route;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function asset(?string $asset = null): string
-    {
-        return $this->getAssetDir() . $asset;
     }
 
     /**
@@ -293,13 +241,11 @@ class WpExtension implements WpExtensionInterface
             $args['textdomain'] ?? $args['slug'],
             $args['prefix'],
             $args['description'],
-            $args['base'],
             $args['path'],
             $args['url'],
             $args['type'],
             $args['container'],
             $args['dev'] ?? false,
-            $args['assets'] ?? null
         );
     }
 }
