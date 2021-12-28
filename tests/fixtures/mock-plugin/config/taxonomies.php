@@ -11,7 +11,7 @@ return [
         'meta_box_cb' => false,
         'public' => true,
         'publicly_queryable' => true,
-        'rest_base' => 'backalley-delivery-platforms',
+        'rest_base' => 'leonidas-delivery-platforms',
         'show_admin_column' => true,
         'show_in_menu' => true,
         'show_in_nav_menus' => true,

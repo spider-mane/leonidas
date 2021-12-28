@@ -22,7 +22,7 @@ class MetaboxLayoutView implements ViewInterface
 
         $html = '';
         $html .= $context['auth_field'];
-        $html .= $this->open('div', ['class' => 'backalley-wrap']);
+        $html .= $this->open('div', ['class' => 'leonidas-wrap']);
 
         $count = count($components);
 

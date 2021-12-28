@@ -15,13 +15,13 @@ if (window.pagenow === wpPages.editPostLocation) {
 
     // Remove Platfrom url input from DOM and thusly POST
     elements.platformUrlContainer.addEventListener('click', function (e) {
-        if (e.target.dataset.backalleyLocationPlatform) {
+        if (e.target.dataset.leonidasLocationPlatform) {
             e.preventDefault();
 
             let confirmationMessage = "Are you sure you want to remove this platform? If you save after removing it, the url associated with it for this location will be permanantly deleted.";
 
             if (window.confirm(confirmationMessage)) {
-                document.getElementById(e.target.dataset.backalleyLocationPlatform).remove();
+                document.getElementById(e.target.dataset.leonidasLocationPlatform).remove();
             }
         }
     });
