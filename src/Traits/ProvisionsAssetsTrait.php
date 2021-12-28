@@ -188,11 +188,16 @@ trait ProvisionsAssetsTrait
 
     protected function asset(?string $asset = null): string
     {
-        $cascade = [
+        return $this->extension->url(
+            $this->configCascade($this->assetsConfigCascade()) . $asset
+        );
+    }
+
+    protected function assetsConfigCascade(): array
+    {
+        return [
             'view.assets.path', 'view.assets', 'theme.assets'
         ];
-
-        return $this->extension->url($this->configCascade($cascade) . $asset);
     }
 
     protected function version(?string $version = null): string
