@@ -135,7 +135,7 @@
   },
   "config": {
     "optimize-autoloader": true,
-    "apcu-autoloader": true,
+    "apcu-autoloader": false,
     "sort-packages": true,
     "process-timeout": 0,
     "allow-plugins": {
