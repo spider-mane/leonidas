@@ -21,8 +21,8 @@ abstract class AbstractBlockEditorAssetProviderModule extends AbstractModule imp
     public function hook(): void
     {
         $this->targetEnqueueBlockEditorAssetsHook();
-        $this->targetScriptLoaderTagHook();
-        $this->targetStyleLoaderTagHook();
+        // $this->targetScriptLoaderTagHook();
+        // $this->targetStyleLoaderTagHook();
     }
 
     protected function doAdminEnqueueScriptsAction(): void

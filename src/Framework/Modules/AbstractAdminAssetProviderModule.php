@@ -20,8 +20,8 @@ abstract class AbstractAdminAssetProviderModule extends AbstractModule implement
     public function hook(): void
     {
         $this->targetAdminEnqueueScriptsHook();
-        $this->targetScriptLoaderTagHook();
-        $this->targetStyleLoaderTagHook();
+        // $this->targetScriptLoaderTagHook();
+        // $this->targetStyleLoaderTagHook();
     }
 
     protected function doAdminEnqueueScriptsAction(string $hookSuffix): void

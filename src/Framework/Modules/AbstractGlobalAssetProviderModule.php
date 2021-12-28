@@ -46,8 +46,8 @@ abstract class AbstractGlobalAssetProviderModule extends AbstractModule implemen
         $this->targetAdminEnqueueScriptsHook();
         $this->targetLoginEnqueueScriptsHook();
         $this->targetWpEnqueueScriptsHook();
-        $this->targetScriptLoaderTagHook();
-        $this->targetStyleLoaderTagHook();
+        // $this->targetScriptLoaderTagHook();
+        // $this->targetStyleLoaderTagHook();
     }
 
     protected function doAdminEnqueueScriptsAction(string $hookSuffix): void

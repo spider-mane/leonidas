@@ -20,8 +20,8 @@ abstract class AbstractLoginAssetProviderModule extends AbstractModule implement
     public function hook(): void
     {
         $this->targetLoginEnqueueScriptsHook();
-        $this->targetScriptLoaderTagHook();
-        $this->targetStyleLoaderTagHook();
+        // $this->targetScriptLoaderTagHook();
+        // $this->targetStyleLoaderTagHook();
     }
 
     protected function doLoginEnqueueScriptsAction(): void

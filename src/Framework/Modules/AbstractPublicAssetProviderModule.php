@@ -20,8 +20,8 @@ abstract class AbstractPublicAssetProviderModule extends AbstractModule implemen
     public function hook(): void
     {
         $this->targetWpEnqueueScriptsHook();
-        $this->targetScriptLoaderTagHook();
-        $this->targetStyleLoaderTagHook();
+        // $this->targetScriptLoaderTagHook();
+        // $this->targetStyleLoaderTagHook();
     }
 
     public function doWpEnqueueScriptsAction(): void
