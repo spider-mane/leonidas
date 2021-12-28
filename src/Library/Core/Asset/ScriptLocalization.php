@@ -4,6 +4,7 @@ namespace Leonidas\Library\Core\Asset;
 
 use Leonidas\Contracts\Http\ConstrainerCollectionInterface;
 use Leonidas\Contracts\Ui\Asset\ScriptLocalizationInterface;
+use Leonidas\Library\Core\Http\ConstrainerCollection;
 use Psr\Http\Message\ServerRequestInterface;
 
 class ScriptLocalization implements ScriptLocalizationInterface
@@ -26,7 +27,7 @@ class ScriptLocalization implements ScriptLocalizationInterface
         $this->variable = $variable;
         $this->data = $data;
 
-        $constraints && $this->constraints = $constraints;
+        $this->constraints = $constraints ?? new ConstrainerCollection();
     }
 
     public function getHandle(): string

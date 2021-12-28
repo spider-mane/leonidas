@@ -3,6 +3,7 @@
 namespace Leonidas\Library\Core\Asset;
 
 use Leonidas\Contracts\Http\ConstrainerCollectionInterface;
+use Leonidas\Library\Core\Http\ConstrainerCollection;
 use Psr\Http\Message\ServerRequestInterface;
 
 class AbstractInlineAsset
@@ -18,7 +19,7 @@ class AbstractInlineAsset
         $this->handle = $handle;
         $this->code = $code;
 
-        $constraints && $this->constraints = $constraints;
+        $this->constraints = $constraints ?? new ConstrainerCollection();
     }
 
     public function getHandle(): string
