@@ -16,11 +16,9 @@ final class AdminAssets extends AbstractAdminAssetProviderModule implements Modu
     protected function scripts(): ScriptCollectionInterface
     {
         return ScriptCollection::with(
-            ScriptBuilder::inlineFoundationInHeader('@inline:header'),
-            ScriptBuilder::inlineFoundationInFooter('@inline:footer'),
 
             ScriptBuilder::for('leonidas')
-                ->src($this->asset('js/backalley-admin.js'))
+                ->src($this->asset('js/leonidas.js'))
                 ->version($this->version())
                 ->dependencies('jquery')
                 ->inFooter(true)
@@ -30,13 +28,18 @@ final class AdminAssets extends AbstractAdminAssetProviderModule implements Modu
             // 3rd party
             ScriptBuilder::for('saveyour')
                 ->src($this->asset('lib/saveyour/saveyour.js'))
-                ->dependencies('select2', 'trix')
+                ->dependencies('select2', 'choices', 'trix')
                 ->inFooter(true)
                 ->enqueue(true)
                 ->done(),
 
             ScriptBuilder::for('select2')
                 ->src($this->asset('lib/select2/select2.full.min.js'))
+                ->inFooter(true)
+                ->done(),
+
+            ScriptBuilder::for('choices')
+                ->src($this->asset('lib/choices/choices.min.js'))
                 ->inFooter(true)
                 ->done(),
 
@@ -50,10 +53,9 @@ final class AdminAssets extends AbstractAdminAssetProviderModule implements Modu
     protected function styles(): StyleCollectionInterface
     {
         return StyleCollection::with(
-            StyleBuilder::inlineFoundation('@inline'),
 
             StyleBuilder::for('leonidas')
-                ->src($this->asset('css/backalley-admin-styles.css'))
+                ->src($this->asset('css/leonidas.css'))
                 ->version($this->version())
                 ->enqueue(true)
                 ->done(),
@@ -61,6 +63,11 @@ final class AdminAssets extends AbstractAdminAssetProviderModule implements Modu
             // 3rd party
             StyleBuilder::for('select2')
                 ->src($this->asset('lib/select2/select2.min.css'))
+                ->enqueue(true)
+                ->done(),
+
+            StyleBuilder::for('choices')
+                ->src($this->asset('lib/choices/choices.min.css'))
                 ->enqueue(true)
                 ->done(),
 
