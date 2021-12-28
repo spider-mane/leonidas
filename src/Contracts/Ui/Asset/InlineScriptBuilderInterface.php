@@ -6,11 +6,11 @@ use Leonidas\Contracts\Http\ConstrainerCollectionInterface;
 
 interface InlineScriptBuilderInterface
 {
-    public function handle(string $handle): InlineScriptBuilderInterface;
+    public function handle(string $handle);
 
-    public function code(string $code): InlineScriptBuilderInterface;
+    public function code(string $code);
 
-    public function position(string $position): InlineScriptBuilderInterface;
+    public function position(string $position);
 
     public function constraints(?ConstrainerCollectionInterface $constraints): InlineScriptBuilderInterface;
 
