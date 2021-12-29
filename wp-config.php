@@ -21,7 +21,7 @@ define('DB_CHARSET', Env::get('DB_CHARSET') ?? 'utf8');
 define('DB_COLLATE', Env::get('DB_COLLATE') ?? '');
 
 define('WP_HOME', Env::get('WP_HOME'));
-define('WP_SITE_URL', Env::get('WP_SITE_URL') ?? WP_HOME);
+define('WP_SITEURL', Env::get('WP_SITEURL') ?? WP_HOME);
 
 define('WP_ALLOW_MULTISITE', false);
 
