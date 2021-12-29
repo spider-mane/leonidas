@@ -4,7 +4,6 @@ namespace Leonidas\Library\Core\Asset;
 
 use Leonidas\Contracts\Http\ConstrainerCollectionInterface;
 use Leonidas\Library\Core\Asset\Traits\HasAssetDataTrait;
-use Leonidas\Library\Core\Asset\Traits\SetsAssetDataTrait;
 
 abstract class AbstractAssetBuilder
 {

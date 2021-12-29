@@ -2,7 +2,6 @@
 
 namespace Leonidas\Framework\Modules;
 
-use Dotenv\Util\Str;
 use GuzzleHttp\Psr7\ServerRequest;
 use Leonidas\Contracts\Extension\ModuleInterface;
 use Leonidas\Contracts\Extension\WpExtensionInterface;

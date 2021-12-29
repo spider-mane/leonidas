@@ -4,8 +4,6 @@ namespace Leonidas\Library\Core\Asset;
 
 use Leonidas\Contracts\Ui\Asset\InlineStyleCollectionInterface;
 use Leonidas\Contracts\Ui\Asset\InlineStyleInterface;
-use Leonidas\Contracts\Ui\Asset\StyleCollectionInterface;
-use Leonidas\Contracts\Ui\Asset\StyleInterface;
 
 class InlineStyleCollection implements InlineStyleCollectionInterface
 {

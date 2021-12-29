@@ -3,9 +3,7 @@
 namespace Leonidas\Library\Core\Asset;
 
 use Leonidas\Contracts\Ui\Asset\ScriptInterface;
-use Leonidas\Contracts\Ui\Asset\ScriptLocalizationInterface;
 use Leonidas\Library\Core\Asset\Traits\HasScriptDataTrait;
-use Leonidas\Library\Core\Asset\Traits\SetsScriptDataTrait;
 
 class ScriptBuilder extends AbstractAssetBuilder
 {
@@ -106,6 +104,7 @@ class ScriptBuilder extends AbstractAssetBuilder
 
         return $this;
     }
+
     public function done(): ScriptInterface
     {
         return new Script(

@@ -10,7 +10,6 @@ use Leonidas\Contracts\Ui\Asset\ScriptLoaderInterface;
 use Leonidas\Contracts\Ui\Asset\ScriptLocalizationCollectionInterface;
 use Leonidas\Contracts\Ui\Asset\ScriptLocalizationInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use WebTheory\Html\Html;
 
 class ScriptLoader implements ScriptLoaderInterface
 {

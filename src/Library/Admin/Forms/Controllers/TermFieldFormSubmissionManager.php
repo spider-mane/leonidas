@@ -3,9 +3,9 @@
 namespace Leonidas\Library\Admin\Forms\Controllers;
 
 use GuzzleHttp\Psr7\ServerRequest;
+use Leonidas\Library\Admin\Forms\Validators\CsrfCheck;
 use Leonidas\Library\Admin\Forms\Validators\NoAutosave;
 use Leonidas\Library\Admin\Forms\Validators\Permissions\EditTerm;
-use Leonidas\Library\Admin\Forms\Validators\CsrfCheck;
 use Leonidas\Traits\MaybeHandlesCsrfTrait;
 use WP_Taxonomy;
 

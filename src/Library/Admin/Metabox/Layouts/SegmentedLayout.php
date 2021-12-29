@@ -10,7 +10,6 @@ use Leonidas\Traits\CanBeRestrictedTrait;
 use Leonidas\Traits\MaybeHandlesCsrfTrait;
 use Leonidas\Traits\RendersWithViewTrait;
 use Psr\Http\Message\ServerRequestInterface;
-use Stringable;
 
 class SegmentedLayout implements MetaboxLayoutInterface
 {
@@ -25,7 +24,7 @@ class SegmentedLayout implements MetaboxLayoutInterface
      */
     protected $components = [];
 
-    protected string|Stringable $separator = '<hr>';
+    protected string $separator = '<hr>';
 
     /**
      *

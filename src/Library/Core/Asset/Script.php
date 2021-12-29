@@ -3,12 +3,7 @@
 namespace Leonidas\Library\Core\Asset;
 
 use Leonidas\Contracts\Http\ConstrainerCollectionInterface;
-use Leonidas\Contracts\Ui\Asset\InlineScriptBuilderInterface;
-use Leonidas\Contracts\Ui\Asset\InlineScriptCollectionInterface;
-use Leonidas\Contracts\Ui\Asset\InlineScriptInterface;
 use Leonidas\Contracts\Ui\Asset\ScriptInterface;
-use Leonidas\Contracts\Ui\Asset\ScriptLocalizationCollectionInterface;
-use Leonidas\Contracts\Ui\Asset\ScriptLocalizationInterface;
 use Leonidas\Library\Core\Asset\Traits\HasScriptDataTrait;
 
 class Script extends AbstractAsset implements ScriptInterface

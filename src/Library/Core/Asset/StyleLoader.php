@@ -7,7 +7,6 @@ use Leonidas\Contracts\Ui\Asset\StyleCollectionInterface;
 use Leonidas\Contracts\Ui\Asset\StyleInterface;
 use Leonidas\Contracts\Ui\Asset\StyleLoaderInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use WebTheory\Html\Html;
 
 class StyleLoader implements StyleLoaderInterface
 {

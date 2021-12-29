@@ -58,7 +58,7 @@ class ImageSize implements ImageSizeInterface
 
     public static function create(array $definition): ImageSize
     {
-        return static(
+        return new static(
             $definition['name'],
             $definition['label'],
             $definition['width'],

@@ -2,7 +2,6 @@
 
 namespace Leonidas\Traits;
 
-use Leonidas\Contracts\Extension\WpExtensionInterface;
 use Leonidas\Contracts\Ui\Asset\InlineScriptCollectionInterface;
 use Leonidas\Contracts\Ui\Asset\InlineStyleCollectionInterface;
 use Leonidas\Contracts\Ui\Asset\ScriptCollectionInterface;
@@ -14,15 +13,10 @@ use Leonidas\Contracts\Ui\Asset\StyleLoaderInterface;
 use Leonidas\Contracts\Ui\Asset\StylePrinterInterface;
 use Leonidas\Framework\Modules\Traits\AbstractModuleTraitTrait;
 use Leonidas\Framework\Modules\Traits\MustBeInitiatedTrait;
-use Leonidas\Library\Core\Asset\InlineScriptCollection;
-use Leonidas\Library\Core\Asset\InlineStyleCollection;
-use Leonidas\Library\Core\Asset\ScriptCollection;
 use Leonidas\Library\Core\Asset\ScriptLoader;
 use Leonidas\Library\Core\Asset\ScriptPrinter;
-use Leonidas\Library\Core\Asset\StyleCollection;
 use Leonidas\Library\Core\Asset\StyleLoader;
 use Leonidas\Library\Core\Asset\StylePrinter;
-use Psr\Http\Message\ServerRequestInterface;
 
 trait ProvisionsAssetsTrait
 {
@@ -196,7 +190,7 @@ trait ProvisionsAssetsTrait
     protected function assetsConfigCascade(): array
     {
         return [
-            'view.assets.path', 'view.assets', 'theme.assets'
+            'view.assets.path', 'view.assets', 'theme.assets',
         ];
     }
 

@@ -4,8 +4,6 @@ namespace Leonidas\Library\Core\Asset;
 
 use Leonidas\Contracts\Ui\Asset\InlineScriptCollectionInterface;
 use Leonidas\Contracts\Ui\Asset\InlineScriptInterface;
-use Leonidas\Contracts\Ui\Asset\ScriptCollectionInterface;
-use Leonidas\Contracts\Ui\Asset\ScriptInterface;
 
 class InlineScriptCollection implements InlineScriptCollectionInterface
 {

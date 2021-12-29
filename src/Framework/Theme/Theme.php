@@ -7,7 +7,7 @@ class Theme
     public const TEMPLATE_TYPES = [
         '404', 'archive', 'attachment', 'author', 'category', 'date', 'embed',
         'frontpage', 'home', 'index', 'page', 'paged', 'privacypolicy',
-        'search', 'single', 'singular', 'tag', 'taxonomy'
+        'search', 'single', 'singular', 'tag', 'taxonomy',
     ];
 
     public static function path(string $path = ''): string

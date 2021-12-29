@@ -3,10 +3,8 @@
 namespace Leonidas\Framework\Modules;
 
 use Closure;
-use GuzzleHttp\Psr7\ServerRequest;
 use Leonidas\Contracts\Admin\Components\ColumnRowActionInterface;
 use Leonidas\Contracts\Extension\ModuleInterface;
-use Leonidas\Framework\Modules\AbstractModule;
 use Leonidas\Traits\CanBeRestrictedTrait;
 use WebTheory\Html\Traits\ElementConstructorTrait;
 

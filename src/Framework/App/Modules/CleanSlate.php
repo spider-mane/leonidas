@@ -63,8 +63,9 @@ class CleanSlate extends AbstractModule implements ModuleInterface
 
     protected function doInitAction()
     {
-        if ($unregister = $this->getConfig(static::CONFIG_ROOT . '.post_type.unregister'))
+        if ($unregister = $this->getConfig(static::CONFIG_ROOT . '.post_type.unregister')) {
             $this->unregisterBuiltInPostType((array) $unregister);
+        }
 
         if ($blog = $this->getConfig(static::CONFIG_ROOT . '.blog')) {
             $this->setPostsAsBlog((array) $blog);

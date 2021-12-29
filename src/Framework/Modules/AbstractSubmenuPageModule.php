@@ -4,12 +4,8 @@ namespace Leonidas\Framework\Modules;
 
 use Leonidas\Contracts\Admin\Components\SubmenuPageInterface;
 use Leonidas\Contracts\Extension\ModuleInterface;
-use Leonidas\Traits\Hooks\TargetsAdminMenuHook;
-use Leonidas\Traits\Hooks\TargetsAdminNoticesHook;
-use Leonidas\Traits\Hooks\TargetsAdminTitleHook;
 use Leonidas\Traits\Hooks\TargetsParentFileHook;
 use Leonidas\Traits\Hooks\TargetsSubmenuFileHook;
-use Leonidas\Traits\Hooks\TargetsWpRedirectHook;
 use Leonidas\Traits\Registrars\RegistersSubmenuPage;
 
 abstract class AbstractSubmenuPageModule extends AbstractAdminPageModule implements ModuleInterface

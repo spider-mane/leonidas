@@ -2,16 +2,10 @@
 
 namespace Leonidas\Framework\Modules;
 
-use DateInterval;
-use GuzzleHttp\Psr7\Request;
 use Leonidas\Contracts\Admin\Components\AdminPageInterface;
 use Leonidas\Contracts\Extension\ModuleInterface;
 use Leonidas\Traits\Hooks\TargetsAdminMenuHook;
-use Leonidas\Traits\Hooks\TargetsAdminNoticesHook;
 use Leonidas\Traits\Hooks\TargetsAdminTitleHook;
-use Leonidas\Traits\Hooks\TargetsWpRedirectHook;
-use Psr\SimpleCache\CacheInterface;
-use Stringable;
 
 abstract class AbstractInfoAdminPageModule extends AbstractModule implements ModuleInterface
 {
@@ -51,7 +45,6 @@ abstract class AbstractInfoAdminPageModule extends AbstractModule implements Mod
     {
         return $this->definition->defineAdminTitle($adminTitle, $title);
     }
-
 
     protected function configurePage()
     {
