@@ -29,7 +29,7 @@
         "conditions": []
       },
       {
-        "action": "composer asset run check",
+        "action": "composer asset run lint",
         "options": [],
         "conditions": []
       },

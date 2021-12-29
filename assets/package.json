@@ -1,14 +1,14 @@
 {
   "private": true,
   "scripts": {
-    "build": "npm run check && npm run test && npm run mix:prod",
-    "check": "",
+    "build": "npm run lint && npm run test && npm run mix:prod",
+    "lint": "",
+    "test": "",
     "mix:dev": "mix",
     "mix:hot": "mix watch --hot",
     "mix:poll": "mix watch -- --watch-options-poll=1000",
     "mix:prod": "mix --production",
-    "mix:watch": "mix watch",
-    "test": ""
+    "mix:watch": "mix watch"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.3",

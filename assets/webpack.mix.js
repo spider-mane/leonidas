@@ -7,6 +7,8 @@ mix
   .setPublicPath('dist')
   .setResourceRoot('src')
   .browserSync('leonidas.test')
+  .sourceMaps(true, 'eval-source-map', 'source-map')
+  .version()
   .options({
     processCssUrls: false,
     postCss: [require('tailwindcss')],
@@ -26,11 +28,11 @@ mix.sass('src/scss/main.scss', 'css/leonidas.css', {
  */
 mix
   .js('src/js/index.js', 'js/leonidas.js')
-  .autoload({jquery: ['$', 'window.jQuery']})
+  // .autoload({jquery: ['$', 'window.jQuery']})
   .extract();
 
 /**
- * Copy
+ * Direct Copies
  */
 mix
   // saveyour
@@ -59,8 +61,3 @@ mix
     ['./node_modules/trix/dist/trix.js', './node_modules/trix/dist/trix.css'],
     'dist/lib/trix/',
   );
-
-/**
- * Finish
- */
-mix.sourceMaps().version();
