@@ -44,4 +44,9 @@ class ScriptLocalizationCollection implements ScriptLocalizationCollectionInterf
     {
         return new static(...$localizations);
     }
+
+    public static function from(array $localizations): ScriptLocalizationCollection
+    {
+        return new static(...$localizations);
+    }
 }

@@ -15,14 +15,27 @@ final class AdminAssets extends AbstractAdminAssetProviderModule implements Modu
 {
     protected function scripts(): ScriptCollectionInterface
     {
-        return ScriptCollection::with(
+        return ScriptCollection::from([
 
             ScriptBuilder::for('leonidas')
                 ->src($this->asset('js/leonidas.js'))
                 ->version($this->version())
-                ->dependencies('jquery')
+                ->dependencies('jquery', 'leonidas-manifest', 'leonidas-vendors')
                 ->inFooter(true)
                 ->enqueue(true)
+                ->done(),
+
+            ScriptBuilder::for('leonidas-manifest')
+                ->src($this->asset('js/manifest.js'))
+                ->version($this->version())
+                ->inFooter(true)
+                ->done(),
+
+            ScriptBuilder::for('leonidas-vendors')
+                ->src($this->asset('js/vendor.js'))
+                ->version($this->version())
+                ->dependencies('leonidas-manifest')
+                ->inFooter(true)
                 ->done(),
 
             // 3rd party
@@ -47,12 +60,13 @@ final class AdminAssets extends AbstractAdminAssetProviderModule implements Modu
                 ->src($this->asset('lib/trix/trix.js'))
                 ->inFooter(true)
                 ->done(),
-        );
+
+        ]);
     }
 
     protected function styles(): StyleCollectionInterface
     {
-        return StyleCollection::with(
+        return StyleCollection::from([
 
             StyleBuilder::for('leonidas')
                 ->src($this->asset('css/leonidas.css'))
@@ -75,6 +89,7 @@ final class AdminAssets extends AbstractAdminAssetProviderModule implements Modu
                 ->src($this->asset('lib/trix/trix.css'))
                 ->enqueue(true)
                 ->done(),
-        );
+
+        ]);
     }
 }

@@ -46,4 +46,9 @@ class ScriptCollection implements ScriptCollectionInterface
     {
         return new static(...$scripts);
     }
+
+    public static function from(array $scripts): ScriptCollection
+    {
+        return new static(...$scripts);
+    }
 }

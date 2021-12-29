@@ -46,4 +46,9 @@ class InlineScriptCollection implements InlineScriptCollectionInterface
     {
         return new static(...$scripts);
     }
+
+    public static function from(array $scripts): InlineScriptCollection
+    {
+        return new static(...$scripts);
+    }
 }

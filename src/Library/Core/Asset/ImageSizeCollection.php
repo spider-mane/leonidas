@@ -41,4 +41,9 @@ class ImageSizeCollection implements ImageSizeCollectionInterface
     {
         return new static(...$sizes);
     }
+
+    public static function from(array $sizes): ImageSizeCollection
+    {
+        return new static(...$sizes);
+    }
 }

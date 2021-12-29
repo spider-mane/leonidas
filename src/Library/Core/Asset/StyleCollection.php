@@ -46,4 +46,9 @@ class StyleCollection implements StyleCollectionInterface
     {
         return new static(...$styles);
     }
+
+    public static function from(array $styles): StyleCollection
+    {
+        return new static(...$styles);
+    }
 }

@@ -46,4 +46,9 @@ class InlineStyleCollection implements InlineStyleCollectionInterface
     {
         return new static(...$styles);
     }
+
+    public static function from(array $styles): InlineStyleCollection
+    {
+        return new static(...$styles);
+    }
 }
