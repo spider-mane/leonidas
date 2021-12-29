@@ -2,20 +2,31 @@
 # https://www.kernel.org/pub/software/scm/git/docs/gitattributes.html
 
 # Ignore asset src and build files.
+
+# folders
 /build/                   export-ignore
 /scripts/                 export-ignore
 /src/                     export-ignore
 
-/.babelrc                 export-ignore
-/.browserslistrc          export-ignore
+# files
 /.editorconfig            export-ignore
-/.eslintignore            export-ignore
-/.eslintrc.js             export-ignore
-/.prettierignore          export-ignore
-/gulpfile.js              export-ignore
-/package.json             export-ignore
-/postcss.config.js        export-ignore
-/prettier.config.js       export-ignore
-/tailwind.config.js       export-ignore
-/webpack.config.js        export-ignore
-/webpack.mix.js           export-ignore
+
+# patterns
+/*.js                     export-ignore
+/.*rc                     export-ignore
+/.*ignore                 export-ignore
+/.git*                    export-ignore
+
+
+# /.browserslistrc          export-ignore
+# /.eslintignore            export-ignore
+# /.eslintrc-jsdoc.js       export-ignore
+# /.eslintrc.js             export-ignore
+# /.prettierignore          export-ignore
+# /jshintrc                 export-ignore
+# /package.json             export-ignore
+# /postcss.config.js        export-ignore
+# /prettier.config.js       export-ignore
+# /tailwind.config.js       export-ignore
+# /webpack.config.js        export-ignore
+# /webpack.mix.js           export-ignore

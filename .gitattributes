@@ -2,12 +2,21 @@
 # https://www.kernel.org/pub/software/scm/git/docs/gitattributes.html
 
 # Ignore development specific files with "export-ignore".
-.gitkeep                        export-ignore
+
+# folders
 /.circleci/                     export-ignore
+/.github/                       export-ignore
+/bin/                           export-ignore
+/boot/development/              export-ignore
+/config/development/            export-ignore
+/docs/                          export-ignore
+/tests/                         export-ignore
+
+# files
+.gitkeep                        export-ignore
 /.editorconfig                  export-ignore
 /.env*                          export-ignore
 /.gitattributes                 export-ignore
-/.github/                       export-ignore
 /.gitignore                     export-ignore
 /.php_cs*                       export-ignore
 /.scrutinizer.yml*              export-ignore
@@ -18,15 +27,14 @@
 /CONTRIBUTING.md                export-ignore
 /ISSUE_TEMPLATE.md              export-ignore
 /PULL_REQUEST_TEMPLATE.md       export-ignore
-/assets/src                     export-ignore
-/boot/development/              export-ignore
-/config/development/            export-ignore
-/docs/                          export-ignore
+/build.json                     export-ignore
+/captainhook.json               export-ignore
 /phpbench.json*                 export-ignore
 /phpcs.xml*                     export-ignore
-/phpunit.xml*                   export-ignore
 /phpunit-watcher.yml*           export-ignore
+/phpunit.xml*                   export-ignore
 /psalm.xml*                     export-ignore
-/tests/                         export-ignore
 /wp-cli.yml                     export-ignore
 /wp-config.php                  export-ignore
+
+# patterns
