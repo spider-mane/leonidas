@@ -11,7 +11,7 @@ $finder = Finder::create()
   ->ignoreVCS(true);
 
 return (new Config('leonidas'))
-  // ->setCacheFile(__DIR__ . '/build/phpcs/.cache')
+  ->setCacheFile(__DIR__ . '/build/php-cs-fixer/.cache')
   ->setFinder($finder)
   ->setRules([
     '@PSR12' => true,
@@ -51,6 +51,7 @@ return (new Config('leonidas'))
     ],
     'phpdoc_single_line_var_spacing' => true,
     'phpdoc_var_without_name' => true,
+    'single_blank_line_at_eof' => true,
     'single_space_after_construct' => true,
     'ternary_to_null_coalescing' => true,
     'trailing_comma_in_multiline' => true,

@@ -59,7 +59,7 @@
     "egulias/email-validator": "^2.1",
     "fakerphp/faker": "^1.16",
     "filp/whoops": "^2.5",
-    "friendsofphp/php-cs-fixer": "^2.18",
+    "friendsofphp/php-cs-fixer": "^3.3",
     "geocoder-php/google-maps-provider": "^4.4",
     "giggsey/libphonenumber-for-php": "^8.10",
     "koodimonni/composer-dropin-installer": "^1.3",
@@ -105,8 +105,9 @@
     "bench": "vendor/bin/phpbench",
     "check": "vendor/bin/phpcs",
     "collect": "vendor/bin/var-dump-server",
-    "env": "cp -n .env.example .env",
-    "fix": "vendor/bin/php-cs-fixer fix --verbose",
+    "env": "cp -n .env.example .env && bin/build-paths",
+    "fix": "vendor/bin/phpcbf",
+    "fix:pcf": "vendor/bin/php-cs-fixer fix --verbose",
     "hooks": "vendor/bin/captainhook",
     "inspect": "vendor/bin/psalm",
     "link": "bin/symlink-plugin",
@@ -139,6 +140,9 @@
       "@wp db export",
       "@wp db clean --yes",
       "@wp core install"
+    ],
+    "post-install-cmd": [
+      "@env"
     ]
   },
   "config": {
