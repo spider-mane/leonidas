@@ -101,6 +101,7 @@
     }
   },
   "scripts": {
+    "asset": "npm --prefix assets",
     "bench": "vendor/bin/phpbench",
     "check": "vendor/bin/phpcs",
     "collect": "vendor/bin/var-dump-server",
@@ -118,10 +119,17 @@
     "watch": "vendor/bin/phpunit-watcher watch",
     "wp": "vendor/bin/wp",
     "build": [
+      "@asset run build",
       "@fix",
       "@check",
-      "@inspect",
       "@test"
+    ],
+    "test": [
+      "@test:unit",
+      "@test:wpunit",
+      "@test:integration",
+      "@test:functional",
+      "@test:acceptance"
     ],
     "wp:init": [
       "@wp core download",
