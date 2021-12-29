@@ -1,0 +1,4 @@
+{
+  "build": { "phpunit": {}, "php-cs-fixer": {}, "wordpress": {} },
+  "logs": {}
+}

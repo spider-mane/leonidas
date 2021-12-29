@@ -1,0 +1,21 @@
+#!/usr/bin/env php
+<?php
+
+$root = dirname(__DIR__);
+
+$paths = json_decode(file_get_contents($root . '/build.json'), true);
+
+foreach ($paths as $path => $subs) {
+  create_path($root . '/' . $path, $subs);
+}
+
+function create_path($path, $subs = [])
+{
+  if (!file_exists($path)) {
+    mkdir($path, 0777, true);
+  }
+
+  foreach ($subs as $sub => $nested) {
+    create_path($path . '/' . $sub, $nested);
+  }
+}
