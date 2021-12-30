@@ -48,7 +48,7 @@ abstract class AbstractImageSizeProviderModule extends AbstractModule
     protected function filterImageSizeNamesChoose(array $sizeNames): array
     {
         if (!$this->isInitiated()) {
-            return;
+            return $sizeNames;
         }
 
         foreach ($this->getDefinitions()->getSizes() as $size) {
