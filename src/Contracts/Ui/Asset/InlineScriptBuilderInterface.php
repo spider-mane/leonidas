@@ -12,7 +12,7 @@ interface InlineScriptBuilderInterface
 
     public function position(string $position);
 
-    public function constraints(?ConstrainerCollectionInterface $constraints): InlineScriptBuilderInterface;
+    public function constraints(?ConstrainerCollectionInterface $constraints);
 
     public function done(): InlineScriptInterface;
 }
