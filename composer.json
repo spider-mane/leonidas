@@ -106,6 +106,7 @@
     "check": "vendor/bin/phpcs",
     "collect": "vendor/bin/var-dump-server",
     "env": "cp -n .env.example .env && bin/build-paths",
+    "export": "git archive --output=./build/leonidas.zip --format=zip HEAD",
     "fix": "vendor/bin/phpcbf",
     "fix:pcf": "vendor/bin/php-cs-fixer fix --verbose",
     "hooks": "vendor/bin/captainhook",
@@ -157,6 +158,15 @@
     }
   },
   "extra": {
+    "build-paths": {
+      "build": {
+        "phpunit": {},
+        "php-cs-fixer": {},
+        "wordpress": {}
+      },
+      "logs": {},
+      "temp": {}
+    },
     "installer-paths": {
       "wordpress/wp-content/plugins/{$name}": [
         "type:wordpress-plugin"

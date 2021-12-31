@@ -1,32 +1,15 @@
 # Path-based git attributes
 # https://www.kernel.org/pub/software/scm/git/docs/gitattributes.html
 
-# Ignore asset src and build files.
+# Specify files to exclude when creating archives
+
+# globs
+/*.*          export-ignore
 
 # folders
-/build/                   export-ignore
-/scripts/                 export-ignore
-/src/                     export-ignore
+/build/       export-ignore
+/scripts/     export-ignore
+/src/         export-ignore
+/tests/       export-ignore
 
 # files
-/.editorconfig            export-ignore
-
-# patterns
-/*.js                     export-ignore
-/.*rc                     export-ignore
-/.*ignore                 export-ignore
-/.git*                    export-ignore
-
-
-# /.browserslistrc          export-ignore
-# /.eslintignore            export-ignore
-# /.eslintrc-jsdoc.js       export-ignore
-# /.eslintrc.js             export-ignore
-# /.prettierignore          export-ignore
-# /jshintrc                 export-ignore
-# /package.json             export-ignore
-# /postcss.config.js        export-ignore
-# /prettier.config.js       export-ignore
-# /tailwind.config.js       export-ignore
-# /webpack.config.js        export-ignore
-# /webpack.mix.js           export-ignore

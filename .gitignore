@@ -6,6 +6,7 @@
 /build/
 /dist/
 /logs/
+/temp/
 captainhook.config.json
 cghooks.lock
 docker-compose.override.yml
