@@ -26,6 +26,7 @@ module.exports = {
       version: 'detect',
     },
   },
+  plugins: ['jsdoc'],
   rules: {
     strict: 0,
     'no-console': 0,
@@ -52,4 +53,4 @@ module.exports = {
       },
     ],
   },
-}
+};
