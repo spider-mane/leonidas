@@ -24,7 +24,7 @@
  * License: GPL-3.0-or-later
  * License URI: https://www.gnu.org/licenses/gpl-3.0.en.html
  * Text Domain: leonidas
- * Domain Path: /languages
+ * Domain Path: /lang
  */
 
 defined('ABSPATH') || exit;
