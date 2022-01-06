@@ -60,7 +60,7 @@ class Script extends AbstractAsset implements ScriptInterface
         ?ConstrainerCollectionInterface $constraints = null,
         ?array $attributes = null,
         ?bool $isAsync = null,
-        ?string $crossorigin,
+        ?string $crossorigin = null,
         ?bool $isDeferred = null,
         ?string $integrity = null,
         ?bool $isNoModule = null,
