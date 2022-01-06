@@ -44,6 +44,20 @@ class ScriptLoader implements ScriptLoaderInterface
         }
     }
 
+    public function activate(string ...$scripts)
+    {
+        foreach ($scripts as $script) {
+            wp_enqueue_script($script);
+        }
+    }
+
+    public function deactivate(string ...$scripts)
+    {
+        foreach ($scripts as $script) {
+            wp_dequeue_script($script);
+        }
+    }
+
     protected function registerScript(ScriptInterface $script)
     {
         wp_register_script(

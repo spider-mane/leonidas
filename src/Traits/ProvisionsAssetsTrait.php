@@ -135,29 +135,38 @@ trait ProvisionsAssetsTrait
 
         $request = $this->getServerRequest();
 
+        $scriptLoader = $this->getScriptLoader();
+        $styleLoader = $this->getStyleLoader();
+
         if ($hookSuffix) {
             $request = $request->withAttribute('hook_suffix', $hookSuffix);
         }
 
         if ($this->hasScripts()) {
-            $this->getScriptLoader()->load($this->getScripts(), $request);
+            $scriptLoader->load($this->getScripts(), $request);
         }
 
         if ($this->hasStyles()) {
-            $this->getStyleLoader()->load($this->getStyles(), $request);
+            $styleLoader->load($this->getStyles(), $request);
         }
 
         if ($this->hasInlineScripts()) {
-            $this->getScriptLoader()->support($this->getInlineScripts(), $request);
+            $scriptLoader->support($this->getInlineScripts(), $request);
         }
 
         if ($this->hasInlineStyles()) {
-            $this->getStyleLoader()->support($this->getInlineStyles(), $request);
+            $styleLoader->support($this->getInlineStyles(), $request);
         }
 
         if ($this->hasScriptLocalizations()) {
-            $this->getScriptLoader()->localize($this->getScriptLocalizations(), $request);
+            $scriptLoader->localize($this->getScriptLocalizations(), $request);
         }
+
+        $scriptLoader->activate(...$this->activateScripts());
+        $scriptLoader->deactivate(...$this->deactivateScripts());
+
+        $styleLoader->activate(...$this->activateStyles());
+        $styleLoader->deactivate(...$this->deactivateStyles());
     }
 
     protected function filterScriptLoaderTag(string $tag, string $handle, string $src): string
@@ -246,5 +255,25 @@ trait ProvisionsAssetsTrait
     protected function scriptLocalizations(): ?ScriptLocalizationCollectionInterface
     {
         return null;
+    }
+
+    protected function activateScripts(): array
+    {
+        return [];
+    }
+
+    protected function deactivateScripts(): array
+    {
+        return [];
+    }
+
+    protected function activateStyles(): array
+    {
+        return [];
+    }
+
+    protected function deactivateStyles(): array
+    {
+        return [];
     }
 }

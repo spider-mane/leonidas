@@ -32,6 +32,20 @@ class StyleLoader implements StyleLoaderInterface
         }
     }
 
+    public function activate(string ...$styles)
+    {
+        foreach ($styles as $style) {
+            wp_enqueue_style($style);
+        }
+    }
+
+    public function deactivate(string ...$styles)
+    {
+        foreach ($styles as $style) {
+            wp_dequeue_style($style);
+        }
+    }
+
     protected function registerStyle(StyleInterface $style)
     {
         wp_register_style(

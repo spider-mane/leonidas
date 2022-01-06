@@ -20,4 +20,8 @@ interface ScriptLoaderInterface
         ScriptLocalizationCollectionInterface $localizations,
         ServerRequestInterface $request
     );
+
+    public function activate(string ...$scripts);
+
+    public function deactivate(string ...$scripts);
 }

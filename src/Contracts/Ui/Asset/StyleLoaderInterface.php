@@ -9,4 +9,8 @@ interface StyleLoaderInterface
     public function load(StyleCollectionInterface $style, ServerRequestInterface $request);
 
     public function support(InlineStyleCollectionInterface $style, ServerRequestInterface $request);
+
+    public function activate(string ...$scripts);
+
+    public function deactivate(string ...$scripts);
 }
