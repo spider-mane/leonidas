@@ -87,6 +87,7 @@
     "webtheory/wp-cli-util": "@stable",
     "webtheory/wpunit": "@stable",
     "wp-cli/wp-cli-bundle": "@stable",
+    "wpackagist-plugin/disable-gutenberg": "@stable",
     "wpackagist-plugin/wp-native-php-sessions": "@stable",
     "wpackagist-theme/twentytwentyone": "@stable"
   },

@@ -46,18 +46,20 @@ abstract class AbstractModule implements ModuleInterface
         return $this->extension->hasConfig($key);
     }
 
-    protected function getConfig(string $key)
+    protected function getConfig(string $key, $default = null)
     {
-        return $this->extension->config($key);
+        return $this->extension->config($key, $default);
     }
 
-    protected function configCascade(array $cascade)
+    protected function configCascade(array $cascade, $default = null)
     {
         foreach ($cascade as $key) {
             if ($this->hasConfig($key)) {
                 return $this->getConfig($key);
             }
         }
+
+        return $default;
     }
 
     protected function getServerRequest(): ServerRequestInterface
