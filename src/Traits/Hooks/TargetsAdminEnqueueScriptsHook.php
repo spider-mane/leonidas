@@ -11,7 +11,7 @@ trait TargetsAdminEnqueueScriptsHook
         add_action(
             'admin_enqueue_scripts',
             $this->getAdminEnqueueScriptsCallback(),
-            null,
+            10,
             PHP_INT_MAX
         );
 

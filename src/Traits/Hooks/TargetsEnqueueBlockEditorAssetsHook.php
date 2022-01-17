@@ -11,7 +11,7 @@ trait TargetsEnqueueBlockEditorAssetsHook
         add_action(
             'enqueue_block_editor_assets',
             $this->getEnqueueBlockEditorAssetsCallback(),
-            null,
+            10,
             PHP_INT_MAX
         );
 

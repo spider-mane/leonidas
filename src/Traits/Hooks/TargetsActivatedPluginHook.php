@@ -11,7 +11,7 @@ trait TargetsActivatedPluginHook
         add_action(
             'activated_plugin',
             $this->getActivatedPluginCallback(),
-            null,
+            10,
             PHP_INT_MAX
         );
     }

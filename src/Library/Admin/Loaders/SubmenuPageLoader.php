@@ -53,14 +53,14 @@ class SubmenuPageLoader extends AbstractAdminPageLoader
 
     protected function targetSubmenuFileHook(): SubmenuPageLoader
     {
-        add_filter('submenu_file', [$this, 'resolveSubmenuFile'], null, PHP_INT_MAX);
+        add_filter('submenu_file', [$this, 'resolveSubmenuFile'], 10, PHP_INT_MAX);
 
         return $this;
     }
 
     protected function targetParentFileHook(): SubmenuPageLoader
     {
-        add_filter('parent_file', [$this, 'resolveParentFile'], null, PHP_INT_MAX);
+        add_filter('parent_file', [$this, 'resolveParentFile'], 10, PHP_INT_MAX);
 
         return $this;
     }

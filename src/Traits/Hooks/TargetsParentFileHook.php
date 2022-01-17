@@ -11,7 +11,7 @@ trait TargetsParentFileHook
         add_filter(
             'parent_file',
             $this->getParentFileCallback(),
-            null,
+            10,
             PHP_INT_MAX
         );
 

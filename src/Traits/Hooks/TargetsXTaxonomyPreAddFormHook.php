@@ -11,7 +11,7 @@ trait TargetsXTaxonomyPreAddFormHook
         add_action(
             "{$this->getTaxonomy()}_pre_add_form",
             $this->getXTaxonomyPreAddFormCallback(),
-            null,
+            10,
             PHP_INT_MAX
         );
 

@@ -86,14 +86,14 @@ class TermFieldCollectionLoader implements ComponentLoaderInterface
 
     protected function targetTaxonomyEditFormFieldsHook(): TermFieldCollectionLoader
     {
-        add_action("{$this->taxonomy}_edit_form_fields", [$this, 'renderFieldsOnEdit'], null, PHP_INT_MAX);
+        add_action("{$this->taxonomy}_edit_form_fields", [$this, 'renderFieldsOnEdit'], 10, PHP_INT_MAX);
 
         return $this;
     }
 
     protected function targetTaxonomyAddFormFieldsHook(): TermFieldCollectionLoader
     {
-        add_action("{$this->taxonomy}_add_form_fields", [$this, 'renderFieldsOnAdd'], null, PHP_INT_MAX);
+        add_action("{$this->taxonomy}_add_form_fields", [$this, 'renderFieldsOnAdd'], 10, PHP_INT_MAX);
 
         return $this;
     }

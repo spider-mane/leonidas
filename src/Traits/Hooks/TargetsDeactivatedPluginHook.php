@@ -11,7 +11,7 @@ trait TargetsDeactivatedPluginHook
         add_action(
             'deactivated_plugin',
             $this->getDeactivatedPluginCallback(),
-            null,
+            10,
             PHP_INT_MAX
         );
     }

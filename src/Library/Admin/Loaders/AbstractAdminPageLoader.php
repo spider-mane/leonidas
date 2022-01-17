@@ -44,7 +44,7 @@ abstract class AbstractAdminPageLoader
      */
     protected function targetAdminTitleHook(): AbstractAdminPageLoader
     {
-        add_filter('admin_title', [$this, 'resolveAdminTitle'], null, PHP_INT_MAX);
+        add_filter('admin_title', [$this, 'resolveAdminTitle'], 10, PHP_INT_MAX);
 
         return $this;
     }

@@ -11,7 +11,7 @@ trait TargetsWpEnqueueScriptsHook
         add_action(
             'wp_enqueue_scripts',
             $this->getWpEnqueueScriptsCallback(),
-            null,
+            10,
             PHP_INT_MAX
         );
 

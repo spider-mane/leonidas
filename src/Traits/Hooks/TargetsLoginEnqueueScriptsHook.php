@@ -11,7 +11,7 @@ trait TargetsLoginEnqueueScriptsHook
         add_action(
             'login_enqueue_scripts',
             $this->getLoginEnqueueScriptsCallback(),
-            null,
+            10,
             PHP_INT_MAX
         );
 

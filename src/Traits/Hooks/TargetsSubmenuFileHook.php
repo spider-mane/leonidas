@@ -11,7 +11,7 @@ trait TargetsSubmenuFileHook
         add_filter(
             'submenu_file',
             $this->getSubmenuFileCallback(),
-            null,
+            10,
             PHP_INT_MAX
         );
 

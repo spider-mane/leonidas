@@ -67,7 +67,7 @@ class PostMetaboxCollectionLoader implements MetaboxCollectionLoaderInterFace
      */
     protected function targetAddMetaboxesHook(): PostMetaboxCollectionLoader
     {
-        add_action("add_meta_boxes", [$this, 'registerMetaboxes'], null, PHP_INT_MAX);
+        add_action("add_meta_boxes", [$this, 'registerMetaboxes'], 10, PHP_INT_MAX);
 
         return $this;
     }

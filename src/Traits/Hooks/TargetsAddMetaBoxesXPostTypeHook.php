@@ -12,7 +12,7 @@ trait TargetsAddMetaBoxesXPostTypeHook
         add_action(
             "add_meta_boxes_{$this->getPostType()}",
             $this->getAddMetaBoxesXPostTypeCallback(),
-            null,
+            10,
             PHP_INT_MAX
         );
 

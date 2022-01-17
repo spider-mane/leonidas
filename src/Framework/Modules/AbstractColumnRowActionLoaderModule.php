@@ -55,9 +55,9 @@ abstract class AbstractColumnRowActionLoaderModule extends AbstractModule implem
         return $actions;
     }
 
-    protected function xRowActionsPriority(): ?int
+    protected function xRowActionsPriority(): int
     {
-        return null;
+        return 10;
     }
 
     abstract protected function screen(): string;

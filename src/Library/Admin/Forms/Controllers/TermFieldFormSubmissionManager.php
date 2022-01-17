@@ -54,7 +54,7 @@ class TermFieldFormSubmissionManager extends AbstractWpAdminFormSubmissionManage
                 add_action(
                     "{$event}_{$this->taxonomy->name}",
                     [$this, 'processTermFields'],
-                    null,
+                    10,
                     PHP_INT_MAX
                 );
             }

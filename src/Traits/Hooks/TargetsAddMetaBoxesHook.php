@@ -12,7 +12,7 @@ trait TargetsAddMetaBoxesHook
         add_action(
             'add_meta_boxes',
             $this->getAddMetaBoxesCallback(),
-            null,
+            10,
             PHP_INT_MAX
         );
 

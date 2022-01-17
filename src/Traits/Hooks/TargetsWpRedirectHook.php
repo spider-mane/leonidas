@@ -11,7 +11,7 @@ trait TargetsWpRedirectHook
         add_filter(
             'wp_redirect',
             $this->getWpRedirectCallback(),
-            null,
+            10,
             PHP_INT_MAX
         );
 

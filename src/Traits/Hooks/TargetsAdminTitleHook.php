@@ -11,7 +11,7 @@ trait TargetsAdminTitleHook
         add_filter(
             'admin_title',
             $this->getAdminTitleCallback(),
-            null,
+            10,
             PHP_INT_MAX
         );
 

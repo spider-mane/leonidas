@@ -11,7 +11,7 @@ trait TargetsStyleLoaderTagHook
         add_filter(
             'style_loader_tag',
             $this->getStyleLoaderTagCallback(),
-            null,
+            10,
             PHP_INT_MAX
         );
 

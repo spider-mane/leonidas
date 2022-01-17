@@ -22,10 +22,7 @@
   testdox="true"
   verbose="true">
 
-  <!-- Testsuites -->
   <testsuites>
-
-    <!-- Unit Testing -->
     <testsuite name="unit">
       <directory>tests/Suites/Unit</directory>
     </testsuite>
@@ -34,23 +31,19 @@
       <directory>tests/Suites/WpUnit</directory>
     </testsuite>
 
-    <!-- Integration Testing -->
     <testsuite name="integration">
       <directory>tests/Suites/Integration</directory>
     </testsuite>
 
-    <!-- Functional Testing -->
     <testsuite name="functional">
       <directory>tests/Suites/Functional</directory>
     </testsuite>
 
-    <!-- Acceptance Testing -->
     <testsuite name="acceptance">
       <directory>tests/Suites/Acceptance</directory>
     </testsuite>
   </testsuites>
 
-  <!-- Coverage -->
   <coverage cacheDirectory="build/phpunit/coverage/.cache">
     <include>
       <directory suffix=".php">src</directory>
@@ -62,7 +55,6 @@
     </report>
   </coverage>
 
-  <!-- Logging -->
   <logging>
     <junit outputFile="build/phpunit/logs/report.junit.xml"/>
     <teamcity outputFile="build/phpunit/logs/teamcity.txt"/>
@@ -72,7 +64,6 @@
     <text outputFile="build/phpunit/logs/logfile.txt"/>
   </logging>
 
-  <!-- Php -->
   <php>
     <!-- <ini name="variables_order" value="EGPCS"/> -->
     <env name="RUNNING_TESTS" value="true"/>

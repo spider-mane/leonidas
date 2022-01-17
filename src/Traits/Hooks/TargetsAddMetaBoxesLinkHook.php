@@ -11,7 +11,7 @@ trait TargetsAddMetaBoxesLinkHook
         add_action(
             "add_meta_boxes_link",
             $this->getAddMetaBoxesLinkCallback(),
-            null,
+            10,
             PHP_INT_MAX
         );
 

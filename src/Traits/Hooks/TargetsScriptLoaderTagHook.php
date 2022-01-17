@@ -11,7 +11,7 @@ trait TargetsScriptLoaderTagHook
         add_filter(
             'script_loader_tag',
             $this->getScriptLoaderTagCallback(),
-            null,
+            10,
             PHP_INT_MAX
         );
 

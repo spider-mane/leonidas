@@ -11,7 +11,7 @@ trait TargetsAdminMenuHook
         add_action(
             'admin_menu',
             $this->getAdminMenuCallback(),
-            null,
+            10,
             PHP_INT_MAX
         );
 

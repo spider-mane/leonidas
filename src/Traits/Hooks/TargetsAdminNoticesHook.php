@@ -11,7 +11,7 @@ trait TargetsAdminNoticesHook
         add_action(
             'admin_notices',
             $this->getAdminNoticesCallback(),
-            null,
+            10,
             PHP_INT_MAX
         );
 

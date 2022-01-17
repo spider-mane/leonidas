@@ -11,7 +11,7 @@ trait TargetsImageSizeNamesChooseHook
         add_filter(
             'image_size_names_choose',
             Closure::fromCallable([$this, 'filterImageSizeNamesChoose']),
-            null,
+            10,
             PHP_INT_MAX
         );
 

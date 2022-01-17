@@ -165,8 +165,7 @@
         "php-cs-fixer": {},
         "wordpress": {}
       },
-      "logs": {},
-      "temp": {}
+      "logs": {}
     },
     "installer-paths": {
       "wordpress/wp-content/plugins/{$name}": [

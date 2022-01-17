@@ -11,7 +11,7 @@ trait TargetsAdminInitHook
         add_action(
             'admin_init',
             Closure::fromCallable([$this, 'doAdminInitAction']),
-            null,
+            10,
             PHP_INT_MAX
         );
 

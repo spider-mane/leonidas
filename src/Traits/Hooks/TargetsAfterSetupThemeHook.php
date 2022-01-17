@@ -11,7 +11,7 @@ trait TargetsAfterSetupThemeHook
         add_action(
             'after_setup_theme',
             Closure::fromCallable([$this, 'doAfterSetupThemeAction']),
-            null,
+            10,
             PHP_INT_MAX
         );
     }

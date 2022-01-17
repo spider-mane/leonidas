@@ -11,7 +11,7 @@ trait TargetsInitHook
         add_action(
             'init',
             Closure::fromCallable([$this, 'doInitAction']),
-            null,
+            10,
             PHP_INT_MAX
         );
 

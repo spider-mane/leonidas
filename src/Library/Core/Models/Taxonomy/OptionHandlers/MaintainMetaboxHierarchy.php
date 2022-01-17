@@ -25,7 +25,7 @@ class MaintainMetaboxHierarchy implements TaxonomyOptionHandlerInterface
      */
     public function hook()
     {
-        add_filter('wp_terms_checklist_args', [$this, 'doit'], null, 2);
+        add_filter('wp_terms_checklist_args', [$this, 'doit'], 10, 2);
     }
 
     /**

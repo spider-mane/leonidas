@@ -11,7 +11,7 @@ trait TargetsInAdminHeaderHook
         add_action(
             'in_admin_header',
             $this->getInAdminHeaderCallback(),
-            null,
+            10,
             PHP_INT_MAX
         );
 

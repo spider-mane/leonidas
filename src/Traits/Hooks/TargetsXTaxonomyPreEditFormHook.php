@@ -12,7 +12,7 @@ trait TargetsXTaxonomyPreEditFormHook
         add_action(
             "{$this->getTaxonomy()}_pre_edit_form",
             $this->getXTaxonomyPreEditFormCallback(),
-            null,
+            10,
             PHP_INT_MAX
         );
 

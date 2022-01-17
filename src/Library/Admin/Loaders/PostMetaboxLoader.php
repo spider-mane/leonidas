@@ -50,7 +50,7 @@ class PostMetaboxLoader implements ComponentLoaderInterface
     {
         $post = $this->metabox->getScreen();
 
-        add_action("add_meta_boxes_{$post}", [$this, 'registerMetabox'], null, PHP_INT_MAX);
+        add_action("add_meta_boxes_{$post}", [$this, 'registerMetabox'], 10, PHP_INT_MAX);
 
         return $this;
     }

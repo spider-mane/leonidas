@@ -41,7 +41,7 @@ class PostMetaBoxFormSubmissionManager extends AbstractWpAdminFormSubmissionMana
      */
     public function hook()
     {
-        add_action("save_post_{$this->postType->name}", [$this, 'savePostActionCallback'], null, 3);
+        add_action("save_post_{$this->postType->name}", [$this, 'savePostActionCallback'], 10, 3);
 
         return parent::hook();
     }
