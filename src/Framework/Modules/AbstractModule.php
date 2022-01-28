@@ -5,10 +5,13 @@ namespace Leonidas\Framework\Modules;
 use GuzzleHttp\Psr7\ServerRequest;
 use Leonidas\Contracts\Extension\ModuleInterface;
 use Leonidas\Contracts\Extension\WpExtensionInterface;
+use Leonidas\Traits\HasCallbackMethodsTrait;
 use Psr\Http\Message\ServerRequestInterface;
 
 abstract class AbstractModule implements ModuleInterface
 {
+    use HasCallbackMethodsTrait;
+
     protected WpExtensionInterface $extension;
 
     public function __construct(WpExtensionInterface $extension)
