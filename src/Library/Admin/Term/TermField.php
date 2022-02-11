@@ -1,6 +1,6 @@
 <?php
 
-namespace Leonidas\Library\Admin\Term\Components;
+namespace Leonidas\Library\Admin\Term;
 
 use Leonidas\Contracts\Admin\Components\TermFieldInterface;
 use Leonidas\Contracts\Ui\ViewInterface;
@@ -16,22 +16,18 @@ class TermField extends AbstractAdminField implements TermFieldInterface
     use CanBeRestrictedTrait;
     use RendersWithViewTrait;
 
-    /**
-     *
-     */
-    protected const ADD_TERM_SCREEN = 'edit-tags';
+    public const ADD_TERM_SCREEN = 'edit-tags';
 
-    /**
-     *
-     */
-    protected const EDIT_TERM_SCREEN = 'term';
+    public const EDIT_TERM_SCREEN = 'term';
 
-    /**
-     *
-     */
+    public function renderInputField(ServerRequestInterface $request): string
+    {
+        return $this->renderFormField($request)->toHtml();
+    }
+
     protected function defineView(ServerRequestInterface $request): ViewInterface
     {
-        switch (get_current_screen()->base) {
+        switch ($request->getAttribute('context')) {
 
             case static::ADD_TERM_SCREEN:
                 $view = $this->getAddTermFieldView();
@@ -47,25 +43,16 @@ class TermField extends AbstractAdminField implements TermFieldInterface
         return $view;
     }
 
-    /**
-     *
-     */
     protected function getAddTermFieldView(): ViewInterface
     {
         return new AddTermFieldView();
     }
 
-    /**
-     *
-     */
     protected function getEditTermFieldView(): ViewInterface
     {
         return new EditTermFieldView();
     }
 
-    /**
-     *
-     */
     protected function defineViewContext(ServerRequestInterface $request): array
     {
         return [
