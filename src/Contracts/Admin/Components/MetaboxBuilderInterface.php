@@ -2,7 +2,6 @@
 
 namespace Leonidas\Contracts\Admin\Components;
 
-use Leonidas\Contracts\Admin\Components\MetaboxLayoutInterface;
 use Leonidas\Contracts\Http\ConstrainerCollectionInterface;
 
 interface MetaboxBuilderInterface

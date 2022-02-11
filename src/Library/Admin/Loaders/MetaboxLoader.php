@@ -2,14 +2,10 @@
 
 namespace Leonidas\Library\Admin\Loaders;
 
-use GuzzleHttp\Psr7\ServerRequest;
-use Leonidas\Contracts\Admin\ComponentLoaderInterface;
 use Leonidas\Contracts\Admin\Components\MetaboxInterface;
 use Leonidas\Contracts\Admin\Loader\MetaboxLoaderInterface;
 use Leonidas\Contracts\Admin\MetaboxCollectionInterface;
-use Leonidas\Traits\MaybeHandlesCsrfTrait;
 use Psr\Http\Message\ServerRequestInterface;
-use WP_Post;
 
 class MetaboxLoader implements MetaboxLoaderInterface
 {

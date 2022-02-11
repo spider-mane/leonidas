@@ -2,7 +2,6 @@
 
 namespace Leonidas\Contracts\Admin\Components;
 
-use Leonidas\Contracts\Admin\Components\AdminNoticeInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 interface AdminNoticeRepositoryInterface

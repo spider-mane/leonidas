@@ -7,9 +7,7 @@ use Leonidas\Contracts\Admin\Components\TermFieldPrinterInterface;
 use Leonidas\Contracts\Ui\ViewInterface;
 use Leonidas\Library\Admin\Term\Views\AddTermFieldView;
 use Leonidas\Library\Admin\Term\Views\EditTermFieldView;
-use Leonidas\Traits\RendersWithViewTrait;
 use Psr\Http\Message\ServerRequestInterface;
-use WebTheory\Saveyour\Contracts\FormFieldInterface;
 
 class BasicTermFieldPrinter implements TermFieldPrinterInterface
 {

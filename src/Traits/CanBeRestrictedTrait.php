@@ -3,7 +3,6 @@
 namespace Leonidas\Traits;
 
 use Leonidas\Contracts\Http\ConstrainerCollectionInterface;
-use Leonidas\Contracts\Http\ConstrainerInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 trait CanBeRestrictedTrait

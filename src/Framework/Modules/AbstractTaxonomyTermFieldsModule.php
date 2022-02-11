@@ -2,19 +2,17 @@
 
 namespace Leonidas\Framework\Modules;
 
-use GuzzleHttp\Psr7\ServerRequest;
 use Leonidas\Contracts\Admin\Components\TermFieldInterface;
 use Leonidas\Contracts\Admin\Components\TermFieldPrinterInterface;
 use Leonidas\Contracts\Auth\CsrfManagerInterface;
 use Leonidas\Contracts\Extension\ModuleInterface;
-use Leonidas\Framework\Modules\AbstractModule;
 use Leonidas\Framework\Modules\Traits\HasExtraConstructionTrait;
-use Leonidas\Library\Core\Http\Form\Authenticators\CsrfCheck;
-use Leonidas\Library\Core\Http\Form\Authenticators\NoAutosave;
-use Leonidas\Library\Core\Http\Form\Authenticators\Permissions\EditTerm;
 use Leonidas\Library\Admin\Term\Printers\BasicTermFieldPrinter;
 use Leonidas\Library\Admin\Term\Printers\DeferrableTermFieldPrinter;
 use Leonidas\Library\Core\Auth\Nonce;
+use Leonidas\Library\Core\Http\Form\Authenticators\CsrfCheck;
+use Leonidas\Library\Core\Http\Form\Authenticators\NoAutosave;
+use Leonidas\Library\Core\Http\Form\Authenticators\Permissions\EditTerm;
 use Leonidas\Traits\Hooks\TargetsCreatedXTaxonomyHook;
 use Leonidas\Traits\Hooks\TargetsEditedXTaxonomyHook;
 use Leonidas\Traits\Hooks\TargetsXTaxonomyAddFormFieldsHook;
@@ -22,11 +20,11 @@ use Leonidas\Traits\Hooks\TargetsXTaxonomyAddFormHook;
 use Leonidas\Traits\Hooks\TargetsXTaxonomyEditFormFieldsHook;
 use Leonidas\Traits\Hooks\TargetsXTaxonomyTermEditFormTopHook;
 use Psr\Http\Message\ServerRequestInterface;
-use WP_Term;
 use WebTheory\Saveyour\Contracts\FormFieldControllerInterface;
 use WebTheory\Saveyour\Contracts\FormProcessingCacheInterface;
 use WebTheory\Saveyour\Contracts\FormSubmissionManagerInterface;
 use WebTheory\Saveyour\Controllers\FormSubmissionManager;
+use WP_Term;
 
 abstract class AbstractTaxonomyTermFieldsModule extends AbstractModule implements ModuleInterface
 {

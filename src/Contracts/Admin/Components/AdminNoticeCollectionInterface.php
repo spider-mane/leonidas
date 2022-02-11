@@ -2,8 +2,6 @@
 
 namespace Leonidas\Contracts\Admin\Components;
 
-use Leonidas\Contracts\Admin\Components\AdminNoticeInterface;
-
 interface AdminNoticeCollectionInterface
 {
     /**

@@ -5,7 +5,6 @@ namespace Leonidas\Framework\Modules;
 use Leonidas\Contracts\Auth\CsrfManagerInterface;
 use Leonidas\Contracts\Auth\CsrfManagerRepositoryInterface;
 use Leonidas\Contracts\Extension\ModuleInterface;
-use Leonidas\Framework\Modules\Traits\HasExtraConstructionTrait;
 use Leonidas\Traits\Hooks\TargetsEditFormTopHook;
 use Psr\Http\Message\ServerRequestInterface;
 use WP_Post;
