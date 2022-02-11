@@ -53,6 +53,6 @@ class Transients implements CacheInterface
 
     public function has($key)
     {
-        return false !== get_transient($key);
+        return (bool) $this->get($key);
     }
 }

@@ -2,65 +2,28 @@
 
 namespace Leonidas\Traits;
 
+use Leonidas\Contracts\Http\ConstrainerCollectionInterface;
 use Leonidas\Contracts\Http\ConstrainerInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 trait CanBeRestrictedTrait
 {
-    /**
-     * @var ConstrainerInterface[]
-     */
-    protected $constraints = [];
+    protected ConstrainerCollectionInterface $constraints;
 
-    /**
-     * Get the value of constraints
-     *
-     * @return array|ConstrainerInterface[]
-     */
-    public function getConstraints()
+    public function getConstraints(): ConstrainerCollectionInterface
     {
         return $this->constraints;
     }
 
-    /**
-     * Set the value of constraints
-     *
-     * @param ConstrainerInterface[] $constraints
-     *
-     * @return self
-     */
-    public function setConstraints(ConstrainerInterface ...$constraints)
+    public function setConstraints(ConstrainerCollectionInterface $constraints)
     {
         $this->constraints = $constraints;
 
         return $this;
     }
 
-    /**
-     * Set the value of constraints
-     *
-     * @param ConstrainerInterface $constraint
-     *
-     * @return self
-     */
-    public function addConstraint(ConstrainerInterface $constraint)
-    {
-        $this->constraints[] = $constraint;
-
-        return $this;
-    }
-
-    /**
-     *
-     */
     public function shouldBeRendered(ServerRequestInterface $request): bool
     {
-        foreach ($this->constraints as $constraint) {
-            if (!$constraint->requestMeetsCriteria($request)) {
-                return false;
-            }
-        }
-
-        return true;
+        return !$this->constraints->constrains($request);
     }
 }

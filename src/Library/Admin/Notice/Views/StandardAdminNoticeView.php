@@ -9,9 +9,6 @@ class StandardAdminNoticeView implements ViewInterface
 {
     use ElementConstructorTrait;
 
-    /**
-     *
-     */
     public function render(array $context): string
     {
         $type = $context['type'];
@@ -24,6 +21,6 @@ class StandardAdminNoticeView implements ViewInterface
 
         $noticeBody = $this->tag('p', [], htmlspecialchars($message));
 
-        return $this->tag('div', $noticeAttr, $noticeBody);
+        return $this->tag('div', $noticeAttr, $noticeBody) . "\n";
     }
 }

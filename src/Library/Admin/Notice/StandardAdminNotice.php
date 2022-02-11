@@ -1,10 +1,10 @@
 <?php
 
-namespace Leonidas\Library\Admin\Notice\Components;
+namespace Leonidas\Library\Admin\Notice;
 
 use Leonidas\Contracts\Admin\Components\AdminNoticeInterface;
 use Leonidas\Contracts\Ui\ViewInterface;
-use Leonidas\Library\Admin\Notices\Views\StandardAdminNoticeView;
+use Leonidas\Library\Admin\Notice\Views\StandardAdminNoticeView;
 use Leonidas\Traits\CanBeRestrictedTrait;
 use Leonidas\Traits\RendersWithViewTrait;
 use Psr\Http\Message\ServerRequestInterface;
@@ -40,14 +40,22 @@ class StandardAdminNotice implements AdminNoticeInterface
     protected $screen;
 
     /**
+     * @var null|int|int[]
+     */
+    protected $users;
+
+    protected ?string $field = null;
+
+    /**
      *
      * @param string $message
      * @param string $id
      */
-    public function __construct(string $message, string $id = '')
+    public function __construct(string $message, string $id = '', ?int $users)
     {
         $this->id = $id;
         $this->message = $message;
+        $this->users = $users;
     }
 
     /**
@@ -72,6 +80,16 @@ class StandardAdminNotice implements AdminNoticeInterface
         $this->id = $id;
 
         return $this;
+    }
+
+    /**
+     * Get the value of message
+     *
+     * @return string
+     */
+    public function getMessage(): string
+    {
+        return $this->message;
     }
 
     /**
@@ -142,6 +160,26 @@ class StandardAdminNotice implements AdminNoticeInterface
     public function setScreen(string $screen)
     {
         $this->screen = $screen;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getUsers()
+    {
+        return $this->users;
+    }
+
+    public function getField(): ?string
+    {
+        return $this->field;
+    }
+
+    public function setField($field)
+    {
+        $this->field = $field;
 
         return $this;
     }

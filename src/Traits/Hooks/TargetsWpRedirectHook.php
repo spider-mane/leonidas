@@ -10,19 +10,17 @@ trait TargetsWpRedirectHook
     {
         add_filter(
             'wp_redirect',
-            $this->getWpRedirectCallback(),
-            10,
+            Closure::fromCallable([$this, 'filterWpRedirect']),
+            $this->getWpRedirectPriority(),
             PHP_INT_MAX
         );
 
         return $this;
     }
 
-    protected function getWpRedirectCallback(): Closure
+    protected function getWpRedirectPriority(): int
     {
-        return function (string $location, int $status) {
-            return $this->filterWpRedirect($location, $status);
-        };
+        return 10;
     }
 
     abstract protected function filterWpRedirect(string $location, int $status): string;
