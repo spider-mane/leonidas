@@ -4,6 +4,8 @@ use Dotenv\Dotenv;
 use WebTheory\Config\Config;
 use WebTheory\Exterminate\Exterminator;
 
+use function Env\env;
+
 $root = dirname(__DIR__, 2);
 
 require_once "$root/vendor/autoload.php";
@@ -21,7 +23,7 @@ $config = new Config("$root/config/development");
 /**
  * Establish that plugin is in a development environment
  */
-define('LEONIDAS_DEVELOPMENT', true);
+define('LEONIDAS_DEVELOPMENT', env('LEONIDAS_DEVELOPMENT') ?? true);
 
 /**
  * Initiate debug support

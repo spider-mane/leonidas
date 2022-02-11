@@ -20,6 +20,7 @@
   "require": {
     "php": "^7.4 || ^8.0",
     "guzzlehttp/psr7": "^2.1",
+    "jawira/case-converter": "^3.4",
     "league/container": "^4.2",
     "myclabs/php-enum": "^1.8",
     "nesbot/carbon": "^2.54",
@@ -87,9 +88,10 @@
     "webtheory/wp-cli-util": "@stable",
     "webtheory/wpunit": "@stable",
     "wp-cli/wp-cli-bundle": "@stable",
+    "wpackagist-plugin/classic-editor": "@stable",
     "wpackagist-plugin/disable-gutenberg": "@stable",
     "wpackagist-plugin/wp-native-php-sessions": "@stable",
-    "wpackagist-theme/twentytwentyone": "@stable"
+    "wpackagist-theme/twentytwentytwo": "@stable"
   },
   "autoload": {
     "psr-4": {

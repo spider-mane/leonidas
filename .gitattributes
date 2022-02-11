@@ -17,6 +17,7 @@
 /boot/development/            export-ignore
 /config/development/          export-ignore
 /docs/                        export-ignore
+/example/                     export-ignore
 /spec/                        export-ignore
 /stories/                     export-ignore
 /tests/                       export-ignore
