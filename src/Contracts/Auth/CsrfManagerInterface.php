@@ -6,6 +6,10 @@ use Psr\Http\Message\ServerRequestInterface;
 
 interface CsrfManagerInterface
 {
+    public function getName(): string;
+
+    public function getToken(): string;
+
     /**
      * Validate a csrf token
      */
