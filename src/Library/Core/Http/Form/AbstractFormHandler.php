@@ -4,7 +4,7 @@ namespace Leonidas\Library\Core\Http\Form;
 
 use Leonidas\Contracts\Auth\CsrfManagerInterface;
 use Leonidas\Contracts\Http\Form\FormInterface;
-use Leonidas\Library\Admin\Forms\Validators\CsrfCheck;
+use Leonidas\Library\Core\Http\Form\Authenticators\CsrfCheck;
 use Leonidas\Library\Core\Auth\Nonce;
 use Psr\Http\Message\ServerRequestInterface;
 use WebTheory\Saveyour\Contracts\FormDataProcessorInterface;

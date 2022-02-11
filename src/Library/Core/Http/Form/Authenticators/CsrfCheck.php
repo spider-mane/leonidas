@@ -1,6 +1,6 @@
 <?php
 
-namespace Leonidas\Library\Admin\Forms\Validators;
+namespace Leonidas\Library\Core\Http\Form\Authenticators;
 
 use Leonidas\Contracts\Auth\CsrfManagerInterface;
 use Psr\Http\Message\ServerRequestInterface;
