@@ -188,9 +188,9 @@ class MetaboxTest extends TestCase
     public function testCanSetAndGetCallbackArgs()
     {
         $expected = ['test_arg' => 'test_value'];
-        $metabox = $this->metabox->setCallbackArgs($expected);
+        $metabox = $this->metabox->setArgs($expected);
 
-        $this->assertEquals($expected, $metabox->getCallbackArgs());
+        $this->assertEquals($expected, $metabox->getArgs());
     }
 
     /**

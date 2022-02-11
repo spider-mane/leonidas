@@ -11,58 +11,23 @@ class Metabox implements MetaboxInterface
 {
     use CanBeRestrictedTrait;
 
-    /**
-     * id
-     *
-     * @var string
-     */
-    protected $id;
+    protected string $id;
+
+    protected string $title;
 
     /**
-     * title
-     *
-     * @var string
-     */
-    protected $title;
-
-    /**
-     * screen
-     *
      * @var string|string[]|WP_Screen
      */
     protected $screen;
 
-    /**
-     * context
-     *
-     * @var null|string
-     */
-    protected $context = 'advanced';
+    protected ?string $context = 'advanced';
 
-    /**
-     * priority
-     *
-     * @var string
-     */
-    protected $priority = 'default';
+    protected ?string $priority = 'default';
 
-    /**
-     * callbackArgs
-     *
-     * @var array
-     */
-    protected $callbackArgs = [];
+    protected ?array $args = [];
 
-    /**
-     * layout
-     *
-     * @var MetaboxLayoutInterface
-     */
-    protected $layout;
+    protected MetaboxLayoutInterface $layout;
 
-    /**
-     *
-     */
     public function __construct(string $id, string $title, MetaboxLayoutInterface $layout)
     {
         $this->id = $id;
@@ -103,7 +68,7 @@ class Metabox implements MetaboxInterface
     /**
      * Set screen
      *
-     * @param string|string[]|WP_Screen $screen screen
+     * @param string|string[]|WP_Screen $screen
      *
      * @return self
      */
@@ -119,7 +84,7 @@ class Metabox implements MetaboxInterface
      *
      * @return string
      */
-    public function getContext(): string
+    public function getContext(): ?string
     {
         return $this->context;
     }
@@ -127,11 +92,11 @@ class Metabox implements MetaboxInterface
     /**
      * Set context
      *
-     * @param string  $context  context
+     * @param string $context
      *
      * @return self
      */
-    public function setContext(string $context)
+    public function setContext(?string $context)
     {
         $this->context = $context;
 
@@ -143,7 +108,7 @@ class Metabox implements MetaboxInterface
      *
      * @return string
      */
-    public function getPriority(): string
+    public function getPriority(): ?string
     {
         return $this->priority;
     }
@@ -151,11 +116,11 @@ class Metabox implements MetaboxInterface
     /**
      * Set priority
      *
-     * @param string  $priority  priority
+     * @param string $priority
      *
      * @return self
      */
-    public function setPriority(string $priority)
+    public function setPriority(?string $priority)
     {
         $this->priority = $priority;
 
@@ -163,25 +128,25 @@ class Metabox implements MetaboxInterface
     }
 
     /**
-     * Get callbackArgs
+     * Get args
      *
      * @return array
      */
-    public function getCallbackArgs(): array
+    public function getArgs(): array
     {
-        return $this->callbackArgs;
+        return $this->args;
     }
 
     /**
-     * Set callbackArgs
+     * Set args
      *
-     * @param array  $callbackArgs  callbackArgs
+     * @param array $args
      *
      * @return self
      */
-    public function setCallbackArgs(array $callbackArgs)
+    public function setArgs(?array $args)
     {
-        $this->callbackArgs = $callbackArgs;
+        $this->args = $args;
 
         return $this;
     }

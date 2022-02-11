@@ -4,7 +4,7 @@ namespace Leonidas\Library\Admin\Metabox\Components;
 
 use Leonidas\Contracts\Admin\Components\MetaboxComponentInterface;
 use Leonidas\Contracts\Admin\Components\MetaboxFieldInterface;
-use Leonidas\Library\Admin\Forms\Controllers\AbstractWpAdminFormSubmissionManager;
+use Leonidas\Library\Core\Http\Form\Controllers\AbstractWpAdminFormSubmissionManager;
 use Leonidas\Traits\CanBeRestrictedTrait;
 use Psr\Http\Message\ServerRequestInterface;
 use WebTheory\Saveyour\Contracts\FormFieldControllerInterface;

@@ -11,19 +11,17 @@ trait TargetsAddMetaBoxesXPostTypeHook
     {
         add_action(
             "add_meta_boxes_{$this->getPostType()}",
-            $this->getAddMetaBoxesXPostTypeCallback(),
-            10,
+            Closure::fromCallable([$this, 'doAddMetaBoxesXPostTypeAction']),
+            $this->getAddMetaBoxesXPostTypePriority(),
             PHP_INT_MAX
         );
 
         return $this;
     }
 
-    protected function getAddMetaBoxesXPostTypeCallback(): Closure
+    protected function getAddMetaBoxesXPostTypePriority(): int
     {
-        return function (WP_Post $post) {
-            $this->doAddMetaBoxesXPostTypeAction($post);
-        };
+        return 10;
     }
 
     abstract protected function getPostType(): string;
