@@ -2,11 +2,13 @@
 
 namespace Leonidas\Contracts\Http\Form;
 
+use Psr\Http\Message\ServerRequestInterface;
+
 interface FormRepositoryInterface
 {
-    public function register(string $id, FormControllerInterface $form);
+    public function add(string $id, FormHandlerInterface $form);
 
-    public function getForm(string $id): FormControllerInterface;
+    public function get(string $id): FormHandlerInterface;
 
-    public function build(string $form): array;
+    public function getBuild(string $form, ServerRequestInterface $request): array;
 }

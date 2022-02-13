@@ -2,10 +2,11 @@
 
 namespace Leonidas\Contracts\Http\Form;
 
-interface FormControllerInterface
+use Psr\Http\Message\ServerRequestInterface;
+
+interface FormControllerInterface extends FormHandlerInterface
 {
-    /**
-     * @return array
-     */
-    public function build(): array;
+    public function getAction(): string;
+
+    public function process(ServerRequestInterface $request): void;
 }

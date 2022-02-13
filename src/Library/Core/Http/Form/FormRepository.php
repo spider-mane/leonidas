@@ -2,34 +2,29 @@
 
 namespace Leonidas\Library\Core\Http\Form;
 
-use Leonidas\Contracts\Http\Form\FormControllerInterface;
+use Leonidas\Contracts\Http\Form\FormHandlerInterface;
 use Leonidas\Contracts\Http\Form\FormRepositoryInterface;
+use Psr\Http\Message\ServerRequestInterface;
 
 class FormRepository implements FormRepositoryInterface
 {
     /**
-     * @var FormControllerInterface[]
+     * @var FormHandlerInterface[]
      */
     protected $forms = [];
 
-    /**
-     *
-     */
-    public function register(string $id, FormControllerInterface $form)
+    public function add(string $id, FormHandlerInterface $form)
     {
         $this->forms[$id] = $form;
     }
 
-    public function getForm(string $id): FormControllerInterface
+    public function get(string $id): FormHandlerInterface
     {
         return $this->forms[$id];
     }
 
-    /**
-     *
-     */
-    public function build(string $form): array
+    public function getBuild(string $form, ServerRequestInterface $request): array
     {
-        return $this->getForm($form)->build();
+        return $this->get($form)->getBuild($request);
     }
 }

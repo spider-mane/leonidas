@@ -12,4 +12,8 @@ trait AbstractModuleTraitTrait
     abstract protected function getServerRequest(): ServerRequestInterface;
 
     abstract protected function getExtension(): WpExtensionInterface;
+
+    abstract protected function getService(string $service);
+
+    abstract protected function getConfig(string $key, $default = null);
 }
