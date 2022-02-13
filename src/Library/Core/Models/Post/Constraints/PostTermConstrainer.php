@@ -1,6 +1,6 @@
 <?php
 
-namespace Leonidas\Library\Core\Http\Constrainers;
+namespace Leonidas\Library\Core\Models\Post\Constraints;
 
 use Leonidas\Contracts\Http\ConstrainerInterface;
 use Leonidas\Traits\ExpectsPostTrait;
