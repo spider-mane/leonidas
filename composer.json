@@ -111,7 +111,7 @@
     "env": "cp -n .env.example .env && bin/build-paths",
     "export": "git archive --output=./build/leonidas.zip --format=zip HEAD",
     "fix": "vendor/bin/phpcbf",
-    "fix:pcf": "vendor/bin/php-cs-fixer fix --verbose",
+    "style": "vendor/bin/php-cs-fixer fix --verbose",
     "hooks": "vendor/bin/captainhook",
     "inspect": "vendor/bin/psalm",
     "link": "bin/symlink-plugin",
