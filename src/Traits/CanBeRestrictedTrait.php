@@ -7,22 +7,15 @@ use Psr\Http\Message\ServerRequestInterface;
 
 trait CanBeRestrictedTrait
 {
-    protected ConstrainerCollectionInterface $constraints;
+    protected ?ConstrainerCollectionInterface $constraints = null;
 
-    public function getConstraints(): ConstrainerCollectionInterface
+    public function getConstraints(): ?ConstrainerCollectionInterface
     {
         return $this->constraints;
     }
 
-    public function setConstraints(ConstrainerCollectionInterface $constraints)
-    {
-        $this->constraints = $constraints;
-
-        return $this;
-    }
-
     public function shouldBeRendered(ServerRequestInterface $request): bool
     {
-        return !$this->constraints->constrains($request);
+        return !isset($this->constraints) || !$this->constraints->constrains($request);
     }
 }
