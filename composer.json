@@ -167,7 +167,8 @@
         "php-cs-fixer": {},
         "wordpress": {}
       },
-      "logs": {}
+      "logs": {},
+      "boot/development/playground.php": {}
     },
     "installer-paths": {
       "wordpress/wp-content/plugins/{$name}": [
