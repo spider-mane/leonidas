@@ -6,5 +6,5 @@ use Leonidas\Enum\Admin\Page\AdminPageContext;
 
 interface FlexPageInterface extends MenuPageInterface, SubmenuPageInterface, InteriorPageInterface
 {
-    public function getContext(AdminPageContext $context): string;
+    public function getContext(): AdminPageContext;
 }
