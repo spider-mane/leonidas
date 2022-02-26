@@ -3,9 +3,9 @@
 namespace Leonidas\Library\Admin\Setting;
 
 use Leonidas\Contracts\Admin\Setting\SettingInterface;
-use Leonidas\Contracts\Admin\Setting\SettingsRegistrarInterface;
+use Leonidas\Contracts\Admin\Setting\SettingRegistrarInterface;
 
-class SettingRegistrar implements SettingsRegistrarInterface
+class SettingRegistrar implements SettingRegistrarInterface
 {
     public function registerOne(SettingInterface $setting)
     {

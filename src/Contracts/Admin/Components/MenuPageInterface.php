@@ -2,7 +2,7 @@
 
 namespace Leonidas\Contracts\Admin\Components;
 
-interface MenuPageInterface extends AdminPageInterface
+interface MenuPageInterface extends BaseMenuPageInterface
 {
     public function getIconUrl(): string;
 

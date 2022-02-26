@@ -3,43 +3,40 @@
 namespace Leonidas\Library\Admin\Loaders;
 
 use Leonidas\Contracts\Admin\Components\MenuPageInterface;
+use Leonidas\Contracts\Admin\Components\MenuPageLoaderInterface;
 
-class MenuPageLoader extends AbstractAdminPageLoader
+class MenuPageLoader implements MenuPageLoaderInterface
 {
     /**
-     * @var MenuPageInterface
+     * @var callable
      */
-    protected $adminPage;
+    protected $outputLoader;
 
-    /**
-     *
-     */
-    public function __construct(MenuPageInterface $adminPage)
+    public function __construct(callable $outputLoader)
     {
-        $this->adminPage = $adminPage;
+        $this->outputLoader = $outputLoader;
     }
 
-    protected function addPage(): AbstractAdminPageLoader
+    public function getOutputLoader(): callable
     {
-        $adminPage = $this->adminPage;
+        return $this->outputLoader;
+    }
 
+    public function addOne(MenuPageInterface $page)
+    {
         add_menu_page(
-            $adminPage->getPageTitle(),
-            $adminPage->getMenuTitle(),
-            $adminPage->getCapability(),
-            htmlspecialchars($adminPage->getMenuSlug()),
-            [$this, 'renderPage'],
-            $adminPage->getIconUrl(),
-            $adminPage->getPosition()
+            $page->getPageTitle(),
+            $page->getMenuTitle(),
+            $page->getCapability(),
+            $this->getEscapedMenuSlug($page->getMenuSlug()),
+            $this->getOutputLoader(),
+            $page->getIconUrl(),
+            $page->getPosition()
         );
-
-        return $this;
     }
 
-    protected function removePage(): AbstractAdminPageLoader
+    protected function getEscapedMenuSlug(string $menuSlug)
     {
-        remove_menu_page($this->menuSlug);
-
-        return $this;
+        return htmlspecialchars($menuSlug);
     }
 }

@@ -2,11 +2,7 @@
 
 namespace Leonidas\Contracts\Admin\Components;
 
-interface SubmenuPageInterface extends AdminPageInterface
+interface SubmenuPageInterface extends BaseMenuPageInterface, BaseNestedPageInterface
 {
-    public function getParentSlug(): string;
-
-    public function defineParentFile(string $parentFile): string;
-
-    public function defineSubmenuFile(string $submenuFile, string $parentFile): string;
+    //
 }

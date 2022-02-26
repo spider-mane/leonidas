@@ -2,7 +2,7 @@
 
 namespace Leonidas\Contracts\Admin\Setting;
 
-interface SettingsRegistrarInterface
+interface SettingRegistrarInterface
 {
     public function registerOne(SettingInterface $setting);
 

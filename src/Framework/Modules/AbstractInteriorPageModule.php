@@ -4,17 +4,17 @@ namespace Leonidas\Framework\Modules;
 
 use Closure;
 use Framework\Modules\Traits\FluentlySetsPropertiesTrait;
-use Leonidas\Contracts\Admin\Components\SubmenuPageInterface;
-use Leonidas\Contracts\Admin\Components\SubmenuPageLoaderInterface;
+use Leonidas\Contracts\Admin\Components\InteriorPageInterface;
+use Leonidas\Contracts\Admin\Components\InteriorPageLoaderInterface;
 use Leonidas\Contracts\Extension\ModuleInterface;
 use Leonidas\Framework\Modules\Traits\NestedPageModuleTrait;
-use Leonidas\Library\Admin\Loaders\SubmenuPageLoader;
+use Leonidas\Library\Admin\Loaders\InteriorPageLoader;
 use Leonidas\Traits\Hooks\TargetsAdminMenuHook;
 use Leonidas\Traits\Hooks\TargetsAdminTitleHook;
 use Leonidas\Traits\Hooks\TargetsParentFileHook;
 use Leonidas\Traits\Hooks\TargetsSubmenuFileHook;
 
-abstract class AbstractSubmenuPageModule extends AbstractModule implements ModuleInterface
+abstract class AbstractInteriorPageModule extends AbstractModule implements ModuleInterface
 {
     use FluentlySetsPropertiesTrait;
     use NestedPageModuleTrait;
@@ -23,18 +23,18 @@ abstract class AbstractSubmenuPageModule extends AbstractModule implements Modul
     use TargetsParentFileHook;
     use TargetsSubmenuFileHook;
 
-    protected SubmenuPageInterface $definition;
+    protected InteriorPageInterface $definition;
 
-    protected SubmenuPageLoaderInterface $submenuPageLoader;
+    protected InteriorPageLoaderInterface $interiorPageLoader;
 
-    protected function getDefinition(): SubmenuPageInterface
+    protected function getDefinition(): InteriorPageInterface
     {
         return $this->definition;
     }
 
-    protected function getSubmenuPageLoader(): SubmenuPageLoaderInterface
+    protected function getInteriorPageLoader(): InteriorPageLoaderInterface
     {
-        return $this->submenuPageLoader;
+        return $this->interiorPageLoader;
     }
 
     public function hook(): void
@@ -51,15 +51,15 @@ abstract class AbstractSubmenuPageModule extends AbstractModule implements Modul
 
         $request = $this->getServerRequest()->withAttribute('context', $context);
 
-        $this->addSubmenuPage($request);
+        $this->addInteriorPage($request);
     }
 
-    protected function addSubmenuPage()
+    protected function addInteriorPage()
     {
-        $this->getSubmenuPageLoader()->addOne($this->getDefinition());
+        $this->getInteriorPageLoader()->addOne($this->getDefinition());
     }
 
-    protected function renderSubmenuPage(array $args): void
+    protected function renderInteriorPage(array $args): void
     {
         $request = $this->getServerRequest()->withAttribute('args', $args);
 
@@ -75,15 +75,15 @@ abstract class AbstractSubmenuPageModule extends AbstractModule implements Modul
 
     protected function adminMenuRequiredProperties(): array
     {
-        return ['definition', 'submenuPageLoader'];
+        return ['definition', 'interiorPageLoader'];
     }
 
-    protected function submenuPageLoader(): SubmenuPageLoaderInterface
+    protected function interiorPageLoader(): InteriorPageLoaderInterface
     {
-        return new SubmenuPageLoader(
-            Closure::fromCallable([$this, 'renderSubmenuPage'])
+        return new InteriorPageLoader(
+            Closure::fromCallable([$this, 'renderInteriorPage'])
         );
     }
 
-    abstract protected function definition(): SubmenuPageInterface;
+    abstract protected function definition(): InteriorPageInterface;
 }

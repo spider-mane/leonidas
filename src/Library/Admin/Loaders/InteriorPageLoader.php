@@ -2,10 +2,10 @@
 
 namespace Leonidas\Library\Admin\Loaders;
 
-use Leonidas\Contracts\Admin\Components\SubmenuPageInterface;
-use Leonidas\Contracts\Admin\Components\SubmenuPageLoaderInterface;
+use Leonidas\Contracts\Admin\Components\InteriorPageInterface;
+use Leonidas\Contracts\Admin\Components\InteriorPageLoaderInterface;
 
-class SubmenuPageLoader implements SubmenuPageLoaderInterface
+class InteriorPageLoader implements InteriorPageLoaderInterface
 {
     /**
      * @var callable
@@ -22,16 +22,21 @@ class SubmenuPageLoader implements SubmenuPageLoaderInterface
         return $this->outputLoader;
     }
 
-    public function addOne(SubmenuPageInterface $page)
+    public function addOne(InteriorPageInterface $page)
     {
+        $menuSlug = $this->getEscapedSlug($page->getParentSlug());
+        $submenuSlug = $this->getEscapedMenuSlug($page->getMenuSlug());
+
         add_submenu_page(
-            $this->getEscapedSlug($page->getParentSlug()),
+            $menuSlug,
             $page->getPageTitle(),
-            $page->getMenuTitle(),
+            '',
             $page->getCapability(),
-            $this->getEscapedMenuSlug($page->getMenuSlug()),
+            $submenuSlug,
             $this->getOutputLoader()
         );
+
+        remove_submenu_page($menuSlug, $submenuSlug);
     }
 
     protected function getEscapedSlug(string $slug)

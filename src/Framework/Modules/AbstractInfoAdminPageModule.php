@@ -2,7 +2,7 @@
 
 namespace Leonidas\Framework\Modules;
 
-use Leonidas\Contracts\Admin\Components\AdminPageInterface;
+use Leonidas\Contracts\Admin\Components\BaseMenuPageInterface;
 use Leonidas\Contracts\Extension\ModuleInterface;
 use Leonidas\Traits\Hooks\TargetsAdminMenuHook;
 use Leonidas\Traits\Hooks\TargetsAdminTitleHook;
@@ -12,9 +12,9 @@ abstract class AbstractInfoAdminPageModule extends AbstractModule implements Mod
     use TargetsAdminMenuHook;
     use TargetsAdminTitleHook;
 
-    protected AdminPageInterface $definition;
+    protected BaseMenuPageInterface $definition;
 
-    protected AdminPageInterface $fallback;
+    protected BaseMenuPageInterface $fallback;
 
     public function hook(): void
     {
@@ -66,7 +66,7 @@ abstract class AbstractInfoAdminPageModule extends AbstractModule implements Mod
 
     abstract protected function removePage();
 
-    abstract protected function definition(): AdminPageInterface;
+    abstract protected function definition(): BaseMenuPageInterface;
 
-    abstract protected function fallback(): AdminPageInterface;
+    abstract protected function fallback(): BaseMenuPageInterface;
 }

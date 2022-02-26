@@ -2,7 +2,7 @@
 
 namespace Leonidas\Contracts\Admin\Components;
 
-interface SubmenuPageCollectionInterface
+interface InteriorPageInterface extends BaseNestedPageInterface
 {
     //
 }
