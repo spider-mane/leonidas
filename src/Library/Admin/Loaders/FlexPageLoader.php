@@ -15,9 +15,22 @@ class FlexPageLoader implements FlexPageLoaderInterface
      */
     protected $outputLoader;
 
-    public function __construct(callable $outputLoader)
-    {
+    protected MenuPageLoaderInterface $menuPageLoader;
+
+    protected SubmenuPageLoaderInterface $submenuPageLoader;
+
+    protected InteriorPageLoaderInterface $interiorPageLoader;
+
+    public function __construct(
+        callable $outputLoader,
+        ?MenuPageLoaderInterface $menuPageLoader = null,
+        ?SubmenuPageLoaderInterface $submenuPageLoader = null,
+        ?InteriorPageLoaderInterface $interiorPageLoader = null
+    ) {
         $this->outputLoader = $outputLoader;
+        $this->menuPageLoader = $menuPageLoader ?? $this->defaultMenuPageLoader();
+        $this->submenuPageLoader = $submenuPageLoader ?? $this->defaultSubmenuPageLoader();
+        $this->interiorPageLoader = $interiorPageLoader ?? $this->defaultInteriorPageLoader();
     }
 
     public function getOutputLoader(): callable
@@ -25,34 +38,37 @@ class FlexPageLoader implements FlexPageLoaderInterface
         return $this->outputLoader;
     }
 
-    public function addOne(FlexPageInterface $page)
+    public function getMenuPageLoader(): MenuPageLoaderInterface
     {
-        switch ($page->getContext()->value) {
-            case 'menu':
-                $this->menuPageLoader()->addOne($page);
-                break;
-
-            case 'submenu':
-                $this->submenuPageLoader()->addOne($page);
-                break;
-
-            case 'interior':
-                $this->interiorPageLoader()->addOne($page);
-                break;
-        }
+        return $this->menuPageLoader;
     }
 
-    protected function menuPageLoader(): MenuPageLoaderInterface
+    public function getSubMenuPageLoader(): SubmenuPageLoaderInterface
+    {
+        return $this->submenuPageLoader;
+    }
+
+    public function getInteriorPageLoader(): InteriorPageLoaderInterface
+    {
+        return $this->interiorPageLoader;
+    }
+
+    public function addOne(FlexPageInterface $page)
+    {
+        $this->{$page->getContext()->value . "PageLoader"}->addOne($page);
+    }
+
+    protected function defaultMenuPageLoader(): MenuPageLoaderInterface
     {
         return new MenuPageLoader($this->getOutputLoader());
     }
 
-    protected function submenuPageLoader(): SubmenuPageLoaderInterface
+    protected function defaultSubmenuPageLoader(): SubmenuPageLoaderInterface
     {
         return new SubmenuPageLoader($this->getOutputLoader());
     }
 
-    protected function interiorPageLoader(): InteriorPageLoaderInterface
+    protected function defaultInteriorPageLoader(): InteriorPageLoaderInterface
     {
         return new InteriorPageLoader($this->getOutputLoader());
     }
