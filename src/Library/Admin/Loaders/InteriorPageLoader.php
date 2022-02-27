@@ -24,28 +24,15 @@ class InteriorPageLoader implements InteriorPageLoaderInterface
 
     public function addOne(InteriorPageInterface $page)
     {
-        $menuSlug = $this->getEscapedSlug($page->getParentSlug());
-        $submenuSlug = $this->getEscapedMenuSlug($page->getMenuSlug());
-
         add_submenu_page(
-            $menuSlug,
+            $page->getParentSlug(),
             $page->getPageTitle(),
             '',
             $page->getCapability(),
-            $submenuSlug,
-            $this->getOutputLoader()
+            $page->getMenuSlug(),
+            $this->getOutputLoader(),
         );
 
-        remove_submenu_page($menuSlug, $submenuSlug);
-    }
-
-    protected function getEscapedSlug(string $slug)
-    {
-        return htmlspecialchars($slug);
-    }
-
-    protected function getEscapedMenuSlug(string $menuSlug)
-    {
-        return htmlspecialchars($menuSlug);
+        remove_submenu_page($page->getParentSlug(), $page->getMenuSlug());
     }
 }

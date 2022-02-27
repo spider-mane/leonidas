@@ -28,15 +28,10 @@ class MenuPageLoader implements MenuPageLoaderInterface
             $page->getPageTitle(),
             $page->getMenuTitle(),
             $page->getCapability(),
-            $this->getEscapedMenuSlug($page->getMenuSlug()),
+            $page->getMenuSlug(),
             $this->getOutputLoader(),
             $page->getIconUrl(),
             $page->getPosition()
         );
-    }
-
-    protected function getEscapedMenuSlug(string $menuSlug)
-    {
-        return htmlspecialchars($menuSlug);
     }
 }

@@ -25,22 +25,12 @@ class SubmenuPageLoader implements SubmenuPageLoaderInterface
     public function addOne(SubmenuPageInterface $page)
     {
         add_submenu_page(
-            $this->getEscapedSlug($page->getParentSlug()),
+            $page->getParentSlug(),
             $page->getPageTitle(),
             $page->getMenuTitle(),
             $page->getCapability(),
-            $this->getEscapedMenuSlug($page->getMenuSlug()),
+            $page->getMenuSlug(),
             $this->getOutputLoader()
         );
-    }
-
-    protected function getEscapedSlug(string $slug)
-    {
-        return htmlspecialchars($slug);
-    }
-
-    protected function getEscapedMenuSlug(string $menuSlug)
-    {
-        return htmlspecialchars($menuSlug);
     }
 }
