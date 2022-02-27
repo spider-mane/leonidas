@@ -3,6 +3,7 @@
 namespace Leonidas\Library\Admin\Page\Resolvers\AdminTitle;
 
 use Leonidas\Contracts\Admin\AdminTitleResolverInterface;
+use Psr\Http\Message\ServerRequestInterface;
 
 class AdminTitleCallback implements AdminTitleResolverInterface
 {
@@ -13,8 +14,8 @@ class AdminTitleCallback implements AdminTitleResolverInterface
         $this->callback = $callback;
     }
 
-    public function resolveAdminTitle(string $adminTitle, string $title): string
+    public function resolveAdminTitle(ServerRequestInterface $request): string
     {
-        return ($this->callback)($adminTitle, $title);
+        return ($this->callback)($request);
     }
 }

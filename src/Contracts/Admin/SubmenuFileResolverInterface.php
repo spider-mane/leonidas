@@ -2,10 +2,9 @@
 
 namespace Leonidas\Contracts\Admin;
 
+use Psr\Http\Message\ServerRequestInterface;
+
 interface SubmenuFileResolverInterface
 {
-    /**
-     *
-     */
-    public function resolveSubmenuFile(string $submenuFile, string $parentFile): string;
+    public function resolveSubmenuFile(ServerRequestInterface $request): string;
 }

@@ -3,6 +3,7 @@
 namespace Leonidas\Library\Admin\Page\Resolvers\SubmenuFile;
 
 use Leonidas\Contracts\Admin\SubmenuFileResolverInterface;
+use Psr\Http\Message\ServerRequestInterface;
 
 class SubmenuFileCallback implements SubmenuFileResolverInterface
 {
@@ -13,8 +14,8 @@ class SubmenuFileCallback implements SubmenuFileResolverInterface
         $this->callback = $callback;
     }
 
-    public function resolveSubmenuFile(string $submenuFile, string $parentFile): string
+    public function resolveSubmenuFile(ServerRequestInterface $request): string
     {
-        return ($this->callback)($submenuFile, $parentFile);
+        return ($this->callback)($request);
     }
 }

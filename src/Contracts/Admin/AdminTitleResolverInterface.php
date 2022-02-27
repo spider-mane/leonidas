@@ -2,10 +2,9 @@
 
 namespace Leonidas\Contracts\Admin;
 
+use Psr\Http\Message\ServerRequestInterface;
+
 interface AdminTitleResolverInterface
 {
-    /**
-     *
-     */
-    public function resolveAdminTitle(string $adminTitle, string $title): string;
+    public function resolveAdminTitle(ServerRequestInterface $request): string;
 }

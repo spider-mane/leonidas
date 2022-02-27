@@ -3,6 +3,7 @@
 namespace Leonidas\Library\Admin\Page\Resolvers\ParentFile;
 
 use Leonidas\Contracts\Admin\ParentFileResolverInterface;
+use Psr\Http\Message\ServerRequestInterface;
 
 class ParentFileCallback implements ParentFileResolverInterface
 {
@@ -13,8 +14,8 @@ class ParentFileCallback implements ParentFileResolverInterface
         $this->callback = $callback;
     }
 
-    public function resolveParentFile(string $parentFile): string
+    public function resolveParentFile(ServerRequestInterface $request): string
     {
-        return ($this->callback)($parentFile);
+        return ($this->callback)($request);
     }
 }
