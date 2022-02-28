@@ -5,19 +5,12 @@ namespace Leonidas\Library\Admin\Page;
 use Leonidas\Contracts\Admin\AdminTitleResolverInterface;
 use Leonidas\Contracts\Admin\Components\AdminPageLayoutInterface;
 use Leonidas\Contracts\Admin\Components\LoadErrorPageInterface;
-use Leonidas\Contracts\Admin\Components\MenuPageInterface;
-use Leonidas\Traits\CanBeRestrictedTrait;
 
-class MenuPage extends AbstractMenuPage implements MenuPageInterface
+abstract class AbstractMenuPage extends AbstractAdminPage
 {
-    use CanBeRestrictedTrait;
+    protected string $menuTitle = '';
 
-    protected ?string $iconUrl;
-
-    /**
-     * @var bool|string
-     */
-    protected $shownInSubmenu;
+    protected int $position;
 
     public function __construct(
         string $pageTitle,
@@ -26,19 +19,15 @@ class MenuPage extends AbstractMenuPage implements MenuPageInterface
         int $position,
         AdminPageLayoutInterface $layout,
         LoadErrorPageInterface $loadErrorPage,
-        ?string $iconUrl,
         ?string $capability = null,
-        $shownInSubmenu = null,
         ?AdminTitleResolverInterface $adminTitleResolver = null
     ) {
-        $this->iconUrl = $iconUrl;
-        $shownInSubmenu && $this->shownInSubmenu = $shownInSubmenu;
+        $this->menuTitle = $menuTitle;
+        $this->position = $position;
 
         parent::__construct(
             $pageTitle,
-            $menuTitle,
             $menuSlug,
-            $position,
             $layout,
             $loadErrorPage,
             $capability,
@@ -46,13 +35,13 @@ class MenuPage extends AbstractMenuPage implements MenuPageInterface
         );
     }
 
-    public function getIconUrl(): ?string
+    public function getMenuTitle(): string
     {
-        return $this->iconUrl;
+        return $this->menuTitle;
     }
 
-    public function getTitleInSubmenu(): string
+    public function getPosition(): ?int
     {
-        return $this->shownInSubmenu;
+        return $this->position;
     }
 }

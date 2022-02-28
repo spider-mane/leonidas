@@ -4,22 +4,20 @@ namespace Leonidas\Library\Admin\Page;
 
 use Leonidas\Contracts\Admin\AdminTitleResolverInterface;
 use Leonidas\Contracts\Admin\Components\AdminPageLayoutInterface;
+use Leonidas\Contracts\Admin\Components\InteriorPageInterface;
 use Leonidas\Contracts\Admin\Components\LoadErrorPageInterface;
-use Leonidas\Contracts\Admin\Components\SubmenuPageInterface;
 use Leonidas\Contracts\Admin\ParentFileResolverInterface;
 use Leonidas\Contracts\Admin\SubmenuFileResolverInterface;
 use Leonidas\Library\Admin\Page\Traits\NestedPageTrait;
 
-class SubmenuPage extends AbstractMenuPage implements SubmenuPageInterface
+class InteriorPage extends AbstractAdminPage implements InteriorPageInterface
 {
     use NestedPageTrait;
 
     public function __construct(
         string $parentSlug,
         string $pageTitle,
-        string $menuTitle,
         string $menuSlug,
-        int $position,
         AdminPageLayoutInterface $layout,
         LoadErrorPageInterface $loadErrorPage,
         ?string $capability = null,
@@ -35,9 +33,7 @@ class SubmenuPage extends AbstractMenuPage implements SubmenuPageInterface
 
         parent::__construct(
             $pageTitle,
-            $menuTitle,
             $menuSlug,
-            $position,
             $layout,
             $loadErrorPage,
             $capability,

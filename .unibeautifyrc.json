@@ -1,0 +1,6 @@
+{
+  "PHP": {
+    "beautifiers": ["PHP-CS-Fixer"],
+    "PHP-CS-Fixer": {}
+  }
+}

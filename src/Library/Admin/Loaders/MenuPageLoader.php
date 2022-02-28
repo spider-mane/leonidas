@@ -33,5 +33,22 @@ class MenuPageLoader implements MenuPageLoaderInterface
             $page->getIconUrl(),
             $page->getPosition()
         );
+
+        $this->maybeAddSubMenuLink($page);
+    }
+
+    protected function maybeAddSubMenuLink(MenuPageInterface $page)
+    {
+        if ($title = $page->getTitleInSubmenu()) {
+            add_submenu_page(
+                $page->getMenuSlug(),
+                $page->getPageTitle(),
+                $title,
+                $page->getCapability(),
+                $page->getMenuSlug(),
+                null,
+                PHP_INT_MIN
+            );
+        }
     }
 }

@@ -14,5 +14,8 @@ interface BaseAdminPageInterface extends AdminComponentInterface
 
     public function getLoadErrorPage(): LoadErrorPageInterface;
 
+    /**
+     * @link https://developer.wordpress.org/reference/hooks/admin_title/
+     */
     public function defineAdminTitle(ServerRequestInterface $request): ?string;
 }
