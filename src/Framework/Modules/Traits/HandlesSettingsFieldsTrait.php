@@ -1,11 +1,10 @@
 <?php
 
-namespace Framework\Modules\Traits;
+namespace Leonidas\Framework\Modules\Traits;
 
 use Closure;
 use Leonidas\Contracts\Admin\Components\SettingsFieldCollectionInterface;
 use Leonidas\Contracts\Admin\Components\SettingsFieldLoaderInterface;
-use Leonidas\Framework\Modules\Traits\AbstractModuleTraitTrait;
 use Leonidas\Library\Admin\Page\SettingsField\SettingsFieldLoader;
 use Psr\Http\Message\ServerRequestInterface;
 

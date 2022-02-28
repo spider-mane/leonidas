@@ -3,11 +3,11 @@
 namespace Leonidas\Framework\Modules;
 
 use Closure;
-use Framework\Modules\Traits\FluentlySetsPropertiesTrait;
 use Leonidas\Contracts\Admin\Components\MenuPageInterface;
 use Leonidas\Contracts\Admin\Components\MenuPageLoaderInterface;
 use Leonidas\Contracts\Extension\ModuleInterface;
 use Leonidas\Framework\Modules\Traits\AdminPageModuleTrait;
+use Leonidas\Framework\Modules\Traits\FluentlySetsPropertiesTrait;
 use Leonidas\Library\Admin\Loaders\MenuPageLoader;
 use Leonidas\Traits\Hooks\TargetsAdminMenuHook;
 use Leonidas\Traits\Hooks\TargetsAdminTitleHook;

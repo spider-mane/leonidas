@@ -2,15 +2,15 @@
 
 namespace Leonidas\Framework\Modules;
 
-use Framework\Modules\Traits\FluentlySetsPropertiesTrait;
 use Leonidas\Contracts\Admin\Setting\SettingCollectionInterface;
-use Leonidas\Contracts\Admin\Setting\SettingRegistrarInterface;
 use Leonidas\Contracts\Extension\ModuleInterface;
+use Leonidas\Framework\Modules\Traits\FluentlySetsPropertiesTrait;
 use Leonidas\Framework\Modules\Traits\HandlesSettingsTrait;
 use Leonidas\Traits\Hooks\TargetsAdminInitHook;
 
 abstract class AbstractSettingsModuleInterface extends AbstractModule implements ModuleInterface
 {
+    use FluentlySetsPropertiesTrait;
     use HandlesSettingsTrait;
     use TargetsAdminInitHook;
 

@@ -2,7 +2,6 @@
 
 namespace Leonidas\Framework\Modules\Traits;
 
-use Framework\Modules\Traits\FluentlySetsPropertiesTrait;
 use Leonidas\Contracts\Admin\Components\BaseAdminPageInterface;
 use Psr\Http\Message\ServerRequestInterface;
 

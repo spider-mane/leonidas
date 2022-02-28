@@ -2,8 +2,6 @@
 
 namespace Leonidas\Framework\Modules\Traits;
 
-use Framework\Modules\Traits\FluentlySetsPropertiesTrait;
-use Framework\Modules\Traits\HandlesSettingsFieldsTrait;
 use Leonidas\Contracts\Admin\Components\SettingsFieldCollectionInterface;
 use Leonidas\Contracts\Admin\Components\SettingsSectionCollectionInterface;
 use Leonidas\Contracts\Admin\Setting\SettingCollectionInterface;

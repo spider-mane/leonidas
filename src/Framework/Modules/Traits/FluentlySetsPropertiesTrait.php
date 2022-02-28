@@ -1,6 +1,6 @@
 <?php
 
-namespace Framework\Modules\Traits;
+namespace Leonidas\Framework\Modules\Traits;
 
 trait FluentlySetsPropertiesTrait
 {

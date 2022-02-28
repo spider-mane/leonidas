@@ -3,10 +3,10 @@
 namespace Leonidas\Framework\Modules;
 
 use Closure;
-use Framework\Modules\Traits\FluentlySetsPropertiesTrait;
 use Leonidas\Contracts\Admin\Components\FlexPageInterface;
 use Leonidas\Contracts\Admin\Components\FlexPageLoaderInterface;
 use Leonidas\Contracts\Extension\ModuleInterface;
+use Leonidas\Framework\Modules\Traits\FluentlySetsPropertiesTrait;
 use Leonidas\Framework\Modules\Traits\NestedPageModuleTrait;
 use Leonidas\Library\Admin\Loaders\FlexPageLoader;
 use Leonidas\Traits\Hooks\TargetsAdminMenuHook;
