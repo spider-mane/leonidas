@@ -4,11 +4,11 @@ namespace Leonidas\Library\Admin\Setting;
 
 use Leonidas\Contracts\Admin\Setting\SettingBuilderInterface;
 use Leonidas\Contracts\Admin\Setting\SettingHandlerInterface;
-use Leonidas\Library\Admin\Setting\Traits\HasSettingsTrait;
+use Leonidas\Library\Admin\Setting\Traits\HasSettingDataTrait;
 
 class SettingBuilder implements SettingBuilderInterface
 {
-    use HasSettingsTrait;
+    use HasSettingDataTrait;
 
     protected ?SettingHandlerInterface $handler = null;
 

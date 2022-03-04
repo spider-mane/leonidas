@@ -4,11 +4,11 @@ namespace Leonidas\Library\Admin\Setting;
 
 use Leonidas\Contracts\Admin\Setting\SettingHandlerInterface;
 use Leonidas\Contracts\Admin\Setting\SettingInterface;
-use Leonidas\Library\Admin\Setting\Traits\HasSettingsTrait;
+use Leonidas\Library\Admin\Setting\Traits\HasSettingDataTrait;
 
 class Setting implements SettingInterface
 {
-    use HasSettingsTrait;
+    use HasSettingDataTrait;
 
     public function __construct(
         string $optionGroup,

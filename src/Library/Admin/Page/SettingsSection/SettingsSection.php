@@ -1,6 +1,6 @@
 <?php
 
-namespace Leonidas\Library\Admin\Page;
+namespace Leonidas\Library\Admin\Page\SettingsSection;
 
 use Leonidas\Contracts\Admin\Components\SettingsSectionInterface;
 use Leonidas\Contracts\Http\ConstrainerCollectionInterface;
