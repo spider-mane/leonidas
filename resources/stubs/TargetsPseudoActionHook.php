@@ -1,10 +1,8 @@
 <?php
 
-namespace Leonidas\Traits\Hooks;
-
 use Closure;
 
-trait TargetsPseudoActionHook
+trait TargetsPseudoActionTypeHook
 {
     protected function targetPseudoActionHook()
     {
@@ -20,7 +18,7 @@ trait TargetsPseudoActionHook
 
     protected function getPseudoActionPriority(): int
     {
-        return 10;
+        return HOOK_DEFAULT_PRIORITY;
     }
 
     abstract protected function doPseudoActionAction(): void;

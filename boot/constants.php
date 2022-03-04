@@ -4,4 +4,4 @@ defined('ABSPATH') || exit;
 
 $root = dirname(__DIR__, 1);
 
-define('WP_HOOK_PRIORITY_DEFAULT', 10);
+define('HOOK_DEFAULT_PRIORITY', 10);

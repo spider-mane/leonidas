@@ -1,7 +1,5 @@
 <?php
 
-namespace Leonidas\Traits\Hooks;
-
 use Closure;
 
 trait TargetsPseudoFilterHook
@@ -20,7 +18,7 @@ trait TargetsPseudoFilterHook
 
     protected function getPseudoFilterPriority(): int
     {
-        return 10;
+        return HOOK_DEFAULT_PRIORITY;
     }
 
     abstract protected function filterPseudoFilter(): mixed;
