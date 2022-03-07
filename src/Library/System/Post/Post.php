@@ -7,8 +7,6 @@ use DateTimeInterface;
 use Exception;
 use Leonidas\Contracts\System\Post\PostInterface;
 use Leonidas\Contracts\System\User\UserInterface;
-use Leonidas\Library\Domain\Interfaces\PostDataProviderInterface;
-use Leonidas\Library\System\Traits\DefersResolutionTrait;
 use WP_Post;
 
 class Post implements PostInterface
