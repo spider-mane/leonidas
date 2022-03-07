@@ -2,7 +2,7 @@
 
 use Closure;
 
-trait TargetsPseudoActionTypeHook
+trait TargetsPseudoActionHook
 {
     protected function targetPseudoActionHook()
     {
