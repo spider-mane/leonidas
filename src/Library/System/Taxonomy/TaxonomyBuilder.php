@@ -9,11 +9,11 @@ class TaxonomyBuilder extends AbstractSystemModelTypeBuilder implements Taxonomy
 {
     protected array $objectTypes;
 
-    protected ?bool $isShownInTagCloud;
+    protected ?bool $showTagCloud;
 
-    protected ?bool $isShownInQuickEdit;
+    protected ?bool $showInQuickEdit;
 
-    protected ?bool $showsAdminColumn;
+    protected ?bool $showAdminColumn;
 
     /**
      * @var null|bool|callable
@@ -84,23 +84,23 @@ class TaxonomyBuilder extends AbstractSystemModelTypeBuilder implements Taxonomy
         return $this;
     }
 
-    public function hierarchical(?bool $isHierarchical): self
+    public function hierarchical(?bool $hierarchical): self
     {
-        $this->isHierarchical = $isHierarchical;
+        $this->hierarchical = $hierarchical;
 
         return $this;
     }
 
-    public function publiclyQueryable(?bool $isPubliclyQueryable): self
+    public function publiclyQueryable(?bool $publiclyQueryable): self
     {
-        $this->isPubliclyQueryable = $isPubliclyQueryable;
+        $this->publiclyQueryable = $publiclyQueryable;
 
         return $this;
     }
 
     public function showInUi(?bool $showInUi): self
     {
-        $this->isShownInUi = $showInUi;
+        $this->isAllowedInUi = $showInUi;
 
         return $this;
     }
@@ -114,7 +114,7 @@ class TaxonomyBuilder extends AbstractSystemModelTypeBuilder implements Taxonomy
 
     public function showInNavMenus(?bool $showInNavMenu): self
     {
-        $this->shownInMenus = $showInNavMenu;
+        $this->displayedInMenu = $showInNavMenu;
 
         return $this;
     }
@@ -142,7 +142,7 @@ class TaxonomyBuilder extends AbstractSystemModelTypeBuilder implements Taxonomy
 
     public function showInRest(?bool $showInRest): self
     {
-        $this->isShownInRest = $showInRest;
+        $this->isAllowedInRest = $showInRest;
 
         return $this;
     }
@@ -184,21 +184,21 @@ class TaxonomyBuilder extends AbstractSystemModelTypeBuilder implements Taxonomy
 
     public function showTagCloud(?bool $showInTagCloud): self
     {
-        $this->isShownInTagCloud = $showInTagCloud;
+        $this->showTagCloud = $showInTagCloud;
 
         return $this;
     }
 
     public function showInQuickEdit(?bool $showInQuickEdit): self
     {
-        $this->isShownInQuickEdit = $showInQuickEdit;
+        $this->showInQuickEdit = $showInQuickEdit;
 
         return $this;
     }
 
     public function showAdminColumn(?bool $showAdminColumn): self
     {
-        $this->showsAdminColumn = $showAdminColumn;
+        $this->showAdminColumn = $showAdminColumn;
 
         return $this;
     }
@@ -255,21 +255,21 @@ class TaxonomyBuilder extends AbstractSystemModelTypeBuilder implements Taxonomy
             $this->description ?? '',
             $this->labels ?? [],
             $this->isPublic ?? false,
-            $this->isHierarchical ?? false,
-            $this->isPubliclyQueryable,
-            $this->isShownInUi,
-            $this->shownInMenus,
-            $this->isShownInNavMenus,
+            $this->hierarchical ?? false,
+            $this->publiclyQueryable,
+            $this->isAllowedInUi,
+            $this->displayedInMenu,
+            $this->isAllowedInNavMenus,
             $this->capabilities ?? [],
             $this->rewrite ?? true,
             $this->queryVar ?? true,
-            $this->isShownInRest ?? false,
+            $this->isAllowedInRest ?? false,
             $this->restBase ?? false,
             $this->restNamespace ?? false,
             $this->restControllerClass ?? false,
-            $this->isShownInTagCloud,
-            $this->isShownInQuickEdit,
-            $this->showsAdminColumn ?? false,
+            $this->showTagCloud,
+            $this->showInQuickEdit,
+            $this->showAdminColumn ?? false,
             $this->metaBoxCb,
             $this->metaBoxSanitizeCb,
             $this->updateCountCallback,

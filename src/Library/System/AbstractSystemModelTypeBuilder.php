@@ -18,18 +18,18 @@ abstract class AbstractSystemModelTypeBuilder implements BaseSystemModelTypeBuil
 
     protected ?bool $isPublic;
 
-    protected ?bool $isHierarchical;
+    protected ?bool $hierarchical;
 
-    protected ?bool $isPubliclyQueryable;
+    protected ?bool $publiclyQueryable;
 
-    protected ?bool $isShownInUi;
+    protected ?bool $isAllowedInUi;
 
     /**
      * @var null|bool|string
      */
-    protected $shownInMenus;
+    protected $displayedInMenu;
 
-    protected ?bool $isShownInNavMenus;
+    protected ?bool $isAllowedInNavMenus;
 
     protected array $capabilities;
 
@@ -43,7 +43,7 @@ abstract class AbstractSystemModelTypeBuilder implements BaseSystemModelTypeBuil
      */
     protected $queryVar;
 
-    protected ?bool $isShownInRest;
+    protected ?bool $isAllowedInRest;
 
     /**
      * @var null|bool|string

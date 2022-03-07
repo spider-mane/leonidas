@@ -28,7 +28,7 @@ interface TaxonomyBuilderInterface extends BaseSystemModelTypeBuilderInterface
      */
     public function defaultTerm($defaultTerm): self;
 
-    public function sort(?bool $sorted): self;
+    public function sort(?bool $sort): self;
 
     public function args(?array $args): self;
 

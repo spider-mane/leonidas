@@ -35,7 +35,7 @@ interface PostTypeBuilderInterface extends BaseSystemModelTypeBuilderInterface
      */
     public function hasArchive(?bool $archive): self;
 
-    public function canExport(?bool $exportable): self;
+    public function canExport(?bool $canExport): self;
 
     public function deleteWithUser(?bool $deleteWithUser): self;
 

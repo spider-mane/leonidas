@@ -9,7 +9,7 @@ class PostType extends AbstractSystemModelType implements PostTypeInterface
 {
     protected bool $isExcludedFromSearch;
 
-    protected bool $isShownInAdminBar;
+    protected bool $isAllowedInAdminBar;
 
     protected ?int $menuPosition;
 
@@ -20,7 +20,7 @@ class PostType extends AbstractSystemModelType implements PostTypeInterface
      */
     protected $capabilityType;
 
-    protected bool $usesMapMetaCap;
+    protected bool $allowsMetaCapMapping;
 
     /**
      * @var bool|array
@@ -59,22 +59,22 @@ class PostType extends AbstractSystemModelType implements PostTypeInterface
         bool $isPublic = false,
         bool $isHierarchical = false,
         ?bool $isPubliclyQueryable = null,
-        ?bool $isShownInUi = null,
-        $shownInMenu = null,
-        ?bool $isShownInNavMenus = null,
+        ?bool $isAllowedInUi = null,
+        $displayedInMenu = null,
+        ?bool $isAllowedInNavMenus = null,
         array $capabilities = [],
         $rewrite = true,
         $queryVar = true,
-        bool $isShownInRest = false,
+        bool $isAllowedInRest = false,
         $restBase = false,
         $restNamespace = false,
         $restControllerClass = false,
         ?bool $isExcludedFromSearch = null,
-        ?bool $isShownInAdminBar = null,
+        ?bool $isAllowedInAdminBar = null,
         ?int $menuPosition = null,
         ?string $menuIcon = null,
         $capabilityType = 'post',
-        bool $usesMapMetaCap = false,
+        bool $allowsMetaCapMapping = false,
         $supports = [],
         ?callable $registerMetaBoxCb = null,
         array $taxonomies = [],
@@ -94,13 +94,13 @@ class PostType extends AbstractSystemModelType implements PostTypeInterface
             $isPublic,
             $isHierarchical,
             $isPubliclyQueryable,
-            $isShownInUi,
-            $shownInMenu,
-            $isShownInNavMenus,
+            $isAllowedInUi,
+            $displayedInMenu,
+            $isAllowedInNavMenus,
             $capabilities,
             $rewrite,
             $queryVar,
-            $isShownInRest,
+            $isAllowedInRest,
             $restBase,
             $restNamespace,
             $restControllerClass,
@@ -109,7 +109,7 @@ class PostType extends AbstractSystemModelType implements PostTypeInterface
 
         $this->menuPosition = $menuPosition;
         $this->menuIcon = $menuIcon;
-        $this->usesMapMetaCap = $usesMapMetaCap;
+        $this->allowsMetaCapMapping = $allowsMetaCapMapping;
         $this->capabilityType = $capabilityType;
         $this->supports = $supports;
         $this->registerMetaBoxCb = $registerMetaBoxCb;
@@ -121,7 +121,7 @@ class PostType extends AbstractSystemModelType implements PostTypeInterface
         $this->templateLock = $templateLock;
 
         $this->isExcludedFromSearch = $isExcludedFromSearch ?? $this->isPublic;
-        $this->isShownInAdminBar = $isShownInAdminBar ?? $this->shownInMenu;
+        $this->isAllowedInAdminBar = $isAllowedInAdminBar ?? $this->displayedInMenu;
     }
 
     public function isExcludedFromSearch(): bool
@@ -129,9 +129,9 @@ class PostType extends AbstractSystemModelType implements PostTypeInterface
         return $this->isExcludedFromSearch;
     }
 
-    public function isShownInAdminBar(): bool
+    public function isAllowedInAdminBar(): bool
     {
-        return $this->isShownInAdminBar;
+        return $this->isAllowedInAdminBar;
     }
 
     public function getMenuPosition(): int
@@ -149,9 +149,9 @@ class PostType extends AbstractSystemModelType implements PostTypeInterface
         return $this->capabilityType;
     }
 
-    public function usesMapMetaCap(): bool
+    public function allowsMetaCapMapping(): bool
     {
-        return $this->usesMapMetaCap;
+        return $this->allowsMetaCapMapping;
     }
 
     public function getSupports()

@@ -45,9 +45,9 @@ class TaxonomyRegistrar extends AbstractSystemModelTypeRegistrar implements Taxo
     protected function getArgs(TaxonomyInterface $taxonomy)
     {
         $args = [
-            "show_tagcloud" => $taxonomy->isShownInTagCloud(),
-            "show_in_quick_edit" => $taxonomy->isShownInQuickEdit(),
-            "show_admin_column" => $taxonomy->showsAdminColumn(),
+            "show_tagcloud" => $taxonomy->isAllowedInTagCloud(),
+            "show_in_quick_edit" => $taxonomy->isAllowedInQuickEdit(),
+            "show_admin_column" => $taxonomy->canHaveAdminColumn(),
             "meta_box_cb" => $taxonomy->getMetaBoxCb(),
             "meta_box_sanitize_cb" => $taxonomy->getMetaBoxSanitizeCb(),
             "update_count_callback" => $taxonomy->getUpdateCountCallback(),

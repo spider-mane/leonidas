@@ -9,11 +9,11 @@ class Taxonomy extends AbstractSystemModelType implements TaxonomyInterface
 {
     protected array $objectTypes;
 
-    protected bool $isShownInTagCloud;
+    protected bool $isAllowedInTagCloud;
 
-    protected bool $isShownInQuickEdit;
+    protected bool $isAllowedInQuickEdit;
 
-    protected bool $showsAdminColumn;
+    protected bool $canHaveAdminColumn;
 
     /**
      * @var bool|callable
@@ -52,19 +52,19 @@ class Taxonomy extends AbstractSystemModelType implements TaxonomyInterface
         bool $isPublic = false,
         bool $isHierarchical = false,
         ?bool $isPubliclyQueryable = null,
-        ?bool $isShownInUi = null,
-        $shownInMenu = null,
-        ?bool $isShownInNavMenus = null,
+        ?bool $isAllowedInUi = null,
+        $displayedInMenu = null,
+        ?bool $isAllowedInNavMenus = null,
         array $capabilities = [],
         $rewrite = true,
         $queryVar = true,
-        bool $isShownInRest = false,
+        bool $isAllowedInRest = false,
         $restBase = false,
         $restNamespace = false,
         $restControllerClass = false,
-        ?bool $isShownInTagCloud = null,
-        ?bool $isShownInQuickEdit = null,
-        bool $showsAdminColumn = false,
+        ?bool $isAllowedInTagCloud = null,
+        ?bool $isAllowedInQuickEdit = null,
+        bool $canHaveAdminColumn = false,
         $metaBoxCb = null,
         ?callable $metaBoxSanitizeCb = null,
         ?callable $updateCountCallback = null,
@@ -81,13 +81,13 @@ class Taxonomy extends AbstractSystemModelType implements TaxonomyInterface
             $isPublic,
             $isHierarchical,
             $isPubliclyQueryable,
-            $isShownInUi,
-            $shownInMenu,
-            $isShownInNavMenus,
+            $isAllowedInUi,
+            $displayedInMenu,
+            $isAllowedInNavMenus,
             $capabilities,
             $rewrite,
             $queryVar,
-            $isShownInRest,
+            $isAllowedInRest,
             $restBase,
             $restNamespace,
             $restControllerClass,
@@ -95,15 +95,15 @@ class Taxonomy extends AbstractSystemModelType implements TaxonomyInterface
         );
 
         $this->objectTypes = $objectTypes;
-        $this->showsAdminColumn = $showsAdminColumn;
+        $this->canHaveAdminColumn = $canHaveAdminColumn;
         $this->metaBoxCb = $metaBoxCb;
         $this->metaBoxSanitizeCb = $metaBoxSanitizeCb;
         $this->updateCountCallback = $updateCountCallback;
         $this->defaultTerm = $defaultTerm;
         $this->shouldBeSorted = $shouldBeSorted;
 
-        $this->isShownInTagCloud = $isShownInTagCloud ?? $this->isShownInUi;
-        $this->isShownInQuickEdit = $isShownInQuickEdit ?? $this->isShownInUi;
+        $this->isAllowedInTagCloud = $isAllowedInTagCloud ?? $this->isAllowedInUi;
+        $this->isAllowedInQuickEdit = $isAllowedInQuickEdit ?? $this->isAllowedInUi;
     }
 
     public function getObjectTypes(): array
@@ -111,19 +111,19 @@ class Taxonomy extends AbstractSystemModelType implements TaxonomyInterface
         return $this->objectTypes;
     }
 
-    public function isShownInTagCloud(): bool
+    public function isAllowedInTagCloud(): bool
     {
-        return $this->isShownInTagCloud;
+        return $this->isAllowedInTagCloud;
     }
 
-    public function isShownInQuickEdit(): bool
+    public function isAllowedInQuickEdit(): bool
     {
-        return $this->isShownInQuickEdit;
+        return $this->isAllowedInQuickEdit;
     }
 
-    public function showsAdminColumn(): bool
+    public function canHaveAdminColumn(): bool
     {
-        return $this->showsAdminColumn;
+        return $this->canHaveAdminColumn;
     }
 
     public function getMetaBoxCb()

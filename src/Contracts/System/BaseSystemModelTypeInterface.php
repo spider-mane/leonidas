@@ -20,14 +20,14 @@ interface BaseSystemModelTypeInterface
 
     public function isPubliclyQueryable(): bool;
 
-    public function isShownInUi(): bool;
+    public function isAllowedInUi(): bool;
 
     /**
      * @return bool|string
      */
-    public function getShownInMenu();
+    public function getDisplayedInMenu();
 
-    public function isShownInNavMenus(): bool;
+    public function isAllowedInNavMenus(): bool;
 
     public function getCapabilities(): array;
 
@@ -41,7 +41,7 @@ interface BaseSystemModelTypeInterface
      */
     public function getQueryVar();
 
-    public function isShownInRest(): bool;
+    public function isAllowedInRest(): bool;
 
     /**
      * @return bool|string

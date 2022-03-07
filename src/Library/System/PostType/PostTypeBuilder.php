@@ -7,9 +7,9 @@ use Leonidas\Library\System\AbstractSystemModelTypeBuilder;
 
 class PostTypeBuilder extends AbstractSystemModelTypeBuilder implements PostTypeBuilderInterface
 {
-    protected ?bool $isExcludedFromSearch;
+    protected ?bool $excludeFromSearch;
 
-    protected ?bool $isShownInAdminBar;
+    protected ?bool $showInAdminBar;
 
     protected ?int $menuPosition;
 
@@ -20,7 +20,7 @@ class PostTypeBuilder extends AbstractSystemModelTypeBuilder implements PostType
      */
     protected $capabilityType;
 
-    protected ?bool $usesMapMetaCap;
+    protected ?bool $mapMetaCap;
 
     /**
      * @var null|bool|array
@@ -39,9 +39,9 @@ class PostTypeBuilder extends AbstractSystemModelTypeBuilder implements PostType
      */
     protected $archive;
 
-    protected ?bool $canBeExported;
+    protected ?bool $canExport;
 
-    protected ?bool $isDeletedWithUser;
+    protected ?bool $deleteWithUser;
 
     protected ?array $template;
 
@@ -92,23 +92,23 @@ class PostTypeBuilder extends AbstractSystemModelTypeBuilder implements PostType
         return $this;
     }
 
-    public function hierarchical(?bool $isHierarchical): self
+    public function hierarchical(?bool $hierarchical): self
     {
-        $this->isHierarchical = $isHierarchical;
+        $this->hierarchical = $hierarchical;
 
         return $this;
     }
 
-    public function publiclyQueryable(?bool $isPubliclyQueryable): self
+    public function publiclyQueryable(?bool $publiclyQueryable): self
     {
-        $this->isPubliclyQueryable = $isPubliclyQueryable;
+        $this->publiclyQueryable = $publiclyQueryable;
 
         return $this;
     }
 
     public function showInUi(?bool $showInUi): self
     {
-        $this->isShownInUi = $showInUi;
+        $this->isAllowedInUi = $showInUi;
 
         return $this;
     }
@@ -122,7 +122,7 @@ class PostTypeBuilder extends AbstractSystemModelTypeBuilder implements PostType
 
     public function showInNavMenus(?bool $showInNavMenu): self
     {
-        $this->shownInMenus = $showInNavMenu;
+        $this->displayedInMenu = $showInNavMenu;
 
         return $this;
     }
@@ -150,7 +150,7 @@ class PostTypeBuilder extends AbstractSystemModelTypeBuilder implements PostType
 
     public function showInRest(?bool $showInRest): self
     {
-        $this->isShownInRest = $showInRest;
+        $this->isAllowedInRest = $showInRest;
 
         return $this;
     }
@@ -185,14 +185,14 @@ class PostTypeBuilder extends AbstractSystemModelTypeBuilder implements PostType
 
     public function excludeFromSearch(?bool $excludeFromSearch): self
     {
-        $this->isExcludedFromSearch = $excludeFromSearch;
+        $this->excludeFromSearch = $excludeFromSearch;
 
         return $this;
     }
 
     public function showInAdminBar(?bool $showInAdminBar): self
     {
-        $this->isShownInAdminBar = $showInAdminBar;
+        $this->showInAdminBar = $showInAdminBar;
 
         return $this;
     }
@@ -253,16 +253,16 @@ class PostTypeBuilder extends AbstractSystemModelTypeBuilder implements PostType
         return $this;
     }
 
-    public function canExport(?bool $exportable): self
+    public function canExport(?bool $canExport): self
     {
-        $this->canBeExported = $exportable;
+        $this->canExport = $canExport;
 
         return $this;
     }
 
     public function deleteWithUser(?bool $deleteWithUser): self
     {
-        $this->isDeletedWithUser = $deleteWithUser;
+        $this->deleteWithUser = $deleteWithUser;
 
         return $this;
     }
@@ -290,30 +290,30 @@ class PostTypeBuilder extends AbstractSystemModelTypeBuilder implements PostType
             $this->description ?? '',
             $this->labels ?? [],
             $this->isPublic ?? false,
-            $this->isHierarchical ?? false,
-            $this->isPubliclyQueryable,
-            $this->isShownInUi,
-            $this->shownInMenus,
-            $this->isShownInNavMenus,
+            $this->hierarchical ?? false,
+            $this->publiclyQueryable,
+            $this->isAllowedInUi,
+            $this->displayedInMenu,
+            $this->isAllowedInNavMenus,
             $this->capabilities ?? [],
             $this->rewrite ?? true,
             $this->queryVar ?? true,
-            $this->isShownInRest ?? false,
+            $this->isAllowedInRest ?? false,
             $this->restBase ?? false,
             $this->restNamespace ?? false,
             $this->restControllerClass ?? false,
-            $this->isExcludedFromSearch,
-            $this->isShownInAdminBar,
+            $this->excludeFromSearch,
+            $this->showInAdminBar,
             $this->menuPosition,
             $this->menuIcon,
             $this->capabilityType ?? 'post',
-            $this->usesMapMetaCap ?? false,
+            $this->mapMetaCap ?? false,
             $this->supports ?? [],
             $this->registerMetaBoxCb,
             $this->taxonomies ?? [],
             $this->archive ?? false,
-            $this->canBeExported ?? true,
-            $this->isDeletedWithUser,
+            $this->canExport ?? true,
+            $this->deleteWithUser,
             $this->template ?? [],
             $this->templateLock ?? false,
             $this->options ?? []

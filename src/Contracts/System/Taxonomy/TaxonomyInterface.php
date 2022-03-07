@@ -8,11 +8,11 @@ interface TaxonomyInterface extends BaseSystemModelTypeInterface
 {
     public function getObjectTypes(): array;
 
-    public function isShownInTagCloud(): bool;
+    public function isAllowedInTagCloud(): bool;
 
-    public function isShownInQuickEdit(): bool;
+    public function isAllowedInQuickEdit(): bool;
 
-    public function showsAdminColumn(): bool;
+    public function canHaveAdminColumn(): bool;
 
     /**
      * @return bool|callable

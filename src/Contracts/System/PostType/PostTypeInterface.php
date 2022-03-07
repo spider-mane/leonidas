@@ -8,7 +8,7 @@ interface PostTypeInterface extends BaseSystemModelTypeInterface
 {
     public function isExcludedFromSearch(): bool;
 
-    public function isShownInAdminBar(): bool;
+    public function isAllowedInAdminBar(): bool;
 
     public function getMenuPosition(): ?int;
 
@@ -19,7 +19,7 @@ interface PostTypeInterface extends BaseSystemModelTypeInterface
      */
     public function getCapabilityType();
 
-    public function usesMapMetaCap(): bool;
+    public function allowsMetaCapMapping(): bool;
 
     /**
      * @return array|bool

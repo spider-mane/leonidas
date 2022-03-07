@@ -22,14 +22,14 @@ abstract class AbstractSystemModelType implements BaseSystemModelTypeInterface
 
     protected bool $isPubliclyQueryable;
 
-    protected bool $isShownInUi;
+    protected bool $isAllowedInUi;
 
     /**
      * @var bool|string
      */
-    protected $shownInMenu;
+    protected $displayedInMenu;
 
-    protected bool $isShownInNavMenus;
+    protected bool $isAllowedInNavMenus;
 
     protected array $capabilities;
 
@@ -43,7 +43,7 @@ abstract class AbstractSystemModelType implements BaseSystemModelTypeInterface
      */
     protected $queryVar;
 
-    protected bool $isShownInRest;
+    protected bool $isAllowedInRest;
 
     /**
      * @var bool|string
@@ -71,13 +71,13 @@ abstract class AbstractSystemModelType implements BaseSystemModelTypeInterface
         bool $isPublic = false,
         bool $isHierarchical = false,
         ?bool $isPubliclyQueryable = null,
-        ?bool $isShownInUi = null,
-        $shownInMenu = null,
-        ?bool $isShownInNavMenus = null,
+        ?bool $isAllowedInUi = null,
+        $displayedInMenu = null,
+        ?bool $isAllowedInNavMenus = null,
         array $capabilities = [],
         $rewrite = true,
         $queryVar = true,
-        bool $isShownInRest = false,
+        bool $isAllowedInRest = false,
         $restBase = false,
         $restNamespace = false,
         $restControllerClass = false,
@@ -92,7 +92,7 @@ abstract class AbstractSystemModelType implements BaseSystemModelTypeInterface
         $this->capabilities = $capabilities;
         $this->rewrite = $rewrite;
         $this->queryVar = $queryVar;
-        $this->isShownInRest = $isShownInRest;
+        $this->isAllowedInRest = $isAllowedInRest;
         $this->restBase = $restBase;
         $this->restNamespace = $restNamespace;
         $this->restControllerClass = $restControllerClass;
@@ -100,9 +100,9 @@ abstract class AbstractSystemModelType implements BaseSystemModelTypeInterface
 
         $this->singularLabel = $singularLabel ?? $this->pluralLabel;
         $this->isPubliclyQueryable = $isPubliclyQueryable ?? $this->isPublic;
-        $this->isShownInUi = $isShownInUi ?? $this->isPublic;
-        $this->shownInMenu = $shownInMenu ?? $this->isShownInUi;
-        $this->isShownInNavMenus = $isShownInNavMenus ?? $this->isPublic;
+        $this->isAllowedInUi = $isAllowedInUi ?? $this->isPublic;
+        $this->displayedInMenu = $displayedInMenu ?? $this->isAllowedInUi;
+        $this->isAllowedInNavMenus = $isAllowedInNavMenus ?? $this->isPublic;
     }
 
     public function getName(): string
@@ -150,19 +150,19 @@ abstract class AbstractSystemModelType implements BaseSystemModelTypeInterface
         return $this->isPubliclyQueryable;
     }
 
-    public function isShownInUi(): bool
+    public function isAllowedInUi(): bool
     {
-        return $this->isShownInUi;
+        return $this->isAllowedInUi;
     }
 
-    public function getShownInMenu()
+    public function getDisplayedInMenu()
     {
-        return $this->shownInMenu;
+        return $this->displayedInMenu;
     }
 
-    public function isShownInNavMenus(): bool
+    public function isAllowedInNavMenus(): bool
     {
-        return $this->isShownInNavMenus;
+        return $this->isAllowedInNavMenus;
     }
 
     public function getRewrite()
@@ -175,9 +175,9 @@ abstract class AbstractSystemModelType implements BaseSystemModelTypeInterface
         return $this->queryVar;
     }
 
-    public function isShownInRest(): bool
+    public function isAllowedInRest(): bool
     {
-        return $this->isShownInRest;
+        return $this->isAllowedInRest;
     }
 
     public function getRestBase()

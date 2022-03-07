@@ -16,9 +16,9 @@ interface BaseSystemModelTypeBuilderInterface
 
     public function public(?bool $isPublic): self;
 
-    public function hierarchical(?bool $isHierarchical): self;
+    public function hierarchical(?bool $hierarchical): self;
 
-    public function publiclyQueryable(?bool $isPubliclyQueryable): self;
+    public function publiclyQueryable(?bool $publiclyQueryable): self;
 
     public function showInUi(?bool $showInUi): self;
 

@@ -41,11 +41,11 @@ class PostTypeRegistrar extends AbstractSystemModelTypeRegistrar implements Post
     {
         $args = [
             'exclude_from_search' => $postType->isExcludedFromSearch(),
-            'show_in_admin_bar' => $postType->isShownInAdminBar(),
+            'show_in_admin_bar' => $postType->isAllowedInAdminBar(),
             'menu_position' => $postType->getMenuPosition(),
             'menu_icon' => $postType->getMenuIcon(),
             'capability_type' => $postType->getCapabilityType(),
-            'map_meta_cap' => $postType->usesMapMetaCap(),
+            'map_meta_cap' => $postType->allowsMetaCapMapping(),
             'supports' => $postType->getSupports(),
             'register_meta_box_cb' => $postType->getRegisterMetaBoxCb(),
             'taxonomies' => $postType->getTaxonomies(),
