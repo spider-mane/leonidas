@@ -1,6 +1,6 @@
 <?php
 
-namespace Leonidas\Library\Domain\Models;
+namespace Leonidas\Library\System\Tag;
 
 use Leonidas\Library\Domain\Interfaces\TagInterface;
 

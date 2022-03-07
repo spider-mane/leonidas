@@ -1,6 +1,6 @@
 <?php
 
-namespace Leonidas\Library\Domain\Interfaces;
+namespace Leonidas\Contracts\System\Category;
 
 interface CategoryInterface
 {

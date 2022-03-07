@@ -1,21 +1,23 @@
 <?php
 
-namespace Leonidas\Library\Domain\Interfaces;
+namespace Leonidas\Contracts\System\Post;
 
-use Carbon\CarbonInterface;
+use DateTimeInterface;
+use Leonidas\Contracts\System\PostType\PostTypeInterface;
+use Leonidas\Contracts\System\User\UserInterface;
 use Psr\Link\LinkInterface;
 
-interface PostDataProviderInterface
+interface PostInterface
 {
     public function getId(): int;
 
     public function getAuthor(): UserInterface;
 
-    public function getDate(): CarbonInterface;
+    public function getDate(): DateTimeInterface;
 
-    public function getDateGmt(): CarbonInterface;
+    public function getDateGmt(): DateTimeInterface;
 
-    public function getContent(): DynamicTextInterface;
+    public function getContent(): string;
 
     public function getTitle(): string;
 
@@ -33,13 +35,13 @@ interface PostDataProviderInterface
 
     public function hasBeenPinged(): bool;
 
-    public function getDateModified(): CarbonInterface;
+    public function getDateModified(): DateTimeInterface;
 
     public function getContentFiltered(): string;
 
     public function getParentId(): int;
 
-    public function getParent(): ?PostDataProviderInterface;
+    public function getParent(): ?PostInterface;
 
     public function getGuid(): LinkInterface;
 

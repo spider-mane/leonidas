@@ -1,6 +1,6 @@
 <?php
 
-namespace Leonidas\Library\Domain\Models;
+namespace Leonidas\Library\System\Category;
 
 use Leonidas\Library\Domain\Interfaces\CategoryInterface;
 

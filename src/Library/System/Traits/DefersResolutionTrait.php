@@ -1,6 +1,6 @@
 <?php
 
-namespace Library\Wp\Domain\Traits;
+namespace Leonidas\Library\System\Traits;
 
 trait DefersResolutionTrait
 {

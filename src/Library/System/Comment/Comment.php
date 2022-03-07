@@ -1,6 +1,6 @@
 <?php
 
-namespace Leonidas\Library\Domain\Models;
+namespace Leonidas\Library\System\Comment;
 
 use DateTimeInterface;
 use Leonidas\Library\Domain\Interfaces\CommentInterface;
