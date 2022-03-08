@@ -55,9 +55,6 @@ class Fieldset implements MetaboxComponentInterface
         'padding' => 2,
     ];
 
-    /**
-     *
-     */
     public function __construct(string $title, ?AbstractWpAdminFormSubmissionManager $formController = null)
     {
         $this->title = $title;
@@ -117,9 +114,6 @@ class Fieldset implements MetaboxComponentInterface
         return $this;
     }
 
-    /**
-     *
-     */
     public function setContainerOption(string $option, $value)
     {
         $this->containerOptions[$option] = $value;
@@ -151,9 +145,6 @@ class Fieldset implements MetaboxComponentInterface
         return $this;
     }
 
-    /**
-     *
-     */
     public function setFieldOption(string $option, $value)
     {
         $this->fieldOptions[$option] = $value;
@@ -181,9 +172,6 @@ class Fieldset implements MetaboxComponentInterface
         return $this->fields;
     }
 
-    /**
-     *
-     */
     public function setFields(array $fields)
     {
         $this->fields = [];
@@ -213,9 +201,6 @@ class Fieldset implements MetaboxComponentInterface
         return $this;
     }
 
-    /**
-     *
-     */
     public function addField(string $slug, FormFieldControllerInterface $field, array $options = [])
     {
         if (isset($this->formController)) {
@@ -233,17 +218,11 @@ class Fieldset implements MetaboxComponentInterface
         return $this;
     }
 
-    /**
-     *
-     */
     protected function createContainer(): MetaboxComponentInterface
     {
         return (new Section($this->title))->setIsFieldset(true);
     }
 
-    /**
-     *
-     */
     protected function createFieldContainer(FormFieldControllerInterface $field, array $options): MetaboxFieldInterface
     {
         return new Field($field);
@@ -269,9 +248,6 @@ class Fieldset implements MetaboxComponentInterface
         return $this->container->setPadding($this->containerOptions['padding']);
     }
 
-    /**
-     *
-     */
     public function renderComponent(ServerRequestInterface $request): string
     {
         foreach ($this->fields as $field) {

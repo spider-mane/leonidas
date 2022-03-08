@@ -16,9 +16,6 @@ abstract class AbstractLeonidasTwigView
         return Twig::render($this->getTemplate(), $context);
     }
 
-    /**
-     *
-     */
     protected function getTemplate(): string
     {
         return $this->template;

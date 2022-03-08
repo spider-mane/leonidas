@@ -13,9 +13,6 @@ abstract class AbstractTaxonomySelection extends AbstractTermSelectionProvider i
      */
     protected $taxonomy;
 
-    /**
-     *
-     */
     public function __construct(string $taxonomy)
     {
         $this->taxonomy = $taxonomy;

@@ -13,17 +13,11 @@ class CsrfCheck implements FormValidatorInterface
      */
     protected $token;
 
-    /**
-     *
-     */
     public function __construct(CsrfManagerInterface $token)
     {
         $this->token = $token;
     }
 
-    /**
-     *
-     */
     public function isValid(ServerRequestInterface $request): bool
     {
         return $this->token->validate($request);

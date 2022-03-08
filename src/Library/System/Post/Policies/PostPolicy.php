@@ -15,9 +15,6 @@ class PostPolicy implements ServerRequestPolicyInterface
      */
     protected $posts = [];
 
-    /**
-     *
-     */
     public function __construct(int ...$posts)
     {
         $this->posts = $posts;
@@ -33,9 +30,6 @@ class PostPolicy implements ServerRequestPolicyInterface
         return $this->posts;
     }
 
-    /**
-     *
-     */
     public function approvesRequest(ServerRequestInterface $request): bool
     {
         return in_array($this->getPostId($request), $this->posts);

@@ -14,17 +14,11 @@ class TabGroup implements MetaboxComponentInterface
     use CanBeRestrictedTrait;
     use RendersWithViewTrait;
 
-    /**
-     *
-     */
     protected function defineView(ServerRequestInterface $request): ViewInterface
     {
         return new TabGroupView();
     }
 
-    /**
-     *
-     */
     protected function defineViewContext(ServerRequestInterface $request): array
     {
         return [];

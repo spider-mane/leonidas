@@ -12,9 +12,6 @@ class TermCollection
      */
     protected $terms;
 
-    /**
-     *
-     */
     public function __construct(WP_Term ...$terms)
     {
         $this->terms = $terms;
@@ -28,9 +25,6 @@ class TermCollection
         return $this->terms;
     }
 
-    /**
-     *
-     */
     public function get(string $property)
     {
         return array_map(function (WP_Term $term) use ($property) {
@@ -38,49 +32,31 @@ class TermCollection
         }, $this->terms);
     }
 
-    /**
-     *
-     */
     public function getIds()
     {
         return $this->get('term_id');
     }
 
-    /**
-     *
-     */
     public function getNames()
     {
         return $this->get('name');
     }
 
-    /**
-     *
-     */
     public function getSlugs()
     {
         return $this->get('slug');
     }
 
-    /**
-     *
-     */
     public function append(WP_Term $term)
     {
         $this->terms[] = $term;
     }
 
-    /**
-     *
-     */
     public function isEmpty(): bool
     {
         return empty($this->terms);
     }
 
-    /**
-     *
-     */
     protected function diffCallback()
     {
         return function (WP_Term $term1, WP_Term $term2) {
@@ -88,9 +64,6 @@ class TermCollection
         };
     }
 
-    /**
-     *
-     */
     public function without(TermCollection $collection)
     {
         return array_udiff(
@@ -100,9 +73,6 @@ class TermCollection
         );
     }
 
-    /**
-     *
-     */
     public function notIn(TermCollection $collection)
     {
         return array_udiff(
@@ -112,9 +82,6 @@ class TermCollection
         );
     }
 
-    /**
-     *
-     */
     public function diff(TermCollection $collection): array
     {
         $primary = $this->getTerms();
@@ -132,33 +99,21 @@ class TermCollection
             : array_udiff($secondary, $primary, $cb);
     }
 
-    /**
-     *
-     */
     public function isDiff(TermCollection $collection): bool
     {
         return (bool) $this->diff($collection);
     }
 
-    /**
-     *
-     */
     public static function fromQuery(WP_Term_Query $query): TermCollection
     {
         return new static(...$query->get_terms());
     }
 
-    /**
-     *
-     */
     public static function create(array $args): TermCollection
     {
         return static::fromQuery(new WP_Term_Query($args));
     }
 
-    /**
-     *
-     */
     public static function fromIds(int ...$ids): TermCollection
     {
         return static::create([

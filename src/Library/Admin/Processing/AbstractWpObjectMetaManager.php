@@ -56,9 +56,6 @@ abstract class AbstractWpObjectMetaManager extends AbstractInputManager
      */
     protected const OBJECT_TYPE = '';
 
-    /**
-     *
-     */
     protected const GET_OBJECT_FUNCTION = '';
 
     /**
@@ -252,9 +249,6 @@ abstract class AbstractWpObjectMetaManager extends AbstractInputManager
         return $this;
     }
 
-    /**
-     *
-     */
     public function register()
     {
         $args = [
@@ -272,9 +266,6 @@ abstract class AbstractWpObjectMetaManager extends AbstractInputManager
         return $this;
     }
 
-    /**
-     *
-     */
     protected function authorizeAction()
     {
         return function ($allowed, $metaKey, $objectId, $userId, $cap, $caps) {
@@ -282,9 +273,6 @@ abstract class AbstractWpObjectMetaManager extends AbstractInputManager
         };
     }
 
-    /**
-     *
-     */
     protected function returnIfFailed()
     {
         return get_metadata(
@@ -294,9 +282,6 @@ abstract class AbstractWpObjectMetaManager extends AbstractInputManager
         );
     }
 
-    /**
-     *
-     */
     protected function handleRuleViolation($rule)
     {
         $alert = $this->alerts[$rule] ?? null;

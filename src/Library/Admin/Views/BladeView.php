@@ -11,17 +11,11 @@ class BladeView implements ViewInterface
      */
     protected $template;
 
-    /**
-     *
-     */
     public function __construct(string $template)
     {
         $this->template = $template;
     }
 
-    /**
-     *
-     */
     public function render(array $context = []): string
     {
         //

@@ -12,9 +12,6 @@ class CsrfManagerRepository implements CsrfManagerRepositoryInterface
      */
     protected $managers;
 
-    /**
-     *
-     */
     public function __construct(CsrfManagerInterface ...$managers)
     {
         array_walk($managers, [$this, 'addManager']);
@@ -30,17 +27,11 @@ class CsrfManagerRepository implements CsrfManagerRepositoryInterface
         return $this->managers;
     }
 
-    /**
-     *
-     */
     public function getManager(string $tag): ?CsrfManagerInterface
     {
         return $this->managers[$tag] ?? null;
     }
 
-    /**
-     *
-     */
     public function getManagerSelection(string ...$tags): array
     {
         $managers = [];
@@ -52,9 +43,6 @@ class CsrfManagerRepository implements CsrfManagerRepositoryInterface
         return $managers;
     }
 
-    /**
-     *
-     */
     public function addManager(string $tag, CsrfManagerInterface $manager)
     {
         $this->managers[$tag] = $manager;

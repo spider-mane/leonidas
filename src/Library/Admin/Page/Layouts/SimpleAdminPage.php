@@ -29,9 +29,6 @@ class SimpleAdminPage extends AbstractPageLayout implements AdminPageLayoutInter
      */
     protected $template = 'page/admin-page.twig';
 
-    /**
-     *
-     */
     public function __construct(AdminPageComponentInterface ...$components)
     {
         $this->components = $components;
@@ -73,17 +70,11 @@ class SimpleAdminPage extends AbstractPageLayout implements AdminPageLayoutInter
         return $this;
     }
 
-    /**
-     *
-     */
     protected function defineView(ServerRequestInterface $request): ViewInterface
     {
         return new SimpleAdminPageView();
     }
 
-    /**
-     *
-     */
     protected function defineViewContext(ServerRequestInterface $request): array
     {
         return [

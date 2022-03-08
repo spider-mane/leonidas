@@ -35,9 +35,6 @@ class Field extends AbstractAdminField implements MetaboxFieldInterface
      */
     protected $hiddenInput;
 
-    /**
-     *
-     */
     private const ROW_TITLE_COL_WIDTH = 2;
 
     /**
@@ -93,9 +90,6 @@ class Field extends AbstractAdminField implements MetaboxFieldInterface
         return new FieldView();
     }
 
-    /**
-     *
-     */
     protected function defineViewContext(ServerRequestInterface $request): array
     {
         return [

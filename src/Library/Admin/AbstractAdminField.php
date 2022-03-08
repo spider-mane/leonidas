@@ -28,9 +28,6 @@ abstract class AbstractAdminField implements AdminFieldInterface
      */
     protected $formFieldController;
 
-    /**
-     *
-     */
     public function __construct(FormFieldControllerInterface $formFieldController)
     {
         $this->formFieldController = $formFieldController;
@@ -84,9 +81,6 @@ abstract class AbstractAdminField implements AdminFieldInterface
         return $this;
     }
 
-    /**
-     *
-     */
     protected function renderFormField(ServerRequestInterface $request): FormFieldInterface
     {
         return $this->formFieldController->render($request);

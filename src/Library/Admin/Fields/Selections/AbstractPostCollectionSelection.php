@@ -13,9 +13,6 @@ abstract class AbstractPostCollectionSelection extends AbstractPostSelectionProv
      */
     protected $collection;
 
-    /**
-     *
-     */
     public function __construct(PostCollection $collection)
     {
         $this->collection = $collection;

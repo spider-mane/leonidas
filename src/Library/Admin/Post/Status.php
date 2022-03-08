@@ -21,9 +21,6 @@ class Status
      */
     protected $args;
 
-    /**
-     *
-     */
     public function __construct(string $name, $options = [])
     {
         $this->name = $name;
@@ -74,17 +71,11 @@ class Status
         return $this->args;
     }
 
-    /**
-     *
-     */
     public function editOption($option, $value)
     {
         $this->options[$option] = $value;
     }
 
-    /**
-     *
-     */
     public function getOptionValue($option)
     {
         return $this->options[$option];
@@ -107,9 +98,6 @@ class Status
         ];
     }
 
-    /**
-     *
-     */
     public function register()
     {
         $this->args = register_post_status($this->name, $this->options);

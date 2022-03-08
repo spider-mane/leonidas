@@ -27,9 +27,6 @@ class PostTermPolicy implements ServerRequestPolicyInterface
      */
     protected $matchAll = false;
 
-    /**
-     *
-     */
     public function __construct(string $taxonomy, int ...$terms)
     {
         $this->taxonomy = $taxonomy;
@@ -46,9 +43,6 @@ class PostTermPolicy implements ServerRequestPolicyInterface
         return $this->terms;
     }
 
-    /**
-     *
-     */
     public function addTerm(int $term)
     {
         $this->terms[] = $term;
@@ -78,9 +72,6 @@ class PostTermPolicy implements ServerRequestPolicyInterface
         return $this;
     }
 
-    /**
-     *
-     */
     public function approvesRequest(ServerRequestInterface $request): bool
     {
         $post = $this->getPost($request);
@@ -90,9 +81,6 @@ class PostTermPolicy implements ServerRequestPolicyInterface
             $this->matchesSingleTerm($post);
     }
 
-    /**
-     *
-     */
     protected function matchesSingleTerm(WP_Post $post): bool
     {
         foreach ($this->terms as $term) {
@@ -104,9 +92,6 @@ class PostTermPolicy implements ServerRequestPolicyInterface
         return false;
     }
 
-    /**
-     *
-     */
     protected function matchesAllTerms(WP_Post $post): bool
     {
         foreach ($this->terms as $term) {

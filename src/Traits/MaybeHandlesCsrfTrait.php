@@ -35,17 +35,11 @@ trait MaybeHandlesCsrfTrait
         return $this;
     }
 
-    /**
-     *
-     */
     protected function renderTokenField(): string
     {
         return $this->csrfManager->renderField() . "\n";
     }
 
-    /**
-     *
-     */
     protected function maybeRenderTokenField(): string
     {
         return isset($this->csrfManager) ? $this->renderTokenField() : '';

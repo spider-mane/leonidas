@@ -10,9 +10,6 @@ class SectionView implements ViewInterface
 {
     use ElementConstructorTrait;
 
-    /**
-     *
-     */
     public function render(array $context = []): string
     {
         $title = $context['title'];

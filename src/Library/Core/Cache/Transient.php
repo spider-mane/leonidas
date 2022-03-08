@@ -27,9 +27,6 @@ class Transient implements CacheItemInterface
      */
     protected $isHit = false;
 
-    /**
-     *
-     */
     public function __construct(string $key)
     {
         $this->key = $key;

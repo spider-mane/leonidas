@@ -24,9 +24,6 @@ class StandardSettingsPage extends AbstractPageLayout implements AdminPageLayout
      */
     protected $optionGroup;
 
-    /**
-     *
-     */
     public function __construct(string $page, string $optionGroup)
     {
         $this->page = $page;
@@ -53,17 +50,11 @@ class StandardSettingsPage extends AbstractPageLayout implements AdminPageLayout
         return $this->optionGroup;
     }
 
-    /**
-     *
-     */
     protected function defineView(ServerRequestInterface $request): ViewInterface
     {
         return new StandardSettingsPageView();
     }
 
-    /**
-     *
-     */
     protected function defineViewContext(ServerRequestInterface $request): array
     {
         return [

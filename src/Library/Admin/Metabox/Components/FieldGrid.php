@@ -119,9 +119,6 @@ class FieldGrid implements MetaboxComponentInterface
         return $this;
     }
 
-    /**
-     *
-     */
     public function getColumnCount()
     {
         return $this->columnCount;
@@ -304,17 +301,11 @@ class FieldGrid implements MetaboxComponentInterface
         return $this;
     }
 
-    /**
-     *
-     */
     protected function defineView(ServerRequestInterface $request): ViewInterface
     {
         return new FieldGridView();
     }
 
-    /**
-     *
-     */
     protected function defineViewContext(ServerRequestInterface $request): array
     {
         /** @var FormFieldControllerInterface $field */

@@ -7,8 +7,5 @@ use Leonidas\Library\Admin\Views\AbstractLeonidasTwigView;
 
 class EditTermFieldView extends AbstractLeonidasTwigView implements ViewInterface
 {
-    /**
-     *
-     */
     protected $template = 'screens/term/components/edit-field.twig';
 }

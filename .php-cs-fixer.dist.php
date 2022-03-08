@@ -39,6 +39,8 @@ return (new Config('leonidas'))
     'method_argument_space' => [
       'after_heredoc' => true,
     ],
+    'no_empty_phpdoc' => true,
+    'no_extra_blank_lines' => true,
     'no_unused_imports' => true,
     'not_operator_with_space' => false,
     'not_operator_with_successor_space' => false,

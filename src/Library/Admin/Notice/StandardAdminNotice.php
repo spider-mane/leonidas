@@ -184,17 +184,11 @@ class StandardAdminNotice implements AdminNoticeInterface
         return $this;
     }
 
-    /**
-     *
-     */
     protected function defineView(ServerRequestInterface $request): ViewInterface
     {
         return new StandardAdminNoticeView();
     }
 
-    /**
-     *
-     */
     protected function defineViewContext(ServerRequestInterface $request): array
     {
         return [

@@ -12,17 +12,11 @@ abstract class AbstractUserPermissionsValidator implements FormValidatorInterfac
      */
     protected $capability;
 
-    /**
-     *
-     */
     public function isValid(ServerRequestInterface $request): bool
     {
         return current_user_can($this->capability, ...$this->getCapArgs($request));
     }
 
-    /**
-     *
-     */
     protected function getCapArgs(ServerRequestInterface $request): array
     {
         return [];

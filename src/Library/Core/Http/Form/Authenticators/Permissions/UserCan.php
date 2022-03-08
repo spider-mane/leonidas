@@ -17,9 +17,6 @@ class UserCan extends AbstractUserPermissionsValidator implements FormValidatorI
      */
     protected $args = [];
 
-    /**
-     *
-     */
     public function __construct(string $capability, ...$args)
     {
         $this->capability = $capability;
@@ -27,9 +24,6 @@ class UserCan extends AbstractUserPermissionsValidator implements FormValidatorI
         $args && $this->args = $args;
     }
 
-    /**
-     *
-     */
     protected function getCapArgs(ServerRequestInterface $request): array
     {
         return $this->args;

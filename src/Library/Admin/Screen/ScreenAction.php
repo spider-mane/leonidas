@@ -27,9 +27,6 @@ class ScreenAction implements ScreenActionInterface
      */
     protected $actions;
 
-    /**
-     *
-     */
     protected function __construct($base, array $screens, callable $callback, array $actions = [])
     {
         $this->base = (array) $base;

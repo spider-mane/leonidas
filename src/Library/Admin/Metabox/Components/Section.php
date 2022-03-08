@@ -34,9 +34,6 @@ class Section implements MetaboxComponentInterface
      */
     protected $isFieldset = true;
 
-    /**
-     *
-     */
     public function __construct($title)
     {
         $this->title = $title;
@@ -140,17 +137,11 @@ class Section implements MetaboxComponentInterface
         return $this;
     }
 
-    /**
-     *
-     */
     protected function defineView(ServerRequestInterface $request): ViewInterface
     {
         return new SectionView();
     }
 
-    /**
-     *
-     */
     protected function defineViewContext(ServerRequestInterface $request): array
     {
         return [

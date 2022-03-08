@@ -16,9 +16,6 @@ class Hook implements HookInterface
      */
     protected $args;
 
-    /**
-     *
-     */
     public function __construct(string $tag, array $args)
     {
         $this->tag = $tag;

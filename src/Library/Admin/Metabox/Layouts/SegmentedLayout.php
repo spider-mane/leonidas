@@ -26,9 +26,6 @@ class SegmentedLayout implements MetaboxLayoutInterface
 
     protected string $separator = '<hr>';
 
-    /**
-     *
-     */
     public function __construct(MetaboxComponentInterface ...$components)
     {
         $this->components = $components;
@@ -70,17 +67,11 @@ class SegmentedLayout implements MetaboxLayoutInterface
         return $this;
     }
 
-    /**
-     *
-     */
     protected function defineView(ServerRequestInterface $request): ViewInterface
     {
         return new MetaboxLayoutView();
     }
 
-    /**
-     *
-     */
     protected function defineViewContext(ServerRequestInterface $request): array
     {
         return [
@@ -91,9 +82,6 @@ class SegmentedLayout implements MetaboxLayoutInterface
         ];
     }
 
-    /**
-     *
-     */
     protected function getComponentSeparator()
     {
         return $this->separator;

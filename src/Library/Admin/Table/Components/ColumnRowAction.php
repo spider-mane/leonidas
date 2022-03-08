@@ -32,9 +32,6 @@ class ColumnRowAction implements ColumnRowActionInterface
      */
     protected $attributes = [];
 
-    /**
-     *
-     */
     public function __construct(string $title, string $link)
     {
         $this->title = $title;
@@ -109,9 +106,6 @@ class ColumnRowAction implements ColumnRowActionInterface
         return $this;
     }
 
-    /**
-     *
-     */
     public function renderComponent(ServerRequestInterface $request): string
     {
         $object = $request->getAttribute('object', '');

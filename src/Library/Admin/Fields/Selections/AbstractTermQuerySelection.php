@@ -13,9 +13,6 @@ class AbstractTermQuerySelection extends AbstractTermSelectionProvider implement
      */
     protected $query;
 
-    /**
-     *
-     */
     public function __construct(WP_Term_Query $query)
     {
         $this->query = $query;

@@ -13,17 +13,11 @@ class ListenerProvider implements ListenerProviderInterface
      */
     protected $listeners;
 
-    /**
-     *
-     */
     public function addListener(ListenerInterface $listener)
     {
         $this->listeners[$listener->getFeatureGroup()] = $listener;
     }
 
-    /**
-     *
-     */
     public function getListenersForEvent(HookInterface $hook): iterable
     {
         $listeners = [];
@@ -37,9 +31,6 @@ class ListenerProvider implements ListenerProviderInterface
         return $listeners;
     }
 
-    /**
-     *
-     */
     protected function shouldRunListener(HookInterface $hook, ListenerInterface $listener): bool
     {
         $listenerMatchesTag = $hook->getTag() === $listener->getHookTag();

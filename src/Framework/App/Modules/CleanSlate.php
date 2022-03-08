@@ -120,7 +120,6 @@ class CleanSlate extends AbstractModule implements ModuleInterface
         $post->menu_position = $args['position'] ?? 9;
         $post->menu_icon = $args['menu_icon'] ?? 'dashicons-welcome-write-blog';
 
-
         $supports = [
             'trackbacks',
             'custom-fields',

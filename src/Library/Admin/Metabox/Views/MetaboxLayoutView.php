@@ -10,9 +10,6 @@ class MetaboxLayoutView implements ViewInterface
 {
     use ElementConstructorTrait;
 
-    /**
-     *
-     */
     public function render(array $context = []): string
     {
         /** @var MetaboxComponentInterface[] $components */

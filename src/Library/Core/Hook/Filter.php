@@ -29,14 +29,8 @@ class Filter
      */
     protected $acceptedArgs = 1;
 
-    /**
-     *
-     */
     public const FILTER_PREFIX = 'listeners.filters';
 
-    /**
-     *
-     */
     public function __construct(string $tag, string $id, callable $callback)
     {
         $this->tag = $tag;
@@ -72,17 +66,11 @@ class Filter
         return $this;
     }
 
-    /**
-     *
-     */
     protected function addListener()
     {
         add_filter($this->tag, [$this, 'maybeRunCallback'], $this->priority, $this->acceptedArgs);
     }
 
-    /**
-     *
-     */
     public function maybeRunCallback(...$args)
     {
         if ($this->callbackShouldRun()) {
@@ -92,9 +80,6 @@ class Filter
         }
     }
 
-    /**
-     *
-     */
     protected function callbackShouldRun(): bool
     {
         $prefix = static::FILTER_PREFIX;
@@ -102,9 +87,6 @@ class Filter
         return apply_filters("{$prefix}.{$this->id}", true);
     }
 
-    /**
-     *
-     */
     public static function add(
         string $tag,
         string $id,
@@ -122,9 +104,6 @@ class Filter
         return $filter;
     }
 
-    /**
-     *
-     */
     public static function remove(string $id, int $priority = 10)
     {
         $prefix = static::FILTER_PREFIX;

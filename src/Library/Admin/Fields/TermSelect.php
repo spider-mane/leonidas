@@ -15,19 +15,10 @@ use WebTheory\Saveyour\Fields\Select;
 
 class TermSelect extends AbstractField implements FormFieldControllerInterface
 {
-    /**
-     *
-     */
     protected $taxonomy;
 
-    /**
-     *
-     */
     protected $options;
 
-    /**
-     *
-     */
     public function __construct(string $taxonomy, string $requestVar, array $options = [])
     {
         $this->taxonomy = $taxonomy;
@@ -36,9 +27,6 @@ class TermSelect extends AbstractField implements FormFieldControllerInterface
         parent::__construct($requestVar);
     }
 
-    /**
-     *
-     */
     protected function defineOptions(array $options)
     {
         return [
@@ -48,9 +36,6 @@ class TermSelect extends AbstractField implements FormFieldControllerInterface
         ];
     }
 
-    /**
-     *
-     */
     protected function defineFormField(): FormFieldInterface
     {
         $options = $this->options;
@@ -62,33 +47,21 @@ class TermSelect extends AbstractField implements FormFieldControllerInterface
             ->setClasslist($options['class']);
     }
 
-    /**
-     *
-     */
     protected function createSelection(): OptionsProviderInterface
     {
         return new TaxonomySelectOptions($this->taxonomy);
     }
 
-    /**
-     *
-     */
     protected function defineDataManager(): ?FieldDataManagerInterface
     {
         return new PostTermDataManager($this->taxonomy);
     }
 
-    /**
-     *
-     */
     protected function defineDataFormatter(): ?DataFormatterInterface
     {
         return new TermsToIdsDataFormatter();
     }
 
-    /**
-     *
-     */
     protected function defineFilters(): ?array
     {
         return ['sanitize_text_field'];

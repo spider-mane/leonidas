@@ -11,17 +11,11 @@ class PhpView implements ViewInterface
      */
     protected $file;
 
-    /**
-     *
-     */
     public function __construct(string $file)
     {
         $this->file = $file;
     }
 
-    /**
-     *
-     */
     public function render(array $context = []): string
     {
         ob_start();

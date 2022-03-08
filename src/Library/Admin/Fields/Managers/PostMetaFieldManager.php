@@ -4,9 +4,6 @@ namespace Leonidas\Library\Admin\Fields\Managers;
 
 use WebTheory\Saveyour\Contracts\FieldDataManagerInterface;
 
-/**
- *
- */
 class PostMetaFieldManager extends AbstractWPEntityMetaFieldDataManager implements FieldDataManagerInterface
 {
     protected const MODEL = 'post';

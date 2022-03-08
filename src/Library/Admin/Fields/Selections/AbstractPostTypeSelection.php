@@ -12,9 +12,6 @@ abstract class AbstractPostTypeSelection extends AbstractPostSelectionProvider i
      */
     protected $postType;
 
-    /**
-     *
-     */
     public function __construct(string $postType)
     {
         $this->postType = $postType;

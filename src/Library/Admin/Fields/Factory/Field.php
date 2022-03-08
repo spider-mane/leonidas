@@ -8,14 +8,8 @@ use WebTheory\Saveyour\Factories\SimpleFieldFactory;
 
 class Field extends SimpleFieldFactory
 {
-    /**
-     *
-     */
     protected $controller = WpAdminField::class;
 
-    /**
-     *
-     */
     protected function defineFormFieldFactory(array $options): FormFieldResolverFactoryInterface
     {
         $namespaces = $options['namespaces'] ?? [];
@@ -24,9 +18,6 @@ class Field extends SimpleFieldFactory
         return new FormField($namespaces, $fields);
     }
 
-    /**
-     *
-     */
     protected function defineDataManagerFactory(array $options): FieldDataManagerResolverFactoryInterface
     {
         $namespaces = $options['namespaces'] ?? [];

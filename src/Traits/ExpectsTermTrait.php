@@ -7,17 +7,11 @@ use WP_Term;
 
 trait ExpectsTermTrait
 {
-    /**
-     *
-     */
     protected function getTerm(ServerRequestInterface $request): ?WP_Term
     {
         return $request->getAttribute('term');
     }
 
-    /**
-     *
-     */
     protected function getTermId(ServerRequestInterface $request): ?int
     {
         $term = $this->getTerm($request);

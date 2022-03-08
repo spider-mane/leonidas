@@ -7,9 +7,6 @@ use WP_Term;
 
 abstract class AbstractTermSelectionProvider implements SelectionProviderInterface
 {
-    /**
-     *
-     */
     protected $valueKey = 'term_id';
 
     /**

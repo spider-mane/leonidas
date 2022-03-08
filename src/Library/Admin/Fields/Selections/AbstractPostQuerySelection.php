@@ -13,9 +13,6 @@ abstract class AbstractPostQuerySelection extends AbstractPostSelectionProvider 
      */
     protected $query;
 
-    /**
-     *
-     */
     public function __construct(WP_Query $query)
     {
         $this->query = $query;

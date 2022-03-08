@@ -15,19 +15,10 @@ use WebTheory\Saveyour\Fields\Checklist;
 
 class TermChecklist extends AbstractField implements FormFieldControllerInterface
 {
-    /**
-     *
-     */
     protected $taxonomy;
 
-    /**
-     *
-     */
     protected $options;
 
-    /**
-     *
-     */
     public function __construct(string $taxonomy, string $requestVar, array $options = [])
     {
         $this->taxonomy = $taxonomy;
@@ -36,9 +27,6 @@ class TermChecklist extends AbstractField implements FormFieldControllerInterfac
         parent::__construct($requestVar);
     }
 
-    /**
-     *
-     */
     protected function defineOptions(array $options)
     {
         return [
@@ -47,9 +35,6 @@ class TermChecklist extends AbstractField implements FormFieldControllerInterfac
         ];
     }
 
-    /**
-     *
-     */
     protected function defineFormField(): ?FormFieldInterface
     {
         $options = $this->options;
@@ -61,33 +46,21 @@ class TermChecklist extends AbstractField implements FormFieldControllerInterfac
             ->addClass('thing');
     }
 
-    /**
-     *
-     */
     protected function createSelection(): ChecklistItemsProviderInterface
     {
         return new TaxonomyChecklistItems($this->taxonomy);
     }
 
-    /**
-     *
-     */
     protected function defineDataManager(): ?FieldDataManagerInterface
     {
         return new PostTermDataManager($this->taxonomy);
     }
 
-    /**
-     *
-     */
     protected function defineDataFormatter(): ?DataFormatterInterface
     {
         return new TermsToIdsDataFormatter();
     }
 
-    /**
-     *
-     */
     protected function defineFilters(): ?array
     {
         return ['sanitize_text_field'];

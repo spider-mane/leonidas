@@ -21,17 +21,11 @@ abstract class AbstractWPEntityMetaFieldDataManager implements FieldDataManagerI
     protected const ID_KEY = null;
     protected const NAME_KEY = null;
 
-    /**
-     *
-     */
     public function __construct(string $metaKey)
     {
         $this->metaKey = $metaKey;
     }
 
-    /**
-     *
-     */
     public function getCurrentData(ServerRequestInterface $request)
     {
         $entity = $request->getAttribute(static::MODEL);
@@ -44,9 +38,6 @@ abstract class AbstractWPEntityMetaFieldDataManager implements FieldDataManagerI
         );
     }
 
-    /**
-     *
-     */
     public function handleSubmittedData(ServerRequestInterface $request, $data): bool
     {
         $entity = $request->getAttribute(static::MODEL);
@@ -62,9 +53,6 @@ abstract class AbstractWPEntityMetaFieldDataManager implements FieldDataManagerI
         return $response;
     }
 
-    /**
-     *
-     */
     protected function createData($entity, $data): bool
     {
         return add_metadata(
@@ -76,9 +64,6 @@ abstract class AbstractWPEntityMetaFieldDataManager implements FieldDataManagerI
         );
     }
 
-    /**
-     *
-     */
     protected function deleteData($entity)
     {
         $response = (bool) delete_metadata(

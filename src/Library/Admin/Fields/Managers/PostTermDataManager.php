@@ -21,9 +21,6 @@ class PostTermDataManager implements FieldDataManagerInterface
      */
     protected $appendNewTerms = false;
 
-    /**
-     *
-     */
     public function __construct(string $taxonomy, bool $appendNewTerms = false)
     {
         $this->taxonomy = $taxonomy;
@@ -50,17 +47,11 @@ class PostTermDataManager implements FieldDataManagerInterface
         return $this->appendNewTerms;
     }
 
-    /**
-     *
-     */
     public function getCurrentData(ServerRequestInterface $request)
     {
         return get_the_terms($this->getPostId($request), $this->taxonomy) ?: [];
     }
 
-    /**
-     *
-     */
     public function handleSubmittedData(ServerRequestInterface $request, $terms): bool
     {
         $old = new TermCollection(...$this->getCurrentData($request));

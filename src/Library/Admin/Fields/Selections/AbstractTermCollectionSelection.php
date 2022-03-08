@@ -13,9 +13,6 @@ abstract class AbstractTermCollectionSelection extends AbstractTermSelectionProv
      */
     protected $collection;
 
-    /**
-     *
-     */
     public function __construct(TermCollection $collection)
     {
         $this->collection = $collection;

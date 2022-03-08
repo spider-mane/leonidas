@@ -8,9 +8,6 @@ use WebTheory\Saveyour\Fields\Select2;
 
 class TermSelect2 extends TermSelect implements FormFieldControllerInterface
 {
-    /**
-     *
-     */
     protected function defineFormField(): FormFieldInterface
     {
         $options = $this->options;

@@ -11,9 +11,6 @@ class EditPage extends AbstractUserPermissionsValidator
      */
     protected $capability = 'edit_page';
 
-    /**
-     *
-     */
     protected function getCapArgs(ServerRequestInterface $request): array
     {
         return [$request->getAttribute('post_id')];
