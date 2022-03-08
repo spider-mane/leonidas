@@ -2,7 +2,7 @@
 
 namespace Leonidas\Contracts\Ui\Asset;
 
-use Leonidas\Contracts\Http\ConstrainerCollectionInterface;
+use Leonidas\Contracts\Http\ServerRequestPolicyInterface;
 
 interface InlineScriptBuilderInterface
 {
@@ -12,7 +12,7 @@ interface InlineScriptBuilderInterface
 
     public function position(string $position);
 
-    public function constraints(?ConstrainerCollectionInterface $constraints);
+    public function policy(?ServerRequestPolicyInterface $policy);
 
     public function done(): InlineScriptInterface;
 }

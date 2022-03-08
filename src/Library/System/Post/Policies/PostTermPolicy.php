@@ -1,14 +1,14 @@
 <?php
 
-namespace Leonidas\Library\System\Post\Constraints;
+namespace Leonidas\Library\System\Post\Policies;
 
-use Leonidas\Contracts\Http\ConstrainerInterface;
+use Leonidas\Contracts\Http\ServerRequestPolicyInterface;
 use Leonidas\Traits\ExpectsPostTrait;
 use Psr\Http\Message\ServerRequestInterface;
 use WP_Post;
 use WP_Term;
 
-class PostTermConstrainer implements ConstrainerInterface
+class PostTermPolicy implements ServerRequestPolicyInterface
 {
     use ExpectsPostTrait;
 
@@ -81,7 +81,7 @@ class PostTermConstrainer implements ConstrainerInterface
     /**
      *
      */
-    public function requestMeetsCriteria(ServerRequestInterface $request): bool
+    public function approvesRequest(ServerRequestInterface $request): bool
     {
         $post = $this->getPost($request);
 

@@ -2,7 +2,7 @@
 
 namespace Leonidas\Library\Core\Asset;
 
-use Leonidas\Contracts\Http\ConstrainerCollectionInterface;
+use Leonidas\Contracts\Http\ServerRequestPolicyInterface;
 use Leonidas\Contracts\Ui\Asset\ScriptInterface;
 use Leonidas\Library\Core\Asset\Traits\HasScriptDataTrait;
 
@@ -57,7 +57,7 @@ class Script extends AbstractAsset implements ScriptInterface
         $version = null,
         ?bool $shouldLoadInFooter = null,
         ?bool $shouldBeEnqueued = null,
-        ?ConstrainerCollectionInterface $constraints = null,
+        ?ServerRequestPolicyInterface $policy = null,
         ?array $attributes = null,
         ?bool $isAsync = null,
         ?string $crossorigin = null,
@@ -74,7 +74,7 @@ class Script extends AbstractAsset implements ScriptInterface
             $dependencies,
             $version,
             $shouldBeEnqueued,
-            $constraints,
+            $policy,
             $attributes,
             $crossorigin
         );

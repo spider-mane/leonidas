@@ -4,6 +4,8 @@ namespace Leonidas\Library\Admin\Metabox;
 
 use Leonidas\Contracts\Admin\Components\MetaboxInterface;
 use Leonidas\Contracts\Admin\Components\MetaboxLayoutInterface;
+use Leonidas\Contracts\Http\ServerRequestPolicyInterface;
+use Leonidas\Library\Core\Http\Policies\NoPolicy;
 use Leonidas\Traits\CanBeRestrictedTrait;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -20,19 +22,31 @@ class Metabox implements MetaboxInterface
      */
     protected $screen;
 
-    protected ?string $context = 'advanced';
+    protected string $context = 'advanced';
 
-    protected ?string $priority = 'default';
+    protected string $priority = 'default';
 
-    protected ?array $args = [];
+    protected array $args;
 
-    protected MetaboxLayoutInterface $layout;
-
-    public function __construct(string $id, string $title, MetaboxLayoutInterface $layout)
-    {
+    public function __construct(
+        string $id,
+        string $title,
+        string $screen,
+        ?string $context = null,
+        ?string $priority = null,
+        array $args = [],
+        MetaboxLayoutInterface $layout,
+        ?ServerRequestPolicyInterface $policy = null
+    ) {
         $this->id = $id;
         $this->title = $title;
         $this->layout = $layout;
+        $this->screen = $screen;
+        $this->context = $context ?? $this->context;
+        $this->priority = $priority ?? $this->priority;
+        $this->args = $args;
+        $this->layout = $layout;
+        $this->policy = $policy ?? new NoPolicy();
     }
 
     /**
@@ -66,41 +80,13 @@ class Metabox implements MetaboxInterface
     }
 
     /**
-     * Set screen
-     *
-     * @param string|string[]|WP_Screen $screen
-     *
-     * @return self
-     */
-    public function setScreen($screen)
-    {
-        $this->screen = $screen;
-
-        return $this;
-    }
-
-    /**
      * Get context
      *
      * @return string
      */
-    public function getContext(): ?string
+    public function getContext(): string
     {
         return $this->context;
-    }
-
-    /**
-     * Set context
-     *
-     * @param string $context
-     *
-     * @return self
-     */
-    public function setContext(?string $context)
-    {
-        $this->context = $context;
-
-        return $this;
     }
 
     /**
@@ -108,23 +94,9 @@ class Metabox implements MetaboxInterface
      *
      * @return string
      */
-    public function getPriority(): ?string
+    public function getPriority(): string
     {
         return $this->priority;
-    }
-
-    /**
-     * Set priority
-     *
-     * @param string $priority
-     *
-     * @return self
-     */
-    public function setPriority(?string $priority)
-    {
-        $this->priority = $priority;
-
-        return $this;
     }
 
     /**
@@ -135,20 +107,6 @@ class Metabox implements MetaboxInterface
     public function getArgs(): array
     {
         return $this->args;
-    }
-
-    /**
-     * Set args
-     *
-     * @param array $args
-     *
-     * @return self
-     */
-    public function setArgs(?array $args)
-    {
-        $this->args = $args;
-
-        return $this;
     }
 
     /**

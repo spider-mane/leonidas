@@ -2,9 +2,9 @@
 
 namespace Leonidas\Library\Core\Asset;
 
-use Leonidas\Contracts\Http\ConstrainerCollectionInterface;
+use Leonidas\Contracts\Http\ServerRequestPolicyInterface;
 use Leonidas\Contracts\Ui\Asset\ScriptLocalizationInterface;
-use Leonidas\Library\Core\Http\ConstrainerCollection;
+use Leonidas\Library\Core\Http\Policies\NoPolicy;
 use Psr\Http\Message\ServerRequestInterface;
 
 class ScriptLocalization implements ScriptLocalizationInterface
@@ -15,19 +15,19 @@ class ScriptLocalization implements ScriptLocalizationInterface
 
     protected array $data;
 
-    protected ?ConstrainerCollectionInterface $constraints = null;
+    protected ?ServerRequestPolicyInterface $policy = null;
 
     public function __construct(
         string $handle,
         string $variable,
         array $data,
-        ?ConstrainerCollectionInterface $constraints
+        ?ServerRequestPolicyInterface $policy
     ) {
         $this->handle = $handle;
         $this->variable = $variable;
         $this->data = $data;
 
-        $this->constraints = $constraints ?? new ConstrainerCollection();
+        $this->policy = $policy ?? new NoPolicy();
     }
 
     public function getHandle(): string
@@ -45,13 +45,13 @@ class ScriptLocalization implements ScriptLocalizationInterface
         return $this->data;
     }
 
-    public function getConstraints(): ?ConstrainerCollectionInterface
+    public function getPolicy(): ?ServerRequestPolicyInterface
     {
-        return $this->constraints;
+        return $this->policy;
     }
 
     public function shouldBeLoaded(ServerRequestInterface $request): bool
     {
-        return !$this->constraints->constrains($request);
+        return $this->policy->approvesRequest($request);
     }
 }

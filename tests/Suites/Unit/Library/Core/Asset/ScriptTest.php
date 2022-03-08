@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Suites\Unit\Library\Core\Asset;
 
-use Leonidas\Contracts\Http\ConstrainerCollectionInterface;
+use Leonidas\Contracts\Http\ServerRequestPolicyInterface;
 use Leonidas\Contracts\Ui\Asset\ScriptInterface;
 use Leonidas\Library\Core\Asset\Script;
 use PHPUnit\Framework\TestCase;
@@ -83,9 +83,9 @@ class ScriptTest extends TestCase
         return true;
     }
 
-    protected function getConstructedConstraints(): ConstrainerCollectionInterface
+    protected function getConstructedConstraints(): ServerRequestPolicyInterface
     {
-        return $this->prophesize(ConstrainerCollectionInterface::class)->reveal();
+        return $this->prophesize(ServerRequestPolicyInterface::class)->reveal();
     }
 
     protected function getConstructedAttributes(): array
@@ -293,12 +293,12 @@ class ScriptTest extends TestCase
         $this->assertInstanceOf(ScriptInterface::class, $this->script);
     }
 
-    public function test_constructed_constrainer_is_instance_of_ConstrainerCollectionInterface()
+    public function test_constructed_policy_is_instance_of_ConstrainerCollectionInterface()
     {
         $script = $this->script;
 
         $this->assertInstanceOf(
-            ConstrainerCollectionInterface::class,
+            ServerRequestPolicyInterface::class,
             $script->getConstraints()
         );
     }
@@ -306,11 +306,11 @@ class ScriptTest extends TestCase
     public function test_will_not_load_if_intended_to_be_constrained()
     {
         $request = $this->prophesize(ServerRequestInterface::class)->reveal();
-        $constraints = $this->prophesize(ConstrainerCollectionInterface::class);
-        $constraints->constrains($request)
+        $policy = $this->prophesize(ServerRequestPolicyInterface::class);
+        $policy->constrains($request)
             ->shouldBeCalled()
             ->willReturn(true);
-        $constraints = $constraints->reveal();
+        $policy = $policy->reveal();
 
         $script = new Script(
             $this->getConstructedHandle(),
@@ -319,7 +319,7 @@ class ScriptTest extends TestCase
             $this->getConstructedVersion(),
             $this->getConstructedFooterFlag(),
             $this->getConstructedEnqueueFlag(),
-            $constraints,
+            $policy,
             $this->getConstructedAttributes(),
             $this->getConstructedAsyncAttribute(),
             $this->getConstructedCrossoriginAttribute(),
@@ -337,11 +337,11 @@ class ScriptTest extends TestCase
     public function test_will_load_if_not_intended_to_be_constrained()
     {
         $request = $this->prophesize(ServerRequestInterface::class)->reveal();
-        $constraints = $this->prophesize(ConstrainerCollectionInterface::class);
-        $constraints->constrains($request)
+        $policy = $this->prophesize(ServerRequestPolicyInterface::class);
+        $policy->constrains($request)
             ->shouldBeCalled()
             ->willReturn(false);
-        $constraints = $constraints->reveal();
+        $policy = $policy->reveal();
 
         $script = new Script(
             $this->getConstructedHandle(),
@@ -350,7 +350,7 @@ class ScriptTest extends TestCase
             $this->getConstructedVersion(),
             $this->getConstructedFooterFlag(),
             $this->getConstructedEnqueueFlag(),
-            $constraints,
+            $policy,
             $this->getConstructedAttributes(),
             $this->getConstructedAsyncAttribute(),
             $this->getConstructedCrossoriginAttribute(),

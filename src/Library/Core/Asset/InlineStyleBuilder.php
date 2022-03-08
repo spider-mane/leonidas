@@ -11,7 +11,7 @@ class InlineStyleBuilder extends AbstractInlineAssetBuilder
         return new InlineStyle(
             $this->getHandle(),
             $this->getCode(),
-            $this->getConstraints()
+            $this->getPolicy()
         );
     }
 

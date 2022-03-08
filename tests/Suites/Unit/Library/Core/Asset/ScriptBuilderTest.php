@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Suites\Unit\Library\Core\Asset;
 
-use Leonidas\Contracts\Http\ConstrainerCollectionInterface;
+use Leonidas\Contracts\Http\ServerRequestPolicyInterface;
 use Leonidas\Library\Core\Asset\Script;
 use Leonidas\Library\Core\Asset\ScriptBuilder;
 use PHPUnit\Framework\TestCase;
@@ -61,9 +61,9 @@ class ScriptBuilderTest extends TestCase
         return true;
     }
 
-    protected function getProvidedConstrainers(): ConstrainerCollectionInterface
+    protected function getProvidedPolicies(): ServerRequestPolicyInterface
     {
-        return $this->getMockBuilder(ConstrainerCollectionInterface::class)->getMock();
+        return $this->getMockBuilder(ServerRequestPolicyInterface::class)->getMock();
     }
 
     protected function getProvidedLoadInFooterFlag(): bool
@@ -203,15 +203,15 @@ class ScriptBuilderTest extends TestCase
     /**
      * @test
      */
-    public function it_can_get_and_set_constraints()
+    public function it_can_get_and_set_policy()
     {
         $builder = $this->scriptBuilder;
-        $constraints = $this->getMockBuilder(ConstrainerCollectionInterface::class)
+        $policy = $this->getMockBuilder(ServerRequestPolicyInterface::class)
             ->getMock();
 
-        $builder->constraints($constraints);
+        $builder->policy($policy);
 
-        $this->assertEquals($constraints, $builder->getConstraints());
+        $this->assertEquals($policy, $builder->getConstraints());
     }
 
     /**
@@ -370,7 +370,7 @@ class ScriptBuilderTest extends TestCase
         $this->assertEquals($builder, $builder->dependencies(...$this->getProvidedDependencies()));
         $this->assertEquals($builder, $builder->version($this->getProvidedVersion()));
         $this->assertEquals($builder, $builder->enqueue($this->getProvidedEnqueueFlag()));
-        $this->assertEquals($builder, $builder->constraints($this->getProvidedConstrainers()));
+        $this->assertEquals($builder, $builder->policy($this->getProvidedPolicies()));
         $this->assertEquals($builder, $builder->attributes($this->getProvidedAttributes()));
         $this->assertEquals($builder, $builder->crossorigin($this->getProvidedCrossoriginAttribute()));
         $this->assertEquals($builder, $builder->inFooter($this->getProvidedLoadInFooterFlag()));

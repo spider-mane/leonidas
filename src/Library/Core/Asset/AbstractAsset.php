@@ -2,10 +2,10 @@
 
 namespace Leonidas\Library\Core\Asset;
 
-use Leonidas\Contracts\Http\ConstrainerCollectionInterface;
+use Leonidas\Contracts\Http\ServerRequestPolicyInterface;
 use Leonidas\Contracts\Ui\Asset\AssetInterface;
 use Leonidas\Library\Core\Asset\Traits\HasAssetDataTrait;
-use Leonidas\Library\Core\Http\ConstrainerCollection;
+use Leonidas\Library\Core\Http\Policies\NoPolicy;
 use Psr\Http\Message\ServerRequestInterface;
 
 abstract class AbstractAsset implements AssetInterface
@@ -38,9 +38,9 @@ abstract class AbstractAsset implements AssetInterface
     protected $shouldBeEnqueued = false;
 
     /**
-     * @var null|ConstrainerCollectionInterface
+     * @var null|ServerRequestPolicyInterface
      */
-    protected $constraints;
+    protected $policy;
 
     /**
      * @var array
@@ -58,7 +58,7 @@ abstract class AbstractAsset implements AssetInterface
         ?array $dependencies = null,
         $version = null,
         ?bool $shouldBeEnqueued,
-        ?ConstrainerCollectionInterface $constraints = null,
+        ?ServerRequestPolicyInterface $policy = null,
         ?array $attributes = null,
         ?string $crossorigin = null
     ) {
@@ -71,12 +71,12 @@ abstract class AbstractAsset implements AssetInterface
         $attributes && $this->attributes = $attributes;
         $crossorigin && $this->crossorigin = $crossorigin;
 
-        $this->constraints = $constraints ?? new ConstrainerCollection();
+        $this->policy = $policy ?? new NoPolicy();
     }
 
     public function shouldBeLoaded(ServerRequestInterface $request): bool
     {
-        return !$this->constraints->constrains($request);
+        return $this->policy->approvesRequest($request);
     }
 
     public function getSrcAttribute()

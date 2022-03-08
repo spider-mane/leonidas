@@ -114,7 +114,7 @@ class ScriptBuilder extends AbstractAssetBuilder
             $this->getVersion(),
             $this->shouldLoadInFooter(),
             $this->shouldBeEnqueued(),
-            $this->getConstraints(),
+            $this->getPolicy(),
             $this->getAttributes(),
             $this->isAsync(),
             $this->getCrossorigin(),

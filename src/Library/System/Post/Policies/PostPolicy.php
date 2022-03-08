@@ -1,12 +1,12 @@
 <?php
 
-namespace Leonidas\Library\System\Post\Constraints;
+namespace Leonidas\Library\System\Post\Policies;
 
-use Leonidas\Contracts\Http\ConstrainerInterface;
+use Leonidas\Contracts\Http\ServerRequestPolicyInterface;
 use Leonidas\Traits\ExpectsPostTrait;
 use Psr\Http\Message\ServerRequestInterface;
 
-class PostConstrainer implements ConstrainerInterface
+class PostPolicy implements ServerRequestPolicyInterface
 {
     use ExpectsPostTrait;
 
@@ -36,7 +36,7 @@ class PostConstrainer implements ConstrainerInterface
     /**
      *
      */
-    public function requestMeetsCriteria(ServerRequestInterface $request): bool
+    public function approvesRequest(ServerRequestInterface $request): bool
     {
         return in_array($this->getPostId($request), $this->posts);
     }

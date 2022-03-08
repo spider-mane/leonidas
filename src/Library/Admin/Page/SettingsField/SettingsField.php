@@ -3,7 +3,7 @@
 namespace Leonidas\Library\Admin\Page\SettingsField;
 
 use Leonidas\Contracts\Admin\Components\SettingsFieldInterface;
-use Leonidas\Contracts\Http\ConstrainerCollectionInterface;
+use Leonidas\Contracts\Http\ServerRequestPolicyInterface;
 use Leonidas\Library\Admin\Page\SettingsField\Traits\HasSettingsFieldDataTrait;
 use Leonidas\Traits\CanBeRestrictedTrait;
 use Psr\Http\Message\ServerRequestInterface;
@@ -27,7 +27,7 @@ class SettingsField implements SettingsFieldInterface
         ?array $args = null,
         ?FormFieldInterface $input = null,
         ?DataFormatterInterface $formatter = null,
-        ?ConstrainerCollectionInterface $constraints = null
+        ?ServerRequestPolicyInterface $policy = null
     ) {
         $this->id = $id;
         $this->title = $title;
@@ -40,7 +40,7 @@ class SettingsField implements SettingsFieldInterface
         $args && $this->args = $args;
         $input && $this->input = $input;
         $formatter && $this->formatter = $formatter;
-        $constraints && $this->constraints = $constraints;
+        $policy && $this->policy = $policy;
     }
 
     public function renderComponent(ServerRequestInterface $request): string

@@ -2,8 +2,8 @@
 
 namespace Leonidas\Library\Core\Asset;
 
-use Leonidas\Contracts\Http\ConstrainerCollectionInterface;
-use Leonidas\Library\Core\Http\ConstrainerCollection;
+use Leonidas\Contracts\Http\ServerRequestPolicyInterface;
+use Leonidas\Library\Core\Http\Policies\NoPolicy;
 use Psr\Http\Message\ServerRequestInterface;
 
 class AbstractInlineAsset
@@ -12,14 +12,14 @@ class AbstractInlineAsset
 
     protected string $code;
 
-    protected ?ConstrainerCollectionInterface $constraints = null;
+    protected ?ServerRequestPolicyInterface $policy = null;
 
-    public function __construct(string $handle, string $code, ?ConstrainerCollectionInterface $constraints = null)
+    public function __construct(string $handle, string $code, ?ServerRequestPolicyInterface $policy = null)
     {
         $this->handle = $handle;
         $this->code = $code;
 
-        $this->constraints = $constraints ?? new ConstrainerCollection();
+        $this->policy = $policy ?? new NoPolicy();
     }
 
     public function getHandle(): string
@@ -32,13 +32,13 @@ class AbstractInlineAsset
         return $this->code;
     }
 
-    public function getConstraints(): ConstrainerCollectionInterface
+    public function getPolicy(): ServerRequestPolicyInterface
     {
-        return $this->constraints;
+        return $this->policy;
     }
 
     public function shouldBeLoaded(ServerRequestInterface $request): bool
     {
-        return !$this->constraints->constrains($request);
+        return $this->policy->approvesRequest($request);
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Leonidas\Library\Core\Asset;
 
-use Leonidas\Contracts\Http\ConstrainerCollectionInterface;
+use Leonidas\Contracts\Http\ServerRequestPolicyInterface;
 use Leonidas\Library\Core\Asset\Traits\HasAssetDataTrait;
 
 abstract class AbstractAssetBuilder
@@ -35,9 +35,9 @@ abstract class AbstractAssetBuilder
     protected $shouldBeEnqueued = false;
 
     /**
-     * @var null|ConstrainerCollectionInterface
+     * @var null|ServerRequestPolicyInterface
      */
-    protected $constraints;
+    protected $policy;
 
     /**
      * @var array
@@ -111,15 +111,15 @@ abstract class AbstractAssetBuilder
     }
 
     /**
-     * Set the value of constraints
+     * Set the value of policy
      *
-     * @param ConstrainerCollectionInterface $constraints
+     * @param ServerRequestPolicyInterface $policy
      *
      * @return self
      */
-    public function constraints(?ConstrainerCollectionInterface $constraints)
+    public function policy(?ServerRequestPolicyInterface $policy)
     {
-        $this->constraints = $constraints;
+        $this->policy = $policy;
 
         return $this;
     }

@@ -94,7 +94,7 @@ class StyleBuilder extends AbstractAssetBuilder
             $this->getVersion(),
             $this->getMedia(),
             $this->shouldBeEnqueued(),
-            $this->getConstraints(),
+            $this->getPolicy(),
             $this->getAttributes(),
             $this->getCrossorigin(),
             $this->isDisabled(),

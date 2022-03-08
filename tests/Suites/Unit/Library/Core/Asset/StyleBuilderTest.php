@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Suites\Unit\Library\Core\Asset;
 
-use Leonidas\Contracts\Http\ConstrainerCollectionInterface;
+use Leonidas\Contracts\Http\ServerRequestPolicyInterface;
 use Leonidas\Library\Core\Asset\Style;
 use Leonidas\Library\Core\Asset\StyleBuilder;
 use PHPUnit\Framework\TestCase;
@@ -61,9 +61,9 @@ class StyleBuilderTest extends TestCase
         return true;
     }
 
-    protected function getProvidedConstrainers(): ConstrainerCollectionInterface
+    protected function getProvidedPolicies(): ServerRequestPolicyInterface
     {
-        return $this->getMockBuilder(ConstrainerCollectionInterface::class)->getMock();
+        return $this->getMockBuilder(ServerRequestPolicyInterface::class)->getMock();
     }
 
     protected function getProvidedAttributes(): array
@@ -155,12 +155,12 @@ class StyleBuilderTest extends TestCase
     public function testCanSetAndGetConstraints()
     {
         $builder = $this->styleBuilder;
-        $constraints = $this->getMockBuilder(ConstrainerCollectionInterface::class)
+        $policy = $this->getMockBuilder(ServerRequestPolicyInterface::class)
             ->getMock();
 
-        $builder->constraints($constraints);
+        $builder->policy($policy);
 
-        $this->assertEquals($constraints, $builder->getConstraints());
+        $this->assertEquals($policy, $builder->getConstraints());
     }
 
     public function testCanSetAndGetAttributes()
@@ -249,7 +249,7 @@ class StyleBuilderTest extends TestCase
         $this->assertEquals($builder, $builder->dependencies(...$this->getProvidedDependencies()));
         $this->assertEquals($builder, $builder->version($this->getProvidedVersion()));
         $this->assertEquals($builder, $builder->enqueue($this->getProvidedEnqueueFlag()));
-        $this->assertEquals($builder, $builder->constraints($this->getProvidedConstrainers()));
+        $this->assertEquals($builder, $builder->policy($this->getProvidedPolicies()));
         $this->assertEquals($builder, $builder->attributes($this->getProvidedAttributes()));
         $this->assertEquals($builder, $builder->crossorigin($this->getProvidedCrossoriginAttribute()));
 

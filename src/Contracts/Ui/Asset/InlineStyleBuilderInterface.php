@@ -2,7 +2,7 @@
 
 namespace Leonidas\Contracts\Ui\Asset;
 
-use Leonidas\Contracts\Http\ConstrainerCollectionInterface;
+use Leonidas\Contracts\Http\ServerRequestPolicyInterface;
 
 interface InlineStyleBuilderInterface
 {
@@ -10,7 +10,7 @@ interface InlineStyleBuilderInterface
 
     public function code(string $code);
 
-    public function constraints(?ConstrainerCollectionInterface $constraints);
+    public function policy(?ServerRequestPolicyInterface $policy);
 
     public function done(): InlineStyleInterface;
 }

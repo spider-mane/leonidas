@@ -2,7 +2,7 @@
 
 namespace Leonidas\Contracts\Admin\Components;
 
-use Leonidas\Contracts\Http\ConstrainerCollectionInterface;
+use Leonidas\Contracts\Http\ServerRequestPolicyInterface;
 
 interface MetaboxBuilderInterface
 {
@@ -20,5 +20,5 @@ interface MetaboxBuilderInterface
 
     public function layout(MetaboxLayoutInterface $layout);
 
-    public function constraints(ConstrainerCollectionInterface $constraints);
+    public function policy(ServerRequestPolicyInterface $policy);
 }

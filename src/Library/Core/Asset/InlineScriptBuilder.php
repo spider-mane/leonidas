@@ -27,7 +27,7 @@ class InlineScriptBuilder extends AbstractInlineAssetBuilder implements InlineSc
             $this->getHandle(),
             $this->getCode(),
             $this->getPosition(),
-            $this->getConstraints(),
+            $this->getPolicy(),
         );
     }
 

@@ -2,7 +2,7 @@
 
 namespace Leonidas\Library\Core\Asset;
 
-use Leonidas\Contracts\Http\ConstrainerCollectionInterface;
+use Leonidas\Contracts\Http\ServerRequestPolicyInterface;
 use Leonidas\Contracts\Ui\Asset\InlineScriptInterface;
 
 class InlineScript extends AbstractInlineAsset implements InlineScriptInterface
@@ -13,9 +13,9 @@ class InlineScript extends AbstractInlineAsset implements InlineScriptInterface
         string $handle,
         string $data,
         ?string $position = null,
-        ?ConstrainerCollectionInterface $constraints = null
+        ?ServerRequestPolicyInterface $policy = null
     ) {
-        parent::__construct($handle, $data, $constraints);
+        parent::__construct($handle, $data, $policy);
 
         $position && $this->position = $position;
     }

@@ -4,7 +4,7 @@ namespace Leonidas\Library\Admin\Page\SettingsField;
 
 use Leonidas\Contracts\Admin\Components\SettingsFieldBuilderInterface;
 use Leonidas\Contracts\Admin\Components\SettingsFieldInterface;
-use Leonidas\Contracts\Http\ConstrainerCollectionInterface;
+use Leonidas\Contracts\Http\ServerRequestPolicyInterface;
 use Leonidas\Library\Admin\Page\SettingsField\Traits\HasSettingsFieldDataTrait;
 use WebTheory\Saveyour\Contracts\FormFieldInterface;
 use WebTheory\Saveyour\Contracts\InputFormatterInterface;
@@ -63,14 +63,14 @@ class SettingsFieldBuilder implements SettingsFieldBuilderInterface
         $this->input = $input;
     }
 
-    public function constraints(ConstrainerCollectionInterface $constraints)
+    public function policy(ServerRequestPolicyInterface $policy)
     {
-        $this->constraints = $constraints;
+        $this->policy = $policy;
     }
 
-    public function getConstraints(): ?ConstrainerCollectionInterface
+    public function getPolicy(): ?ServerRequestPolicyInterface
     {
-        return $this->constraints;
+        return $this->policy;
     }
 
     public function get(): SettingsFieldInterface
@@ -85,7 +85,7 @@ class SettingsFieldBuilder implements SettingsFieldBuilderInterface
             $this->getArgs(),
             $this->getInput(),
             $this->getFormatter(),
-            $this->getConstraints()
+            $this->getPolicy()
         );
     }
 }

@@ -4,8 +4,7 @@ namespace Leonidas\Library\Admin\Page\SettingsSection;
 
 use Leonidas\Contracts\Admin\Components\SettingsSectionBuilderInterface;
 use Leonidas\Contracts\Admin\Components\SettingsSectionInterface;
-use Leonidas\Contracts\Http\ConstrainerCollectionInterface;
-use Leonidas\Library\Admin\Page\SettingsSection;
+use Leonidas\Contracts\Http\ServerRequestPolicyInterface;
 use Leonidas\Library\Admin\Page\SettingsSection\Traits\HasSettingsSectionDataTrait;
 
 class SettingsSectionBuilder implements SettingsSectionBuilderInterface
@@ -37,14 +36,14 @@ class SettingsSectionBuilder implements SettingsSectionBuilderInterface
         $this->description = $description;
     }
 
-    public function constraints(?ConstrainerCollectionInterface $constraints)
+    public function policy(?ServerRequestPolicyInterface $policy)
     {
-        $this->constraints = $constraints;
+        $this->policy = $policy;
     }
 
-    public function getConstraints(): ?ConstrainerCollectionInterface
+    public function getPolicy(): ?ServerRequestPolicyInterface
     {
-        return $this->constraints;
+        return $this->policy;
     }
 
     public function get(): SettingsSectionInterface
@@ -54,7 +53,7 @@ class SettingsSectionBuilder implements SettingsSectionBuilderInterface
             $this->getTitle(),
             $this->getPage(),
             $this->getDescription(),
-            $this->getConstraints(),
+            $this->getPolicy(),
         );
     }
 }

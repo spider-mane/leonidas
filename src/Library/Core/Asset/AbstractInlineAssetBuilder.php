@@ -2,7 +2,7 @@
 
 namespace Leonidas\Library\Core\Asset;
 
-use Leonidas\Contracts\Http\ConstrainerCollectionInterface;
+use Leonidas\Contracts\Http\ServerRequestPolicyInterface;
 
 abstract class AbstractInlineAssetBuilder
 {
@@ -10,7 +10,7 @@ abstract class AbstractInlineAssetBuilder
 
     protected string $code;
 
-    protected ?ConstrainerCollectionInterface $constraints = null;
+    protected ?ServerRequestPolicyInterface $policy = null;
 
     public function __construct(string $handle)
     {
@@ -41,15 +41,15 @@ abstract class AbstractInlineAssetBuilder
         return $this->code;
     }
 
-    public function constraints(?ConstrainerCollectionInterface $constraints): AbstractInlineAssetBuilder
+    public function policy(?ServerRequestPolicyInterface $policy): AbstractInlineAssetBuilder
     {
-        $this->constraints = $constraints;
+        $this->policy = $policy;
 
         return $this;
     }
 
-    public function getConstraints(): ?ConstrainerCollectionInterface
+    public function getPolicy(): ?ServerRequestPolicyInterface
     {
-        return $this->constraints;
+        return $this->policy;
     }
 }

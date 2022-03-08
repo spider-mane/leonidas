@@ -2,7 +2,7 @@
 
 namespace Leonidas\Library\Core\Asset\Traits;
 
-use Leonidas\Contracts\Http\ConstrainerCollectionInterface;
+use Leonidas\Contracts\Http\ServerRequestPolicyInterface;
 
 trait HasAssetDataTrait
 {
@@ -57,13 +57,13 @@ trait HasAssetDataTrait
     }
 
     /**
-     * Get the value of globalConstraints
+     * Get the value of globalPolicy
      *
-     * @return ConstrainerCollectionInterface
+     * @return ServerRequestPolicyInterface
      */
-    public function getConstraints(): ?ConstrainerCollectionInterface
+    public function getPolicy(): ?ServerRequestPolicyInterface
     {
-        return $this->constraints;
+        return $this->policy;
     }
 
     /**

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Suites\Unit\Library\Core\Asset;
 
-use Leonidas\Contracts\Http\ConstrainerCollectionInterface;
+use Leonidas\Contracts\Http\ServerRequestPolicyInterface;
 use Leonidas\Contracts\Ui\Asset\StyleInterface;
 use Leonidas\Library\Core\Asset\Style;
 use PHPUnit\Framework\TestCase;
@@ -74,9 +74,9 @@ class StyleTest extends TestCase
         return true;
     }
 
-    protected function getConstructedConstraints(): ConstrainerCollectionInterface
+    protected function getConstructedConstraints(): ServerRequestPolicyInterface
     {
-        return $this->getMockBuilder(ConstrainerCollectionInterface::class)->getMock();
+        return $this->getMockBuilder(ServerRequestPolicyInterface::class)->getMock();
     }
 
     protected function getConstructedAttributes(): array
@@ -229,12 +229,12 @@ class StyleTest extends TestCase
         $this->assertInstanceOf(StyleInterface::class, $this->style);
     }
 
-    public function test_constructed_constrainer_is_instance_of_ConstrainerCollectionInterface()
+    public function test_constructed_policy_is_instance_of_ConstrainerCollectionInterface()
     {
         $style = $this->style;
 
         $this->assertInstanceOf(
-            ConstrainerCollectionInterface::class,
+            ServerRequestPolicyInterface::class,
             $style->getConstraints()
         );
     }
@@ -242,11 +242,11 @@ class StyleTest extends TestCase
     public function test_will_not_load_if_intended_to_be_constrained()
     {
         $request = $this->prophesize(ServerRequestInterface::class)->reveal();
-        $constraints = $this->prophesize(ConstrainerCollectionInterface::class);
-        $constraints->constrains($request)
+        $policy = $this->prophesize(ServerRequestPolicyInterface::class);
+        $policy->constrains($request)
             ->shouldBeCalled()
             ->willReturn(true);
-        $constraints = $constraints->reveal();
+        $policy = $policy->reveal();
 
         $script = new Style(
             $this->getConstructedHandle(),
@@ -255,7 +255,7 @@ class StyleTest extends TestCase
             $this->getConstructedVersion(),
             $this->getConstructedMedia(),
             $this->getConstructedEnqueueFlag(),
-            $constraints,
+            $policy,
             $this->getConstructedAttributes(),
             $this->getConstructedCrossoriginAttribute(),
             $this->getConstructedDisabledAttribute(),
@@ -269,11 +269,11 @@ class StyleTest extends TestCase
     public function test_will_load_if_not_intended_to_be_constrained()
     {
         $request = $this->prophesize(ServerRequestInterface::class)->reveal();
-        $constraints = $this->prophesize(ConstrainerCollectionInterface::class);
-        $constraints->constrains($request)
+        $policy = $this->prophesize(ServerRequestPolicyInterface::class);
+        $policy->constrains($request)
             ->shouldBeCalled()
             ->willReturn(false);
-        $constraints = $constraints->reveal();
+        $policy = $policy->reveal();
 
         $script = new Style(
             $this->getConstructedHandle(),
@@ -282,7 +282,7 @@ class StyleTest extends TestCase
             $this->getConstructedVersion(),
             $this->getConstructedMedia(),
             $this->getConstructedEnqueueFlag(),
-            $constraints,
+            $policy,
             $this->getConstructedAttributes(),
             $this->getConstructedCrossoriginAttribute(),
             $this->getConstructedDisabledAttribute(),

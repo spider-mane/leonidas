@@ -2,7 +2,7 @@
 
 namespace Leonidas\Library\Core\Asset;
 
-use Leonidas\Contracts\Http\ConstrainerCollectionInterface;
+use Leonidas\Contracts\Http\ServerRequestPolicyInterface;
 use Leonidas\Contracts\Ui\Asset\StyleInterface;
 use Leonidas\Library\Core\Asset\Traits\HasStyleDataTrait;
 
@@ -37,7 +37,7 @@ class Style extends AbstractAsset implements StyleInterface
         $version = null,
         ?string $media = null,
         ?bool $shouldBeEnqueued = null,
-        ?ConstrainerCollectionInterface $constraints = null,
+        ?ServerRequestPolicyInterface $policy = null,
         ?array $attributes = null,
         ?string $crossorigin = null,
         ?bool $isDisabled = null,
@@ -50,7 +50,7 @@ class Style extends AbstractAsset implements StyleInterface
             $dependencies,
             $version,
             $shouldBeEnqueued,
-            $constraints,
+            $policy,
             $attributes,
             $crossorigin
         );

@@ -3,9 +3,8 @@
 namespace Library\Admin\Metabox;
 
 use Leonidas\Contracts\Admin\Components\MetaboxBuilderInterface;
-use Leonidas\Contracts\Admin\Components\MetaboxInterface;
 use Leonidas\Contracts\Admin\Components\MetaboxLayoutInterface;
-use Leonidas\Contracts\Http\ConstrainerCollectionInterface;
+use Leonidas\Contracts\Http\ServerRequestPolicyInterface;
 use Leonidas\Library\Admin\Metabox\Metabox;
 
 class MetaboxBuilder implements MetaboxBuilderInterface
@@ -27,7 +26,7 @@ class MetaboxBuilder implements MetaboxBuilderInterface
 
     protected MetaboxLayoutInterface $layout;
 
-    protected ConstrainerCollectionInterface $constraints;
+    protected ServerRequestPolicyInterface $policy;
 
     public function __construct(string $id)
     {
@@ -79,9 +78,9 @@ class MetaboxBuilder implements MetaboxBuilderInterface
         return $this;
     }
 
-    public function constraints(ConstrainerCollectionInterface $constraints)
+    public function policy(ServerRequestPolicyInterface $policy)
     {
-        $this->constraints = $constraints;
+        $this->policy = $policy;
 
         return $this;
     }
@@ -93,17 +92,18 @@ class MetaboxBuilder implements MetaboxBuilderInterface
         return $this;
     }
 
-    public function get(): MetaboxInterface
+    public function get(): Metabox
     {
-        $metabox = new Metabox($this->id, $this->title, $this->layout);
-
-        $metabox->setScreen($this->screen);
-        $metabox->setContext($this->context);
-        $metabox->setPriority($this->priority);
-        $metabox->setArgs($this->args);
-        $metabox->setConstraints($this->constraints);
-
-        return $metabox;
+        return new Metabox(
+            $this->id,
+            $this->title,
+            $this->screen,
+            $this->context,
+            $this->priority,
+            $this->args,
+            $this->layout,
+            $this->policy
+        );
     }
 
     public static function for(string $id)

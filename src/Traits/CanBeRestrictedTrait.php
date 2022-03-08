@@ -2,20 +2,15 @@
 
 namespace Leonidas\Traits;
 
-use Leonidas\Contracts\Http\ConstrainerCollectionInterface;
+use Leonidas\Contracts\Http\ServerRequestPolicyInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 trait CanBeRestrictedTrait
 {
-    protected ?ConstrainerCollectionInterface $constraints = null;
-
-    public function getConstraints(): ?ConstrainerCollectionInterface
-    {
-        return $this->constraints;
-    }
+    protected ?ServerRequestPolicyInterface $policy = null;
 
     public function shouldBeRendered(ServerRequestInterface $request): bool
     {
-        return !isset($this->constraints) || !$this->constraints->constrains($request);
+        return !isset($this->policy) || $this->policy->approvesRequest($request);
     }
 }

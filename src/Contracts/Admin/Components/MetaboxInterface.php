@@ -13,9 +13,9 @@ interface MetaboxInterface extends AdminComponentInterface
      */
     public function getScreen();
 
-    public function getContext(): ?string;
+    public function getContext(): string;
 
-    public function getPriority(): ?string;
+    public function getPriority(): string;
 
-    public function getArgs(): ?array;
+    public function getArgs(): array;
 }

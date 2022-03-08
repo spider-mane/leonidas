@@ -3,7 +3,7 @@
 namespace Leonidas\Library\Admin\Page\SettingsSection;
 
 use Leonidas\Contracts\Admin\Components\SettingsSectionInterface;
-use Leonidas\Contracts\Http\ConstrainerCollectionInterface;
+use Leonidas\Contracts\Http\ServerRequestPolicyInterface;
 use Leonidas\Library\Admin\Page\SettingsSection\Traits\HasSettingsSectionDataTrait;
 use Leonidas\Traits\CanBeRestrictedTrait;
 use Psr\Http\Message\ServerRequestInterface;
@@ -19,13 +19,13 @@ class SettingsSection implements SettingsSectionInterface
         string $title,
         string $page,
         ?string $description = null,
-        ?ConstrainerCollectionInterface $constraints = null
+        ?ServerRequestPolicyInterface $policy = null
     ) {
         $this->id = $id;
         $this->title = $title;
         $this->page = $page;
         $this->description = $description;
-        $this->constraints = $constraints;
+        $this->policy = $policy;
     }
 
     public function renderComponent(ServerRequestInterface $request): string
