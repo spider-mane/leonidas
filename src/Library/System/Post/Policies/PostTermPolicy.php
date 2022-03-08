@@ -2,7 +2,7 @@
 
 namespace Leonidas\Library\System\Post\Policies;
 
-use Leonidas\Contracts\Http\ServerRequestPolicyInterface;
+use Leonidas\Contracts\Http\Policy\ServerRequestPolicyInterface;
 use Leonidas\Traits\ExpectsPostTrait;
 use Psr\Http\Message\ServerRequestInterface;
 use WP_Post;

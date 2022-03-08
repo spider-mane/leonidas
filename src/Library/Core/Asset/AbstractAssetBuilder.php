@@ -2,7 +2,7 @@
 
 namespace Leonidas\Library\Core\Asset;
 
-use Leonidas\Contracts\Http\ServerRequestPolicyInterface;
+use Leonidas\Contracts\Http\Policy\ServerRequestPolicyInterface;
 use Leonidas\Library\Core\Asset\Traits\HasAssetDataTrait;
 
 abstract class AbstractAssetBuilder

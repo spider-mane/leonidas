@@ -2,7 +2,7 @@
 
 namespace Leonidas\Library\Core\Http;
 
-use Leonidas\Contracts\Http\ServerRequestPolicyInterface;
+use Leonidas\Contracts\Http\Policy\ServerRequestPolicyInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 class CallbackPolicy implements ServerRequestPolicyInterface

@@ -2,7 +2,7 @@
 
 namespace Leonidas\Contracts\Ui\Asset;
 
-use Leonidas\Contracts\Http\ServerRequestPolicyInterface;
+use Leonidas\Contracts\Http\Policy\ServerRequestPolicyInterface;
 
 interface InlineStyleBuilderInterface
 {

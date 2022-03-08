@@ -4,7 +4,7 @@ namespace Library\Admin\Metabox;
 
 use Leonidas\Contracts\Admin\Components\MetaboxBuilderInterface;
 use Leonidas\Contracts\Admin\Components\MetaboxLayoutInterface;
-use Leonidas\Contracts\Http\ServerRequestPolicyInterface;
+use Leonidas\Contracts\Http\Policy\ServerRequestPolicyInterface;
 use Leonidas\Library\Admin\Metabox\Metabox;
 
 class MetaboxBuilder implements MetaboxBuilderInterface

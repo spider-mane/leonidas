@@ -2,7 +2,7 @@
 
 namespace Leonidas\Library\Core\Http\Policies;
 
-use Leonidas\Contracts\Http\ServerRequestPolicyInterface;
+use Leonidas\Contracts\Http\Policy\ServerRequestPolicyInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 class NoPolicy implements ServerRequestPolicyInterface

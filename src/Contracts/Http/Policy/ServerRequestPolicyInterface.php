@@ -1,6 +1,6 @@
 <?php
 
-namespace Leonidas\Contracts\Http;
+namespace Leonidas\Contracts\Http\Policy;
 
 use Psr\Http\Message\ServerRequestInterface;
 
