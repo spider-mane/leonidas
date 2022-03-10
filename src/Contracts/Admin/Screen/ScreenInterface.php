@@ -1,6 +1,6 @@
 <?php
 
-namespace Leonidas\Contracts\System\Screen;
+namespace Leonidas\Contracts\Admin\Screen;
 
 interface ScreenInterface
 {
