@@ -6,7 +6,7 @@
  * file that was distributed with this source code.
  *
  * @package leonidas/leonidas
- * @version 0.11.1
+ * @version 0.15.0
  * @license GPL-3.0-or-later
  * @copyright Copyright (C) 2021 Chris Williams, All rights reserved.
  * @link https://github.com/spider-mane/leonidas
@@ -16,7 +16,7 @@
  * Plugin Name: Leonidas
  * Plugin URI: https://github.com/spider-mane/leonidas
  * Description: Theme and plugin framework with enhanced WordPress abstraction api.
- * Version: 0.11.1
+ * Version: 0.15.0
  * Requires at least: 5.0
  * Requires PHP: 7.3
  * Author: Chris Williams

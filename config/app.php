@@ -1,14 +1,12 @@
 <?php
 
-use Leonidas\Plugin\Leonidas;
-
 $name = 'Leonidas';
 
 return [
 
     'name' => $name,
 
-    'version' => '0.11.0',
+    'version' => '0.15.0',
 
     'slug' => 'leonidas',
 

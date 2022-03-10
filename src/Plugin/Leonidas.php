@@ -4,7 +4,7 @@ namespace Leonidas\Plugin;
 
 use Leonidas\Contracts\Extension\DependentExtensionListInterface;
 use Leonidas\Contracts\Extension\WpExtensionInterface;
-use Leonidas\Enum\ExtensionType;
+use Leonidas\Enum\Extension\ExtensionType;
 use Leonidas\Framework\Exceptions\InvalidCallToPluginMethodException;
 
 final class Leonidas
@@ -71,21 +71,21 @@ final class Leonidas
 
     public static function supportTheme(string $name): void
     {
-        self::supportExtension(new ExtensionType('theme'), $name);
+        self::supportExtension(ExtensionType::from('theme'), $name);
     }
 
     public static function supportPlugin(string $name): void
     {
-        self::supportExtension(new ExtensionType('plugin'), $name);
+        self::supportExtension(ExtensionType::from('plugin'), $name);
     }
 
     public static function supportMuPlugin(string $name): void
     {
-        self::supportExtension(new ExtensionType('mu-plugin'), $name);
+        self::supportExtension(ExtensionType::from('mu-plugin'), $name);
     }
 
     public static function supportMixin(string $name): void
     {
-        self::supportExtension(new ExtensionType('mixin'), $name);
+        self::supportExtension(ExtensionType::from('mixin'), $name);
     }
 }
