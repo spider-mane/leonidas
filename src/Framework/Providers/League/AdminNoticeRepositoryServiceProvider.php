@@ -3,29 +3,29 @@
 namespace Leonidas\Framework\Providers\League;
 
 use Leonidas\Contracts\Container\StaticProviderInterface;
-use Leonidas\Framework\Providers\PhoneNumberUtilProvider;
-use libphonenumber\PhoneNumberUtil;
+use Leonidas\Framework\Providers\AdminNoticeRepositoryProvider;
+use Leonidas\Library\Admin\Notice\AdminNoticeRepository;
 use Psr\Container\ContainerInterface;
 
-class PhoneNumberUtilServiceProvider extends AbstractLeagueProviderWrapper
+class AdminNoticeRepositoryServiceProvider extends AbstractLeagueProviderWrapper
 {
     protected function serviceId(): string
     {
-        return PhoneNumberUtil::class;
+        return AdminNoticeRepository::class;
     }
 
     protected function serviceTags(): array
     {
-        return ['phone', 'phone_util', 'phoneUtil'];
+        return ['admin_notices', 'adminNotices'];
     }
 
     protected function serviceProvider(): StaticProviderInterface
     {
-        return new PhoneNumberUtilProvider();
+        return new AdminNoticeRepositoryProvider();
     }
 
     protected function providerArgs(ContainerInterface $container): ?array
     {
-        return $this->getConfig('phone.util');
+        return $this->getConfig('admin.notices');
     }
 }

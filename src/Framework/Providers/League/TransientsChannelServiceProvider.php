@@ -3,29 +3,30 @@
 namespace Leonidas\Framework\Providers\League;
 
 use Leonidas\Contracts\Container\StaticProviderInterface;
-use Leonidas\Framework\Providers\PhoneNumberUtilProvider;
-use libphonenumber\PhoneNumberUtil;
+use Leonidas\Framework\Providers\TransientsChannelProvider;
 use Psr\Container\ContainerInterface;
 
-class PhoneNumberUtilServiceProvider extends AbstractLeagueProviderWrapper
+class TransientsChannelServiceProvider extends AbstractLeagueProviderWrapper
 {
     protected function serviceId(): string
     {
-        return PhoneNumberUtil::class;
+        return 'cache_channel';
     }
 
     protected function serviceTags(): array
     {
-        return ['phone', 'phone_util', 'phoneUtil'];
+        return ['transients_channel'];
     }
 
     protected function serviceProvider(): StaticProviderInterface
     {
-        return new PhoneNumberUtilProvider();
+        return new TransientsChannelProvider();
     }
 
     protected function providerArgs(ContainerInterface $container): ?array
     {
-        return $this->getConfig('phone.util');
+        return [
+            'channel' => $this->getConfig('app.prefix'),
+        ];
     }
 }

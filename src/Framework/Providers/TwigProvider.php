@@ -12,26 +12,26 @@ use Twig\TwigFunction;
 
 class TwigProvider implements StaticProviderInterface
 {
-    public static function provide(array $args, ContainerInterface $container): Environment
+    public static function provide(ContainerInterface $container, array $args = []): Environment
     {
         $loader = $container->has(LoaderInterface::class)
             ? $container->get(LoaderInterface::class)
-            : static::getDefaultLoader($args);
+            : static::defaultLoader($args);
 
         $twig = new Environment($loader, $args['options']);
 
-        foreach ($args['filters'] as $filter => $function) {
+        foreach ($args['filters'] ?? [] as $filter => $function) {
             $twig->addFilter(new TwigFilter($filter, $function));
         }
 
-        foreach ($args['functions'] as $alias => $function) {
+        foreach ($args['functions'] ?? [] as $alias => $function) {
             $twig->addFunction(new TwigFunction($alias, $function));
         }
 
         return $twig;
     }
 
-    protected static function getDefaultLoader(array $args): LoaderInterface
+    protected static function defaultLoader(array $args): LoaderInterface
     {
         return new FilesystemLoader($args['paths'], $args['root'] ?? null);
     }

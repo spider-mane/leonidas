@@ -2,28 +2,24 @@
 
 namespace Leonidas\Framework\Providers\League;
 
-use League\Container\ServiceProvider\AbstractServiceProvider;
-use Leonidas\Framework\App\Forms\FormRepository;
+use Leonidas\Contracts\Container\StaticProviderInterface;
+use Leonidas\Contracts\Http\Form\FormRepositoryInterface;
+use Leonidas\Framework\Providers\FormRepositoryProvider;
 
-class FormRepositoryServiceProvider extends AbstractServiceProvider
+class FormRepositoryServiceProvider extends AbstractLeagueProviderWrapper
 {
-    /**
-     * {@inheritDoc}
-     */
-    public function provides(string $id): bool
+    protected function serviceId(): string
     {
-        return in_array($id, [FormRepository::class]);
+        return FormRepositoryInterface::class;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function register(): void
+    protected function serviceTags(): array
     {
-        $container = $this->getContainer();
+        return ['forms', 'form_repository', 'formRepository'];
+    }
 
-        $container->addShared(FormRepository::class, function () {
-            return new FormRepository();
-        });
+    protected function serviceProvider(): StaticProviderInterface
+    {
+        return new FormRepositoryProvider();
     }
 }

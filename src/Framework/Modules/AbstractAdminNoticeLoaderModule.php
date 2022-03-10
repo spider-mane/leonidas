@@ -28,7 +28,7 @@ abstract class AbstractAdminNoticeLoaderModule extends AbstractModule implements
 
     protected function doShutdownAction()
     {
-        if (is_admin()) {
+        if (is_admin() && did_action('wp_redirect')) {
             $this->stashCollectedNotices();
         }
     }

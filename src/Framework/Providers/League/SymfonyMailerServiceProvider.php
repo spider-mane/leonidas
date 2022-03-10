@@ -3,29 +3,29 @@
 namespace Leonidas\Framework\Providers\League;
 
 use Leonidas\Contracts\Container\StaticProviderInterface;
-use Leonidas\Framework\Providers\PhoneNumberUtilProvider;
-use libphonenumber\PhoneNumberUtil;
+use Leonidas\Framework\Providers\SymfonyMailerProvider;
 use Psr\Container\ContainerInterface;
+use Symfony\Component\Mailer\Mailer;
 
-class PhoneNumberUtilServiceProvider extends AbstractLeagueProviderWrapper
+class SymfonyMailerServiceProvider extends AbstractLeagueProviderWrapper
 {
     protected function serviceId(): string
     {
-        return PhoneNumberUtil::class;
+        return Mailer::class;
     }
 
     protected function serviceTags(): array
     {
-        return ['phone', 'phone_util', 'phoneUtil'];
+        return ['mailer', 'symfony_mailer', 'symfonyMailer'];
     }
 
     protected function serviceProvider(): StaticProviderInterface
     {
-        return new PhoneNumberUtilProvider();
+        return new SymfonyMailerProvider();
     }
 
     protected function providerArgs(ContainerInterface $container): ?array
     {
-        return $this->getConfig('phone.util');
+        return $this->getConfig('mail');
     }
 }

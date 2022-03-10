@@ -3,29 +3,29 @@
 namespace Leonidas\Framework\Providers\League;
 
 use Leonidas\Contracts\Container\StaticProviderInterface;
-use Leonidas\Framework\Providers\PhoneNumberUtilProvider;
-use libphonenumber\PhoneNumberUtil;
+use Leonidas\Framework\Providers\TwigProvider;
 use Psr\Container\ContainerInterface;
+use Twig\Environment;
 
-class PhoneNumberUtilServiceProvider extends AbstractLeagueProviderWrapper
+class TwigViewServiceProvider extends AbstractLeagueProviderWrapper
 {
     protected function serviceId(): string
     {
-        return PhoneNumberUtil::class;
+        return Environment::class;
     }
 
     protected function serviceTags(): array
     {
-        return ['phone', 'phone_util', 'phoneUtil'];
+        return ['twig', 'views', 'templates'];
     }
 
     protected function serviceProvider(): StaticProviderInterface
     {
-        return new PhoneNumberUtilProvider();
+        return new TwigProvider();
     }
 
     protected function providerArgs(ContainerInterface $container): ?array
     {
-        return $this->getConfig('phone.util');
+        return $this->getConfig('twig');
     }
 }

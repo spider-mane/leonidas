@@ -2,35 +2,24 @@
 
 namespace Leonidas\Framework\Providers\League;
 
-use League\Container\ServiceProvider\AbstractServiceProvider;
-use Psr\Http\Message\ResponseFactoryInterface;
-use Slim\CallableResolver;
+use Leonidas\Contracts\Container\StaticProviderInterface;
+use Leonidas\Framework\Providers\SlimRouterProvider;
 use Slim\Interfaces\RouteCollectorProxyInterface;
-use Slim\Routing\RouteCollectorProxy;
 
-class SlimRouterServiceProvider extends AbstractServiceProvider
+class SlimRouterServiceProvider extends AbstractLeagueProviderWrapper
 {
-    /**
-     * {@inheritDoc}
-     */
-    public function provides(string $id): bool
+    protected function serviceId(): string
     {
-        return in_array($id, [RouteCollectorProxyInterface::class]);
+        return RouteCollectorProxyInterface::class;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function register(): void
+    protected function serviceTags(): array
     {
-        $container = $this->getContainer();
+        return ['router'];
+    }
 
-        $container->addShared(RouteCollectorProxyInterface::class, function () use ($container) {
-            return new RouteCollectorProxy(
-                $container->get(ResponseFactoryInterface::class),
-                new CallableResolver($container),
-                $container
-            );
-        });
+    protected function serviceProvider(): StaticProviderInterface
+    {
+        return new SlimRouterProvider();
     }
 }

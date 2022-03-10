@@ -107,7 +107,7 @@ abstract class AbstractPostTypeMetaboxesModule extends AbstractModule
         $this->postFormProcessing($this->form()->process($request), $request);
     }
 
-    protected function renderMetabox(WP_Post $post, array $metabox): void
+    protected function printMetabox(WP_Post $post, array $metabox): void
     {
         $request = $this->getServerRequest()
             ->withAttribute('post', $post)
@@ -153,7 +153,7 @@ abstract class AbstractPostTypeMetaboxesModule extends AbstractModule
 
     protected function metaboxLoader(): MetaboxLoaderInterface
     {
-        return new MetaboxLoader($this->callbackMethod('renderMetabox'));
+        return new MetaboxLoader($this->callbackMethod('printMetabox'));
     }
 
     protected function allowAutosave(): bool

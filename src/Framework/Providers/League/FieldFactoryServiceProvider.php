@@ -3,29 +3,29 @@
 namespace Leonidas\Framework\Providers\League;
 
 use Leonidas\Contracts\Container\StaticProviderInterface;
-use Leonidas\Framework\Providers\PhoneNumberUtilProvider;
-use libphonenumber\PhoneNumberUtil;
+use Leonidas\Framework\Providers\FieldFactoryProvider;
+use Leonidas\Library\Admin\Fields\Factory\Field;
 use Psr\Container\ContainerInterface;
 
-class PhoneNumberUtilServiceProvider extends AbstractLeagueProviderWrapper
+class FieldFactoryServiceProvider extends AbstractLeagueProviderWrapper
 {
     protected function serviceId(): string
     {
-        return PhoneNumberUtil::class;
+        return Field::class;
     }
 
     protected function serviceTags(): array
     {
-        return ['phone', 'phone_util', 'phoneUtil'];
+        return ['field_factory'];
     }
 
     protected function serviceProvider(): StaticProviderInterface
     {
-        return new PhoneNumberUtilProvider();
+        return new FieldFactoryProvider();
     }
 
     protected function providerArgs(ContainerInterface $container): ?array
     {
-        return $this->getConfig('phone.util');
+        return $this->getConfig('view.fields');
     }
 }

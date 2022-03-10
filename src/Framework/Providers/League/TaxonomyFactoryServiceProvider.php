@@ -3,29 +3,31 @@
 namespace Leonidas\Framework\Providers\League;
 
 use Leonidas\Contracts\Container\StaticProviderInterface;
-use Leonidas\Framework\Providers\PhoneNumberUtilProvider;
-use libphonenumber\PhoneNumberUtil;
+use Leonidas\Framework\Providers\TaxonomyProvider;
+use Leonidas\Library\System\Taxonomy\TaxonomyFactory;
 use Psr\Container\ContainerInterface;
 
-class PhoneNumberUtilServiceProvider extends AbstractLeagueProviderWrapper
+class TaxonomyFactoryServiceProvider extends AbstractLeagueProviderWrapper
 {
     protected function serviceId(): string
     {
-        return PhoneNumberUtil::class;
+        return TaxonomyFactory::class;
     }
 
     protected function serviceTags(): array
     {
-        return ['phone', 'phone_util', 'phoneUtil'];
+        return ['taxonomy_factory'];
     }
 
     protected function serviceProvider(): StaticProviderInterface
     {
-        return new PhoneNumberUtilProvider();
+        return new TaxonomyProvider();
     }
 
     protected function providerArgs(ContainerInterface $container): ?array
     {
-        return $this->getConfig('phone.util');
+        return [
+            'prefix' => $this->getConfig('app.prefix'),
+        ];
     }
 }

@@ -3,10 +3,10 @@
 namespace Leonidas\Framework\Providers\League;
 
 use Leonidas\Contracts\Container\StaticProviderInterface;
-use Leonidas\Framework\Providers\GuzzleHttpFactoryProvider;
+use Leonidas\Framework\Providers\SlimResponseFactoryProvider;
 use Psr\Http\Message\ResponseFactoryInterface;
 
-class GuzzleResponseFactoryServiceProvider extends AbstractLeagueProviderWrapper
+class SlimResponseFactoryServiceProvider extends AbstractLeagueProviderWrapper
 {
     protected function serviceId(): string
     {
@@ -20,6 +20,6 @@ class GuzzleResponseFactoryServiceProvider extends AbstractLeagueProviderWrapper
 
     protected function serviceProvider(): StaticProviderInterface
     {
-        return new GuzzleHttpFactoryProvider();
+        return new SlimResponseFactoryProvider();
     }
 }
