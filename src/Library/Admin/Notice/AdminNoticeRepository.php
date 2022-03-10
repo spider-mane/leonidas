@@ -10,16 +10,17 @@ use Psr\SimpleCache\CacheInterface;
 
 class AdminNoticeRepository implements AdminNoticeRepositoryInterface
 {
-    protected string $channel;
+    protected AdminNoticeCollectionInterface $notices;
 
     protected CacheInterface $cache;
 
-    protected AdminNoticeCollectionInterface $notices;
+    protected string $channel;
 
     public function __construct(string $channel, CacheInterface $cache)
     {
         $this->channel = $channel;
         $this->cache = $cache;
+        $this->notices = new AdminNoticeCollection();
     }
 
     public function get(string $notice): AdminNoticeInterface

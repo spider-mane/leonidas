@@ -6,7 +6,7 @@ use WebTheory\Config\Interfaces\ConfigInterface;
 
 trait ExtensionAwareTrait
 {
-    protected const CONFIG_SERVICE = 'config';
+    protected string $configService = 'config';
 
     final protected function getConfig(string $key, $default = null)
     {

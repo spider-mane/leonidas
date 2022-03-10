@@ -48,7 +48,7 @@ foreach ($config->get('app.services', []) as $service) {
 }
 
 # register service providers
-foreach ($config->get('container.providers', []) as $provider) {
+foreach ($config->get('app.providers', []) as $provider) {
     $container->addServiceProvider(new $provider);
 }
 

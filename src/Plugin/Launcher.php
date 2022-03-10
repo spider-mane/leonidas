@@ -54,7 +54,7 @@ final class Launcher
 
     private function getConfig(string $key, $default = null)
     {
-        return $this->getExtension()->config($key, $default);
+        return $this->container->get('config')->get($key, $default);
     }
 
     private function bootstrapContainer(): ContainerInterface

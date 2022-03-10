@@ -43,7 +43,7 @@ abstract class AbstractLeagueServiceProvider extends AbstractServiceProvider
 
     protected function config(): ConfigInterface
     {
-        return $this->container->get(static::CONFIG_SERVICE);
+        return $this->container->get($this->configService);
     }
 
     protected function shared(): ?bool
