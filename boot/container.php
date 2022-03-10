@@ -1,6 +1,7 @@
 <?php
 
 use League\Container\Container;
+use Leonidas\Contracts\Container\StaticProviderInterface;
 use WebTheory\Config\Config;
 
 defined('ABSPATH') || exit;
@@ -17,18 +18,31 @@ $config = $container
     ->getConcrete();
 
 # register services from config
-foreach ($config->get('container.services', []) as $service) {
+foreach ($config->get('app.services', []) as $service) {
 
     # extract service values
-    $id       = $service['id'];
+    $id     = $service['id'];
+    $alias  = $service['alias'] ?? '';
+    $tags   = $service['tags'] ?? [];
+    $shared = $service['shared'] ?? null;
+    $args   = $service['args'] ?? [];
+
+    /** @var StaticProviderInterface $provider */
     $provider = $service['provider'];
-    $args     = $service['args'] ?? [];
-    $shared   = $service['shared'] ?? false;
-    $tags     = $service['tags'] ?? [];
 
     # register and configure service
-    $add = $shared ? 'addShared' : 'add';
-    $service = $container->$add($id, fn () => $provider::provide($args, $container));
+    $service = $container->add($id, fn () => $provider::provide(
+        $container,
+        $args
+    ));
+
+    if (null !== $shared) {
+        $service->setShared($shared);
+    }
+
+    if (!empty($alias)) {
+        $service->setAlias($alias);
+    }
 
     array_map([$service, 'addTag'], $tags);
 }

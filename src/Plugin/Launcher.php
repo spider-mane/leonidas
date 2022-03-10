@@ -3,7 +3,7 @@
 namespace Leonidas\Plugin;
 
 use Leonidas\Contracts\Extension\WpExtensionInterface;
-use Leonidas\Enum\ExtensionType;
+use Leonidas\Enum\Extension\ExtensionType;
 use Leonidas\Framework\Exceptions\InvalidCallToPluginMethodException;
 use Leonidas\Framework\ModuleInitializer;
 use Leonidas\Framework\Plugin\Plugin;
@@ -13,11 +13,6 @@ use Psr\Container\ContainerInterface;
 
 final class Launcher
 {
-    /**
-     * @var string
-     */
-    private $base;
-
     /**
      * @var string
      */
@@ -52,35 +47,35 @@ final class Launcher
         $this->extension = $this->bootstrapExtension();
     }
 
-    /**
-     * Get the value of extension
-     *
-     * @return WpExtension
-     */
     private function getExtension(): WpExtension
     {
         return $this->extension;
     }
 
+    private function getConfig(string $key, $default = null)
+    {
+        return $this->getExtension()->config($key, $default);
+    }
+
     private function bootstrapContainer(): ContainerInterface
     {
-        return require $this->path . 'boot/container.php';
+        return require $this->path . '/boot/container.php';
     }
 
     private function bootstrapExtension(): WpExtensionInterface
     {
-        $config = [$this->container->get('config'), 'get'];
+        $app = $this->getConfig('app');
 
         return WpExtension::create([
-            'name' => $config('plugin.name'),
-            'version' => $config('plugin.version'),
-            'slug' => $config('plugin.slug'),
-            'prefix' => $config('plugin.prefix'),
-            'description' => $config('plugin.description'),
+            'name' => $app['name'],
+            'version' => $app['version'],
+            'slug' => $app['slug'],
+            'prefix' => $app['prefix'],
+            'description' => $app['description'],
             'path' => $this->path,
             'url' => $this->url,
-            'dev' => $config('plugin.dev'),
-            'type' => new ExtensionType($config('plugin.type')),
+            'dev' => $app['dev'],
+            'type' => ExtensionType::from($app['type']),
             'container' => $this->container,
         ]);
     }
