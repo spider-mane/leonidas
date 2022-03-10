@@ -15,8 +15,10 @@ class AdminNoticeHandler implements AdminNoticeHandlerInterface
 
     protected ?AdminNoticePrinterInterface $printer = null;
 
-    public function __construct(AdminNoticeRepositoryInterface $repository, ?AdminNoticePrinterInterface $printer = null)
-    {
+    public function __construct(
+        AdminNoticeRepositoryInterface $repository,
+        ?AdminNoticePrinterInterface $printer = null
+    ) {
         $this->repository = $repository;
         $this->printer = $printer;
     }

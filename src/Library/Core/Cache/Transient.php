@@ -45,13 +45,7 @@ class Transient implements CacheItemInterface
      */
     public function get()
     {
-        $value = get_transient($this->key);
-
-        if (false === $value) {
-            $this->isHit = true;
-        }
-
-        return $value;
+        //
     }
 
     /**
@@ -67,7 +61,7 @@ class Transient implements CacheItemInterface
      */
     public function set($value)
     {
-        set_transient($this->key, $value, $this->expiration);
+        $this->value = $value;
     }
 
     /**
@@ -78,6 +72,9 @@ class Transient implements CacheItemInterface
         $this->expiration = $expiration;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function expiresAfter($time)
     {
         //

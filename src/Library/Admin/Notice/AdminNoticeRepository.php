@@ -76,7 +76,7 @@ class AdminNoticeRepository implements AdminNoticeRepositoryInterface
 
     public function persist(ServerRequestInterface $request): void
     {
-        $this->cache->set("{$this->channel}_admin_notices", $this->notices);
+        $this->cache->set("{$this->channel}.admin_notices", $this->notices);
     }
 
     public function toArray(): array

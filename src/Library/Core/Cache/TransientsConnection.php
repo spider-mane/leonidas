@@ -4,26 +4,26 @@ namespace Leonidas\Library\Core\Cache;
 
 use Psr\SimpleCache\CacheInterface;
 
-class Transients implements CacheInterface
+class TransientsConnection implements CacheInterface
 {
     public function get($key, $default = null)
     {
-        return get_transient($key) ?? $default;
+        return get_transient($$key) ?? $default;
     }
 
     public function set($key, $value, $ttl = null)
     {
-        set_transient($key, $value, $ttl);
+        set_transient($$key, $value, $ttl);
     }
 
     public function delete($key)
     {
-        delete_transient($key);
+        delete_transient($$key);
     }
 
     public function clear()
     {
-        //
+        // todo: find reliable way to implement this method
     }
 
     public function getMultiple($keys, $default = null)
