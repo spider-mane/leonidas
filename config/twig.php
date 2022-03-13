@@ -1,12 +1,17 @@
 <?php
 
+use WebTheory\Config\Deferred\Reflection;
+
 return [
 
-    'paths' => [
-        'views'
-    ],
+    'root' => dirname(__DIR__),
+
+    'paths' => ['views'],
 
     'options' => [
+
+        'debug' => Reflection::get('app.dev'),
+
         'autoescape' => false,
     ],
 
@@ -19,4 +24,6 @@ return [
     ],
 
     'filters' => [],
+
+    'globals' => [],
 ];

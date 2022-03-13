@@ -2,7 +2,8 @@
 
 namespace Leonidas\Framework\Providers;
 
-use Leonidas\Contracts\Container\StaticProviderInterface;
+use Panamax\Contracts\ServiceFactoryInterface;
+use Panamax\Factories\AbstractServiceFactory;
 use Psr\Container\ContainerInterface;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
@@ -10,28 +11,47 @@ use Twig\Loader\LoaderInterface;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
 
-class TwigProvider implements StaticProviderInterface
+class TwigProvider extends AbstractServiceFactory implements ServiceFactoryInterface
 {
-    public static function provide(ContainerInterface $container, array $args = []): Environment
+    public function create(ContainerInterface $container, array $args = []): Environment
     {
-        $loader = $container->has(LoaderInterface::class)
-            ? $container->get(LoaderInterface::class)
-            : static::defaultLoader($args);
+        $loaderService = $args['@loader'] ?? LoaderInterface::class;
+
+        $loader = $container->has($loaderService)
+            ? $container->get($loaderService)
+            : $this->defaultLoader($args);
 
         $twig = new Environment($loader, $args['options']);
 
-        foreach ($args['filters'] ?? [] as $filter => $function) {
-            $twig->addFilter(new TwigFilter($filter, $function));
-        }
-
-        foreach ($args['functions'] ?? [] as $alias => $function) {
-            $twig->addFunction(new TwigFunction($alias, $function));
-        }
+        $this->addFunctions($twig, $args);
+        $this->addFilters($twig, $args);
+        $this->addGlobals($twig, $args);
 
         return $twig;
     }
 
-    protected static function defaultLoader(array $args): LoaderInterface
+    protected function addFunctions(Environment $twig, array $args)
+    {
+        foreach ($args['functions'] ?? [] as $alias => $function) {
+            $twig->addFunction(new TwigFunction($alias, $function));
+        }
+    }
+
+    protected function addFilters(Environment $twig, array $args)
+    {
+        foreach ($args['filters'] ?? [] as $filter => $function) {
+            $twig->addFilter(new TwigFilter($filter, $function));
+        }
+    }
+
+    protected function addGlobals(Environment $twig, array $args)
+    {
+        foreach ($args['globals'] as $global => $value) {
+            $twig->addGlobal($global, $value);
+        }
+    }
+
+    protected function defaultLoader(array $args): LoaderInterface
     {
         return new FilesystemLoader($args['paths'], $args['root'] ?? null);
     }

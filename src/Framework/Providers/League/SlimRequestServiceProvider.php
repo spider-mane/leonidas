@@ -2,24 +2,24 @@
 
 namespace Leonidas\Framework\Providers\League;
 
-use Leonidas\Framework\Providers\SlimRouterProvider;
+use Leonidas\Framework\Providers\SlimRequestProvider;
 use Panamax\Contracts\ServiceFactoryInterface;
-use Slim\Interfaces\RouteCollectorProxyInterface;
+use Psr\Http\Message\ServerRequestInterface;
 
-class SlimRouterServiceProvider extends AbstractLeagueProviderWrapper
+class SlimRequestServiceProvider extends AbstractLeagueProviderWrapper
 {
     protected function serviceId(): string
     {
-        return RouteCollectorProxyInterface::class;
+        return ServerRequestInterface::class;
     }
 
     protected function serviceTags(): array
     {
-        return ['router'];
+        return ['server_request'];
     }
 
     protected function serviceFactory(): ServiceFactoryInterface
     {
-        return new SlimRouterProvider();
+        return new SlimRequestProvider();
     }
 }

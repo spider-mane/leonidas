@@ -2,23 +2,23 @@
 
 namespace Leonidas\Framework\Providers\Traits;
 
-use Leonidas\Contracts\Container\StaticProviderInterface;
+use Panamax\Contracts\ServiceFactoryInterface;
 use Psr\Container\ContainerInterface;
 
 trait UsesStaticProviderTrait
 {
     protected function service(ContainerInterface $container)
     {
-        return $this->serviceProvider()->provide(
+        return $this->serviceFactory()->create(
             $container,
-            $this->providerArgs($container) ?? []
+            $this->factoryArgs() ?? []
         );
     }
 
-    protected function providerArgs(ContainerInterface $container): ?array
+    protected function factoryArgs(): ?array
     {
         return [];
     }
 
-    abstract protected function serviceProvider(): StaticProviderInterface;
+    abstract protected function serviceFactory(): ServiceFactoryInterface;
 }

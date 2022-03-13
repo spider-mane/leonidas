@@ -1,10 +1,10 @@
 <?php
 
 use Dotenv\Dotenv;
-use WebTheory\Config\Config;
-use WebTheory\Exterminate\Exterminator;
-
 use function Env\env;
+use WebTheory\Config\Config;
+
+use WebTheory\Exterminate\Exterminator;
 
 $root = dirname(__DIR__, 2);
 

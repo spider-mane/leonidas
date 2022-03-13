@@ -3,12 +3,13 @@
 namespace Leonidas\Framework\Providers;
 
 use GuzzleHttp\Psr7\HttpFactory;
-use Leonidas\Contracts\Container\StaticProviderInterface;
+use Panamax\Contracts\ServiceFactoryInterface;
+use Panamax\Factories\AbstractServiceFactory;
 use Psr\Container\ContainerInterface;
 
-class GuzzleHttpFactoryProvider implements StaticProviderInterface
+class GuzzleHttpFactoryProvider extends AbstractServiceFactory implements ServiceFactoryInterface
 {
-    public static function provide(ContainerInterface $container, array $args = []): HttpFactory
+    public function create(ContainerInterface $container, array $args = []): HttpFactory
     {
         return new HttpFactory();
     }

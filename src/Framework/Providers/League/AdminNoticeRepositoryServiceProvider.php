@@ -2,10 +2,9 @@
 
 namespace Leonidas\Framework\Providers\League;
 
-use Leonidas\Contracts\Container\StaticProviderInterface;
 use Leonidas\Framework\Providers\AdminNoticeRepositoryProvider;
 use Leonidas\Library\Admin\Notice\AdminNoticeRepository;
-use Psr\Container\ContainerInterface;
+use Panamax\Contracts\ServiceFactoryInterface;
 
 class AdminNoticeRepositoryServiceProvider extends AbstractLeagueProviderWrapper
 {
@@ -19,12 +18,12 @@ class AdminNoticeRepositoryServiceProvider extends AbstractLeagueProviderWrapper
         return ['admin_notices', 'adminNotices'];
     }
 
-    protected function serviceProvider(): StaticProviderInterface
+    protected function serviceFactory(): ServiceFactoryInterface
     {
         return new AdminNoticeRepositoryProvider();
     }
 
-    protected function providerArgs(ContainerInterface $container): ?array
+    protected function factoryArgs(): ?array
     {
         return $this->getConfig('admin.notices');
     }

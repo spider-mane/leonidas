@@ -2,9 +2,8 @@
 
 namespace Leonidas\Framework\Providers\League;
 
-use Leonidas\Contracts\Container\StaticProviderInterface;
 use Leonidas\Framework\Providers\SymfonyMailerProvider;
-use Psr\Container\ContainerInterface;
+use Panamax\Contracts\ServiceFactoryInterface;
 use Symfony\Component\Mailer\Mailer;
 
 class SymfonyMailerServiceProvider extends AbstractLeagueProviderWrapper
@@ -19,12 +18,12 @@ class SymfonyMailerServiceProvider extends AbstractLeagueProviderWrapper
         return ['mailer', 'symfony_mailer', 'symfonyMailer'];
     }
 
-    protected function serviceProvider(): StaticProviderInterface
+    protected function serviceFactory(): ServiceFactoryInterface
     {
         return new SymfonyMailerProvider();
     }
 
-    protected function providerArgs(ContainerInterface $container): ?array
+    protected function factoryArgs(): ?array
     {
         return $this->getConfig('mail');
     }

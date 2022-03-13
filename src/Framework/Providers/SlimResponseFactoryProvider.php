@@ -2,13 +2,14 @@
 
 namespace Leonidas\Framework\Providers;
 
-use Leonidas\Contracts\Container\StaticProviderInterface;
+use Panamax\Contracts\ServiceFactoryInterface;
+use Panamax\Factories\AbstractServiceFactory;
 use Psr\Container\ContainerInterface;
 use Slim\Psr7\Factory\ResponseFactory;
 
-class SlimResponseFactoryProvider implements StaticProviderInterface
+class SlimResponseFactoryProvider extends AbstractServiceFactory implements ServiceFactoryInterface
 {
-    public static function provide(ContainerInterface $container, array $args = []): ResponseFactory
+    public function create(ContainerInterface $container, array $args = []): ResponseFactory
     {
         return new ResponseFactory();
     }

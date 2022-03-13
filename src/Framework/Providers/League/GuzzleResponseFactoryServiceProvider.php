@@ -2,8 +2,8 @@
 
 namespace Leonidas\Framework\Providers\League;
 
-use Leonidas\Contracts\Container\StaticProviderInterface;
 use Leonidas\Framework\Providers\GuzzleHttpFactoryProvider;
+use Panamax\Contracts\ServiceFactoryInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
 
 class GuzzleResponseFactoryServiceProvider extends AbstractLeagueProviderWrapper
@@ -18,7 +18,7 @@ class GuzzleResponseFactoryServiceProvider extends AbstractLeagueProviderWrapper
         return ['response_factory'];
     }
 
-    protected function serviceProvider(): StaticProviderInterface
+    protected function serviceFactory(): ServiceFactoryInterface
     {
         return new GuzzleHttpFactoryProvider();
     }

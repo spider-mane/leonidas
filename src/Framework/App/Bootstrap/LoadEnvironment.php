@@ -4,17 +4,10 @@ namespace Leonidas\Framework\App\Bootstrap;
 
 use Dotenv\Dotenv;
 use Leonidas\Contracts\Extension\BootstrapAssistantInterface;
-use Leonidas\Contracts\Extension\WpExtensionInterface;
+use Leonidas\Framework\Bootstrappers\AbstractBootstrapAssistant;
 
-class LoadEnvironment implements BootstrapAssistantInterface
+class LoadEnvironment extends AbstractBootstrapAssistant implements BootstrapAssistantInterface
 {
-    protected WpExtensionInterface $extension;
-
-    public function __construct(WpExtensionInterface $extension)
-    {
-        $this->extension = $extension;
-    }
-
     public function boot(): void
     {
         $env = Dotenv::createUnsafeImmutable($this->extension->absPath());

@@ -2,16 +2,17 @@
 
 namespace Leonidas\Framework\Providers;
 
-use Leonidas\Contracts\Container\StaticProviderInterface;
+use Panamax\Contracts\ServiceFactoryInterface;
+use Panamax\Factories\AbstractServiceFactory;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Slim\CallableResolver;
 use Slim\Interfaces\RouteCollectorInterface;
 use Slim\Routing\RouteCollectorProxy;
 
-class SlimRouterProvider implements StaticProviderInterface
+class SlimRouterProvider extends AbstractServiceFactory implements ServiceFactoryInterface
 {
-    public static function provide(ContainerInterface $container, array $args = []): RouteCollectorProxy
+    public function create(ContainerInterface $container, array $args = []): RouteCollectorProxy
     {
         $routeCollector = $container->get(RouteCollectorInterface::class)
             ? $container->get(RouteCollectorInterface::class)

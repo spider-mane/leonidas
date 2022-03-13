@@ -1,0 +1,55 @@
+#!/usr/bin/env php
+<?php
+
+$root = dirname(__DIR__);
+$public = "wordpress";
+$contexts = ["boot", "plugin"];
+
+$content = <<<PHP
+<?php
+
+declare(strict_types=1);
+
+require_once dirname(__DIR__) . '/vendor/autoload.php';
+
+/**
+ *==========================================================================
+ * PHP Playground
+ *==========================================================================
+ *
+ * You can use this file as you would a REPL (code pen). To avoid having to
+ * comment out large sections of code, wrap each example in a simple if
+ * statement. Set the condition to false to disable and delete when no longer
+ * needed.
+ *
+ */
+
+if (true) {
+    // code here
+}
+
+PHP;
+
+################################################################################
+# Process
+################################################################################
+
+if (!file_exists($path = "$root/.playground")) {
+  mkdir($path);
+}
+
+foreach (['web', 'console', ...$contexts] as $context) {
+  $file = "$path/$context.php";
+
+  if (!file_exists($file)) {
+    file_put_contents($file, $content);
+  }
+
+  if ('web' === $context && file_exists($public = "$root/$public")) {
+    if (file_exists($link = "$public/.playground.php")) {
+      unlink($link);
+    }
+
+    link($file, $link);
+  }
+}

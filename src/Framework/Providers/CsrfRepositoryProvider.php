@@ -2,13 +2,14 @@
 
 namespace Leonidas\Framework\Providers;
 
-use Leonidas\Contracts\Container\StaticProviderInterface;
 use Leonidas\Library\Core\Auth\CsrfManagerRepository;
+use Panamax\Contracts\ServiceFactoryInterface;
+use Panamax\Factories\AbstractServiceFactory;
 use Psr\Container\ContainerInterface;
 
-class CsrfRepositoryProvider implements StaticProviderInterface
+class CsrfRepositoryProvider extends AbstractServiceFactory implements ServiceFactoryInterface
 {
-    public static function provide(ContainerInterface $container, array $args = []): CsrfManagerRepository
+    public function create(ContainerInterface $container, array $args = []): CsrfManagerRepository
     {
         return new CsrfManagerRepository();
     }

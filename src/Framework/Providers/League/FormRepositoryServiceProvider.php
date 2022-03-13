@@ -2,9 +2,9 @@
 
 namespace Leonidas\Framework\Providers\League;
 
-use Leonidas\Contracts\Container\StaticProviderInterface;
 use Leonidas\Contracts\Http\Form\FormRepositoryInterface;
 use Leonidas\Framework\Providers\FormRepositoryProvider;
+use Panamax\Contracts\ServiceFactoryInterface;
 
 class FormRepositoryServiceProvider extends AbstractLeagueProviderWrapper
 {
@@ -18,7 +18,7 @@ class FormRepositoryServiceProvider extends AbstractLeagueProviderWrapper
         return ['forms', 'form_repository', 'formRepository'];
     }
 
-    protected function serviceProvider(): StaticProviderInterface
+    protected function serviceFactory(): ServiceFactoryInterface
     {
         return new FormRepositoryProvider();
     }

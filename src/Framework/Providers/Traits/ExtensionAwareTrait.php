@@ -8,7 +8,7 @@ trait ExtensionAwareTrait
 {
     protected string $configService = 'config';
 
-    final protected function getConfig(string $key, $default = null)
+    protected function getConfig(string $key, $default = null)
     {
         return $this->config()->get($key, $default);
     }

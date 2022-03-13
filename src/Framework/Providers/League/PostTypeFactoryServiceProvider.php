@@ -2,10 +2,9 @@
 
 namespace Leonidas\Framework\Providers\League;
 
-use Leonidas\Contracts\Container\StaticProviderInterface;
 use Leonidas\Framework\Providers\PostTypeProvider;
 use Leonidas\Library\System\PostType\PostTypeFactory;
-use Psr\Container\ContainerInterface;
+use Panamax\Contracts\ServiceFactoryInterface;
 
 class PostTypeFactoryServiceProvider extends AbstractLeagueProviderWrapper
 {
@@ -19,12 +18,12 @@ class PostTypeFactoryServiceProvider extends AbstractLeagueProviderWrapper
         return ['post_type_factory'];
     }
 
-    protected function serviceProvider(): StaticProviderInterface
+    protected function serviceFactory(): ServiceFactoryInterface
     {
         return new PostTypeProvider();
     }
 
-    protected function providerArgs(ContainerInterface $container): ?array
+    protected function factoryArgs(): ?array
     {
         return [
             'prefix' => $this->getConfig('app.prefix'),

@@ -2,10 +2,9 @@
 
 namespace Leonidas\Framework\Providers\League;
 
-use Leonidas\Contracts\Container\StaticProviderInterface;
 use Leonidas\Framework\Providers\FieldFactoryProvider;
 use Leonidas\Library\Admin\Fields\Factory\Field;
-use Psr\Container\ContainerInterface;
+use Panamax\Contracts\ServiceFactoryInterface;
 
 class FieldFactoryServiceProvider extends AbstractLeagueProviderWrapper
 {
@@ -19,12 +18,12 @@ class FieldFactoryServiceProvider extends AbstractLeagueProviderWrapper
         return ['field_factory'];
     }
 
-    protected function serviceProvider(): StaticProviderInterface
+    protected function serviceFactory(): ServiceFactoryInterface
     {
         return new FieldFactoryProvider();
     }
 
-    protected function providerArgs(ContainerInterface $container): ?array
+    protected function factoryArgs(): ?array
     {
         return $this->getConfig('view.fields');
     }

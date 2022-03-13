@@ -2,13 +2,14 @@
 
 namespace Leonidas\Framework\Providers;
 
-use Leonidas\Contracts\Container\StaticProviderInterface;
 use Leonidas\Library\Core\Cache\TransientsChannel;
+use Panamax\Contracts\ServiceFactoryInterface;
+use Panamax\Factories\AbstractServiceFactory;
 use Psr\Container\ContainerInterface;
 
-class TransientsChannelProvider implements StaticProviderInterface
+class TransientsChannelProvider extends AbstractServiceFactory implements ServiceFactoryInterface
 {
-    public static function provide(ContainerInterface $container, array $args = [])
+    public function create(ContainerInterface $container, array $args = []): TransientsChannel
     {
         return new TransientsChannel($args['channel']);
     }

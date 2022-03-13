@@ -3,6 +3,8 @@
 
 # Dev and CI builds
 *.cache
+/.playground
+/.playground.php
 /build/
 /dist/
 /logs/

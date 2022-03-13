@@ -3,17 +3,10 @@
 namespace Leonidas\Framework\App\Bootstrap;
 
 use Leonidas\Contracts\Extension\BootstrapAssistantInterface;
-use Leonidas\Contracts\Extension\WpExtensionInterface;
+use Leonidas\Framework\Bootstrappers\AbstractBootstrapAssistant;
 
-class SetWpConfig implements BootstrapAssistantInterface
+class SetWpConfig extends AbstractBootstrapAssistant implements BootstrapAssistantInterface
 {
-    protected WpExtensionInterface $extension;
-
-    public function __construct(WpExtensionInterface $extension)
-    {
-        $this->extension = $extension;
-    }
-
     public function boot(): void
     {
         $contexts = $this->extension->config('wp.config', []);

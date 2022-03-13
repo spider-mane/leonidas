@@ -4,7 +4,7 @@ use PhpCsFixer\Config;
 use PhpCsFixer\Finder;
 
 $finder = Finder::create()
-  ->in(['src', 'tests'])
+  ->in(['src', 'boot', 'tests', '.playground'])
   ->exclude(['assets', 'bin', 'build', 'config', 'vendor', 'wordpress'])
   ->name('*.php')
   ->ignoreDotFiles(true)

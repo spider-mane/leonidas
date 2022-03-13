@@ -14,7 +14,7 @@ return [
 
     'type' => 'plugin',
 
-    'description' => "{$name} is a development framework for creating plugins and themes for WordPress. It makes WordPress extensions easy to develop and maintain by defining a simple module-based architecture and exposing an extensive library of WordPress core abstractions, admin UI components, and utilities for performing other common tasks.",
+    'description' => "{$name} is a framework that helps developers create plugins and themes by simplifying some of the more common and complex tasks.",
 
     'dev' => defined('LEONIDAS_DEVELOPMENT'),
 
@@ -27,15 +27,19 @@ return [
 
     ],
 
+    'services' => [],
+
     'providers' => [
 
+        # Framework providers
         Leonidas\Framework\Providers\League\AdminNoticeRepositoryServiceProvider::class,
+        Leonidas\Framework\Providers\League\GuzzleServerRequestServiceProvider::class,
         Leonidas\Framework\Providers\League\TransientsChannelServiceProvider::class,
         Leonidas\Framework\Providers\League\TwigViewServiceProvider::class,
 
-    ],
+        # Plugin providers
 
-    'services' => [],
+    ],
 
     'bootstrap' => [],
 ];

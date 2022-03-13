@@ -3,13 +3,14 @@
 namespace Leonidas\Framework\Providers;
 
 use Leonidas\Contracts\Admin\Components\AdminNoticeRepositoryInterface;
-use Leonidas\Contracts\Container\StaticProviderInterface;
 use Leonidas\Library\Admin\Notice\AdminNoticeRepository;
+use Panamax\Contracts\ServiceFactoryInterface;
+use Panamax\Factories\AbstractServiceFactory;
 use Psr\Container\ContainerInterface;
 
-class AdminNoticeRepositoryProvider implements StaticProviderInterface
+class AdminNoticeRepositoryProvider extends AbstractServiceFactory implements ServiceFactoryInterface
 {
-    public static function provide(ContainerInterface $container, array $args = []): AdminNoticeRepositoryInterface
+    public function create(ContainerInterface $container, array $args = []): AdminNoticeRepositoryInterface
     {
         return new AdminNoticeRepository(
             $args['channel'],

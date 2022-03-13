@@ -2,10 +2,9 @@
 
 namespace Leonidas\Framework\Providers\League;
 
-use Leonidas\Contracts\Container\StaticProviderInterface;
 use Leonidas\Framework\Providers\PhoneNumberUtilProvider;
 use libphonenumber\PhoneNumberUtil;
-use Psr\Container\ContainerInterface;
+use Panamax\Contracts\ServiceFactoryInterface;
 
 class PhoneNumberUtilServiceProvider extends AbstractLeagueProviderWrapper
 {
@@ -19,12 +18,12 @@ class PhoneNumberUtilServiceProvider extends AbstractLeagueProviderWrapper
         return ['phone', 'phone_util', 'phoneUtil'];
     }
 
-    protected function serviceProvider(): StaticProviderInterface
+    protected function serviceFactory(): ServiceFactoryInterface
     {
         return new PhoneNumberUtilProvider();
     }
 
-    protected function providerArgs(ContainerInterface $container): ?array
+    protected function factoryArgs(): ?array
     {
         return $this->getConfig('phone.util');
     }

@@ -3,8 +3,8 @@
 namespace Leonidas\Framework\Providers\League;
 
 use Leonidas\Contracts\Auth\CsrfManagerRepositoryInterface;
-use Leonidas\Contracts\Container\StaticProviderInterface;
 use Leonidas\Framework\Providers\CsrfRepositoryProvider;
+use Panamax\Contracts\ServiceFactoryInterface;
 
 class CsrfRepositoryServiceProvider extends AbstractLeagueProviderWrapper
 {
@@ -18,7 +18,7 @@ class CsrfRepositoryServiceProvider extends AbstractLeagueProviderWrapper
         return ['csrf', 'csrf_manager'];
     }
 
-    protected function serviceProvider(): StaticProviderInterface
+    protected function serviceFactory(): ServiceFactoryInterface
     {
         return new CsrfRepositoryProvider();
     }

@@ -2,14 +2,15 @@
 
 namespace Leonidas\Framework\Providers;
 
-use Leonidas\Contracts\Container\StaticProviderInterface;
 use libphonenumber\MetadataSourceInterface;
 use libphonenumber\PhoneNumberUtil;
+use Panamax\Contracts\ServiceFactoryInterface;
+use Panamax\Factories\AbstractServiceFactory;
 use Psr\Container\ContainerInterface;
 
-class PhoneNumberUtilProvider implements StaticProviderInterface
+class PhoneNumberUtilProvider extends AbstractServiceFactory implements ServiceFactoryInterface
 {
-    public static function provide(ContainerInterface $container, array $args = []): PhoneNumberUtil
+    public function create(ContainerInterface $container, array $args = []): PhoneNumberUtil
     {
         $metadataLoader = $container->has(MetadataLoaderInterface::class)
             ? $container->get(MetadataLoaderInterface::class)

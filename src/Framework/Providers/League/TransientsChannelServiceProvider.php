@@ -2,9 +2,8 @@
 
 namespace Leonidas\Framework\Providers\League;
 
-use Leonidas\Contracts\Container\StaticProviderInterface;
 use Leonidas\Framework\Providers\TransientsChannelProvider;
-use Psr\Container\ContainerInterface;
+use Panamax\Contracts\ServiceFactoryInterface;
 
 class TransientsChannelServiceProvider extends AbstractLeagueProviderWrapper
 {
@@ -18,12 +17,12 @@ class TransientsChannelServiceProvider extends AbstractLeagueProviderWrapper
         return ['transients_channel'];
     }
 
-    protected function serviceProvider(): StaticProviderInterface
+    protected function serviceFactory(): ServiceFactoryInterface
     {
         return new TransientsChannelProvider();
     }
 
-    protected function providerArgs(ContainerInterface $container): ?array
+    protected function factoryArgs(): ?array
     {
         return [
             'channel' => $this->getConfig('app.prefix'),

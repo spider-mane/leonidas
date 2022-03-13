@@ -2,9 +2,8 @@
 
 namespace Leonidas\Framework\Providers\League;
 
-use Leonidas\Contracts\Container\StaticProviderInterface;
 use Leonidas\Framework\Providers\TwigProvider;
-use Psr\Container\ContainerInterface;
+use Panamax\Contracts\ServiceFactoryInterface;
 use Twig\Environment;
 
 class TwigViewServiceProvider extends AbstractLeagueProviderWrapper
@@ -19,12 +18,12 @@ class TwigViewServiceProvider extends AbstractLeagueProviderWrapper
         return ['twig', 'views', 'templates'];
     }
 
-    protected function serviceProvider(): StaticProviderInterface
+    protected function serviceFactory(): ServiceFactoryInterface
     {
         return new TwigProvider();
     }
 
-    protected function providerArgs(ContainerInterface $container): ?array
+    protected function factoryArgs(): ?array
     {
         return $this->getConfig('twig');
     }

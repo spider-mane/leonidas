@@ -34,10 +34,6 @@ abstract class AbstractLeagueServiceProvider extends AbstractServiceProvider
             $definition->setShared($shared);
         }
 
-        if (!empty($alias = $this->serviceAlias())) {
-            $definition->setAlias($alias);
-        }
-
         array_map([$definition, 'addTag'], $this->serviceTags());
     }
 
@@ -57,11 +53,6 @@ abstract class AbstractLeagueServiceProvider extends AbstractServiceProvider
     protected function serviceTags(): array
     {
         return [];
-    }
-
-    protected function serviceAlias(): string
-    {
-        return '';
     }
 
     abstract protected function service(ContainerInterface $container);

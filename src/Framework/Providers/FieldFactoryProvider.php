@@ -2,13 +2,14 @@
 
 namespace Leonidas\Framework\Providers;
 
-use Leonidas\Contracts\Container\StaticProviderInterface;
 use Leonidas\Library\Admin\Fields\Factory\Field;
+use Panamax\Contracts\ServiceFactoryInterface;
+use Panamax\Factories\AbstractServiceFactory;
 use Psr\Container\ContainerInterface;
 
-class FieldFactoryProvider implements StaticProviderInterface
+class FieldFactoryProvider extends AbstractServiceFactory implements ServiceFactoryInterface
 {
-    public static function provide(ContainerInterface $container, array $args = [])
+    public function create(ContainerInterface $container, array $args = []): Field
     {
         return new Field([
 

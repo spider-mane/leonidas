@@ -24,8 +24,9 @@
     "league/container": "^4.2",
     "myclabs/php-enum": "^1.8",
     "nesbot/carbon": "^2.54",
+    "panamax/panamax": "@stable",
     "psr/cache": "^1.0",
-    "psr/container": "^1.0",
+    "psr/container": "^2.0",
     "psr/event-dispatcher": "^1.0",
     "psr/http-client": "^1.0",
     "psr/http-factory": "^1.0",
@@ -34,6 +35,7 @@
     "psr/http-server-middleware": "^1.0",
     "psr/link": "^1.0",
     "psr/simple-cache": "^1.0",
+    "ramsey/collection": "^1.2",
     "symfony/polyfill-php80": "^1.23",
     "symfony/polyfill-php81": "^1.23",
     "twig/twig": "^2.0",
@@ -111,13 +113,13 @@
     "bench": "vendor/bin/phpbench",
     "check": "vendor/bin/phpcs",
     "collect": "vendor/bin/var-dump-server",
-    "env": "cp -n .env.example .env && bin/build-paths",
     "export": "git archive --output=./build/leonidas.zip --format=zip HEAD",
     "fix": "vendor/bin/phpcbf",
     "style": "vendor/bin/php-cs-fixer fix --verbose",
     "hooks": "vendor/bin/captainhook",
     "inspect": "vendor/bin/psalm",
     "link": "bin/symlink-plugin",
+    "play": "php .playground/env.php",
     "shell": "@wp shell",
     "test:acceptance": "vendor/bin/phpunit --testsuite acceptance",
     "test:functional": "vendor/bin/phpunit --testsuite functional",
@@ -131,6 +133,11 @@
       "@fix",
       "@check",
       "@test"
+    ],
+    "env": [
+      "cp -n .env.example .env",
+      "bin/build-paths",
+      "bin/make-playground"
     ],
     "test": [
       "@test:unit",
@@ -170,8 +177,7 @@
         "php-cs-fixer": {},
         "wordpress": {}
       },
-      "logs": {},
-      "boot/development/playground.php": {}
+      "logs": {}
     },
     "installer-paths": {
       "wordpress/wp-content/plugins/{$name}": [

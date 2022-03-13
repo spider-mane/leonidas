@@ -24,11 +24,6 @@ class SimpleAdminPage extends AbstractPageLayout implements AdminPageLayoutInter
      */
     protected $components = [];
 
-    /**
-     * @var string
-     */
-    protected $template = 'page/admin-page.twig';
-
     public function __construct(AdminPageComponentInterface ...$components)
     {
         $this->components = $components;

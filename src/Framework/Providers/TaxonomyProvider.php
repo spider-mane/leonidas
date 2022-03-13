@@ -2,13 +2,14 @@
 
 namespace Leonidas\Framework\Providers;
 
-use Leonidas\Contracts\Container\StaticProviderInterface;
 use Leonidas\Library\System\Taxonomy\TaxonomyFactory;
+use Panamax\Contracts\ServiceFactoryInterface;
+use Panamax\Factories\AbstractServiceFactory;
 use Psr\Container\ContainerInterface;
 
-class TaxonomyProvider implements StaticProviderInterface
+class TaxonomyProvider extends AbstractServiceFactory implements ServiceFactoryInterface
 {
-    public static function provide(ContainerInterface $container, array $args = []): TaxonomyFactory
+    public function create(ContainerInterface $container, array $args = []): TaxonomyFactory
     {
         return new TaxonomyFactory($args['prefix']);
     }

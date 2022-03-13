@@ -2,13 +2,14 @@
 
 namespace Leonidas\Framework\Providers;
 
-use Leonidas\Contracts\Container\StaticProviderInterface;
 use Leonidas\Library\Core\Http\Form\FormRepository;
+use Panamax\Contracts\ServiceFactoryInterface;
+use Panamax\Factories\AbstractServiceFactory;
 use Psr\Container\ContainerInterface;
 
-class FormRepositoryProvider implements StaticProviderInterface
+class FormRepositoryProvider extends AbstractServiceFactory implements ServiceFactoryInterface
 {
-    public static function provide(ContainerInterface $container, array $args = []): FormRepository
+    public function create(ContainerInterface $container, array $args = []): FormRepository
     {
         return new FormRepository();
     }

@@ -2,10 +2,9 @@
 
 namespace Leonidas\Framework\Providers\League;
 
-use Leonidas\Contracts\Container\StaticProviderInterface;
 use Leonidas\Framework\Providers\TaxonomyProvider;
 use Leonidas\Library\System\Taxonomy\TaxonomyFactory;
-use Psr\Container\ContainerInterface;
+use Panamax\Contracts\ServiceFactoryInterface;
 
 class TaxonomyFactoryServiceProvider extends AbstractLeagueProviderWrapper
 {
@@ -19,12 +18,12 @@ class TaxonomyFactoryServiceProvider extends AbstractLeagueProviderWrapper
         return ['taxonomy_factory'];
     }
 
-    protected function serviceProvider(): StaticProviderInterface
+    protected function serviceFactory(): ServiceFactoryInterface
     {
         return new TaxonomyProvider();
     }
 
-    protected function providerArgs(ContainerInterface $container): ?array
+    protected function factoryArgs(): ?array
     {
         return [
             'prefix' => $this->getConfig('app.prefix'),

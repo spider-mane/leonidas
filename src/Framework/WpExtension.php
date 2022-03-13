@@ -165,7 +165,7 @@ class WpExtension implements WpExtensionInterface
     /**
      * {@inheritDoc}
      */
-    public function get($id)
+    public function get(string $id)
     {
         return $this->container->get($id);
     }
@@ -173,7 +173,7 @@ class WpExtension implements WpExtensionInterface
     /**
      * {@inheritDoc}
      */
-    public function has($id)
+    public function has(string $id): bool
     {
         return $this->container->has($id);
     }

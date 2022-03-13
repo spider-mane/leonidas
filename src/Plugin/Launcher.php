@@ -9,62 +9,53 @@ use Leonidas\Framework\ModuleInitializer;
 use Leonidas\Framework\Plugin\Plugin;
 use Leonidas\Framework\WpExtension;
 use Leonidas\Library\Core\Facades\_Facade;
-use Psr\Container\ContainerInterface;
+use Panamax\Contracts\ContainerAdapterInterface;
+use Panamax\Contracts\ProviderContainerInterface;
+use Panamax\Contracts\ServiceContainerInterface;
+use Panamax\Contracts\ServiceCreatorInterface;
+use WebTheory\Config\Config;
+use WebTheory\Config\Interfaces\ConfigInterface;
 
 final class Launcher
 {
-    /**
-     * @var string
-     */
-    private $path;
+    private string $path;
 
-    /**
-     * @var string
-     */
-    private $url;
+    private string $url;
 
-    /**
-     * @var ContainerInterface
-     */
-    private $container;
+    private Config $config;
 
-    /**
-     * @var WpExtension
-     */
-    private $extension;
+    private ServiceContainerInterface $container;
 
-    /**
-     * @var Launcher
-     */
-    private static $instance;
+    private WpExtension $extension;
 
-    private function __construct(string $base, string $path, string $url)
+    private static Launcher $instance;
+
+    private function __construct(string $path, string $url)
     {
-        $this->base = $base;
         $this->path = $path;
         $this->url = $url;
-        $this->container = $this->bootstrapContainer();
-        $this->extension = $this->bootstrapExtension();
+        $this->config = $this->defineConfig();
+        $this->container = $this->defineContainer();
+        $this->extension = $this->defineExtension();
     }
 
-    private function getExtension(): WpExtension
+    protected function defineConfig(): ConfigInterface
     {
-        return $this->extension;
+        return new Config($this->path . '/config');
     }
 
-    private function getConfig(string $key, $default = null)
-    {
-        return $this->container->get('config')->get($key, $default);
-    }
-
-    private function bootstrapContainer(): ContainerInterface
+    private function defineContainer(): ServiceContainerInterface
     {
         return require $this->path . '/boot/container.php';
     }
 
-    private function bootstrapExtension(): WpExtensionInterface
+    private function defineExtension(): WpExtensionInterface
     {
-        $app = $this->getConfig('app');
+        $app = $this->config->get('app');
+
+        if ($this->container instanceof ContainerAdapterInterface) {
+            $container = $this->container->getAdaptedContainer();
+        }
 
         return WpExtension::create([
             'name' => $app['name'],
@@ -76,50 +67,68 @@ final class Launcher
             'url' => $this->url,
             'dev' => $app['dev'],
             'type' => ExtensionType::from($app['type']),
-            'container' => $this->container,
+            'container' => $container ?? $this->container,
         ]);
     }
 
-    private function reallyReallyInit(): void
+    private function bootstrap(): void
     {
         $this
-            ->bindContainerToBaseProxy()
-            ->requireFiles()
+            ->buildServiceContainer()
+            ->bindContainerToBaseFacade()
             ->initializeModules()
-            ->getFurtherAssistance()
-            ->bootLeonidas()
+            ->initBootstrappers()
+            ->launchLeonidas()
             ->registerLoadedHook();
     }
 
-    private function bindContainerToBaseProxy(): Launcher
+    private function buildServiceContainer(): self
+    {
+        $container = $this->container;
+
+        $container->share('root', $this->path);
+        $container->share('config', $this->config);
+
+        if ($container instanceof ProviderContainerInterface) {
+            foreach ($this->config->get('app.providers', []) as $provider) {
+                $container->addServiceProvider(new $provider());
+            }
+        }
+
+        if ($container instanceof ServiceCreatorInterface) {
+            $container->createServices($this->config->get('app.services', []));
+        }
+
+        return $this;
+    }
+
+    private function bindContainerToBaseFacade(): self
     {
         _Facade::_setFacadeContainer($this->container);
 
         return $this;
     }
 
-    private function requireFiles(): Launcher
+    private function initializeModules(): self
     {
-        return $this;
-    }
-
-    private function initializeModules(): Launcher
-    {
-        (new ModuleInitializer($this->extension, $this->getModules()))->init();
+        (new ModuleInitializer(
+            $this->extension,
+            $this->config->get('app.modules', [])
+        ))->init();
 
         return $this;
     }
 
-    private function getFurtherAssistance(): Launcher
+    private function initBootstrappers(): self
     {
-        foreach ($this->extension->config('app.bootstrap', []) as $assistant) {
-            (new $assistant($this->extension))->bootstrap();
+        foreach ($this->config->get('app.bootstrap', []) as $bootstrapper) {
+            (new $bootstrapper($this->extension))->bootstrap();
         }
 
         return $this;
     }
 
-    private function bootLeonidas(): Launcher
+    private function launchLeonidas(): self
     {
         Leonidas::launch($this->extension);
 
@@ -129,11 +138,6 @@ final class Launcher
     private function registerLoadedHook(): void
     {
         do_action('leonidas_loaded');
-    }
-
-    private function getModules(): array
-    {
-        return $this->extension->config('app.modules');
     }
 
     public static function init(string $base): void
@@ -153,18 +157,17 @@ final class Launcher
     private static function reallyInit(string $base): void
     {
         self::$instance = new self(
-            Plugin::base($base),
             Plugin::path($base),
             Plugin::url($base),
         );
 
-        static::$instance->reallyReallyInit();
+        static::$instance->bootstrap();
     }
 
     private static function throwInvalidCallException(callable $method): void
     {
         throw new InvalidCallToPluginMethodException(
-            self::$instance->getExtension()->getName(),
+            self::$instance->extension->getName(),
             $method
         );
     }

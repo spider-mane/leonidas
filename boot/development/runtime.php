@@ -25,7 +25,6 @@ define('SCRIPT_DEBUG', true);
 define('WP_CACHE', false);
 define('SAVEQUERIES', true);
 
-
 /**
  *==========================================================================
  * Disable Updates
@@ -36,3 +35,13 @@ define('SAVEQUERIES', true);
  */
 define('AUTOMATIC_UPDATER_DISABLED', true);
 define('WP_AUTO_UPDATE_CORE', false);
+
+/**
+ *==========================================================================
+ * Playground
+ *==========================================================================
+ *
+ *
+ *
+ */
+require_once dirname(__DIR__, 2) . '/.playground/boot.php';

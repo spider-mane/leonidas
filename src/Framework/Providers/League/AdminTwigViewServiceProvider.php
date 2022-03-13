@@ -2,8 +2,6 @@
 
 namespace Leonidas\Framework\Providers\League;
 
-use Psr\Container\ContainerInterface;
-
 class AdminTwigViewServiceProvider extends TwigViewServiceProvider
 {
     protected function serviceId(): string
@@ -21,7 +19,7 @@ class AdminTwigViewServiceProvider extends TwigViewServiceProvider
         ];
     }
 
-    protected function providerArgs(ContainerInterface $container): ?array
+    protected function factoryArgs(): ?array
     {
         return $this->getConfig('twig.admin');
     }

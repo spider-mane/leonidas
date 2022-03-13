@@ -2,13 +2,14 @@
 
 namespace Leonidas\Framework\Providers;
 
-use Leonidas\Contracts\Container\StaticProviderInterface;
 use Leonidas\Library\System\PostType\PostTypeFactory;
+use Panamax\Contracts\ServiceFactoryInterface;
+use Panamax\Factories\AbstractServiceFactory;
 use Psr\Container\ContainerInterface;
 
-class PostTypeProvider implements StaticProviderInterface
+class PostTypeProvider extends AbstractServiceFactory implements ServiceFactoryInterface
 {
-    public static function provide(ContainerInterface $container, array $args = []): PostTypeFactory
+    public function create(ContainerInterface $container, array $args = []): PostTypeFactory
     {
         return new PostTypeFactory($args['prefix']);
     }
