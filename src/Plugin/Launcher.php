@@ -2,13 +2,14 @@
 
 namespace Leonidas\Plugin;
 
+use Leonidas\Contracts\Extension\ExtensionBootProcessInterface;
 use Leonidas\Contracts\Extension\WpExtensionInterface;
-use Leonidas\Enum\Extension\ExtensionType;
 use Leonidas\Framework\Exceptions\InvalidCallToPluginMethodException;
 use Leonidas\Framework\ModuleInitializer;
 use Leonidas\Framework\Plugin\Plugin;
 use Leonidas\Framework\WpExtension;
 use Leonidas\Library\Core\Facades\_Facade;
+use Panamax\Contracts\BootableProviderContainerInterface;
 use Panamax\Contracts\ContainerAdapterInterface;
 use Panamax\Contracts\ProviderContainerInterface;
 use Panamax\Contracts\ServiceContainerInterface;
@@ -22,11 +23,11 @@ final class Launcher
 
     private string $url;
 
-    private Config $config;
+    private ConfigInterface $config;
 
     private ServiceContainerInterface $container;
 
-    private WpExtension $extension;
+    private WpExtensionInterface $extension;
 
     private static Launcher $instance;
 
@@ -65,24 +66,25 @@ final class Launcher
             'description' => $app['description'],
             'path' => $this->path,
             'url' => $this->url,
-            'dev' => $app['dev'],
-            'type' => ExtensionType::from($app['type']),
+            'type' => $app['type'],
             'container' => $container ?? $this->container,
+            'dev' => $app['dev'],
         ]);
     }
 
     private function bootstrap(): void
     {
         $this
-            ->buildServiceContainer()
+            ->bindServicesToContainer()
             ->bindContainerToBaseFacade()
             ->initializeModules()
-            ->initBootstrappers()
+            ->loadBootProcesses()
+            ->maybeBootProviders()
             ->launchLeonidas()
-            ->registerLoadedHook();
+            ->declareExtensionLoaded();
     }
 
-    private function buildServiceContainer(): self
+    private function bindServicesToContainer(): self
     {
         $container = $this->container;
 
@@ -90,9 +92,9 @@ final class Launcher
         $container->share('config', $this->config);
 
         if ($container instanceof ProviderContainerInterface) {
-            foreach ($this->config->get('app.providers', []) as $provider) {
-                $container->addServiceProvider(new $provider());
-            }
+            $container->addServiceProviders(
+                $this->config->get('app.providers', [])
+            );
         }
 
         if ($container instanceof ServiceCreatorInterface) {
@@ -119,10 +121,21 @@ final class Launcher
         return $this;
     }
 
-    private function initBootstrappers(): self
+    private function maybeBootProviders(): self
     {
-        foreach ($this->config->get('app.bootstrap', []) as $bootstrapper) {
-            (new $bootstrapper($this->extension))->bootstrap();
+        if ($this->container instanceof BootableProviderContainerInterface) {
+            $this->container->bootServiceProviders();
+        }
+
+        return $this;
+    }
+
+    private function loadBootProcesses(): self
+    {
+        foreach ($this->config->get('app.bootstrap', []) as $bootProcess) {
+            /** @var ExtensionBootProcessInterface $bootProcess */
+            $bootProcess = new $bootProcess();
+            $bootProcess->boot($this->extension, $this->container);
         }
 
         return $this;
@@ -135,7 +148,7 @@ final class Launcher
         return $this;
     }
 
-    private function registerLoadedHook(): void
+    private function declareExtensionLoaded(): void
     {
         do_action('leonidas_loaded');
     }
@@ -145,13 +158,13 @@ final class Launcher
         if (!self::isLoaded()) {
             self::reallyInit($base);
         } else {
-            self::throwInvalidCallException(__METHOD__);
+            throw self::invalidCallException(__METHOD__);
         }
     }
 
     private static function isLoaded(): bool
     {
-        return isset(self::$instance) && (self::$instance instanceof self);
+        return isset(self::$instance);
     }
 
     private static function reallyInit(string $base): void
@@ -164,9 +177,9 @@ final class Launcher
         static::$instance->bootstrap();
     }
 
-    private static function throwInvalidCallException(callable $method): void
+    private static function invalidCallException(callable $method): InvalidCallToPluginMethodException
     {
-        throw new InvalidCallToPluginMethodException(
+        return new InvalidCallToPluginMethodException(
             self::$instance->extension->getName(),
             $method
         );
