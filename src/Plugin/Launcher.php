@@ -2,7 +2,6 @@
 
 namespace Leonidas\Plugin;
 
-use Leonidas\Contracts\Admin\Components\InteriorPageInterface;
 use Leonidas\Contracts\Extension\ExtensionBootProcessInterface;
 use Leonidas\Contracts\Extension\WpExtensionInterface;
 use Leonidas\Framework\Exceptions\InvalidCallToPluginMethodException;
