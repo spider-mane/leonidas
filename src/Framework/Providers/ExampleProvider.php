@@ -7,7 +7,7 @@ use Panamax\Factories\AbstractServiceFactory;
 use Psr\Container\ContainerInterface;
 use stdClass;
 
-class ExampleStaticProvider extends AbstractServiceFactory implements ServiceFactoryInterface
+class ExampleProvider extends AbstractServiceFactory implements ServiceFactoryInterface
 {
     public function create(ContainerInterface $container, array $args = []): stdClass
     {
