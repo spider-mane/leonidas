@@ -8,60 +8,27 @@ use Psr\Container\ContainerInterface;
 
 class WpExtension implements WpExtensionInterface
 {
-    /**
-     * @var string
-     */
-    protected $name;
+    protected string $name;
 
-    /**
-     * @var string
-     */
-    protected $version;
+    protected string $version;
 
-    /**
-     * @var string
-     */
-    protected $slug;
+    protected string $slug;
 
-    /**
-     * @var string
-     */
-    protected $prefix;
+    protected string $prefix;
 
-    /**
-     * @var string
-     */
-    protected $description;
+    protected string $description;
 
-    /**
-     * @var string
-     */
-    protected $file;
+    protected string $file;
 
-    /**
-     * @var string
-     */
-    protected $path;
+    protected string $path;
 
-    /**
-     * @var string
-     */
-    protected $url;
+    protected string $url;
 
-    /**
-     * @var string
-     */
-    protected $type;
+    protected string $type;
 
-    /**
-     * @var ContainerInterface
-     */
-    protected $container;
+    protected ContainerInterface $container;
 
-    /**
-     * @var bool
-     */
-    protected $isInDev;
+    protected bool $isInDev;
 
     public function __construct(
         string $name,
