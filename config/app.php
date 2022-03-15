@@ -1,12 +1,20 @@
 <?php
 
-$name = 'Leonidas';
+use function Leonidas\Plugin\header;
 
 return [
+
+    'name' => header('name'),
+
+    'version' => header('version'),
+
+    'slug' => header('textdomain'),
 
     'prefix' => 'leon',
 
     'type' => 'plugin',
+
+    'description' => header('description'),
 
     'dev' => defined('LEONIDAS_DEVELOPMENT'),
 

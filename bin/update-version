@@ -7,9 +7,9 @@ $files = [
     "/Version: $vReg/" => "Version: $version",
   ],
 
-  "config/app.php" => [
-    "/'version' => '$vReg'/" => "'version' => '$version'"
-  ],
+  // "config/app.php" => [
+  //   "/'version' => '$vReg'/" => "'version' => '$version'"
+  // ],
 ];
 
 $version = trim(`git describe --abbrev=0 --tags`);

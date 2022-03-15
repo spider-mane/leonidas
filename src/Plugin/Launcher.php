@@ -2,6 +2,7 @@
 
 namespace Leonidas\Plugin;
 
+use Leonidas\Contracts\Admin\Components\InteriorPageInterface;
 use Leonidas\Contracts\Extension\ExtensionBootProcessInterface;
 use Leonidas\Contracts\Extension\WpExtensionInterface;
 use Leonidas\Framework\Exceptions\InvalidCallToPluginMethodException;
@@ -55,7 +56,7 @@ final class Launcher
 
     private function defineExtension(): WpExtensionInterface
     {
-        $app = $this->config->get('app') + Plugin::headers($this->file);
+        $app = $this->config->get('app');
 
         if ($this->container instanceof ContainerAdapterInterface) {
             $container = $this->container->getAdaptedContainer();
@@ -64,7 +65,7 @@ final class Launcher
         return WpExtension::create([
             'name' => $app['name'],
             'version' => $app['version'],
-            'slug' => $app['textdomain'],
+            'slug' => $app['slug'],
             'prefix' => $app['prefix'],
             'description' => $app['description'],
             'file' => $this->file,
@@ -173,13 +174,25 @@ final class Launcher
 
     private static function reallyInit(string $base): void
     {
+        self::helpers();
+
+        define('LEONIDAS_PLUGIN_HEADERS', Plugin::headers($base));
+
         self::$instance = new self(
             $base,
             Plugin::path($base),
             Plugin::url($base),
         );
 
-        static::$instance->bootstrap();
+        self::$instance->bootstrap();
+    }
+
+    private static function helpers()
+    {
+        function header(string $header)
+        {
+            return LEONIDAS_PLUGIN_HEADERS[$header];
+        }
     }
 
     private static function invalidCallException(callable $method): InvalidCallToPluginMethodException
