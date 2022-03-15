@@ -6,7 +6,7 @@ use Leonidas\Framework\Providers\FieldFactoryProvider;
 use Leonidas\Library\Admin\Fields\Factory\Field;
 use Panamax\Contracts\ServiceFactoryInterface;
 
-class FieldFactoryServiceProvider extends AbstractLeagueProviderWrapper
+class FieldFactoryServiceProvider extends AbstractLeagueServiceFactory
 {
     protected function serviceId(): string
     {

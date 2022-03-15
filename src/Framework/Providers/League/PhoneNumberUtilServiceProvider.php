@@ -6,7 +6,7 @@ use Leonidas\Framework\Providers\PhoneNumberUtilProvider;
 use libphonenumber\PhoneNumberUtil;
 use Panamax\Contracts\ServiceFactoryInterface;
 
-class PhoneNumberUtilServiceProvider extends AbstractLeagueProviderWrapper
+class PhoneNumberUtilServiceProvider extends AbstractLeagueServiceFactory
 {
     protected function serviceId(): string
     {

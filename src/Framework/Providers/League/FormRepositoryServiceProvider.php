@@ -6,7 +6,7 @@ use Leonidas\Contracts\Http\Form\FormRepositoryInterface;
 use Leonidas\Framework\Providers\FormRepositoryProvider;
 use Panamax\Contracts\ServiceFactoryInterface;
 
-class FormRepositoryServiceProvider extends AbstractLeagueProviderWrapper
+class FormRepositoryServiceProvider extends AbstractLeagueServiceFactory
 {
     protected function serviceId(): string
     {

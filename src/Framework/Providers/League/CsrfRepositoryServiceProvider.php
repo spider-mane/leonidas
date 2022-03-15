@@ -6,7 +6,7 @@ use Leonidas\Contracts\Auth\CsrfManagerRepositoryInterface;
 use Leonidas\Framework\Providers\CsrfRepositoryProvider;
 use Panamax\Contracts\ServiceFactoryInterface;
 
-class CsrfRepositoryServiceProvider extends AbstractLeagueProviderWrapper
+class CsrfRepositoryServiceProvider extends AbstractLeagueServiceFactory
 {
     protected function serviceId(): string
     {

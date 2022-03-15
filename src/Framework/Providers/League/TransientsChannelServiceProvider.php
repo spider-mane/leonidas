@@ -5,7 +5,7 @@ namespace Leonidas\Framework\Providers\League;
 use Leonidas\Framework\Providers\TransientsChannelProvider;
 use Panamax\Contracts\ServiceFactoryInterface;
 
-class TransientsChannelServiceProvider extends AbstractLeagueProviderWrapper
+class TransientsChannelServiceProvider extends AbstractLeagueServiceFactory
 {
     protected function serviceId(): string
     {

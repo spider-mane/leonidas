@@ -6,7 +6,7 @@ use Leonidas\Framework\Providers\TwigProvider;
 use Panamax\Contracts\ServiceFactoryInterface;
 use Twig\Environment;
 
-class TwigViewServiceProvider extends AbstractLeagueProviderWrapper
+class TwigViewServiceProvider extends AbstractLeagueServiceFactory
 {
     protected function serviceId(): string
     {

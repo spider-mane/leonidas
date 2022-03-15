@@ -6,7 +6,7 @@ use Leonidas\Framework\Providers\TaxonomyProvider;
 use Leonidas\Library\System\Taxonomy\TaxonomyFactory;
 use Panamax\Contracts\ServiceFactoryInterface;
 
-class TaxonomyFactoryServiceProvider extends AbstractLeagueProviderWrapper
+class TaxonomyFactoryServiceProvider extends AbstractLeagueServiceFactory
 {
     protected function serviceId(): string
     {

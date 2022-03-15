@@ -6,7 +6,7 @@ use Leonidas\Framework\Providers\GuzzleServerRequestProvider;
 use Panamax\Contracts\ServiceFactoryInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
-class GuzzleServerRequestServiceProvider extends AbstractLeagueProviderWrapper
+class GuzzleServerRequestServiceProvider extends AbstractLeagueServiceFactory
 {
     protected function serviceId(): string
     {

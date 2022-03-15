@@ -6,7 +6,7 @@ use Leonidas\Framework\Providers\SlimResponseFactoryProvider;
 use Panamax\Contracts\ServiceFactoryInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
 
-class SlimResponseFactoryServiceProvider extends AbstractLeagueProviderWrapper
+class SlimResponseFactoryServiceProvider extends AbstractLeagueServiceFactory
 {
     protected function serviceId(): string
     {

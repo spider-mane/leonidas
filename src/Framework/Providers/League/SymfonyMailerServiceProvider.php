@@ -6,7 +6,7 @@ use Leonidas\Framework\Providers\SymfonyMailerProvider;
 use Panamax\Contracts\ServiceFactoryInterface;
 use Symfony\Component\Mailer\Mailer;
 
-class SymfonyMailerServiceProvider extends AbstractLeagueProviderWrapper
+class SymfonyMailerServiceProvider extends AbstractLeagueServiceFactory
 {
     protected function serviceId(): string
     {

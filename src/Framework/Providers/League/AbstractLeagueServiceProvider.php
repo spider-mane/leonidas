@@ -2,60 +2,16 @@
 
 namespace Leonidas\Framework\Providers\League;
 
-use League\Container\ServiceProvider\AbstractServiceProvider;
 use Leonidas\Framework\Providers\Traits\ExtensionAwareTrait;
-use Psr\Container\ContainerInterface;
+use Panamax\Providers\League\AbstractLeagueServiceProvider as PanamaxAbstractLeagueServiceProvider;
 use WebTheory\Config\Interfaces\ConfigInterface;
 
-abstract class AbstractLeagueServiceProvider extends AbstractServiceProvider
+abstract class AbstractLeagueServiceProvider extends PanamaxAbstractLeagueServiceProvider
 {
     use ExtensionAwareTrait;
-
-    /**
-     * {@inheritDoc}
-     */
-    public function provides(string $id): bool
-    {
-        return in_array($id, [$this->serviceId(), ...$this->serviceTags()]);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function register(): void
-    {
-        $container = $this->getContainer();
-        $definition = $container->add(
-            $this->serviceId(),
-            fn () => $this->service($container)
-        );
-
-        if (null !== $shared = $this->shared()) {
-            $definition->setShared($shared);
-        }
-
-        array_map([$definition, 'addTag'], $this->serviceTags());
-    }
 
     protected function config(): ConfigInterface
     {
         return $this->container->get($this->configService);
     }
-
-    protected function shared(): ?bool
-    {
-        return true;
-    }
-
-    /**
-     * @return string[]
-     */
-    protected function serviceTags(): array
-    {
-        return [];
-    }
-
-    abstract protected function service(ContainerInterface $container);
-
-    abstract protected function serviceId(): string;
 }

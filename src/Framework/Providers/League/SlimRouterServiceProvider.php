@@ -6,7 +6,7 @@ use Leonidas\Framework\Providers\SlimRouterProvider;
 use Panamax\Contracts\ServiceFactoryInterface;
 use Slim\Interfaces\RouteCollectorProxyInterface;
 
-class SlimRouterServiceProvider extends AbstractLeagueProviderWrapper
+class SlimRouterServiceProvider extends AbstractLeagueServiceFactory
 {
     protected function serviceId(): string
     {

@@ -6,7 +6,7 @@ use Leonidas\Framework\Providers\AdminNoticeRepositoryProvider;
 use Leonidas\Library\Admin\Notice\AdminNoticeRepository;
 use Panamax\Contracts\ServiceFactoryInterface;
 
-class AdminNoticeRepositoryServiceProvider extends AbstractLeagueProviderWrapper
+class AdminNoticeRepositoryServiceProvider extends AbstractLeagueServiceFactory
 {
     protected function serviceId(): string
     {

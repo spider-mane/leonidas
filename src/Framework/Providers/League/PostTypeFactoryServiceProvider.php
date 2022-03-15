@@ -6,7 +6,7 @@ use Leonidas\Framework\Providers\PostTypeProvider;
 use Leonidas\Library\System\PostType\PostTypeFactory;
 use Panamax\Contracts\ServiceFactoryInterface;
 
-class PostTypeFactoryServiceProvider extends AbstractLeagueProviderWrapper
+class PostTypeFactoryServiceProvider extends AbstractLeagueServiceFactory
 {
     protected function serviceId(): string
     {
