@@ -36,6 +36,11 @@ class WpExtension implements WpExtensionInterface
     /**
      * @var string
      */
+    protected $file;
+
+    /**
+     * @var string
+     */
     protected $path;
 
     /**
@@ -64,6 +69,7 @@ class WpExtension implements WpExtensionInterface
         string $slug,
         string $prefix,
         string $description,
+        string $file,
         string $path,
         string $url,
         string $type,
@@ -75,6 +81,7 @@ class WpExtension implements WpExtensionInterface
         $this->slug = $slug;
         $this->prefix = $prefix;
         $this->description = $description;
+        $this->file = $file;
         $this->path = $path;
         $this->url = $url;
         $this->type = $type;
@@ -242,6 +249,7 @@ class WpExtension implements WpExtensionInterface
             $args['slug'] ?? $args['textdomain'],
             $args['prefix'],
             $args['description'],
+            $args['file'],
             $args['path'],
             $args['url'],
             ExtensionType::from($args['type']),

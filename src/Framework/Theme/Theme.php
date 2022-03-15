@@ -10,6 +10,20 @@ class Theme
         'search', 'single', 'singular', 'tag', 'taxonomy',
     ];
 
+    public const HEADERS = [
+        'name' => 'Name',
+        'uri' => 'ThemeURI',
+        'description' => 'Description',
+        'author' => 'Author',
+        'author_uri' => 'AuthorURI',
+        'version' => 'Version',
+        'template' => 'Template',
+        'status' => 'Status',
+        'tags' => 'Tags',
+        'title' => 'Name',
+        'author_name' => 'Author',
+    ];
+
     public static function path(string $path = ''): string
     {
         return get_theme_file_path($path);
@@ -18,6 +32,11 @@ class Theme
     public static function url(string $path = ''): string
     {
         return get_theme_file_uri($path);
+    }
+
+    public static function headers(string $file)
+    {
+        return get_file_data($file, static::HEADERS, 'theme');
     }
 
     public static function data(string $theme = ''): array
@@ -31,29 +50,4 @@ class Theme
     {
         return static::TEMPLATE_TYPES;
     }
-
-    // public static function support(array $features)
-    // {
-    //     foreach ($features as $feature => $args) {
-
-    //         if (is_int($feature)) {
-    //             static::addSupport($args);
-    //         } else {
-    //             static::addSupport($feature, $args);
-    //         }
-    //     }
-    // }
-
-    // public static function addSupport(string $feature, $args = null)
-    // {
-    //     if (isset($args)) {
-    //         if (is_array($args) && array_is_list($args)) {
-    //             add_theme_support($feature, ...$args);
-    //         } else {
-    //             add_theme_support($feature, $args);
-    //         }
-    //     } else {
-    //         add_theme_support($feature);
-    //     }
-    // }
 }

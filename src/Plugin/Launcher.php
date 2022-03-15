@@ -19,6 +19,8 @@ use WebTheory\Config\Interfaces\ConfigInterface;
 
 final class Launcher
 {
+    private string $file;
+
     private string $path;
 
     private string $url;
@@ -31,8 +33,9 @@ final class Launcher
 
     private static Launcher $instance;
 
-    private function __construct(string $path, string $url)
+    private function __construct(string $file, string $path, string $url)
     {
+        $this->file = $file;
         $this->path = $path;
         $this->url = $url;
         $this->config = $this->defineConfig();
@@ -52,7 +55,7 @@ final class Launcher
 
     private function defineExtension(): WpExtensionInterface
     {
-        $app = $this->config->get('app');
+        $app = $this->config->get('app') + Plugin::headers($this->file);
 
         if ($this->container instanceof ContainerAdapterInterface) {
             $container = $this->container->getAdaptedContainer();
@@ -61,9 +64,10 @@ final class Launcher
         return WpExtension::create([
             'name' => $app['name'],
             'version' => $app['version'],
-            'slug' => $app['slug'],
+            'slug' => $app['textdomain'],
             'prefix' => $app['prefix'],
             'description' => $app['description'],
+            'file' => $this->file,
             'path' => $this->path,
             'url' => $this->url,
             'type' => $app['type'],
@@ -170,6 +174,7 @@ final class Launcher
     private static function reallyInit(string $base): void
     {
         self::$instance = new self(
+            $base,
             Plugin::path($base),
             Plugin::url($base),
         );

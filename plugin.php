@@ -15,7 +15,7 @@
  * @wordpress-plugin
  * Plugin Name: Leonidas
  * Plugin URI: https://github.com/spider-mane/leonidas
- * Description: Theme and plugin framework with enhanced WordPress abstraction api.
+ * Description: Development framework that helps developers create plugins and themes by simplifying some of the more common and complex tasks.
  * Version: 0.15.0
  * Requires at least: 5.0
  * Requires PHP: 7.3
