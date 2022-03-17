@@ -3,9 +3,9 @@
 namespace Leonidas\Framework\Modules;
 
 use Leonidas\Contracts\Extension\ModuleInterface;
-use Leonidas\Contracts\System\Taxonomy\TaxonomyFactoryInterface;
-use Leonidas\Contracts\System\Taxonomy\TaxonomyOptionHandlerCollectionInterface;
-use Leonidas\Library\System\Taxonomy\TaxonomyFactory;
+use Leonidas\Contracts\System\Model\Taxonomy\TaxonomyFactoryInterface;
+use Leonidas\Contracts\System\Model\Taxonomy\TaxonomyOptionHandlerCollectionInterface;
+use Leonidas\Library\System\Model\Taxonomy\TaxonomyFactory;
 
 class Taxonomies extends AbstractTaxonomyRegistrationModule implements ModuleInterface
 {

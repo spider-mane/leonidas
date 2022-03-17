@@ -3,9 +3,9 @@
 namespace Leonidas\Framework\Modules;
 
 use Leonidas\Contracts\Extension\ModuleInterface;
-use Leonidas\Contracts\System\PostType\PostTypeFactoryInterface;
-use Leonidas\Contracts\System\PostType\PostTypeOptionHandlerCollectionInterface;
-use Leonidas\Library\System\PostType\PostTypeFactory;
+use Leonidas\Contracts\System\Model\PostType\PostTypeFactoryInterface;
+use Leonidas\Contracts\System\Model\PostType\PostTypeOptionHandlerCollectionInterface;
+use Leonidas\Library\System\Model\PostType\PostTypeFactory;
 
 class PostTypes extends AbstractPostTypeRegistrationModule implements ModuleInterface
 {

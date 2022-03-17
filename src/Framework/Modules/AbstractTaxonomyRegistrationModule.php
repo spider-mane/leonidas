@@ -3,10 +3,10 @@
 namespace Leonidas\Framework\Modules;
 
 use Leonidas\Contracts\Extension\ModuleInterface;
-use Leonidas\Contracts\System\Taxonomy\TaxonomyInterface;
-use Leonidas\Contracts\System\Taxonomy\TaxonomyOptionHandlerCollectionInterface;
-use Leonidas\Contracts\System\Taxonomy\TaxonomyRegistrarInterface;
-use Leonidas\Library\System\Taxonomy\TaxonomyRegistrar;
+use Leonidas\Contracts\System\Model\Taxonomy\TaxonomyInterface;
+use Leonidas\Contracts\System\Model\Taxonomy\TaxonomyOptionHandlerCollectionInterface;
+use Leonidas\Contracts\System\Model\Taxonomy\TaxonomyRegistrarInterface;
+use Leonidas\Library\System\Model\Taxonomy\TaxonomyRegistrar;
 use Leonidas\Traits\Hooks\TargetsInitHook;
 
 abstract class AbstractTaxonomyRegistrationModule extends AbstractModule implements ModuleInterface

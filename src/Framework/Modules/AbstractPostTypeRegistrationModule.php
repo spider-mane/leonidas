@@ -3,10 +3,10 @@
 namespace Leonidas\Framework\Modules;
 
 use Leonidas\Contracts\Extension\ModuleInterface;
-use Leonidas\Contracts\System\PostType\PostTypeInterface;
-use Leonidas\Contracts\System\PostType\PostTypeOptionHandlerCollectionInterface;
-use Leonidas\Contracts\System\PostType\PostTypeRegistrarInterface;
-use Leonidas\Library\System\PostType\PostTypeRegistrar;
+use Leonidas\Contracts\System\Model\PostType\PostTypeInterface;
+use Leonidas\Contracts\System\Model\PostType\PostTypeOptionHandlerCollectionInterface;
+use Leonidas\Contracts\System\Model\PostType\PostTypeRegistrarInterface;
+use Leonidas\Library\System\Model\PostType\PostTypeRegistrar;
 use Leonidas\Traits\Hooks\TargetsInitHook;
 
 abstract class AbstractPostTypeRegistrationModule extends AbstractModule implements ModuleInterface

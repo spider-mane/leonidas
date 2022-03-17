@@ -3,7 +3,7 @@
 namespace Leonidas\Framework\Providers\League;
 
 use Leonidas\Framework\Providers\TaxonomyProvider;
-use Leonidas\Library\System\Taxonomy\TaxonomyFactory;
+use Leonidas\Library\System\Model\Taxonomy\TaxonomyFactory;
 use Panamax\Contracts\ServiceFactoryInterface;
 
 class TaxonomyFactoryServiceProvider extends AbstractLeagueServiceFactory

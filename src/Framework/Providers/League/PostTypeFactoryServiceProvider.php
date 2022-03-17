@@ -3,7 +3,7 @@
 namespace Leonidas\Framework\Providers\League;
 
 use Leonidas\Framework\Providers\PostTypeProvider;
-use Leonidas\Library\System\PostType\PostTypeFactory;
+use Leonidas\Library\System\Model\PostType\PostTypeFactory;
 use Panamax\Contracts\ServiceFactoryInterface;
 
 class PostTypeFactoryServiceProvider extends AbstractLeagueServiceFactory
