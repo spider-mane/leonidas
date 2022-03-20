@@ -30,7 +30,7 @@ require_once $autoload;
  */
 array_map(function ($path) use ($root) {
     require "{$root}/src/{$path}.php";
-}, []);
+}, ['Library/functions']);
 
 /**
  *==========================================================================
