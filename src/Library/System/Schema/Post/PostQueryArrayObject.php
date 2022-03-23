@@ -6,7 +6,6 @@ use ArrayAccess;
 use Countable;
 use IteratorAggregate;
 use Leonidas\Contracts\System\Schema\Post\PostConverterInterface;
-use Leonidas\Library\System\Schema\Post\PostQueryIterator;
 use Traversable;
 use WP_Query;
 

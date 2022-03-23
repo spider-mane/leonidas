@@ -3,10 +3,10 @@
 namespace Leonidas\Contracts\System\Model\Post;
 
 use DateTimeInterface;
+use Leonidas\Contracts\System\Model\Author\AuthorInterface;
 use Leonidas\Contracts\System\Model\Category\CategoryCollectionInterface;
 use Leonidas\Contracts\System\Model\PostType\PostTypeInterface;
 use Leonidas\Contracts\System\Model\Tag\TagCollectionInterface;
-use Leonidas\Contracts\System\Model\User\UserInterface;
 use Psr\Link\LinkInterface;
 
 interface PostInterface
@@ -15,7 +15,7 @@ interface PostInterface
 
     public function getName(): string;
 
-    public function getAuthor(): UserInterface;
+    public function getAuthor(): AuthorInterface;
 
     public function getContent(): string;
 
@@ -58,6 +58,8 @@ interface PostInterface
     public function getCommentCount(): int;
 
     public function getFilter(): string;
+
+    public function applyFilter(string $filter);
 
     public function pageTemplate(): string;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Leonidas\Library\System\Model\Taxonomy\OptionHandlers;
+namespace Leonidas\Library\System\Model\Taxonomy\Option;
 
 use Closure;
 use Leonidas\Contracts\System\Model\Taxonomy\TaxonomyInterface;

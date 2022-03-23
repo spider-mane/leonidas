@@ -1,6 +1,6 @@
 <?php
 
-namespace Leonidas\Library\System\Model\Term;
+namespace Leonidas\Library\System\Schema\Term;
 
 use WP_Term;
 use WP_Term_Query;

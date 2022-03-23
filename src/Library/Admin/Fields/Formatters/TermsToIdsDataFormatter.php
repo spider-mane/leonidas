@@ -2,7 +2,7 @@
 
 namespace Leonidas\Library\Admin\Fields\Formatters;
 
-use Leonidas\Library\Core\Models\Term\TermCollection;
+use Leonidas\Library\System\Schema\Term\TermCollection;
 use WebTheory\Saveyour\Contracts\DataFormatterInterface;
 use WP_Term;
 

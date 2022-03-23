@@ -2,53 +2,88 @@
 
 namespace Leonidas\Library\System\Model\Comment;
 
+use Carbon\Carbon;
+use Carbon\CarbonInterface;
 use DateTimeInterface;
-use Leonidas\Library\Domain\Interfaces\CommentInterface;
+use Leonidas\Contracts\System\Model\Comment\CommentCollectionInterface;
+use Leonidas\Contracts\System\Model\Comment\CommentInterface;
+use Leonidas\Contracts\System\Model\Post\PostInterface;
+use Leonidas\Contracts\System\Model\User\UserInterface;
+use Leonidas\Library\System\Model\Post\Post;
+use Leonidas\Library\System\Model\User\User;
+use WP_Comment;
 
 class Comment implements CommentInterface
 {
-    /**
-     * @var string
-     */
-    protected $content;
+    protected WP_Comment $comment;
 
-    /**
-     * @var string
-     */
-    protected $authorName;
+    public function __construct(WP_Comment $comment)
+    {
+        $this->comment = $comment;
+    }
 
-    /**
-     * @var string
-     */
-    protected $authorEmail;
+    public function getId(): int
+    {
+        return $this->comment->comment_ID;
+    }
 
-    /**
-     * @var string
-     */
-    protected $authorUrl;
+    public function getAuthor(): UserInterface
+    {
+        return new User(get_user_by('id', $this->comment->user_id));
+    }
 
-    /**
-     * @var string
-     */
-    protected $authorIp;
+    public function getContent(): string
+    {
+        return $this->comment->comment_content;
+    }
 
-    /**
-     * @var DateTimeInterface
-     */
-    protected $dateCreated;
+    public function getDate(): CarbonInterface
+    {
+        return new Carbon($this->comment->comment_date);
+    }
 
-    /**
-     * @var int
-     */
-    protected $karma;
+    public function getDateGmt(): CarbonInterface
+    {
+        return new Carbon($this->comment->comment_date_gmt);
+    }
 
-    /**
-     * @var bool
-     */
-    protected $isApproved;
+    public function getKarma(): int
+    {
+        return $this->comment->comment_karma;
+    }
 
-    /**
-     * @var Comment
-     */
-    protected $parent;
+    public function getParent(): ?CommentInterface
+    {
+        return get_comment($this->comment->comment_parent);
+    }
+
+    public function getParentId(): int
+    {
+        return $this->comment->comment_parent;
+    }
+
+    public function getChildren(): CommentCollectionInterface
+    {
+        return new CommentCollection();
+    }
+
+    public function getPost(): PostInterface
+    {
+        return new Post(get_post($this->comment->comment_post_ID));
+    }
+
+    public function getPostId(): int
+    {
+        return $this->comment->comment_post_ID;
+    }
+
+    public function getStatus(): string
+    {
+        return $this->comment->comment_approved;
+    }
+
+    public function getType(): string
+    {
+        return $this->comment->comment_type;
+    }
 }

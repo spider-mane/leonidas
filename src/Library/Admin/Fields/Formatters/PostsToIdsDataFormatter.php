@@ -2,7 +2,7 @@
 
 namespace Leonidas\Library\Admin\Fields\Formatters;
 
-use Leonidas\Library\Core\Models\Post\PostCollection;
+use Leonidas\Library\System\Schema\Post\PostCollection;
 use WebTheory\Saveyour\Contracts\DataFormatterInterface;
 use WP_Post;
 

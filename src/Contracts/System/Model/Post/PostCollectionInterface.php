@@ -2,7 +2,9 @@
 
 namespace Leonidas\Contracts\System\Model\Post;
 
-interface PostCollectionInterface
+use Traversable;
+
+interface PostCollectionInterface extends Traversable
 {
     /**
      * @return PostInterface[]
