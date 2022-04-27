@@ -6,7 +6,7 @@ use WP_Post;
 
 interface PostConverterInterface
 {
-    public function convert(WP_Post $post);
+    public function convert(WP_Post $post): object;
 
-    public function revert($post): WP_Post;
+    public function revert(object $entity): WP_Post;
 }

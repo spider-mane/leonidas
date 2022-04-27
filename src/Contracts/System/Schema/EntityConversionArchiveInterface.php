@@ -2,7 +2,7 @@
 
 namespace Leonidas\Contracts\System\Schema;
 
-interface BaseEntityConversionArchiveInterface
+interface EntityConversionArchiveInterface
 {
     public function hasRecords(): bool;
 
