@@ -2,10 +2,11 @@
 
 namespace Leonidas\Contracts\System\Model\Category;
 
-interface CategoryCollectionInterface
+use Leonidas\Contracts\System\Model\SystemModelCollectionInterface;
+
+interface CategoryCollectionInterface extends SystemModelCollectionInterface
 {
-    /**
-     * @var CategoryInterface[]
-     */
-    public function all(): array;
+    public function extractIds(): array;
+
+    public function extractNames(): array;
 }

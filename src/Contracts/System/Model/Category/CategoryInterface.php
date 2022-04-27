@@ -2,12 +2,14 @@
 
 namespace Leonidas\Contracts\System\Model\Category;
 
-use Leonidas\Contracts\System\Model\Post\PostCollectionInterface;
-use Leonidas\Contracts\System\Schema\Term\TermInterface;
+use Leonidas\Contracts\System\Model\HierarchicalInterface;
+use Leonidas\Contracts\System\Model\Tag\TagInterface;
 
-interface CategoryInterface extends TermInterface
+interface CategoryInterface extends TagInterface, HierarchicalInterface
 {
     public function getParent(): ?CategoryInterface;
 
-    public function getPosts(): PostCollectionInterface;
+    public function getChildren(): CategoryCollectionInterface;
+
+    public function setParent(?CategoryInterface $parent): CategoryInterface;
 }

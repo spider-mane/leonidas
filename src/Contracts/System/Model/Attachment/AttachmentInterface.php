@@ -2,16 +2,13 @@
 
 namespace Leonidas\Contracts\System\Model\Attachment;
 
-use DateTimeInterface;
 use Leonidas\Contracts\System\Model\Author\AuthorInterface;
-use Leonidas\Contracts\System\Model\Category\CategoryCollectionInterface;
-use Leonidas\Contracts\System\Model\Tag\TagCollectionInterface;
+use Leonidas\Contracts\System\Model\DatableInterface;
+use Leonidas\Contracts\System\Model\EntityModelInterface;
 use Psr\Link\LinkInterface;
 
-interface AttachmentInterface
+interface AttachmentInterface extends EntityModelInterface, DatableInterface
 {
-    public function getId(): int;
-
     public function getName(): string;
 
     public function getTitle(): string;
@@ -21,14 +18,6 @@ interface AttachmentInterface
     public function getDescription(): string;
 
     public function getAuthor(): AuthorInterface;
-
-    public function getDateCreated(): DateTimeInterface;
-
-    public function getDateCreatedGmt(): DateTimeInterface;
-
-    public function getDateModified(): DateTimeInterface;
-
-    public function getDateModifiedGmt(): DateTimeInterface;
 
     public function getPassword(): ?string;
 
@@ -45,4 +34,26 @@ interface AttachmentInterface
     public function applyFilter(string $filter);
 
     public function pageTemplate(): string;
+
+    public function setName(string $name): AttachmentInterface;
+
+    public function setTitle(string $title): AttachmentInterface;
+
+    public function setCaption(string $caption): AttachmentInterface;
+
+    public function setDescription(string $description): AttachmentInterface;
+
+    public function setAuthor(AuthorInterface $author): AttachmentInterface;
+
+    public function setPassword(string $password): ?AttachmentInterface;
+
+    public function setGuid(LinkInterface $name): AttachmentInterface;
+
+    public function setMenuOrder(int $menuOrder): AttachmentInterface;
+
+    public function setMimeType(string $mimeType): AttachmentInterface;
+
+    public function setCommentCount(int $commentCount): AttachmentInterface;
+
+    public function setFilter(string $filter): AttachmentInterface;
 }

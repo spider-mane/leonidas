@@ -2,10 +2,9 @@
 
 namespace Leonidas\Contracts\System\Model\Comment;
 
-interface CommentCollectionInterface
+use Leonidas\Contracts\System\Model\SystemModelCollectionInterface;
+
+interface CommentCollectionInterface extends SystemModelCollectionInterface
 {
-    /**
-     * @return CommentInterface[]
-     */
-    public function all(): array;
+    public function getById(int $id): CommentInterface;
 }

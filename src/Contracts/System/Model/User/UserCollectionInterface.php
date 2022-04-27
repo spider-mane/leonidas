@@ -2,9 +2,11 @@
 
 namespace Leonidas\Contracts\System\Model\User;
 
-interface UserCollectionInterface
+use Leonidas\Contracts\System\Model\SystemModelCollectionInterface;
+
+interface UserCollectionInterface extends SystemModelCollectionInterface
 {
-    public function get(int $id): UserInterface;
+    public function getById(int $id): UserInterface;
 
     public function getBySlug(string $slug): UserInterface;
 
@@ -14,12 +16,7 @@ interface UserCollectionInterface
 
     public function add(UserInterface $user): void;
 
+    public function hasUser(string $username): bool;
+
     public function remove(int $id): void;
-
-    public function has(string $username): bool;
-
-    /**
-     * @return UserInterface[]
-     */
-    public function all(): array;
 }

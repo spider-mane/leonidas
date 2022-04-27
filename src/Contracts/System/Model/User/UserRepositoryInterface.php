@@ -4,9 +4,9 @@ namespace Leonidas\Contracts\System\Model\User;
 
 interface UserRepositoryInterface
 {
-    public function get(int $id): UserInterface;
+    public function select(int $id): UserInterface;
 
-    public function getBySlug(string $slug): UserInterface;
+    public function getByNicename(string $slug): UserInterface;
 
     public function getByEmail(string $email): UserInterface;
 

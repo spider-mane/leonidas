@@ -2,12 +2,16 @@
 
 namespace Leonidas\Contracts\System\Model\Tag;
 
+use Leonidas\Contracts\System\Model\MutableTermModelInterface;
 use Leonidas\Contracts\System\Model\Post\PostCollectionInterface;
-use Leonidas\Contracts\System\Schema\Term\TermInterface;
 
-interface TagInterface extends TermInterface
+interface TagInterface extends MutableTermModelInterface
 {
-    public function getParent(): ?TagInterface;
+    public function getDescription(): string;
+
+    public function setDescription(string $description): self;
 
     public function getPosts(): PostCollectionInterface;
+
+    public function setPosts(PostCollectionInterface $name): self;
 }

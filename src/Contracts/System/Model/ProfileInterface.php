@@ -1,15 +1,12 @@
 <?php
 
-namespace Leonidas\Contracts\System\Model\Profile;
+namespace Leonidas\Contracts\System\Model;
 
 use DateTimeInterface;
-use Leonidas\Contracts\System\Model\User\UserInterface;
 use Psr\Link\LinkInterface;
 
 interface ProfileInterface
 {
-    public function getUser(): UserInterface;
-
     public function getNickname(): string;
 
     public function getBio(): string;
@@ -22,7 +19,7 @@ interface ProfileInterface
 
     public function getPassword(): string;
 
-    public function getNameSlug(): string;
+    public function getNicename(): string;
 
     public function getEmail(): string;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Leonidas\Contracts\System\Model\Post;
+namespace Leonidas\Contracts\System\Model\Post\Status;
 
 interface PostStatusInterface
 {

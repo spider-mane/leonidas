@@ -2,10 +2,9 @@
 
 namespace Leonidas\Contracts\System\Model\Tag;
 
-interface TagCollectionInterface
+use Leonidas\Contracts\System\Model\SystemModelCollectionInterface;
+
+interface TagCollectionInterface extends SystemModelCollectionInterface
 {
-    /**
-     * @return TagInterface[]
-     */
-    public function all(): array;
+    public function getById(int $id): TagInterface;
 }
