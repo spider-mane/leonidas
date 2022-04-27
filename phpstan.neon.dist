@@ -1,0 +1,12 @@
+parameters:
+  level: 0
+
+  paths:
+    - src
+    - tests
+
+  scanDirectories:
+    - wordpress/wp-admin/includes
+    - wordpress/wp-includes
+
+  tmpDir: build/phpstan

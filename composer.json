@@ -92,6 +92,7 @@
     "symfony/var-dumper": "^5.4",
     "symfony/var-exporter": "^5.4",
     "symfony/yaml": "^5.4",
+    "vimeo/psalm": "^4.22",
     "vlucas/phpdotenv": "^5.4",
     "webtheory/exterminate": "@stable",
     "webtheory/wp-cli-util": "@stable",
@@ -113,6 +114,7 @@
     }
   },
   "scripts": {
+    "analyze": "vendor/bin/phpstan analyze",
     "asset": "npm --prefix assets",
     "bench": "vendor/bin/phpbench",
     "check": "vendor/bin/phpcs",
@@ -136,6 +138,7 @@
       "@rector",
       "@style",
       "@check",
+      "@analyze",
       "@inspect",
       "@test"
     ],
