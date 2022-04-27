@@ -1,5 +1,7 @@
 build:
+  image: default-bionic
   environment:
+    php: 7.4
     variables:
       XDEBUG_MODE: coverage
   dependencies:
@@ -11,22 +13,22 @@ build:
         coverage:
           file: build/phpunit/coverage/coverage.clover.xml
           format: clover
+      - php-scrutinizer-run --enable-security-analysis
 
   nodes:
-    php-analysis:
+    php-coding-style:
       tests:
         override:
           - vendor/bin/phpcs
-          - php-scrutinizer-run --enable-security-analysis
-    php-7.3:
-      environment:
-        php: 7.3
     php-7.4:
       environment:
         php: 7.4
     php-8.0:
       environment:
         php: 8.0
+    php-8.1:
+      environment:
+        php: 8.1
 
 filter:
   excluded_paths:

@@ -1,26 +1,34 @@
 #!/usr/bin/env php
 <?php
 
-$root = dirname(__DIR__);
+################################################################################
+# Config
+################################################################################
+
 $public = "wordpress";
+$uri = ".playground";
 $contexts = ["boot", "plugin"];
+
+################################################################################
+# Content
+################################################################################
 
 $content = <<<PHP
 <?php
 
 declare(strict_types=1);
 
-require_once dirname(__DIR__) . '/vendor/autoload.php';
+require_once dirname(__DIR__) . '/tests/bootstrap.php';
 
 /**
- *==========================================================================
+ *==============================================================================
  * PHP Playground
- *==========================================================================
+ *==============================================================================
  *
- * You can use this file as you would a REPL (code pen). To avoid having to
- * comment out large sections of code, wrap each example in a simple if
- * statement. Set the condition to false to disable and delete when no longer
- * needed.
+ * This is a burner file for when you just need to explore what happens with
+ * random bits code. To avoid having to comment out large sections of code, wrap
+ * each example in a simple if statement. Set the condition to false to disable
+ * and delete when no longer needed.
  *
  */
 
@@ -34,19 +42,21 @@ PHP;
 # Process
 ################################################################################
 
+$root = dirname(__DIR__);
+
 if (!file_exists($path = "$root/.playground")) {
   mkdir($path);
 }
 
-foreach (['web', 'console', ...$contexts] as $context) {
+foreach (['browser', 'console', ...$contexts] as $context) {
   $file = "$path/$context.php";
 
   if (!file_exists($file)) {
     file_put_contents($file, $content);
   }
 
-  if ('web' === $context && file_exists($public = "$root/$public")) {
-    if (file_exists($link = "$public/.playground.php")) {
+  if ('browser' === $context && file_exists($publicDir = "$root/$publicDir")) {
+    if (file_exists($link = "$publicDir/$uri.php")) {
       unlink($link);
     }
 

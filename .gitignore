@@ -24,10 +24,10 @@ composer.lock
 !.env.example
 
 # Editor/ IDE
+*.code-workspace
 .idea/
 .project/
 .vscode/
-*.code-workspace
 
 # System files
 .DS_Store
