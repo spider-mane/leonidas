@@ -7,12 +7,12 @@ namespace Tests\Suites\Unit\Library\Core\Asset;
 use Leonidas\Contracts\Http\ServerRequestPolicyInterface;
 use Leonidas\Contracts\Ui\Asset\ScriptInterface;
 use Leonidas\Library\Core\Asset\Script;
-use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Psr\Http\Message\ServerRequestInterface;
+use Tests\Support\UnitTestCase;
 use UnitTester;
 
-class ScriptTest extends TestCase
+class ScriptTest extends UnitTestCase
 {
     use ProphecyTrait;
 
@@ -28,6 +28,8 @@ class ScriptTest extends TestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->script = new Script(
             $this->getConstructedHandle(),
             $this->getConstructedSrc(),

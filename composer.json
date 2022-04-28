@@ -71,6 +71,7 @@
     "phpmailer/phpmailer": "^6.6",
     "phpoption/phpoption": "^1.8",
     "phpspec/prophecy-phpunit": "^2.0",
+    "phpstan/phpstan": "^1.6",
     "phpunit/phpunit": "^9.5",
     "phpunit/phpunit-selenium": "^9.0",
     "psy/psysh": "^0.10",
@@ -135,6 +136,7 @@
     "wp": "vendor/bin/wp",
     "build": [
       "@asset run build",
+      "composer dumpautoload --optimize",
       "@rector",
       "@style",
       "@check",
@@ -186,8 +188,10 @@
   "extra": {
     "build-paths": {
       "build": {
-        "phpunit": {},
         "php-cs-fixer": {},
+        "phpstan": {},
+        "phpunit": {},
+        "psalm": {},
         "wordpress": {}
       },
       "logs": {}

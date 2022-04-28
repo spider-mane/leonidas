@@ -7,12 +7,12 @@ namespace Tests\Suites\Unit\Library\Core\Asset;
 use Leonidas\Contracts\Http\ServerRequestPolicyInterface;
 use Leonidas\Contracts\Ui\Asset\StyleInterface;
 use Leonidas\Library\Core\Asset\Style;
-use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Psr\Http\Message\ServerRequestInterface;
+use Tests\Support\UnitTestCase;
 use UnitTester;
 
-class StyleTest extends TestCase
+class StyleTest extends UnitTestCase
 {
     use ProphecyTrait;
 
@@ -28,6 +28,8 @@ class StyleTest extends TestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->style = new Style(
             $this->getConstructedHandle(),
             $this->getConstructedSrc(),

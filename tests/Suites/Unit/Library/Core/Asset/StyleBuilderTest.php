@@ -7,9 +7,9 @@ namespace Tests\Suites\Unit\Library\Core\Asset;
 use Leonidas\Contracts\Http\ServerRequestPolicyInterface;
 use Leonidas\Library\Core\Asset\Style;
 use Leonidas\Library\Core\Asset\StyleBuilder;
-use PHPUnit\Framework\TestCase;
+use Tests\Support\UnitTestCase;
 
-class StyleBuilderTest extends TestCase
+class StyleBuilderTest extends UnitTestCase
 {
     /**
      * @var StyleBuilder
@@ -18,6 +18,8 @@ class StyleBuilderTest extends TestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->styleBuilder = new StyleBuilder(
             $this->getConstructedHandle()
         );

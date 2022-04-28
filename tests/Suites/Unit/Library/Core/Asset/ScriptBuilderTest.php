@@ -7,9 +7,9 @@ namespace Tests\Suites\Unit\Library\Core\Asset;
 use Leonidas\Contracts\Http\ServerRequestPolicyInterface;
 use Leonidas\Library\Core\Asset\Script;
 use Leonidas\Library\Core\Asset\ScriptBuilder;
-use PHPUnit\Framework\TestCase;
+use Tests\Support\UnitTestCase;
 
-class ScriptBuilderTest extends TestCase
+class ScriptBuilderTest extends UnitTestCase
 {
     /**
      * @var ScriptBuilder
@@ -18,6 +18,8 @@ class ScriptBuilderTest extends TestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->scriptBuilder = new ScriptBuilder(
             $this->getConstructedHandle()
         );

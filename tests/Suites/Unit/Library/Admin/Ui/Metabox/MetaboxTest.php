@@ -5,11 +5,11 @@ namespace Tests\Suites\Unit\Library\Admin\Ui\Metabox;
 use Leonidas\Contracts\Admin\Components\MetaboxInterface;
 use Leonidas\Contracts\Admin\Components\MetaboxLayoutInterface;
 use Leonidas\Library\Admin\Metabox\Metabox;
-use PHPUnit\Framework\TestCase;
+use Tests\Support\UnitTestCase;
 use UnitTester;
 use WP_Screen;
 
-class MetaboxTest extends TestCase
+class MetaboxTest extends UnitTestCase
 {
     /**
      * @var UnitTester
@@ -23,6 +23,8 @@ class MetaboxTest extends TestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $layout = $this->getMockBuilder(MetaboxLayoutInterface::class)
             ->getMock();
 
