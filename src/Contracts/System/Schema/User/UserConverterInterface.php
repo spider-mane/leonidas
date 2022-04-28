@@ -2,7 +2,6 @@
 
 namespace Leonidas\Contracts\System\Schema\User;
 
-use Leonidas\Contracts\System\Model\User\UserInterface;
 use WP_User;
 
 interface UserConverterInterface

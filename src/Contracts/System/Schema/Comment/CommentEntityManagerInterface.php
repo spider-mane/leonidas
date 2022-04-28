@@ -10,15 +10,13 @@ interface CommentEntityManagerInterface
 
     public function whereIds(int ...$ids): object;
 
-    public function whereAuthors(string ...$authors): object;
+    public function whereAuthorIds(int ...$authorIds): object;
 
-    public function whereAuthorEmails(string ...$authorEmails): object;
+    public function whereAuthorEmail(string $authorEmail): object;
 
-    public function whereAuthorIps(string ...$authorIps): object;
+    public function whereAuthorUrl(string $authorUrl): object;
 
-    public function whereAuthorUrls(string ...$authorUrls): object;
-
-    public function whereParentId(int $parentId): object;
+    public function whereParentIds(int ...$parentId): object;
 
     public function all(): object;
 

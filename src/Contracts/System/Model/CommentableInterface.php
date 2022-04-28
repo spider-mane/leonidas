@@ -2,8 +2,6 @@
 
 namespace Leonidas\Contracts\System\Model;
 
-use Leonidas\Contracts\System\Model\EntityModelInterface;
-
 interface CommentableInterface extends EntityModelInterface
 {
     public function getCommentStatus(): string;

@@ -12,7 +12,7 @@ interface PostEntityManagerInterface
 
     public function selectByName(string $name): object;
 
-    public function whereName(string ...$names): object;
+    public function whereNames(string ...$names): object;
 
     public function whereUser(int $user): object;
 

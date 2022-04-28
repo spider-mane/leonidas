@@ -13,7 +13,7 @@ class PostConversionArchive extends AbstractEntityConversionArchive implements P
         return $this->conversions[$this->hash($post)];
     }
 
-    public function getReversion($entity): WP_Post
+    public function getReversion(object $entity): WP_Post
     {
         return $this->reversions[$this->hash($entity)];
     }

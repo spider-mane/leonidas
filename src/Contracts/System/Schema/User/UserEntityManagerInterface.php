@@ -12,15 +12,11 @@ interface UserEntityManagerInterface
 
     public function selectByLogin(string $login): object;
 
-    public function whereLogins(string ...$logins): object;
-
     public function selectByEmail(string $email): object;
-
-    public function whereEmails(string ...$emails): object;
 
     public function selectByNicename(string $nicename): object;
 
-    public function whereNicenames(string ...$nicenames): object;
+    public function whereBlogId(int $blogId): object;
 
     public function all(): object;
 
@@ -32,7 +28,7 @@ interface UserEntityManagerInterface
 
     public function update(int $id, array $data): void;
 
-    public function delete(int $id): void;
+    public function delete(int $id, ?int $reassign = null): void;
 
     public function commit(): void;
 }

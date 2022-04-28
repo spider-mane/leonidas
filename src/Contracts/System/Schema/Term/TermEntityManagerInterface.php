@@ -18,11 +18,11 @@ interface TermEntityManagerInterface
 
     public function whereSlugs(string ...$slugs): object;
 
-    public function whereTaxonomies(string ...$taxonomies): object;
-
     public function whereParentId(int $parentId): object;
 
-    public function whereObjects(int ...$objects): object;
+    public function whereChildOf(int $parentId): object;
+
+    public function whereObjectIds(int ...$objects): object;
 
     public function all(): object;
 
