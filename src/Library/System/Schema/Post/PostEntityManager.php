@@ -15,8 +15,6 @@ class PostEntityManager implements PostEntityManagerInterface
     use NoCommitmentsTrait;
     use ThrowsExceptionOnErrorTrait;
 
-    public const DATE_FORMAT = 'Y-m-d H:i:s';
-
     protected string $type;
 
     protected PostConverterInterface $entityConverter;

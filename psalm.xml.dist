@@ -9,10 +9,9 @@
 >
   <projectFiles>
     <directory name="src"/>
+    <directory name="boot"/>
+    <directory name="config"/>
     <directory name="tests"/>
-    <ignoreFiles>
-      <directory name="vendor"/>
-    </ignoreFiles>
   </projectFiles>
 
   <extraFiles>

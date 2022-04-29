@@ -1,10 +1,10 @@
 <?php
 
-namespace Library\System\Model\Post;
+namespace Leonidas\Library\System\Model\Page\Status;
 
-use Leonidas\Contracts\System\Model\Post\PostStatusInterface as PostPostStatusInterface;
+use Leonidas\Contracts\System\Model\Page\Status\PageStatusInterface;
 
-class PostStatus implements PostPostStatusInterface
+class PageStatus implements PageStatusInterface
 {
     protected string $name;
 

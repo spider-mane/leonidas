@@ -37,7 +37,7 @@
     "psr/simple-cache": "^1.0",
     "symfony/polyfill-php80": "^1.23",
     "symfony/polyfill-php81": "^1.23",
-    "twig/twig": "^2.0",
+    "twig/twig": "^2.0 || ^3.0",
     "webtheory/collection": "@stable",
     "webtheory/config": "@stable",
     "webtheory/facade": "@stable",
@@ -124,6 +124,7 @@
     "hooks": "vendor/bin/captainhook",
     "inspect": "vendor/bin/psalm",
     "link": "bin/symlink-plugin",
+    "namespace": "composer dump-autoload -o",
     "play": "php .playground/env.php",
     "rector": "vendor/bin/rector process",
     "shell": "@wp shell",
@@ -136,7 +137,7 @@
     "wp": "vendor/bin/wp",
     "build": [
       "@asset run build",
-      "composer dumpautoload --optimize",
+      "@namespace",
       "@rector",
       "@style",
       "@check",
@@ -175,7 +176,7 @@
     ]
   },
   "config": {
-    "optimize-autoloader": true,
+    "optimize-autoloader": false,
     "apcu-autoloader": false,
     "sort-packages": true,
     "process-timeout": 0,

@@ -10,11 +10,11 @@ interface PostRepositoryInterface
 {
     public function select(int $id): ?PostInterface;
 
-    public function selectMany(int ...$ids): PostCollectionInterface;
+    public function whereIds(int ...$ids): PostCollectionInterface;
 
     public function selectByName(string $name): ?PostInterface;
 
-    public function selectManyByName(string ...$names): PostCollectionInterface;
+    public function whereNames(string ...$names): PostCollectionInterface;
 
     public function whereAuthor(AuthorInterface $author): PostCollectionInterface;
 
@@ -36,5 +36,5 @@ interface PostRepositoryInterface
 
     public function trash(int $postId): void;
 
-    public function selectAll(): PostCollectionInterface;
+    public function all(): PostCollectionInterface;
 }

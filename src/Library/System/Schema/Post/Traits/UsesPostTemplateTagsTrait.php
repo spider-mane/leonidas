@@ -11,13 +11,13 @@ trait UsesPostTemplateTagsTrait
 
     protected WP_Post $post;
 
-    protected function doPostTemplateTag(callable $function, bool $ob, ...$args): string
+    protected function doPostTemplateTag(callable $tag, bool $ob, ...$args): string
     {
         $cached = $this->swapGlobalPost($this->post);
 
         $value = $ob
-            ? OutputBuffer::wrapFunction($function, $args)
-            : call_user_func_array($function, $args);
+            ? OutputBuffer::wrapFunction($tag, ...$args)
+            : ($tag)(...$args);
 
         $this->restoreGlobalPost($cached);
 

@@ -47,7 +47,5 @@ interface ProfileInterface
 
     public function setOption(string $option, $value): void;
 
-    public function getFilter(): string;
-
-    public function setFilter(string $filter): void;
+    public function toArray(): array;
 }

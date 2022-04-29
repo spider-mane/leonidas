@@ -2,58 +2,34 @@
 
 namespace Leonidas\Contracts\System\Model\Attachment;
 
-use Leonidas\Contracts\System\Model\Author\AuthorInterface;
-use Leonidas\Contracts\System\Model\DatableInterface;
-use Leonidas\Contracts\System\Model\EntityModelInterface;
-use Psr\Link\LinkInterface;
+use Leonidas\Contracts\System\Model\CommentableInterface;
+use Leonidas\Contracts\System\Model\FilterableInterface;
+use Leonidas\Contracts\System\Model\MimeInterface;
+use Leonidas\Contracts\System\Model\MutableAuthoredInterface;
+use Leonidas\Contracts\System\Model\MutableDatableInterface;
+use Leonidas\Contracts\System\Model\MutablePostModelInterface;
+use Leonidas\Contracts\System\Model\PingableInterface;
+use Leonidas\Contracts\System\Model\RestrictableInterface;
 
-interface AttachmentInterface extends EntityModelInterface, DatableInterface
+interface AttachmentInterface extends
+    MutableAuthoredInterface,
+    FilterableInterface,
+    MutablePostModelInterface,
+    PingableInterface,
+    CommentableInterface,
+    RestrictableInterface,
+    MimeInterface,
+    MutableDatableInterface
 {
-    public function getName(): string;
-
     public function getTitle(): string;
+
+    public function setTitle(string $title): self;
 
     public function getCaption(): string;
 
+    public function setCaption(string $caption): self;
+
     public function getDescription(): string;
 
-    public function getAuthor(): AuthorInterface;
-
-    public function getPassword(): ?string;
-
-    public function getGuid(): LinkInterface;
-
-    public function getMenuOrder(): int;
-
-    public function getMimeType(): string;
-
-    public function getCommentCount(): int;
-
-    public function getFilter(): string;
-
-    public function applyFilter(string $filter);
-
-    public function pageTemplate(): string;
-
-    public function setName(string $name): AttachmentInterface;
-
-    public function setTitle(string $title): AttachmentInterface;
-
-    public function setCaption(string $caption): AttachmentInterface;
-
-    public function setDescription(string $description): AttachmentInterface;
-
-    public function setAuthor(AuthorInterface $author): AttachmentInterface;
-
-    public function setPassword(string $password): ?AttachmentInterface;
-
-    public function setGuid(LinkInterface $name): AttachmentInterface;
-
-    public function setMenuOrder(int $menuOrder): AttachmentInterface;
-
-    public function setMimeType(string $mimeType): AttachmentInterface;
-
-    public function setCommentCount(int $commentCount): AttachmentInterface;
-
-    public function setFilter(string $filter): AttachmentInterface;
+    public function setDescription(string $description): self;
 }

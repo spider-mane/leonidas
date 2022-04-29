@@ -6,6 +6,8 @@ use WP_Query;
 
 interface PostEntityManagerInterface
 {
+    public const DATE_FORMAT = 'Y-m-d H:i:s';
+
     public function select(int $id): object;
 
     public function whereIds(int ...$ids): object;

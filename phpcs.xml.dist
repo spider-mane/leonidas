@@ -37,4 +37,7 @@
   <rule ref="PSR1.Methods.CamelCapsMethodName">
     <exclude-pattern>./tests/Suites</exclude-pattern>
   </rule>
+  <rule ref="PSR1.Classes.ClassDeclaration.MissingNamespace">
+    <exclude-pattern>./src/Traits/Hooks/stubs</exclude-pattern>
+  </rule>
 </ruleset>

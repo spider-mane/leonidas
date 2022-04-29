@@ -2,7 +2,9 @@
 
 namespace Leonidas\Contracts\System\Model\Post\Status;
 
-interface PostStatusInterface
+use Leonidas\Contracts\System\Model\PublicationStatusInterface;
+
+interface PostStatusInterface extends PublicationStatusInterface
 {
-    public function getName(): string;
+    //
 }
