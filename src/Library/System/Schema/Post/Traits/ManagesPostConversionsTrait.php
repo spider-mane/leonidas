@@ -41,7 +41,7 @@ trait ManagesPostConversionsTrait
         return $this->archive->getConversion($post);
     }
 
-    protected function getRevertedPost(WP_Post $post): WP_Post
+    protected function getRevertedPost(object $post): WP_Post
     {
         if (!$this->archive->hasRecordOf($post)) {
             $this->archive->archive($post, $this->converter->revert($post));

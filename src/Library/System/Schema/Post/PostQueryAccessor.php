@@ -49,11 +49,4 @@ class PostQueryAccessor implements ArrayAccess, Countable
     {
         return count($this->query->posts);
     }
-
-    public static function fromGlobal(
-        PostConverterInterface $converter,
-        PostConversionArchiveInterface $archive
-    ): PostQueryAccessor {
-        return new static($GLOBALS['wp_query'], $converter, $archive);
-    }
 }

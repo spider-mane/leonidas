@@ -161,7 +161,7 @@ class PostEntityManager implements PostEntityManagerInterface
         return $this->entityConverter->convert($post);
     }
 
-    protected function createCollection(WP_Post ...$posts)
+    protected function createCollection(WP_Post ...$posts): object
     {
         return $this->collectionFactory->createEntityCollection(
             ...array_map([$this, 'convertEntity'], $posts)

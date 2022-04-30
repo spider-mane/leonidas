@@ -76,11 +76,4 @@ class PostQueryIterator implements Iterator, Countable
     {
         return count($this->query->posts);
     }
-
-    public static function fromGlobal(
-        PostConverterInterface $factory,
-        ?PostConversionArchiveInterface $archive = null
-    ): PostQueryIterator {
-        return new static($GLOBALS['wp_query'], $factory, $archive);
-    }
 }

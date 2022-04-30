@@ -118,7 +118,7 @@ class PostCollection
     {
         $query->set('fields', 'all');
 
-        return new static(...$query->get_posts());
+        return new self(...$query->get_posts());
     }
 
     public static function create(array $args): PostCollection

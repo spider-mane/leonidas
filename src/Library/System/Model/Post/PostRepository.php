@@ -7,17 +7,17 @@ use Leonidas\Contracts\System\Model\Post\PostCollectionInterface;
 use Leonidas\Contracts\System\Model\Post\PostInterface;
 use Leonidas\Contracts\System\Model\Post\PostRepositoryInterface;
 use Leonidas\Contracts\System\Model\Post\Status\PostStatusInterface;
-use Leonidas\Contracts\System\Schema\Post\PostConverterInterface;
+use Leonidas\Contracts\System\Schema\Post\PostEntityManagerInterface;
 use Leonidas\Library\System\Schema\Post\PostEntityManager;
 use WP_Query;
 
 class PostRepository implements PostRepositoryInterface
 {
-    protected PostEntityManager $manager;
+    protected PostEntityManagerInterface $manager;
 
-    public function __construct(PostConverterInterface $converter, PostCollectionFactory $factory)
+    public function __construct(PostEntityManagerInterface $manager)
     {
-        $this->manager = new PostEntityManager('post', $converter, $factory);
+        $this->manager = $manager;
     }
 
     public function select(int $id): ?PostInterface

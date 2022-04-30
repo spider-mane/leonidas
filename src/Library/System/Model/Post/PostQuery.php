@@ -2,29 +2,18 @@
 
 namespace Leonidas\Library\System\Model\Post;
 
-use Countable;
-use IteratorAggregate;
+use Leonidas\Contracts\System\Model\Post\PostCollectionInterface;
 use Leonidas\Contracts\System\Schema\Post\PostConverterInterface;
-use Leonidas\Library\System\Schema\Post\PostQueryArrayObject;
-use Traversable;
+use Leonidas\Library\System\Model\Abstracts\Post\AbstractPostModelQuery;
+use Leonidas\Library\System\Model\Post\Abstracts\PostCollectionTrait;
 use WP_Query;
 
-class PostQuery implements IteratorAggregate, Countable
+class PostQuery extends AbstractPostModelQuery implements PostCollectionInterface
 {
-    protected PostQueryArrayObject $query;
+    use PostCollectionTrait;
 
     public function __construct(WP_Query $query, PostConverterInterface $converter)
     {
-        $this->query = new PostQueryArrayObject($query, $converter);
-    }
-
-    public function count(): int
-    {
-        return $this->query->count();
-    }
-
-    public function getIterator(): Traversable
-    {
-        return $this->query;
+        parent::__construct($query, $converter);
     }
 }

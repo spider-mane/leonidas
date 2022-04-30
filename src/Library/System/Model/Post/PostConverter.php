@@ -7,6 +7,7 @@ use Leonidas\Contracts\System\Model\Author\AuthorRepositoryInterface;
 use Leonidas\Contracts\System\Model\Category\CategoryRepositoryInterface;
 use Leonidas\Contracts\System\Model\Comment\CommentRepositoryInterface;
 use Leonidas\Contracts\System\Model\GetAccessProviderInterface;
+use Leonidas\Contracts\System\Model\Post\PostInterface;
 use Leonidas\Contracts\System\Model\SetAccessProviderInterface;
 use Leonidas\Contracts\System\Model\Tag\TagRepositoryInterface;
 use Leonidas\Contracts\System\Schema\Post\PostConverterInterface;
@@ -62,12 +63,12 @@ class PostConverter implements PostConverterInterface
 
     public function revert(object $post): WP_Post
     {
-        if ($post instanceof Post) {
+        if ($post instanceof PostInterface) {
             return get_post($post->getId());
         }
 
         throw new InvalidArgumentException(
-            '$post must be an instance of ' . Post::class
+            '$post must be an instance of ' . PostInterface::class
         );
     }
 }

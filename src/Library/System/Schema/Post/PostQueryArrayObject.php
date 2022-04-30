@@ -52,9 +52,4 @@ class PostQueryArrayObject implements IteratorAggregate, ArrayAccess, Countable
     {
         return $this->accessor->count();
     }
-
-    public static function fromGlobal(PostConverterInterface $converter): PostQueryArrayObject
-    {
-        return new static($GLOBALS['wp_query'], $converter);
-    }
 }

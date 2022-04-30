@@ -7,6 +7,9 @@ parameters:
     - config
     - tests
 
+  bootstrapFiles:
+    - wordpress/wp-includes/wp-db.php
+
   scanDirectories:
     - wordpress/wp-admin/includes
     - wordpress/wp-includes
