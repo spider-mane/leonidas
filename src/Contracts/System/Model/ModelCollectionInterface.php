@@ -2,11 +2,9 @@
 
 namespace Leonidas\Contracts\System\Model;
 
-use Countable;
-use JsonSerializable;
-use Traversable;
+use Leonidas\Contracts\Collection\ObjectCollectionInterface;
 
-interface SystemModelCollectionInterface extends Traversable, Countable, JsonSerializable
+interface ModelCollectionInterface extends ObjectCollectionInterface
 {
     public function map(callable $callback): array;
 
@@ -15,8 +13,4 @@ interface SystemModelCollectionInterface extends Traversable, Countable, JsonSer
     public function foreach(callable $callback): void;
 
     public function extract(string $property): array;
-
-    public function values(): array;
-
-    public function toArray(): array;
 }

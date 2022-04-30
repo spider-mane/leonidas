@@ -4,12 +4,10 @@ namespace Leonidas\Library\System\Model\Post\Abstracts;
 
 use Leonidas\Contracts\System\Model\Post\PostCollectionInterface;
 use Leonidas\Contracts\System\Model\Post\PostInterface;
-use WebTheory\Collection\Contracts\CollectionKernelInterface;
+use Leonidas\Library\System\Model\Abstracts\AbstractModelCollection;
 
-trait PostCollectionTrait
+abstract class AbstractPostCollection extends AbstractModelCollection implements PostCollectionInterface
 {
-    protected CollectionKernelInterface $kernel;
-
     public function getById(int $id): ?PostInterface
     {
         return $this->kernel->firstWhere('id', '=', $id);

@@ -2,9 +2,9 @@
 
 namespace Leonidas\Contracts\System\Model\Administrator;
 
-use Leonidas\Contracts\System\Model\SystemModelCollectionInterface;
+use Leonidas\Contracts\System\Model\ModelCollectionInterface;
 
-interface AdministratorCollectionInterface extends SystemModelCollectionInterface
+interface AdministratorCollectionInterface extends ModelCollectionInterface
 {
     public function getById(int $id): AdministratorInterface;
 }

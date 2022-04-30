@@ -2,9 +2,9 @@
 
 namespace Leonidas\Contracts\System\Model\Category;
 
-use Leonidas\Contracts\System\Model\SystemModelCollectionInterface;
+use Leonidas\Contracts\System\Model\ModelCollectionInterface;
 
-interface CategoryCollectionInterface extends SystemModelCollectionInterface
+interface CategoryCollectionInterface extends ModelCollectionInterface
 {
     public function extractIds(): array;
 

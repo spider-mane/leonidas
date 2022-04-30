@@ -4,27 +4,37 @@ namespace Leonidas\Library\System\Model\Tag;
 
 use Leonidas\Contracts\System\Model\Tag\TagCollectionInterface;
 use Leonidas\Contracts\System\Model\Tag\TagInterface;
-use WP_Term;
+use Leonidas\Library\System\Model\Abstracts\AbstractModelCollection;
+use Leonidas\Library\System\Model\Abstracts\PoweredByModelCollectionKernelTrait;
 
-class TagCollection implements TagCollectionInterface
+class TagCollection extends AbstractModelCollection implements TagCollectionInterface
 {
-    protected array $tags;
+    use PoweredByModelCollectionKernelTrait;
+
+    protected const MODEL_IDENTIFIER = 'slug';
 
     public function __construct(TagInterface ...$tags)
     {
-        $this->tags = $tags;
+        $this->initKernel($tags);
     }
 
-    public function all(): array
+    public function getById(int $id): TagInterface
     {
-        return $this->tags;
+        return $this->kernel->firstWhere('id', '=', $id);
     }
 
-    public static function adapt(array $tags): TagCollection
+    public function extractIds(): array
     {
-        return new static(...array_map(
-            fn (WP_Term $tag) => new Tag($tag),
-            $tags
-        ));
+        return $this->kernel->column('id');
+    }
+
+    public function extractNames(): array
+    {
+        return $this->kernel->column('name');
+    }
+
+    public function extractSlugs(): array
+    {
+        return $this->kernel->column('slug');
     }
 }

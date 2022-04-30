@@ -2,72 +2,50 @@
 
 namespace Leonidas\Library\System\Model\User;
 
-use Contracts\Collection\CollectionInterface;
-use Leonidas\Library\System\Model\SystemModelCollection;
+use Leonidas\Contracts\System\Model\User\UserCollectionInterface;
+use Leonidas\Contracts\System\Model\User\UserInterface;
+use Leonidas\Library\System\Model\Abstracts\AbstractModelCollection;
+use Leonidas\Library\System\Model\Abstracts\PoweredByModelCollectionKernelTrait;
 use WP_User;
 
-class UserCollection implements CollectionInterface
+class UserCollection extends AbstractModelCollection implements UserCollectionInterface
 {
-    protected const ENTITY_TYPE = 'user';
+    use PoweredByModelCollectionKernelTrait;
 
-    protected const ID_KEY = 'ID';
-
-    protected const SLUG_KEY = 'user_nicename';
-
-    protected SystemModelCollection $users;
+    protected const MODEL_IDENTIFIER = 'login';
 
     public function __construct(WP_User ...$users)
     {
-        $this->users = new SystemModelCollection(
-            static::ENTITY_TYPE,
-            static::ID_KEY,
-            static::SLUG_KEY,
-            $users
-        );
+        $this->initKernel($users);
     }
 
-    public function select(string $property): array
+    public function getById(int $id): UserInterface
     {
-        return $this->users->select($property);
+        return $this->kernel->firstWhere('id', '=', $id);
     }
 
-    public function getIds(): array
+    public function getByLogin(string $login): UserInterface
     {
-        return $this->users->getIds();
+        return $this->kernel->fetch($login);
     }
 
-    public function getMeta(string $metaKey): array
+    public function getByEmail(string $email): UserInterface
     {
-        return $this->users->getMeta($metaKey);
+        return $this->kernel->firstWhere('email', '=', $email);
     }
 
-    public function has(string $item): bool
+    public function getBySlug(string $slug): UserInterface
     {
-        return $this->users->has($item);
+        return $this->kernel->firstWhere('slug', '=', $slug);
     }
 
-    public function remove(string $item): void
+    public function insert(UserInterface $user): void
     {
-        $this->users->remove($item);
+        $this->kernel->insert($user);
     }
 
-    public function all(): array
+    public function hasUser(string $login): bool
     {
-        return $this->users->all();
-    }
-
-    public function isEmpty(): bool
-    {
-        return $this->users->isEmpty();
-    }
-
-    public function diff(UserCollection $collection): UserCollection
-    {
-        return $this->users->diff($collection);
-    }
-
-    public function sortByMeta(string $metaKey)
-    {
-        return $this->users->sortByMeta($metaKey);
+        return $this->kernel->contains($login);
     }
 }

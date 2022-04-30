@@ -4,24 +4,22 @@ namespace Leonidas\Library\System\Model\Comment;
 
 use Leonidas\Contracts\System\Model\Comment\CommentCollectionInterface;
 use Leonidas\Contracts\System\Model\Comment\CommentInterface;
+use Leonidas\Library\System\Model\Abstracts\AbstractModelCollection;
+use Leonidas\Library\System\Model\Abstracts\PoweredByModelCollectionKernelTrait;
 
-class CommentCollection implements CommentCollectionInterface
+class CommentCollection extends AbstractModelCollection implements CommentCollectionInterface
 {
-    /**
-     * @var CommentInterface[]
-     */
-    protected array $comments;
+    use PoweredByModelCollectionKernelTrait;
+
+    protected const MODEL_IDENTIFIER = 'id';
 
     public function __construct(CommentInterface ...$comments)
     {
-        $this->comments = $comments;
+        $this->initKernel($comments);
     }
 
-    /**
-     * @return CommentInterface[]
-     */
-    public function all(): array
+    public function getById(int $id): CommentInterface
     {
-        return $this->comments;
+        return $this->kernel->fetch($id);
     }
 }

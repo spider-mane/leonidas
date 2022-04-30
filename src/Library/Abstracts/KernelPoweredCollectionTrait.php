@@ -1,34 +1,14 @@
 <?php
 
-namespace Leonidas\Library\System\Model\Abstracts;
+namespace Leonidas\Library\Abstracts;
 
-use Leonidas\Contracts\System\Model\SystemModelCollectionInterface;
+use Leonidas\Contracts\Collection\ObjectCollectionInterface;
 use Traversable;
 use WebTheory\Collection\Contracts\CollectionKernelInterface;
 
-trait PoweredByKernelTrait
+trait KernelPoweredCollectionTrait
 {
     protected CollectionKernelInterface $kernel;
-
-    public function map(callable $callback): array
-    {
-        return $this->kernel->map($callback);
-    }
-
-    public function walk(callable $callback): void
-    {
-        $this->kernel->walk($callback);
-    }
-
-    public function foreach(callable $callback): void
-    {
-        $this->kernel->foreach($callback);
-    }
-
-    public function extract(string $property): array
-    {
-        return $this->kernel->column($property);
-    }
 
     public function count(): int
     {
@@ -60,7 +40,7 @@ trait PoweredByKernelTrait
         return $this->kernel->jsonSerialize();
     }
 
-    protected function spawn(CollectionKernelInterface $kernel): AbstractSystemModelCollection
+    protected function spawn(CollectionKernelInterface $kernel): ObjectCollectionInterface
     {
         $spawn = clone $this;
 
@@ -72,7 +52,7 @@ trait PoweredByKernelTrait
     protected function expose(array ...$collections): array
     {
         return array_map(
-            fn (SystemModelCollectionInterface $collection) => $collection->toArray(),
+            fn (ObjectCollectionInterface $collection) => $collection->toArray(),
             $collections
         );
     }

@@ -2,9 +2,9 @@
 
 namespace Leonidas\Contracts\System\Model\Post;
 
-use Leonidas\Contracts\System\Model\SystemModelCollectionInterface;
+use Leonidas\Contracts\System\Model\ModelCollectionInterface;
 
-interface PostCollectionInterface extends SystemModelCollectionInterface
+interface PostCollectionInterface extends ModelCollectionInterface
 {
     public function getById(int $id): ?PostInterface;
 

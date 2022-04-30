@@ -4,27 +4,32 @@ namespace Leonidas\Library\System\Model\Category;
 
 use Leonidas\Contracts\System\Model\Category\CategoryCollectionInterface;
 use Leonidas\Contracts\System\Model\Category\CategoryInterface;
-use WP_Term;
+use Leonidas\Library\System\Model\Abstracts\AbstractModelCollection;
+use Leonidas\Library\System\Model\Abstracts\PoweredByModelCollectionKernelTrait;
 
-class CategoryCollection implements CategoryCollectionInterface
+class CategoryCollection extends AbstractModelCollection implements CategoryCollectionInterface
 {
-    protected array $categories;
+    use PoweredByModelCollectionKernelTrait;
+
+    protected const MODEL_IDENTIFIER = 'slug';
 
     public function __construct(CategoryInterface ...$categories)
     {
-        $this->categories = $categories;
+        $this->initKernel($categories);
     }
 
-    public function all(): array
+    public function extractIds(): array
     {
-        return $this->categories;
+        return $this->kernel->column('id');
     }
 
-    public static function adapt(array $categories): CategoryCollection
+    public function extractNames(): array
     {
-        return new static(...array_map(
-            fn (WP_Term $category) => new Category($category),
-            $categories
-        ));
+        return $this->kernel->column('name');
+    }
+
+    public function extractSlugs(): array
+    {
+        return $this->kernel->column('slug');
     }
 }
