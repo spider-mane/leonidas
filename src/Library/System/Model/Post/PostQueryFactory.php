@@ -1,6 +1,6 @@
 <?php
 
-namespace Leonidas\Library\System\Schema\Post;
+namespace Leonidas\Library\System\Model\Post;
 
 use Leonidas\Contracts\System\Schema\Post\PostConverterInterface;
 use Leonidas\Contracts\System\Schema\Post\QueryFactoryInterface;
