@@ -1,25 +1,22 @@
 <?php
 
-namespace Leonidas\Library\System\Model\Post;
+namespace Leonidas\Library\System\Model\Page;
 
 use InvalidArgumentException;
 use Leonidas\Contracts\System\Model\Author\AuthorRepositoryInterface;
-use Leonidas\Contracts\System\Model\Category\CategoryRepositoryInterface;
 use Leonidas\Contracts\System\Model\Comment\CommentRepositoryInterface;
 use Leonidas\Contracts\System\Model\GetAccessProviderInterface;
-use Leonidas\Contracts\System\Model\Post\PostInterface;
+use Leonidas\Contracts\System\Model\Page\PageInterface;
+use Leonidas\Contracts\System\Model\Page\PageRepositoryInterface;
 use Leonidas\Contracts\System\Model\SetAccessProviderInterface;
-use Leonidas\Contracts\System\Model\Tag\TagRepositoryInterface;
 use Leonidas\Contracts\System\Schema\Post\PostConverterInterface;
 use WP_Post;
 
-class PostConverter implements PostConverterInterface
+class PageConverter implements PostConverterInterface
 {
+    protected PageRepositoryInterface $pageRepository;
+
     protected AuthorRepositoryInterface $authorRepository;
-
-    protected TagRepositoryInterface $tagRepository;
-
-    protected CategoryRepositoryInterface $categoryRepository;
 
     protected CommentRepositoryInterface $commentRepository;
 
@@ -30,30 +27,27 @@ class PostConverter implements PostConverterInterface
     protected string $postTypePrefix = '';
 
     public function __construct(
+        PageRepositoryInterface $pageRepository,
         AuthorRepositoryInterface $authorRepository,
-        TagRepositoryInterface $tagRepository,
-        CategoryRepositoryInterface $categoryRepository,
         CommentRepositoryInterface $commentRepository,
         ?GetAccessProviderInterface $getAccessProvider = null,
         ?SetAccessProviderInterface $setAccessProvider = null,
         string $postTypePrefix = ''
     ) {
+        $this->pageRepository = $pageRepository;
         $this->authorRepository = $authorRepository;
-        $this->tagRepository = $tagRepository;
-        $this->categoryRepository = $categoryRepository;
         $this->commentRepository = $commentRepository;
         $this->getAccessProvider = $getAccessProvider;
         $this->setAccessProvider = $setAccessProvider;
         $this->postTypePrefix = $postTypePrefix;
     }
 
-    public function convert(WP_Post $post): Post
+    public function convert(WP_Post $post): Page
     {
-        return new Post(
+        return new Page(
             $post,
+            $this->pageRepository,
             $this->authorRepository,
-            $this->tagRepository,
-            $this->categoryRepository,
             $this->commentRepository,
             $this->getAccessProvider,
             $this->setAccessProvider,
@@ -63,12 +57,12 @@ class PostConverter implements PostConverterInterface
 
     public function revert(object $post): WP_Post
     {
-        if ($post instanceof PostInterface) {
+        if ($post instanceof PageInterface) {
             return get_post($post->getId());
         }
 
         throw new InvalidArgumentException(
-            '$post must be an instance of ' . PostInterface::class
+            '$post must be an instance of ' . PageInterface::class
         );
     }
 }

@@ -10,7 +10,7 @@ class GlobalPostTemplateTags extends PostGetAccessProvider implements GetAccessP
 {
     use ProvidesTemplateTagsTrait;
 
-    protected function gettablePropertyMap(PostInterface $post): array
+    protected function resolvedGetters(PostInterface $post): array
     {
         return [
             'id' => $this->templateTag('the_ID'),
@@ -21,6 +21,6 @@ class GlobalPostTemplateTags extends PostGetAccessProvider implements GetAccessP
             'hasExcerpt' => $this->function('has_excerpt'),
             'has_excerpt' => $this->function('has_excerpt'),
             'passwordRequired' => $this->function('post_password_required'),
-        ] + parent::gettablePropertyMap($post);
+        ] + parent::resolvedGetters($post);
     }
 }

@@ -20,7 +20,7 @@ class PageCollection extends AbstractPageCollection implements PageCollectionInt
         $this->initKernel($pages);
     }
 
-    public function getByName(string $name): PageInterface
+    public function getByName(string $name): ?PageInterface
     {
         return $this->kernel->fetch($name);
     }

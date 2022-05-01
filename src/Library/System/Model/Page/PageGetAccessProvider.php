@@ -2,32 +2,19 @@
 
 namespace Leonidas\Library\System\Model\Page;
 
-use Closure;
+use Leonidas\Contracts\System\Model\GetAccessProviderInterface;
 use Leonidas\Contracts\System\Model\Page\PageInterface;
 use Leonidas\Contracts\System\Schema\Post\PostEntityManagerInterface;
+use Leonidas\Library\System\Model\GetAccessProvider;
 
-class PageGetAccessProvider
+class PageGetAccessProvider extends GetAccessProvider implements GetAccessProviderInterface
 {
-    protected PageInterface $page;
-
-    protected array $getters;
-
     public function __construct(PageInterface $page)
     {
-        $this->page = $page;
-        $this->getters = $this->gettablePropertyMap($page);
+        parent::__construct($page, $this->resolvedGetters($page));
     }
 
-    public function get(string $property)
-    {
-        if ($getter = $this->getters[$property] ?? null) {
-            return $getter instanceof Closure
-                ? $getter()
-                : $this->page->$getter();
-        }
-    }
-
-    protected function gettablePropertyMap(PageInterface $page): array
+    protected function resolvedGetters(PageInterface $page): array
     {
         $dateFormat = PostEntityManagerInterface::DATE_FORMAT;
 
@@ -40,8 +27,6 @@ class PageGetAccessProvider
         $getParent = fn () => $page->getParent()->getId();
 
         return [
-            'id' => 'getId',
-            'author' => 'getAuthor',
             'date' => $getDate,
             'dateGmt' => $getDateGmt,
             'date_gmt' => $getDateGmt,
@@ -49,32 +34,8 @@ class PageGetAccessProvider
             'date_modified' => $getDateModified,
             'dateModifiedGmt' => $getDateModifiedGmt,
             'date_modified_gmt' => $getDateModifiedGmt,
-            'content' => 'getContent',
-            'title' => 'getTitle',
-            'excerpt' => 'getExcerpt',
             'status' => $getStatus,
-            'commentStatus' => 'getCommentStatus',
-            'comment_status' => 'getCommentStatus',
-            'pingStatus' => 'getPingStatus',
-            'ping_status' => 'getPingStatus',
-            'password' => 'getPassword',
-            'name' => 'getName',
-            'pingQueue' => 'getPingQueue',
-            'to_ping' => 'getPingQueue',
-            'isPinged' => 'hasBeenPinged',
-            'pinged' => 'hasBeenPinged',
-            'contentFiltered' => 'getContentFiltered',
-            'content_filtered' => 'getContentFiltered',
             'guid' => $getGuid,
-            'menuOrder' => 'getMenuOrder',
-            'menu_order' => 'getMenuOrder',
-            'pageType' => 'getPostType',
-            'page_type' => 'getPostType',
-            'mimeType' => 'getMimeType',
-            'mime_type' => 'getMimeType',
-            'commentCount' => 'getCommentCount',
-            'comment_count' => 'getCommentCount',
-            'filter' => 'getFilter',
             'parent' => $getParent,
             'post_parent' => $getParent,
         ];

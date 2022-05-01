@@ -10,7 +10,7 @@ class GlobalPageTemplateTags extends PageGetAccessProvider implements GetAccessP
 {
     use ProvidesTemplateTagsTrait;
 
-    protected function gettablePropertyMap(PageInterface $page): array
+    protected function resolvedGetters(PageInterface $page): array
     {
         return [
             'id' => $this->templateTag('the_ID'),
@@ -18,6 +18,6 @@ class GlobalPageTemplateTags extends PageGetAccessProvider implements GetAccessP
             'content' => $this->templateTag('the_content'),
             'guid' => $this->templateTag('the_guid'),
             'passwordRequired' => $this->function('post_password_required'),
-        ] + parent::gettablePropertyMap($page);
+        ] + parent::resolvedGetters($page);
     }
 }

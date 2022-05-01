@@ -4,9 +4,10 @@ namespace Leonidas\Contracts\System\Model\Post;
 
 use Leonidas\Contracts\System\Model\Author\AuthorInterface;
 use Leonidas\Contracts\System\Model\Post\Status\PostStatusInterface;
+use Leonidas\Contracts\System\Model\SoftDeletingRepositoryInterface;
 use WP_Query;
 
-interface PostRepositoryInterface
+interface PostRepositoryInterface extends SoftDeletingRepositoryInterface
 {
     public function select(int $id): ?PostInterface;
 
@@ -28,13 +29,9 @@ interface PostRepositoryInterface
 
     public function query(WP_Query $query): PostCollectionInterface;
 
+    public function all(): PostCollectionInterface;
+
     public function insert(PostInterface $post): void;
 
     public function update(PostInterface $post): void;
-
-    public function delete(int $postId): void;
-
-    public function trash(int $postId): void;
-
-    public function all(): PostCollectionInterface;
 }

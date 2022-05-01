@@ -125,7 +125,7 @@
     "inspect": "vendor/bin/psalm",
     "link": "bin/symlink-plugin",
     "namespace": "composer dump-autoload -o",
-    "play": "php .playground/env.php",
+    "play": "php .playground/console.php",
     "rector": "vendor/bin/rector process",
     "shell": "@wp shell",
     "test:acceptance": "vendor/bin/phpunit --testsuite acceptance",

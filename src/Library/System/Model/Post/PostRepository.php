@@ -7,19 +7,12 @@ use Leonidas\Contracts\System\Model\Post\PostCollectionInterface;
 use Leonidas\Contracts\System\Model\Post\PostInterface;
 use Leonidas\Contracts\System\Model\Post\PostRepositoryInterface;
 use Leonidas\Contracts\System\Model\Post\Status\PostStatusInterface;
-use Leonidas\Contracts\System\Schema\Post\PostEntityManagerInterface;
+use Leonidas\Library\System\Model\Abstracts\Post\AbstractPostEntityRepository;
 use Leonidas\Library\System\Schema\Post\PostEntityManager;
 use WP_Query;
 
-class PostRepository implements PostRepositoryInterface
+class PostRepository extends AbstractPostEntityRepository implements PostRepositoryInterface
 {
-    protected PostEntityManagerInterface $manager;
-
-    public function __construct(PostEntityManagerInterface $manager)
-    {
-        $this->manager = $manager;
-    }
-
     public function select(int $id): ?PostInterface
     {
         return $this->manager->select($id);
@@ -38,11 +31,6 @@ class PostRepository implements PostRepositoryInterface
     public function whereNames(string ...$names): PostCollectionInterface
     {
         return $this->manager->whereNames(...$names);
-    }
-
-    public function all(): PostCollectionInterface
-    {
-        return $this->manager->all();
     }
 
     public function whereAuthor(AuthorInterface $author): PostCollectionInterface
@@ -75,6 +63,11 @@ class PostRepository implements PostRepositoryInterface
         return $this->manager->query($query);
     }
 
+    public function all(): PostCollectionInterface
+    {
+        return $this->manager->all();
+    }
+
     public function insert(PostInterface $post): void
     {
         $this->manager->insert($this->extractData($post));
@@ -83,16 +76,6 @@ class PostRepository implements PostRepositoryInterface
     public function update(PostInterface $post): void
     {
         $this->manager->update($post->getId(), $this->extractData($post));
-    }
-
-    public function delete(int $postId): void
-    {
-        $this->manager->delete($postId);
-    }
-
-    public function trash(int $postId): void
-    {
-        $this->manager->trash($postId);
     }
 
     protected function extractData(PostInterface $post): array

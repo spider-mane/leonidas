@@ -2,7 +2,7 @@
 
 namespace Leonidas\Contracts\System\Model;
 
-interface HierarchicalInterface
+interface HierarchicalInterface extends EntityModelInterface
 {
     public function getParent(): ?HierarchicalInterface;
 
