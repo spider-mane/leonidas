@@ -201,6 +201,6 @@ class AdaptedPostType implements PostTypeInterface
 
     public static function fromName(string $name): PostTypeInterface
     {
-        return new static(get_post_type_object($name));
+        return new self(get_post_type_object($name));
     }
 }

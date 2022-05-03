@@ -52,8 +52,6 @@ class Page implements PageInterface
         PageRepositoryInterface $pageRepository,
         AuthorRepositoryInterface $authorRepository,
         CommentRepositoryInterface $commentRepository,
-        ?GetAccessProviderInterface $getAccessProvider = null,
-        ?SetAccessProviderInterface $setAccessProvider = null,
         string $postTypePrefix = ''
     ) {
         $this->validatePostType($post, $postTypePrefix . 'post');
@@ -63,11 +61,11 @@ class Page implements PageInterface
         $this->authorRepository = $authorRepository;
         $this->commentRepository = $commentRepository;
 
-        $this->getAccessProvider = $getAccessProvider
-            ?? new PageGetAccessProvider($this);
-
-        $this->setAccessProvider = $setAccessProvider
-            ?? new PageSetAccessProvider($this, $this->pageRepository);
+        $this->getAccessProvider = new PageTemplateTags($this, $post);
+        $this->setAccessProvider = new PageSetAccessProvider(
+            $this,
+            $this->pageRepository
+        );
     }
 
     #[ReturnTypeWillChange]

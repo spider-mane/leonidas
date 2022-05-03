@@ -51,8 +51,6 @@ class Post implements PostInterface
         TagRepositoryInterface $tagRepository,
         CategoryRepositoryInterface $categoryRepository,
         CommentRepositoryInterface $commentRepository,
-        ?GetAccessProviderInterface $getAccessProvider = null,
-        ?SetAccessProviderInterface $setAccessProvider = null,
         string $postTypePrefix = ''
     ) {
         $this->validatePostType($post, $postTypePrefix . 'post');
@@ -63,11 +61,8 @@ class Post implements PostInterface
         $this->categoryRepository = $categoryRepository;
         $this->commentRepository = $commentRepository;
 
-        $this->getAccessProvider = $getAccessProvider
-            ?? new PostGetAccessProvider($this);
-
-        $this->setAccessProvider = $setAccessProvider
-            ?? new PostSetAccessProvider($this);
+        $this->getAccessProvider = new PostTemplateTags($this, $post);
+        $this->setAccessProvider = new PostSetAccessProvider($this);
     }
 
     #[ReturnTypeWillChange]

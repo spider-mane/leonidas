@@ -6,7 +6,6 @@ use Leonidas\Contracts\Http\Policy\ServerRequestPolicyInterface;
 use Leonidas\Traits\ExpectsPostTrait;
 use Psr\Http\Message\ServerRequestInterface;
 use WP_Post;
-use WP_Term;
 
 class PostTermPolicy implements ServerRequestPolicyInterface
 {
@@ -18,7 +17,7 @@ class PostTermPolicy implements ServerRequestPolicyInterface
     protected $taxonomy;
 
     /**
-     * @var WP_Term[]
+     * @var array<int,int>
      */
     protected $terms = [];
 

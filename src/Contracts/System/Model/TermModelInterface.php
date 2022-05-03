@@ -17,5 +17,7 @@ interface TermModelInterface extends EntityModelInterface, Countable
 
     public function getFilter(): string;
 
+    public function applyFilter(string $name): self;
+
     public function getTaxonomy(): TaxonomyInterface;
 }

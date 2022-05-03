@@ -17,6 +17,8 @@ use Leonidas\Library\System\Model\Abstracts\Post\MutablePostModelTrait;
 use Leonidas\Library\System\Model\Abstracts\Post\PolymorphicPostModelTrait;
 use Leonidas\Library\System\Model\Abstracts\Post\RestrictablePostModelTrait;
 use Leonidas\Library\System\Model\Abstracts\Post\UsesPostMetaTrait;
+use Leonidas\Library\System\Schema\Post\Traits\ValidatesPostTypeTrait;
+use ReturnTypeWillChange;
 use WP_Post;
 
 class Image implements ImageInterface
@@ -31,6 +33,7 @@ class Image implements ImageInterface
     use PolymorphicPostModelTrait;
     use RestrictablePostModelTrait;
     use UsesPostMetaTrait;
+    use ValidatesPostTypeTrait;
 
     protected WP_Post $post;
 
@@ -50,6 +53,8 @@ class Image implements ImageInterface
         CommentRepositoryInterface $commentRepository,
         string $postTypePrefix = ''
     ) {
+        $this->validatePostType($post, $postTypePrefix . 'attachment');
+
         $this->post = $post;
         $this->userRepository = $userRepository;
         $this->commentRepository = $commentRepository;
@@ -59,12 +64,13 @@ class Image implements ImageInterface
         $this->setAccessProvider = new ImageSetAccessProvider($this);
     }
 
+    #[ReturnTypeWillChange]
     public function __get($name)
     {
         return $this->getAccessProvider->get($name);
     }
 
-    public function __set($name, $value)
+    public function __set($name, $value): void
     {
         $this->setAccessProvider->set($name, $value);
     }

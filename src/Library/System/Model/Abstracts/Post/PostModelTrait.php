@@ -12,9 +12,11 @@ trait PostModelTrait
 {
     protected WP_Post $post;
 
+    protected PostTypeInterface $postType;
+
     public function getId(): int
     {
-        return $this->post->ID;
+        return $this->post->ID ?? 0;
     }
 
     public function getName(): string
@@ -29,7 +31,7 @@ trait PostModelTrait
 
     public function getPostType(): PostTypeInterface
     {
-        return AdaptedPostType::fromName($this->post->post_type);
+        return $this->postType ??= AdaptedPostType::fromName($this->post->post_type);
     }
 
     public function getGuid(): LinkInterface

@@ -11,6 +11,4 @@ interface MutableTermModelInterface extends TermModelInterface
     public function setTaxonomyId(int $taxonomyId): self;
 
     public function setGroup(int $group): self;
-
-    public function setFilter(string $name): self;
 }

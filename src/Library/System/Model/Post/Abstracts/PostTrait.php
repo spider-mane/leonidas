@@ -14,6 +14,10 @@ trait PostTrait
 {
     protected WP_Post $post;
 
+    protected CategoryCollectionInterface $categories;
+
+    protected TagCollectionInterface $tags;
+
     protected TagRepositoryInterface $tagRepository;
 
     protected CategoryRepositoryInterface $categoryRepository;
@@ -30,11 +34,21 @@ trait PostTrait
 
     public function getCategories(): CategoryCollectionInterface
     {
-        return $this->categoryRepository->whereObjectId($this->getId());
+        return $this->categories ??= $this->getCategoriesFromRepository();
     }
 
     public function getTags(): TagCollectionInterface
     {
-        return $this->tagRepository->whereObjectId($this->getId());
+        return $this->tags ??= $this->getTagsFromRepository();
+    }
+
+    protected function getCategoriesFromRepository(): CategoryCollectionInterface
+    {
+        return $this->categoryRepository->withPost($this);
+    }
+
+    protected function getTagsFromRepository(): TagCollectionInterface
+    {
+        return $this->tagRepository->withPost($this);
     }
 }

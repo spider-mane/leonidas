@@ -13,5 +13,5 @@ interface TagInterface extends MutableTermModelInterface
 
     public function getPosts(): PostCollectionInterface;
 
-    public function setPosts(PostCollectionInterface $name): self;
+    public function setPosts(PostCollectionInterface $posts): self;
 }

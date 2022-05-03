@@ -13,6 +13,8 @@ class TagCollection extends AbstractModelCollection implements TagCollectionInte
 
     protected const MODEL_IDENTIFIER = 'slug';
 
+    protected const COLLECTION_IS_MAP = true;
+
     public function __construct(TagInterface ...$tags)
     {
         $this->initKernel($tags);
@@ -21,6 +23,48 @@ class TagCollection extends AbstractModelCollection implements TagCollectionInte
     public function getById(int $id): TagInterface
     {
         return $this->kernel->firstWhere('id', '=', $id);
+    }
+
+    public function getBySlug(string $slug): TagInterface
+    {
+        return $this->kernel->fetch('slug');
+    }
+
+    public function add(TagInterface $tag): TagCollectionInterface
+    {
+        $this->kernel->insert($tag);
+
+        return $this;
+    }
+
+    public function merge(TagCollectionInterface $tags): TagCollectionInterface
+    {
+        return $this->kernel->merge($tags->toArray());
+    }
+
+    public function containsWithId(int $id): bool
+    {
+        return $this->kernel->hasWhere('id', '=', $id);
+    }
+
+    public function containsWithSlug(string $slug): bool
+    {
+        return $this->kernel->contains($slug);
+    }
+
+    public function removeWithId(int $id): TagCollectionInterface
+    {
+        return $this->kernel->where('id', '!=', $id);
+    }
+
+    public function removeWithSlug(string $slug): TagCollectionInterface
+    {
+        return $this->kernel->where('slug', '!=', $slug);
+    }
+
+    public function matches(TagCollectionInterface $tags): bool
+    {
+        return $this->kernel->matches($tags->toArray());
     }
 
     public function extractIds(): array

@@ -26,48 +26,28 @@ trait MutablePostTrait
 
     public function setCategories(CategoryCollectionInterface $categories): self
     {
-        wp_set_object_terms(
-            $this->post->ID,
-            $categories->extract('id'),
-            'category',
-            false
-        );
+        $this->categories = $categories;
 
         return $this;
     }
 
     public function addCategories(CategoryCollectionInterface $categories): self
     {
-        wp_set_object_terms(
-            $this->post->ID,
-            $categories->extract('id'),
-            'category',
-            true
-        );
+        $this->categories = $this->categories->merge($categories);
 
         return $this;
     }
 
     public function setTags(TagCollectionInterface $tags): self
     {
-        wp_set_object_terms(
-            $this->post->ID,
-            $tags->extract('name'),
-            'post_tag',
-            false
-        );
+        $this->tags = $tags;
 
         return $this;
     }
 
     public function addTags(TagCollectionInterface $tags): self
     {
-        wp_set_object_terms(
-            $this->post->ID,
-            $tags->extract('name'),
-            'post_tag',
-            true
-        );
+        $this->tags = $this->tags->merge($tags);
 
         return $this;
     }

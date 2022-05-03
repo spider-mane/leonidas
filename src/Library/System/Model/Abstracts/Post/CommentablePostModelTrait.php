@@ -10,6 +10,8 @@ trait CommentablePostModelTrait
 {
     protected WP_Post $post;
 
+    protected CommentCollectionInterface $comments;
+
     protected CommentRepositoryInterface $commentRepository;
 
     public function getCommentStatus(): string
@@ -24,6 +26,6 @@ trait CommentablePostModelTrait
 
     public function getComments(): CommentCollectionInterface
     {
-        return $this->commentRepository->wherePost($this);
+        return $this->comments ??= $this->commentRepository->wherePost($this);
     }
 }

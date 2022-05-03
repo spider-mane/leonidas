@@ -3,8 +3,10 @@
 namespace Leonidas\Contracts\System\Model\Post;
 
 use Leonidas\Contracts\System\Model\Author\AuthorInterface;
+use Leonidas\Contracts\System\Model\Category\CategoryInterface;
 use Leonidas\Contracts\System\Model\Post\Status\PostStatusInterface;
 use Leonidas\Contracts\System\Model\SoftDeletingRepositoryInterface;
+use Leonidas\Contracts\System\Model\Tag\TagInterface;
 use WP_Query;
 
 interface PostRepositoryInterface extends SoftDeletingRepositoryInterface
@@ -24,6 +26,10 @@ interface PostRepositoryInterface extends SoftDeletingRepositoryInterface
     public function whereAuthorAll(AuthorInterface $author): PostCollectionInterface;
 
     public function whereStatus(PostStatusInterface $status): PostCollectionInterface;
+
+    public function withTag(TagInterface $tags): PostCollectionInterface;
+
+    public function withCategory(CategoryInterface $category): PostCollectionInterface;
 
     public function find(array $args): PostCollectionInterface;
 

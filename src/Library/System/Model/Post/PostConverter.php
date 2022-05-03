@@ -6,9 +6,7 @@ use InvalidArgumentException;
 use Leonidas\Contracts\System\Model\Author\AuthorRepositoryInterface;
 use Leonidas\Contracts\System\Model\Category\CategoryRepositoryInterface;
 use Leonidas\Contracts\System\Model\Comment\CommentRepositoryInterface;
-use Leonidas\Contracts\System\Model\GetAccessProviderInterface;
 use Leonidas\Contracts\System\Model\Post\PostInterface;
-use Leonidas\Contracts\System\Model\SetAccessProviderInterface;
 use Leonidas\Contracts\System\Model\Tag\TagRepositoryInterface;
 use Leonidas\Contracts\System\Schema\Post\PostConverterInterface;
 use WP_Post;
@@ -23,10 +21,6 @@ class PostConverter implements PostConverterInterface
 
     protected CommentRepositoryInterface $commentRepository;
 
-    protected ?GetAccessProviderInterface $getAccessProvider;
-
-    protected ?SetAccessProviderInterface $setAccessProvider;
-
     protected string $postTypePrefix = '';
 
     public function __construct(
@@ -34,16 +28,12 @@ class PostConverter implements PostConverterInterface
         TagRepositoryInterface $tagRepository,
         CategoryRepositoryInterface $categoryRepository,
         CommentRepositoryInterface $commentRepository,
-        ?GetAccessProviderInterface $getAccessProvider = null,
-        ?SetAccessProviderInterface $setAccessProvider = null,
         string $postTypePrefix = ''
     ) {
         $this->authorRepository = $authorRepository;
         $this->tagRepository = $tagRepository;
         $this->categoryRepository = $categoryRepository;
         $this->commentRepository = $commentRepository;
-        $this->getAccessProvider = $getAccessProvider;
-        $this->setAccessProvider = $setAccessProvider;
         $this->postTypePrefix = $postTypePrefix;
     }
 
