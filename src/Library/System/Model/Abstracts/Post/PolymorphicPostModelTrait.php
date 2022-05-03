@@ -10,6 +10,6 @@ trait PolymorphicPostModelTrait
 
     public function getPostFormat(): string
     {
-        return $this->post->post_format;
+        return get_post_format($this->post);
     }
 }

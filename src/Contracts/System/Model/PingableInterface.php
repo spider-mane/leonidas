@@ -6,13 +6,13 @@ interface PingableInterface
 {
     public function getPingStatus(): string;
 
-    public function getPingQueue(): string;
+    public function getPinged(): string;
 
-    public function hasBeenPinged(): bool;
+    public function getToBePinged(): string;
 
     public function setPingStatus(string $pingStatus): self;
 
-    public function setPingQueue(string $pingQueue): self;
+    public function setPinged(string $pinged): self;
 
-    public function setHasBeenPinged(bool $hasBeenPinged): self;
+    public function setToBePinged(string $toBePinged): self;
 }

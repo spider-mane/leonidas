@@ -4,12 +4,11 @@ namespace Leonidas\Library\System\Model\Abstracts\Post;
 
 use Closure;
 use Leonidas\Library\Core\Util\OutputBuffer;
-use Leonidas\Library\System\Schema\Post\Traits\SwapsGlobalPostTrait;
 use WP_Post;
 
 trait ForcesTemplateTagsTrait
 {
-    use SwapsGlobalPostTrait;
+    use ProvidesTemplateTagsTrait;
 
     protected WP_Post $core;
 

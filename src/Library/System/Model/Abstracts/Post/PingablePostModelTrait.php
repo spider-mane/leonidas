@@ -13,13 +13,13 @@ trait PingablePostModelTrait
         return $this->post->ping_status;
     }
 
-    public function getPingQueue(): string
-    {
-        return $this->post->to_ping;
-    }
-
-    public function hasBeenPinged(): bool
+    public function getPinged(): string
     {
         return $this->post->pinged;
+    }
+
+    public function getToBePinged(): string
+    {
+        return $this->post->to_ping;
     }
 }

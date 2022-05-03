@@ -15,7 +15,7 @@ trait MutableCommentablePostModelTrait
 
     public function setCommentCount(int $commentCount): self
     {
-        $this->post->comment_count = $commentCount;
+        $this->post->comment_count = (string) $commentCount;
 
         return $this;
     }

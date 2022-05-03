@@ -13,16 +13,16 @@ trait MutablePingablePostModelTrait
         return $this;
     }
 
-    public function setPingQueue(string $pingQueue): self
+    public function setPinged(string $pinged): self
     {
-        $this->post->to_ping = $pingQueue;
+        $this->post->pinged = $pinged;
 
         return $this;
     }
 
-    public function setHasBeenPinged(bool $hasBeenPinged): self
+    public function setToBePinged(string $toBePinged): self
     {
-        $this->post->pinged = $hasBeenPinged;
+        $this->post->to_ping = $toBePinged;
 
         return $this;
     }

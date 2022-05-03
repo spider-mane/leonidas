@@ -19,7 +19,7 @@ trait CommentablePostModelTrait
 
     public function getCommentCount(): int
     {
-        return $this->post->comment_count;
+        return (int) $this->post->comment_count;
     }
 
     public function getComments(): CommentCollectionInterface

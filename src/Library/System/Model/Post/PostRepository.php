@@ -8,7 +8,6 @@ use Leonidas\Contracts\System\Model\Post\PostInterface;
 use Leonidas\Contracts\System\Model\Post\PostRepositoryInterface;
 use Leonidas\Contracts\System\Model\Post\Status\PostStatusInterface;
 use Leonidas\Library\System\Model\Abstracts\Post\AbstractPostEntityRepository;
-use Leonidas\Library\System\Schema\Post\PostEntityManager;
 use WP_Query;
 
 class PostRepository extends AbstractPostEntityRepository implements PostRepositoryInterface
@@ -80,7 +79,7 @@ class PostRepository extends AbstractPostEntityRepository implements PostReposit
 
     protected function extractData(PostInterface $post): array
     {
-        $dateFormat = PostEntityManager::DATE_FORMAT;
+        $dateFormat = $post::DATE_FORMAT;
 
         $post->applyFilter('db');
 
@@ -94,10 +93,10 @@ class PostRepository extends AbstractPostEntityRepository implements PostReposit
             'post_status' => $post->getStatus()->getName(),
             'comment_status' => $post->getCommentStatus(),
             'ping_status' => $post->getPingStatus(),
+            'pinged' => $post->getPinged(),
+            'to_ping' => $post->getToBePinged(),
             'post_password' => $post->getPassword(),
             'post_name' => $post->getName(),
-            'to_ping' => $post->getPingQueue(),
-            'pinged' => $post->hasBeenPinged(),
             'post_modified' => $post->getDate()->format($dateFormat),
             'post_modified_gmt' => $post->getDate()->format($dateFormat),
             'post_mime_type' => $post->getMimeType(),

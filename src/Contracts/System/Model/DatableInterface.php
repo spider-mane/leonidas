@@ -6,6 +6,8 @@ use DateTimeInterface;
 
 interface DatableInterface
 {
+    public const DATE_FORMAT = 'Y-m-d H:i:s';
+
     public function getDate(): DateTimeInterface;
 
     public function getDateGmt(): DateTimeInterface;
