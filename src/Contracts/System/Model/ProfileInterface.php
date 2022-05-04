@@ -45,7 +45,5 @@ interface ProfileInterface
 
     public function hasOption(string $option): bool;
 
-    public function setOption(string $option, $value): void;
-
     public function toArray(): array;
 }

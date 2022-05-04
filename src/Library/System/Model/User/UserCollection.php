@@ -14,6 +14,8 @@ class UserCollection extends AbstractModelCollection implements UserCollectionIn
 
     protected const MODEL_IDENTIFIER = 'login';
 
+    protected const COLLECTION_IS_MAP = true;
+
     public function __construct(WP_User ...$users)
     {
         $this->initKernel($users);
@@ -34,18 +36,28 @@ class UserCollection extends AbstractModelCollection implements UserCollectionIn
         return $this->kernel->firstWhere('email', '=', $email);
     }
 
-    public function getBySlug(string $slug): UserInterface
+    public function getByNicename(string $nicename): ?UserInterface
     {
-        return $this->kernel->firstWhere('slug', '=', $slug);
+        return $this->kernel->firstWhere('nicename', '=', $nicename);
+    }
+
+    public function hasWithId(int $id): bool
+    {
+        return $this->kernel->hasWhere('id', '=', $id);
+    }
+
+    public function hasWithLogin(string $login): bool
+    {
+        return $this->kernel->contains($login);
+    }
+
+    public function hasWithEmail(string $email): bool
+    {
+        return $this->kernel->hasWhere('email', '=', $email);
     }
 
     public function insert(UserInterface $user): void
     {
         $this->kernel->insert($user);
-    }
-
-    public function hasUser(string $login): bool
-    {
-        return $this->kernel->contains($login);
     }
 }

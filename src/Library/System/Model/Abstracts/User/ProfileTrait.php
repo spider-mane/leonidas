@@ -1,29 +1,20 @@
 <?php
 
-namespace Leonidas\Library\System\Model\Profile;
+namespace Leonidas\Library\System\Model\Abstracts\User;
 
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
-use Leonidas\Contracts\System\Model\Profile\ProfileInterface;
-use Leonidas\Contracts\System\Model\User\UserInterface;
 use Leonidas\Library\System\Model\Link\WebPage;
-use Leonidas\Library\System\Model\User\User;
 use Psr\Link\LinkInterface;
 use WP_User;
 
-class Profile implements ProfileInterface
+trait ProfileTrait
 {
     protected WP_User $user;
 
-    public function __construct(WP_User $user)
-    {
-        $this->user = $user;
-    }
+    protected LinkInterface $url;
 
-    public function getUser(): UserInterface
-    {
-        return new User($this->user);
-    }
+    protected CarbonInterface $dateRegistered;
 
     public function getNickname(): string
     {
@@ -55,7 +46,7 @@ class Profile implements ProfileInterface
         return $this->user->user_pass;
     }
 
-    public function getNameSlug(): string
+    public function getNicename(): string
     {
         return $this->user->user_nicename;
     }
@@ -67,12 +58,12 @@ class Profile implements ProfileInterface
 
     public function getUrl(): LinkInterface
     {
-        return new WebPage($this->user->user_url);
+        return $this->url ??= new WebPage($this->user->user_url);
     }
 
     public function getDateRegistered(): CarbonInterface
     {
-        return new Carbon($this->user->user_registered);
+        return $this->dateRegistered ??= new Carbon($this->user->user_registered);
     }
 
     public function getActivationKey(): string
@@ -120,18 +111,8 @@ class Profile implements ProfileInterface
         return $this->user->has_prop($option);
     }
 
-    public function setOption(string $option, $value): void
+    public function toArray(): array
     {
-        $this->user->set($option, $value);
-    }
-
-    public function setFilter(string $filter): void
-    {
-        $this->user->filter = $filter;
-    }
-
-    public function getFilter(): string
-    {
-        return $this->user->filter;
+        return (array) $this->user->data;
     }
 }

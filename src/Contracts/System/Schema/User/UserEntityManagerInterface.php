@@ -2,10 +2,10 @@
 
 namespace Leonidas\Contracts\System\Schema\User;
 
-use WP_User_Query;
-
 interface UserEntityManagerInterface
 {
+    public const DATE_FORMAT = 'Y-m-d H:i:s';
+
     public function select(int $id): object;
 
     public function whereIds(int ...$ids): object;
@@ -20,9 +20,7 @@ interface UserEntityManagerInterface
 
     public function all(): object;
 
-    public function find(array $queryArgs): object;
-
-    public function query(WP_User_Query $query): object;
+    public function query(array $args): object;
 
     public function insert(array $data): void;
 

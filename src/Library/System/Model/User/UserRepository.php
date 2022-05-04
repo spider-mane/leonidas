@@ -3,75 +3,62 @@
 namespace Leonidas\Library\System\Model\User;
 
 use Leonidas\Contracts\System\Model\User\UserCollectionInterface;
-use Leonidas\Contracts\System\Model\User\UserConverterInterface;
 use Leonidas\Contracts\System\Model\User\UserInterface;
 use Leonidas\Contracts\System\Model\User\UserRepositoryInterface;
+use Leonidas\Contracts\System\Schema\User\UserEntityManagerInterface;
+use Leonidas\Library\System\Model\Abstracts\User\AbstractUserModelRepository;
 
-class UserRepository implements UserRepositoryInterface
+class UserRepository extends AbstractUserModelRepository implements UserRepositoryInterface
 {
-    protected UserConverterInterface $converter;
-
-    public function __construct(UserConverterInterface $converter)
+    public function select(int $id): ?UserInterface
     {
-        $this->converter = $converter;
+        return $this->manager->select($id);
     }
 
-    public function get(int $id): UserInterface
+    public function selectByNicename(string $slug): ?UserInterface
     {
-        return new User(get_user_by('id', $id));
+        return $this->manager->selectByNicename($slug);
     }
 
-    public function getMany(int ...$ids): UserCollectionInterface
+    public function selectByEmail(string $email): ?UserInterface
     {
-        return array_map(fn (int $id) => $this->get($id), $ids);
+        return $this->manager->selectByEmail($email);
     }
 
-    public function getBySlug(string $slug): UserInterface
+    public function selectByLogin(string $login): ?UserInterface
     {
-        return new User(get_user_by('slug', $slug));
+        return $this->manager->selectByLogin($login);
     }
 
-    public function getByEmail(string $email): UserInterface
+    public function all(): UserCollectionInterface
     {
-        return new User(get_user_by('email', $email));
-    }
-
-    public function getByLogin(string $login): UserInterface
-    {
-        return new User(get_user_by('login', $login));
+        return $this->manager->all();
     }
 
     public function insert(UserInterface $user): void
     {
-        wp_insert_user($this->converter->convert($user));
+        $this->manager->insert($this->extractData($user));
     }
 
     public function update(UserInterface $user): void
     {
-        wp_update_user($this->converter->convert($user));
+        $this->manager->update($user->getId(), $this->extractData($user));
     }
 
-    public function delete(UserInterface $user): void
+    protected function extractData(UserInterface $user)
     {
-        wp_delete_user($user->getId());
-    }
+        $dateFormat = UserEntityManagerInterface::DATE_FORMAT;
+        $profile = $user->getProfile();
 
-    public function save(UserInterface $user): void
-    {
-        if ($user->getId() && $this->has($user->getProfile()->getLogin())) {
-            $this->update($user);
-        } else {
-            $this->insert($user);
-        }
-    }
-
-    public function has(string $username): bool
-    {
-        return username_exists($username);
-    }
-
-    public function persist(): void
-    {
-        //
+        return [
+            'user_login' => $profile->getLogin(),
+            'user_pass' => $profile->getPassword(),
+            'user_nicename' => $profile->getNicename(),
+            'user_email' => $profile->getEmail(),
+            'user_url' => $profile->getUrl(),
+            'user_registered' => $profile->getDateRegistered()->format($dateFormat),
+            'user_activation_key' => $profile->getActivationKey(),
+            'display_name' => $profile->getDisplayName(),
+        ];
     }
 }

@@ -38,7 +38,7 @@ class UserEntityManager implements UserEntityManagerInterface
 
     public function whereIds(int ...$ids): object
     {
-        return $this->find(['include' => $ids]);
+        return $this->query(['include' => $ids]);
     }
 
     public function selectByLogin(string $login): object
@@ -58,24 +58,19 @@ class UserEntityManager implements UserEntityManagerInterface
 
     public function whereBlogId(int $blogId): object
     {
-        return $this->find(['blog_id' => $blogId]);
+        return $this->query(['blog_id' => $blogId]);
     }
 
     public function all(): object
     {
-        return $this->find([]);
+        return $this->query([]);
     }
 
-    public function find(array $queryArgs): object
+    public function query(array $args): object
     {
-        return $this->query(new WP_User_Query($queryArgs));
-    }
-
-    public function query(WP_User_Query $query): object
-    {
-        $query->set('role', $this->role);
-
-        return $this->createCollection(...$query->get_results());
+        return $this->getCollectionFromQuery(
+            new WP_User_Query($this->normalizeQueryArgs($args))
+        );
     }
 
     public function insert(array $data): void
@@ -95,6 +90,19 @@ class UserEntityManager implements UserEntityManagerInterface
     public function delete(int $id, ?int $reassign = null): void
     {
         wp_delete_user($id, $reassign);
+    }
+
+    protected function getCollectionFromQuery(WP_User_Query $query): object
+    {
+        return $this->createCollection(...$query->get_results());
+    }
+
+    protected function normalizeQueryArgs(array $args): array
+    {
+        return [
+            'role' => $this->role,
+            'fields' => 'all',
+        ] + $args;
     }
 
     protected function normalizeDataForEntry(array $data, int $id = 0)

@@ -8,6 +8,4 @@ use Leonidas\Contracts\System\Model\User\UserInterface;
 interface UserProfileInterface extends ProfileInterface
 {
     public function getUser(): UserInterface;
-
-    public function setUser(UserInterface $user): UserProfileInterface;
 }
