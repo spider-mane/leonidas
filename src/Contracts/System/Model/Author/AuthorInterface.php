@@ -3,11 +3,9 @@
 namespace Leonidas\Contracts\System\Model\Author;
 
 use Leonidas\Contracts\System\Model\Post\PostCollectionInterface;
-use Leonidas\Contracts\System\Model\User\UserInterface;
+use Leonidas\Contracts\System\Model\UserModelInterface;
 
-interface AuthorInterface extends UserInterface
+interface AuthorInterface extends UserModelInterface
 {
     public function getPosts(): PostCollectionInterface;
-
-    public function getDrafts(): PostCollectionInterface;
 }

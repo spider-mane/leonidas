@@ -2,10 +2,9 @@
 
 namespace Leonidas\Contracts\System\Model\User;
 
-use Leonidas\Contracts\System\Model\MutableUserModelInterface;
-use Leonidas\Contracts\System\Model\User\Profile\UserProfileInterface;
+use Leonidas\Contracts\System\Model\UserModelInterface;
 
-interface UserInterface extends MutableUserModelInterface
+interface UserInterface extends UserModelInterface
 {
-    public function getProfile(): UserProfileInterface;
+    //
 }

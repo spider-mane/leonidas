@@ -4,6 +4,7 @@ namespace Leonidas\Library\System\Model\User;
 
 use Leonidas\Contracts\System\Model\GetAccessProviderInterface;
 use Leonidas\Contracts\System\Model\User\UserInterface;
+use Leonidas\Contracts\System\Schema\User\UserEntityManagerInterface;
 use Leonidas\Library\System\Model\GetAccessProvider;
 
 class UserGetAccessProvider extends GetAccessProvider implements GetAccessProviderInterface
@@ -15,6 +16,15 @@ class UserGetAccessProvider extends GetAccessProvider implements GetAccessProvid
 
     protected function resolvedGetters(UserInterface $user): array
     {
-        return [];
+        $dateFormat = UserEntityManagerInterface::DATE_FORMAT;
+
+        $getDateRegistered = fn () => $user->getDateRegistered()->format($dateFormat);
+        $getUrl = fn () => $user->getUrl()->getHref();
+
+        return [
+            'dateRegistered' => $getDateRegistered,
+            'date_registered' => $getDateRegistered,
+            'url' => $getUrl,
+        ];
     }
 }

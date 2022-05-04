@@ -48,17 +48,16 @@ class UserRepository extends AbstractUserModelRepository implements UserReposito
     protected function extractData(UserInterface $user)
     {
         $dateFormat = UserEntityManagerInterface::DATE_FORMAT;
-        $profile = $user->getProfile();
 
         return [
-            'user_login' => $profile->getLogin(),
-            'user_pass' => $profile->getPassword(),
-            'user_nicename' => $profile->getNicename(),
-            'user_email' => $profile->getEmail(),
-            'user_url' => $profile->getUrl(),
-            'user_registered' => $profile->getDateRegistered()->format($dateFormat),
-            'user_activation_key' => $profile->getActivationKey(),
-            'display_name' => $profile->getDisplayName(),
+            'user_login' => $user->getLogin(),
+            'user_pass' => $user->getPassword(),
+            'user_nicename' => $user->getNicename(),
+            'user_email' => $user->getEmail(),
+            'user_url' => $user->getUrl(),
+            'user_registered' => $user->getDateRegistered()->format($dateFormat),
+            'user_activation_key' => $user->getActivationKey(),
+            'display_name' => $user->getDisplayName(),
         ];
     }
 }
