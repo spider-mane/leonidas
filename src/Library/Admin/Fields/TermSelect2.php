@@ -2,9 +2,9 @@
 
 namespace Leonidas\Library\Admin\Fields;
 
-use WebTheory\Saveyour\Contracts\FormFieldControllerInterface;
-use WebTheory\Saveyour\Contracts\FormFieldInterface;
-use WebTheory\Saveyour\Fields\Select2;
+use WebTheory\Saveyour\Contracts\Controller\FormFieldControllerInterface;
+use WebTheory\Saveyour\Contracts\Field\FormFieldInterface;
+use WebTheory\Saveyour\Field\Type\Select2;
 
 class TermSelect2 extends TermSelect implements FormFieldControllerInterface
 {

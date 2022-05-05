@@ -2,7 +2,7 @@
 
 namespace Leonidas\Library\Admin\Processing;
 
-use Leonidas\Library\Admin\Notices\Components\StandardAdminNotice;
+use Leonidas\Library\Admin\Notice\StandardAdminNotice;
 
 abstract class AbstractWpObjectMetaManager extends AbstractInputManager
 {

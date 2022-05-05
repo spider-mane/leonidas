@@ -3,7 +3,7 @@
 namespace Leonidas\Library\Admin\Fields\Selections;
 
 use Leonidas\Library\Admin\Fields\Selections\Traits\TermSelectOptionsTrait;
-use WebTheory\Saveyour\Contracts\OptionsProviderInterface;
+use WebTheory\Saveyour\Contracts\Field\Selection\OptionsProviderInterface;
 
 class TermQuerySelectOptions extends AbstractTermQuerySelection implements OptionsProviderInterface
 {

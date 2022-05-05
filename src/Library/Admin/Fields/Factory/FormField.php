@@ -2,8 +2,8 @@
 
 namespace Leonidas\Library\Admin\Fields\Factory;
 
-use WebTheory\Saveyour\Contracts\FormFieldResolverFactoryInterface;
-use WebTheory\Saveyour\Factories\FormFieldFactory;
+use WebTheory\Saveyour\Contracts\Factory\FormFieldResolverFactoryInterface;
+use WebTheory\Saveyour\Factory\FormFieldFactory;
 
 class FormField extends FormFieldFactory implements FormFieldResolverFactoryInterface
 {

@@ -2,7 +2,7 @@
 
 namespace Leonidas\Library\Admin\Fields\Selections;
 
-use WebTheory\Saveyour\Contracts\SelectionProviderInterface;
+use WebTheory\Saveyour\Contracts\Field\Selection\SelectionProviderInterface;
 use WP_Term;
 use WP_Term_Query;
 

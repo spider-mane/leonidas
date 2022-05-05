@@ -5,8 +5,8 @@ namespace Leonidas\Library\Admin\Fields\Factory;
 use Leonidas\Library\Admin\Fields\Managers\PostMetaFieldManager;
 use Leonidas\Library\Admin\Fields\Managers\PostTermManager;
 use Leonidas\Library\Admin\Fields\Managers\TermMetaDataManager;
-use WebTheory\Saveyour\Contracts\FieldDataManagerResolverFactoryInterface;
-use WebTheory\Saveyour\Factories\DataManagerFactory;
+use WebTheory\Saveyour\Contracts\Factory\FieldDataManagerResolverFactoryInterface;
+use WebTheory\Saveyour\Factory\DataManagerFactory;
 
 class DataManager extends DataManagerFactory implements FieldDataManagerResolverFactoryInterface
 {

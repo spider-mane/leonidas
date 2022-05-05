@@ -8,8 +8,8 @@ use Leonidas\Library\Admin\Metabox\Views\FieldGridView;
 use Leonidas\Traits\CanBeRestrictedTrait;
 use Leonidas\Traits\RendersWithViewTrait;
 use Psr\Http\Message\ServerRequestInterface;
-use WebTheory\Saveyour\Contracts\FormFieldControllerInterface;
-use WebTheory\Saveyour\Controllers\FormFieldController;
+use WebTheory\Saveyour\Contracts\Controller\FormFieldControllerInterface;
+use WebTheory\Saveyour\Controller\FormFieldController;
 
 class FieldGrid implements MetaboxComponentInterface
 {
@@ -308,11 +308,7 @@ class FieldGrid implements MetaboxComponentInterface
 
     protected function defineViewContext(ServerRequestInterface $request): array
     {
-        /** @var FormFieldControllerInterface $field */
-        foreach ($this->fields as $field) {
-            // triggers field controller to set formField dynamic value
-            $field->render($request);
-        }
+        $this->prepareFields($request);
 
         return [
             'map' => $this->map,
@@ -322,5 +318,12 @@ class FieldGrid implements MetaboxComponentInterface
             'row_root_width' => static::ROW_TITLE_COL_WITDH,
             'col_width' => isset($this->columnWidth) ? "-{$this->columnWidth}" : null,
         ];
+    }
+
+    protected function prepareFields(ServerRequestInterface $request): void
+    {
+        foreach ($this->fields as $field) {
+            $field->compose($request);
+        }
     }
 }

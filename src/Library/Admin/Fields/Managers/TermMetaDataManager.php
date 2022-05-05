@@ -2,7 +2,7 @@
 
 namespace Leonidas\Library\Admin\Fields\Managers;
 
-use WebTheory\Saveyour\Contracts\FieldDataManagerInterface;
+use WebTheory\Saveyour\Contracts\Data\FieldDataManagerInterface;
 
 class TermMetaDataManager extends AbstractWPEntityMetaFieldDataManager implements FieldDataManagerInterface
 {

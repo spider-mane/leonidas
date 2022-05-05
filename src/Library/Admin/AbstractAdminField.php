@@ -4,8 +4,8 @@ namespace Leonidas\Library\Admin;
 
 use Leonidas\Contracts\Admin\Components\AdminFieldInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use WebTheory\Saveyour\Contracts\FormFieldControllerInterface;
-use WebTheory\Saveyour\Contracts\FormFieldInterface;
+use WebTheory\Saveyour\Contracts\Controller\FormFieldControllerInterface;
+use WebTheory\Saveyour\Contracts\Field\FormFieldInterface;
 
 abstract class AbstractAdminField implements AdminFieldInterface
 {
@@ -81,8 +81,13 @@ abstract class AbstractAdminField implements AdminFieldInterface
         return $this;
     }
 
-    protected function renderFormField(ServerRequestInterface $request): FormFieldInterface
+    public function renderInputField(ServerRequestInterface $request): string
     {
         return $this->formFieldController->render($request);
+    }
+
+    protected function renderFormField(ServerRequestInterface $request): FormFieldInterface
+    {
+        return $this->formFieldController->compose($request);
     }
 }

@@ -3,7 +3,7 @@
 namespace Leonidas\Library\Admin\Fields\Formatters;
 
 use Leonidas\Library\System\Schema\Term\TermCollection;
-use WebTheory\Saveyour\Contracts\DataFormatterInterface;
+use WebTheory\Saveyour\Contracts\Formatting\DataFormatterInterface;
 
 class TermsToNamesDataFormatter implements DataFormatterInterface
 {

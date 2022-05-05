@@ -7,7 +7,7 @@ use Leonidas\Contracts\Admin\Components\MetaboxFieldInterface;
 use Leonidas\Library\Core\Http\Form\Controllers\AbstractWpAdminFormSubmissionManager;
 use Leonidas\Traits\CanBeRestrictedTrait;
 use Psr\Http\Message\ServerRequestInterface;
-use WebTheory\Saveyour\Contracts\FormFieldControllerInterface;
+use WebTheory\Saveyour\Contracts\Controller\FormFieldControllerInterface;
 
 class Fieldset implements MetaboxComponentInterface
 {

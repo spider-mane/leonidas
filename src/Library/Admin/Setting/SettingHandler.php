@@ -6,8 +6,8 @@ use Leonidas\Contracts\Admin\Setting\SettingHandlerInterface;
 use Leonidas\Contracts\Admin\Setting\SettingInterface;
 use Leonidas\Contracts\Admin\Setting\SettingsNoticeCollectionInterface;
 use Leonidas\Library\Admin\Processing\AbstractInputManager;
-use WebTheory\Saveyour\Contracts\InputFormatterInterface;
-use WebTheory\Saveyour\Contracts\ValidatorInterface;
+use WebTheory\Saveyour\Contracts\Formatting\InputFormatterInterface;
+use WebTheory\Saveyour\Contracts\Validation\ValidatorInterface;
 
 class SettingHandler extends AbstractInputManager implements SettingHandlerInterface
 {

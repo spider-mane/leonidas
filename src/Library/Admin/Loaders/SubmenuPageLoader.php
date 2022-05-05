@@ -17,7 +17,7 @@ class SubmenuPageLoader implements SubmenuPageLoaderInterface
         $this->outputLoader = $outputLoader;
     }
 
-    public function getOutputLoader(): callable
+    protected function getOutputLoader(): callable
     {
         return $this->outputLoader;
     }

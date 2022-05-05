@@ -2,8 +2,8 @@
 
 namespace Leonidas\Library\Admin\Processing;
 
-use WebTheory\Saveyour\Contracts\InputFormatterInterface;
-use WebTheory\Saveyour\Contracts\ValidatorInterface;
+use WebTheory\Saveyour\Contracts\Formatting\InputFormatterInterface;
+use WebTheory\Saveyour\Contracts\Validation\ValidatorInterface;
 
 abstract class AbstractInputManager
 {
@@ -19,13 +19,13 @@ abstract class AbstractInputManager
 
     public function handleInput($input)
     {
-        $result = $this->validator->validate($input);
+        $result = $this->validator->inspect($input);
 
-        if (true === $result->getStatus()) {
+        if (true === $result->validationStatus()) {
             return $this->formatter->formatInput($input);
         }
 
-        foreach ($result->getViolations() as $violation) {
+        foreach ($result->ruleViolations() as $violation) {
             $this->handleRuleViolation($violation);
         }
 

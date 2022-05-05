@@ -2,9 +2,9 @@
 
 namespace Leonidas\Library\Admin\Fields\Selections;
 
-use Leonidas\Library\Core\Models\Term\TermCollection;
-use WebTheory\Saveyour\Contracts\SelectionProviderInterface;
+use Leonidas\Library\System\Schema\Term\TermCollection;
 use WP_Term;
+use WebTheory\Saveyour\Contracts\Field\Selection\SelectionProviderInterface;
 
 abstract class AbstractTermCollectionSelection extends AbstractTermSelectionProvider implements SelectionProviderInterface
 {

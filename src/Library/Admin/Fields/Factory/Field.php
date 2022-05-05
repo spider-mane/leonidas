@@ -2,9 +2,11 @@
 
 namespace Leonidas\Library\Admin\Fields\Factory;
 
-use WebTheory\Saveyour\Contracts\FieldDataManagerResolverFactoryInterface;
-use WebTheory\Saveyour\Contracts\FormFieldResolverFactoryInterface;
-use WebTheory\Saveyour\Factories\SimpleFieldFactory;
+use Leonidas\Library\Admin\Fields\Factory\DataManager;
+use Leonidas\Library\Admin\Fields\Factory\FormField;
+use WebTheory\Saveyour\Contracts\Factory\FieldDataManagerResolverFactoryInterface;
+use WebTheory\Saveyour\Contracts\Factory\FormFieldResolverFactoryInterface;
+use WebTheory\Saveyour\Factory\SimpleFieldFactory;
 
 class Field extends SimpleFieldFactory
 {

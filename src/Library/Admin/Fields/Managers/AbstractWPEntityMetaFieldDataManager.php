@@ -3,7 +3,7 @@
 namespace Leonidas\Library\Admin\Fields\Managers;
 
 use Psr\Http\Message\ServerRequestInterface;
-use WebTheory\Saveyour\Contracts\FieldDataManagerInterface;
+use WebTheory\Saveyour\Contracts\Data\FieldDataManagerInterface;
 
 abstract class AbstractWPEntityMetaFieldDataManager implements FieldDataManagerInterface
 {

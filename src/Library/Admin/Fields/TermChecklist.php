@@ -5,13 +5,13 @@ namespace Leonidas\Library\Admin\Fields;
 use Leonidas\Library\Admin\Fields\Formatters\TermsToIdsDataFormatter;
 use Leonidas\Library\Admin\Fields\Managers\PostTermDataManager;
 use Leonidas\Library\Admin\Fields\Selections\TaxonomyChecklistItems;
-use WebTheory\Saveyour\Contracts\ChecklistItemsProviderInterface;
-use WebTheory\Saveyour\Contracts\DataFormatterInterface;
-use WebTheory\Saveyour\Contracts\FieldDataManagerInterface;
-use WebTheory\Saveyour\Contracts\FormFieldControllerInterface;
-use WebTheory\Saveyour\Contracts\FormFieldInterface;
-use WebTheory\Saveyour\Controllers\AbstractField;
-use WebTheory\Saveyour\Fields\Checklist;
+use WebTheory\Saveyour\Contracts\Controller\FormFieldControllerInterface;
+use WebTheory\Saveyour\Contracts\Data\FieldDataManagerInterface;
+use WebTheory\Saveyour\Contracts\Field\FormFieldInterface;
+use WebTheory\Saveyour\Contracts\Field\Selection\ChecklistItemsProviderInterface;
+use WebTheory\Saveyour\Contracts\Formatting\DataFormatterInterface;
+use WebTheory\Saveyour\Controller\Abstracts\AbstractField;
+use WebTheory\Saveyour\Field\Type\Checklist;
 
 class TermChecklist extends AbstractField implements FormFieldControllerInterface
 {
@@ -39,11 +39,13 @@ class TermChecklist extends AbstractField implements FormFieldControllerInterfac
     {
         $options = $this->options;
 
-        return (new Checklist())
-            ->setSelectionProvider($this->createSelection())
+        $checklist = new Checklist();
+        $checklist->setSelectionProvider($this->createSelection())
             ->setId($options['id'])
             ->setClasslist($options['class'])
             ->addClass('thing');
+
+        return $checklist;
     }
 
     protected function createSelection(): ChecklistItemsProviderInterface

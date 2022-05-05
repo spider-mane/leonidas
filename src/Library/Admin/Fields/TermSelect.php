@@ -5,13 +5,13 @@ namespace Leonidas\Library\Admin\Fields;
 use Leonidas\Library\Admin\Fields\Formatters\TermsToIdsDataFormatter;
 use Leonidas\Library\Admin\Fields\Managers\PostTermDataManager;
 use Leonidas\Library\Admin\Fields\Selections\TaxonomySelectOptions;
-use WebTheory\Saveyour\Contracts\DataFormatterInterface;
-use WebTheory\Saveyour\Contracts\FieldDataManagerInterface;
-use WebTheory\Saveyour\Contracts\FormFieldControllerInterface;
-use WebTheory\Saveyour\Contracts\FormFieldInterface;
-use WebTheory\Saveyour\Contracts\OptionsProviderInterface;
-use WebTheory\Saveyour\Controllers\AbstractField;
-use WebTheory\Saveyour\Fields\Select;
+use WebTheory\Saveyour\Contracts\Controller\FormFieldControllerInterface;
+use WebTheory\Saveyour\Contracts\Data\FieldDataManagerInterface;
+use WebTheory\Saveyour\Contracts\Field\FormFieldInterface;
+use WebTheory\Saveyour\Contracts\Field\Selection\OptionsProviderInterface;
+use WebTheory\Saveyour\Contracts\Formatting\DataFormatterInterface;
+use WebTheory\Saveyour\Controller\Abstracts\AbstractField;
+use WebTheory\Saveyour\Field\Type\Select;
 
 class TermSelect extends AbstractField implements FormFieldControllerInterface
 {
