@@ -11,6 +11,8 @@ class PostTypeBuilder extends AbstractSystemModelTypeBuilder implements PostType
 
     protected ?bool $showInAdminBar;
 
+    protected ?bool $showInMenu;
+
     protected ?int $menuPosition;
 
     protected ?string $menuIcon;
@@ -155,21 +157,21 @@ class PostTypeBuilder extends AbstractSystemModelTypeBuilder implements PostType
         return $this;
     }
 
-    public function restBase(?string $restBase): self
+    public function restBase($restBase): self
     {
         $this->restBase = $restBase;
 
         return $this;
     }
 
-    public function restNamespace(?string $restNamespace): self
+    public function restNamespace($restNamespace): self
     {
         $this->restNamespace = $restNamespace;
 
         return $this;
     }
 
-    public function restControllerClass(?string $restControllerClass): self
+    public function restControllerClass($restControllerClass): self
     {
         $this->restControllerClass = $restControllerClass;
 
@@ -246,7 +248,7 @@ class PostTypeBuilder extends AbstractSystemModelTypeBuilder implements PostType
         return $this;
     }
 
-    public function hasArchive(?bool $archive): self
+    public function hasArchive($archive): self
     {
         $this->archive = $archive;
 

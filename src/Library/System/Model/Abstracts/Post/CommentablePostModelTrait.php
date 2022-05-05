@@ -34,6 +34,6 @@ trait CommentablePostModelTrait
 
     protected function getCommentsFromRepository(): CommentCollectionInterface
     {
-        return $this->commentRepository->forPostApproved($this);
+        return $this->commentRepository->forPostAndApproved($this);
     }
 }

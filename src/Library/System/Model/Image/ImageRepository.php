@@ -6,7 +6,6 @@ use Leonidas\Contracts\System\Model\Image\ImageCollectionInterface;
 use Leonidas\Contracts\System\Model\Image\ImageInterface;
 use Leonidas\Contracts\System\Model\Image\ImageRepositoryInterface;
 use Leonidas\Library\System\Model\Abstracts\Post\AbstractPostEntityRepository;
-use WP_Query;
 
 class ImageRepository extends AbstractPostEntityRepository implements ImageRepositoryInterface
 {
@@ -20,14 +19,9 @@ class ImageRepository extends AbstractPostEntityRepository implements ImageRepos
         return $this->manager->whereIds(...$ids);
     }
 
-    public function find(array $queryArgs): ImageCollectionInterface
+    public function query(array $args): ImageCollectionInterface
     {
-        return $this->manager->find($queryArgs);
-    }
-
-    public function query(WP_Query $query): ImageCollectionInterface
-    {
-        return $this->manager->query($query);
+        return $this->manager->query($args);
     }
 
     public function all(): ImageCollectionInterface

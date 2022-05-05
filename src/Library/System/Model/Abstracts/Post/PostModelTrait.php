@@ -3,6 +3,7 @@
 namespace Leonidas\Library\System\Model\Abstracts\Post;
 
 use Leonidas\Contracts\System\Model\PostType\PostTypeInterface;
+use Leonidas\Library\System\Model\Abstracts\LazyLoadableRelationshipsTrait;
 use Leonidas\Library\System\Model\Link\WebPage;
 use Leonidas\Library\System\Model\PostType\AdaptedPostType;
 use Psr\Link\LinkInterface;
@@ -10,6 +11,8 @@ use WP_Post;
 
 trait PostModelTrait
 {
+    use LazyLoadableRelationshipsTrait;
+
     protected WP_Post $post;
 
     protected PostTypeInterface $postType;
@@ -31,7 +34,7 @@ trait PostModelTrait
 
     public function getPostType(): PostTypeInterface
     {
-        return $this->postType ??= AdaptedPostType::fromName($this->post->post_type);
+        return $this->lazyLoadable('postType');
     }
 
     public function getGuid(): LinkInterface
@@ -47,5 +50,10 @@ trait PostModelTrait
     public function getPageTemplate(): string
     {
         return $this->post->page_template;
+    }
+
+    protected function getPostTypeFromRepository(): PostTypeInterface
+    {
+        return AdaptedPostType::fromName($this->post->post_type);
     }
 }

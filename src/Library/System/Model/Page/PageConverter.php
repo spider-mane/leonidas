@@ -2,12 +2,12 @@
 
 namespace Leonidas\Library\System\Model\Page;
 
-use InvalidArgumentException;
 use Leonidas\Contracts\System\Model\Author\AuthorRepositoryInterface;
 use Leonidas\Contracts\System\Model\Comment\CommentRepositoryInterface;
 use Leonidas\Contracts\System\Model\Page\PageInterface;
 use Leonidas\Contracts\System\Model\Page\PageRepositoryInterface;
 use Leonidas\Contracts\System\Schema\Post\PostConverterInterface;
+use Leonidas\Library\System\Schema\Exceptions\UnexpectedEntityException;
 use WP_Post;
 
 class PageConverter implements PostConverterInterface
@@ -18,18 +18,14 @@ class PageConverter implements PostConverterInterface
 
     protected CommentRepositoryInterface $commentRepository;
 
-    protected string $postTypePrefix = '';
-
     public function __construct(
         PageRepositoryInterface $pageRepository,
         AuthorRepositoryInterface $authorRepository,
-        CommentRepositoryInterface $commentRepository,
-        string $postTypePrefix = ''
+        CommentRepositoryInterface $commentRepository
     ) {
         $this->pageRepository = $pageRepository;
         $this->authorRepository = $authorRepository;
         $this->commentRepository = $commentRepository;
-        $this->postTypePrefix = $postTypePrefix;
     }
 
     public function convert(WP_Post $post): Page
@@ -38,10 +34,7 @@ class PageConverter implements PostConverterInterface
             $post,
             $this->pageRepository,
             $this->authorRepository,
-            $this->commentRepository,
-            $this->getAccessProvider,
-            $this->setAccessProvider,
-            $this->postTypePrefix
+            $this->commentRepository
         );
     }
 
@@ -51,8 +44,10 @@ class PageConverter implements PostConverterInterface
             return get_post($post->getId());
         }
 
-        throw new InvalidArgumentException(
-            '$post must be an instance of ' . PageInterface::class
+        throw new UnexpectedEntityException(
+            PageInterface::class,
+            $post,
+            __METHOD__
         );
     }
 }

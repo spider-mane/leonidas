@@ -1,6 +1,6 @@
 <?php
 
-namespace Leonidas\Library\System\Schema\Post\Traits;
+namespace Leonidas\Library\System\Model\Abstracts\Post;
 
 use InvalidArgumentException;
 use WP_Post;

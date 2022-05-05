@@ -2,16 +2,13 @@
 
 namespace Leonidas\Library\System\Model\Abstracts\User;
 
-use Carbon\Carbon;
 use DateTimeInterface;
+use Leonidas\Contracts\System\Schema\User\UserEntityManagerInterface;
 use Psr\Link\LinkInterface;
-use WP_User;
 
 trait MutableUserModelTrait
 {
     use UserModelTrait;
-
-    protected WP_User $user;
 
     public function setNickname(string $nickname): self
     {
@@ -69,16 +66,18 @@ trait MutableUserModelTrait
         return $this;
     }
 
-    public function setUrl(LinkInterface $nickname): self
+    public function setUrl(LinkInterface $url): self
     {
-        $this->url = $nickname;
+        $this->user->user_url = $url->getHref();
 
         return $this;
     }
 
     public function setDateRegistered(DateTimeInterface $registered): self
     {
-        $this->dateRegistered = new Carbon($registered);
+        $this->user->user_registered = $registered->format(
+            UserEntityManagerInterface::DATE_FORMAT
+        );
 
         return $this;
     }
@@ -111,9 +110,9 @@ trait MutableUserModelTrait
         return $this;
     }
 
-    public function setLocale(string $nickname): self
+    public function setLocale(string $local): self
     {
-        $this->user->locale = $nickname;
+        $this->user->locale = $local;
 
         return $this;
     }

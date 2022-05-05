@@ -3,7 +3,6 @@
 namespace Leonidas\Contracts\System\Model\Image;
 
 use Leonidas\Contracts\System\Model\SoftDeletingRepositoryInterface;
-use WP_Query;
 
 interface ImageRepositoryInterface extends SoftDeletingRepositoryInterface
 {
@@ -11,9 +10,7 @@ interface ImageRepositoryInterface extends SoftDeletingRepositoryInterface
 
     public function whereIds(int ...$ids): ImageCollectionInterface;
 
-    public function find(array $queryArgs): ImageCollectionInterface;
-
-    public function query(WP_Query $query): ImageCollectionInterface;
+    public function query(array $args): ImageCollectionInterface;
 
     public function all(): ImageCollectionInterface;
 

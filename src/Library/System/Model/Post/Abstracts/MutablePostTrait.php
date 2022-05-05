@@ -33,7 +33,7 @@ trait MutablePostTrait
 
     public function addCategories(CategoryCollectionInterface $categories): self
     {
-        $this->categories = $this->categories->merge($categories);
+        $this->setCategories($this->categories->merge($categories));
 
         return $this;
     }
@@ -47,7 +47,7 @@ trait MutablePostTrait
 
     public function addTags(TagCollectionInterface $tags): self
     {
-        $this->tags = $this->tags->merge($tags);
+        $this->setTags($this->tags->merge($tags));
 
         return $this;
     }

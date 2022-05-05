@@ -6,14 +6,14 @@ use Leonidas\Contracts\System\Schema\EntityCollectionFactoryInterface;
 use Leonidas\Contracts\System\Schema\User\UserConverterInterface;
 use Leonidas\Contracts\System\Schema\User\UserEntityManagerInterface;
 use Leonidas\Library\System\Schema\Abstracts\NoCommitmentsTrait;
-use Leonidas\Library\System\Schema\Abstracts\ThrowsExceptionOnErrorTrait;
+use Leonidas\Library\System\Schema\Abstracts\ThrowsExceptionOnWpErrorTrait;
 use WP_User;
 use WP_User_Query;
 
 class UserEntityManager implements UserEntityManagerInterface
 {
     use NoCommitmentsTrait;
-    use ThrowsExceptionOnErrorTrait;
+    use ThrowsExceptionOnWpErrorTrait;
 
     protected string $role;
 
@@ -73,16 +73,21 @@ class UserEntityManager implements UserEntityManagerInterface
         );
     }
 
+    public function spawn(array $data): object
+    {
+        return $this->convertEntity(new WP_User());
+    }
+
     public function insert(array $data): void
     {
-        $this->throwExceptionIfError(
+        $this->throwExceptionIfWpError(
             wp_insert_user($this->normalizeDataForEntry($data))
         );
     }
 
     public function update(int $id, array $data): void
     {
-        $this->throwExceptionIfError(
+        $this->throwExceptionIfWpError(
             wp_update_user($this->normalizeDataForEntry($data, $id))
         );
     }

@@ -6,14 +6,14 @@ use Leonidas\Contracts\System\Schema\EntityCollectionFactoryInterface;
 use Leonidas\Contracts\System\Schema\Post\PostConverterInterface;
 use Leonidas\Contracts\System\Schema\Post\PostEntityManagerInterface;
 use Leonidas\Library\System\Schema\Abstracts\NoCommitmentsTrait;
-use Leonidas\Library\System\Schema\Abstracts\ThrowsExceptionOnErrorTrait;
+use Leonidas\Library\System\Schema\Abstracts\ThrowsExceptionOnWpErrorTrait;
 use WP_Post;
 use WP_Query;
 
 class PostEntityManager implements PostEntityManagerInterface
 {
     use NoCommitmentsTrait;
-    use ThrowsExceptionOnErrorTrait;
+    use ThrowsExceptionOnWpErrorTrait;
 
     protected string $type;
 
@@ -38,11 +38,7 @@ class PostEntityManager implements PostEntityManagerInterface
 
     public function whereIds(int ...$ids): object
     {
-        return $this->find([
-            'post__in' => $ids,
-            'post_status' => 'publish',
-            'posts_per_page' => -1,
-        ]);
+        return $this->query(['post__in' => $ids]);
     }
 
     public function selectByName(string $name): object
@@ -54,78 +50,83 @@ class PostEntityManager implements PostEntityManagerInterface
 
     public function whereNames(string ...$names): object
     {
-        return $this->find([
-            'post_name__in' => $names,
-            'post_status' => 'publish',
-            'posts_per_page' => -1,
-        ]);
+        return $this->query(['post_name__in' => $names]);
     }
 
     public function whereUser(int $user): object
     {
-        return $this->find([
-            'author' => $user,
-            'post_status' => 'any',
-            'posts_per_page' => -1,
-        ]);
+        return $this->query(['author' => $user, 'post_status' => 'any']);
     }
 
     public function whereUserAndStatus(int $user, string $status): object
     {
-        return $this->find([
-            'author' => $user,
-            'post_status' => $status,
-            'posts_per_page' => -1,
-        ]);
+        return $this->query(['author' => $user, 'post_status' => $status]);
     }
 
     public function whereParentId(int $parentId): object
     {
-        return $this->find([
-            'post_parent' => $parentId,
-            'post_status' => 'publish',
-            'posts_per_page' => -1,
-        ]);
+        return $this->query(['post_parent' => $parentId]);
     }
 
     public function whereStatus(string $status): object
     {
-        return $this->find([
-            'post_status' => $status,
-            'posts_per_page' => -1,
+        return $this->query(['post_status' => $status]);
+    }
+
+    /**
+     * @link https://developer.wordpress.org/reference/classes/wp_tax_query/__construct/
+     */
+    public function whereTaxQuery(array $args): object
+    {
+        return $this->query(['tax_query' => $args]);
+    }
+
+    public function withTerm(string $taxonomy, int $termId): object
+    {
+        return $this->query([
+            'tax_query' => [
+                [
+                    'field' => 'term_id',
+                    'taxonomy' => $taxonomy,
+                    'terms' => $termId,
+                ],
+            ],
         ]);
     }
 
     public function all(): object
     {
-        return $this->find([
-            'post_status' => 'publish',
-            'posts_per_page' => -1,
-        ]);
+        return $this->query([]);
     }
 
-    public function find(array $queryArgs): object
+    public function spawn(array $data): object
     {
-        return $this->query(new WP_Query($queryArgs));
+        return $this->convertEntity(new WP_Post((object) $data));
     }
 
-    public function query(WP_Query $query): object
+    /**
+     * @link https://developer.wordpress.org/reference/classes/WP_Query/parse_query/
+     */
+    public function query(array $args): object
     {
-        $query->set('post_type', $this->type);
-
-        return $this->createCollection(...$query->get_posts());
+        return $this->getCollectionFromQuery(
+            new WP_Query($this->normalizeQueryArgs($args))
+        );
     }
 
+    /**
+     * @link https://developer.wordpress.org/reference/functions/wp_insert_post/
+     */
     public function insert(array $data): void
     {
-        $this->throwExceptionIfError(
+        $this->throwExceptionIfWpError(
             wp_insert_post($this->normalizeDataForEntry($data))
         );
     }
 
     public function update(int $id, array $data): void
     {
-        $this->throwExceptionIfError(
+        $this->throwExceptionIfWpError(
             wp_update_post($this->normalizeDataForEntry($data, $id))
         );
     }
@@ -143,6 +144,21 @@ class PostEntityManager implements PostEntityManagerInterface
     public function recover(int $id): void
     {
         wp_untrash_post($id);
+    }
+
+    public function getCollectionFromQuery(WP_Query $query): object
+    {
+        return $this->createCollection(...$query->get_posts());
+    }
+
+    protected function normalizeQueryArgs($args): array
+    {
+        return [
+            'post_type' => $this->type,
+        ] + $args + [
+            'post_status' => 'publish',
+            'posts_per_page' => -1,
+        ];
     }
 
     protected function normalizeDataForEntry(array $data, int $id = 0): array

@@ -2,7 +2,9 @@
 
 namespace Leonidas\Library\System\Schema\Post;
 
-class AttachmentPostEntityManager extends PostEntityManager
+use Leonidas\Contracts\System\Schema\Post\AttachmentPostEntityManagerInterface;
+
+class AttachmentPostEntityManager extends PostEntityManager implements AttachmentPostEntityManagerInterface
 {
     public function update(int $id, array $data): void
     {

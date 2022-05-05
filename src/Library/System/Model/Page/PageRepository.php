@@ -5,10 +5,9 @@ namespace Leonidas\Library\System\Model\Page;
 use Leonidas\Contracts\System\Model\Page\PageCollectionInterface;
 use Leonidas\Contracts\System\Model\Page\PageInterface;
 use Leonidas\Contracts\System\Model\Page\PageRepositoryInterface;
+use Leonidas\Library\System\Model\Abstracts\HierarchicalModelRepositoryTrait;
 use Leonidas\Library\System\Model\Abstracts\Post\AbstractPostEntityRepository;
-use Leonidas\Library\System\Model\Abstracts\Post\HierarchicalModelRepositoryTrait;
 use Leonidas\Library\System\Schema\Post\PostEntityManager;
-use WP_Query;
 
 class PageRepository extends AbstractPostEntityRepository implements PageRepositoryInterface
 {
@@ -44,14 +43,9 @@ class PageRepository extends AbstractPostEntityRepository implements PageReposit
         return $this->manager->whereParentId($parentId);
     }
 
-    public function find(array $args): PageCollectionInterface
+    public function query(array $args): PageCollectionInterface
     {
-        return $this->manager->find($args);
-    }
-
-    public function query(WP_Query $query): PageCollectionInterface
-    {
-        return $this->manager->query($query);
+        return $this->manager->query($args);
     }
 
     public function all(): PageCollectionInterface

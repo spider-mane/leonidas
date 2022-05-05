@@ -12,10 +12,6 @@ trait UserModelTrait
 {
     protected WP_User $user;
 
-    protected LinkInterface $url;
-
-    protected CarbonInterface $dateRegistered;
-
     public function getId(): int
     {
         return $this->user->ID;
@@ -63,12 +59,12 @@ trait UserModelTrait
 
     public function getUrl(): LinkInterface
     {
-        return $this->url ??= new WebPage($this->user->user_url);
+        return new WebPage($this->user->user_url);
     }
 
     public function getDateRegistered(): CarbonInterface
     {
-        return $this->dateRegistered ??= new Carbon($this->user->user_registered);
+        return new Carbon($this->user->user_registered);
     }
 
     public function getActivationKey(): string

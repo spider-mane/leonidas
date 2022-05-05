@@ -46,17 +46,17 @@ interface BaseSystemModelTypeBuilderInterface
     /**
      * @param null|bool|string $restBase
      */
-    public function restBase(?string $restBase): self;
+    public function restBase($restBase): self;
 
     /**
      * @param null|bool|string $restNamespace
      */
-    public function restNamespace(?string $restNamespace): self;
+    public function restNamespace($restNamespace): self;
 
     /**
      * @param null|bool|string $restControllerClass
      */
-    public function restControllerClass(?string $restControllerClass): self;
+    public function restControllerClass($restControllerClass): self;
 
     public function options(?array $options): self;
 }

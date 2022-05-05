@@ -5,7 +5,7 @@ namespace Leonidas\Library\System\Model\Category;
 use Leonidas\Contracts\System\Model\Category\CategoryInterface;
 use Leonidas\Contracts\System\Model\Category\CategoryRepositoryInterface;
 use Leonidas\Contracts\System\Model\Post\PostInterface;
-use Leonidas\Library\System\Model\Abstracts\Post\HierarchicalModelRepositoryTrait;
+use Leonidas\Library\System\Model\Abstracts\HierarchicalModelRepositoryTrait;
 use Leonidas\Library\System\Model\Abstracts\Term\AbstractTermEntityRepository;
 
 class CategoryRepository extends AbstractTermEntityRepository implements CategoryRepositoryInterface

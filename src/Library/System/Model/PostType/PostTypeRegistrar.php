@@ -6,9 +6,12 @@ use Leonidas\Contracts\System\Model\PostType\PostTypeInterface;
 use Leonidas\Contracts\System\Model\PostType\PostTypeOptionHandlerCollectionInterface;
 use Leonidas\Contracts\System\Model\PostType\PostTypeRegistrarInterface;
 use Leonidas\Library\System\Model\AbstractSystemModelTypeRegistrar;
+use Leonidas\Library\System\Schema\Abstracts\ThrowsExceptionOnWpErrorTrait;
 
 class PostTypeRegistrar extends AbstractSystemModelTypeRegistrar implements PostTypeRegistrarInterface
 {
+    use ThrowsExceptionOnWpErrorTrait;
+
     protected ?PostTypeOptionHandlerCollectionInterface $optionHandlers = null;
 
     public function __construct(?PostTypeOptionHandlerCollectionInterface $optionHandlers = null)
@@ -18,9 +21,11 @@ class PostTypeRegistrar extends AbstractSystemModelTypeRegistrar implements Post
 
     public function registerOne(PostTypeInterface $postType)
     {
-        $registered = register_post_type(
-            $postType->getName(),
-            $this->getArgs($postType)
+        $this->throwExceptionIfWpError(
+            $registered = register_post_type(
+                $postType->getName(),
+                $this->getArgs($postType)
+            )
         );
 
         $registered->options = $postType->getOptions();

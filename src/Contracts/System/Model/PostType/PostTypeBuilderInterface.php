@@ -33,7 +33,7 @@ interface PostTypeBuilderInterface extends BaseSystemModelTypeBuilderInterface
     /**
      * @param null|bool|string $archive
      */
-    public function hasArchive(?bool $archive): self;
+    public function hasArchive($archive): self;
 
     public function canExport(?bool $canExport): self;
 

@@ -5,17 +5,20 @@ namespace Leonidas\Library\System\Model\Category;
 use Leonidas\Contracts\System\Model\Category\CategoryCollectionInterface;
 use Leonidas\Contracts\System\Model\Category\CategoryInterface;
 use Leonidas\Contracts\System\Model\Category\CategoryRepositoryInterface;
-use Leonidas\Contracts\System\Model\GetAccessProviderInterface;
 use Leonidas\Contracts\System\Model\Post\PostCollectionInterface;
 use Leonidas\Contracts\System\Model\Post\PostRepositoryInterface;
-use Leonidas\Contracts\System\Model\SetAccessProviderInterface;
+use Leonidas\Library\System\Model\Abstracts\AllAccessGrantedTrait;
+use Leonidas\Library\System\Model\Abstracts\LazyLoadableRelationshipsTrait;
+use Leonidas\Library\System\Model\Abstracts\Term\HierarchicalTermTrait;
 use Leonidas\Library\System\Model\Abstracts\Term\MutableTermModelTrait;
 use Leonidas\Library\System\Model\Abstracts\Term\ValidatesTaxonomyTrait;
-use ReturnTypeWillChange;
 use WP_Term;
 
 class Category implements CategoryInterface
 {
+    use AllAccessGrantedTrait;
+    use HierarchicalTermTrait;
+    use LazyLoadableRelationshipsTrait;
     use MutableTermModelTrait;
     use ValidatesTaxonomyTrait;
 
@@ -31,10 +34,6 @@ class Category implements CategoryInterface
 
     protected CategoryRepositoryInterface $categoryRepository;
 
-    protected GetAccessProviderInterface $getAccessProvider;
-
-    protected SetAccessProviderInterface $setAccessProvider;
-
     public function __construct(
         WP_Term $term,
         PostRepositoryInterface $postRepository,
@@ -48,17 +47,6 @@ class Category implements CategoryInterface
 
         $this->getAccessProvider = new CategoryGetAccessProvider($this);
         $this->setAccessProvider = new CategorySetAccessProvider($this);
-    }
-
-    #[ReturnTypeWillChange]
-    public function __get($name)
-    {
-        return $this->getAccessProvider->get($name);
-    }
-
-    public function __set($name, $value): void
-    {
-        $this->setAccessProvider->set($name, $value);
     }
 
     public function getDescription(): string
@@ -87,24 +75,20 @@ class Category implements CategoryInterface
 
     public function getParent(): ?CategoryInterface
     {
-        return $this->parent ??= $this->getParentFromRepository();
+        return $this->lazyLoadableNullable('parent');
     }
 
     public function setParent(?CategoryInterface $parent): CategoryInterface
     {
         $this->parent = $parent;
+        $this->term->parent = $parent ? $parent->getId() : 0;
 
         return $this;
     }
 
-    public function getParentId(): int
-    {
-        return $this->getParent()->getId();
-    }
-
     public function getChildren(): CategoryCollectionInterface
     {
-        return $this->children ??= $this->getChildrenFromRepository();
+        return $this->lazyLoadable('children');
     }
 
     protected function getPostsFromRepository(): PostCollectionInterface
@@ -114,7 +98,7 @@ class Category implements CategoryInterface
 
     protected function getParentFromRepository(): ?CategoryInterface
     {
-        return $this->categoryRepository->select($this->term->parent);
+        return $this->categoryRepository->select($this->getParentId());
     }
 
     protected function getChildrenFromRepository(): CategoryCollectionInterface

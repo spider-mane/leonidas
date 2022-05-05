@@ -1,5 +1,7 @@
 parameters:
   level: 0
+  tmpDir: build/phpstan
+  reportUnmatchedIgnoredErrors: false
 
   paths:
     - src
@@ -8,6 +10,7 @@ parameters:
     - tests
 
   bootstrapFiles:
+    # - boot/constants.php
     - wordpress/wp-includes/wp-db.php
 
   scanDirectories:
@@ -15,6 +18,11 @@ parameters:
     - wordpress/wp-includes
 
   ignoreErrors:
-    - '#Unsafe usage of new static()'
-
-  tmpDir: build/phpstan
+    - '#^Unsafe usage of new static\(\).$#'
+    - '#^Expression on left side of \?\? is not nullable\.$#'
+    - '#^Right side of && is always true.$#'
+    - '#^Variable \$[a-zA-Z0-9\\_]+ on left side of \?\? always exists and is not nullable.$#'
+    - '#^Access to an undefined property WP_Taxonomy\:\:\$options\.$#'
+    - '#^Access to an undefined property Wp_Error|WP_Taxonomy\:\:\$options\.$#'
+    - '#^Access to an undefined property WP_Post_Type\:\:\$options\.$#'
+    - '#^Access to an undefined property Wp_Error|WP_Post_Type\:\:\$options\.$#'

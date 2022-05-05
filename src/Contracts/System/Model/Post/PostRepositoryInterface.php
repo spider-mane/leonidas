@@ -7,7 +7,6 @@ use Leonidas\Contracts\System\Model\Category\CategoryInterface;
 use Leonidas\Contracts\System\Model\Post\Status\PostStatusInterface;
 use Leonidas\Contracts\System\Model\SoftDeletingRepositoryInterface;
 use Leonidas\Contracts\System\Model\Tag\TagInterface;
-use WP_Query;
 
 interface PostRepositoryInterface extends SoftDeletingRepositoryInterface
 {
@@ -27,15 +26,15 @@ interface PostRepositoryInterface extends SoftDeletingRepositoryInterface
 
     public function whereStatus(PostStatusInterface $status): PostCollectionInterface;
 
-    public function withTag(TagInterface $tags): PostCollectionInterface;
+    public function withTag(TagInterface $tag): PostCollectionInterface;
 
     public function withCategory(CategoryInterface $category): PostCollectionInterface;
 
-    public function find(array $args): PostCollectionInterface;
-
-    public function query(WP_Query $query): PostCollectionInterface;
+    public function query(array $args): PostCollectionInterface;
 
     public function all(): PostCollectionInterface;
+
+    public function make(array $data): PostInterface;
 
     public function insert(PostInterface $post): void;
 

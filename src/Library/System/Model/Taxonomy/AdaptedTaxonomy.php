@@ -94,11 +94,6 @@ class AdaptedTaxonomy implements TaxonomyInterface
         return $this->taxonomy->show_admin_column;
     }
 
-    public function getMetaBoxTitle(): string
-    {
-        return $this->taxonomy->meta_box_title;
-    }
-
     public function getMetaBoxCallback(): ?callable
     {
         return $this->taxonomy->meta_box_cb;
@@ -122,16 +117,6 @@ class AdaptedTaxonomy implements TaxonomyInterface
     public function isAllowedInRest(): bool
     {
         return $this->taxonomy->show_in_rest;
-    }
-
-    public function getQueryVarHierarchical(): string
-    {
-        return $this->taxonomy->query_var_hierarchical;
-    }
-
-    public function getRewriteHierarchical(): string
-    {
-        return $this->taxonomy->rewrite_hierarchical;
     }
 
     public function isAllowedInNavMenus(): bool

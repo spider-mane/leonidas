@@ -6,14 +6,14 @@ use Leonidas\Contracts\System\Schema\Comment\CommentConverterInterface;
 use Leonidas\Contracts\System\Schema\Comment\CommentEntityManagerInterface;
 use Leonidas\Contracts\System\Schema\EntityCollectionFactoryInterface;
 use Leonidas\Library\System\Schema\Abstracts\NoCommitmentsTrait;
-use Leonidas\Library\System\Schema\Abstracts\ThrowsExceptionOnErrorTrait;
+use Leonidas\Library\System\Schema\Abstracts\ThrowsExceptionOnWpErrorTrait;
 use WP_Comment;
 use WP_Comment_Query;
 
 class CommentEntityManager implements CommentEntityManagerInterface
 {
     use NoCommitmentsTrait;
-    use ThrowsExceptionOnErrorTrait;
+    use ThrowsExceptionOnWpErrorTrait;
 
     protected string $type;
 
@@ -71,6 +71,9 @@ class CommentEntityManager implements CommentEntityManagerInterface
         return $this->query([]);
     }
 
+    /**
+     * @link https://developer.wordpress.org/reference/classes/WP_Comment_Query/__construct/
+     */
     public function query(array $args): object
     {
         return $this->getCollectionFromQuery(
@@ -78,7 +81,7 @@ class CommentEntityManager implements CommentEntityManagerInterface
         );
     }
 
-    public function make(array $data): object
+    public function spawn(array $data): object
     {
         return $this->convertEntity(
             /** @phpstan-ignore-next-line */
@@ -86,6 +89,9 @@ class CommentEntityManager implements CommentEntityManagerInterface
         );
     }
 
+    /**
+     * @link https://developer.wordpress.org/reference/functions/wp_insert_comment/
+     */
     public function insert(array $data): void
     {
         wp_insert_comment($this->normalizeDataForEntry($data));
@@ -93,7 +99,7 @@ class CommentEntityManager implements CommentEntityManagerInterface
 
     public function update(int $id, array $data): void
     {
-        $this->throwExceptionIfError(
+        $this->throwExceptionIfWpError(
             wp_update_comment($this->normalizeDataForEntry($data, $id))
         );
     }

@@ -2,11 +2,11 @@
 
 namespace Leonidas\Library\System\Model\Image;
 
-use InvalidArgumentException;
 use Leonidas\Contracts\System\Model\Comment\CommentRepositoryInterface;
 use Leonidas\Contracts\System\Model\Image\ImageInterface;
 use Leonidas\Contracts\System\Model\User\UserRepositoryInterface;
 use Leonidas\Contracts\System\Schema\Post\PostConverterInterface;
+use Leonidas\Library\System\Schema\Exceptions\UnexpectedEntityException;
 use WP_Post;
 
 class ImageConverter implements PostConverterInterface
@@ -15,26 +15,17 @@ class ImageConverter implements PostConverterInterface
 
     protected CommentRepositoryInterface $commentRepository;
 
-    protected string $postTypePrefix = '';
-
     public function __construct(
         UserRepositoryInterface $userRepository,
-        CommentRepositoryInterface $commentRepository,
-        string $postTypePrefix = ''
+        CommentRepositoryInterface $commentRepository
     ) {
         $this->userRepository = $userRepository;
         $this->commentRepository = $commentRepository;
-        $this->postTypePrefix = $postTypePrefix;
     }
 
     public function convert(WP_Post $post, ?string $size = null): Image
     {
-        return new Image(
-            $post,
-            $this->userRepository,
-            $this->commentRepository,
-            $this->postTypePrefix
-        );
+        return new Image($post, $this->userRepository, $this->commentRepository);
     }
 
     public function revert(object $post): WP_Post
@@ -43,8 +34,10 @@ class ImageConverter implements PostConverterInterface
             return get_post($post->getId());
         }
 
-        throw new InvalidArgumentException(
-            '$post must be an instance of ' . ImageInterface::class
+        throw new UnexpectedEntityException(
+            ImageInterface::class,
+            $post,
+            __METHOD__
         );
     }
 }

@@ -3,12 +3,13 @@
 namespace Leonidas\Library\System\Model\Post;
 
 use Leonidas\Contracts\System\Model\Author\AuthorInterface;
+use Leonidas\Contracts\System\Model\Category\CategoryInterface;
 use Leonidas\Contracts\System\Model\Post\PostCollectionInterface;
 use Leonidas\Contracts\System\Model\Post\PostInterface;
 use Leonidas\Contracts\System\Model\Post\PostRepositoryInterface;
 use Leonidas\Contracts\System\Model\Post\Status\PostStatusInterface;
+use Leonidas\Contracts\System\Model\Tag\TagInterface;
 use Leonidas\Library\System\Model\Abstracts\Post\AbstractPostEntityRepository;
-use WP_Query;
 
 class PostRepository extends AbstractPostEntityRepository implements PostRepositoryInterface
 {
@@ -52,19 +53,29 @@ class PostRepository extends AbstractPostEntityRepository implements PostReposit
         return $this->manager->whereStatus($status->getName());
     }
 
-    public function find(array $args): PostCollectionInterface
+    public function withTag(TagInterface $tag): PostCollectionInterface
     {
-        return $this->manager->find($args);
+        return $this->manager->withTerm('tag', $tag->getId());
     }
 
-    public function query(WP_Query $query): PostCollectionInterface
+    public function withCategory(CategoryInterface $category): PostCollectionInterface
     {
-        return $this->manager->query($query);
+        return $this->manager->withTerm('category', $category->getId());
+    }
+
+    public function query(array $args): PostCollectionInterface
+    {
+        return $this->manager->query($args);
     }
 
     public function all(): PostCollectionInterface
     {
         return $this->manager->all();
+    }
+
+    public function make(array $data): PostInterface
+    {
+        return $this->manager->spawn($data);
     }
 
     public function insert(PostInterface $post): void

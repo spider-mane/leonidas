@@ -3,17 +3,17 @@
 namespace Leonidas\Contracts\System\Model\Comment;
 
 use Leonidas\Contracts\System\Model\FungibleRepositoryInterface;
-use Leonidas\Contracts\System\Model\Post\PostInterface;
+use Leonidas\Contracts\System\Model\PostModelInterface;
 
 interface CommentRepositoryInterface extends FungibleRepositoryInterface
 {
     public function select(int $id): ?CommentInterface;
 
-    public function forPostApproved(PostInterface $post): CommentCollectionInterface;
+    public function forPostAndApproved(PostModelInterface $post): CommentCollectionInterface;
 
     public function withParent(CommentInterface $comment): CommentCollectionInterface;
 
-    public function withChild(CommentInterface $comment): CommentInterface;
+    public function withChild(CommentInterface $comment): ?CommentInterface;
 
     public function all(): CommentCollectionInterface;
 

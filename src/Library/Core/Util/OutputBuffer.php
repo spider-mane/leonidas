@@ -4,7 +4,7 @@ namespace Leonidas\Library\Core\Util;
 
 class OutputBuffer
 {
-    public static function wrapFunction(callable $function, ...$args): string
+    public static function wrapFunctionCall(callable $function, ...$args): string
     {
         ob_start();
 

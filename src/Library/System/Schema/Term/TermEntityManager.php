@@ -6,14 +6,14 @@ use Leonidas\Contracts\System\Schema\EntityCollectionFactoryInterface;
 use Leonidas\Contracts\System\Schema\Term\TermConverterInterface;
 use Leonidas\Contracts\System\Schema\Term\TermEntityManagerInterface;
 use Leonidas\Library\System\Schema\Abstracts\NoCommitmentsTrait;
-use Leonidas\Library\System\Schema\Abstracts\ThrowsExceptionOnErrorTrait;
+use Leonidas\Library\System\Schema\Abstracts\ThrowsExceptionOnWpErrorTrait;
 use WP_Term;
 use WP_Term_Query;
 
 class TermEntityManager implements TermEntityManagerInterface
 {
     use NoCommitmentsTrait;
-    use ThrowsExceptionOnErrorTrait;
+    use ThrowsExceptionOnWpErrorTrait;
 
     protected string $taxonomy;
 
@@ -38,30 +38,24 @@ class TermEntityManager implements TermEntityManagerInterface
 
     public function whereIds(int ...$ids): object
     {
-        return $this->find([
-            'include' => $ids,
-            'hide_empty' => false,
-        ]);
+        return $this->query(['include' => $ids]);
     }
 
-    public function selectByTermTaxonomyId(int $termTaxonomyId): object
+    public function selectByTermTaxonomyId(int $ttId): object
     {
         return $this->convertEntity(
             get_term_by(
                 'term_taxonomy_id',
-                $termTaxonomyId,
+                $ttId,
                 $this->taxonomy,
                 OBJECT
             )
         );
     }
 
-    public function whereTermTaxonomyIds(int ...$termTaxonomyIds): object
+    public function whereTermTaxonomyIds(int ...$ttId): object
     {
-        return $this->find([
-            'term_taxonomy_id' => $termTaxonomyIds,
-            'hide_empty' => false,
-        ]);
+        return $this->query(['term_taxonomy_id' => $ttId]);
     }
 
     public function selectBySlug(string $name): object
@@ -73,58 +67,44 @@ class TermEntityManager implements TermEntityManagerInterface
 
     public function whereSlugs(string ...$names): object
     {
-        return $this->find([
-            'slug' => $names,
-            'hide_empty' => false,
-        ]);
+        return $this->query(['slug' => $names]);
     }
 
     public function whereParentId(int $parentId): object
     {
-        return $this->find([
-            'parent' => $parentId,
-            'hide_empty' => false,
-        ]);
+        return $this->query(['parent' => $parentId]);
     }
 
     public function whereChildOf(int $parentId): object
     {
-        return $this->find([
-            'child_of' => $parentId,
-            'hide_empty' => false,
-        ]);
+        return $this->query(['child_of' => $parentId]);
     }
 
     public function whereObjectIds(int ...$objects): object
     {
-        return $this->find([
-            'object_ids' => $objects,
-            'hide_empty' => false,
-        ]);
+        return $this->query(['object_ids' => $objects]);
     }
 
     public function all(): object
     {
-        return $this->find([
-            'hide_empty' => false,
-        ]);
+        return $this->query([]);
     }
 
-    public function find(array $queryArgs): object
+    public function query(array $args): object
     {
-        return $this->query(new WP_Term_Query($queryArgs));
+        return $this->gerCollectionFromQuery(
+            new WP_Term_Query($this->normalizeQueryArgs($args))
+        );
     }
 
-    public function query(WP_Term_Query $query): object
+    public function spawn(array $data): object
     {
-        $query->query_vars['taxonomy'] = $this->taxonomy;
-
-        return $this->createCollection(...$query->get_terms());
+        return $this->convertEntity(new WP_Term((object) $data));
     }
 
     public function insert(array $data): void
     {
-        $this->throwExceptionIfError(
+        $this->throwExceptionIfWpError(
             wp_insert_term(
                 $data['name'],
                 $this->taxonomy,
@@ -135,7 +115,7 @@ class TermEntityManager implements TermEntityManagerInterface
 
     public function update(int $id, array $data): void
     {
-        $this->throwExceptionIfError(
+        $this->throwExceptionIfWpError(
             wp_update_term(
                 $id,
                 $this->taxonomy,
@@ -146,9 +126,23 @@ class TermEntityManager implements TermEntityManagerInterface
 
     public function delete(int $id): void
     {
-        $this->throwExceptionIfError(
+        $this->throwExceptionIfWpError(
             wp_delete_term($id, $this->taxonomy)
         );
+    }
+
+    public function gerCollectionFromQuery(WP_Term_Query $query): object
+    {
+        return $this->createCollection(...$query->get_terms());
+    }
+
+    protected function normalizeQueryArgs(array $args): array
+    {
+        return [
+            'taxonomy' => $this->taxonomy,
+        ] + $args + [
+            'hide_empty' => false,
+        ];
     }
 
     protected function normalizeDataForEntry(array $data): array

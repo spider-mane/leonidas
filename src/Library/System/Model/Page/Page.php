@@ -4,12 +4,12 @@ namespace Leonidas\Library\System\Model\Page;
 
 use Leonidas\Contracts\System\Model\Author\AuthorRepositoryInterface;
 use Leonidas\Contracts\System\Model\Comment\CommentRepositoryInterface;
-use Leonidas\Contracts\System\Model\GetAccessProviderInterface;
 use Leonidas\Contracts\System\Model\Page\PageCollectionInterface;
 use Leonidas\Contracts\System\Model\Page\PageInterface;
 use Leonidas\Contracts\System\Model\Page\PageRepositoryInterface;
 use Leonidas\Contracts\System\Model\Page\Status\PageStatusInterface;
-use Leonidas\Contracts\System\Model\SetAccessProviderInterface;
+use Leonidas\Library\System\Model\Abstracts\AllAccessGrantedTrait;
+use Leonidas\Library\System\Model\Abstracts\LazyLoadableRelationshipsTrait;
 use Leonidas\Library\System\Model\Abstracts\Post\FilterablePostModelTrait;
 use Leonidas\Library\System\Model\Abstracts\Post\HierarchicalPostModelTrait;
 use Leonidas\Library\System\Model\Abstracts\Post\MimePostModelTrait;
@@ -20,15 +20,16 @@ use Leonidas\Library\System\Model\Abstracts\Post\MutableDatablePostModelTrait;
 use Leonidas\Library\System\Model\Abstracts\Post\MutablePingablePostModelTrait;
 use Leonidas\Library\System\Model\Abstracts\Post\MutablePostModelTrait;
 use Leonidas\Library\System\Model\Abstracts\Post\RestrictablePostModelTrait;
+use Leonidas\Library\System\Model\Abstracts\Post\ValidatesPostTypeTrait;
 use Leonidas\Library\System\Model\Page\Status\PageStatus;
-use Leonidas\Library\System\Schema\Post\Traits\ValidatesPostTypeTrait;
-use ReturnTypeWillChange;
 use WP_Post;
 
 class Page implements PageInterface
 {
+    use AllAccessGrantedTrait;
     use FilterablePostModelTrait;
     use HierarchicalPostModelTrait;
+    use LazyLoadableRelationshipsTrait;
     use MimePostModelTrait;
     use MutableAuthoredPostModelTrait;
     use MutableCommentablePostModelTrait;
@@ -41,20 +42,19 @@ class Page implements PageInterface
 
     protected WP_Post $post;
 
+    protected ?PageInterface $parent;
+
+    protected PageCollectionInterface $children;
+
     protected PageRepositoryInterface $pageRepository;
-
-    protected GetAccessProviderInterface $getAccessProvider;
-
-    protected SetAccessProviderInterface $setAccessProvider;
 
     public function __construct(
         WP_Post $post,
         PageRepositoryInterface $pageRepository,
         AuthorRepositoryInterface $authorRepository,
-        CommentRepositoryInterface $commentRepository,
-        string $postTypePrefix = ''
+        CommentRepositoryInterface $commentRepository
     ) {
-        $this->validatePostType($post, $postTypePrefix . 'post');
+        $this->validatePostType($post, 'page');
 
         $this->post = $post;
         $this->pageRepository = $pageRepository;
@@ -68,34 +68,14 @@ class Page implements PageInterface
         );
     }
 
-    #[ReturnTypeWillChange]
-    public function __get($name)
-    {
-        $this->getAccessProvider->get($name);
-    }
-
-    public function __set($name, $value): void
-    {
-        $this->setAccessProvider->set($name, $value);
-    }
-
-    public function __isset($name)
-    {
-        return $this->post->__isset($name);
-    }
-
-    public function __toString(): string
-    {
-        return $this->getContent();
-    }
-
     public function getParent(): ?PageInterface
     {
-        return $this->pageRepository->select((int) $this->post->post_parent);
+        return $this->lazyLoadableNullable('parent');
     }
 
     public function setParent(?PageInterface $parent): self
     {
+        $this->parent = $parent;
         $this->post->post_parent = $parent ? $parent->getId() : 0;
 
         return $this;
@@ -103,7 +83,7 @@ class Page implements PageInterface
 
     public function getChildren(): PageCollectionInterface
     {
-        return $this->pageRepository->whereParent($this);
+        return $this->lazyLoadable('$children');
     }
 
     public function getStatus(): PageStatusInterface
@@ -116,5 +96,15 @@ class Page implements PageInterface
         $this->post->post_status = $status->getName();
 
         return $this;
+    }
+
+    protected function getParentFromRepository(): ?PageInterface
+    {
+        return $this->pageRepository->select($this->getParentId());
+    }
+
+    protected function getChildrenFromRepository(): PageCollectionInterface
+    {
+        return $this->pageRepository->whereParent($this);
     }
 }

@@ -2,17 +2,15 @@
 
 namespace Leonidas\Contracts\System\Schema\Term;
 
-use WP_Term_Query;
+use Leonidas\Contracts\System\Schema\EntityManagerInterface;
 
-interface TermEntityManagerInterface
+interface TermEntityManagerInterface extends EntityManagerInterface
 {
-    public function select(int $id): object;
-
     public function whereIds(int ...$ids): object;
 
-    public function selectByTermTaxonomyId(int $termTaxonomyId): object;
+    public function selectByTermTaxonomyId(int $ttId): object;
 
-    public function whereTermTaxonomyIds(int ...$termTaxonomyIds): object;
+    public function whereTermTaxonomyIds(int ...$ttId): object;
 
     public function selectBySlug(string $slug): object;
 
@@ -23,18 +21,4 @@ interface TermEntityManagerInterface
     public function whereChildOf(int $parentId): object;
 
     public function whereObjectIds(int ...$objects): object;
-
-    public function all(): object;
-
-    public function find(array $queryArgs): object;
-
-    public function query(WP_Term_Query $query): object;
-
-    public function insert(array $data): void;
-
-    public function update(int $id, array $data): void;
-
-    public function delete(int $id): void;
-
-    public function commit(): void;
 }

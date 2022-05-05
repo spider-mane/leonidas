@@ -5,9 +5,9 @@ namespace Leonidas\Library\System\Model\Comment;
 use Leonidas\Contracts\System\Model\Comment\CommentCollectionInterface;
 use Leonidas\Contracts\System\Model\Comment\CommentInterface;
 use Leonidas\Contracts\System\Model\Comment\CommentRepositoryInterface;
-use Leonidas\Contracts\System\Model\Post\PostInterface;
+use Leonidas\Contracts\System\Model\PostModelInterface;
 use Leonidas\Contracts\System\Schema\Comment\CommentEntityManagerInterface;
-use Leonidas\Library\System\Model\Abstracts\Post\HierarchicalModelRepositoryTrait;
+use Leonidas\Library\System\Model\Abstracts\HierarchicalModelRepositoryTrait;
 use Leonidas\Library\System\Schema\Comment\CommentEntityManager;
 
 class CommentRepository implements CommentRepositoryInterface
@@ -26,7 +26,7 @@ class CommentRepository implements CommentRepositoryInterface
         return $this->manager->select($id);
     }
 
-    public function forPostApproved(PostInterface $post): CommentCollectionInterface
+    public function forPostAndApproved(PostModelInterface $post): CommentCollectionInterface
     {
         return $this->manager->wherePostAndStatus($post->getId(), 'approved');
     }
@@ -36,7 +36,7 @@ class CommentRepository implements CommentRepositoryInterface
         return $this->manager->whereParentIds($comment->getId());
     }
 
-    public function withChild(CommentInterface $comment): CommentInterface
+    public function withChild(CommentInterface $comment): ?CommentInterface
     {
         return $this->manager->select($comment->getParentId());
     }

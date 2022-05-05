@@ -3,7 +3,6 @@
 namespace Leonidas\Contracts\System\Model\Page;
 
 use Leonidas\Contracts\System\Model\SoftDeletingRepositoryInterface;
-use WP_Query;
 
 interface PageRepositoryInterface extends SoftDeletingRepositoryInterface
 {
@@ -19,9 +18,7 @@ interface PageRepositoryInterface extends SoftDeletingRepositoryInterface
 
     public function whereParentId(int $parentId): PageCollectionInterface;
 
-    public function find(array $args): PageCollectionInterface;
-
-    public function query(WP_Query $query): PageCollectionInterface;
+    public function query(array $args): PageCollectionInterface;
 
     public function all(): PageCollectionInterface;
 

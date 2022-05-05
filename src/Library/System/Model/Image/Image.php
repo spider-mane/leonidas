@@ -3,10 +3,9 @@
 namespace Leonidas\Library\System\Model\Image;
 
 use Leonidas\Contracts\System\Model\Comment\CommentRepositoryInterface;
-use Leonidas\Contracts\System\Model\GetAccessProviderInterface;
 use Leonidas\Contracts\System\Model\Image\ImageInterface;
-use Leonidas\Contracts\System\Model\SetAccessProviderInterface;
 use Leonidas\Contracts\System\Model\User\UserRepositoryInterface;
+use Leonidas\Library\System\Model\Abstracts\AllAccessGrantedTrait;
 use Leonidas\Library\System\Model\Abstracts\Post\FilterablePostModelTrait;
 use Leonidas\Library\System\Model\Abstracts\Post\MimePostModelTrait;
 use Leonidas\Library\System\Model\Abstracts\Post\MutableAuthoredPostModelTrait;
@@ -17,12 +16,12 @@ use Leonidas\Library\System\Model\Abstracts\Post\MutablePostModelTrait;
 use Leonidas\Library\System\Model\Abstracts\Post\PolymorphicPostModelTrait;
 use Leonidas\Library\System\Model\Abstracts\Post\RestrictablePostModelTrait;
 use Leonidas\Library\System\Model\Abstracts\Post\UsesPostMetaTrait;
-use Leonidas\Library\System\Schema\Post\Traits\ValidatesPostTypeTrait;
-use ReturnTypeWillChange;
+use Leonidas\Library\System\Model\Abstracts\Post\ValidatesPostTypeTrait;
 use WP_Post;
 
 class Image implements ImageInterface
 {
+    use AllAccessGrantedTrait;
     use MutableAuthoredPostModelTrait;
     use FilterablePostModelTrait;
     use MimePostModelTrait;
@@ -41,38 +40,21 @@ class Image implements ImageInterface
 
     protected CommentRepositoryInterface $commentRepository;
 
-    protected GetAccessProviderInterface $getAccessProvider;
-
-    protected SetAccessProviderInterface $setAccessProvider;
-
     protected string $postTypePrefix;
 
     public function __construct(
         WP_Post $post,
         UserRepositoryInterface $userRepository,
-        CommentRepositoryInterface $commentRepository,
-        string $postTypePrefix = ''
+        CommentRepositoryInterface $commentRepository
     ) {
-        $this->validatePostType($post, $postTypePrefix . 'attachment');
+        $this->validatePostType($post, 'attachment');
 
         $this->post = $post;
         $this->userRepository = $userRepository;
         $this->commentRepository = $commentRepository;
-        $this->postTypePrefix = $postTypePrefix;
 
         $this->getAccessProvider = new ImageTemplateTags($this, $post);
         $this->setAccessProvider = new ImageSetAccessProvider($this);
-    }
-
-    #[ReturnTypeWillChange]
-    public function __get($name)
-    {
-        return $this->getAccessProvider->get($name);
-    }
-
-    public function __set($name, $value): void
-    {
-        $this->setAccessProvider->set($name, $value);
     }
 
     public function getSrc(string $size = 'full'): string

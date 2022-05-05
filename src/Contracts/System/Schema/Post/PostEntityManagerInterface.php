@@ -2,13 +2,11 @@
 
 namespace Leonidas\Contracts\System\Schema\Post;
 
-use WP_Query;
+use Leonidas\Contracts\System\Schema\EntityManagerInterface;
 
-interface PostEntityManagerInterface
+interface PostEntityManagerInterface extends EntityManagerInterface
 {
     public const DATE_FORMAT = 'Y-m-d H:i:s';
-
-    public function select(int $id): object;
 
     public function whereIds(int ...$ids): object;
 
@@ -24,21 +22,11 @@ interface PostEntityManagerInterface
 
     public function whereStatus(string $status): object;
 
-    public function all(): object;
+    public function whereTaxQuery(array $args): object;
 
-    public function find(array $queryArgs): object;
-
-    public function query(WP_Query $query): object;
-
-    public function insert(array $data): void;
-
-    public function update(int $id, array $data): void;
-
-    public function delete(int $id): void;
+    public function withTerm(string $taxonomy, int $termId): object;
 
     public function trash(int $id): void;
 
     public function recover(int $id): void;
-
-    public function commit(): void;
 }

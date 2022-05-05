@@ -2,11 +2,11 @@
 
 namespace Leonidas\Library\System\Model\Category;
 
-use InvalidArgumentException;
 use Leonidas\Contracts\System\Model\Category\CategoryInterface;
 use Leonidas\Contracts\System\Model\Category\CategoryRepositoryInterface;
 use Leonidas\Contracts\System\Model\Post\PostRepositoryInterface;
 use Leonidas\Contracts\System\Schema\Term\TermConverterInterface;
+use Leonidas\Library\System\Schema\Exceptions\UnexpectedEntityException;
 use WP_Term;
 
 class CategoryConverter implements TermConverterInterface
@@ -15,8 +15,10 @@ class CategoryConverter implements TermConverterInterface
 
     protected PostRepositoryInterface $postRepository;
 
-    public function __construct(CategoryRepositoryInterface $categoryRepository, PostRepositoryInterface $postRepository)
-    {
+    public function __construct(
+        CategoryRepositoryInterface $categoryRepository,
+        PostRepositoryInterface $postRepository
+    ) {
         $this->categoryRepository = $categoryRepository;
         $this->postRepository = $postRepository;
     }
@@ -36,8 +38,10 @@ class CategoryConverter implements TermConverterInterface
             return get_term($entity->getId(), 'category');
         }
 
-        throw new InvalidArgumentException(
-            '$entity must be an instance of ' . CategoryInterface::class
+        throw new UnexpectedEntityException(
+            CategoryInterface::class,
+            $entity,
+            __METHOD__
         );
     }
 }

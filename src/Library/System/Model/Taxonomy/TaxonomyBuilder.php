@@ -15,6 +15,8 @@ class TaxonomyBuilder extends AbstractSystemModelTypeBuilder implements Taxonomy
 
     protected ?bool $showAdminColumn;
 
+    protected ?bool $showInMenu;
+
     /**
      * @var null|bool|callable
      */
@@ -147,21 +149,21 @@ class TaxonomyBuilder extends AbstractSystemModelTypeBuilder implements Taxonomy
         return $this;
     }
 
-    public function restBase(?string $restBase): self
+    public function restBase($restBase): self
     {
         $this->restBase = $restBase;
 
         return $this;
     }
 
-    public function restNamespace(?string $restNamespace): self
+    public function restNamespace($restNamespace): self
     {
         $this->restNamespace = $restNamespace;
 
         return $this;
     }
 
-    public function restControllerClass(?string $restControllerClass): self
+    public function restControllerClass($restControllerClass): self
     {
         $this->restControllerClass = $restControllerClass;
 

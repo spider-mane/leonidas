@@ -16,7 +16,6 @@ return (new Config('leonidas'))
   ->setRules([
     '@PSR12' => true,
     'array_syntax' => ['syntax' => 'short'],
-    'binary_operator_spaces' => true,
     'blank_line_before_statement' => [
       'statements' => ['break', 'continue', 'declare', 'return', 'throw', 'try'],
     ],

@@ -22,7 +22,7 @@ trait MutableTermModelTrait
 
     public function setTaxonomyId(int $taxonomyId): self
     {
-        $this->term->taxonomy = $taxonomyId;
+        $this->term->term_taxonomy_id = $taxonomyId;
 
         return $this;
     }

@@ -29,7 +29,7 @@ trait TermModelTrait
 
     public function getTaxonomyId(): int
     {
-        return $this->term->taxonomy;
+        return $this->term->term_taxonomy_id;
     }
 
     public function getGroup(): int

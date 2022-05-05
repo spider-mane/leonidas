@@ -13,10 +13,10 @@ trait LazyLoadableRelationshipsTrait
 
     protected function lazyLoadableNullable(string $property)
     {
-        static $queried = [];
+        static $loaded = [];
 
-        if (!$queried[$property] ?? false) {
-            $queried[$property] = true;
+        if (!$loaded[$property] ?? false) {
+            $loaded[$property] = true;
 
             return $this->lazyLoadable($property);
         }

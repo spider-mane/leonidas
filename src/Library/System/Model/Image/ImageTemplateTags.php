@@ -4,18 +4,17 @@ namespace Leonidas\Library\System\Model\Image;
 
 use Leonidas\Contracts\System\Model\GetAccessProviderInterface;
 use Leonidas\Contracts\System\Model\Image\ImageInterface;
-use Leonidas\Library\System\Model\Abstracts\Post\ForcesTemplateTagsTrait;
+use Leonidas\Library\System\Model\Abstracts\Post\UsesTemplateTagsTrait;
 use WP_Post;
 
 class ImageTemplateTags extends ImageGetAccessProvider implements GetAccessProviderInterface
 {
-    use ForcesTemplateTagsTrait;
+    use UsesTemplateTagsTrait;
 
     public function __construct(ImageInterface $image, WP_Post $core)
     {
         parent::__construct($image);
-
-        $this->core = $core;
+        $this->stashPostObject($core);
     }
 
     protected function resolvedGetters(ImageInterface $image): array
