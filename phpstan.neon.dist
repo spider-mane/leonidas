@@ -14,4 +14,7 @@ parameters:
     - wordpress/wp-admin/includes
     - wordpress/wp-includes
 
+  ignoreErrors:
+    - '#Unsafe usage of new static()'
+
   tmpDir: build/phpstan

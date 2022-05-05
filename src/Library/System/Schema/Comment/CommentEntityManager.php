@@ -38,44 +38,52 @@ class CommentEntityManager implements CommentEntityManagerInterface
 
     public function whereIds(int ...$ids): object
     {
-        return $this->find(['comment_in' => $ids]);
+        return $this->query(['comment_in' => $ids]);
     }
 
-    public function whereAuthorIds(int ...$authorIds): object
+    public function whereUserIds(int ...$userIds): object
     {
-        return $this->find(['author__in' => $authorIds]);
+        return $this->query(['author__in' => $userIds]);
     }
 
     public function whereAuthorEmail(string $authorEmail): object
     {
-        return $this->find(['author_email' => $authorEmail]);
+        return $this->query(['author_email' => $authorEmail]);
     }
 
     public function whereAuthorUrl(string $authorUrl): object
     {
-        return $this->find(['author_url' => $authorUrl]);
+        return $this->query(['author_url' => $authorUrl]);
     }
 
     public function whereParentIds(int ...$parentId): object
     {
-        return $this->find(['parent__in' => $parentId]);
+        return $this->query(['parent__in' => $parentId]);
+    }
+
+    public function wherePostAndStatus(int $postId, string $status): object
+    {
+        return $this->query(['post_id' => $postId, 'status' => $status]);
     }
 
     public function all(): object
     {
-        return $this->find([]);
+        return $this->query([]);
     }
 
-    public function find(array $queryArgs): object
+    public function query(array $args): object
     {
-        return $this->query(new WP_Comment_Query($queryArgs));
+        return $this->getCollectionFromQuery(
+            new WP_Comment_Query($this->normalizeQueryArgs($args))
+        );
     }
 
-    public function query(WP_Comment_Query $query): object
+    public function make(array $data): object
     {
-        $query->query_vars['type'] = $this->type;
-
-        return $this->createCollection(...$query->get_comments());
+        return $this->convertEntity(
+            /** @phpstan-ignore-next-line */
+            new WP_Comment((object) $data)
+        );
     }
 
     public function insert(array $data): void
@@ -86,7 +94,7 @@ class CommentEntityManager implements CommentEntityManagerInterface
     public function update(int $id, array $data): void
     {
         $this->throwExceptionIfError(
-            wp_update_comment($this->normalizeDataForEntry($data))
+            wp_update_comment($this->normalizeDataForEntry($data, $id))
         );
     }
 
@@ -95,11 +103,25 @@ class CommentEntityManager implements CommentEntityManagerInterface
         wp_delete_comment($id);
     }
 
+    protected function getCollectionFromQuery(WP_Comment_Query $query): object
+    {
+        return $this->createCollection(...$query->get_comments());
+    }
+
+    protected function normalizeQueryArgs(array $args): array
+    {
+        return [
+            'type' => $this->type,
+            'fields' => null,
+            'hierarchical' => false,
+        ] + $args;
+    }
+
     protected function normalizeDataForEntry(array $data, int $id = 0)
     {
         return [
             'comment_ID' => $id,
-            'role' => $this->role,
+            'type' => $this->type,
         ] + $data;
     }
 

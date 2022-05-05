@@ -2,15 +2,15 @@
 
 namespace Leonidas\Contracts\System\Schema\Comment;
 
-use WP_Comment_Query;
-
 interface CommentEntityManagerInterface
 {
+    public const DATE_FORMAT = 'Y-m-d H:i:s';
+
     public function select(int $id): object;
 
     public function whereIds(int ...$ids): object;
 
-    public function whereAuthorIds(int ...$authorIds): object;
+    public function whereUserIds(int ...$userIds): object;
 
     public function whereAuthorEmail(string $authorEmail): object;
 
@@ -18,12 +18,20 @@ interface CommentEntityManagerInterface
 
     public function whereParentIds(int ...$parentId): object;
 
+    public function wherePostAndStatus(int $postId, string $status): object;
+
     public function all(): object;
 
-    public function find(array $queryArgs): object;
+    /**
+     * @link https://developer.wordpress.org/reference/classes/WP_Comment_Query/__construct/
+     */
+    public function query(array $args): object;
 
-    public function query(WP_Comment_Query $query): object;
+    public function make(array $data): object;
 
+    /**
+     * @link https://developer.wordpress.org/reference/functions/wp_insert_comment/
+     */
     public function insert(array $data): void;
 
     public function update(int $id, array $data): void;

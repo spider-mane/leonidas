@@ -3,14 +3,27 @@
 namespace Leonidas\Contracts\System\Model\Comment;
 
 use DateTimeInterface;
+use Leonidas\Contracts\System\Model\HierarchicalInterface;
 use Leonidas\Contracts\System\Model\Post\PostInterface;
 use Leonidas\Contracts\System\Model\User\UserInterface;
 
-interface CommentInterface
+interface CommentInterface extends HierarchicalInterface
 {
     public function getId(): int;
 
-    public function getAuthor(): UserInterface;
+    public function getAuthor(): string;
+
+    public function getAuthorEmail(): string;
+
+    public function getAuthorUrl(): string;
+
+    public function getAuthorIp(): string;
+
+    public function getAuthorUserAgent(): string;
+
+    public function getUser(): ?UserInterface;
+
+    public function getUserId(): int;
 
     public function getContent(): string;
 
@@ -22,15 +35,13 @@ interface CommentInterface
 
     public function getParent(): ?CommentInterface;
 
-    public function getParentId(): int;
-
     public function getChildren(): CommentCollectionInterface;
 
     public function getPost(): PostInterface;
 
     public function getPostId(): int;
 
-    public function getStatus(): string;
+    public function getApprovalStatus(): string;
 
     public function getType(): string;
 }

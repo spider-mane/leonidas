@@ -4,10 +4,13 @@ namespace Leonidas\Library\System\Model\Abstracts\Post;
 
 use Leonidas\Contracts\System\Model\Comment\CommentCollectionInterface;
 use Leonidas\Contracts\System\Model\Comment\CommentRepositoryInterface;
+use Leonidas\Library\System\Model\Abstracts\LazyLoadableRelationshipsTrait;
 use WP_Post;
 
 trait CommentablePostModelTrait
 {
+    use LazyLoadableRelationshipsTrait;
+
     protected WP_Post $post;
 
     protected CommentCollectionInterface $comments;
@@ -26,6 +29,11 @@ trait CommentablePostModelTrait
 
     public function getComments(): CommentCollectionInterface
     {
-        return $this->comments ??= $this->commentRepository->wherePost($this);
+        return $this->lazyLoadable('comments');
+    }
+
+    protected function getCommentsFromRepository(): CommentCollectionInterface
+    {
+        return $this->commentRepository->forPostApproved($this);
     }
 }

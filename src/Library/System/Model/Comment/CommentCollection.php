@@ -13,6 +13,8 @@ class CommentCollection extends AbstractModelCollection implements CommentCollec
 
     protected const MODEL_IDENTIFIER = 'id';
 
+    protected const COLLECTION_IS_MAP = true;
+
     public function __construct(CommentInterface ...$comments)
     {
         $this->initKernel($comments);
