@@ -11,10 +11,7 @@ use Tests\Support\UnitTestCase;
 
 class ScriptBuilderTest extends UnitTestCase
 {
-    /**
-     * @var ScriptBuilder
-     */
-    protected $scriptBuilder;
+    protected ScriptBuilder $scriptBuilder;
 
     protected function setUp(): void
     {

@@ -15,25 +15,13 @@ class Field extends AbstractAdminField implements MetaboxFieldInterface
     use CanBeRestrictedTrait;
     use RendersWithViewTrait;
 
-    /**
-     * @var bool
-     */
-    protected $displayLabel = true;
+    protected bool $displayLabel = true;
 
-    /**
-     * @var int
-     */
-    protected $rowPadding = 3;
+    protected int $rowPadding = 3;
 
-    /**
-     * @var string
-     */
-    protected $submitButton;
+    protected ?string $submitButton = null;
 
-    /**
-     * @var array
-     */
-    protected $hiddenInput;
+    protected array $hiddenInput = [];
 
     private const ROW_TITLE_COL_WIDTH = 2;
 

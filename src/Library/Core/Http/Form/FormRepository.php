@@ -11,7 +11,7 @@ class FormRepository implements FormRepositoryInterface
     /**
      * @var FormHandlerInterface[]
      */
-    protected $forms = [];
+    protected array $forms = [];
 
     public function add(string $id, FormHandlerInterface $form)
     {

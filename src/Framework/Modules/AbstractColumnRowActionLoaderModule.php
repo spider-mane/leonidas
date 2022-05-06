@@ -13,20 +13,11 @@ abstract class AbstractColumnRowActionLoaderModule extends AbstractModule implem
     use ElementConstructorTrait;
     use CanBeRestrictedTrait;
 
-    /**
-     * @var string
-     */
-    protected $entity;
+    protected string $entity;
 
-    /**
-     * @var string
-     */
-    protected $action;
+    protected ?string $action = null;
 
-    /**
-     * @var ColumnRowActionInterface
-     */
-    protected $columnRow;
+    protected ColumnRowActionInterface $columnRow;
 
     public function getAction(): string
     {

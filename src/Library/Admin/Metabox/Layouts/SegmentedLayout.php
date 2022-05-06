@@ -22,7 +22,7 @@ class SegmentedLayout implements MetaboxLayoutInterface
      *
      * @var MetaboxComponentInterface[]
      */
-    protected $components = [];
+    protected array $components = [];
 
     protected string $separator = '<hr>';
 

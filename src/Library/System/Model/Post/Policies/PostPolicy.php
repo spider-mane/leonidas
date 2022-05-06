@@ -13,7 +13,7 @@ class PostPolicy implements ServerRequestPolicyInterface
     /**
      * @var int[]
      */
-    protected $posts = [];
+    protected array $posts = [];
 
     public function __construct(int ...$posts)
     {

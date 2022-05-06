@@ -22,7 +22,7 @@ abstract class AbstractAssetBuilder
     /**
      * @var string[]
      */
-    protected $dependencies;
+    protected $dependencies = [];
 
     /**
      * @var string|bool|null

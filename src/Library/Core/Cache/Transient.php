@@ -7,25 +7,16 @@ use Psr\Cache\CacheItemInterface;
 
 class Transient implements CacheItemInterface
 {
-    /**
-     * @var string
-     */
-    protected $key;
+    protected string $key;
 
     /**
      * @var mixed
      */
     protected $value = null;
 
-    /**
-     * @var DateTimeInterface|null
-     */
-    protected $expiration = null;
+    protected ?DateTimeInterface $expiration = null;
 
-    /**
-     * @var bool
-     */
-    protected $isHit = false;
+    protected bool $isHit = false;
 
     public function __construct(string $key)
     {

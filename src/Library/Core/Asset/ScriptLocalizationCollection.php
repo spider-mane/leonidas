@@ -10,7 +10,7 @@ class ScriptLocalizationCollection implements ScriptLocalizationCollectionInterf
     /**
      * @var ScriptLocalizationInterface[]
      */
-    protected $localizations = [];
+    protected array $localizations = [];
 
     public function __construct(ScriptLocalizationInterface ...$localizations)
     {

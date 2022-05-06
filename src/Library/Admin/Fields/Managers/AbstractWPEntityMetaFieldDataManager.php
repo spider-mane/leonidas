@@ -7,15 +7,9 @@ use WebTheory\Saveyour\Contracts\Data\FieldDataManagerInterface;
 
 abstract class AbstractWPEntityMetaFieldDataManager implements FieldDataManagerInterface
 {
-    /**
-     * @var string
-     */
-    protected $metaKey;
+    protected string $metaKey;
 
-    /**
-     * @var bool
-     */
-    protected $isUniqueValue = true;
+    protected bool $isUniqueValue = true;
 
     protected const MODEL = null;
     protected const ID_KEY = null;

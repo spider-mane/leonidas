@@ -51,7 +51,7 @@ abstract class AbstractSubmenuPageModule extends AbstractModule implements Modul
 
         $request = $this->getServerRequest()->withAttribute('context', $context);
 
-        $this->addSubmenuPage($request);
+        $this->addSubmenuPage();
     }
 
     protected function addSubmenuPage()

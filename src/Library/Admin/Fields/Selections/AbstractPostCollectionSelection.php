@@ -8,10 +8,7 @@ use WP_Post;
 
 abstract class AbstractPostCollectionSelection extends AbstractPostSelectionProvider implements SelectionProviderInterface
 {
-    /**
-     * @var PostCollection
-     */
-    protected $collection;
+    protected PostCollection $collection;
 
     public function __construct(PostCollection $collection)
     {

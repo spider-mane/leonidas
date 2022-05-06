@@ -16,10 +16,7 @@ class MetaboxTest extends UnitTestCase
      */
     protected $tester;
 
-    /**
-     * @var Metabox
-     */
-    protected $metabox;
+    protected Metabox $metabox;
 
     protected function setUp(): void
     {

@@ -10,7 +10,7 @@ class MetaboxCollection implements MetaboxCollectionInterface
     /**
      * @var MetaboxInterface[]
      */
-    protected $metaboxes = [];
+    protected array $metaboxes = [];
 
     public function __construct(MetaboxInterface ...$metaboxes)
     {

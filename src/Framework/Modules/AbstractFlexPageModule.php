@@ -51,7 +51,7 @@ abstract class AbstractFlexPageModule extends AbstractModule implements ModuleIn
 
         $request = $this->getServerRequest()->withAttribute('context', $context);
 
-        $this->addFlexPage($request);
+        $this->addFlexPage();
     }
 
     protected function addFlexPage()

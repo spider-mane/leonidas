@@ -7,10 +7,7 @@ use WP_Post;
 
 abstract class AbstractPostTypeSelection extends AbstractPostSelectionProvider implements SelectionProviderInterface
 {
-    /**
-     * @var string
-     */
-    protected $postType;
+    protected string $postType;
 
     public function __construct(string $postType)
     {

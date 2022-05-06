@@ -6,10 +6,7 @@ use Leonidas\Contracts\Ui\ViewInterface;
 
 class BladeView implements ViewInterface
 {
-    /**
-     * @var string
-     */
-    protected $template;
+    protected string $template;
 
     public function __construct(string $template)
     {

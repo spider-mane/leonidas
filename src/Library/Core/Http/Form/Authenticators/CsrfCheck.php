@@ -8,10 +8,7 @@ use WebTheory\HttpPolicy\ServerRequestPolicyInterface;
 
 class CsrfCheck implements ServerRequestPolicyInterface
 {
-    /**
-     * @var CsrfManagerInterface
-     */
-    protected $token;
+    protected CsrfManagerInterface $token;
 
     public function __construct(CsrfManagerInterface $token)
     {

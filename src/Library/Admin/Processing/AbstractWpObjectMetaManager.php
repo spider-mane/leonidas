@@ -6,30 +6,15 @@ use Leonidas\Library\Admin\Notice\StandardAdminNotice;
 
 abstract class AbstractWpObjectMetaManager extends AbstractInputManager
 {
-    /**
-     * @var string
-     */
-    protected $metaKey;
+    protected string $metaKey;
 
-    /**
-     * @var string
-     */
-    protected $objectSubtype;
+    protected ?string $objectSubtype = null;
 
-    /**
-     * @var string
-     */
-    protected $dataType = 'string';
+    protected string $dataType = 'string';
 
-    /**
-     * @var string
-     */
-    protected $description;
+    protected ?string $description = null;
 
-    /**
-     * @var bool
-     */
-    protected $single;
+    protected ?bool $single = null;
 
     /**
      * @var string
@@ -41,15 +26,9 @@ abstract class AbstractWpObjectMetaManager extends AbstractInputManager
      */
     protected $authCallback;
 
-    /**
-     * @var bool
-     */
-    protected $showInRest;
+    protected ?bool $showInRest = null;
 
-    /**
-     * @var string
-     */
-    protected $capability = 'edit_posts';
+    protected string $capability = 'edit_posts';
 
     /**
      * @var string

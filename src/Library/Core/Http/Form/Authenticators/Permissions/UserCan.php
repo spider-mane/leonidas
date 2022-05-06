@@ -12,10 +12,7 @@ class UserCan extends AbstractUserPermissionsValidator implements ServerRequestP
      */
     protected $capability;
 
-    /**
-     * @var array
-     */
-    protected $args = [];
+    protected array $args = [];
 
     public function __construct(string $capability, ...$args)
     {

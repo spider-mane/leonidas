@@ -10,7 +10,7 @@ class AdminNoticeCollection implements AdminNoticeCollectionInterface
     /**
      * @var AdminNoticeInterface[]
      */
-    protected array $notices;
+    protected array $notices = [];
 
     public function __construct(AdminNoticeInterface ...$notices)
     {

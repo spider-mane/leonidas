@@ -10,7 +10,7 @@ class CompositePolicy implements ServerRequestPolicyInterface
     /**
      * @var ServerRequestPolicyInterface[]
      */
-    public $policies = [];
+    public array $policies = [];
 
     public function __construct(ServerRequestPolicyInterface ...$policies)
     {

@@ -10,7 +10,7 @@ class PostCollection
     /**
      * @var WP_Post[]
      */
-    protected $posts;
+    protected array $posts = [];
 
     /**
      * @param WP_Post $posts

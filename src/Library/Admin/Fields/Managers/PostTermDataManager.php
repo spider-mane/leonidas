@@ -11,15 +11,9 @@ class PostTermDataManager implements FieldDataManagerInterface
 {
     use ExpectsPostTrait;
 
-    /**
-     * @var string
-     */
-    protected $taxonomy;
+    protected string $taxonomy;
 
-    /**
-     * @var bool
-     */
-    protected $appendNewTerms = false;
+    protected bool $appendNewTerms = false;
 
     public function __construct(string $taxonomy, bool $appendNewTerms = false)
     {

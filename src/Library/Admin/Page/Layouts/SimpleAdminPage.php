@@ -22,7 +22,7 @@ class SimpleAdminPage extends AbstractPageLayout implements AdminPageLayoutInter
      *
      * @var AdminPageComponentInterface[]
      */
-    protected $components = [];
+    protected array $components = [];
 
     public function __construct(AdminPageComponentInterface ...$components)
     {

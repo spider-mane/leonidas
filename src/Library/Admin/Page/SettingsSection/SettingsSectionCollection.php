@@ -10,7 +10,7 @@ class SettingsSectionCollection implements SettingsSectionCollectionInterface
     /**
      * @var SettingsSectionInterface[]
      */
-    protected array $sections;
+    protected array $sections = [];
 
     public function __construct(SettingsSectionCollectionInterface ...$sections)
     {

@@ -6,15 +6,9 @@ use WebTheory\Html\Html;
 
 class Status
 {
-    /**
-     * @var string
-     */
-    protected $name;
+    protected string $name;
 
-    /**
-     * @var array
-     */
-    protected $options;
+    protected array $options = [];
 
     /**
      * @var object

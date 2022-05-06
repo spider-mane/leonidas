@@ -16,40 +16,22 @@ class FieldGrid implements MetaboxComponentInterface
     use CanBeRestrictedTrait;
     use RendersWithViewTrait;
 
-    /**
-     * @var array
-     */
-    protected $columns = [];
+    protected array $columns = [];
 
-    /**
-     * @var array
-     */
-    protected $rows = [];
+    protected array $rows = [];
 
     /**
      * @var FormFieldControllerInterface[]
      */
-    protected $fields = [];
+    protected array $fields = [];
 
-    /**
-     * @var array
-     */
-    protected $map = [];
+    protected array $map = [];
 
-    /**
-     * @var int
-     */
-    private $columnCount = 0;
+    private int $columnCount = 0;
 
-    /**
-     * @var int
-     */
-    protected $columnWidth;
+    protected ?int $columnWidth = null;
 
-    /**
-     * @var int
-     */
-    protected $rowPadding = 2;
+    protected int $rowPadding = 2;
 
     /**
      * @var int|bool

@@ -14,30 +14,18 @@ class StandardAdminNotice implements AdminNoticeInterface
     use CanBeRestrictedTrait;
     use RendersWithViewTrait;
 
-    /**
-     * @var string
-     */
-    protected $id;
+    protected string $id;
 
-    /**
-     * @var string
-     */
-    protected $message;
+    protected string $message;
 
-    /**
-     * @var bool
-     */
-    protected $dismissible = true;
+    protected bool $dismissible = true;
 
     /**
      * @var string
      */
     protected $type = 'error';
 
-    /**
-     * @var string
-     */
-    protected $screen;
+    protected ?string $screen = null;
 
     /**
      * @var null|int|int[]

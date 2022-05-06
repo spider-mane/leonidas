@@ -4,30 +4,18 @@ namespace Leonidas\Library\Core\Hook;
 
 class Filter
 {
-    /**
-     * @var string
-     */
-    protected $tag;
+    protected string $tag;
 
-    /**
-     * @var string
-     */
-    protected $id;
+    protected string $id;
 
     /**
      * @var callable
      */
     protected $callback;
 
-    /**
-     * @var int
-     */
-    protected $priority = 10;
+    protected int $priority = 10;
 
-    /**
-     * @var int
-     */
-    protected $acceptedArgs = 1;
+    protected int $acceptedArgs = 1;
 
     public const FILTER_PREFIX = 'listeners.filters';
 

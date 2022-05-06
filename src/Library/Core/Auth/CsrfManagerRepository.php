@@ -10,7 +10,7 @@ class CsrfManagerRepository implements CsrfManagerRepositoryInterface
     /**
      * @var CsrfManagerInterface[]
      */
-    protected $managers = [];
+    protected array $managers = [];
 
     public function __construct(CsrfManagerInterface ...$managers)
     {

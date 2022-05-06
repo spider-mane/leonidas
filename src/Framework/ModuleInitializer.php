@@ -11,20 +11,11 @@ use Leonidas\Framework\Exceptions\InvalidModuleException;
 
 class ModuleInitializer implements ModuleInitializerInterface
 {
-    /**
-     * @var WpExtensionInterface
-     */
-    protected $extension;
+    protected WpExtensionInterface $extension;
 
-    /**
-     * @var array
-     */
-    protected $modules;
+    protected array $modules = [];
 
-    /**
-     * @var array
-     */
-    protected $validModules = [
+    protected array $validModules = [
         ModuleInterface::class,
         PluginModuleInterface::class,
         ThemeModuleInterface::class,

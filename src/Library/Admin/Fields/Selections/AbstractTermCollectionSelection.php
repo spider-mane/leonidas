@@ -8,10 +8,7 @@ use WP_Term;
 
 abstract class AbstractTermCollectionSelection extends AbstractTermSelectionProvider implements SelectionProviderInterface
 {
-    /**
-     * @var TermCollection
-     */
-    protected $collection;
+    protected TermCollection $collection;
 
     public function __construct(TermCollection $collection)
     {

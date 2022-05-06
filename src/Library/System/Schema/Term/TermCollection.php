@@ -10,7 +10,7 @@ class TermCollection
     /**
      * @var WP_Term[]
      */
-    protected $terms;
+    protected array $terms = [];
 
     public function __construct(WP_Term ...$terms)
     {

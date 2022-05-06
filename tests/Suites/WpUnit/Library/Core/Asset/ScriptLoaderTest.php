@@ -14,10 +14,7 @@ class ScriptLoaderTest extends WpLoadedTestCase
 {
     use ProphecyTrait;
 
-    /**
-     * @var ScriptLoader
-     */
-    protected $loader;
+    protected ScriptLoader $loader;
 
     /**
      * @return ScriptInterface|ScriptInterface[]

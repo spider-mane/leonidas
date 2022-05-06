@@ -11,10 +11,7 @@ use Tests\Support\UnitTestCase;
 
 class StyleBuilderTest extends UnitTestCase
 {
-    /**
-     * @var StyleBuilder
-     */
-    protected $styleBuilder;
+    protected StyleBuilder $styleBuilder;
 
     protected function setUp(): void
     {

@@ -14,15 +14,9 @@ class StandardSettingsPage extends AbstractPageLayout implements AdminPageLayout
     use CanBeRestrictedTrait;
     use RendersWithViewTrait;
 
-    /**
-     * @var string
-     */
-    protected $page;
+    protected string $page;
 
-    /**
-     * @var string
-     */
-    protected $optionGroup;
+    protected string $optionGroup;
 
     public function __construct(string $page, string $optionGroup)
     {

@@ -14,25 +14,16 @@ class Section implements MetaboxComponentInterface
     use CanBeRestrictedTrait;
     use RendersWithViewTrait;
 
-    /**
-     * @var string
-     */
-    protected $title;
+    protected string $title;
 
     /**
      * @var MetaboxComponentInterface[]
      */
-    protected $components = [];
+    protected array $components = [];
 
-    /**
-     * @var int
-     */
-    protected $padding = 2;
+    protected int $padding = 2;
 
-    /**
-     * @var bool
-     */
-    protected $isFieldset = true;
+    protected bool $isFieldset = true;
 
     public function __construct($title)
     {

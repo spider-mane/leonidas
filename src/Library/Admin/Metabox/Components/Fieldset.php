@@ -13,45 +13,28 @@ class Fieldset implements MetaboxComponentInterface
 {
     use CanBeRestrictedTrait;
 
-    /**
-     * @var string
-     */
-    protected $title;
+    protected string $title;
 
-    /**
-     * @var array
-     */
-    protected $fields = [];
+    protected array $fields = [];
 
     /**
      * @var AbstractWpAdminFormSubmissionManager
      */
     protected $formController;
 
-    /**
-     * @var MetaboxComponentInterface
-     */
-    protected $container;
+    protected MetaboxComponentInterface $container;
 
     /**
      * horizontal padding for each field
-     *
-     * @var int
      */
-    protected $rowPadding = 2;
+    protected int $rowPadding = 2;
 
-    /**
-     * @var array
-     */
-    protected $fieldOptions = [
+    protected array $fieldOptions = [
         'submit_button' => null,
         'hidden_input' => null,
     ];
 
-    /**
-     * @var array
-     */
-    protected $containerOptions = [
+    protected array $containerOptions = [
         'padding' => 2,
     ];
 

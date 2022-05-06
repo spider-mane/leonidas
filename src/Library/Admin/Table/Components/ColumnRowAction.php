@@ -12,25 +12,13 @@ class ColumnRowAction implements ColumnRowActionInterface
     use ElementConstructorTrait;
     use CanBeRestrictedTrait;
 
-    /**
-     * @var string
-     */
-    protected $link;
+    protected string $link;
 
-    /**
-     * @var string
-     */
-    protected $title;
+    protected string $title;
 
-    /**
-     * @var string
-     */
-    protected $ariaLabel = '%s';
+    protected string $ariaLabel = '%s';
 
-    /**
-     * @var array
-     */
-    protected $attributes = [];
+    protected array $attributes = [];
 
     public function __construct(string $title, string $link)
     {

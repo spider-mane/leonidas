@@ -21,10 +21,7 @@ class ScriptTest extends UnitTestCase
      */
     protected $tester;
 
-    /**
-     * @var Script
-     */
-    protected $script;
+    protected Script $script;
 
     protected function setUp(): void
     {

@@ -10,7 +10,7 @@ class SettingsFieldCollection implements SettingsFieldCollectionInterface
     /**
      * @var SettingsFieldInterface[]
      */
-    protected array $fields;
+    protected array $fields = [];
 
     public function __construct(SettingsFieldInterface ...$fields)
     {

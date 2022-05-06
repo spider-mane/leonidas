@@ -11,22 +11,15 @@ abstract class AbstractAdminField implements AdminFieldInterface
 {
     /**
      * label
-     *
-     * @var string
      */
-    protected $label;
+    protected ?string $label = null;
 
     /**
      * description
-     *
-     * @var string
      */
-    protected $description;
+    protected ?string $description = null;
 
-    /**
-     * @var FormFieldControllerInterface
-     */
-    protected $formFieldController;
+    protected FormFieldControllerInterface $formFieldController;
 
     public function __construct(FormFieldControllerInterface $formFieldController)
     {

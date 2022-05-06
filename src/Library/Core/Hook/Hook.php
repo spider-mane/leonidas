@@ -6,15 +6,9 @@ use Leonidas\Contracts\Hook\HookInterface;
 
 class Hook implements HookInterface
 {
-    /**
-     * @var string
-     */
-    protected $tag;
+    protected string $tag;
 
-    /**
-     * @var array
-     */
-    protected $args;
+    protected array $args = [];
 
     public function __construct(string $tag, array $args)
     {

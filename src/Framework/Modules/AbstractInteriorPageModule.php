@@ -51,7 +51,7 @@ abstract class AbstractInteriorPageModule extends AbstractModule implements Modu
 
         $request = $this->getServerRequest()->withAttribute('context', $context);
 
-        $this->addInteriorPage($request);
+        $this->addInteriorPage();
     }
 
     protected function addInteriorPage()

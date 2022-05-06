@@ -6,15 +6,9 @@ use Leonidas\Contracts\Admin\Components\AdminPageLayoutInterface;
 
 abstract class AbstractPageLayout implements AdminPageLayoutInterface
 {
-    /**
-     * @var string
-     */
-    protected $title;
+    protected ?string $title = null;
 
-    /**
-     * @var string
-     */
-    protected $description;
+    protected ?string $description = null;
 
     /**
      * Get the value of title

@@ -7,7 +7,7 @@ use RuntimeException;
 
 class InvalidModuleException extends RuntimeException
 {
-    protected $interface = ModuleInterface::class;
+    protected string $interface = ModuleInterface::class;
 
     public function __construct(string $module)
     {

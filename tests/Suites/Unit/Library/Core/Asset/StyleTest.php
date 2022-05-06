@@ -21,10 +21,7 @@ class StyleTest extends UnitTestCase
      */
     protected $tester;
 
-    /**
-     * @var Style
-     */
-    protected $style;
+    protected Style $style;
 
     protected function setUp(): void
     {

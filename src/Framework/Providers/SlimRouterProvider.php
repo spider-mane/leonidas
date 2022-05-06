@@ -14,7 +14,7 @@ class SlimRouterProvider extends AbstractServiceFactory implements ServiceFactor
 {
     public function create(ContainerInterface $container, array $args = []): RouteCollectorProxy
     {
-        $routeCollector = $container->get(RouteCollectorInterface::class)
+        $routeCollector = $container->has(RouteCollectorInterface::class)
             ? $container->get(RouteCollectorInterface::class)
             : null;
 

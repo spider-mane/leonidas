@@ -9,7 +9,7 @@ class PhpView implements ViewInterface
     /**
      * @var string;
      */
-    protected $file;
+    protected string $file;
 
     public function __construct(string $file)
     {

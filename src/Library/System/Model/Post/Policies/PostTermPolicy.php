@@ -11,20 +11,14 @@ class PostTermPolicy implements ServerRequestPolicyInterface
 {
     use ExpectsPostTrait;
 
-    /**
-     * @var string
-     */
-    protected $taxonomy;
+    protected string $taxonomy;
 
     /**
      * @var array<int,int>
      */
-    protected $terms = [];
+    protected array $terms = [];
 
-    /**
-     * @var bool
-     */
-    protected $matchAll = false;
+    protected bool $matchAll = false;
 
     public function __construct(string $taxonomy, int ...$terms)
     {

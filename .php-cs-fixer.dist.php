@@ -6,6 +6,7 @@ use PhpCsFixer\Finder;
 $finder = Finder::create()
   ->in(['src', 'boot', 'tests', '.playground'])
   ->exclude(['assets', 'bin', 'build', 'config', 'vendor', 'wordpress'])
+  ->append(['rector.php'])
   ->name('*.php')
   ->ignoreDotFiles(true)
   ->ignoreVCS(true);
