@@ -7,5 +7,5 @@ use Leonidas\Library\Admin\Views\AbstractLeonidasTwigView;
 
 class FieldGridView extends AbstractLeonidasTwigView implements ViewInterface
 {
-    protected $template = 'metabox/components/field-grid.twig';
+    protected string $template = 'metabox/components/field-grid.twig';
 }

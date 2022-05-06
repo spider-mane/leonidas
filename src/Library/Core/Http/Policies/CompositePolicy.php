@@ -2,8 +2,8 @@
 
 namespace Leonidas\Library\Core\Http\Policies;
 
-use Leonidas\Contracts\Http\Policy\ServerRequestPolicyInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use WebTheory\HttpPolicy\ServerRequestPolicyInterface;
 
 class CompositePolicy implements ServerRequestPolicyInterface
 {

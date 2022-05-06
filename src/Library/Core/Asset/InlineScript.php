@@ -2,8 +2,8 @@
 
 namespace Leonidas\Library\Core\Asset;
 
-use Leonidas\Contracts\Http\Policy\ServerRequestPolicyInterface;
 use Leonidas\Contracts\Ui\Asset\InlineScriptInterface;
+use WebTheory\HttpPolicy\ServerRequestPolicyInterface;
 
 class InlineScript extends AbstractInlineAsset implements InlineScriptInterface
 {

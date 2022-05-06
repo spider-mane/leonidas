@@ -7,8 +7,5 @@ use Leonidas\Library\Admin\Views\AbstractLeonidasTwigView;
 
 class SimpleAdminPageView extends AbstractLeonidasTwigView implements ViewInterface
 {
-    /**
-     * @var string
-     */
-    protected $template = 'page/layouts/admin-page.twig';
+    protected string $template = 'page/layouts/admin-page.twig';
 }

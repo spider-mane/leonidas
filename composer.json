@@ -127,6 +127,7 @@
     "namespace": "composer dump-autoload -o",
     "play": "php .playground/console.php",
     "rector": "vendor/bin/rector process",
+    "rector:d": "@rector --dry-run",
     "shell": "@wp shell",
     "test:acceptance": "vendor/bin/phpunit --testsuite acceptance",
     "test:functional": "vendor/bin/phpunit --testsuite functional",
@@ -138,7 +139,6 @@
     "build": [
       "@asset run build",
       "@namespace",
-      "@rector",
       "@style",
       "@check",
       "@analyze",

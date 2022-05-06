@@ -4,8 +4,8 @@ namespace Leonidas\Library\Admin\Page\SettingsSection;
 
 use Leonidas\Contracts\Admin\Components\SettingsSectionBuilderInterface;
 use Leonidas\Contracts\Admin\Components\SettingsSectionInterface;
-use Leonidas\Contracts\Http\Policy\ServerRequestPolicyInterface;
 use Leonidas\Library\Admin\Page\SettingsSection\Traits\HasSettingsSectionDataTrait;
+use WebTheory\HttpPolicy\ServerRequestPolicyInterface;
 
 class SettingsSectionBuilder implements SettingsSectionBuilderInterface
 {

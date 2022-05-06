@@ -3,16 +3,16 @@
 namespace Leonidas\Library\Core\Http\Form\Authenticators\Permissions;
 
 use Psr\Http\Message\ServerRequestInterface;
-use WebTheory\Saveyour\Contracts\FormValidatorInterface;
+use WebTheory\HttpPolicy\ServerRequestPolicyInterface;
 
-abstract class AbstractUserPermissionsValidator implements FormValidatorInterface
+abstract class AbstractUserPermissionsValidator implements ServerRequestPolicyInterface
 {
     /**
      * @var string
      */
     protected $capability;
 
-    public function isValid(ServerRequestInterface $request): bool
+    public function approvesRequest(ServerRequestInterface $request): bool
     {
         return current_user_can($this->capability, ...$this->getCapArgs($request));
     }

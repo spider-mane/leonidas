@@ -2,9 +2,9 @@
 
 namespace Leonidas\Library\Core\Asset;
 
-use Leonidas\Contracts\Http\Policy\ServerRequestPolicyInterface;
 use Leonidas\Library\Core\Http\Policies\NoPolicy;
 use Psr\Http\Message\ServerRequestInterface;
+use WebTheory\HttpPolicy\ServerRequestPolicyInterface;
 
 class AbstractInlineAsset
 {

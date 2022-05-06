@@ -2,7 +2,7 @@
 
 namespace Leonidas\Contracts\Admin\Components;
 
-use Leonidas\Contracts\Http\Policy\ServerRequestPolicyInterface;
+use WebTheory\HttpPolicy\ServerRequestPolicyInterface;
 
 interface MetaboxBuilderInterface
 {

@@ -2,7 +2,7 @@
 
 namespace Leonidas\Library\Core\Asset\Traits;
 
-use Leonidas\Contracts\Http\Policy\ServerRequestPolicyInterface;
+use WebTheory\HttpPolicy\ServerRequestPolicyInterface;
 
 trait HasAssetDataTrait
 {

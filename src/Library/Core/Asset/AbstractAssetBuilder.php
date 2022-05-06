@@ -2,8 +2,8 @@
 
 namespace Leonidas\Library\Core\Asset;
 
-use Leonidas\Contracts\Http\Policy\ServerRequestPolicyInterface;
 use Leonidas\Library\Core\Asset\Traits\HasAssetDataTrait;
+use WebTheory\HttpPolicy\ServerRequestPolicyInterface;
 
 abstract class AbstractAssetBuilder
 {

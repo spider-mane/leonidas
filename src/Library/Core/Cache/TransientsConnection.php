@@ -11,19 +11,20 @@ class TransientsConnection implements CacheInterface
         return get_transient($$key) ?? $default;
     }
 
-    public function set($key, $value, $ttl = null)
+    public function set($key, $value, $ttl = null): bool
     {
-        set_transient($$key, $value, $ttl);
+        return set_transient($key, $value, $ttl);
     }
 
-    public function delete($key)
+    public function delete($key): bool
     {
-        delete_transient($$key);
+        return delete_transient($key);
     }
 
-    public function clear()
+    public function clear(): bool
     {
         // todo: find reliable way to implement this method
+        return false;
     }
 
     public function getMultiple($keys, $default = null)
@@ -37,21 +38,25 @@ class TransientsConnection implements CacheInterface
         return $values;
     }
 
-    public function setMultiple($values, $ttl = null)
+    public function setMultiple($values, $ttl = null): bool
     {
         foreach ($values as $key => $value) {
             $this->set($key, $value, $ttl);
         }
+
+        return true;
     }
 
-    public function deleteMultiple($keys)
+    public function deleteMultiple($keys): bool
     {
         foreach ($keys as $key) {
             $this->delete($key);
         }
+
+        return true;
     }
 
-    public function has($key)
+    public function has($key): bool
     {
         return (bool) $this->get($key);
     }

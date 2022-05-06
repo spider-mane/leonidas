@@ -20,19 +20,20 @@ class TransientsChannel extends TransientsConnection implements CacheInterface
         return parent::get($this->identifier($key), $default);
     }
 
-    public function set($key, $value, $ttl = null)
+    public function set($key, $value, $ttl = null): bool
     {
-        parent::set($this->identifier($key), $value, $ttl);
+        return parent::set($this->identifier($key), $value, $ttl);
     }
 
-    public function delete($key)
+    public function delete($key): bool
     {
-        parent::delete($this->identifier($key));
+        return parent::delete($this->identifier($key));
     }
 
-    public function clear()
+    public function clear(): bool
     {
         // todo: find reliable way to implement this method
+        return false;
     }
 
     protected function identifier(string $key)

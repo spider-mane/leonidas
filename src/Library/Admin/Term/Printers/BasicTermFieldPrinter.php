@@ -42,18 +42,11 @@ class BasicTermFieldPrinter implements TermFieldPrinterInterface
     protected function defineView(ServerRequestInterface $request): ViewInterface
     {
         switch ($request->getAttribute('context')) {
-
             case static::ADD_TERM_SCREEN:
-                $view = new AddTermFieldView();
-
-                break;
+                return new AddTermFieldView();
 
             case static::EDIT_TERM_SCREEN:
-                $view = new EditTermFieldView();
-
-                break;
+                return new EditTermFieldView();
         }
-
-        return $view;
     }
 }

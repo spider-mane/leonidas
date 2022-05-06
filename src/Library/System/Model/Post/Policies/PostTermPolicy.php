@@ -2,9 +2,9 @@
 
 namespace Leonidas\Library\System\Model\Post\Policies;
 
-use Leonidas\Contracts\Http\Policy\ServerRequestPolicyInterface;
 use Leonidas\Traits\ExpectsPostTrait;
 use Psr\Http\Message\ServerRequestInterface;
+use WebTheory\HttpPolicy\ServerRequestPolicyInterface;
 use WP_Post;
 
 class PostTermPolicy implements ServerRequestPolicyInterface

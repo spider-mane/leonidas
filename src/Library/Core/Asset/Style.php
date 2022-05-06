@@ -2,9 +2,9 @@
 
 namespace Leonidas\Library\Core\Asset;
 
-use Leonidas\Contracts\Http\Policy\ServerRequestPolicyInterface;
 use Leonidas\Contracts\Ui\Asset\StyleInterface;
 use Leonidas\Library\Core\Asset\Traits\HasStyleDataTrait;
+use WebTheory\HttpPolicy\ServerRequestPolicyInterface;
 
 class Style extends AbstractAsset implements StyleInterface
 {

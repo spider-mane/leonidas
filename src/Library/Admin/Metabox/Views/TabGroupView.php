@@ -7,5 +7,5 @@ use Leonidas\Library\Admin\Views\AbstractLeonidasTwigView;
 
 class TabGroupView extends AbstractLeonidasTwigView implements ViewInterface
 {
-    protected $template = 'metabox/components/tab-group.twig';
+    protected string $template = 'metabox/components/tab-group.twig';
 }

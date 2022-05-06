@@ -31,7 +31,7 @@ class AdminNoticeHandler implements AdminNoticeHandlerInterface
             ->toArray();
 
         if (!$notices) {
-            return;
+            return '';
         }
 
         $printer = new DeferrableAdminNoticePrinter($this->printer);

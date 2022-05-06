@@ -3,6 +3,8 @@
 namespace Leonidas\Library\Admin\Fields\Types;
 
 use WebTheory\Saveyour\Contracts\Field\FormFieldInterface;
+use WebTheory\Saveyour\Contracts\Field\Selection\SelectionProviderInterface;
+use WebTheory\Saveyour\Field\Selection\ChecklistSelectionFromMap;
 use WebTheory\Saveyour\Field\Type\Abstracts\AbstractCompositeSelectionField;
 
 class WpChecklist extends AbstractCompositeSelectionField implements FormFieldInterface
@@ -10,5 +12,10 @@ class WpChecklist extends AbstractCompositeSelectionField implements FormFieldIn
     protected function renderHtmlMarkup(): string
     {
         return '';
+    }
+
+    protected function getSelectionProvider(): SelectionProviderInterface
+    {
+        return new ChecklistSelectionFromMap([]);
     }
 }

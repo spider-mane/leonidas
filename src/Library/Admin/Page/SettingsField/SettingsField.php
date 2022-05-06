@@ -3,14 +3,14 @@
 namespace Leonidas\Library\Admin\Page\SettingsField;
 
 use Leonidas\Contracts\Admin\Components\SettingsFieldInterface;
-use Leonidas\Contracts\Http\Policy\ServerRequestPolicyInterface;
 use Leonidas\Library\Admin\Page\SettingsField\Traits\HasSettingsFieldDataTrait;
 use Leonidas\Traits\CanBeRestrictedTrait;
 use Psr\Http\Message\ServerRequestInterface;
 use WebTheory\Html\Html;
-use WebTheory\Saveyour\Contracts\DataFormatterInterface;
-use WebTheory\Saveyour\Contracts\FormFieldInterface;
-use WebTheory\Saveyour\Fields\Text;
+use WebTheory\HttpPolicy\ServerRequestPolicyInterface;
+use WebTheory\Saveyour\Contracts\Field\FormFieldInterface;
+use WebTheory\Saveyour\Contracts\Formatting\DataFormatterInterface;
+use WebTheory\Saveyour\Field\Type\Text;
 
 class SettingsField implements SettingsFieldInterface
 {

@@ -6,10 +6,7 @@ use Leonidas\Library\Admin\Proxies\Twig;
 
 abstract class AbstractLeonidasTwigView
 {
-    /**
-     * @var string
-     */
-    protected $template;
+    protected string $template;
 
     public function render(array $context = []): string
     {

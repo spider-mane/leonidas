@@ -5,9 +5,9 @@ parameters:
 
   paths:
     - src
-    - boot
-    - config
-    - tests
+    # - boot
+    # - config
+    # - tests
 
   bootstrapFiles:
     # - boot/constants.php

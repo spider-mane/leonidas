@@ -4,9 +4,9 @@ namespace Leonidas\Library\Core\Http\Form\Authenticators;
 
 use Leonidas\Contracts\Auth\CsrfManagerInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use WebTheory\Saveyour\Contracts\FormValidatorInterface;
+use WebTheory\HttpPolicy\ServerRequestPolicyInterface;
 
-class CsrfCheck implements FormValidatorInterface
+class CsrfCheck implements ServerRequestPolicyInterface
 {
     /**
      * @var CsrfManagerInterface
@@ -18,7 +18,7 @@ class CsrfCheck implements FormValidatorInterface
         $this->token = $token;
     }
 
-    public function isValid(ServerRequestInterface $request): bool
+    public function approvesRequest(ServerRequestInterface $request): bool
     {
         return $this->token->validate($request);
     }

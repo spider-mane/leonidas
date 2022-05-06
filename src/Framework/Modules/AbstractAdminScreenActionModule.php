@@ -6,7 +6,7 @@ use Leonidas\Contracts\Extension\ModuleInterface;
 use Leonidas\Traits\Hooks\TargetsAdminInitHook;
 use Leonidas\Traits\Hooks\TargetsCurrentScreenHook;
 use Psr\Http\Message\ServerRequestInterface;
-use WebTheory\Saveyour\Request;
+use WebTheory\Saveyour\Http\Request;
 use WP_Screen;
 
 abstract class AbstractAdminScreenActionModule extends AbstractModule implements ModuleInterface

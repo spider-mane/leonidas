@@ -2,9 +2,9 @@
 
 namespace Leonidas\Library\Admin\Page\SettingsField\Traits;
 
-use Leonidas\Contracts\Http\Policy\ServerRequestPolicyInterface;
-use WebTheory\Saveyour\Contracts\DataFormatterInterface;
-use WebTheory\Saveyour\Contracts\FormFieldInterface;
+use WebTheory\HttpPolicy\ServerRequestPolicyInterface;
+use WebTheory\Saveyour\Contracts\Field\FormFieldInterface;
+use WebTheory\Saveyour\Contracts\Formatting\DataFormatterInterface;
 
 trait HasSettingsFieldDataTrait
 {

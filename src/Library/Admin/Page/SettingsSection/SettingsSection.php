@@ -3,11 +3,11 @@
 namespace Leonidas\Library\Admin\Page\SettingsSection;
 
 use Leonidas\Contracts\Admin\Components\SettingsSectionInterface;
-use Leonidas\Contracts\Http\Policy\ServerRequestPolicyInterface;
 use Leonidas\Library\Admin\Page\SettingsSection\Traits\HasSettingsSectionDataTrait;
 use Leonidas\Traits\CanBeRestrictedTrait;
 use Psr\Http\Message\ServerRequestInterface;
 use WebTheory\Html\Html;
+use WebTheory\HttpPolicy\ServerRequestPolicyInterface;
 
 class SettingsSection implements SettingsSectionInterface
 {

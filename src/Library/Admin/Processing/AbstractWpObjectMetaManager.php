@@ -282,14 +282,12 @@ abstract class AbstractWpObjectMetaManager extends AbstractInputManager
         );
     }
 
-    protected function handleRuleViolation($rule)
+    protected function handleRuleViolation($rule): void
     {
         $alert = $this->alerts[$rule] ?? null;
 
         if ($alert) {
             new StandardAdminNotice($alert);
         }
-
-        return $this;
     }
 }

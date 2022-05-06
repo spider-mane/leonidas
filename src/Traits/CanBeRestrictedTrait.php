@@ -2,8 +2,8 @@
 
 namespace Leonidas\Traits;
 
-use Leonidas\Contracts\Http\Policy\ServerRequestPolicyInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use WebTheory\HttpPolicy\ServerRequestPolicyInterface;
 
 trait CanBeRestrictedTrait
 {

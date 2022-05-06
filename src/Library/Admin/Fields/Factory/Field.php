@@ -2,8 +2,6 @@
 
 namespace Leonidas\Library\Admin\Fields\Factory;
 
-use Leonidas\Library\Admin\Fields\Factory\DataManager;
-use Leonidas\Library\Admin\Fields\Factory\FormField;
 use WebTheory\Saveyour\Contracts\Factory\FieldDataManagerResolverFactoryInterface;
 use WebTheory\Saveyour\Contracts\Factory\FormFieldResolverFactoryInterface;
 use WebTheory\Saveyour\Factory\SimpleFieldFactory;

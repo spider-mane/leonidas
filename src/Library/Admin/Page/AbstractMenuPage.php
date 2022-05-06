@@ -40,7 +40,7 @@ abstract class AbstractMenuPage extends AbstractAdminPage
         return $this->menuTitle;
     }
 
-    public function getPosition(): ?int
+    public function getPosition(): int
     {
         return $this->position;
     }

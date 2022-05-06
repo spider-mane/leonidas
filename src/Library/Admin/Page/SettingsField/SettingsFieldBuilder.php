@@ -4,10 +4,10 @@ namespace Leonidas\Library\Admin\Page\SettingsField;
 
 use Leonidas\Contracts\Admin\Components\SettingsFieldBuilderInterface;
 use Leonidas\Contracts\Admin\Components\SettingsFieldInterface;
-use Leonidas\Contracts\Http\Policy\ServerRequestPolicyInterface;
 use Leonidas\Library\Admin\Page\SettingsField\Traits\HasSettingsFieldDataTrait;
-use WebTheory\Saveyour\Contracts\FormFieldInterface;
-use WebTheory\Saveyour\Contracts\InputFormatterInterface;
+use WebTheory\HttpPolicy\ServerRequestPolicyInterface;
+use WebTheory\Saveyour\Contracts\Field\FormFieldInterface;
+use WebTheory\Saveyour\Contracts\Formatting\InputFormatterInterface;
 
 class SettingsFieldBuilder implements SettingsFieldBuilderInterface
 {

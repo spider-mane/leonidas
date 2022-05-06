@@ -6,26 +6,19 @@ use Leonidas\Contracts\Admin\Screen\ScreenActionInterface;
 
 class ScreenAction implements ScreenActionInterface
 {
-    /**
-     * @var array
-     */
-    protected $base;
+    protected array $base;
 
     /**
      * @var callable
      */
     protected $callback;
 
-    /**
-     * @var array
-     */
-    protected $screens;
+    protected array $screens;
 
     /**
      * ajax actions that callback
-     * @var array
      */
-    protected $actions;
+    protected array $actions;
 
     protected function __construct($base, array $screens, callable $callback, array $actions = [])
     {
@@ -33,5 +26,25 @@ class ScreenAction implements ScreenActionInterface
         $this->screens = $screens;
         $this->callback = $callback;
         $this->actions = $actions;
+    }
+
+    public function getScreens(): array
+    {
+        return $this->screens;
+    }
+
+    public function getScreenMap(): array
+    {
+        return $this->base;
+    }
+
+    public function getAjaxActions(): array
+    {
+        return $this->actions;
+    }
+
+    public function doScreenAction(): void
+    {
+        ($this->callback)();
     }
 }

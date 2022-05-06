@@ -9,22 +9,22 @@ use Psr\EventDispatcher\ListenerProviderInterface;
 class ListenerProvider implements ListenerProviderInterface
 {
     /**
-     * @var ListenerInterface[]
+     * @var array<int,ListenerInterface>
      */
-    protected $listeners;
+    protected array $listeners = [];
 
     public function addListener(ListenerInterface $listener)
     {
         $this->listeners[$listener->getFeatureGroup()] = $listener;
     }
 
-    public function getListenersForEvent(HookInterface $hook): iterable
+    public function getListenersForEvent(object $hook): iterable
     {
         $listeners = [];
 
         foreach ($this->listeners as $listener) {
             if ($this->shouldRunListener($hook, $listener)) {
-                $listeners[] = $listener;
+                $listeners[] = $listener->getCallback();
             }
         }
 

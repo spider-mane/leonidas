@@ -3,9 +3,9 @@
 namespace Leonidas\Library\Core\Http\Form\Authenticators\Permissions;
 
 use Psr\Http\Message\ServerRequestInterface;
-use WebTheory\Saveyour\Contracts\FormValidatorInterface;
+use WebTheory\HttpPolicy\ServerRequestPolicyInterface;
 
-class UserCan extends AbstractUserPermissionsValidator implements FormValidatorInterface
+class UserCan extends AbstractUserPermissionsValidator implements ServerRequestPolicyInterface
 {
     /**
      * @var string

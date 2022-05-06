@@ -2,11 +2,11 @@
 
 namespace Leonidas\Library\Core\Asset;
 
-use Leonidas\Contracts\Http\Policy\ServerRequestPolicyInterface;
 use Leonidas\Contracts\Ui\Asset\AssetInterface;
 use Leonidas\Library\Core\Asset\Traits\HasAssetDataTrait;
 use Leonidas\Library\Core\Http\Policies\NoPolicy;
 use Psr\Http\Message\ServerRequestInterface;
+use WebTheory\HttpPolicy\ServerRequestPolicyInterface;
 
 abstract class AbstractAsset implements AssetInterface
 {

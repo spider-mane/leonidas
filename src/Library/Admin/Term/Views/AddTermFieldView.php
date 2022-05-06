@@ -7,5 +7,5 @@ use Leonidas\Library\Admin\Views\AbstractLeonidasTwigView;
 
 class AddTermFieldView extends AbstractLeonidasTwigView implements ViewInterface
 {
-    protected $template = 'screens/term/components/add-field.twig';
+    protected string $template = 'screens/term/components/add-field.twig';
 }

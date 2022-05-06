@@ -51,7 +51,7 @@ class StandardAdminNotice implements AdminNoticeInterface
      * @param string $message
      * @param string $id
      */
-    public function __construct(string $message, string $id = '', ?int $users)
+    public function __construct(string $message, string $id = '', ?int $users = null)
     {
         $this->id = $id;
         $this->message = $message;
