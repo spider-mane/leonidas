@@ -30,11 +30,14 @@ class TagCollection extends AbstractModelCollection implements TagCollectionInte
         return $this->kernel->fetch('slug');
     }
 
-    public function add(TagInterface $tag): TagCollectionInterface
+    public function add(TagInterface $tag): void
     {
         $this->kernel->insert($tag);
+    }
 
-        return $this;
+    public function collect(TagInterface ...$tags): void
+    {
+        $this->kernel->collect($tags);
     }
 
     public function merge(TagCollectionInterface $tags): TagCollectionInterface

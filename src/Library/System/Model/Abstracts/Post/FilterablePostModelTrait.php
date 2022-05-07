@@ -2,11 +2,9 @@
 
 namespace Leonidas\Library\System\Model\Abstracts\Post;
 
-use WP_Post;
-
 trait FilterablePostModelTrait
 {
-    protected WP_Post $post;
+    use MappedToWpPostTrait;
 
     public function getFilter(): string
     {

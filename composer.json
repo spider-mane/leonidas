@@ -71,6 +71,7 @@
     "phpmailer/phpmailer": "^6.6",
     "phpoption/phpoption": "^1.8",
     "phpspec/prophecy-phpunit": "^2.0",
+    "phpstan/extension-installer": "^1.1",
     "phpstan/phpstan": "^1.6",
     "phpunit/phpunit": "^9.5",
     "phpunit/phpunit-selenium": "^9.0",
@@ -93,6 +94,7 @@
     "symfony/var-dumper": "^5.4",
     "symfony/var-exporter": "^5.4",
     "symfony/yaml": "^5.4",
+    "szepeviktor/phpstan-wordpress": "^1.1",
     "vimeo/psalm": "^4.22",
     "vlucas/phpdotenv": "^5.4",
     "webtheory/exterminate": "@stable",
@@ -140,14 +142,14 @@
       "@asset run build",
       "@namespace",
       "@style",
-      "@check",
       "@analyze",
       "@inspect",
       "@test"
     ],
     "style": [
       "vendor/bin/php-cs-fixer fix --verbose",
-      "vendor/bin/phpcbf"
+      "vendor/bin/phpcbf",
+      "@check"
     ],
     "setup": [
       "composer install",
@@ -183,7 +185,8 @@
     "allow-plugins": {
       "composer/installers": true,
       "composer/package-versions-deprecated": true,
-      "koodimonni/composer-dropin-installer": true
+      "koodimonni/composer-dropin-installer": true,
+      "phpstan/extension-installer": true
     }
   },
   "extra": {

@@ -8,13 +8,18 @@ use WP_Term;
 
 trait TermModelTrait
 {
-    protected WP_Term $term;
+    use MappedToWpTermTrait;
 
     protected TaxonomyInterface $taxonomy;
 
     public function getId(): int
     {
         return $this->term->term_id ?? 0;
+    }
+
+    public function getCore(): WP_Term
+    {
+        return $this->term;
     }
 
     public function getName(): string

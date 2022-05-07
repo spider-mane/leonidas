@@ -3,8 +3,10 @@
 namespace Leonidas\Library\System\Model\Post\Abstracts;
 
 use Leonidas\Contracts\System\Model\Category\CategoryCollectionInterface;
+use Leonidas\Contracts\System\Model\Category\CategoryInterface;
 use Leonidas\Contracts\System\Model\Post\Status\PostStatusInterface;
 use Leonidas\Contracts\System\Model\Tag\TagCollectionInterface;
+use Leonidas\Contracts\System\Model\Tag\TagInterface;
 
 trait MutablePostTrait
 {
@@ -31,9 +33,16 @@ trait MutablePostTrait
         return $this;
     }
 
-    public function addCategories(CategoryCollectionInterface $categories): self
+    public function addCategories(CategoryInterface ...$categories): self
     {
-        $this->setCategories($this->categories->merge($categories));
+        $this->getCategories()->collect(...$categories);
+
+        return $this;
+    }
+
+    public function mergeCategories(CategoryCollectionInterface $categories): self
+    {
+        $this->getCategories()->collect(...$categories->values());
 
         return $this;
     }
@@ -45,9 +54,16 @@ trait MutablePostTrait
         return $this;
     }
 
-    public function addTags(TagCollectionInterface $tags): self
+    public function addTags(TagInterface ...$tags): self
     {
-        $this->setTags($this->tags->merge($tags));
+        $this->getTags()->collect(...$tags);
+
+        return $this;
+    }
+
+    public function mergeTags(TagCollectionInterface $tags): self
+    {
+        $this->getTags()->collect(...$tags->values());
 
         return $this;
     }

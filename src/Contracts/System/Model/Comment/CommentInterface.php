@@ -6,6 +6,7 @@ use DateTimeInterface;
 use Leonidas\Contracts\System\Model\HierarchicalInterface;
 use Leonidas\Contracts\System\Model\Post\PostInterface;
 use Leonidas\Contracts\System\Model\User\UserInterface;
+use WP_Comment;
 
 interface CommentInterface extends HierarchicalInterface
 {
@@ -44,4 +45,6 @@ interface CommentInterface extends HierarchicalInterface
     public function getApprovalStatus(): string;
 
     public function getType(): string;
+
+    public function getCore(): WP_Comment;
 }

@@ -10,8 +10,7 @@ trait MutableAuthoredPostModelTrait
 
     public function setAuthor(AuthorInterface $author): self
     {
-        $this->author = $author;
-        $this->post->post_author = (string) $author->getId();
+        $this->mirror('author', $author, 'post_author', (string) $author->getId());
 
         return $this;
     }

@@ -4,11 +4,10 @@ namespace Leonidas\Library\System\Model\Abstracts\Post;
 
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
-use WP_Post;
 
 trait DatablePostModelTrait
 {
-    protected WP_Post $post;
+    use MappedToWpPostTrait;
 
     public function getDate(): CarbonInterface
     {

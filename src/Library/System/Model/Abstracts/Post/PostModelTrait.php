@@ -12,14 +12,18 @@ use WP_Post;
 trait PostModelTrait
 {
     use LazyLoadableRelationshipsTrait;
-
-    protected WP_Post $post;
+    use MappedToWpPostTrait;
 
     protected PostTypeInterface $postType;
 
     public function getId(): int
     {
         return $this->post->ID ?? 0;
+    }
+
+    public function getCore(): WP_Post
+    {
+        return $this->post;
     }
 
     public function getName(): string

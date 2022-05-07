@@ -8,14 +8,13 @@ use Leonidas\Contracts\System\Model\Post\Status\PostStatusInterface;
 use Leonidas\Contracts\System\Model\Tag\TagCollectionInterface;
 use Leonidas\Contracts\System\Model\Tag\TagRepositoryInterface;
 use Leonidas\Library\System\Model\Abstracts\LazyLoadableRelationshipsTrait;
+use Leonidas\Library\System\Model\Abstracts\Post\MappedToWpPostTrait;
 use Leonidas\Library\System\Model\Post\Status\PostStatus;
-use WP_Post;
 
 trait PostTrait
 {
     use LazyLoadableRelationshipsTrait;
-
-    protected WP_Post $post;
+    use MappedToWpPostTrait;
 
     protected TagCollectionInterface $tags;
 

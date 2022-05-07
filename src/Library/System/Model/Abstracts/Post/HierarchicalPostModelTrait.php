@@ -2,11 +2,9 @@
 
 namespace Leonidas\Library\System\Model\Abstracts\Post;
 
-use WP_Post;
-
 trait HierarchicalPostModelTrait
 {
-    protected WP_Post $post;
+    use MappedToWpPostTrait;
 
     public function getParentId(): int
     {

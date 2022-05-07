@@ -4,6 +4,7 @@ namespace Leonidas\Contracts\System\Model;
 
 use DateTimeInterface;
 use Psr\Link\LinkInterface;
+use WP_User;
 
 interface UserModelInterface extends EntityModelInterface
 {
@@ -56,4 +57,6 @@ interface UserModelInterface extends EntityModelInterface
     public function hasCapability(string $capability, ...$args): bool;
 
     public function getAllCapabilities(): array;
+
+    public function getCore(): WP_User;
 }

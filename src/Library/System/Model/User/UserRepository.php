@@ -58,6 +58,22 @@ class UserRepository extends AbstractUserModelRepository implements UserReposito
             'user_registered' => $user->getDateRegistered()->format($dateFormat),
             'user_activation_key' => $user->getActivationKey(),
             'display_name' => $user->getDisplayName(),
+            'use_ssl' => $user->useSsl(),
+            'first_name' => $user->getFirstName(),
+            'last_name' => $user->getLastName(),
+            'description' => $user->getBio(),
+            'nickname' => $user->getNickname(),
+            'admin_color' => $user->getOption('admin_color'),
+            'comment_shortcuts' => $user->getOption('comment_shortcuts'),
+            'show_admin_bar_front' => $user->getOption('show_admin_bar_front'),
+            'locale' => $user->getLocale(),
+            'rich_editing' => $user->getOption('rich_editing'),
+            'meta_input' => $this->extractMetadata($user),
         ];
+    }
+
+    protected function extractMetadata(UserInterface $user): array
+    {
+        return [];
     }
 }

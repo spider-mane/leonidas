@@ -3,6 +3,7 @@
 namespace Leonidas\Library\System\Model\PostType;
 
 use Jawira\CaseConverter\CaseConverter;
+use Leonidas\Contracts\System\Model\PostType\PostTypeBuilderInterface;
 use Leonidas\Contracts\System\Model\PostType\PostTypeFactoryInterface;
 use Leonidas\Library\System\Model\AbstractSystemModelTypeFactory;
 
@@ -16,7 +17,7 @@ class PostTypeFactory extends AbstractSystemModelTypeFactory implements PostType
     public function createMany(array $definitions): array
     {
         return array_map(
-            fn (PostTypeBuilder $builder) => $builder->get(),
+            fn (PostTypeBuilderInterface $builder) => $builder->get(),
             $this->buildMany($definitions),
         );
     }

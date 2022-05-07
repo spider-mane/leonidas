@@ -10,11 +10,16 @@ use WP_User;
 
 trait UserModelTrait
 {
-    protected WP_User $user;
+    use MappedToWpUserTrait;
 
     public function getId(): int
     {
         return $this->user->ID;
+    }
+
+    public function getCore(): WP_User
+    {
+        return $this->user;
     }
 
     public function getNickname(): string

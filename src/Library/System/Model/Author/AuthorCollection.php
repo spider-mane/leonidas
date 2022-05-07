@@ -21,17 +21,17 @@ class AuthorCollection extends AbstractModelCollection implements AuthorCollecti
         $this->initKernel($users);
     }
 
-    public function getById(int $id): AuthorInterface
+    public function getById(int $id): ?AuthorInterface
     {
         return $this->kernel->firstWhere('id', '=', $id);
     }
 
-    public function getByLogin(string $login): AuthorInterface
+    public function getByLogin(string $login): ?AuthorInterface
     {
         return $this->kernel->fetch($login);
     }
 
-    public function getByEmail(string $email): AuthorInterface
+    public function getByEmail(string $email): ?AuthorInterface
     {
         return $this->kernel->firstWhere('email', '=', $email);
     }
@@ -56,8 +56,13 @@ class AuthorCollection extends AbstractModelCollection implements AuthorCollecti
         return $this->kernel->hasWhere('email', '=', $email);
     }
 
-    public function insert(AuthorInterface $user): void
+    public function add(AuthorInterface $user): void
     {
         $this->kernel->insert($user);
+    }
+
+    public function collect(AuthorInterface ...$users): void
+    {
+        $this->kernel->collect($users);
     }
 }

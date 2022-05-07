@@ -2,11 +2,9 @@
 
 namespace Leonidas\Library\System\Model\Abstracts\Post;
 
-use WP_Post;
-
 trait PingablePostModelTrait
 {
-    protected WP_Post $post;
+    use MappedToWpPostTrait;
 
     public function getPingStatus(): string
     {

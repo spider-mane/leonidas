@@ -38,6 +38,16 @@ abstract class AbstractImageCollection extends AbstractModelCollection implement
         return $this->kernel->firstWhere('src', '=', $src);
     }
 
+    public function add(ImageInterface $image): void
+    {
+        $this->kernel->insert($image);
+    }
+
+    public function collect(ImageInterface ...$images): void
+    {
+        $this->kernel->collect($images);
+    }
+
     public function sortBy(string $property, string $order = 'ASC'): ImageCollectionInterface
     {
         return $this->kernel->sortBy($property, $order);

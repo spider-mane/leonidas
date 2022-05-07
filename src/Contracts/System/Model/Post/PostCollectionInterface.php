@@ -18,6 +18,8 @@ interface PostCollectionInterface extends ModelCollectionInterface
 
     public function add(PostInterface $post): void;
 
+    public function collect(PostInterface ...$posts): void;
+
     public function hasPosts(): bool;
 
     public function containsId(int $id): bool;

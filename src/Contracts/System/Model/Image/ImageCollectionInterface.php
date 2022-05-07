@@ -18,6 +18,10 @@ interface ImageCollectionInterface extends ModelCollectionInterface
 
     public function hasWithSrc(string $src): bool;
 
+    public function add(ImageInterface $image): void;
+
+    public function collect(ImageInterface ...$images): void;
+
     public function sortBy(string $property, string $order = 'ASC'): ImageCollectionInterface;
 
     public function sortMappedById(array $map, string $order = 'ASC'): ImageCollectionInterface;

@@ -35,6 +35,11 @@ class CategoryCollection extends AbstractModelCollection implements CategoryColl
         $this->kernel->insert($category);
     }
 
+    public function collect(CategoryInterface ...$categories): void
+    {
+        $this->kernel->collect($categories);
+    }
+
     public function merge(CategoryCollectionInterface $categories): CategoryCollectionInterface
     {
         return $this->kernel->merge($categories->toArray());

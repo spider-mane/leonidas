@@ -12,6 +12,8 @@ interface CategoryCollectionInterface extends ModelCollectionInterface
 
     public function add(CategoryInterface $category): void;
 
+    public function collect(CategoryInterface ...$categories): void;
+
     public function merge(CategoryCollectionInterface $categories): CategoryCollectionInterface;
 
     public function containsWithId(int $id): bool;

@@ -26,7 +26,7 @@ class Tag implements TagInterface
 
     public function __construct(WP_Term $term, PostRepositoryInterface $postRepository)
     {
-        $this->validateTaxonomy($term, 'post_tag');
+        $this->assertTaxonomy($term, 'post_tag');
 
         $this->term = $term;
         $this->postRepository = $postRepository;

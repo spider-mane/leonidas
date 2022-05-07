@@ -78,6 +78,9 @@ class UserEntityManager implements UserEntityManagerInterface
         return $this->convertEntity(new WP_User());
     }
 
+    /**
+     * @link https://developer.wordpress.org/reference/functions/wp_insert_user/
+     */
     public function insert(array $data): void
     {
         $this->throwExceptionIfWpError(

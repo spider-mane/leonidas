@@ -38,8 +38,6 @@ class Post implements PostInterface
     use RestrictablePostModelTrait;
     use ValidatesPostTypeTrait;
 
-    protected WP_Post $post;
-
     public function __construct(
         WP_Post $post,
         AuthorRepositoryInterface $authorRepository,
@@ -47,7 +45,7 @@ class Post implements PostInterface
         CategoryRepositoryInterface $categoryRepository,
         CommentRepositoryInterface $commentRepository
     ) {
-        $this->validatePostType($post, 'post');
+        $this->assertPostType($post, 'post');
 
         $this->post = $post;
         $this->authorRepository = $authorRepository;

@@ -20,5 +20,7 @@ interface UserCollectionInterface extends ModelCollectionInterface
 
     public function hasWithEmail(string $email): bool;
 
-    public function insert(UserInterface $user): void;
+    public function add(UserInterface $user): void;
+
+    public function collect(UserInterface ...$users): void;
 }

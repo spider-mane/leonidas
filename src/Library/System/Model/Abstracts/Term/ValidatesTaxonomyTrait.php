@@ -7,7 +7,7 @@ use WP_Term;
 
 trait ValidatesTaxonomyTrait
 {
-    protected function validateTaxonomy(WP_Term $term, string $taxonomy): void
+    protected function assertTaxonomy(WP_Term $term, string $taxonomy): void
     {
         if ($expected = $taxonomy !== $actual = $term->taxonomy) {
             throw new InvalidArgumentException(

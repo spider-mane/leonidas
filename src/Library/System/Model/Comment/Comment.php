@@ -12,6 +12,7 @@ use Leonidas\Contracts\System\Model\Post\PostRepositoryInterface;
 use Leonidas\Contracts\System\Model\User\UserInterface;
 use Leonidas\Contracts\System\Model\User\UserRepositoryInterface;
 use Leonidas\Library\System\Model\Abstracts\AllAccessGrantedTrait;
+use Leonidas\Library\System\Model\Abstracts\Comment\MappedToWpCommentTrait;
 use Leonidas\Library\System\Model\Abstracts\LazyLoadableRelationshipsTrait;
 use WP_Comment;
 
@@ -19,8 +20,7 @@ class Comment implements CommentInterface
 {
     use AllAccessGrantedTrait;
     use LazyLoadableRelationshipsTrait;
-
-    protected WP_Comment $comment;
+    use MappedToWpCommentTrait;
 
     protected ?CommentInterface $parent;
 
@@ -54,6 +54,11 @@ class Comment implements CommentInterface
     public function getId(): int
     {
         return (int) $this->comment->comment_ID;
+    }
+
+    public function getCore(): WP_Comment
+    {
+        return $this->comment;
     }
 
     public function getAuthor(): string

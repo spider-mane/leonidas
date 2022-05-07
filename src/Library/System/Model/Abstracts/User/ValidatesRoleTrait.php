@@ -7,7 +7,7 @@ use WP_User;
 
 trait ValidatesRoleTrait
 {
-    protected function validateRole(WP_User $user, string $role): void
+    protected function assertRole(WP_User $user, string $role): void
     {
         if (!in_array($role, $user->roles, true)) {
             throw new InvalidArgumentException(

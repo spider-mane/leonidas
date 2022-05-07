@@ -22,7 +22,7 @@ class Author implements MutableAuthorInterface
 
     public function __construct(WP_User $user, PostRepositoryInterface $postRepository)
     {
-        $this->validateRole($user, 'author');
+        $this->assertRole($user, 'author');
 
         $this->user = $user;
         $this->postRepository = $postRepository;

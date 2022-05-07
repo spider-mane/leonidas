@@ -2,11 +2,9 @@
 
 namespace Leonidas\Library\System\Model\Abstracts\Post;
 
-use WP_Post;
-
 trait RestrictablePostModelTrait
 {
-    protected WP_Post $post;
+    use MappedToWpPostTrait;
 
     public function getPassword(): ?string
     {

@@ -14,6 +14,10 @@ interface PageCollectionInterface extends ModelCollectionInterface
 
     public function hasWithName(string $name): bool;
 
+    public function add(PageInterface $page): void;
+
+    public function collect(PageInterface ...$pages): void;
+
     public function sortBy(string $sortBy, string $order = 'asc'): PageCollectionInterface;
 
     public function sortMapped(array $sortMap, string $order = 'asc'): PageCollectionInterface;

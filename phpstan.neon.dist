@@ -5,17 +5,12 @@ parameters:
 
   paths:
     - src
-    # - boot
-    # - config
-    # - tests
+    - boot
+    - config
+    - tests
 
   bootstrapFiles:
-    # - boot/constants.php
-    - wordpress/wp-includes/wp-db.php
-
-  scanDirectories:
-    - wordpress/wp-admin/includes
-    - wordpress/wp-includes
+    - boot/constants.php
 
   ignoreErrors:
     - '#^Unsafe usage of new static\(\).$#'

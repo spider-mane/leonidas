@@ -28,6 +28,16 @@ abstract class AbstractPageCollection extends AbstractModelCollection implements
         return $this->kernel->hasWhere('name', '=', $name);
     }
 
+    public function add(PageInterface $page): void
+    {
+        $this->kernel->insert($page);
+    }
+
+    public function collect(PageInterface ...$pages): void
+    {
+        $this->kernel->collect($pages);
+    }
+
     public function sortBy(string $sortBy, string $order = 'asc'): PageCollectionInterface
     {
         return $this->kernel->sortBy($sortBy, $order);

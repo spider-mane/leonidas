@@ -22,11 +22,9 @@ class Category implements CategoryInterface
     use MutableTermModelTrait;
     use ValidatesTaxonomyTrait;
 
-    protected WP_Term $term;
-
     protected PostCollectionInterface $posts;
 
-    protected CategoryInterface $parent;
+    protected ?CategoryInterface $parent;
 
     protected CategoryCollectionInterface $children;
 
@@ -39,7 +37,7 @@ class Category implements CategoryInterface
         PostRepositoryInterface $postRepository,
         CategoryRepositoryInterface $categoryRepository
     ) {
-        $this->validateTaxonomy($term, 'category');
+        $this->assertTaxonomy($term, 'category');
 
         $this->term = $term;
         $this->postRepository = $postRepository;
@@ -63,7 +61,7 @@ class Category implements CategoryInterface
 
     public function getPosts(): PostCollectionInterface
     {
-        return $this->posts ??= $this->getPostsFromRepository();
+        return $this->lazyLoadable('posts');
     }
 
     public function setPosts(PostCollectionInterface $posts): CategoryInterface
@@ -80,8 +78,7 @@ class Category implements CategoryInterface
 
     public function setParent(?CategoryInterface $parent): CategoryInterface
     {
-        $this->parent = $parent;
-        $this->term->parent = $parent ? $parent->getId() : 0;
+        $this->mirror('parent', $parent, 'parent', $parent ? $parent->getId() : 0);
 
         return $this;
     }

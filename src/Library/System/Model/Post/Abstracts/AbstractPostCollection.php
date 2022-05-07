@@ -28,6 +28,11 @@ abstract class AbstractPostCollection extends AbstractModelCollection implements
         $this->kernel->insert($post);
     }
 
+    public function collect(PostInterface ...$posts): void
+    {
+        $this->kernel->collect($posts);
+    }
+
     public function first(): PostInterface
     {
         return $this->kernel->first();

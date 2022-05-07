@@ -24,4 +24,14 @@ class CommentCollection extends AbstractModelCollection implements CommentCollec
     {
         return $this->kernel->fetch($id);
     }
+
+    public function add(CommentInterface $comment): void
+    {
+        $this->kernel->insert($comment);
+    }
+
+    public function collect(CommentInterface ...$comments): void
+    {
+        $this->kernel->collect($comments);
+    }
 }

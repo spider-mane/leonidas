@@ -3,6 +3,7 @@
 namespace Leonidas\Library\System\Model\Taxonomy;
 
 use Jawira\CaseConverter\CaseConverter;
+use Leonidas\Contracts\System\Model\Taxonomy\TaxonomyBuilderInterface;
 use Leonidas\Contracts\System\Model\Taxonomy\TaxonomyFactoryInterface;
 use Leonidas\Library\System\Model\AbstractSystemModelTypeFactory;
 
@@ -16,7 +17,7 @@ class TaxonomyFactory extends AbstractSystemModelTypeFactory implements Taxonomy
     public function createMany(array $definitions): array
     {
         return array_map(
-            fn (TaxonomyBuilder $builder) => $builder->get(),
+            fn (TaxonomyBuilderInterface $builder) => $builder->get(),
             $this->buildMany($definitions),
         );
     }

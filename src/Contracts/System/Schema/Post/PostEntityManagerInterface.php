@@ -2,9 +2,9 @@
 
 namespace Leonidas\Contracts\System\Schema\Post;
 
-use Leonidas\Contracts\System\Schema\EntityManagerInterface;
+use Leonidas\Contracts\System\Schema\SoftDeletingEntityManagerInterface;
 
-interface PostEntityManagerInterface extends EntityManagerInterface
+interface PostEntityManagerInterface extends SoftDeletingEntityManagerInterface
 {
     public const DATE_FORMAT = 'Y-m-d H:i:s';
 
@@ -25,8 +25,4 @@ interface PostEntityManagerInterface extends EntityManagerInterface
     public function whereTaxQuery(array $args): object;
 
     public function withTerm(string $taxonomy, int $termId): object;
-
-    public function trash(int $id): void;
-
-    public function recover(int $id): void;
 }

@@ -4,6 +4,8 @@ namespace Leonidas\Library\System\Model\Abstracts\Post;
 
 trait MutableContentPostModelTrait
 {
+    use MappedToWpPostTrait;
+
     public function getContent(): string
     {
         return $this->post->post_content;

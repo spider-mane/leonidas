@@ -5,13 +5,11 @@ namespace Leonidas\Library\System\Model\Abstracts\Post;
 use Leonidas\Contracts\System\Model\Author\AuthorInterface;
 use Leonidas\Contracts\System\Model\Author\AuthorRepositoryInterface;
 use Leonidas\Library\System\Model\Abstracts\LazyLoadableRelationshipsTrait;
-use WP_Post;
 
 trait AuthoredPostModelTrait
 {
     use LazyLoadableRelationshipsTrait;
-
-    protected WP_Post $post;
+    use MappedToWpPostTrait;
 
     protected AuthorInterface $author;
 

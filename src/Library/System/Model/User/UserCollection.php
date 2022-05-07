@@ -56,8 +56,13 @@ class UserCollection extends AbstractModelCollection implements UserCollectionIn
         return $this->kernel->hasWhere('email', '=', $email);
     }
 
-    public function insert(UserInterface $user): void
+    public function add(UserInterface $user): void
     {
         $this->kernel->insert($user);
+    }
+
+    public function collect(UserInterface ...$users): void
+    {
+        $this->kernel->collect($users);
     }
 }

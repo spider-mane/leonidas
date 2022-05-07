@@ -4,7 +4,7 @@ namespace Leonidas\Library\System\Model\Abstracts\Post;
 
 use WP_Post;
 
-trait UsesPostMetaTrait
+trait MappedToWpPostTrait
 {
     protected WP_Post $post;
 
@@ -16,5 +16,11 @@ trait UsesPostMetaTrait
     protected function setPostModelMeta(string $key, string $value): void
     {
         $this->post->{$key} = $value;
+    }
+
+    protected function mirror(string $local, $localVal, string $mapped, $mappedVal): void
+    {
+        $this->{$local} = $localVal;
+        $this->post->{$mapped} = $mappedVal;
     }
 }

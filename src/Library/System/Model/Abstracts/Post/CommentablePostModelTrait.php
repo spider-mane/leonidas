@@ -5,13 +5,11 @@ namespace Leonidas\Library\System\Model\Abstracts\Post;
 use Leonidas\Contracts\System\Model\Comment\CommentCollectionInterface;
 use Leonidas\Contracts\System\Model\Comment\CommentRepositoryInterface;
 use Leonidas\Library\System\Model\Abstracts\LazyLoadableRelationshipsTrait;
-use WP_Post;
 
 trait CommentablePostModelTrait
 {
     use LazyLoadableRelationshipsTrait;
-
-    protected WP_Post $post;
+    use MappedToWpPostTrait;
 
     protected CommentCollectionInterface $comments;
 

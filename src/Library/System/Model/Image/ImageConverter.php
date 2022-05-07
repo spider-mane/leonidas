@@ -2,30 +2,30 @@
 
 namespace Leonidas\Library\System\Model\Image;
 
+use Leonidas\Contracts\System\Model\Author\AuthorRepositoryInterface;
 use Leonidas\Contracts\System\Model\Comment\CommentRepositoryInterface;
 use Leonidas\Contracts\System\Model\Image\ImageInterface;
-use Leonidas\Contracts\System\Model\User\UserRepositoryInterface;
 use Leonidas\Contracts\System\Schema\Post\PostConverterInterface;
 use Leonidas\Library\System\Schema\Exceptions\UnexpectedEntityException;
 use WP_Post;
 
 class ImageConverter implements PostConverterInterface
 {
-    protected UserRepositoryInterface $userRepository;
+    protected AuthorRepositoryInterface $authorRepository;
 
     protected CommentRepositoryInterface $commentRepository;
 
     public function __construct(
-        UserRepositoryInterface $userRepository,
+        AuthorRepositoryInterface $authorRepository,
         CommentRepositoryInterface $commentRepository
     ) {
-        $this->userRepository = $userRepository;
+        $this->authorRepository = $authorRepository;
         $this->commentRepository = $commentRepository;
     }
 
     public function convert(WP_Post $post, ?string $size = null): Image
     {
-        return new Image($post, $this->userRepository, $this->commentRepository);
+        return new Image($post, $this->authorRepository, $this->commentRepository);
     }
 
     public function revert(object $post): WP_Post

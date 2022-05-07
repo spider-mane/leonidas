@@ -10,7 +10,9 @@ interface TagCollectionInterface extends ModelCollectionInterface
 
     public function getBySlug(string $slug): TagInterface;
 
-    public function add(TagInterface $tag): TagCollectionInterface;
+    public function add(TagInterface $tag): void;
+
+    public function collect(TagInterface ...$tags): void;
 
     public function merge(TagCollectionInterface $tags): TagCollectionInterface;
 

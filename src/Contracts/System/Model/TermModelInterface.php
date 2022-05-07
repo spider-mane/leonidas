@@ -4,6 +4,7 @@ namespace Leonidas\Contracts\System\Model;
 
 use Countable;
 use Leonidas\Contracts\System\Model\Taxonomy\TaxonomyInterface;
+use WP_Term;
 
 interface TermModelInterface extends EntityModelInterface, Countable
 {
@@ -20,4 +21,6 @@ interface TermModelInterface extends EntityModelInterface, Countable
     public function applyFilter(string $name): self;
 
     public function getTaxonomy(): TaxonomyInterface;
+
+    public function getCore(): WP_Term;
 }
