@@ -2,7 +2,7 @@
 
 namespace Leonidas\Library\Admin\Views;
 
-use Leonidas\Library\Admin\Proxies\Twig;
+use Leonidas\Library\Admin\Access\Twig;
 
 abstract class AbstractLeonidasTwigView
 {

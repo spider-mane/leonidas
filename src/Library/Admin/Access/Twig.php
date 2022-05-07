@@ -1,8 +1,8 @@
 <?php
 
-namespace Leonidas\Library\Admin\Proxies;
+namespace Leonidas\Library\Admin\Access;
 
-use Leonidas\Library\Core\Facades\_Facade;
+use Leonidas\Library\Core\Access\_Facade;
 use Twig\Environment;
 
 /** @method static string render($name, array $context = []) */

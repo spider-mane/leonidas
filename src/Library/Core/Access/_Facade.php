@@ -1,6 +1,6 @@
 <?php
 
-namespace Leonidas\Library\Core\Facades;
+namespace Leonidas\Library\Core\Access;
 
 use Panamax\Traits\ServiceContainerFacadeTrait;
 use WebTheory\Facade\MockeryMockableFacadeBaseTrait;

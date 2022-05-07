@@ -8,7 +8,7 @@ use Leonidas\Framework\Exceptions\InvalidCallToPluginMethodException;
 use Leonidas\Framework\ModuleInitializer;
 use Leonidas\Framework\Plugin\Plugin;
 use Leonidas\Framework\WpExtension;
-use Leonidas\Library\Core\Facades\_Facade;
+use Leonidas\Library\Core\Access\_Facade;
 use Panamax\Contracts\BootableProviderContainerInterface;
 use Panamax\Contracts\ContainerAdapterInterface;
 use Panamax\Contracts\ProviderContainerInterface;
