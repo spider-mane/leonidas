@@ -18,6 +18,6 @@ abstract class AbstractPluginSetupModule extends AbstractModule
 
     protected function getPlugin(): string
     {
-        return $this->getExtension()->getBase();
+        return $this->getExtension()->getName();
     }
 }

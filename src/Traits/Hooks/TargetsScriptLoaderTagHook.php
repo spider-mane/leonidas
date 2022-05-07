@@ -10,19 +10,17 @@ trait TargetsScriptLoaderTagHook
     {
         add_filter(
             'script_loader_tag',
-            $this->getScriptLoaderTagCallback(),
-            10,
+            Closure::fromCallable([$this, 'filterScriptLoaderTag']),
+            $this->getScriptLoaderTagPriority(),
             PHP_INT_MAX
         );
 
         return $this;
     }
 
-    protected function getScriptLoaderTagCallback(): Closure
+    protected function getScriptLoaderTagPriority(): int
     {
-        return function (string $tag, string $handle, string $src) {
-            return $this->filterScriptLoaderTag($tag, $handle, $src);
-        };
+        return HOOK_DEFAULT_PRIORITY;
     }
 
     abstract protected function filterScriptLoaderTag(string $tag, string $handle, string $src): string;

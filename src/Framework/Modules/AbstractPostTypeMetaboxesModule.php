@@ -16,10 +16,12 @@ use Leonidas\Traits\Hooks\TargetsAddMetaBoxesXPostTypeHook;
 use Leonidas\Traits\Hooks\TargetsEditFormTopHook;
 use Leonidas\Traits\Hooks\TargetsSavePostXPostTypeHook;
 use Psr\Http\Message\ServerRequestInterface;
-use WebTheory\Saveyour\Contracts\FormFieldControllerInterface;
-use WebTheory\Saveyour\Contracts\FormProcessingCacheInterface;
-use WebTheory\Saveyour\Contracts\FormSubmissionManagerInterface;
-use WebTheory\Saveyour\Controllers\FormSubmissionManager;
+use WebTheory\Saveyour\Auth\FormShield;
+use WebTheory\Saveyour\Contracts\Auth\FormShieldInterface;
+use WebTheory\Saveyour\Contracts\Controller\FormFieldControllerInterface;
+use WebTheory\Saveyour\Contracts\Controller\FormSubmissionManagerInterface;
+use WebTheory\Saveyour\Contracts\Report\ProcessedFormReportInterface;
+use WebTheory\Saveyour\Controller\FormSubmissionManager;
 use WP_Post;
 
 abstract class AbstractPostTypeMetaboxesModule extends AbstractModule
@@ -120,23 +122,26 @@ abstract class AbstractPostTypeMetaboxesModule extends AbstractModule
 
     protected function form(): FormSubmissionManagerInterface
     {
-        $manager = new FormSubmissionManager();
+        return new FormSubmissionManager(
+            $this->formFields(),
+            [],
+            $this->formShield()
+        );
+    }
 
-        foreach ($this->formFields() as $field) {
-            $manager->addField($field);
-        }
-
-        $manager->addValidator('user_cannot_edit', new EditPost());
+    protected function formShield(): FormShieldInterface
+    {
+        $policies = ['user_cannot_edit' => new EditPost()];
 
         if ($this->allowAutosave()) {
-            $manager->addValidator('no_autosave', new NoAutosave());
+            $policies['no_autosave'] = new NoAutosave();
         }
 
         if ($token = $this->token()) {
-            $manager->addValidator('invalid_request', new CsrfCheck($token));
+            $policies['invalid_request'] = new CsrfCheck($token);
         }
 
-        return $manager;
+        return new FormShield($policies);
     }
 
     protected function token(): ?CsrfManagerInterface
@@ -161,7 +166,7 @@ abstract class AbstractPostTypeMetaboxesModule extends AbstractModule
         return false;
     }
 
-    protected function postFormProcessing(FormProcessingCacheInterface $form, ServerRequestInterface $request): void
+    protected function postFormProcessing(ProcessedFormReportInterface $form, ServerRequestInterface $request): void
     {
         //
     }

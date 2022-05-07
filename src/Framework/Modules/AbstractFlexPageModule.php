@@ -68,7 +68,7 @@ abstract class AbstractFlexPageModule extends AbstractModule implements ModuleIn
 
     protected function getDefinitionContext(): string
     {
-        return $this->getDefinition()->getContext()->value;
+        return $this->getDefinition()->getContext()->getValue();
     }
 
     protected function definitionIsNested(): bool
