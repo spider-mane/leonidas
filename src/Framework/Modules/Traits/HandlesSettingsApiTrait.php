@@ -5,7 +5,7 @@ namespace Leonidas\Framework\Modules\Traits;
 use Leonidas\Contracts\Admin\Components\SettingsFieldCollectionInterface;
 use Leonidas\Contracts\Admin\Components\SettingsSectionCollectionInterface;
 use Leonidas\Contracts\Admin\Setting\SettingCollectionInterface;
-use Leonidas\Traits\Hooks\TargetsAdminInitHook;
+use Leonidas\Hooks\TargetsAdminInitHook;
 
 trait HandlesSettingsApiTrait
 {

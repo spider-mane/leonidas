@@ -4,9 +4,9 @@ namespace Leonidas\Framework\Modules;
 
 use Leonidas\Contracts\Extension\ModuleInterface;
 use Leonidas\Framework\Modules\Traits\ProvisionsAssetsTrait;
-use Leonidas\Traits\Hooks\TargetsScriptLoaderTagHook;
-use Leonidas\Traits\Hooks\TargetsStyleLoaderTagHook;
-use Leonidas\Traits\Hooks\TargetsWpEnqueueScriptsHook;
+use Leonidas\Hooks\TargetsScriptLoaderTagHook;
+use Leonidas\Hooks\TargetsStyleLoaderTagHook;
+use Leonidas\Hooks\TargetsWpEnqueueScriptsHook;
 
 abstract class AbstractPublicAssetProviderModule extends AbstractModule implements ModuleInterface
 {

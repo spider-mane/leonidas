@@ -6,7 +6,7 @@ use Leonidas\Contracts\Admin\Setting\SettingCollectionInterface;
 use Leonidas\Contracts\Extension\ModuleInterface;
 use Leonidas\Framework\Modules\Traits\FluentlySetsPropertiesTrait;
 use Leonidas\Framework\Modules\Traits\HandlesSettingsTrait;
-use Leonidas\Traits\Hooks\TargetsAdminInitHook;
+use Leonidas\Hooks\TargetsAdminInitHook;
 
 abstract class AbstractSettingsModuleInterface extends AbstractModule implements ModuleInterface
 {

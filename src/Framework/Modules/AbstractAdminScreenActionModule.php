@@ -3,8 +3,8 @@
 namespace Leonidas\Framework\Modules;
 
 use Leonidas\Contracts\Extension\ModuleInterface;
-use Leonidas\Traits\Hooks\TargetsAdminInitHook;
-use Leonidas\Traits\Hooks\TargetsCurrentScreenHook;
+use Leonidas\Hooks\TargetsAdminInitHook;
+use Leonidas\Hooks\TargetsCurrentScreenHook;
 use Psr\Http\Message\ServerRequestInterface;
 use WebTheory\Saveyour\Http\Request;
 use WP_Screen;

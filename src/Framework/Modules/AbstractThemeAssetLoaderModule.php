@@ -3,7 +3,7 @@
 namespace Leonidas\Framework\Modules;
 
 use Leonidas\Contracts\Extension\ModuleInterface;
-use Leonidas\Traits\Hooks\TargetsWpEnqueueScriptsHook;
+use Leonidas\Hooks\TargetsWpEnqueueScriptsHook;
 
 abstract class AbstractThemeAssetLoaderModule extends AbstractModule implements ModuleInterface
 {

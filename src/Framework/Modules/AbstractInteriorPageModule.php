@@ -8,11 +8,11 @@ use Leonidas\Contracts\Admin\Components\InteriorPageLoaderInterface;
 use Leonidas\Contracts\Extension\ModuleInterface;
 use Leonidas\Framework\Modules\Traits\FluentlySetsPropertiesTrait;
 use Leonidas\Framework\Modules\Traits\NestedPageModuleTrait;
+use Leonidas\Hooks\TargetsAdminMenuHook;
+use Leonidas\Hooks\TargetsAdminTitleHook;
+use Leonidas\Hooks\TargetsParentFileHook;
+use Leonidas\Hooks\TargetsSubmenuFileHook;
 use Leonidas\Library\Admin\Loaders\InteriorPageLoader;
-use Leonidas\Traits\Hooks\TargetsAdminMenuHook;
-use Leonidas\Traits\Hooks\TargetsAdminTitleHook;
-use Leonidas\Traits\Hooks\TargetsParentFileHook;
-use Leonidas\Traits\Hooks\TargetsSubmenuFileHook;
 
 abstract class AbstractInteriorPageModule extends AbstractModule implements ModuleInterface
 {

@@ -104,27 +104,32 @@ trait ProvisionsAssetsTrait
 
     protected function hasScripts(): bool
     {
-        return $this->getScripts() && !empty($this->getScripts()->getScripts());
+        return ($scripts = $this->getScripts())
+            && !empty($scripts->getScripts());
     }
 
     public function hasStyles(): bool
     {
-        return $this->getStyles() && !empty($this->getStyles()->getStyles());
+        return ($styles = $this->getStyles())
+            && !empty($styles->getStyles());
     }
 
     protected function hasInlineScripts(): bool
     {
-        return $this->getInlineScripts() && !empty($this->getInlineScripts()->getScripts());
+        return ($inlineScripts = $this->getInlineScripts())
+            && !empty($inlineScripts->getScripts());
     }
 
     public function hasInlineStyles(): bool
     {
-        return $this->getInlineStyles() && !empty($this->getInlineStyles()->getStyles());
+        return ($inlineStyles = $this->getInlineStyles())
+            && !empty($inlineStyles->getStyles());
     }
 
     public function hasScriptLocalizations(): bool
     {
-        return $this->getScriptLocalizations() && !empty($this->get()->getStyles());
+        return ($scriptLocalizations = $this->getScriptLocalizations())
+            && !empty($scriptLocalizations->getLocalizations());
     }
 
     protected function provisionAssets(?string $hookSuffix = null): void
@@ -204,7 +209,7 @@ trait ProvisionsAssetsTrait
     protected function version(?string $version = null): string
     {
         if ($this->extension->isInDev()) {
-            return time();
+            return (string) time();
         }
 
         return $version ?: $this->extension->getVersion();

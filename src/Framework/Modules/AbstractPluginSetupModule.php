@@ -2,8 +2,8 @@
 
 namespace Leonidas\Framework\Modules;
 
-use Leonidas\Traits\Hooks\RegistersActivatePluginHook;
-use Leonidas\Traits\Hooks\RegistersDeactivatePluginHook;
+use Leonidas\Hooks\RegistersActivatePluginHook;
+use Leonidas\Hooks\RegistersDeactivatePluginHook;
 
 abstract class AbstractPluginSetupModule extends AbstractModule
 {

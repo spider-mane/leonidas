@@ -8,9 +8,9 @@ use Leonidas\Contracts\Admin\Components\MenuPageLoaderInterface;
 use Leonidas\Contracts\Extension\ModuleInterface;
 use Leonidas\Framework\Modules\Traits\AdminPageModuleTrait;
 use Leonidas\Framework\Modules\Traits\FluentlySetsPropertiesTrait;
+use Leonidas\Hooks\TargetsAdminMenuHook;
+use Leonidas\Hooks\TargetsAdminTitleHook;
 use Leonidas\Library\Admin\Loaders\MenuPageLoader;
-use Leonidas\Traits\Hooks\TargetsAdminMenuHook;
-use Leonidas\Traits\Hooks\TargetsAdminTitleHook;
 use Psr\Http\Message\ServerRequestInterface;
 
 abstract class AbstractMenuPageModule extends AbstractModule implements ModuleInterface

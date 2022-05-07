@@ -9,12 +9,12 @@ use Leonidas\Contracts\Ui\Asset\ScriptCollectionInterface;
 use Leonidas\Contracts\Ui\Asset\ScriptLocalizationCollectionInterface;
 use Leonidas\Contracts\Ui\Asset\StyleCollectionInterface;
 use Leonidas\Framework\Modules\Traits\ProvisionsAssetsTrait;
-use Leonidas\Traits\Hooks\TargetsAdminEnqueueScriptsHook;
-use Leonidas\Traits\Hooks\TargetsEnqueueBlockEditorAssetsHook;
-use Leonidas\Traits\Hooks\TargetsLoginEnqueueScriptsHook;
-use Leonidas\Traits\Hooks\TargetsScriptLoaderTagHook;
-use Leonidas\Traits\Hooks\TargetsStyleLoaderTagHook;
-use Leonidas\Traits\Hooks\TargetsWpEnqueueScriptsHook;
+use Leonidas\Hooks\TargetsAdminEnqueueScriptsHook;
+use Leonidas\Hooks\TargetsEnqueueBlockEditorAssetsHook;
+use Leonidas\Hooks\TargetsLoginEnqueueScriptsHook;
+use Leonidas\Hooks\TargetsScriptLoaderTagHook;
+use Leonidas\Hooks\TargetsStyleLoaderTagHook;
+use Leonidas\Hooks\TargetsWpEnqueueScriptsHook;
 
 abstract class AbstractGlobalAssetProviderModule extends AbstractModule implements ModuleInterface
 {

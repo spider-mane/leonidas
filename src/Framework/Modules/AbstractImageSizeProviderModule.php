@@ -4,8 +4,8 @@ namespace Leonidas\Framework\Modules;
 
 use Leonidas\Contracts\Ui\Asset\ImageSizeCollectionInterface;
 use Leonidas\Framework\Modules\Traits\MustBeInitiatedTrait;
-use Leonidas\Traits\Hooks\TargetsAfterSetupThemeHook;
-use Leonidas\Traits\Hooks\TargetsImageSizeNamesChooseHook;
+use Leonidas\Hooks\TargetsAfterSetupThemeHook;
+use Leonidas\Hooks\TargetsImageSizeNamesChooseHook;
 
 abstract class AbstractImageSizeProviderModule extends AbstractModule
 {

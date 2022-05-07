@@ -6,9 +6,9 @@ use Leonidas\Contracts\Admin\Components\AdminNoticeHandlerInterface;
 use Leonidas\Contracts\Admin\Components\AdminNoticePrinterInterface;
 use Leonidas\Contracts\Admin\Components\AdminNoticeRepositoryInterface;
 use Leonidas\Contracts\Extension\ModuleInterface;
+use Leonidas\Hooks\TargetsAllAdminNoticesHook;
+use Leonidas\Hooks\TargetsShutdownHook;
 use Leonidas\Library\Admin\Loaders\AdminNoticeHandler;
-use Leonidas\Traits\Hooks\TargetsAllAdminNoticesHook;
-use Leonidas\Traits\Hooks\TargetsShutdownHook;
 
 abstract class AbstractAdminNoticeLoaderModule extends AbstractModule implements ModuleInterface
 {
