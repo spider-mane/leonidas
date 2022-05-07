@@ -4,8 +4,8 @@ namespace Leonidas\Framework\Modules;
 
 use Leonidas\Contracts\Auth\CsrfManagerRepositoryInterface;
 use Leonidas\Contracts\Extension\ModuleInterface;
+use Leonidas\Framework\Modules\Traits\LoadsCsrfFieldsTrait;
 use Leonidas\Traits\Hooks\TargetsInAdminHeaderHook;
-use Leonidas\Traits\LoadsCsrfFieldsTrait;
 use WP_Screen;
 
 abstract class AbstractAdminCsrfLoaderModule extends AbstractModule implements ModuleInterface

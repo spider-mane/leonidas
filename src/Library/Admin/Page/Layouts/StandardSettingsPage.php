@@ -4,9 +4,9 @@ namespace Leonidas\Library\Admin\Page\Layouts;
 
 use Leonidas\Contracts\Admin\Components\AdminPageLayoutInterface;
 use Leonidas\Contracts\Ui\ViewInterface;
+use Leonidas\Library\Admin\Abstracts\CanBeRestrictedTrait;
+use Leonidas\Library\Admin\Abstracts\RendersWithViewTrait;
 use Leonidas\Library\Admin\Page\Views\StandardSettingsPageView;
-use Leonidas\Traits\CanBeRestrictedTrait;
-use Leonidas\Traits\RendersWithViewTrait;
 use Psr\Http\Message\ServerRequestInterface;
 
 class StandardSettingsPage extends AbstractPageLayout implements AdminPageLayoutInterface

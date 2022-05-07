@@ -4,8 +4,8 @@ namespace Leonidas\Framework\Modules;
 
 use Leonidas\Contracts\Extension\ModuleInterface;
 use Leonidas\Contracts\Extension\WpExtensionInterface;
+use Leonidas\Framework\Modules\Traits\HasCallbackMethodsTrait;
 use Leonidas\Framework\Traits\UtilizesExtensionTrait;
-use Leonidas\Traits\HasCallbackMethodsTrait;
 
 abstract class AbstractModule implements ModuleInterface
 {

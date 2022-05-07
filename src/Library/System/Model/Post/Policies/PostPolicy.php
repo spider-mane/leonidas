@@ -2,7 +2,7 @@
 
 namespace Leonidas\Library\System\Model\Post\Policies;
 
-use Leonidas\Traits\ExpectsPostTrait;
+use Leonidas\Library\System\Schema\Abstracts\ExpectsPostTrait;
 use Psr\Http\Message\ServerRequestInterface;
 use WebTheory\HttpPolicy\ServerRequestPolicyInterface;
 

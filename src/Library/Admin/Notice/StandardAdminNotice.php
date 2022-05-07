@@ -4,9 +4,9 @@ namespace Leonidas\Library\Admin\Notice;
 
 use Leonidas\Contracts\Admin\Components\AdminNoticeInterface;
 use Leonidas\Contracts\Ui\ViewInterface;
+use Leonidas\Library\Admin\Abstracts\CanBeRestrictedTrait;
+use Leonidas\Library\Admin\Abstracts\RendersWithViewTrait;
 use Leonidas\Library\Admin\Notice\Views\StandardAdminNoticeView;
-use Leonidas\Traits\CanBeRestrictedTrait;
-use Leonidas\Traits\RendersWithViewTrait;
 use Psr\Http\Message\ServerRequestInterface;
 
 class StandardAdminNotice implements AdminNoticeInterface

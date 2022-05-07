@@ -5,10 +5,10 @@ namespace Leonidas\Library\Admin\Metabox\Layouts;
 use Leonidas\Contracts\Admin\Components\MetaboxComponentInterface;
 use Leonidas\Contracts\Admin\Components\MetaboxLayoutInterface;
 use Leonidas\Contracts\Ui\ViewInterface;
+use Leonidas\Library\Admin\Abstracts\CanBeRestrictedTrait;
+use Leonidas\Library\Admin\Abstracts\MaybeHandlesCsrfTrait;
+use Leonidas\Library\Admin\Abstracts\RendersWithViewTrait;
 use Leonidas\Library\Admin\Metabox\Views\MetaboxLayoutView;
-use Leonidas\Traits\CanBeRestrictedTrait;
-use Leonidas\Traits\MaybeHandlesCsrfTrait;
-use Leonidas\Traits\RendersWithViewTrait;
 use Psr\Http\Message\ServerRequestInterface;
 
 class SegmentedLayout implements MetaboxLayoutInterface

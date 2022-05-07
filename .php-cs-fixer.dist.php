@@ -32,6 +32,7 @@ return (new Config('leonidas'))
       'spacing' => 'one',
     ],
     'fully_qualified_strict_types' => true,
+    'function_typehint_space' => true,
     'global_namespace_import' => [
       'import_classes' => true
     ],

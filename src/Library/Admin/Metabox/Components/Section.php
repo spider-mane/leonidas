@@ -4,9 +4,9 @@ namespace Leonidas\Library\Admin\Metabox\Components;
 
 use Leonidas\Contracts\Admin\Components\MetaboxComponentInterface;
 use Leonidas\Contracts\Ui\ViewInterface;
+use Leonidas\Library\Admin\Abstracts\CanBeRestrictedTrait;
+use Leonidas\Library\Admin\Abstracts\RendersWithViewTrait;
 use Leonidas\Library\Admin\Metabox\Views\SectionView;
-use Leonidas\Traits\CanBeRestrictedTrait;
-use Leonidas\Traits\RendersWithViewTrait;
 use Psr\Http\Message\ServerRequestInterface;
 
 class Section implements MetaboxComponentInterface
@@ -53,7 +53,7 @@ class Section implements MetaboxComponentInterface
     /**
      * Set the value of content
      *
-     * @param array  $content
+     * @param array $content
      *
      * @return self
      */
@@ -69,7 +69,7 @@ class Section implements MetaboxComponentInterface
     /**
      * Set the value of content
      *
-     * @param array  $content
+     * @param array $content
      *
      * @return self
      */

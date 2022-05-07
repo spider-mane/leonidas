@@ -1,6 +1,6 @@
 <?php
 
-namespace Leonidas\Traits;
+namespace Leonidas\Framework\Modules\Traits;
 
 use Closure;
 

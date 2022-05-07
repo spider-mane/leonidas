@@ -5,7 +5,7 @@ namespace Leonidas\Framework\Modules;
 use Closure;
 use Leonidas\Contracts\Admin\Components\ColumnRowActionInterface;
 use Leonidas\Contracts\Extension\ModuleInterface;
-use Leonidas\Traits\CanBeRestrictedTrait;
+use Leonidas\Library\Admin\Abstracts\CanBeRestrictedTrait;
 use WebTheory\Html\Traits\ElementConstructorTrait;
 
 abstract class AbstractColumnRowActionLoaderModule extends AbstractModule implements ModuleInterface

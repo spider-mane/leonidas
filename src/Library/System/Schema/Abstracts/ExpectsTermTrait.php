@@ -1,6 +1,6 @@
 <?php
 
-namespace Leonidas\Traits;
+namespace Leonidas\Library\System\Schema\Abstracts;
 
 use Psr\Http\Message\ServerRequestInterface;
 use WP_Term;

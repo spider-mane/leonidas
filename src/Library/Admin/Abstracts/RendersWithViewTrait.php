@@ -1,6 +1,6 @@
 <?php
 
-namespace Leonidas\Traits;
+namespace Leonidas\Library\Admin\Abstracts;
 
 use Leonidas\Contracts\Ui\ViewInterface;
 use Psr\Http\Message\ServerRequestInterface;

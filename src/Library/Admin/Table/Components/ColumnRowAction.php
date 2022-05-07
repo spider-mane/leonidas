@@ -3,7 +3,7 @@
 namespace Leonidas\Library\Admin\Table\Components;
 
 use Leonidas\Contracts\Admin\Components\ColumnRowActionInterface;
-use Leonidas\Traits\CanBeRestrictedTrait;
+use Leonidas\Library\Admin\Abstracts\CanBeRestrictedTrait;
 use Psr\Http\Message\ServerRequestInterface;
 use WebTheory\Html\Traits\ElementConstructorTrait;
 

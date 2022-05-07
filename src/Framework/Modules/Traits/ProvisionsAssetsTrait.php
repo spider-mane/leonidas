@@ -1,6 +1,6 @@
 <?php
 
-namespace Leonidas\Traits;
+namespace Leonidas\Framework\Modules\Traits;
 
 use Leonidas\Contracts\Ui\Asset\InlineScriptCollectionInterface;
 use Leonidas\Contracts\Ui\Asset\InlineStyleCollectionInterface;
@@ -11,8 +11,6 @@ use Leonidas\Contracts\Ui\Asset\ScriptPrinterInterface;
 use Leonidas\Contracts\Ui\Asset\StyleCollectionInterface;
 use Leonidas\Contracts\Ui\Asset\StyleLoaderInterface;
 use Leonidas\Contracts\Ui\Asset\StylePrinterInterface;
-use Leonidas\Framework\Modules\Traits\AbstractModuleTraitTrait;
-use Leonidas\Framework\Modules\Traits\MustBeInitiatedTrait;
 use Leonidas\Library\Core\Asset\ScriptLoader;
 use Leonidas\Library\Core\Asset\ScriptPrinter;
 use Leonidas\Library\Core\Asset\StyleLoader;

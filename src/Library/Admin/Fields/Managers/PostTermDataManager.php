@@ -2,8 +2,8 @@
 
 namespace Leonidas\Library\Admin\Fields\Managers;
 
+use Leonidas\Library\System\Schema\Abstracts\ExpectsPostTrait;
 use Leonidas\Library\System\Schema\Term\TermCollection;
-use Leonidas\Traits\ExpectsPostTrait;
 use Psr\Http\Message\ServerRequestInterface;
 use WebTheory\Saveyour\Contracts\Data\FieldDataManagerInterface;
 

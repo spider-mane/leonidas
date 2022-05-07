@@ -5,9 +5,9 @@ namespace Leonidas\Library\Admin\Metabox\Components;
 use Leonidas\Contracts\Admin\Components\MetaboxFieldInterface;
 use Leonidas\Contracts\Ui\ViewInterface;
 use Leonidas\Library\Admin\AbstractAdminField;
+use Leonidas\Library\Admin\Abstracts\CanBeRestrictedTrait;
+use Leonidas\Library\Admin\Abstracts\RendersWithViewTrait;
 use Leonidas\Library\Admin\Metabox\Views\FieldView;
-use Leonidas\Traits\CanBeRestrictedTrait;
-use Leonidas\Traits\RendersWithViewTrait;
 use Psr\Http\Message\ServerRequestInterface;
 
 class Field extends AbstractAdminField implements MetaboxFieldInterface

@@ -4,9 +4,9 @@ namespace Leonidas\Library\Admin\Metabox\Components;
 
 use Leonidas\Contracts\Admin\Components\MetaboxComponentInterface;
 use Leonidas\Contracts\Ui\ViewInterface;
+use Leonidas\Library\Admin\Abstracts\CanBeRestrictedTrait;
+use Leonidas\Library\Admin\Abstracts\RendersWithViewTrait;
 use Leonidas\Library\Admin\Metabox\Views\FieldGridView;
-use Leonidas\Traits\CanBeRestrictedTrait;
-use Leonidas\Traits\RendersWithViewTrait;
 use Psr\Http\Message\ServerRequestInterface;
 use WebTheory\Saveyour\Contracts\Controller\FormFieldControllerInterface;
 use WebTheory\Saveyour\Controller\FormFieldController;

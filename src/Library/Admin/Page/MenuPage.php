@@ -6,7 +6,7 @@ use Leonidas\Contracts\Admin\AdminTitleResolverInterface;
 use Leonidas\Contracts\Admin\Components\AdminPageLayoutInterface;
 use Leonidas\Contracts\Admin\Components\LoadErrorPageInterface;
 use Leonidas\Contracts\Admin\Components\MenuPageInterface;
-use Leonidas\Traits\CanBeRestrictedTrait;
+use Leonidas\Library\Admin\Abstracts\CanBeRestrictedTrait;
 
 class MenuPage extends AbstractMenuPage implements MenuPageInterface
 {

@@ -5,10 +5,10 @@ namespace Leonidas\Library\Admin\Term;
 use Leonidas\Contracts\Admin\Components\TermFieldInterface;
 use Leonidas\Contracts\Ui\ViewInterface;
 use Leonidas\Library\Admin\AbstractAdminField;
+use Leonidas\Library\Admin\Abstracts\CanBeRestrictedTrait;
+use Leonidas\Library\Admin\Abstracts\RendersWithViewTrait;
 use Leonidas\Library\Admin\Term\Views\AddTermFieldView;
 use Leonidas\Library\Admin\Term\Views\EditTermFieldView;
-use Leonidas\Traits\CanBeRestrictedTrait;
-use Leonidas\Traits\RendersWithViewTrait;
 use Psr\Http\Message\ServerRequestInterface;
 
 class TermField extends AbstractAdminField implements TermFieldInterface

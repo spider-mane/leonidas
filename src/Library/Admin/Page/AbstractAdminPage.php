@@ -5,7 +5,7 @@ namespace Leonidas\Library\Admin\Page;
 use Leonidas\Contracts\Admin\AdminTitleResolverInterface;
 use Leonidas\Contracts\Admin\Components\AdminPageLayoutInterface;
 use Leonidas\Contracts\Admin\Components\LoadErrorPageInterface;
-use Leonidas\Traits\CanBeRestrictedTrait;
+use Leonidas\Library\Admin\Abstracts\CanBeRestrictedTrait;
 use Psr\Http\Message\ServerRequestInterface;
 
 abstract class AbstractAdminPage

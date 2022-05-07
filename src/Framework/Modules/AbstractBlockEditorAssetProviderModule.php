@@ -3,10 +3,10 @@
 namespace Leonidas\Framework\Modules;
 
 use Leonidas\Contracts\Extension\ModuleInterface;
+use Leonidas\Framework\Modules\Traits\ProvisionsAssetsTrait;
 use Leonidas\Traits\Hooks\TargetsEnqueueBlockEditorAssetsHook;
 use Leonidas\Traits\Hooks\TargetsScriptLoaderTagHook;
 use Leonidas\Traits\Hooks\TargetsStyleLoaderTagHook;
-use Leonidas\Traits\ProvisionsAssetsTrait;
 
 abstract class AbstractBlockEditorAssetProviderModule extends AbstractModule implements ModuleInterface
 {
