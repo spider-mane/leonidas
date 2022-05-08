@@ -1,11 +1,13 @@
 {
   "private": true,
   "scripts": {
-    "build": "npm run lint && npm run test && npm run mix:prod",
+    "build": "npm run mix:prod && npm run tailwind",
     "lint": "",
     "test": "",
     "mix": "mix",
     "mix:prod": "mix --production",
+    "tailwind": "tailwindcss -i ./src/css/input.css -o ./dist/css/output.css",
+    "tailwind:watch": "npm run tailwind --watch",
     "watch": "mix watch",
     "watch:hot": "mix watch --hot",
     "watch:poll": "mix watch -- --watch-options-poll=1000"
