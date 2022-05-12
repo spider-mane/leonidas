@@ -35,8 +35,10 @@
     "psr/http-server-middleware": "^1.0",
     "psr/link": "^1.0 || ^2.0",
     "psr/simple-cache": "^1.0",
+    "symfony/console": "^5.4",
     "symfony/polyfill-php80": "^1.23",
     "symfony/polyfill-php81": "^1.23",
+    "symfony/yaml": "^5.4",
     "twig/twig": "^2.0 || ^3.0",
     "webtheory/collection": "@stable",
     "webtheory/config": "@stable",
@@ -82,7 +84,6 @@
     "slim/slim": "^4.7",
     "squizlabs/php_codesniffer": "^3.5",
     "symfony/asset": "^5.4",
-    "symfony/console": "^5.4",
     "symfony/error-handler": "^5.4",
     "symfony/filesystem": "^5.4",
     "symfony/finder": "^5.4",
@@ -93,9 +94,8 @@
     "symfony/validator": "^5.4",
     "symfony/var-dumper": "^5.4",
     "symfony/var-exporter": "^5.4",
-    "symfony/yaml": "^5.4",
     "szepeviktor/phpstan-wordpress": "^1.1",
-    "vimeo/psalm": "^4.22",
+    "vimeo/psalm": "^4.23",
     "vlucas/phpdotenv": "^5.4",
     "webtheory/exterminate": "@stable",
     "webtheory/wp-cli-util": "@stable",
@@ -116,6 +116,9 @@
       "Tests\\": "tests/"
     }
   },
+  "bin": [
+    "bin/hoplite"
+  ],
   "scripts": {
     "analyze": "vendor/bin/phpstan analyze",
     "asset": "npm --prefix assets",
