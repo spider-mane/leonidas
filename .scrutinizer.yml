@@ -7,19 +7,23 @@ build:
   dependencies:
     override:
       - composer install --no-interaction --no-scripts
+    after:
+      - cp -n .env.example .env
+      - php bin/build-paths
   tests:
     override:
       - command: vendor/bin/phpunit
         coverage:
           file: build/phpunit/coverage/coverage.clover.xml
           format: clover
-      - php-scrutinizer-run --enable-security-analysis
 
   nodes:
-    php-coding-style:
+    php-analysis:
       tests:
         override:
           - vendor/bin/phpcs
+          - vendor/bin/phpstan analyze
+          - php-scrutinizer-run --enable-security-analysis
     php-7.4:
       environment:
         php: 7.4
@@ -30,6 +34,9 @@ build:
       environment:
         php: 8.1
 
+checks:
+  php: true
+
 filter:
   excluded_paths:
     - tests/
@@ -38,6 +45,3 @@ filter:
     - vendor/
     - wordpress/
     - assets/node_modules/
-
-checks:
-  php: true

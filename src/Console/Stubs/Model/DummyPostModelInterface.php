@@ -2,6 +2,6 @@
 
 namespace Leonidas\Console\Stubs\Model;
 
-interface PostModelInterface
+interface DummyPostModelInterface
 {
 }
