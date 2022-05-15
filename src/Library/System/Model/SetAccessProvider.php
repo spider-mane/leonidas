@@ -22,25 +22,22 @@ class SetAccessProvider implements SetAccessProviderInterface
         $this->caseConverter = new CaseConverter();
     }
 
-    public function set(string $property, $value)
+    public function set(string $property, $value): void
     {
         if ($setter = $this->setters[$property] ?? null) {
             $setter instanceof Closure
                 ? $setter($value)
                 : $this->instance->$setter($value);
+
+            return;
         }
 
-        $setter = $this->inferSetter($property);
+        $setter = $this->prefixPascal('set', $property);
 
         if (is_callable([$this->instance, $setter])) {
             $this->setters[$property] = $setter;
 
             $this->instance->$setter($value);
         }
-    }
-
-    protected function inferSetter(string $property): string
-    {
-        return 'set' . $this->convert($property)->toPascal();
     }
 }

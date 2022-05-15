@@ -30,7 +30,7 @@ class GetAccessProvider implements GetAccessProviderInterface
                 : $this->instance->$getter();
         }
 
-        $getter = $this->inferGetter($property);
+        $getter = $this->prefixPascal('get', $property);
 
         if (is_callable([$this->instance, $getter])) {
             $this->getters[$property] = $getter;
@@ -39,11 +39,6 @@ class GetAccessProvider implements GetAccessProviderInterface
         }
 
         $this->triggerNotice($property);
-    }
-
-    protected function inferGetter(string $property): string
-    {
-        return 'get' . $this->convert($property)->toPascal();
     }
 
     protected function triggerNotice(string $property): void

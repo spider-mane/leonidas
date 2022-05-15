@@ -15,4 +15,14 @@ trait ConvertsCaseTrait
             ? $this->caseConverter->convert($source)
             : new Convert($source);
     }
+
+    protected function prefixPascal(string $prefix, string $source): string
+    {
+        return $prefix . $this->convert($source)->toPascal();
+    }
+
+    protected function prefixStudly(string $prefix, string $source): string
+    {
+        return $this->prefixPascal($prefix, $source);
+    }
 }
