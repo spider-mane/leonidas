@@ -2,13 +2,13 @@
 
 namespace Leonidas\Framework\Modules;
 
-use Leonidas\Contracts\Admin\Components\AdminNoticeHandlerInterface;
-use Leonidas\Contracts\Admin\Components\AdminNoticePrinterInterface;
-use Leonidas\Contracts\Admin\Components\AdminNoticeRepositoryInterface;
+use Leonidas\Contracts\Admin\Component\AdminNoticeLoaderInterface;
+use Leonidas\Contracts\Admin\Component\AdminNoticePrinterInterface;
+use Leonidas\Contracts\Admin\Component\AdminNoticeRepositoryInterface;
 use Leonidas\Contracts\Extension\ModuleInterface;
 use Leonidas\Hooks\TargetsAllAdminNoticesHook;
 use Leonidas\Hooks\TargetsShutdownHook;
-use Leonidas\Library\Admin\Loaders\AdminNoticeHandler;
+use Leonidas\Library\Admin\Loader\AdminNoticeLoader;
 
 abstract class AbstractAdminNoticeLoaderModule extends AbstractModule implements ModuleInterface
 {
@@ -47,9 +47,9 @@ abstract class AbstractAdminNoticeLoaderModule extends AbstractModule implements
         $this->repository()->persist($this->getServerRequest());
     }
 
-    protected function handler(bool $print = false): AdminNoticeHandlerInterface
+    protected function handler(bool $print = false): AdminNoticeLoaderInterface
     {
-        return new AdminNoticeHandler($this->repository(), $print ? $this->printer() : null);
+        return new AdminNoticeLoader($this->repository(), $print ? $this->printer() : null);
     }
 
     protected function printer(): ?AdminNoticePrinterInterface

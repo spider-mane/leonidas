@@ -3,7 +3,7 @@
 namespace Leonidas\Framework\Providers\League;
 
 use Leonidas\Framework\Providers\AdminNoticeRepositoryProvider;
-use Leonidas\Library\Admin\Notice\AdminNoticeRepository;
+use Leonidas\Library\Admin\Repository\AdminNoticeRepository;
 use Panamax\Contracts\ServiceFactoryInterface;
 
 class AdminNoticeRepositoryServiceProvider extends AbstractLeagueServiceFactory

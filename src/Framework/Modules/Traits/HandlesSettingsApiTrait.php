@@ -2,9 +2,9 @@
 
 namespace Leonidas\Framework\Modules\Traits;
 
-use Leonidas\Contracts\Admin\Components\SettingsFieldCollectionInterface;
-use Leonidas\Contracts\Admin\Components\SettingsSectionCollectionInterface;
-use Leonidas\Contracts\Admin\Setting\SettingCollectionInterface;
+use Leonidas\Contracts\Admin\Component\SettingsFieldCollectionInterface;
+use Leonidas\Contracts\Admin\Component\SettingsSectionCollectionInterface;
+use Leonidas\Contracts\System\Setting\SettingCollectionInterface;
 use Leonidas\Hooks\TargetsAdminInitHook;
 
 trait HandlesSettingsApiTrait

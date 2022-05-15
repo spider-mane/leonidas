@@ -2,7 +2,7 @@
 
 namespace Leonidas\Framework\Modules\Traits;
 
-use Leonidas\Contracts\Admin\Components\BaseAdminPageInterface;
+use Leonidas\Contracts\Admin\Component\BaseAdminPageInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 trait AdminPageModuleTrait

@@ -2,7 +2,7 @@
 
 namespace Leonidas\Library\Admin\Abstracts;
 
-use Leonidas\Contracts\Admin\Components\AdminComponentInterface;
+use Leonidas\Contracts\Admin\Component\AdminComponentInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 trait RendersComponentsTrait

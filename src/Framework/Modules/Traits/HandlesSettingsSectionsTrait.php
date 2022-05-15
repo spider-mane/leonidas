@@ -3,9 +3,9 @@
 namespace Leonidas\Framework\Modules\Traits;
 
 use Closure;
-use Leonidas\Contracts\Admin\Components\SettingsSectionCollectionInterface;
-use Leonidas\Contracts\Admin\Components\SettingsSectionLoaderInterface;
-use Leonidas\Library\Admin\Page\SettingsSection\SettingsSectionLoader;
+use Leonidas\Contracts\Admin\Component\SettingsSectionCollectionInterface;
+use Leonidas\Contracts\Admin\Component\SettingsSectionRegistrarInterface;
+use Leonidas\Library\Admin\Registrar\SettingsSectionRegistrar;
 use Psr\Http\Message\ServerRequestInterface;
 
 trait HandlesSettingsSectionsTrait
@@ -14,7 +14,7 @@ trait HandlesSettingsSectionsTrait
 
     protected function registerSettingsSections(ServerRequestInterface $request): void
     {
-        $this->settingsSectionLoader()->registerMany(
+        $this->settingsSectionRegistrar()->registerMany(
             $this->getSettingsSections(),
             $request
         );
@@ -29,9 +29,9 @@ trait HandlesSettingsSectionsTrait
             ->renderComponent($request);
     }
 
-    protected function settingsSectionLoader(): SettingsSectionLoaderInterface
+    protected function settingsSectionRegistrar(): SettingsSectionRegistrarInterface
     {
-        return new SettingsSectionLoader(
+        return new SettingsSectionRegistrar(
             Closure::fromCallable([$this, 'renderSettingsSection'])
         );
     }

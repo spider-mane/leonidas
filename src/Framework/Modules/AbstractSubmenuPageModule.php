@@ -3,8 +3,8 @@
 namespace Leonidas\Framework\Modules;
 
 use Closure;
-use Leonidas\Contracts\Admin\Components\SubmenuPageInterface;
-use Leonidas\Contracts\Admin\Components\SubmenuPageLoaderInterface;
+use Leonidas\Contracts\Admin\Component\SubmenuPageInterface;
+use Leonidas\Contracts\Admin\Component\SubmenuPageRegistrarInterface;
 use Leonidas\Contracts\Extension\ModuleInterface;
 use Leonidas\Framework\Modules\Traits\FluentlySetsPropertiesTrait;
 use Leonidas\Framework\Modules\Traits\NestedPageModuleTrait;
@@ -12,7 +12,7 @@ use Leonidas\Hooks\TargetsAdminMenuHook;
 use Leonidas\Hooks\TargetsAdminTitleHook;
 use Leonidas\Hooks\TargetsParentFileHook;
 use Leonidas\Hooks\TargetsSubmenuFileHook;
-use Leonidas\Library\Admin\Loaders\SubmenuPageLoader;
+use Leonidas\Library\Admin\Registrar\SubmenuPageRegistrar;
 
 abstract class AbstractSubmenuPageModule extends AbstractModule implements ModuleInterface
 {
@@ -25,14 +25,14 @@ abstract class AbstractSubmenuPageModule extends AbstractModule implements Modul
 
     protected SubmenuPageInterface $definition;
 
-    protected SubmenuPageLoaderInterface $submenuPageLoader;
+    protected SubmenuPageRegistrarInterface $submenuPageLoader;
 
     protected function getDefinition(): SubmenuPageInterface
     {
         return $this->definition;
     }
 
-    protected function getSubmenuPageLoader(): SubmenuPageLoaderInterface
+    protected function getSubmenuPageRegistrar(): SubmenuPageRegistrarInterface
     {
         return $this->submenuPageLoader;
     }
@@ -56,7 +56,7 @@ abstract class AbstractSubmenuPageModule extends AbstractModule implements Modul
 
     protected function addSubmenuPage()
     {
-        $this->getSubmenuPageLoader()->addOne($this->getDefinition());
+        $this->getSubmenuPageRegistrar()->registerOne($this->getDefinition());
     }
 
     protected function renderSubmenuPage(array $args): void
@@ -78,9 +78,9 @@ abstract class AbstractSubmenuPageModule extends AbstractModule implements Modul
         return ['definition', 'submenuPageLoader'];
     }
 
-    protected function submenuPageLoader(): SubmenuPageLoaderInterface
+    protected function submenuPageRegistrar(): SubmenuPageRegistrarInterface
     {
-        return new SubmenuPageLoader(
+        return new SubmenuPageRegistrar(
             Closure::fromCallable([$this, 'renderSubmenuPage'])
         );
     }

@@ -3,7 +3,7 @@
 namespace Leonidas\Framework\Providers\League;
 
 use Leonidas\Framework\Providers\FieldFactoryProvider;
-use Leonidas\Library\Admin\Fields\Factory\Field;
+use Leonidas\Library\Admin\Field\Factory\Field;
 use Panamax\Contracts\ServiceFactoryInterface;
 
 class FieldFactoryServiceProvider extends AbstractLeagueServiceFactory

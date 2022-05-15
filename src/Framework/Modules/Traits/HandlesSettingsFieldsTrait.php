@@ -3,9 +3,9 @@
 namespace Leonidas\Framework\Modules\Traits;
 
 use Closure;
-use Leonidas\Contracts\Admin\Components\SettingsFieldCollectionInterface;
-use Leonidas\Contracts\Admin\Components\SettingsFieldLoaderInterface;
-use Leonidas\Library\Admin\Page\SettingsField\SettingsFieldLoader;
+use Leonidas\Contracts\Admin\Component\SettingsFieldCollectionInterface;
+use Leonidas\Contracts\Admin\Component\SettingsFieldRegistrarInterface;
+use Leonidas\Library\Admin\Registrar\SettingsFieldRegistrar;
 use Psr\Http\Message\ServerRequestInterface;
 
 trait HandlesSettingsFieldsTrait
@@ -14,7 +14,7 @@ trait HandlesSettingsFieldsTrait
 
     protected function registerSettingsFields(ServerRequestInterface $request)
     {
-        $this->settingsFieldLoader()->registerMany(
+        $this->settingsFieldRegistrar()->registerMany(
             $this->getSettingsFields(),
             $request
         );
@@ -29,9 +29,9 @@ trait HandlesSettingsFieldsTrait
             ->renderComponent($request);
     }
 
-    protected function settingsFieldLoader(): SettingsFieldLoaderInterface
+    protected function settingsFieldRegistrar(): SettingsFieldRegistrarInterface
     {
-        return new SettingsFieldLoader(
+        return new SettingsFieldRegistrar(
             Closure::fromCallable([$this, 'renderSettingsField'])
         );
     }

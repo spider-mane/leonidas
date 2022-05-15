@@ -3,8 +3,8 @@
 namespace Leonidas\Framework\Modules;
 
 use Closure;
-use Leonidas\Contracts\Admin\Components\InteriorPageInterface;
-use Leonidas\Contracts\Admin\Components\InteriorPageLoaderInterface;
+use Leonidas\Contracts\Admin\Component\InteriorPageInterface;
+use Leonidas\Contracts\Admin\Component\InteriorPageRegistrarInterface;
 use Leonidas\Contracts\Extension\ModuleInterface;
 use Leonidas\Framework\Modules\Traits\FluentlySetsPropertiesTrait;
 use Leonidas\Framework\Modules\Traits\NestedPageModuleTrait;
@@ -12,7 +12,7 @@ use Leonidas\Hooks\TargetsAdminMenuHook;
 use Leonidas\Hooks\TargetsAdminTitleHook;
 use Leonidas\Hooks\TargetsParentFileHook;
 use Leonidas\Hooks\TargetsSubmenuFileHook;
-use Leonidas\Library\Admin\Loaders\InteriorPageLoader;
+use Leonidas\Library\Admin\Registrar\InteriorPageRegistrar;
 
 abstract class AbstractInteriorPageModule extends AbstractModule implements ModuleInterface
 {
@@ -25,14 +25,14 @@ abstract class AbstractInteriorPageModule extends AbstractModule implements Modu
 
     protected InteriorPageInterface $definition;
 
-    protected InteriorPageLoaderInterface $interiorPageLoader;
+    protected InteriorPageRegistrarInterface $interiorPageLoader;
 
     protected function getDefinition(): InteriorPageInterface
     {
         return $this->definition;
     }
 
-    protected function getInteriorPageLoader(): InteriorPageLoaderInterface
+    protected function getInteriorPageRegistrar(): InteriorPageRegistrarInterface
     {
         return $this->interiorPageLoader;
     }
@@ -56,7 +56,7 @@ abstract class AbstractInteriorPageModule extends AbstractModule implements Modu
 
     protected function addInteriorPage()
     {
-        $this->getInteriorPageLoader()->addOne($this->getDefinition());
+        $this->getInteriorPageRegistrar()->registerOne($this->getDefinition());
     }
 
     protected function renderInteriorPage(array $args): void
@@ -78,9 +78,9 @@ abstract class AbstractInteriorPageModule extends AbstractModule implements Modu
         return ['definition', 'interiorPageLoader'];
     }
 
-    protected function interiorPageLoader(): InteriorPageLoaderInterface
+    protected function interiorPageRegistrar(): InteriorPageRegistrarInterface
     {
-        return new InteriorPageLoader(
+        return new InteriorPageRegistrar(
             Closure::fromCallable([$this, 'renderInteriorPage'])
         );
     }

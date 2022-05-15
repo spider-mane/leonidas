@@ -2,9 +2,9 @@
 
 namespace Leonidas\Framework\Modules\Traits;
 
-use Leonidas\Contracts\Admin\Setting\SettingCollectionInterface;
-use Leonidas\Contracts\Admin\Setting\SettingRegistrarInterface;
-use Leonidas\Library\Admin\Setting\SettingRegistrar;
+use Leonidas\Contracts\System\Setting\SettingCollectionInterface;
+use Leonidas\Contracts\System\Setting\SettingRegistrarInterface;
+use Leonidas\Library\System\Setting\SettingRegistrar;
 
 trait HandlesSettingsTrait
 {

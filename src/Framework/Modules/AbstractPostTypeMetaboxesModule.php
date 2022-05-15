@@ -2,15 +2,15 @@
 
 namespace Leonidas\Framework\Modules;
 
-use Leonidas\Contracts\Admin\Loader\MetaboxLoaderInterface;
 use Leonidas\Contracts\Admin\MetaboxCollectionInterface;
+use Leonidas\Contracts\Admin\Registrar\MetaboxRegistrarInterface;
 use Leonidas\Contracts\Auth\CsrfManagerInterface;
 use Leonidas\Framework\Modules\Traits\CreatesAdminNoticesTrait;
 use Leonidas\Framework\Modules\Traits\HasExtraConstructionTrait;
 use Leonidas\Hooks\TargetsAddMetaBoxesXPostTypeHook;
 use Leonidas\Hooks\TargetsEditFormTopHook;
 use Leonidas\Hooks\TargetsSavePostXPostTypeHook;
-use Leonidas\Library\Admin\Loaders\MetaboxLoader;
+use Leonidas\Library\Admin\Registrar\MetaboxRegistrar;
 use Leonidas\Library\Core\Auth\Nonce;
 use Leonidas\Library\Core\Http\Form\Authenticators\CsrfCheck;
 use Leonidas\Library\Core\Http\Form\Authenticators\NoAutosave;
@@ -96,7 +96,7 @@ abstract class AbstractPostTypeMetaboxesModule extends AbstractModule
 
     protected function registerMetaboxes(ServerRequestInterface $request): void
     {
-        $this->metaboxLoader()->registerMany($this->initMetaboxCollection(), $request);
+        $this->metaboxRegistrar()->registerMany($this->initMetaboxCollection(), $request);
     }
 
     protected function renderCsrfToken(ServerRequestInterface $request): ?string
@@ -156,9 +156,9 @@ abstract class AbstractPostTypeMetaboxesModule extends AbstractModule
         return new Nonce($name, $action);
     }
 
-    protected function metaboxLoader(): MetaboxLoaderInterface
+    protected function metaboxRegistrar(): MetaboxRegistrarInterface
     {
-        return new MetaboxLoader($this->callbackMethod('printMetabox'));
+        return new MetaboxRegistrar($this->callbackMethod('printMetabox'));
     }
 
     protected function allowAutosave(): bool

@@ -3,7 +3,7 @@
 namespace Leonidas\Framework\Modules;
 
 use Closure;
-use Leonidas\Contracts\Admin\Components\ColumnRowActionInterface;
+use Leonidas\Contracts\Admin\Component\ColumnRowActionInterface;
 use Leonidas\Contracts\Extension\ModuleInterface;
 use Leonidas\Library\Admin\Abstracts\CanBeRestrictedTrait;
 use WebTheory\Html\Traits\ElementConstructorTrait;

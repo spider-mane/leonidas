@@ -2,8 +2,8 @@
 
 namespace Leonidas\Framework\Modules;
 
-use Leonidas\Contracts\Admin\Components\TermFieldInterface;
-use Leonidas\Contracts\Admin\Components\TermFieldPrinterInterface;
+use Leonidas\Contracts\Admin\Component\TermFieldInterface;
+use Leonidas\Contracts\Admin\Component\TermFieldPrinterInterface;
 use Leonidas\Contracts\Auth\CsrfManagerInterface;
 use Leonidas\Contracts\Extension\ModuleInterface;
 use Leonidas\Framework\Modules\Traits\HasExtraConstructionTrait;
@@ -13,8 +13,8 @@ use Leonidas\Hooks\TargetsXTaxonomyAddFormFieldsHook;
 use Leonidas\Hooks\TargetsXTaxonomyAddFormHook;
 use Leonidas\Hooks\TargetsXTaxonomyEditFormFieldsHook;
 use Leonidas\Hooks\TargetsXTaxonomyTermEditFormTopHook;
-use Leonidas\Library\Admin\Term\Printers\BasicTermFieldPrinter;
-use Leonidas\Library\Admin\Term\Printers\DeferrableTermFieldPrinter;
+use Leonidas\Library\Admin\Printer\BasicTermFieldPrinter;
+use Leonidas\Library\Admin\Printer\DeferrableTermFieldPrinter;
 use Leonidas\Library\Core\Auth\Nonce;
 use Leonidas\Library\Core\Http\Form\Authenticators\CsrfCheck;
 use Leonidas\Library\Core\Http\Form\Authenticators\NoAutosave;

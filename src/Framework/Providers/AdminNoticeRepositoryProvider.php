@@ -2,8 +2,8 @@
 
 namespace Leonidas\Framework\Providers;
 
-use Leonidas\Contracts\Admin\Components\AdminNoticeRepositoryInterface;
-use Leonidas\Library\Admin\Notice\AdminNoticeRepository;
+use Leonidas\Contracts\Admin\Component\AdminNoticeRepositoryInterface;
+use Leonidas\Library\Admin\Repository\AdminNoticeRepository;
 use Panamax\Contracts\ServiceFactoryInterface;
 use Panamax\Factories\AbstractServiceFactory;
 use Psr\Container\ContainerInterface;

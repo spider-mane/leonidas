@@ -2,7 +2,7 @@
 
 namespace Leonidas\Framework\Providers;
 
-use Leonidas\Library\Admin\Fields\Factory\Field;
+use Leonidas\Library\Admin\Field\Factory\Field;
 use Panamax\Contracts\ServiceFactoryInterface;
 use Panamax\Factories\AbstractServiceFactory;
 use Psr\Container\ContainerInterface;

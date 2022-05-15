@@ -2,8 +2,8 @@
 
 namespace Leonidas\Framework\Modules;
 
-use Leonidas\Contracts\Admin\Setting\SettingCollectionInterface;
 use Leonidas\Contracts\Extension\ModuleInterface;
+use Leonidas\Contracts\System\Setting\SettingCollectionInterface;
 use Leonidas\Framework\Modules\Traits\FluentlySetsPropertiesTrait;
 use Leonidas\Framework\Modules\Traits\HandlesSettingsTrait;
 use Leonidas\Hooks\TargetsAdminInitHook;

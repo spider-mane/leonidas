@@ -3,8 +3,8 @@
 namespace Leonidas\Framework\Modules;
 
 use Closure;
-use Leonidas\Contracts\Admin\Components\FlexPageInterface;
-use Leonidas\Contracts\Admin\Components\FlexPageLoaderInterface;
+use Leonidas\Contracts\Admin\Component\FlexPageInterface;
+use Leonidas\Contracts\Admin\Component\FlexPageRegistrarInterface;
 use Leonidas\Contracts\Extension\ModuleInterface;
 use Leonidas\Framework\Modules\Traits\FluentlySetsPropertiesTrait;
 use Leonidas\Framework\Modules\Traits\NestedPageModuleTrait;
@@ -12,7 +12,7 @@ use Leonidas\Hooks\TargetsAdminMenuHook;
 use Leonidas\Hooks\TargetsAdminTitleHook;
 use Leonidas\Hooks\TargetsParentFileHook;
 use Leonidas\Hooks\TargetsSubmenuFileHook;
-use Leonidas\Library\Admin\Loaders\FlexPageLoader;
+use Leonidas\Library\Admin\Registrar\FlexPageRegistrar;
 
 abstract class AbstractFlexPageModule extends AbstractModule implements ModuleInterface
 {
@@ -25,14 +25,14 @@ abstract class AbstractFlexPageModule extends AbstractModule implements ModuleIn
 
     protected FlexPageInterface $definition;
 
-    protected FlexPageLoaderInterface $flexPageLoader;
+    protected FlexPageRegistrarInterface $flexPageLoader;
 
     protected function getDefinition(): FlexPageInterface
     {
         return $this->definition;
     }
 
-    protected function getFlexPageLoader(): FlexPageLoaderInterface
+    protected function getFlexPageRegistrar(): FlexPageRegistrarInterface
     {
         return $this->flexPageLoader;
     }
@@ -56,7 +56,7 @@ abstract class AbstractFlexPageModule extends AbstractModule implements ModuleIn
 
     protected function addFlexPage()
     {
-        $this->getFlexPageLoader()->addOne($this->getDefinition());
+        $this->getFlexPageRegistrar()->registerOne($this->getDefinition());
     }
 
     protected function renderFlexPage(array $args): void
@@ -102,9 +102,9 @@ abstract class AbstractFlexPageModule extends AbstractModule implements ModuleIn
         return ['definition', 'flexPageLoader'];
     }
 
-    protected function flexPageLoader(): FlexPageLoaderInterface
+    protected function flexPageRegistrar(): FlexPageRegistrarInterface
     {
-        return new FlexPageLoader(
+        return new FlexPageRegistrar(
             Closure::fromCallable([$this, 'renderFlexPage'])
         );
     }

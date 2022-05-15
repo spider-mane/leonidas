@@ -3,14 +3,14 @@
 namespace Leonidas\Framework\Modules;
 
 use Closure;
-use Leonidas\Contracts\Admin\Components\MenuPageInterface;
-use Leonidas\Contracts\Admin\Components\MenuPageLoaderInterface;
+use Leonidas\Contracts\Admin\Component\MenuPageInterface;
+use Leonidas\Contracts\Admin\Component\MenuPageRegistrarInterface;
 use Leonidas\Contracts\Extension\ModuleInterface;
 use Leonidas\Framework\Modules\Traits\AdminPageModuleTrait;
 use Leonidas\Framework\Modules\Traits\FluentlySetsPropertiesTrait;
 use Leonidas\Hooks\TargetsAdminMenuHook;
 use Leonidas\Hooks\TargetsAdminTitleHook;
-use Leonidas\Library\Admin\Loaders\MenuPageLoader;
+use Leonidas\Library\Admin\Registrar\MenuPageRegistrar;
 use Psr\Http\Message\ServerRequestInterface;
 
 abstract class AbstractMenuPageModule extends AbstractModule implements ModuleInterface
@@ -22,14 +22,14 @@ abstract class AbstractMenuPageModule extends AbstractModule implements ModuleIn
 
     protected MenuPageInterface $definition;
 
-    protected MenuPageLoaderInterface $menuPageLoader;
+    protected MenuPageRegistrarInterface $menuPageLoader;
 
     protected function getDefinition(): MenuPageInterface
     {
         return $this->definition;
     }
 
-    protected function getMenuPageLoader(): MenuPageLoaderInterface
+    protected function getMenuPageRegistrar(): MenuPageRegistrarInterface
     {
         return $this->menuPageLoader;
     }
@@ -51,7 +51,7 @@ abstract class AbstractMenuPageModule extends AbstractModule implements ModuleIn
 
     protected function addMenuPage(ServerRequestInterface $request): void
     {
-        $this->getMenuPageLoader()->addOne($this->definition);
+        $this->getMenuPageRegistrar()->registerOne($this->definition);
     }
 
     protected function renderMenuPage(array $args): void
@@ -73,9 +73,9 @@ abstract class AbstractMenuPageModule extends AbstractModule implements ModuleIn
         return ['definition', 'menuPageLoader'];
     }
 
-    protected function menuPageLoader(): MenuPageLoaderInterface
+    protected function menuPageRegistrar(): MenuPageRegistrarInterface
     {
-        return new MenuPageLoader(
+        return new MenuPageRegistrar(
             Closure::fromCallable([$this, 'renderMenuPage'])
         );
     }
