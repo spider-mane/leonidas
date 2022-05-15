@@ -20,6 +20,7 @@ return (new Config('leonidas'))
     'blank_line_before_statement' => [
       'statements' => ['break', 'continue', 'declare', 'return', 'throw', 'try'],
     ],
+    'cast_spaces' => true,
     'class_attributes_separation' => [
       'elements' => [
         'method' => 'one',
@@ -42,12 +43,14 @@ return (new Config('leonidas'))
     ],
     'no_empty_phpdoc' => true,
     'no_extra_blank_lines' => true,
+    'no_unneeded_import_alias' => true,
     'no_unused_imports' => true,
     'not_operator_with_space' => false,
     'not_operator_with_successor_space' => false,
     'object_operator_without_whitespace' => true,
     'ordered_imports' => [
-      'sort_algorithm' => 'alpha'
+      'sort_algorithm' => 'alpha',
+      'imports_order' => ['class', 'function', 'const']
     ],
     'phpdoc_scalar' => [
       'types' => ['boolean', 'callback', 'double', 'integer', 'real', 'str'],

@@ -5,6 +5,9 @@ namespace Leonidas\Enum;
 use MyCLabs\Enum\Enum;
 use UnexpectedValueException;
 
+/**
+ * @property string $value
+ */
 abstract class BackedEnum extends Enum
 {
     public function __get($name)

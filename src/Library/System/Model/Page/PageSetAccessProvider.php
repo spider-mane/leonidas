@@ -23,7 +23,7 @@ class PageSetAccessProvider extends SetAccessProvider implements SetAccessProvid
     {
         $setGuid = fn ($guid) => $page->setGuid(new WebPage($guid));
         $setStatus = fn ($status) => $page->setStatus(new PageStatus($status));
-        $setParent = fn ($parent) => $page->setParent($pageRepository->select((int)$parent));
+        $setParent = fn ($parent) => $page->setParent($pageRepository->select((int) $parent));
 
         return [
             'status' => $setStatus,
