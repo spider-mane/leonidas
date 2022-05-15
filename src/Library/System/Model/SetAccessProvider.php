@@ -4,16 +4,16 @@ namespace Leonidas\Library\System\Model;
 
 use Closure;
 use Jawira\CaseConverter\CaseConverter;
-use Jawira\CaseConverter\CaseConverterInterface;
 use Leonidas\Contracts\System\Model\SetAccessProviderInterface;
+use Leonidas\Library\Core\Abstracts\ConvertsCaseTrait;
 
 class SetAccessProvider implements SetAccessProviderInterface
 {
+    use ConvertsCaseTrait;
+
     protected object $instance;
 
     protected array $setters = [];
-
-    protected CaseConverterInterface $caseConverter;
 
     public function __construct(object $instance, array $setters = [])
     {
@@ -41,6 +41,6 @@ class SetAccessProvider implements SetAccessProviderInterface
 
     protected function inferSetter(string $property): string
     {
-        return 'set' . $this->caseConverter->convert($property)->toPascal();
+        return 'set' . $this->convert($property)->toPascal();
     }
 }

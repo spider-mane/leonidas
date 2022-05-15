@@ -3,7 +3,7 @@
 namespace Leonidas\Console\Command;
 
 use Jawira\CaseConverter\CaseConverter;
-use Jawira\CaseConverter\CaseConverterInterface;
+use Leonidas\Library\Core\Abstracts\ConvertsCaseTrait;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -12,13 +12,13 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class MakeHookCommand extends Hoplite
 {
+    use ConvertsCaseTrait;
+
     protected const STUB_NAMESPACE = 'Leonidas\\Console\\Stubs\\Hook';
 
     protected static $defaultName = 'make:hook';
 
     protected static $defaultDescription = 'Creates a hook helper class';
-
-    protected CaseConverterInterface $caseConverter;
 
     protected function configure(): void
     {
@@ -41,7 +41,7 @@ class MakeHookCommand extends Hoplite
 
         $tag = $input->getArgument('tag');
         $type = $input->getArgument('type');
-        $converted = $this->caseConverter->convert($tag)->toPascal();
+        $converted = $this->convert($tag)->toPascal();
 
         $parts = explode('/', $config['hook']['path']);
         $root = array_shift($parts);
