@@ -2,7 +2,7 @@
 
 namespace Leonidas\Library\Admin\Component\Table\Element;
 
-use Leonidas\Contracts\Admin\Component\ColumnRowActionInterface;
+use Leonidas\Contracts\Admin\Component\Table\ColumnRowActionInterface;
 use Leonidas\Library\Admin\Abstracts\CanBeRestrictedTrait;
 use Psr\Http\Message\ServerRequestInterface;
 use WebTheory\Html\Traits\ElementConstructorTrait;

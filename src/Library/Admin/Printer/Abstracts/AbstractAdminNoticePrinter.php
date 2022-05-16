@@ -2,8 +2,8 @@
 
 namespace Leonidas\Library\Admin\Printer\Abstracts;
 
-use Leonidas\Contracts\Admin\Component\AdminNoticeCollectionInterface;
-use Leonidas\Contracts\Admin\Component\AdminNoticePrinterInterface;
+use Leonidas\Contracts\Admin\Component\Notice\AdminNoticeCollectionInterface;
+use Leonidas\Contracts\Admin\Printer\AdminNoticePrinterInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 abstract class AbstractAdminNoticePrinter implements AdminNoticePrinterInterface

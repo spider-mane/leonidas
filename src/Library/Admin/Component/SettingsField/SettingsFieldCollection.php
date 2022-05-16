@@ -2,8 +2,8 @@
 
 namespace Leonidas\Library\Admin\Component\SettingsField;
 
-use Leonidas\Contracts\Admin\Component\SettingsFieldCollectionInterface;
-use Leonidas\Contracts\Admin\Component\SettingsFieldInterface;
+use Leonidas\Contracts\Admin\Component\SettingsField\SettingsFieldCollectionInterface;
+use Leonidas\Contracts\Admin\Component\SettingsField\SettingsFieldInterface;
 
 class SettingsFieldCollection implements SettingsFieldCollectionInterface
 {

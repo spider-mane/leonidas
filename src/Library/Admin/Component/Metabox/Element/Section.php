@@ -2,7 +2,7 @@
 
 namespace Leonidas\Library\Admin\Component\Metabox\Element;
 
-use Leonidas\Contracts\Admin\Component\MetaboxComponentInterface;
+use Leonidas\Contracts\Admin\Component\Metabox\MetaboxComponentInterface;
 use Leonidas\Contracts\Ui\ViewInterface;
 use Leonidas\Library\Admin\Abstracts\CanBeRestrictedTrait;
 use Leonidas\Library\Admin\Abstracts\RendersWithViewTrait;

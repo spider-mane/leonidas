@@ -2,9 +2,9 @@
 
 namespace Leonidas\Library\Admin\Component\Page\Abstracts;
 
-use Leonidas\Contracts\Admin\AdminTitleResolverInterface;
-use Leonidas\Contracts\Admin\Component\AdminPageLayoutInterface;
-use Leonidas\Contracts\Admin\Component\LoadErrorPageInterface;
+use Leonidas\Contracts\Admin\Component\Page\AdminPageLayoutInterface;
+use Leonidas\Contracts\Admin\Component\Page\AdminTitleResolverInterface;
+use Leonidas\Contracts\Admin\Component\Page\LoadErrorPageInterface;
 
 abstract class AbstractMenuPage extends AbstractAdminPage
 {

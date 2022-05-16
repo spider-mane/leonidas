@@ -2,9 +2,9 @@
 
 namespace Leonidas\Library\Admin\Loader;
 
-use Leonidas\Contracts\Admin\Component\AdminNoticeLoaderInterface;
-use Leonidas\Contracts\Admin\Component\AdminNoticePrinterInterface;
-use Leonidas\Contracts\Admin\Component\AdminNoticeRepositoryInterface;
+use Leonidas\Contracts\Admin\Loader\AdminNoticeLoaderInterface;
+use Leonidas\Contracts\Admin\Printer\AdminNoticePrinterInterface;
+use Leonidas\Contracts\Admin\Repository\AdminNoticeRepositoryInterface;
 use Leonidas\Library\Admin\Printer\DeferrableAdminNoticePrinter;
 use Leonidas\Library\Admin\Repository\AdminNoticeRepository;
 use Psr\Http\Message\ServerRequestInterface;

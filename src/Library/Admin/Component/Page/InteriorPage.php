@@ -2,12 +2,12 @@
 
 namespace Leonidas\Library\Admin\Component\Page;
 
-use Leonidas\Contracts\Admin\AdminTitleResolverInterface;
-use Leonidas\Contracts\Admin\Component\AdminPageLayoutInterface;
-use Leonidas\Contracts\Admin\Component\InteriorPageInterface;
-use Leonidas\Contracts\Admin\Component\LoadErrorPageInterface;
-use Leonidas\Contracts\Admin\ParentFileResolverInterface;
-use Leonidas\Contracts\Admin\SubmenuFileResolverInterface;
+use Leonidas\Contracts\Admin\Component\Page\AdminPageLayoutInterface;
+use Leonidas\Contracts\Admin\Component\Page\AdminTitleResolverInterface;
+use Leonidas\Contracts\Admin\Component\Page\InteriorPageInterface;
+use Leonidas\Contracts\Admin\Component\Page\LoadErrorPageInterface;
+use Leonidas\Contracts\Admin\Component\Page\ParentFileResolverInterface;
+use Leonidas\Contracts\Admin\Component\Page\SubmenuFileResolverInterface;
 use Leonidas\Library\Admin\Component\Page\Abstracts\AbstractAdminPage;
 use Leonidas\Library\Admin\Component\Page\Traits\NestedPageTrait;
 

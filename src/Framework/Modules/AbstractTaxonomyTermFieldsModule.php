@@ -2,8 +2,8 @@
 
 namespace Leonidas\Framework\Modules;
 
-use Leonidas\Contracts\Admin\Component\TermFieldInterface;
-use Leonidas\Contracts\Admin\Component\TermFieldPrinterInterface;
+use Leonidas\Contracts\Admin\Component\TermField\TermFieldInterface;
+use Leonidas\Contracts\Admin\Printer\TermFieldPrinterInterface;
 use Leonidas\Contracts\Auth\CsrfManagerInterface;
 use Leonidas\Contracts\Extension\ModuleInterface;
 use Leonidas\Framework\Modules\Traits\HasExtraConstructionTrait;

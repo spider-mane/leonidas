@@ -2,8 +2,8 @@
 
 namespace Leonidas\Library\Admin\Component\SettingsField;
 
-use Leonidas\Contracts\Admin\Component\SettingsFieldBuilderInterface;
-use Leonidas\Contracts\Admin\Component\SettingsFieldInterface;
+use Leonidas\Contracts\Admin\Component\SettingsField\SettingsFieldBuilderInterface;
+use Leonidas\Contracts\Admin\Component\SettingsField\SettingsFieldInterface;
 use Leonidas\Library\Admin\Component\SettingsField\Traits\HasSettingsFieldDataTrait;
 use WebTheory\HttpPolicy\ServerRequestPolicyInterface;
 use WebTheory\Saveyour\Contracts\Field\FormFieldInterface;

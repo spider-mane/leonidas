@@ -2,7 +2,7 @@
 
 namespace Leonidas\Library\Admin\Component\Page\Resolver\ParentFile;
 
-use Leonidas\Contracts\Admin\ParentFileResolverInterface;
+use Leonidas\Contracts\Admin\Component\Page\ParentFileResolverInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 class ParentFileCallback implements ParentFileResolverInterface

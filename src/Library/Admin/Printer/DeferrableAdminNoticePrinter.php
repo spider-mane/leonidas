@@ -2,9 +2,9 @@
 
 namespace Leonidas\Library\Admin\Printer;
 
-use Leonidas\Contracts\Admin\Component\AdminNoticeCollectionInterface;
-use Leonidas\Contracts\Admin\Component\AdminNoticeInterface;
-use Leonidas\Contracts\Admin\Component\AdminNoticePrinterInterface;
+use Leonidas\Contracts\Admin\Component\Notice\AdminNoticeCollectionInterface;
+use Leonidas\Contracts\Admin\Component\Notice\AdminNoticeInterface;
+use Leonidas\Contracts\Admin\Printer\AdminNoticePrinterInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 class DeferrableAdminNoticePrinter implements AdminNoticePrinterInterface

@@ -2,7 +2,7 @@
 
 namespace Leonidas\Library\Admin\Component\SettingsField;
 
-use Leonidas\Contracts\Admin\Component\SettingsFieldInterface;
+use Leonidas\Contracts\Admin\Component\SettingsField\SettingsFieldInterface;
 use Leonidas\Library\Admin\Abstracts\CanBeRestrictedTrait;
 use Leonidas\Library\Admin\Component\SettingsField\Traits\HasSettingsFieldDataTrait;
 use Psr\Http\Message\ServerRequestInterface;
@@ -50,10 +50,10 @@ class SettingsField implements SettingsFieldInterface
         $value = get_option($this->getSetting(), $settingData['default'] ?? null);
 
         $output .= ($this->input ?? $this->getDefaultInput())
-            ->setName($this->getSetting())
-            ->setValue($this->formatValue($value))
-            ->setId($this->getInputId())
-            ->toHtml() . "\n";
+                ->setName($this->getSetting())
+                ->setValue($this->formatValue($value))
+                ->setId($this->getInputId())
+                ->toHtml() . "\n";
 
         if ($description = $settingData['description'] ?? false) {
             $output .= $this->renderDescription($description) . "\n";

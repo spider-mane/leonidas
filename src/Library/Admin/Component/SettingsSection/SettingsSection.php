@@ -2,7 +2,7 @@
 
 namespace Leonidas\Library\Admin\Component\SettingsSection;
 
-use Leonidas\Contracts\Admin\Component\SettingsSectionInterface;
+use Leonidas\Contracts\Admin\Component\SettingsSection\SettingsSectionInterface;
 use Leonidas\Library\Admin\Abstracts\CanBeRestrictedTrait;
 use Leonidas\Library\Admin\Component\SettingsSection\Traits\HasSettingsSectionDataTrait;
 use Psr\Http\Message\ServerRequestInterface;

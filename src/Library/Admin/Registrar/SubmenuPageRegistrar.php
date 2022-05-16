@@ -2,8 +2,8 @@
 
 namespace Leonidas\Library\Admin\Registrar;
 
-use Leonidas\Contracts\Admin\Component\SubmenuPageInterface;
-use Leonidas\Contracts\Admin\Component\SubmenuPageRegistrarInterface;
+use Leonidas\Contracts\Admin\Component\Page\SubmenuPageInterface;
+use Leonidas\Contracts\Admin\Registrar\SubmenuPageRegistrarInterface;
 use Leonidas\Library\Admin\Registrar\Abstracts\AbstractRegistrar;
 
 class SubmenuPageRegistrar extends AbstractRegistrar implements SubmenuPageRegistrarInterface

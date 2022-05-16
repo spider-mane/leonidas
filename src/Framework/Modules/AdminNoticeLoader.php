@@ -2,7 +2,7 @@
 
 namespace Leonidas\Framework\Modules;
 
-use Leonidas\Contracts\Admin\Component\AdminNoticeRepositoryInterface;
+use Leonidas\Contracts\Admin\Repository\AdminNoticeRepositoryInterface;
 use Leonidas\Contracts\Extension\ModuleInterface;
 
 class AdminNoticeLoader extends AbstractAdminNoticeLoaderModule implements ModuleInterface

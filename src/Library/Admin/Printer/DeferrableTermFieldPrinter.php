@@ -2,8 +2,8 @@
 
 namespace Leonidas\Library\Admin\Printer;
 
-use Leonidas\Contracts\Admin\Component\TermFieldInterface;
-use Leonidas\Contracts\Admin\Component\TermFieldPrinterInterface;
+use Leonidas\Contracts\Admin\Component\TermField\TermFieldInterface;
+use Leonidas\Contracts\Admin\Printer\TermFieldPrinterInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 class DeferrableTermFieldPrinter implements TermFieldPrinterInterface

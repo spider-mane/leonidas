@@ -3,8 +3,8 @@
 namespace Leonidas\Framework\Modules;
 
 use Closure;
-use Leonidas\Contracts\Admin\Component\FlexPageInterface;
-use Leonidas\Contracts\Admin\Component\FlexPageRegistrarInterface;
+use Leonidas\Contracts\Admin\Component\Page\FlexPageInterface;
+use Leonidas\Contracts\Admin\Registrar\FlexPageRegistrarInterface;
 use Leonidas\Contracts\Extension\ModuleInterface;
 use Leonidas\Framework\Modules\Traits\FluentlySetsPropertiesTrait;
 use Leonidas\Framework\Modules\Traits\NestedPageModuleTrait;

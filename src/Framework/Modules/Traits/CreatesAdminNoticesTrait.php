@@ -2,8 +2,8 @@
 
 namespace Leonidas\Framework\Modules\Traits;
 
-use Leonidas\Contracts\Admin\Component\AdminNoticeInterface;
-use Leonidas\Contracts\Admin\Component\AdminNoticeRepositoryInterface;
+use Leonidas\Contracts\Admin\Component\Notice\AdminNoticeInterface;
+use Leonidas\Contracts\Admin\Repository\AdminNoticeRepositoryInterface;
 
 trait CreatesAdminNoticesTrait
 {

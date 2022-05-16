@@ -2,8 +2,8 @@
 
 namespace Leonidas\Library\Admin\Component\SettingsSection;
 
-use Leonidas\Contracts\Admin\Component\SettingsSectionBuilderInterface;
-use Leonidas\Contracts\Admin\Component\SettingsSectionInterface;
+use Leonidas\Contracts\Admin\Component\SettingsSection\SettingsSectionBuilderInterface;
+use Leonidas\Contracts\Admin\Component\SettingsSection\SettingsSectionInterface;
 use Leonidas\Library\Admin\Component\SettingsSection\Traits\HasSettingsSectionDataTrait;
 use WebTheory\HttpPolicy\ServerRequestPolicyInterface;
 

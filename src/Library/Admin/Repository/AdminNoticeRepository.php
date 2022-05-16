@@ -2,9 +2,9 @@
 
 namespace Leonidas\Library\Admin\Repository;
 
-use Leonidas\Contracts\Admin\Component\AdminNoticeCollectionInterface;
-use Leonidas\Contracts\Admin\Component\AdminNoticeInterface;
-use Leonidas\Contracts\Admin\Component\AdminNoticeRepositoryInterface;
+use Leonidas\Contracts\Admin\Component\Notice\AdminNoticeCollectionInterface;
+use Leonidas\Contracts\Admin\Component\Notice\AdminNoticeInterface;
+use Leonidas\Contracts\Admin\Repository\AdminNoticeRepositoryInterface;
 use Leonidas\Library\Admin\Component\Notice\AdminNoticeCollection;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\SimpleCache\CacheInterface;

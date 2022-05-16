@@ -2,7 +2,7 @@
 
 namespace Leonidas\Library\Admin\Component\Page\Resolver\AdminTitle;
 
-use Leonidas\Contracts\Admin\AdminTitleResolverInterface;
+use Leonidas\Contracts\Admin\Component\Page\AdminTitleResolverInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 class AdminTitleCallback implements AdminTitleResolverInterface

@@ -2,11 +2,11 @@
 
 namespace Leonidas\Library\Admin\Registrar;
 
-use Leonidas\Contracts\Admin\Component\FlexPageInterface;
-use Leonidas\Contracts\Admin\Component\FlexPageRegistrarInterface;
-use Leonidas\Contracts\Admin\Component\InteriorPageRegistrarInterface;
-use Leonidas\Contracts\Admin\Component\MenuPageRegistrarInterface;
-use Leonidas\Contracts\Admin\Component\SubmenuPageRegistrarInterface;
+use Leonidas\Contracts\Admin\Component\Page\FlexPageInterface;
+use Leonidas\Contracts\Admin\Registrar\FlexPageRegistrarInterface;
+use Leonidas\Contracts\Admin\Registrar\InteriorPageRegistrarInterface;
+use Leonidas\Contracts\Admin\Registrar\MenuPageRegistrarInterface;
+use Leonidas\Contracts\Admin\Registrar\SubmenuPageRegistrarInterface;
 use Leonidas\Library\Admin\Registrar\Abstracts\AbstractRegistrar;
 
 class FlexPageRegistrar extends AbstractRegistrar implements FlexPageRegistrarInterface
@@ -52,16 +52,16 @@ class FlexPageRegistrar extends AbstractRegistrar implements FlexPageRegistrarIn
 
     protected function defaultMenuPageRegistrar(): MenuPageRegistrarInterface
     {
-        return new MenuPageRegistrar($this->getOutputRegistrar());
+        return new MenuPageRegistrar($this->getOutputLoader());
     }
 
     protected function defaultSubmenuPageRegistrar(): SubmenuPageRegistrarInterface
     {
-        return new SubmenuPageRegistrar($this->getOutputRegistrar());
+        return new SubmenuPageRegistrar($this->getOutputLoader());
     }
 
     protected function defaultInteriorPageRegistrar(): InteriorPageRegistrarInterface
     {
-        return new InteriorPageRegistrar($this->getOutputRegistrar());
+        return new InteriorPageRegistrar($this->getOutputLoader());
     }
 }

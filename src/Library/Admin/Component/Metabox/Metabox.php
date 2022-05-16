@@ -2,8 +2,8 @@
 
 namespace Leonidas\Library\Admin\Component\Metabox;
 
-use Leonidas\Contracts\Admin\Component\MetaboxInterface;
-use Leonidas\Contracts\Admin\Component\MetaboxLayoutInterface;
+use Leonidas\Contracts\Admin\Component\Metabox\MetaboxInterface;
+use Leonidas\Contracts\Admin\Component\Metabox\MetaboxLayoutInterface;
 use Leonidas\Library\Admin\Abstracts\CanBeRestrictedTrait;
 use Leonidas\Library\Core\Http\Policies\NoPolicy;
 use Psr\Http\Message\ServerRequestInterface;
@@ -25,6 +25,8 @@ class Metabox implements MetaboxInterface
     protected string $context = 'advanced';
 
     protected string $priority = 'default';
+
+    protected MetaboxLayoutInterface $layout;
 
     protected array $args;
 

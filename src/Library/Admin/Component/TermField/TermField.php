@@ -2,7 +2,7 @@
 
 namespace Leonidas\Library\Admin\Component\TermField;
 
-use Leonidas\Contracts\Admin\Component\TermFieldInterface;
+use Leonidas\Contracts\Admin\Component\TermField\TermFieldInterface;
 use Leonidas\Contracts\Ui\ViewInterface;
 use Leonidas\Library\Admin\Abstracts\CanBeRestrictedTrait;
 use Leonidas\Library\Admin\Abstracts\RendersWithViewTrait;

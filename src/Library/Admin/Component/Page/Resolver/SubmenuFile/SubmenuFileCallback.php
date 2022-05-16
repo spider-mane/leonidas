@@ -2,7 +2,7 @@
 
 namespace Leonidas\Library\Admin\Component\Page\Resolver\SubmenuFile;
 
-use Leonidas\Contracts\Admin\SubmenuFileResolverInterface;
+use Leonidas\Contracts\Admin\Component\Page\SubmenuFileResolverInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 class SubmenuFileCallback implements SubmenuFileResolverInterface

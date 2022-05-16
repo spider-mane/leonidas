@@ -2,8 +2,8 @@
 
 namespace Leonidas\Library\Admin\Printer;
 
-use Leonidas\Contracts\Admin\Component\AdminNoticeInterface;
-use Leonidas\Contracts\Admin\Component\AdminNoticePrinterInterface;
+use Leonidas\Contracts\Admin\Component\Notice\AdminNoticeInterface;
+use Leonidas\Contracts\Admin\Printer\AdminNoticePrinterInterface;
 use Leonidas\Library\Admin\Printer\Abstracts\AbstractAdminNoticePrinter;
 use Psr\Http\Message\ServerRequestInterface;
 

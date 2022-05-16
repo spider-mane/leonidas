@@ -2,7 +2,7 @@
 
 namespace Leonidas\Library\Admin\Component\Notice;
 
-use Leonidas\Contracts\Admin\Component\AdminNoticeInterface;
+use Leonidas\Contracts\Admin\Component\Notice\AdminNoticeInterface;
 use Leonidas\Contracts\Ui\ViewInterface;
 use Leonidas\Library\Admin\Abstracts\CanBeRestrictedTrait;
 use Leonidas\Library\Admin\Abstracts\RendersWithViewTrait;

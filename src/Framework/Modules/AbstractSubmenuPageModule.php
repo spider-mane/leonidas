@@ -3,8 +3,8 @@
 namespace Leonidas\Framework\Modules;
 
 use Closure;
-use Leonidas\Contracts\Admin\Component\SubmenuPageInterface;
-use Leonidas\Contracts\Admin\Component\SubmenuPageRegistrarInterface;
+use Leonidas\Contracts\Admin\Component\Page\SubmenuPageInterface;
+use Leonidas\Contracts\Admin\Registrar\SubmenuPageRegistrarInterface;
 use Leonidas\Contracts\Extension\ModuleInterface;
 use Leonidas\Framework\Modules\Traits\FluentlySetsPropertiesTrait;
 use Leonidas\Framework\Modules\Traits\NestedPageModuleTrait;

@@ -2,8 +2,8 @@
 
 namespace Leonidas\Library\Admin\Component\Notice;
 
-use Leonidas\Contracts\Admin\Component\AdminNoticeCollectionInterface;
-use Leonidas\Contracts\Admin\Component\AdminNoticeInterface;
+use Leonidas\Contracts\Admin\Component\Notice\AdminNoticeCollectionInterface;
+use Leonidas\Contracts\Admin\Component\Notice\AdminNoticeInterface;
 
 class AdminNoticeCollection implements AdminNoticeCollectionInterface
 {

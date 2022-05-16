@@ -2,8 +2,8 @@
 
 namespace Leonidas\Library\Admin\Registrar;
 
-use Leonidas\Contracts\Admin\Component\InteriorPageInterface;
-use Leonidas\Contracts\Admin\Component\InteriorPageRegistrarInterface;
+use Leonidas\Contracts\Admin\Component\Page\InteriorPageInterface;
+use Leonidas\Contracts\Admin\Registrar\InteriorPageRegistrarInterface;
 use Leonidas\Library\Admin\Registrar\Abstracts\AbstractRegistrar;
 
 class InteriorPageRegistrar extends AbstractRegistrar implements InteriorPageRegistrarInterface

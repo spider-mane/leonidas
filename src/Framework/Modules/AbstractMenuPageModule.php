@@ -3,8 +3,8 @@
 namespace Leonidas\Framework\Modules;
 
 use Closure;
-use Leonidas\Contracts\Admin\Component\MenuPageInterface;
-use Leonidas\Contracts\Admin\Component\MenuPageRegistrarInterface;
+use Leonidas\Contracts\Admin\Component\Page\MenuPageInterface;
+use Leonidas\Contracts\Admin\Registrar\MenuPageRegistrarInterface;
 use Leonidas\Contracts\Extension\ModuleInterface;
 use Leonidas\Framework\Modules\Traits\AdminPageModuleTrait;
 use Leonidas\Framework\Modules\Traits\FluentlySetsPropertiesTrait;

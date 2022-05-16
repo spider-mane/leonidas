@@ -2,8 +2,8 @@
 
 namespace Leonidas\Library\Admin\Component\SettingsSection;
 
-use Leonidas\Contracts\Admin\Component\SettingsSectionCollectionInterface;
-use Leonidas\Contracts\Admin\Component\SettingsSectionInterface;
+use Leonidas\Contracts\Admin\Component\SettingsSection\SettingsSectionCollectionInterface;
+use Leonidas\Contracts\Admin\Component\SettingsSection\SettingsSectionInterface;
 
 class SettingsSectionCollection implements SettingsSectionCollectionInterface
 {

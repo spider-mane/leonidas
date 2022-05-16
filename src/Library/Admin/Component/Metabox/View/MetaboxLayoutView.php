@@ -2,7 +2,7 @@
 
 namespace Leonidas\Library\Admin\Component\Metabox\View;
 
-use Leonidas\Contracts\Admin\Component\MetaboxComponentInterface;
+use Leonidas\Contracts\Admin\Component\Metabox\MetaboxComponentInterface;
 use Leonidas\Contracts\Ui\ViewInterface;
 use WebTheory\Html\Traits\ElementConstructorTrait;
 

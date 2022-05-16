@@ -2,8 +2,8 @@
 
 namespace Leonidas\Library\Admin\Component\Metabox\Element;
 
-use Leonidas\Contracts\Admin\Component\MetaboxComponentInterface;
-use Leonidas\Contracts\Admin\Component\MetaboxFieldInterface;
+use Leonidas\Contracts\Admin\Component\Metabox\MetaboxComponentInterface;
+use Leonidas\Contracts\Admin\Component\Metabox\MetaboxFieldInterface;
 use Leonidas\Library\Admin\Abstracts\CanBeRestrictedTrait;
 use Leonidas\Library\Core\Http\Form\Controllers\AbstractWpAdminFormSubmissionManager;
 use Psr\Http\Message\ServerRequestInterface;

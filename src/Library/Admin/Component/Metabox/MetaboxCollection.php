@@ -2,8 +2,8 @@
 
 namespace Leonidas\Library\Admin\Component\Metabox;
 
-use Leonidas\Contracts\Admin\Component\MetaboxInterface;
-use Leonidas\Contracts\Admin\MetaboxCollectionInterface;
+use Leonidas\Contracts\Admin\Component\Metabox\MetaboxCollectionInterface;
+use Leonidas\Contracts\Admin\Component\Metabox\MetaboxInterface;
 
 class MetaboxCollection implements MetaboxCollectionInterface
 {

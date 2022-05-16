@@ -2,9 +2,9 @@
 
 namespace Leonidas\Framework\Modules;
 
-use Leonidas\Contracts\Admin\Component\AdminNoticeLoaderInterface;
-use Leonidas\Contracts\Admin\Component\AdminNoticePrinterInterface;
-use Leonidas\Contracts\Admin\Component\AdminNoticeRepositoryInterface;
+use Leonidas\Contracts\Admin\Loader\AdminNoticeLoaderInterface;
+use Leonidas\Contracts\Admin\Printer\AdminNoticePrinterInterface;
+use Leonidas\Contracts\Admin\Repository\AdminNoticeRepositoryInterface;
 use Leonidas\Contracts\Extension\ModuleInterface;
 use Leonidas\Hooks\TargetsAllAdminNoticesHook;
 use Leonidas\Hooks\TargetsShutdownHook;

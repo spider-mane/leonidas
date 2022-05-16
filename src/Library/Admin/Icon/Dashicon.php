@@ -2,7 +2,7 @@
 
 namespace Leonidas\Library\Admin\Icon;
 
-use Leonidas\Contracts\Admin\IconResolverInterface;
+use Leonidas\Contracts\Admin\Icon\IconResolverInterface;
 
 class Dashicon implements IconResolverInterface
 {

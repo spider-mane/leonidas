@@ -2,8 +2,8 @@
 
 namespace Leonidas\Library\Admin\Component\Metabox;
 
-use Leonidas\Contracts\Admin\Component\MetaboxBuilderInterface;
-use Leonidas\Contracts\Admin\Component\MetaboxLayoutInterface;
+use Leonidas\Contracts\Admin\Component\Metabox\MetaboxBuilderInterface;
+use Leonidas\Contracts\Admin\Component\Metabox\MetaboxLayoutInterface;
 use WebTheory\HttpPolicy\ServerRequestPolicyInterface;
 
 class MetaboxBuilder implements MetaboxBuilderInterface

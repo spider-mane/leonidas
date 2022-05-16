@@ -2,8 +2,8 @@
 
 namespace Leonidas\Library\Admin\Registrar;
 
-use Leonidas\Contracts\Admin\Component\MetaboxInterface;
-use Leonidas\Contracts\Admin\MetaboxCollectionInterface;
+use Leonidas\Contracts\Admin\Component\Metabox\MetaboxCollectionInterface;
+use Leonidas\Contracts\Admin\Component\Metabox\MetaboxInterface;
 use Leonidas\Contracts\Admin\Registrar\MetaboxRegistrarInterface;
 use Leonidas\Library\Admin\Registrar\Abstracts\AbstractRegistrar;
 use Psr\Http\Message\ServerRequestInterface;

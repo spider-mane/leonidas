@@ -3,8 +3,8 @@
 namespace Leonidas\Framework\Modules\Traits;
 
 use Closure;
-use Leonidas\Contracts\Admin\Component\SettingsFieldCollectionInterface;
-use Leonidas\Contracts\Admin\Component\SettingsFieldRegistrarInterface;
+use Leonidas\Contracts\Admin\Component\SettingsField\SettingsFieldCollectionInterface;
+use Leonidas\Contracts\Admin\Registrar\SettingsFieldRegistrarInterface;
 use Leonidas\Library\Admin\Registrar\SettingsFieldRegistrar;
 use Psr\Http\Message\ServerRequestInterface;
 

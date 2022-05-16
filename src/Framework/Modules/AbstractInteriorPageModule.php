@@ -3,8 +3,8 @@
 namespace Leonidas\Framework\Modules;
 
 use Closure;
-use Leonidas\Contracts\Admin\Component\InteriorPageInterface;
-use Leonidas\Contracts\Admin\Component\InteriorPageRegistrarInterface;
+use Leonidas\Contracts\Admin\Component\Page\InteriorPageInterface;
+use Leonidas\Contracts\Admin\Registrar\InteriorPageRegistrarInterface;
 use Leonidas\Contracts\Extension\ModuleInterface;
 use Leonidas\Framework\Modules\Traits\FluentlySetsPropertiesTrait;
 use Leonidas\Framework\Modules\Traits\NestedPageModuleTrait;

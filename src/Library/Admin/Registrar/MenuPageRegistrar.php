@@ -2,8 +2,8 @@
 
 namespace Leonidas\Library\Admin\Registrar;
 
-use Leonidas\Contracts\Admin\Component\MenuPageInterface;
-use Leonidas\Contracts\Admin\Component\MenuPageRegistrarInterface;
+use Leonidas\Contracts\Admin\Component\Page\MenuPageInterface;
+use Leonidas\Contracts\Admin\Registrar\MenuPageRegistrarInterface;
 use Leonidas\Library\Admin\Registrar\Abstracts\AbstractRegistrar;
 
 class MenuPageRegistrar extends AbstractRegistrar implements MenuPageRegistrarInterface

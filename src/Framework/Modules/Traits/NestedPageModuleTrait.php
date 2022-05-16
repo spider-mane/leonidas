@@ -2,7 +2,7 @@
 
 namespace Leonidas\Framework\Modules\Traits;
 
-use Leonidas\Contracts\Admin\Component\BaseNestedPageInterface;
+use Leonidas\Contracts\Admin\Component\Page\BaseNestedPageInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 trait NestedPageModuleTrait

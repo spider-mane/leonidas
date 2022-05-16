@@ -2,9 +2,9 @@
 
 namespace Leonidas\Library\Admin\Registrar;
 
-use Leonidas\Contracts\Admin\Component\SettingsFieldCollectionInterface;
-use Leonidas\Contracts\Admin\Component\SettingsFieldInterface;
-use Leonidas\Contracts\Admin\Component\SettingsFieldRegistrarInterface;
+use Leonidas\Contracts\Admin\Component\SettingsField\SettingsFieldCollectionInterface;
+use Leonidas\Contracts\Admin\Component\SettingsField\SettingsFieldInterface;
+use Leonidas\Contracts\Admin\Registrar\SettingsFieldRegistrarInterface;
 use Leonidas\Library\Admin\Registrar\Abstracts\AbstractRegistrar;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -34,8 +34,8 @@ class SettingsFieldRegistrar extends AbstractRegistrar implements SettingsFieldR
     protected function getFieldArgs(SettingsFieldInterface $field): array
     {
         return [
-            '@base' => $field,
-            'label_for' => $field->getInputId(),
-        ] + $field->getArgs();
+                '@base' => $field,
+                'label_for' => $field->getInputId(),
+            ] + $field->getArgs();
     }
 }

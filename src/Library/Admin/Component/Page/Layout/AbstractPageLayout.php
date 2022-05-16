@@ -2,7 +2,7 @@
 
 namespace Leonidas\Library\Admin\Component\Page\Layout;
 
-use Leonidas\Contracts\Admin\Component\AdminPageLayoutInterface;
+use Leonidas\Contracts\Admin\Component\Page\AdminPageLayoutInterface;
 
 abstract class AbstractPageLayout implements AdminPageLayoutInterface
 {

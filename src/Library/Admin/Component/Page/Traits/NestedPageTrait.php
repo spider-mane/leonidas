@@ -2,8 +2,8 @@
 
 namespace Leonidas\Library\Admin\Component\Page\Traits;
 
-use Leonidas\Contracts\Admin\ParentFileResolverInterface;
-use Leonidas\Contracts\Admin\SubmenuFileResolverInterface;
+use Leonidas\Contracts\Admin\Component\Page\ParentFileResolverInterface;
+use Leonidas\Contracts\Admin\Component\Page\SubmenuFileResolverInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 trait NestedPageTrait

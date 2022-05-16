@@ -2,7 +2,7 @@
 
 namespace Leonidas\Framework\Modules;
 
-use Leonidas\Contracts\Admin\MetaboxCollectionInterface;
+use Leonidas\Contracts\Admin\Component\Metabox\MetaboxCollectionInterface;
 use Leonidas\Contracts\Admin\Registrar\MetaboxRegistrarInterface;
 use Leonidas\Contracts\Auth\CsrfManagerInterface;
 use Leonidas\Framework\Modules\Traits\CreatesAdminNoticesTrait;
