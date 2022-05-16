@@ -11,16 +11,16 @@ class DefineConfigConstants implements ExtensionBootProcessInterface
     public function boot(WpExtensionInterface $extension, ServiceContainerInterface $container): void
     {
         foreach ($this->configKeys() as $key) {
-            $contexts = $extension->config($key, []);
-            $config = array_change_key_case(
+            $config = $extension->config($key, []);
+            $definitions = array_change_key_case(
                 array_merge(
-                    $contexts['default'] ?? [],
-                    $contexts[env('APP_ENV')] ?? []
-                ) ?: $contexts,
+                    $config['@global'] ?? [],
+                    $config['@' . strtolower(env('APP_ENV'))] ?? []
+                ) ?: $config,
                 CASE_UPPER
             );
 
-            foreach ($config as $name => $value) {
+            foreach ($definitions as $name => $value) {
                 define($name, $value);
             }
         }

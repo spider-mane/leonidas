@@ -1,6 +1,6 @@
 <?php
 
-namespace Leonidas\Framework\Providers\Traits;
+namespace Leonidas\Framework\Providers\Abstracts;
 
 use WebTheory\Config\Interfaces\ConfigInterface;
 

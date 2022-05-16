@@ -14,8 +14,8 @@ class SlimRequestProvider extends AbstractServiceFactory implements ServiceFacto
 {
     public function create(ContainerInterface $container, array $args = []): Request
     {
-        $streamFactoryService = $args['@stream_factory_service'] ?? StreamFactoryInterface::class;
-        $uriFactoryService = $args['@uri_factory_service'] ?? UriFactoryInterface::class;
+        $streamFactoryService = $args['$stream_factory_service'] ?? StreamFactoryInterface::class;
+        $uriFactoryService = $args['$uri_factory_service'] ?? UriFactoryInterface::class;
 
         $streamFactory = $container->has($streamFactoryService)
             ? $container->get($streamFactoryService)

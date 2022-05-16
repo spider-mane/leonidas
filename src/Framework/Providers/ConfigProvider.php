@@ -12,7 +12,7 @@ class ConfigProvider extends AbstractServiceFactory implements ServiceFactoryInt
 {
     public function create(ContainerInterface $container, array $args = []): Config
     {
-        $parserService = $args['@parser'] ?? ParserInterface::class;
+        $parserService = $args['$parser'] ?? ParserInterface::class;
 
         $parser = $container->has($parserService)
             ? $container->get($parserService)

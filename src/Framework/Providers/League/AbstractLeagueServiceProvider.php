@@ -2,7 +2,7 @@
 
 namespace Leonidas\Framework\Providers\League;
 
-use Leonidas\Framework\Providers\Traits\ExtensionAwareTrait;
+use Leonidas\Framework\Providers\Abstracts\ExtensionAwareTrait;
 use Panamax\Providers\League\AbstractLeagueServiceProvider as PanamaxAbstractLeagueServiceProvider;
 use WebTheory\Config\Interfaces\ConfigInterface;
 
