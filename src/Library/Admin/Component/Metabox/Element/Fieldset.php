@@ -5,9 +5,10 @@ namespace Leonidas\Library\Admin\Component\Metabox\Element;
 use Leonidas\Contracts\Admin\Component\Metabox\MetaboxComponentInterface;
 use Leonidas\Contracts\Admin\Component\Metabox\MetaboxFieldInterface;
 use Leonidas\Library\Admin\Abstracts\CanBeRestrictedTrait;
-use Leonidas\Library\Core\Http\Form\Controllers\AbstractWpAdminFormSubmissionManager;
 use Psr\Http\Message\ServerRequestInterface;
+use WebTheory\HttpPolicy\ServerRequestPolicyInterface;
 use WebTheory\Saveyour\Contracts\Controller\FormFieldControllerInterface;
+use WebTheory\Saveyour\Contracts\Controller\FormSubmissionManagerInterface;
 
 class Fieldset implements MetaboxComponentInterface
 {
@@ -16,11 +17,6 @@ class Fieldset implements MetaboxComponentInterface
     protected string $title;
 
     protected array $fields = [];
-
-    /**
-     * @var AbstractWpAdminFormSubmissionManager
-     */
-    protected $formController;
 
     protected MetaboxComponentInterface $container;
 
@@ -38,13 +34,10 @@ class Fieldset implements MetaboxComponentInterface
         'padding' => 2,
     ];
 
-    public function __construct(string $title, ?AbstractWpAdminFormSubmissionManager $formController = null)
+    public function __construct(string $title, ?ServerRequestPolicyInterface $policy = null)
     {
         $this->title = $title;
-
-        if (isset($formController)) {
-            $this->formController = $formController;
-        }
+        $this->policy = $policy;
 
         $this->container = $this->createContainer();
     }
@@ -133,16 +126,6 @@ class Fieldset implements MetaboxComponentInterface
         $this->fieldOptions[$option] = $value;
 
         return $this;
-    }
-
-    /**
-     * Get the value of formController
-     *
-     * @return mixed
-     */
-    public function getFormController(): AbstractWpAdminFormSubmissionManager
-    {
-        return $this->formController;
     }
 
     /**

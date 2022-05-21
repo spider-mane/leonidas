@@ -11,6 +11,8 @@ class SettingsSectionBuilder implements SettingsSectionBuilderInterface
 {
     use HasSettingsSectionDataTrait;
 
+    protected ?ServerRequestPolicyInterface $policy = null;
+
     public function __construct(string $id)
     {
         $this->id = $id;

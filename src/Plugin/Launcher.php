@@ -173,8 +173,6 @@ final class Launcher
 
     private static function reallyInit(string $base): void
     {
-        self::helpers();
-
         define('LEONIDAS_PLUGIN_HEADERS', Plugin::headers($base));
 
         self::$instance = new self(
@@ -184,14 +182,6 @@ final class Launcher
         );
 
         self::$instance->bootstrap();
-    }
-
-    private static function helpers()
-    {
-        function header(string $header)
-        {
-            return LEONIDAS_PLUGIN_HEADERS[$header];
-        }
     }
 
     private static function invalidCallException(callable $method): InvalidCallToPluginMethodException

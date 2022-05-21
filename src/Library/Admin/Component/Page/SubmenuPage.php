@@ -13,7 +13,9 @@ use Leonidas\Library\Admin\Component\Page\Traits\NestedPageTrait;
 
 class SubmenuPage extends AbstractMenuPage implements SubmenuPageInterface
 {
-    use NestedPageTrait;
+    use NestedPageTrait {
+        __construct as __nestedPageConstruct;
+    }
 
     public function __construct(
         string $parentSlug,
@@ -28,7 +30,7 @@ class SubmenuPage extends AbstractMenuPage implements SubmenuPageInterface
         ?ParentFileResolverInterface $parentFileResolver = null,
         ?SubmenuFileResolverInterface $subMenuFileResolver = null
     ) {
-        NestedPageTrait::__construct(
+        $this->__nestedPageConstruct(
             $parentSlug,
             $parentFileResolver,
             $subMenuFileResolver

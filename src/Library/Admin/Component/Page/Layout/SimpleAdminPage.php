@@ -74,7 +74,6 @@ class SimpleAdminPage extends AbstractPageLayout implements AdminPageLayoutInter
     {
         return [
             'title' => $this->title,
-            'page' => $this->page,
             'description' => $this->description,
         ];
     }

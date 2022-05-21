@@ -8,8 +8,6 @@ use WebTheory\Saveyour\Factory\SimpleFieldFactory;
 
 class Field extends SimpleFieldFactory
 {
-    protected $controller = WpAdminField::class;
-
     protected function defineFormFieldFactory(array $options): FormFieldResolverFactoryInterface
     {
         $namespaces = $options['namespaces'] ?? [];

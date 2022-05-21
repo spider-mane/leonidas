@@ -3,6 +3,7 @@
 namespace Leonidas\Library\Admin\Field\Factory;
 
 use Leonidas\Library\Admin\Field\Data\PostMetaFieldManager;
+use Leonidas\Library\Admin\Field\Data\PostTermDataManager;
 use Leonidas\Library\Admin\Field\Data\PostTermManager;
 use Leonidas\Library\Admin\Field\Data\TermMetaDataManager;
 use WebTheory\Saveyour\Contracts\Factory\FieldDataManagerResolverFactoryInterface;
@@ -17,6 +18,6 @@ class DataManager extends DataManagerFactory implements FieldDataManagerResolver
     public const MANAGERS = [
         'post_meta' => PostMetaFieldManager::class,
         'term_meta' => TermMetaDataManager::class,
-        'post_term' => PostTermManager::class,
+        'post_term' => PostTermDataManager::class,
     ] + parent::MANAGERS;
 }

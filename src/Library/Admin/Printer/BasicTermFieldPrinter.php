@@ -43,10 +43,16 @@ class BasicTermFieldPrinter implements TermFieldPrinterInterface
     {
         switch ($request->getAttribute('context')) {
             case static::ADD_TERM_SCREEN:
-                return new AddTermFieldView();
+                $view = new AddTermFieldView();
+
+                break;
 
             case static::EDIT_TERM_SCREEN:
-                return new EditTermFieldView();
+                $view = new EditTermFieldView();
+
+                break;
         }
+
+        return $view;
     }
 }

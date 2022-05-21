@@ -3,6 +3,8 @@
 namespace Leonidas\Library\System\Schema;
 
 use Leonidas\Library\Admin\Component\Notice\StandardAdminNotice;
+use WebTheory\Saveyour\Contracts\Formatting\InputFormatterInterface;
+use WebTheory\Saveyour\Contracts\Validation\ValidatorInterface;
 use WebTheory\Saveyour\Controller\InputPurifier;
 
 abstract class AbstractEntityMetaManager extends InputPurifier
@@ -44,9 +46,11 @@ abstract class AbstractEntityMetaManager extends InputPurifier
     /**
      * @var string
      */
-    public function __construct(string $metaKey)
+    public function __construct(string $metaKey, ValidatorInterface $validator, InputFormatterInterface $formatter)
     {
         $this->metaKey = $metaKey;
+
+        parent::__construct($validator, $formatter);
     }
 
     /**
@@ -127,30 +131,6 @@ abstract class AbstractEntityMetaManager extends InputPurifier
     public function setDescription(string $description)
     {
         $this->description = $description;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of sanitizeCallback
-     *
-     * @return callable
-     */
-    public function getSanitizeCallback(): callable
-    {
-        return $this->sanitizeCallback;
-    }
-
-    /**
-     * Set the value of sanitizeCallback
-     *
-     * @param callable $sanitizeCallback
-     *
-     * @return self
-     */
-    public function setSanitizeCallback(callable $sanitizeCallback)
-    {
-        $this->sanitizeCallback = $sanitizeCallback;
 
         return $this;
     }

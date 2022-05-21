@@ -13,7 +13,9 @@ use Leonidas\Library\Admin\Component\Page\Traits\NestedPageTrait;
 
 class FlexPage extends MenuPage implements FlexPageInterface
 {
-    use NestedPageTrait;
+    use NestedPageTrait {
+        __construct as __nestedPageConstruct;
+    }
 
     protected AdminPageContext $context;
 
@@ -34,7 +36,7 @@ class FlexPage extends MenuPage implements FlexPageInterface
     ) {
         $this->context = $context;
 
-        NestedPageTrait::__construct(
+        $this->__nestedPageConstruct(
             $pageTitle,
             $parentFileResolver,
             $subMenuFileResolver
