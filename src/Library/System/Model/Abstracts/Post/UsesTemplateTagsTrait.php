@@ -29,7 +29,7 @@ trait UsesTemplateTagsTrait
     {
         $cached = $this->swapGlobalPost($this->stashedPostObject);
 
-        $value = OutputBuffer::wrapFunctionCall($tag);
+        $value = OutputBuffer::call($tag);
 
         $this->restoreGlobalPost($cached);
 

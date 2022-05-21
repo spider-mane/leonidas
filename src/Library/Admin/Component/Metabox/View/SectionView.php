@@ -10,15 +10,15 @@ class SectionView implements ViewInterface
 {
     use ElementConstructorTrait;
 
-    public function render(array $context = []): string
+    public function render(array $data = []): string
     {
-        $title = $context['title'];
-        $padding = $context['padding'];
-        $isFieldset = $context['is_fieldset'];
-        $request = $context['request'];
+        $title = $data['title'];
+        $padding = $data['padding'];
+        $isFieldset = $data['is_fieldset'];
+        $request = $data['request'];
 
         /** @var AdminComponentInterface[] $components */
-        $components = $context['components'];
+        $components = $data['components'];
 
         $html = '';
 

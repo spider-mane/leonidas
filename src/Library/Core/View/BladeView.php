@@ -13,8 +13,8 @@ class BladeView implements ViewInterface
         $this->template = $template;
     }
 
-    public function render(array $context = []): string
+    public function render(array $data = []): string
     {
-        //
+        return '';
     }
 }

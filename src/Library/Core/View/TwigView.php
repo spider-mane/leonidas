@@ -5,25 +5,20 @@ namespace Leonidas\Library\Core\View;
 use Leonidas\Contracts\Ui\ViewInterface;
 use Twig\Environment;
 
-class TwigView extends AbstractTwigView implements ViewInterface
+class TwigView implements ViewInterface
 {
     protected string $template;
 
-    protected Environment $twigEnvironment;
+    protected Environment $environment;
 
-    public function __construct(string $template, Environment $environment)
+    public function __construct(Environment $environment, string $template)
     {
+        $this->environment = $environment;
         $this->template = $template;
-        $this->twigEnvironment = $environment;
     }
 
-    protected function getTwigEnvironment(): Environment
+    public function render(array $context = []): string
     {
-        return $this->twigEnvironment;
-    }
-
-    protected function getTemplate(): string
-    {
-        return $this->template;
+        return $this->environment->render($this->template, $context);
     }
 }

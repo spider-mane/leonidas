@@ -10,15 +10,15 @@ class MetaboxLayoutView implements ViewInterface
 {
     use ElementConstructorTrait;
 
-    public function render(array $context = []): string
+    public function render(array $data = []): string
     {
         /** @var MetaboxComponentInterface[] $components */
-        $components = $context['components'];
-        $separator = $context['separator'];
-        $request = $context['request'];
+        $components = $data['components'];
+        $separator = $data['separator'];
+        $request = $data['request'];
 
         $html = '';
-        $html .= $context['auth_field'];
+        $html .= $data['auth_field'];
         $html .= $this->open('div', ['class' => 'leonidas-wrap']);
 
         $count = count($components);

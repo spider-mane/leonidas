@@ -9,11 +9,11 @@ class StandardAdminNoticeView implements ViewInterface
 {
     use ElementConstructorTrait;
 
-    public function render(array $context): string
+    public function render(array $data): string
     {
-        $type = $context['type'];
-        $message = $context['message'];
-        $isDismissible = $context['is_dismissible'];
+        $type = $data['type'];
+        $message = $data['message'];
+        $isDismissible = $data['is_dismissible'];
 
         $noticeAttr = [
             'class' => ['notice', "notice-{$type}", $isDismissible ? 'is-dismissible' : null],

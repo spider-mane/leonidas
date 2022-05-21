@@ -3,12 +3,10 @@
 namespace Leonidas\Library\Core\View;
 
 use Leonidas\Contracts\Ui\ViewInterface;
+use Leonidas\Library\Core\Util\OutputBuffer;
 
 class PhpView implements ViewInterface
 {
-    /**
-     * @var string;
-     */
     protected string $file;
 
     public function __construct(string $file)
@@ -16,11 +14,8 @@ class PhpView implements ViewInterface
         $this->file = $file;
     }
 
-    public function render(array $context = []): string
+    public function render(array $data = []): string
     {
-        ob_start();
-        include $this->file;
-
-        return ob_get_clean();
+        return OutputBuffer::require($this->file, $data);
     }
 }
