@@ -22,7 +22,7 @@ trait FluentlySetsPropertiesTrait
 
     protected function setProperty(string $property): void
     {
-        $this->{$property} = ($this->$property)();
+        $this->{$property} = ($this->{$property})();
     }
 
     protected function propertyIsSet(string $property): bool
@@ -37,5 +37,8 @@ trait FluentlySetsPropertiesTrait
         $this->maybeSet(...(array) $contexts[$context]);
     }
 
-    abstract protected function initiationContexts(): array;
+    protected function initiationContexts(): array
+    {
+        return [];
+    }
 }

@@ -5,8 +5,8 @@ namespace Leonidas\Framework\Modules;
 use Leonidas\Contracts\Auth\CsrfManagerInterface;
 use Leonidas\Contracts\Extension\ModuleInterface;
 use Leonidas\Contracts\Http\Form\FormHandlerInterface;
-use Leonidas\Contracts\Http\Form\FormRepositoryInterface;
-use Leonidas\Framework\Modules\Traits\HasExtraConstructionTrait;
+use Leonidas\Contracts\Http\Form\FormHandlerRepositoryInterface;
+use Leonidas\Framework\Modules\Traits\FluentlySetsPropertiesTrait;
 use Leonidas\Hooks\TargetsAdminPostNoprivXActionHook;
 use Leonidas\Hooks\TargetsAdminPostXActionHook;
 use Leonidas\Hooks\TargetsInitHook;
@@ -26,25 +26,29 @@ use WebTheory\Saveyour\Field\Type\Hidden;
 
 abstract class AbstractFormModule extends AbstractModule implements ModuleInterface, FormHandlerInterface
 {
-    use HasExtraConstructionTrait;
+    use FluentlySetsPropertiesTrait;
     use TargetsAdminPostXActionHook;
     use TargetsAdminPostNoprivXActionHook;
     use TargetsInitHook;
 
-    protected string $action;
+    protected string $handle;
 
-    protected function afterConstruction(): void
-    {
-        $this->action = $this->action();
-    }
+    protected string $action;
 
     protected function getAction(): string
     {
         return $this->action;
     }
 
+    public function getHandle(): string
+    {
+        return $this->handle;
+    }
+
     public function hook(): void
     {
+        $this->setProperties('handle', 'action');
+
         $this->targetInitHook();
         $this->targetAdminPostXActionHook();
         $this->targetAdminPostNoprivXActionHook();
@@ -72,7 +76,7 @@ abstract class AbstractFormModule extends AbstractModule implements ModuleInterf
 
     protected function registerForm(): void
     {
-        $this->repository()->add($this->alias(), $this);
+        $this->repository()->add($this);
     }
 
     protected function process(ServerRequestInterface $request)
@@ -85,11 +89,6 @@ abstract class AbstractFormModule extends AbstractModule implements ModuleInterf
         $this->redirect($this->redirectTo($request, $processed));
     }
 
-    protected function postProcessing(ProcessedFormReportInterface $cache, ServerRequestInterface $request): ProcessedFormReportInterface
-    {
-        return $cache;
-    }
-
     protected function form(ServerRequestInterface $request): FormSubmissionManagerInterface
     {
         return new FormSubmissionManager(
@@ -99,7 +98,12 @@ abstract class AbstractFormModule extends AbstractModule implements ModuleInterf
         );
     }
 
-    public function getBuild(ServerRequestInterface $request): array
+    protected function postProcessing(ProcessedFormReportInterface $report, ServerRequestInterface $request): ProcessedFormReportInterface
+    {
+        return $report;
+    }
+
+    public function build(ServerRequestInterface $request): array
     {
         return [
             'method' => $this->formMethod(),
@@ -218,19 +222,19 @@ abstract class AbstractFormModule extends AbstractModule implements ModuleInterf
         return wp_get_referer();
     }
 
-    protected function redirectTo(ServerRequestInterface $request, ProcessedFormReportInterface $cache): ?string
+    protected function redirectTo(ServerRequestInterface $request, ProcessedFormReportInterface $report): ?string
     {
         return null;
     }
 
+    abstract protected function handle(): string;
+
     abstract protected function action(): string;
 
-    abstract protected function alias(): string;
-
-    abstract protected function repository(): FormRepositoryInterface;
+    abstract protected function repository(): FormHandlerRepositoryInterface;
 
     /**
-     * @return FormFieldControllerInterface[]
+     * @return array<FormFieldControllerInterface>
      */
     abstract protected function fields(ServerRequestInterface $request): array;
 }

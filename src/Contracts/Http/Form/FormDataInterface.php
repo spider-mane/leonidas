@@ -8,7 +8,9 @@ interface FormDataInterface
 
     public function action(): string;
 
-    public function checks(): array;
+    public function checks(): string;
 
     public function fields(): array;
+
+    public function output(): ?string;
 }

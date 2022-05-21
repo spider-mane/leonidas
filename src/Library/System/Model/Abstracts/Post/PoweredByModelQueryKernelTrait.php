@@ -4,6 +4,7 @@ namespace Leonidas\Library\System\Model\Abstracts\Post;
 
 use Closure;
 use Leonidas\Contracts\System\Schema\Post\PostConverterInterface;
+use Leonidas\Library\Core\Util\ClassConst;
 use Leonidas\Library\System\Model\Abstracts\KernelPoweredModelCollectionTrait;
 use Leonidas\Library\System\Schema\Post\PostQueryKernel;
 use WebTheory\Collection\Comparison\ObjectComparator;
@@ -26,14 +27,7 @@ trait PoweredByModelQueryKernelTrait
             $converter,
             new ObjectComparator(),
             Closure::fromCallable([$this, 'spawn']),
-            $this->getKernelArg('MODEL_PROPERTY_ACCESSORS', [])
+            ClassConst::optional($this, 'MODEL_PROPERTY_ACCESSORS', [])
         );
-    }
-
-    protected function getKernelArg(string $arg, $default)
-    {
-        $arg = strtoupper($arg);
-
-        return defined($arg) ? constant($arg) : $default;
     }
 }

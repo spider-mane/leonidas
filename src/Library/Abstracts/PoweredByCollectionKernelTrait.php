@@ -3,6 +3,7 @@
 namespace Leonidas\Library\Abstracts;
 
 use Closure;
+use Leonidas\Library\Core\Util\ClassConst;
 use WebTheory\Collection\Contracts\CollectionKernelInterface;
 use WebTheory\Collection\Kernel\CollectionKernel;
 
@@ -30,16 +31,9 @@ trait PoweredByCollectionKernelTrait
         return new CollectionKernel(
             $models,
             Closure::fromCallable([$this, 'spawn']),
-            $this->getKernelArg('ENTRY_IDENTIFIER', null),
-            $this->getKernelArg('ENTRY_PROPERTY_ACCESSORS', []),
-            $this->getKernelArg('COLLECTION_IS_MAP', false)
+            ClassConst::optional($this, 'ENTRY_IDENTIFIER', null),
+            ClassConst::optional($this, 'ENTRY_PROPERTY_ACCESSORS', []),
+            ClassConst::optional($this, 'COLLECTION_IS_MAP', false)
         );
-    }
-
-    protected function getKernelArg(string $arg, $default)
-    {
-        $arg = strtoupper($arg);
-
-        return defined($arg) ? constant($arg) : $default;
     }
 }

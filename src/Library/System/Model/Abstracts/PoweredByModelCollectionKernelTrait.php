@@ -4,6 +4,7 @@ namespace Leonidas\Library\System\Model\Abstracts;
 
 use Closure;
 use Leonidas\Library\Abstracts\PoweredByCollectionKernelTrait;
+use Leonidas\Library\Core\Util\ClassConst;
 use WebTheory\Collection\Contracts\CollectionKernelInterface;
 use WebTheory\Collection\Kernel\CollectionKernel;
 
@@ -17,9 +18,9 @@ trait PoweredByModelCollectionKernelTrait
         return new CollectionKernel(
             $models,
             Closure::fromCallable([$this, 'spawn']),
-            $this->getKernelArg('MODEL_IDENTIFIER', 'id'),
-            $this->getKernelArg('MODEL_PROPERTY_ACCESSORS', []),
-            $this->getKernelArg('COLLECTION_IS_MAP', true)
+            ClassConst::optional($this, 'MODEL_IDENTIFIER', 'id'),
+            ClassConst::optional($this, 'MODEL_PROPERTY_ACCESSORS', []),
+            ClassConst::optional($this, 'COLLECTION_IS_MAP', true)
         );
     }
 }

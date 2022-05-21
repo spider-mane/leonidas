@@ -6,5 +6,7 @@ use Psr\Http\Message\ServerRequestInterface;
 
 interface FormHandlerInterface
 {
-    public function getBuild(ServerRequestInterface $request): array;
+    public function getHandle(): string;
+
+    public function build(ServerRequestInterface $request): array;
 }

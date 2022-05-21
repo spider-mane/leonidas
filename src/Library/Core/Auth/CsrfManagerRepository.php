@@ -18,9 +18,7 @@ class CsrfManagerRepository implements CsrfManagerRepositoryInterface
     }
 
     /**
-     * Get the value of managers
-     *
-     * @return CsrfManagerInterface[]
+     * @return array<CsrfManagerInterface>
      */
     public function getManagers(): array
     {

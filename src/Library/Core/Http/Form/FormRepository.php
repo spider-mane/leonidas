@@ -2,29 +2,45 @@
 
 namespace Leonidas\Library\Core\Http\Form;
 
-use Leonidas\Contracts\Http\Form\FormHandlerInterface;
+use Leonidas\Contracts\Http\Form\FormInterface;
 use Leonidas\Contracts\Http\Form\FormRepositoryInterface;
-use Psr\Http\Message\ServerRequestInterface;
+use LogicException;
 
 class FormRepository implements FormRepositoryInterface
 {
-    /**
-     * @var FormHandlerInterface[]
-     */
     protected array $forms = [];
 
-    public function add(string $id, FormHandlerInterface $form)
+    protected array $map = [];
+
+    public function add(FormInterface $form): void
     {
-        $this->forms[$id] = $form;
+        $handle = $form->getHandle();
+        $action = $form->getAction();
+
+        if (!$this->alreadyHasFormWith($handle, $action)) {
+            $this->forms[$form->getHandle()] = $form;
+            $this->map[$form->getAction()] = $handle;
+        }
+
+        throw new LogicException(sprintf(
+            "Form with handle \"%s\" and/or action \"%s\" already exists.",
+            $handle,
+            $action
+        ));
     }
 
-    public function get(string $id): FormHandlerInterface
+    public function fetch(string $handle): FormInterface
     {
-        return $this->forms[$id];
+        return $this->forms[$handle];
     }
 
-    public function getBuild(string $form, ServerRequestInterface $request): array
+    public function mapped(string $action): FormInterface
     {
-        return $this->get($form)->getBuild($request);
+        return $this->forms[$this->map[$action]];
+    }
+
+    protected function alreadyHasFormWith(string $handle, string $action): bool
+    {
+        return isset($this->forms[$handle]) || isset($this->map[$action]);
     }
 }
