@@ -5,6 +5,7 @@ namespace Leonidas\Library\Admin\Component\Metabox;
 use Leonidas\Contracts\Admin\Component\Metabox\MetaboxBuilderInterface;
 use Leonidas\Contracts\Admin\Component\Metabox\MetaboxLayoutInterface;
 use WebTheory\HttpPolicy\ServerRequestPolicyInterface;
+use WP_Screen;
 
 class MetaboxBuilder implements MetaboxBuilderInterface
 {

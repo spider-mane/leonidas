@@ -43,7 +43,7 @@ class Filter
     /**
      * Set the value of argCount
      *
-     * @param int $acceptedArgs
+     * @param int $argCount
      *
      * @return self
      */

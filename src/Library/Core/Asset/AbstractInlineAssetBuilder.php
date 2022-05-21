@@ -19,7 +19,7 @@ abstract class AbstractInlineAssetBuilder
 
     public function handle(string $handle): AbstractInlineAssetBuilder
     {
-        return $this->handle = $handle;
+        $this->handle = $handle;
 
         return $this;
     }

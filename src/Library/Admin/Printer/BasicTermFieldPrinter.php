@@ -53,6 +53,6 @@ class BasicTermFieldPrinter implements TermFieldPrinterInterface
                 break;
         }
 
-        return $view;
+        return $view; // @phpstan-ignore-line
     }
 }

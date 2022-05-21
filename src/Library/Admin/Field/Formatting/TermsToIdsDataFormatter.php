@@ -9,11 +9,9 @@ use WP_Term;
 class TermsToIdsDataFormatter implements DataFormatterInterface
 {
     /**
-     * @param WP_Term[] $posts
-     *
-     * @return array
+     * @param array<WP_Term> $terms
      */
-    public function formatData($terms)
+    public function formatData($terms): array
     {
         $terms = new TermCollection(...$terms);
 
@@ -22,10 +20,8 @@ class TermsToIdsDataFormatter implements DataFormatterInterface
 
     /**
      * @param array $terms
-     *
-     * @return array
      */
-    public function formatInput($terms)
+    public function formatInput($terms): array
     {
         if (in_array('', $terms)) {
             unset($terms[array_search('', $terms)]);

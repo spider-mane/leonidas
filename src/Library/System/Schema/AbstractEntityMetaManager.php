@@ -43,9 +43,6 @@ abstract class AbstractEntityMetaManager extends InputPurifier
      */
     protected $authCallback;
 
-    /**
-     * @var string
-     */
     public function __construct(string $metaKey, ValidatorInterface $validator, InputFormatterInterface $formatter)
     {
         $this->metaKey = $metaKey;

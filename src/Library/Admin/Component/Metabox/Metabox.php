@@ -8,6 +8,7 @@ use Leonidas\Library\Admin\Abstracts\CanBeRestrictedTrait;
 use Leonidas\Library\Core\Http\Policy\NoPolicy;
 use Psr\Http\Message\ServerRequestInterface;
 use WebTheory\HttpPolicy\ServerRequestPolicyInterface;
+use WP_Screen;
 
 class Metabox implements MetaboxInterface
 {

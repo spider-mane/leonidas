@@ -9,23 +9,16 @@ use WP_Post;
 class PostsToIdsDataFormatter implements DataFormatterInterface
 {
     /**
-     * @param WP_Post[] $posts
-     *
-     * @return array
+     * @param array<WP_Post> $posts
      */
-    public function formatData($posts)
+    public function formatData($posts): array
     {
         $posts = new PostCollection(...$posts);
 
         return array_map('strval', $posts->getIds());
     }
 
-    /**
-     * @param array $terms
-     *
-     * @return array
-     */
-    public function formatInput($posts)
+    public function formatInput($posts): array
     {
         if (in_array('', $posts)) {
             unset($posts[array_search('', $posts)]);

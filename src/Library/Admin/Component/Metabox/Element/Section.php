@@ -66,13 +66,6 @@ class Section implements MetaboxComponentInterface
         return $this;
     }
 
-    /**
-     * Set the value of content
-     *
-     * @param array $content
-     *
-     * @return self
-     */
     public function addContent(string $slug, MetaboxComponentInterface $content)
     {
         $this->components[$slug] = $content;

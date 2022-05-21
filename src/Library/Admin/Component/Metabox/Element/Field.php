@@ -23,7 +23,7 @@ class Field extends AbstractAdminField implements MetaboxFieldInterface
 
     protected array $hiddenInput = [];
 
-    private const ROW_TITLE_COL_WIDTH = 2;
+    protected const ROW_TITLE_COL_WIDTH = 2;
 
     /**
      * Get the value of displayLabel

@@ -153,13 +153,13 @@ abstract class AbstractAssetBuilder
     }
 
     /**
-     * Set the value of attributes
+     * Set the value of shouldBeEnqueued
      *
-     * @param bool $attributes
+     * @param bool $shouldBeEnqueued
      *
      * @return self
      */
-    public function enqueue(bool $shouldBeEnqueued): AbstractAssetBuilder
+    public function enqueue(bool $shouldBeEnqueued)
     {
         $this->shouldBeEnqueued = $shouldBeEnqueued;
 

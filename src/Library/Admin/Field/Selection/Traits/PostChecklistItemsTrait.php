@@ -2,6 +2,8 @@
 
 namespace Leonidas\Library\Admin\Field\Selection\Traits;
 
+use WP_Post;
+
 trait PostChecklistItemsTrait
 {
     /**

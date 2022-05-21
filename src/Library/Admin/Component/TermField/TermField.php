@@ -40,7 +40,7 @@ class TermField extends AbstractAdminField implements TermFieldInterface
                 break;
         }
 
-        return $view;
+        return $view; // @phpstan-ignore-line
     }
 
     protected function getAddTermFieldView(): ViewInterface

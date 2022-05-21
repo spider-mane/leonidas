@@ -57,7 +57,7 @@ abstract class AbstractAsset implements AssetInterface
         string $src,
         ?array $dependencies = null,
         $version = null,
-        ?bool $shouldBeEnqueued,
+        ?bool $shouldBeEnqueued = null,
         ?ServerRequestPolicyInterface $policy = null,
         ?array $attributes = null,
         ?string $crossorigin = null

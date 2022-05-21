@@ -7,6 +7,7 @@ use Leonidas\Contracts\Admin\Component\SettingsField\SettingsFieldInterface;
 use Leonidas\Library\Admin\Component\SettingsField\Traits\HasSettingsFieldDataTrait;
 use WebTheory\HttpPolicy\ServerRequestPolicyInterface;
 use WebTheory\Saveyour\Contracts\Field\FormFieldInterface;
+use WebTheory\Saveyour\Contracts\Formatting\DataFormatterInterface;
 use WebTheory\Saveyour\Contracts\Formatting\InputFormatterInterface;
 
 class SettingsFieldBuilder implements SettingsFieldBuilderInterface
@@ -53,7 +54,7 @@ class SettingsFieldBuilder implements SettingsFieldBuilderInterface
         $this->args = $args;
     }
 
-    public function formatter(InputFormatterInterface $formatter)
+    public function formatter(DataFormatterInterface $formatter)
     {
         $this->formatter = $formatter;
     }

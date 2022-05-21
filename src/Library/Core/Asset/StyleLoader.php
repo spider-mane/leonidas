@@ -77,7 +77,6 @@ class StyleLoader implements StyleLoaderInterface
         wp_add_inline_style(
             $style->getHandle(),
             $style->getData(),
-            $style->getPosition()
         );
     }
 

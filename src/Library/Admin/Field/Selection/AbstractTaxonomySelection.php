@@ -8,10 +8,7 @@ use WP_Term;
 
 abstract class AbstractTaxonomySelection extends AbstractTermSelectionProvider implements SelectionProviderInterface
 {
-    /**
-     * @var WP_Taxonomy
-     */
-    protected $taxonomy;
+    protected string $taxonomy;
 
     public function __construct(string $taxonomy)
     {

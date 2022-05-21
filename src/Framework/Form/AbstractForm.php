@@ -20,6 +20,7 @@ use WebTheory\Saveyour\Contracts\Controller\FormSubmissionManagerInterface;
 use WebTheory\Saveyour\Contracts\Data\FieldDataManagerInterface;
 use WebTheory\Saveyour\Contracts\Field\FormFieldInterface;
 use WebTheory\Saveyour\Contracts\Formatting\DataFormatterInterface;
+use WebTheory\Saveyour\Contracts\Processor\FormDataProcessorInterface;
 use WebTheory\Saveyour\Contracts\Report\ProcessedFormReportInterface;
 use WebTheory\Saveyour\Contracts\Report\ValidationReportInterface;
 use WebTheory\Saveyour\Contracts\Validation\ValidatorInterface;

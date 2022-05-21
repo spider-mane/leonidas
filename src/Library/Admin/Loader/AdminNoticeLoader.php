@@ -11,7 +11,7 @@ use Psr\Http\Message\ServerRequestInterface;
 
 class AdminNoticeLoader implements AdminNoticeLoaderInterface
 {
-    protected AdminNoticeRepository $repository;
+    protected AdminNoticeRepositoryInterface $repository;
 
     protected ?AdminNoticePrinterInterface $printer = null;
 

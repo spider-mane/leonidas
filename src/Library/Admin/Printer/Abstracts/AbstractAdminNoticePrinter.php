@@ -12,7 +12,7 @@ abstract class AbstractAdminNoticePrinter implements AdminNoticePrinterInterface
     {
         $output = '';
 
-        foreach ($notices as $notice) {
+        foreach ($notices->toArray() as $notice) {
             $output .= $this->print($notice, $request);
         }
 

@@ -4,15 +4,14 @@ namespace Leonidas\Library\Admin\Field\Formatting;
 
 use Leonidas\Library\System\Schema\Term\TermCollection;
 use WebTheory\Saveyour\Contracts\Formatting\DataFormatterInterface;
+use WP_Term;
 
 class TermsToNamesDataFormatter implements DataFormatterInterface
 {
     /**
-     * @param WP_Term[] $posts
-     *
-     * @return array
+     * @param array<WP_Term> $terms
      */
-    public function formatData($terms)
+    public function formatData($terms): array
     {
         $terms = new TermCollection(...$terms);
 
@@ -21,10 +20,8 @@ class TermsToNamesDataFormatter implements DataFormatterInterface
 
     /**
      * @param array $terms
-     *
-     * @return array
      */
-    public function formatInput($terms)
+    public function formatInput($terms): array
     {
         if (in_array('', $terms)) {
             unset($terms[array_search('', $terms)]);

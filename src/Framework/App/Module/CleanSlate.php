@@ -102,7 +102,7 @@ class CleanSlate extends AbstractModule implements ModuleInterface
         // convert "post" in all labels to "blog post"
         $labels = $post->labels;
 
-        foreach ($labels as $label => $value) {
+        foreach ((array) $labels as $label => $value) {
             $upper = "/Post/";
             $lower = "/post/";
 

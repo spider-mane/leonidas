@@ -12,8 +12,8 @@ class BindContainerToFacades implements ExtensionBootProcessInterface
     public function boot(WpExtensionInterface $extension, ServiceContainerInterface $container): void
     {
         /** @var FacadeBaseTrait $base */
-        $base = $extension->config('app.facade');
+        $base = $extension->config('app.facade'); // @phpstan-ignore-line
 
-        $base::_setFacadeContainer($container);
+        $base::_setFacadeContainer($container); // @phpstan-ignore-line
     }
 }
