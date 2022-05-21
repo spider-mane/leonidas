@@ -2,7 +2,7 @@
 
 namespace Leonidas\Library\System\Model\Abstracts;
 
-use Leonidas\Library\Abstracts\KernelPoweredCollectionTrait;
+use Leonidas\Library\Core\Abstracts\KernelPoweredCollectionTrait;
 
 trait KernelPoweredModelCollectionTrait
 {

@@ -23,7 +23,7 @@ return [
         # Framework modules
 
         # Plugin modules
-        Leonidas\Plugin\Modules\AdminAssets::class,
+        Leonidas\Plugin\Module\AdminAssets::class,
 
     ],
 
@@ -32,10 +32,10 @@ return [
     'providers' => [
 
         # Framework providers
-        Leonidas\Framework\Providers\League\AdminNoticeRepositoryServiceProvider::class,
-        Leonidas\Framework\Providers\League\GuzzleServerRequestServiceProvider::class,
-        Leonidas\Framework\Providers\League\TransientsChannelServiceProvider::class,
-        Leonidas\Framework\Providers\League\TwigViewServiceProvider::class,
+        Leonidas\Framework\Provider\League\AdminNoticeRepositoryServiceProvider::class,
+        Leonidas\Framework\Provider\League\GuzzleServerRequestServiceProvider::class,
+        Leonidas\Framework\Provider\League\TransientsChannelServiceProvider::class,
+        Leonidas\Framework\Provider\League\TwigViewServiceProvider::class,
 
         # Plugin providers
 

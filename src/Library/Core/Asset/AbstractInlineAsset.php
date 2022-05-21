@@ -2,7 +2,7 @@
 
 namespace Leonidas\Library\Core\Asset;
 
-use Leonidas\Library\Core\Http\Policies\NoPolicy;
+use Leonidas\Library\Core\Http\Policy\NoPolicy;
 use Psr\Http\Message\ServerRequestInterface;
 use WebTheory\HttpPolicy\ServerRequestPolicyInterface;
 

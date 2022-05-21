@@ -4,7 +4,7 @@ namespace Leonidas\Plugin;
 
 use Leonidas\Contracts\Extension\ExtensionBootProcessInterface;
 use Leonidas\Contracts\Extension\WpExtensionInterface;
-use Leonidas\Framework\Exceptions\InvalidCallToPluginMethodException;
+use Leonidas\Framework\Exception\InvalidCallToPluginMethodException;
 use Leonidas\Framework\ModuleInitializer;
 use Leonidas\Framework\Plugin\Plugin;
 use Leonidas\Framework\WpExtension;

@@ -3,7 +3,7 @@
 namespace Leonidas\Library\System\Model\Abstracts;
 
 use Closure;
-use Leonidas\Library\Abstracts\PoweredByCollectionKernelTrait;
+use Leonidas\Library\Core\Abstracts\PoweredByCollectionKernelTrait;
 use Leonidas\Library\Core\Util\ClassConst;
 use WebTheory\Collection\Contracts\CollectionKernelInterface;
 use WebTheory\Collection\Kernel\CollectionKernel;

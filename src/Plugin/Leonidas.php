@@ -3,7 +3,7 @@
 namespace Leonidas\Plugin;
 
 use Leonidas\Contracts\Extension\WpExtensionInterface;
-use Leonidas\Framework\Exceptions\InvalidCallToPluginMethodException;
+use Leonidas\Framework\Exception\InvalidCallToPluginMethodException;
 
 final class Leonidas
 {

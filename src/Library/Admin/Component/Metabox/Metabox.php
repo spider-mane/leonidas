@@ -5,7 +5,7 @@ namespace Leonidas\Library\Admin\Component\Metabox;
 use Leonidas\Contracts\Admin\Component\Metabox\MetaboxInterface;
 use Leonidas\Contracts\Admin\Component\Metabox\MetaboxLayoutInterface;
 use Leonidas\Library\Admin\Abstracts\CanBeRestrictedTrait;
-use Leonidas\Library\Core\Http\Policies\NoPolicy;
+use Leonidas\Library\Core\Http\Policy\NoPolicy;
 use Psr\Http\Message\ServerRequestInterface;
 use WebTheory\HttpPolicy\ServerRequestPolicyInterface;
 

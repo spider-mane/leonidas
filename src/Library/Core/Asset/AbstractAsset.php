@@ -4,7 +4,7 @@ namespace Leonidas\Library\Core\Asset;
 
 use Leonidas\Contracts\Ui\Asset\AssetInterface;
 use Leonidas\Library\Core\Asset\Traits\HasAssetDataTrait;
-use Leonidas\Library\Core\Http\Policies\NoPolicy;
+use Leonidas\Library\Core\Http\Policy\NoPolicy;
 use Psr\Http\Message\ServerRequestInterface;
 use WebTheory\HttpPolicy\ServerRequestPolicyInterface;
 

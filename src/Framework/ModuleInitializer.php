@@ -7,7 +7,7 @@ use Leonidas\Contracts\Extension\ModuleInterface;
 use Leonidas\Contracts\Extension\Plugin\PluginModuleInterface;
 use Leonidas\Contracts\Extension\Theme\ThemeModuleInterface;
 use Leonidas\Contracts\Extension\WpExtensionInterface;
-use Leonidas\Framework\Exceptions\InvalidModuleException;
+use Leonidas\Framework\Exception\InvalidModuleException;
 
 class ModuleInitializer implements ModuleInitializerInterface
 {

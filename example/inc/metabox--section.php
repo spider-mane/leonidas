@@ -6,7 +6,7 @@ use Leonidas\Library\Admin\Metabox\AutoLoadingMetabox;
 use Leonidas\Library\Admin\Metabox\Components\Field;
 use Leonidas\Library\Admin\Metabox\Components\Section;
 use Leonidas\Library\Core\Auth\Nonce;
-use Leonidas\Library\Core\Http\Policies\PostConstrainer;
+use Leonidas\Library\Core\Http\Policy\PostConstrainer;
 use Respect\Validation\Validator;
 use WebTheory\Saveyour\Controllers\FormFieldController;
 use WebTheory\Saveyour\Fields\Email;
