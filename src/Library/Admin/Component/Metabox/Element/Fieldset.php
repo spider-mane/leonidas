@@ -8,7 +8,6 @@ use Leonidas\Library\Admin\Abstracts\CanBeRestrictedTrait;
 use Psr\Http\Message\ServerRequestInterface;
 use WebTheory\HttpPolicy\ServerRequestPolicyInterface;
 use WebTheory\Saveyour\Contracts\Controller\FormFieldControllerInterface;
-use WebTheory\Saveyour\Contracts\Controller\FormSubmissionManagerInterface;
 
 class Fieldset implements MetaboxComponentInterface
 {

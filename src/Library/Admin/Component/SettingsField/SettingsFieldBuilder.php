@@ -8,7 +8,6 @@ use Leonidas\Library\Admin\Component\SettingsField\Traits\HasSettingsFieldDataTr
 use WebTheory\HttpPolicy\ServerRequestPolicyInterface;
 use WebTheory\Saveyour\Contracts\Field\FormFieldInterface;
 use WebTheory\Saveyour\Contracts\Formatting\DataFormatterInterface;
-use WebTheory\Saveyour\Contracts\Formatting\InputFormatterInterface;
 
 class SettingsFieldBuilder implements SettingsFieldBuilderInterface
 {

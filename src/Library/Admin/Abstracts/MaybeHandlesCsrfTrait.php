@@ -7,9 +7,9 @@ use Leonidas\Contracts\Auth\CsrfManagerInterface;
 trait MaybeHandlesCsrfTrait
 {
     /**
-     * @var CsrfManagerInterface
+     * @var ?CsrfManagerInterface
      */
-    protected $csrfManager;
+    protected $csrfManager = null;
 
     /**
      * Get the value of csrfToken

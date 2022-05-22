@@ -60,22 +60,22 @@ abstract class AbstractPostCollection extends AbstractModelCollection implements
 
     public function merge(PostCollectionInterface ...$collections): PostCollectionInterface
     {
-        return $this->kernel->merge(...$this->expose($collections));
+        return $this->kernel->merge(...$this->expose(...$collections));
     }
 
     public function diff(PostCollectionInterface ...$collections): PostCollectionInterface
     {
-        return $this->kernel->diff(...$this->expose($collections));
+        return $this->kernel->diff(...$this->expose(...$collections));
     }
 
     public function contrast(PostCollectionInterface ...$collections): PostCollectionInterface
     {
-        return $this->kernel->contrast(...$this->expose($collections));
+        return $this->kernel->contrast(...$this->expose(...$collections));
     }
 
     public function intersect(PostCollectionInterface ...$collections): PostCollectionInterface
     {
-        return $this->kernel->intersect(...$this->expose($collections));
+        return $this->kernel->intersect(...$this->expose(...$collections));
     }
 
     public function matches(PostCollectionInterface $collection): bool

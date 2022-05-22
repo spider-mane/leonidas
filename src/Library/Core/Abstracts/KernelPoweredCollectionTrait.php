@@ -49,7 +49,7 @@ trait KernelPoweredCollectionTrait
         return $spawn;
     }
 
-    protected function expose(array ...$collections): array
+    protected function expose(ObjectCollectionInterface ...$collections): array
     {
         return array_map(
             fn (ObjectCollectionInterface $collection) => $collection->toArray(),

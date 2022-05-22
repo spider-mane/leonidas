@@ -2,12 +2,12 @@
 
 namespace Leonidas\Framework\Provider;
 
-use Panamax\Contracts\ServiceFactoryInterface;
-use Panamax\Factories\AbstractServiceFactory;
-use Psr\Container\ContainerInterface;
 use libphonenumber\MetadataLoaderInterface;
 use libphonenumber\MetadataSourceInterface;
 use libphonenumber\PhoneNumberUtil;
+use Panamax\Contracts\ServiceFactoryInterface;
+use Panamax\Factories\AbstractServiceFactory;
+use Psr\Container\ContainerInterface;
 
 class PhoneNumberUtilProvider extends AbstractServiceFactory implements ServiceFactoryInterface
 {

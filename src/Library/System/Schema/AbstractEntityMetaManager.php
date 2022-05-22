@@ -38,10 +38,7 @@ abstract class AbstractEntityMetaManager extends InputPurifier
 
     protected string $capability = 'edit_posts';
 
-    /**
-     * @var string
-     */
-    protected $authCallback;
+    protected ?string $authCallback;
 
     public function __construct(string $metaKey, ValidatorInterface $validator, InputFormatterInterface $formatter)
     {

@@ -80,22 +80,22 @@ class DummyModelCollection extends AbstractModelCollection implements DummyModel
 
     public function diff(DummyModelCollectionInterface ...$collections): DummyModelCollectionInterface
     {
-        return $this->kernel->diff(...$this->expose($collections));
+        return $this->kernel->diff(...$this->expose(...$collections));
     }
 
     public function contrast(DummyModelCollectionInterface ...$collections): DummyModelCollectionInterface
     {
-        return $this->kernel->contrast(...$this->expose($collections));
+        return $this->kernel->contrast(...$this->expose(...$collections));
     }
 
     public function intersect(DummyModelCollectionInterface ...$collections): DummyModelCollectionInterface
     {
-        return $this->kernel->intersect(...$this->expose($collections));
+        return $this->kernel->intersect(...$this->expose(...$collections));
     }
 
     public function merge(DummyModelCollectionInterface ...$dummyModel): DummyModelCollectionInterface
     {
-        return $this->kernel->merge(...$this->expose($dummyModel));
+        return $this->kernel->merge(...$this->expose(...$dummyModel));
     }
 
     public function extractIds(): array

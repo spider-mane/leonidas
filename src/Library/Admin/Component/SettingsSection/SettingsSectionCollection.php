@@ -12,7 +12,7 @@ class SettingsSectionCollection implements SettingsSectionCollectionInterface
      */
     protected array $sections = [];
 
-    public function __construct(SettingsSectionCollectionInterface ...$sections)
+    public function __construct(SettingsSectionInterface ...$sections)
     {
         array_map([$this, 'add'], $sections);
     }

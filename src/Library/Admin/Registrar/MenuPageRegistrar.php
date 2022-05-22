@@ -32,7 +32,7 @@ class MenuPageRegistrar extends AbstractRegistrar implements MenuPageRegistrarIn
                 $title,
                 $page->getCapability(),
                 $page->getMenuSlug(),
-                null,
+                $this->getOutputLoader(),
                 PHP_INT_MIN
             );
         }

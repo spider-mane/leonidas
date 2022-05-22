@@ -8,7 +8,7 @@ use Psr\Http\Message\ServerRequestInterface;
 
 class DeferrableTermFieldPrinter implements TermFieldPrinterInterface
 {
-    protected TermFieldPrinterInterface $printer;
+    protected ?TermFieldPrinterInterface $printer = null;
 
     public function __construct(?TermFieldPrinterInterface $printer = null)
     {

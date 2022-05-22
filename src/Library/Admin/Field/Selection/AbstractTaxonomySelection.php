@@ -3,7 +3,6 @@
 namespace Leonidas\Library\Admin\Field\Selection;
 
 use WebTheory\Saveyour\Contracts\Field\Selection\SelectionProviderInterface;
-use WP_Taxonomy;
 use WP_Term;
 
 abstract class AbstractTaxonomySelection extends AbstractTermSelectionProvider implements SelectionProviderInterface

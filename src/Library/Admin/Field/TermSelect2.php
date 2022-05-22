@@ -12,10 +12,13 @@ class TermSelect2 extends TermSelect implements FormFieldControllerInterface
     {
         $options = $this->options;
 
-        return (new Select2())
-            ->setSelectionProvider($this->createSelection())
-            ->setMultiple($options['multiple'])
-            ->setId($options['id'])
-            ->setClasslist($options['class']);
+        $select2 = new Select2();
+
+        $select2->setSelectionProvider($this->createSelection());
+        $select2->setMultiple($options['multiple']);
+        $select2->setId($options['id']);
+        $select2->setClasslist($options['class']);
+
+        return $select2;
     }
 }

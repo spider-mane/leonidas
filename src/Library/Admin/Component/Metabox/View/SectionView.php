@@ -28,7 +28,7 @@ class SectionView implements ViewInterface
 
         $html .= $this->open($container, $attributes);
 
-        if ($isFieldset && false) {
+        if ($isFieldset && false) { // @phpstan-ignore-line
             // temporarily disabled because legend elements are absolutely
             // positioned within their container, making padding not work
             // as desired

@@ -4,7 +4,6 @@ namespace Leonidas\Library\Admin\Field\Factory;
 
 use Leonidas\Library\Admin\Field\Data\PostMetaFieldManager;
 use Leonidas\Library\Admin\Field\Data\PostTermDataManager;
-use Leonidas\Library\Admin\Field\Data\PostTermManager;
 use Leonidas\Library\Admin\Field\Data\TermMetaDataManager;
 use WebTheory\Saveyour\Contracts\Factory\FieldDataManagerResolverFactoryInterface;
 use WebTheory\Saveyour\Factory\DataManagerFactory;
