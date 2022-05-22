@@ -2,12 +2,12 @@
 
 namespace Leonidas\Framework\Module;
 
-use Leonidas\Contracts\Extension\ModuleInterface;
 use Leonidas\Contracts\Ui\Asset\ImageSizeCollectionInterface;
+use Leonidas\Framework\Module\Abstracts\ImageSizeProviderModule;
 use Leonidas\Library\Core\Asset\ImageSize;
 use Leonidas\Library\Core\Asset\ImageSizeCollection;
 
-class ImageSizes extends AbstractImageSizeProviderModule implements ModuleInterface
+class ImageSizes extends ImageSizeProviderModule
 {
     public const SIZES_CASCADE = [
         'images.sizes', 'images', 'view.images.sizes', 'view.images',

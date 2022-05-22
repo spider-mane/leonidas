@@ -3,9 +3,9 @@
 namespace Leonidas\Framework\Module;
 
 use Leonidas\Contracts\Admin\Repository\AdminNoticeRepositoryInterface;
-use Leonidas\Contracts\Extension\ModuleInterface;
+use Leonidas\Framework\Module\Abstracts\AdminNoticeLoaderModule;
 
-class AdminNoticeLoader extends AbstractAdminNoticeLoaderModule implements ModuleInterface
+class AdminNoticeLoader extends AdminNoticeLoaderModule
 {
     protected function repository(): AdminNoticeRepositoryInterface
     {

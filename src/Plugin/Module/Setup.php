@@ -3,9 +3,9 @@
 namespace Leonidas\Plugin\Module;
 
 use Leonidas\Contracts\Extension\ModuleInterface;
-use Leonidas\Framework\Module\AbstractPluginSetupModule;
+use Leonidas\Framework\Module\Abstracts\PluginSetupModule;
 
-final class Setup extends AbstractPluginSetupModule implements ModuleInterface
+final class Setup extends PluginSetupModule implements ModuleInterface
 {
     protected function doActivatePluginAction(bool $networkWide): void
     {

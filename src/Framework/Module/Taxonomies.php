@@ -2,12 +2,12 @@
 
 namespace Leonidas\Framework\Module;
 
-use Leonidas\Contracts\Extension\ModuleInterface;
 use Leonidas\Contracts\System\Model\Taxonomy\TaxonomyFactoryInterface;
 use Leonidas\Contracts\System\Model\Taxonomy\TaxonomyOptionHandlerCollectionInterface;
+use Leonidas\Framework\Module\Abstracts\TaxonomyRegistrationModule;
 use Leonidas\Library\System\Model\Taxonomy\TaxonomyFactory;
 
-class Taxonomies extends AbstractTaxonomyRegistrationModule implements ModuleInterface
+class Taxonomies extends TaxonomyRegistrationModule
 {
     protected function taxonomies(): array
     {

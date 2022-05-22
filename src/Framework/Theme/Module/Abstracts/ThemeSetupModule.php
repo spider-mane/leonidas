@@ -4,9 +4,9 @@ namespace Leonidas\Framework\Theme\Module\Abstracts;
 
 use Closure;
 use Leonidas\Contracts\Extension\ModuleInterface;
-use Leonidas\Framework\Module\AbstractModule;
+use Leonidas\Framework\Module\Abstracts\Module;
 
-abstract class ThemeSetupModule extends AbstractModule implements ModuleInterface
+abstract class ThemeSetupModule extends Module implements ModuleInterface
 {
     public function hook(): void
     {

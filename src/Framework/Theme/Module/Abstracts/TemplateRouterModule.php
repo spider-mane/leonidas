@@ -4,10 +4,10 @@ namespace Leonidas\Framework\Theme\Module\Abstracts;
 
 use Closure;
 use Leonidas\Contracts\Extension\ModuleInterface;
-use Leonidas\Framework\Module\AbstractModule;
+use Leonidas\Framework\Module\Abstracts\Module;
 use Leonidas\Framework\Theme\Theme;
 
-abstract class TemplateRouterModule extends AbstractModule implements ModuleInterface
+abstract class TemplateRouterModule extends Module implements ModuleInterface
 {
     public function hook(): void
     {

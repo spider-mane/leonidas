@@ -2,11 +2,11 @@
 
 namespace Leonidas\Framework\Module;
 
-use Leonidas\Contracts\Extension\ModuleInterface;
 use Leonidas\Contracts\Http\Form\FormInterface;
 use Leonidas\Contracts\Http\Form\FormRepositoryInterface;
-use Leonidas\Framework\Module\Abstracts\FluentlySetsPropertiesTrait;
-use Leonidas\Framework\Module\Abstracts\HasModuleConfigurationTrait;
+use Leonidas\Framework\Abstracts\FluentlySetsPropertiesTrait;
+use Leonidas\Framework\Module\Abstracts\Module;
+use Leonidas\Framework\Module\Abstracts\Traits\HasModuleConfigurationTrait;
 use Leonidas\Hooks\TargetsAdminPostNoprivXActionHook;
 use Leonidas\Hooks\TargetsAdminPostXActionHook;
 use Leonidas\Hooks\TargetsInitHook;
@@ -14,7 +14,7 @@ use Leonidas\Hooks\TargetsWpAjaxNoprivXActionHook;
 use Leonidas\Hooks\TargetsWpAjaxXActionHook;
 use WebTheory\Saveyour\Http\Request;
 
-class Forms extends AbstractModule implements ModuleInterface
+class Forms extends Module
 {
     use FluentlySetsPropertiesTrait;
     use HasModuleConfigurationTrait;

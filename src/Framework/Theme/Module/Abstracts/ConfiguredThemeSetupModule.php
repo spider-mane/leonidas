@@ -2,7 +2,9 @@
 
 namespace Leonidas\Framework\Theme\Module\Abstracts;
 
-abstract class ConfiguredThemeSetupModule extends ThemeSetupModule
+use Leonidas\Contracts\Extension\ModuleInterface;
+
+abstract class ConfiguredThemeSetupModule extends ThemeSetupModule implements ModuleInterface
 {
     public const TEXTDOMAIN_IDENTIFIER = 'app.textdomain';
 

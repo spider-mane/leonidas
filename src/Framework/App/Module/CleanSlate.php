@@ -4,11 +4,11 @@ namespace Leonidas\Framework\App\Module;
 
 use Closure;
 use Leonidas\Contracts\Extension\ModuleInterface;
-use Leonidas\Framework\Module\AbstractModule;
+use Leonidas\Framework\Module\Abstracts\Module;
 use WP_Post;
 use WP_Post_Type;
 
-class CleanSlate extends AbstractModule implements ModuleInterface
+class CleanSlate extends Module implements ModuleInterface
 {
     public const CONFIG_ROOT = 'modules.clean_slate';
 
