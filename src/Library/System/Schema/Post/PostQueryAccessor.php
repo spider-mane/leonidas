@@ -6,7 +6,7 @@ use ArrayAccess;
 use Countable;
 use Leonidas\Contracts\System\Schema\Post\PostConversionArchiveInterface;
 use Leonidas\Contracts\System\Schema\Post\PostConverterInterface;
-use Leonidas\Library\System\Schema\Post\Traits\ManagesPostConversionsTrait;
+use Leonidas\Library\System\Schema\Post\Abstracts\ManagesPostConversionsTrait;
 use WP_Query;
 
 class PostQueryAccessor implements ArrayAccess, Countable

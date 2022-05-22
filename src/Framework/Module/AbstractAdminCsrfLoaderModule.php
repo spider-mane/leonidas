@@ -4,7 +4,7 @@ namespace Leonidas\Framework\Module;
 
 use Leonidas\Contracts\Auth\CsrfManagerRepositoryInterface;
 use Leonidas\Contracts\Extension\ModuleInterface;
-use Leonidas\Framework\Module\Traits\LoadsCsrfFieldsTrait;
+use Leonidas\Framework\Module\Abstracts\LoadsCsrfFieldsTrait;
 use Leonidas\Hooks\TargetsInAdminHeaderHook;
 use WP_Screen;
 

@@ -8,7 +8,7 @@ use Leonidas\Contracts\Ui\Asset\InlineStyleCollectionInterface;
 use Leonidas\Contracts\Ui\Asset\ScriptCollectionInterface;
 use Leonidas\Contracts\Ui\Asset\ScriptLocalizationCollectionInterface;
 use Leonidas\Contracts\Ui\Asset\StyleCollectionInterface;
-use Leonidas\Framework\Module\Traits\ProvisionsAssetsTrait;
+use Leonidas\Framework\Module\Abstracts\ProvisionsAssetsTrait;
 use Leonidas\Hooks\TargetsAdminEnqueueScriptsHook;
 use Leonidas\Hooks\TargetsEnqueueBlockEditorAssetsHook;
 use Leonidas\Hooks\TargetsLoginEnqueueScriptsHook;

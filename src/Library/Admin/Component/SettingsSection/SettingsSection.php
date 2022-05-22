@@ -4,7 +4,7 @@ namespace Leonidas\Library\Admin\Component\SettingsSection;
 
 use Leonidas\Contracts\Admin\Component\SettingsSection\SettingsSectionInterface;
 use Leonidas\Library\Admin\Abstracts\CanBeRestrictedTrait;
-use Leonidas\Library\Admin\Component\SettingsSection\Traits\HasSettingsSectionDataTrait;
+use Leonidas\Library\Admin\Component\SettingsSection\Abstracts\HasSettingsSectionDataTrait;
 use Psr\Http\Message\ServerRequestInterface;
 use WebTheory\Html\Html;
 use WebTheory\HttpPolicy\ServerRequestPolicyInterface;

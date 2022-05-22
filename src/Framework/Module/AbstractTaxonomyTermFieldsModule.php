@@ -6,7 +6,7 @@ use Leonidas\Contracts\Admin\Component\TermField\TermFieldInterface;
 use Leonidas\Contracts\Admin\Printer\TermFieldPrinterInterface;
 use Leonidas\Contracts\Auth\CsrfManagerInterface;
 use Leonidas\Contracts\Extension\ModuleInterface;
-use Leonidas\Framework\Module\Traits\HasExtraConstructionTrait;
+use Leonidas\Framework\Module\Abstracts\HasExtraConstructionTrait;
 use Leonidas\Hooks\TargetsCreatedXTaxonomyHook;
 use Leonidas\Hooks\TargetsEditedXTaxonomyHook;
 use Leonidas\Hooks\TargetsXTaxonomyAddFormFieldsHook;

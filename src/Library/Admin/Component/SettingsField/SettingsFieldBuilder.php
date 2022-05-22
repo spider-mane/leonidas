@@ -4,7 +4,7 @@ namespace Leonidas\Library\Admin\Component\SettingsField;
 
 use Leonidas\Contracts\Admin\Component\SettingsField\SettingsFieldBuilderInterface;
 use Leonidas\Contracts\Admin\Component\SettingsField\SettingsFieldInterface;
-use Leonidas\Library\Admin\Component\SettingsField\Traits\HasSettingsFieldDataTrait;
+use Leonidas\Library\Admin\Component\SettingsField\Abstracts\HasSettingsFieldDataTrait;
 use WebTheory\HttpPolicy\ServerRequestPolicyInterface;
 use WebTheory\Saveyour\Contracts\Field\FormFieldInterface;
 use WebTheory\Saveyour\Contracts\Formatting\DataFormatterInterface;

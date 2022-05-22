@@ -3,7 +3,7 @@
 namespace Leonidas\Framework\Module;
 
 use Leonidas\Contracts\Extension\ModuleInterface;
-use Leonidas\Framework\Module\Traits\ProvisionsAssetsTrait;
+use Leonidas\Framework\Module\Abstracts\ProvisionsAssetsTrait;
 use Leonidas\Hooks\TargetsAdminEnqueueScriptsHook;
 use Leonidas\Hooks\TargetsScriptLoaderTagHook;
 use Leonidas\Hooks\TargetsStyleLoaderTagHook;

@@ -4,7 +4,7 @@ namespace Leonidas\Library\System\Schema\Post;
 
 use Leonidas\Contracts\System\Schema\Post\PostConversionArchiveInterface;
 use Leonidas\Contracts\System\Schema\Post\PostConverterInterface;
-use Leonidas\Library\System\Schema\Post\Traits\ManagesPostConversionsTrait;
+use Leonidas\Library\System\Schema\Post\Abstracts\ManagesPostConversionsTrait;
 use WebTheory\Collection\Access\Abstracts\AbstractArrayDriver;
 use WebTheory\Collection\Access\Abstracts\RejectsDuplicateObjectsTrait;
 use WebTheory\Collection\Contracts\ArrayDriverInterface;

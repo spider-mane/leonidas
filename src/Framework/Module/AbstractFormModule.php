@@ -6,7 +6,7 @@ use Leonidas\Contracts\Auth\CsrfManagerInterface;
 use Leonidas\Contracts\Extension\ModuleInterface;
 use Leonidas\Contracts\Http\Form\FormHandlerInterface;
 use Leonidas\Contracts\Http\Form\FormHandlerRepositoryInterface;
-use Leonidas\Framework\Module\Traits\FluentlySetsPropertiesTrait;
+use Leonidas\Framework\Module\Abstracts\FluentlySetsPropertiesTrait;
 use Leonidas\Hooks\TargetsAdminPostNoprivXActionHook;
 use Leonidas\Hooks\TargetsAdminPostXActionHook;
 use Leonidas\Hooks\TargetsInitHook;

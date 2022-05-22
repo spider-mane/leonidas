@@ -3,7 +3,7 @@
 namespace Leonidas\Library\Core\Asset;
 
 use Leonidas\Contracts\Ui\Asset\StyleInterface;
-use Leonidas\Library\Core\Asset\Traits\HasStyleDataTrait;
+use Leonidas\Library\Core\Asset\Abstracts\HasStyleDataTrait;
 use WebTheory\HttpPolicy\ServerRequestPolicyInterface;
 
 class Style extends AbstractAsset implements StyleInterface

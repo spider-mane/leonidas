@@ -3,7 +3,7 @@
 namespace Leonidas\Library\Core\Asset;
 
 use Leonidas\Contracts\Ui\Asset\ScriptInterface;
-use Leonidas\Library\Core\Asset\Traits\HasScriptDataTrait;
+use Leonidas\Library\Core\Asset\Abstracts\HasScriptDataTrait;
 use WebTheory\HttpPolicy\ServerRequestPolicyInterface;
 
 class Script extends AbstractAsset implements ScriptInterface

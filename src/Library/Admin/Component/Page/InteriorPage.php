@@ -9,7 +9,7 @@ use Leonidas\Contracts\Admin\Component\Page\LoadErrorPageInterface;
 use Leonidas\Contracts\Admin\Component\Page\ParentFileResolverInterface;
 use Leonidas\Contracts\Admin\Component\Page\SubmenuFileResolverInterface;
 use Leonidas\Library\Admin\Component\Page\Abstracts\AbstractAdminPage;
-use Leonidas\Library\Admin\Component\Page\Traits\NestedPageTrait;
+use Leonidas\Library\Admin\Component\Page\Abstracts\NestedPageTrait;
 
 class InteriorPage extends AbstractAdminPage implements InteriorPageInterface
 {

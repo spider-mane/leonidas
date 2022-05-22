@@ -3,7 +3,7 @@
 namespace Leonidas\Framework\Module;
 
 use Leonidas\Contracts\Ui\Asset\ImageSizeCollectionInterface;
-use Leonidas\Framework\Module\Traits\MustBeInitiatedTrait;
+use Leonidas\Framework\Module\Abstracts\MustBeInitiatedTrait;
 use Leonidas\Hooks\TargetsAfterSetupThemeHook;
 use Leonidas\Hooks\TargetsImageSizeNamesChooseHook;
 

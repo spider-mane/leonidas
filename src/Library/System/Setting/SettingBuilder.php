@@ -4,7 +4,7 @@ namespace Leonidas\Library\System\Setting;
 
 use Leonidas\Contracts\System\Setting\SettingBuilderInterface;
 use Leonidas\Contracts\System\Setting\SettingHandlerInterface;
-use Leonidas\Library\System\Setting\Traits\HasSettingDataTrait;
+use Leonidas\Library\System\Setting\Abstracts\HasSettingDataTrait;
 
 class SettingBuilder implements SettingBuilderInterface
 {
