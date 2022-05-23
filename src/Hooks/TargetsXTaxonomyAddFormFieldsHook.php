@@ -25,5 +25,5 @@ trait TargetsXTaxonomyAddFormFieldsHook
 
     abstract protected function getTaxonomy(): string;
 
-    abstract protected function doXTaxonomyAddFormFieldsAction(): void;
+    abstract protected function doXTaxonomyAddFormFieldsAction(string $taxonomy): void;
 }

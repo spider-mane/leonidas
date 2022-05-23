@@ -26,7 +26,7 @@ abstract class AdminNoticeLoaderModule extends Module implements ModuleInterface
         $this->printNotices();
     }
 
-    protected function doShutdownAction()
+    protected function doShutdownAction(): void
     {
         if (is_admin() && did_action('wp_redirect')) {
             $this->stashCollectedNotices();

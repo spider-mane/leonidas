@@ -5,6 +5,7 @@ namespace Leonidas\Library\Admin\Component\Metabox;
 use Leonidas\Contracts\Admin\Component\Metabox\MetaboxInterface;
 use Leonidas\Contracts\Admin\Component\Metabox\MetaboxLayoutInterface;
 use Leonidas\Library\Admin\Abstracts\CanBeRestrictedTrait;
+use Leonidas\Library\Admin\Component\Metabox\Layout\SegmentedLayout;
 use Leonidas\Library\Core\Http\Policy\NoPolicy;
 use Psr\Http\Message\ServerRequestInterface;
 use WebTheory\HttpPolicy\ServerRequestPolicyInterface;
@@ -38,17 +39,18 @@ class Metabox implements MetaboxInterface
         ?string $context = null,
         ?string $priority = null,
         array $args = [],
-        MetaboxLayoutInterface $layout,
+        ?MetaboxLayoutInterface $layout = null,
         ?ServerRequestPolicyInterface $policy = null
     ) {
         $this->id = $id;
         $this->title = $title;
-        $this->layout = $layout;
         $this->screen = $screen;
         $this->context = $context ?? $this->context;
         $this->priority = $priority ?? $this->priority;
         $this->args = $args;
         $this->layout = $layout;
+
+        $this->layout = $layout ?? new SegmentedLayout();
         $this->policy = $policy ?? new NoPolicy();
     }
 

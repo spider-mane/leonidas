@@ -60,9 +60,10 @@ abstract class TaxonomyTermFieldsModule extends Module implements ModuleInterfac
         $this->targetXTaxonomyTermEditFormTopHook();
     }
 
-    protected function doXTaxonomyAddFormAction(): void
+    protected function doXTaxonomyAddFormAction(string $taxonomy): void
     {
         $request = $this->getServerRequest()
+            ->withAttribute('taxonomy', $taxonomy)
             ->withAttribute('context', $this->getScreenContext());
 
         echo $this->renderCsrfToken($request);

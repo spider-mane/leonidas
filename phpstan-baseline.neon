@@ -1,2 +1,26 @@
 parameters:
 	ignoreErrors:
+		-
+			message: "#^Call to an undefined method Leonidas\\\\Contracts\\\\Admin\\\\Component\\\\Metabox\\\\MetaboxComponentInterface\\:\\:addContent\\(\\)\\.$#"
+			count: 1
+			path: src/Library/Admin/Component/Metabox/Element/Fieldset.php
+
+		-
+			message: "#^Call to an undefined method Leonidas\\\\Contracts\\\\Admin\\\\Component\\\\Metabox\\\\MetaboxComponentInterface\\:\\:setPadding\\(\\)\\.$#"
+			count: 1
+			path: src/Library/Admin/Component/Metabox/Element/Fieldset.php
+
+		-
+			message: "#^Call to an undefined method Leonidas\\\\Contracts\\\\Admin\\\\Component\\\\Metabox\\\\MetaboxFieldInterface\\:\\:setLabel\\(\\)\\.$#"
+			count: 1
+			path: src/Library/Admin/Component/Metabox/Element/Fieldset.php
+
+		-
+			message: "#^Parameter \\#5 \\$context of function add_meta_box expects 'advanced'\\|'normal'\\|'side', string given\\.$#"
+			count: 1
+			path: src/Library/Admin/Registrar/MetaboxRegistrar.php
+
+		-
+			message: "#^Parameter \\#6 \\$priority of function add_meta_box expects 'core'\\|'default'\\|'high'\\|'low', string given\\.$#"
+			count: 1
+			path: src/Library/Admin/Registrar/MetaboxRegistrar.php

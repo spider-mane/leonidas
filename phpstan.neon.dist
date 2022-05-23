@@ -27,5 +27,3 @@ parameters:
     - '#^Variable \$root might not be defined.$#'
     - '#^Anonymous function has an unused use \$root.$#'
     - '#^Constant LEONIDAS_PLUGIN_HEADERS not found.$#'
-    - '#^Parameter \#5 \$context of function add_meta_box expects ''advanced''\|''normal''\|''side'', string given\.$#'
-    - '#^Parameter \#6 \$priority of function add_meta_box expects ''core''\|''default''\|''high''\|''low'', string given\.$#'
