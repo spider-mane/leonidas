@@ -26,7 +26,7 @@ trait TermChecklistItemsTrait
      *
      * @param string $idFormat
      *
-     * @return self
+     * @return $this
      */
     public function setIdFormat(string $idFormat)
     {

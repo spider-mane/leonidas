@@ -31,7 +31,7 @@ class Filter
      *
      * @param int $priority
      *
-     * @return self
+     * @return $this
      */
     public function setPriority(int $priority)
     {
@@ -45,7 +45,7 @@ class Filter
      *
      * @param int $argCount
      *
-     * @return self
+     * @return $this
      */
     public function setAcceptedArgs(int $argCount)
     {

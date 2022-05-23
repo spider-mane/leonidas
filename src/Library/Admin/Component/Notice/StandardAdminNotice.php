@@ -61,7 +61,7 @@ class StandardAdminNotice implements AdminNoticeInterface
      *
      * @param string $id
      *
-     * @return self
+     * @return $this
      */
     public function setId(string $id)
     {
@@ -95,7 +95,7 @@ class StandardAdminNotice implements AdminNoticeInterface
      *
      * @param bool $dismissible
      *
-     * @return self
+     * @return $this
      */
     public function setDismissible(bool $dismissible)
     {
@@ -119,7 +119,7 @@ class StandardAdminNotice implements AdminNoticeInterface
      *
      * @param string $type
      *
-     * @return self
+     * @return $this
      */
     public function setType(string $type)
     {
@@ -143,7 +143,7 @@ class StandardAdminNotice implements AdminNoticeInterface
      *
      * @param string $screen
      *
-     * @return self
+     * @return $this
      */
     public function setScreen(string $screen)
     {

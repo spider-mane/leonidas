@@ -26,7 +26,7 @@ trait MaybeHandlesCsrfTrait
      *
      * @param CsrfManagerInterface $csrfTokenManager
      *
-     * @return self
+     * @return $this
      */
     public function setTokenManager(CsrfManagerInterface $csrfTokenManager)
     {

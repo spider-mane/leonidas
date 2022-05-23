@@ -25,7 +25,7 @@ abstract class AbstractPageLayout implements AdminPageLayoutInterface
      *
      * @param string $title
      *
-     * @return self
+     * @return $this
      */
     public function setTitle(string $title)
     {
@@ -49,7 +49,7 @@ abstract class AbstractPageLayout implements AdminPageLayoutInterface
      *
      * @param string $description
      *
-     * @return self
+     * @return $this
      */
     public function setDescription(string $description)
     {

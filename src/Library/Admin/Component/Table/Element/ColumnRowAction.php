@@ -61,7 +61,7 @@ class ColumnRowAction implements ColumnRowActionInterface
      *
      * @param string $ariaLabel
      *
-     * @return self
+     * @return $this
      */
     public function setAriaLabel(string $ariaLabel)
     {
@@ -85,7 +85,7 @@ class ColumnRowAction implements ColumnRowActionInterface
      *
      * @param array $attributes
      *
-     * @return self
+     * @return $this
      */
     public function setAttributes(array $attributes)
     {

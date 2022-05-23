@@ -46,7 +46,7 @@ class StatusBox
      *
      * @param array $options
      *
-     * @return self
+     * @return $this
      */
     public function setOptions(array $options)
     {

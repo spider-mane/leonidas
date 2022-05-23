@@ -4,7 +4,7 @@ namespace Leonidas\Framework\Abstracts;
 
 trait FluentlySetsPropertiesTrait
 {
-    protected function maybeSet(string ...$properties)
+    protected function maybeSet(string ...$properties): void
     {
         foreach ($properties as $property) {
             if (!$this->propertyIsSet($property)) {
@@ -13,7 +13,7 @@ trait FluentlySetsPropertiesTrait
         }
     }
 
-    protected function setProperties(string ...$properties)
+    protected function setProperties(string ...$properties): void
     {
         foreach ($properties as $property) {
             $this->setProperty($property);

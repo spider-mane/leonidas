@@ -41,7 +41,7 @@ abstract class AbstractAdminField implements AdminFieldInterface
      *
      * @param string $label label
      *
-     * @return self
+     * @return $this
      */
     public function setLabel(string $label)
     {
@@ -65,7 +65,7 @@ abstract class AbstractAdminField implements AdminFieldInterface
      *
      * @param string $description description
      *
-     * @return self
+     * @return $this
      */
     public function setDescription(string $description)
     {

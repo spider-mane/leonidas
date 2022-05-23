@@ -55,7 +55,7 @@ class Section implements MetaboxComponentInterface
      *
      * @param array $content
      *
-     * @return self
+     * @return $this
      */
     public function setContent(array $content)
     {
@@ -88,7 +88,7 @@ class Section implements MetaboxComponentInterface
      *
      * @param bool $isFieldset
      *
-     * @return self
+     * @return $this
      */
     public function setIsFieldset(bool $isFieldset)
     {
@@ -112,7 +112,7 @@ class Section implements MetaboxComponentInterface
      *
      * @param int $padding
      *
-     * @return self
+     * @return $this
      */
     public function setPadding(int $padding)
     {

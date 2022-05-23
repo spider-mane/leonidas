@@ -56,7 +56,7 @@ class PostTermPolicy implements ServerRequestPolicyInterface
      *
      * @param bool $matchAll
      *
-     * @return self
+     * @return $this
      */
     public function setMatchAll(bool $matchAll)
     {

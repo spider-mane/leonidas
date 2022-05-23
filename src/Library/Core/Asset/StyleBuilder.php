@@ -34,7 +34,7 @@ class StyleBuilder extends AbstractAssetBuilder
      *
      * @param string $media
      *
-     * @return self
+     * @return $this
      */
     public function media(?string $media)
     {
@@ -48,7 +48,7 @@ class StyleBuilder extends AbstractAssetBuilder
      *
      * @param bool $isDisabled
      *
-     * @return self
+     * @return $this
      */
     public function disabled(?bool $isDisabled)
     {
@@ -62,7 +62,7 @@ class StyleBuilder extends AbstractAssetBuilder
      *
      * @param string $hrefLang
      *
-     * @return self
+     * @return $this
      */
     public function hreflang(?string $hrefLang)
     {
@@ -76,7 +76,7 @@ class StyleBuilder extends AbstractAssetBuilder
      *
      * @param string $title
      *
-     * @return self
+     * @return $this
      */
     public function title(?string $title)
     {

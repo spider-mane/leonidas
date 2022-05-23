@@ -59,7 +59,7 @@ abstract class AbstractAssetBuilder
      *
      * @param string $handle
      *
-     * @return self
+     * @return $this
      */
     public function handle(string $handle)
     {
@@ -73,7 +73,7 @@ abstract class AbstractAssetBuilder
      *
      * @param string|bool $src
      *
-     * @return self
+     * @return $this
      */
     public function src($src)
     {
@@ -87,7 +87,7 @@ abstract class AbstractAssetBuilder
      *
      * @param string ...$dependencies
      *
-     * @return self
+     * @return $this
      */
     public function dependencies(string ...$dependencies)
     {
@@ -101,7 +101,7 @@ abstract class AbstractAssetBuilder
      *
      * @param string|bool|null $version
      *
-     * @return self
+     * @return $this
      */
     public function version($version)
     {
@@ -115,7 +115,7 @@ abstract class AbstractAssetBuilder
      *
      * @param ServerRequestPolicyInterface $policy
      *
-     * @return self
+     * @return $this
      */
     public function policy(?ServerRequestPolicyInterface $policy)
     {
@@ -129,7 +129,7 @@ abstract class AbstractAssetBuilder
      *
      * @param array|null $attributes
      *
-     * @return self
+     * @return $this
      */
     public function attributes(?array $attributes)
     {
@@ -143,7 +143,7 @@ abstract class AbstractAssetBuilder
      *
      * @param string $crossorigin
      *
-     * @return self
+     * @return $this
      */
     public function crossorigin(?string $crossorigin)
     {
@@ -157,7 +157,7 @@ abstract class AbstractAssetBuilder
      *
      * @param bool $shouldBeEnqueued
      *
-     * @return self
+     * @return $this
      */
     public function enqueue(bool $shouldBeEnqueued)
     {

@@ -72,7 +72,7 @@ abstract class AbstractEntityMetaManager extends InputPurifier
      *
      * @param string $objectSubtype
      *
-     * @return self
+     * @return $this
      */
     public function setObjectSubtype(string $objectSubtype)
     {
@@ -96,7 +96,7 @@ abstract class AbstractEntityMetaManager extends InputPurifier
      *
      * @param string $dataType
      *
-     * @return self
+     * @return $this
      */
     public function setDataType(string $dataType)
     {
@@ -120,7 +120,7 @@ abstract class AbstractEntityMetaManager extends InputPurifier
      *
      * @param string $description
      *
-     * @return self
+     * @return $this
      */
     public function setDescription(string $description)
     {
@@ -144,7 +144,7 @@ abstract class AbstractEntityMetaManager extends InputPurifier
      *
      * @param callable $authCallback
      *
-     * @return self
+     * @return $this
      */
     public function setAuthCallback(callable $authCallback)
     {
@@ -168,7 +168,7 @@ abstract class AbstractEntityMetaManager extends InputPurifier
      *
      * @param bool $showInRest
      *
-     * @return self
+     * @return $this
      */
     public function setShowInRest(bool $showInRest)
     {
@@ -192,7 +192,7 @@ abstract class AbstractEntityMetaManager extends InputPurifier
      *
      * @param string $capability
      *
-     * @return self
+     * @return $this
      */
     public function setCapability(string $capability)
     {

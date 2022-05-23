@@ -40,7 +40,7 @@ class Field extends AbstractAdminField implements MetaboxFieldInterface
      *
      * @param bool $displayLabel
      *
-     * @return self
+     * @return $this
      */
     public function setDisplayLabel(bool $displayLabel)
     {
@@ -64,7 +64,7 @@ class Field extends AbstractAdminField implements MetaboxFieldInterface
      *
      * @param int $rowPadding
      *
-     * @return self
+     * @return $this
      */
     public function setRowPadding(int $rowPadding)
     {

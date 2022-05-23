@@ -56,7 +56,7 @@ class Fieldset implements MetaboxComponentInterface
      *
      * @param int $rowPadding
      *
-     * @return self
+     * @return $this
      */
     public function setRowPadding(int $rowPadding)
     {
@@ -80,7 +80,7 @@ class Fieldset implements MetaboxComponentInterface
      *
      * @param array $containerOptions
      *
-     * @return self
+     * @return $this
      */
     public function setContainerOptions(array $containerOptions)
     {
@@ -111,7 +111,7 @@ class Fieldset implements MetaboxComponentInterface
      *
      * @param array $fieldOptions
      *
-     * @return self
+     * @return $this
      */
     public function setFieldOptions(array $fieldOptions)
     {
@@ -151,7 +151,7 @@ class Fieldset implements MetaboxComponentInterface
      *
      * @param array $fields
      *
-     * @return self
+     * @return $this
      */
     public function addFields(array $fields)
     {

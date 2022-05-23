@@ -24,7 +24,7 @@ abstract class AbstractTermSelectionProvider implements SelectionProviderInterfa
      *
      * @param mixed $valueKey
      *
-     * @return self
+     * @return $this
      */
     public function setValueKey($valueKey)
     {
