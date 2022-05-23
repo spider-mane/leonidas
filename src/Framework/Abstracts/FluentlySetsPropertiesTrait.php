@@ -22,7 +22,7 @@ trait FluentlySetsPropertiesTrait
 
     protected function setProperty(string $property): void
     {
-        $this->{$property} = ($this->{$property})();
+        $this->{$property} = ([$this, $property])();
     }
 
     protected function propertyIsSet(string $property): bool
