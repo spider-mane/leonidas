@@ -11,7 +11,6 @@ use Leonidas\Contracts\Ui\Asset\ScriptPrinterInterface;
 use Leonidas\Contracts\Ui\Asset\StyleCollectionInterface;
 use Leonidas\Contracts\Ui\Asset\StyleLoaderInterface;
 use Leonidas\Contracts\Ui\Asset\StylePrinterInterface;
-use Leonidas\Framework\Abstracts\MustBeInitiatedTrait;
 use Leonidas\Library\Core\Asset\ScriptLoader;
 use Leonidas\Library\Core\Asset\ScriptPrinter;
 use Leonidas\Library\Core\Asset\StyleLoader;
@@ -85,22 +84,21 @@ trait ProvisionsAssetsTrait
         return $this->scriptLocalizations;
     }
 
-    protected function init()
+    protected function initiationContexts(): array
     {
-        $this->scripts = $this->scripts();
-        $this->inlineScripts = $this->inlineScripts();
-        $this->scriptLocalizations = $this->scriptLocalizations();
-
-        $this->styles = $this->styles();
-        $this->inlineStyles = $this->inlineStyles();
-
-        $this->scriptLoader = $this->scriptLoader();
-        $this->styleLoader = $this->styleLoader();
-
-        $this->scriptPrinter = $this->scriptPrinter();
-        $this->stylePrinter = $this->stylePrinter();
-
-        $this->isInitiated = true;
+        return [
+            'default' => [
+                'scripts',
+                'inlineScripts',
+                'scriptLocalizations',
+                'styles',
+                'inlineStyles',
+                'scriptLoader',
+                'scriptPrinter',
+                'styleLoader',
+                'stylePrinter',
+            ],
+        ];
     }
 
     protected function hasScripts(): bool
@@ -135,7 +133,7 @@ trait ProvisionsAssetsTrait
 
     protected function provisionAssets(?string $hookSuffix = null): void
     {
-        $this->maybeInit();
+        $this->init('default');
 
         $request = $this->getServerRequest();
 
