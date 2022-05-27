@@ -12,6 +12,7 @@ build:
       - php bin/build-paths
   tests:
     override:
+      - vendor/bin/phpstan analyze
       - command: vendor/bin/phpunit
         coverage:
           file: build/phpunit/coverage/coverage.clover.xml
@@ -22,7 +23,6 @@ build:
       tests:
         override:
           - vendor/bin/phpcs
-          - vendor/bin/phpstan analyze
           - php-scrutinizer-run --enable-security-analysis
     php-7.4:
       environment:

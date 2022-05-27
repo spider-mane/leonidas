@@ -12,5 +12,9 @@ interface FormDataInterface
 
     public function fields(): array;
 
+    public function errors(): array;
+
+    public function alerts(): array;
+
     public function output(): ?string;
 }
