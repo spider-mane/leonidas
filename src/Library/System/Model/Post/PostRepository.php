@@ -23,9 +23,9 @@ class PostRepository extends AbstractPostEntityRepository implements PostReposit
         return $this->manager->whereIds(...$ids);
     }
 
-    public function selectByName(string $name): ?PostInterface
+    public function selectName(string $name): ?PostInterface
     {
-        return $this->manager->selectByName($name);
+        return $this->manager->selectName($name);
     }
 
     public function whereNames(string ...$names): PostCollectionInterface
@@ -53,14 +53,14 @@ class PostRepository extends AbstractPostEntityRepository implements PostReposit
         return $this->manager->whereStatus($status->getName());
     }
 
-    public function withTag(TagInterface $tag): PostCollectionInterface
+    public function whereTag(TagInterface $tag): PostCollectionInterface
     {
-        return $this->manager->withTerm('tag', $tag->getId());
+        return $this->manager->whereTerm('tag', $tag->getId());
     }
 
-    public function withCategory(CategoryInterface $category): PostCollectionInterface
+    public function whereCategory(CategoryInterface $category): PostCollectionInterface
     {
-        return $this->manager->withTerm('category', $category->getId());
+        return $this->manager->whereTerm('category', $category->getId());
     }
 
     public function query(array $args): PostCollectionInterface

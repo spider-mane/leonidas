@@ -20,10 +20,6 @@ trait PostTrait
 
     protected CategoryCollectionInterface $categories;
 
-    protected TagRepositoryInterface $tagRepository;
-
-    protected CategoryRepositoryInterface $categoryRepository;
-
     public function getExcerpt(): string
     {
         return $this->post->post_excerpt;
@@ -36,21 +32,15 @@ trait PostTrait
 
     public function getCategories(): CategoryCollectionInterface
     {
-        return $this->lazyLoadable('categories');
+        return $this->lazyLoadable('categories', fn (
+            CategoryRepositoryInterface $categories
+        ) => $categories->wherePost($this));
     }
 
     public function getTags(): TagCollectionInterface
     {
-        return $this->lazyLoadable('tags');
-    }
-
-    protected function getCategoriesFromRepository(): CategoryCollectionInterface
-    {
-        return $this->categoryRepository->withPost($this);
-    }
-
-    protected function getTagsFromRepository(): TagCollectionInterface
-    {
-        return $this->tagRepository->withPost($this);
+        return $this->lazyLoadable('tags', fn (
+            TagRepositoryInterface $tags
+        ) => $tags->wherePost($this));
     }
 }

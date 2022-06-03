@@ -31,9 +31,9 @@ class CommentEntityManager implements CommentEntityManagerInterface
         $this->collectionFactory = $collectionFactory;
     }
 
-    public function select(int $id): object
+    public function select(int $id): ?object
     {
-        return $this->convertEntity(get_comment($id));
+        return $this->single(['comment_in' => [$id]]);
     }
 
     public function whereIds(int ...$ids): object
@@ -61,6 +61,11 @@ class CommentEntityManager implements CommentEntityManagerInterface
         return $this->query(['parent__in' => $parentId]);
     }
 
+    public function whereApprovedOnPost(int $postId): object
+    {
+        return $this->query(['post_id' => $postId, 'status' => 'approve']);
+    }
+
     public function wherePostAndStatus(int $postId, string $status): object
     {
         return $this->query(['post_id' => $postId, 'status' => $status]);
@@ -76,9 +81,14 @@ class CommentEntityManager implements CommentEntityManagerInterface
      */
     public function query(array $args): object
     {
-        return $this->getCollectionFromQuery(
-            new WP_Comment_Query($this->normalizeQueryArgs($args))
-        );
+        return $this->getCollectionFromQuery($this->getQuery($args));
+    }
+
+    public function single(array $args): ?object
+    {
+        $comments = $this->getQuery($args)->get_comments();
+
+        return $comments ? $this->convertEntity($comments[0]) : null;
     }
 
     public function spawn(array $data): object
@@ -109,6 +119,11 @@ class CommentEntityManager implements CommentEntityManagerInterface
         wp_delete_comment($id);
     }
 
+    protected function getQuery(array $args): WP_Comment_Query
+    {
+        return new WP_Comment_Query($this->normalizeQueryArgs($args));
+    }
+
     protected function getCollectionFromQuery(WP_Comment_Query $query): object
     {
         return $this->createCollection(...$query->get_comments());
@@ -129,6 +144,11 @@ class CommentEntityManager implements CommentEntityManagerInterface
             'comment_ID' => $id,
             'type' => $this->type,
         ] + $data;
+    }
+
+    protected function resolveFound($result): ?object
+    {
+        return $result instanceof WP_Comment ? $this->convertEntity($result) : null;
     }
 
     protected function convertEntity(WP_Comment $user): object

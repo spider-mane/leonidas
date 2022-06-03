@@ -9,11 +9,13 @@ interface CommentRepositoryInterface extends FungibleRepositoryInterface
 {
     public function select(int $id): ?CommentInterface;
 
-    public function forPostAndApproved(PostModelInterface $post): CommentCollectionInterface;
+    public function whereApprovedOnPost(PostModelInterface $post): CommentCollectionInterface;
 
-    public function withParent(CommentInterface $comment): CommentCollectionInterface;
+    public function whereIds(int ...$ids): CommentCollectionInterface;
 
-    public function withChild(CommentInterface $comment): ?CommentInterface;
+    public function whereParent(CommentInterface $comment): CommentCollectionInterface;
+
+    public function whereChild(CommentInterface $comment): ?CommentInterface;
 
     public function all(): CommentCollectionInterface;
 

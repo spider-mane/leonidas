@@ -4,3 +4,7 @@ hook:
 model:
   interfaces: src/Contracts/System/Model
   classes: src/Library/System/Model
+
+util:
+  method:
+    facade: Leonidas\Library\Core\Access\_Facade

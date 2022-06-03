@@ -4,21 +4,22 @@ namespace Leonidas\Contracts\System\Model\Category;
 
 use Leonidas\Contracts\System\Model\FungibleRepositoryInterface;
 use Leonidas\Contracts\System\Model\Post\PostInterface;
-use Leonidas\Library\System\Model\Category\CategoryCollection;
 
 interface CategoryRepositoryInterface extends FungibleRepositoryInterface
 {
     public function select(int $id): ?CategoryInterface;
 
-    public function selectBySlug(string $slug): ?CategoryInterface;
+    public function selectSlug(string $slug): ?CategoryInterface;
 
-    public function whereObjectId(int $id): CategoryCollection;
+    public function whereIds(int ...$ids): CategoryCollectionInterface;
 
-    public function withPost(PostInterface $post): CategoryCollection;
+    public function whereObjectId(int $id): CategoryCollectionInterface;
 
-    public function withParent(CategoryInterface $parent): CategoryCollection;
+    public function wherePost(PostInterface $post): CategoryCollectionInterface;
 
-    public function all(): CategoryCollection;
+    public function whereParent(CategoryInterface $parent): CategoryCollectionInterface;
+
+    public function all(): CategoryCollectionInterface;
 
     public function insert(CategoryInterface $category): void;
 

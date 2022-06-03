@@ -4,11 +4,15 @@ namespace Leonidas\Contracts\System\Schema;
 
 interface EntityManagerInterface
 {
-    public function select(int $id): object;
+    public function select(int $id): ?object;
+
+    public function whereIds(int ...$ids): object;
 
     public function all(): object;
 
     public function query(array $args): object;
+
+    public function single(array $args): ?object;
 
     public function spawn(array $data): object;
 

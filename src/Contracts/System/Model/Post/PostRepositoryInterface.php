@@ -12,9 +12,9 @@ interface PostRepositoryInterface extends SoftDeletingRepositoryInterface
 {
     public function select(int $id): ?PostInterface;
 
-    public function whereIds(int ...$ids): PostCollectionInterface;
+    public function selectName(string $name): ?PostInterface;
 
-    public function selectByName(string $name): ?PostInterface;
+    public function whereIds(int ...$ids): PostCollectionInterface;
 
     public function whereNames(string ...$names): PostCollectionInterface;
 
@@ -26,9 +26,9 @@ interface PostRepositoryInterface extends SoftDeletingRepositoryInterface
 
     public function whereStatus(PostStatusInterface $status): PostCollectionInterface;
 
-    public function withTag(TagInterface $tag): PostCollectionInterface;
+    public function whereTag(TagInterface $tag): PostCollectionInterface;
 
-    public function withCategory(CategoryInterface $category): PostCollectionInterface;
+    public function whereCategory(CategoryInterface $category): PostCollectionInterface;
 
     public function query(array $args): PostCollectionInterface;
 

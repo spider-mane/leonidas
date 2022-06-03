@@ -10,22 +10,27 @@ use Leonidas\Library\System\Model\Abstracts\Term\AbstractTermEntityRepository;
 
 class TagRepository extends AbstractTermEntityRepository implements TagRepositoryInterface
 {
-    public function select(int $id): TagInterface
+    public function select(int $id): ?TagInterface
     {
         return $this->manager->select($id);
     }
 
-    public function selectBySlug(string $slug): TagInterface
+    public function selectSlug(string $slug): ?TagInterface
     {
-        return $this->manager->selectBySlug($slug);
+        return $this->manager->selectSlug($slug);
     }
 
-    public function withObjectId(int $id): TagCollectionInterface
+    public function whereIds(int ...$ids): TagCollectionInterface
+    {
+        return $this->manager->whereIds(...$ids);
+    }
+
+    public function whereObjectId(int $id): TagCollectionInterface
     {
         return $this->manager->whereObjectIds($id);
     }
 
-    public function withPost(PostInterface $post): TagCollectionInterface
+    public function wherePost(PostInterface $post): TagCollectionInterface
     {
         return $this->manager->whereObjectIds($post->getId());
     }

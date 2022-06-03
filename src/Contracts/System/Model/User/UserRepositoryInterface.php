@@ -8,11 +8,13 @@ interface UserRepositoryInterface extends FungibleRepositoryInterface
 {
     public function select(int $id): ?UserInterface;
 
-    public function selectByNicename(string $slug): ?UserInterface;
+    public function selectNicename(string $slug): ?UserInterface;
 
-    public function selectByEmail(string $email): ?UserInterface;
+    public function selectEmail(string $email): ?UserInterface;
 
-    public function selectByLogin(string $login): ?UserInterface;
+    public function selectLogin(string $login): ?UserInterface;
+
+    public function whereIds(int ...$ids): UserCollectionInterface;
 
     public function all(): UserCollectionInterface;
 

@@ -31,21 +31,19 @@ class PostEntityManager implements PostEntityManagerInterface
         $this->collectionFactory = $collectionFactory;
     }
 
-    public function select(int $id): object
+    public function select(int $id): ?object
     {
-        return $this->convertEntity(get_post($id, OBJECT));
+        return $this->single(['post__in' => [$id]]);
+    }
+
+    public function selectName(string $name): ?object
+    {
+        return $this->single(['post_name__in' => [$name]]);
     }
 
     public function whereIds(int ...$ids): object
     {
         return $this->query(['post__in' => $ids]);
-    }
-
-    public function selectByName(string $name): object
-    {
-        return $this->convertEntity(
-            get_page_by_path($name, OBJECT, $this->type)
-        );
     }
 
     public function whereNames(string ...$names): object
@@ -81,7 +79,7 @@ class PostEntityManager implements PostEntityManagerInterface
         return $this->query(['tax_query' => $args]);
     }
 
-    public function withTerm(string $taxonomy, int $termId): object
+    public function whereTerm(string $taxonomy, int $termId): object
     {
         return $this->query([
             'tax_query' => [
@@ -109,9 +107,14 @@ class PostEntityManager implements PostEntityManagerInterface
      */
     public function query(array $args): object
     {
-        return $this->getCollectionFromQuery(
-            new WP_Query($this->normalizeQueryArgs($args))
-        );
+        return $this->getCollectionFromQuery($this->getQuery($args));
+    }
+
+    public function single(array $args): ?object
+    {
+        $posts = $this->getQuery($args)->get_posts();
+
+        return $posts ? $this->convertEntity($posts[0]) : null;
     }
 
     /**
@@ -146,7 +149,12 @@ class PostEntityManager implements PostEntityManagerInterface
         wp_untrash_post($id);
     }
 
-    public function getCollectionFromQuery(WP_Query $query): object
+    protected function getQuery(array $args): WP_Query
+    {
+        return new WP_Query($this->normalizeQueryArgs($args));
+    }
+
+    protected function getCollectionFromQuery(WP_Query $query): object
     {
         return $this->createCollection(...$query->get_posts());
     }
@@ -156,7 +164,7 @@ class PostEntityManager implements PostEntityManagerInterface
         return [
             'post_type' => $this->type,
         ] + $args + [
-            'post_status' => 'publish',
+            'post_status' => ['publish', 'inherit'],
             'posts_per_page' => -1,
         ];
     }
@@ -164,7 +172,7 @@ class PostEntityManager implements PostEntityManagerInterface
     protected function normalizeDataForEntry(array $data, int $id = 0): array
     {
         return [
-            'id' => $id,
+            'ID' => $id,
             'post_type' => $this->type,
             'post_parent' => is_post_type_hierarchical($this->type)
                 ? $data['post_parent']

@@ -19,30 +19,22 @@ trait PageTrait
 
     protected PageCollectionInterface $children;
 
-    protected PageRepositoryInterface $pageRepository;
-
     public function getParent(): ?PageInterface
     {
-        return $this->lazyLoadableNullable('parent');
+        return $this->lazyLoadableNullable('parent', fn (
+            PageRepositoryInterface $pages
+        ) => $pages->select($this->getParentId()));
     }
 
     public function getChildren(): PageCollectionInterface
     {
-        return $this->lazyLoadable('children');
+        return $this->lazyLoadable('children', fn (
+            PageRepositoryInterface $pages
+        ) => $pages->whereParent($this));
     }
 
     public function getStatus(): PageStatusInterface
     {
         return new PageStatus($this->post->post_status);
-    }
-
-    protected function getParentFromRepository(): ?PageInterface
-    {
-        return $this->pageRepository->select($this->getParentId());
-    }
-
-    protected function getChildrenFromRepository(): PageCollectionInterface
-    {
-        return $this->pageRepository->whereParent($this);
     }
 }

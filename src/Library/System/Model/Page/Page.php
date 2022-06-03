@@ -2,10 +2,11 @@
 
 namespace Leonidas\Library\System\Model\Page;
 
-use Leonidas\Contracts\System\Model\Author\AuthorRepositoryInterface;
-use Leonidas\Contracts\System\Model\Comment\CommentRepositoryInterface;
+use Leonidas\Contracts\System\Model\Author\AuthorInterface;
+use Leonidas\Contracts\System\Model\Comment\CommentCollectionInterface;
+use Leonidas\Contracts\System\Model\Page\PageCollectionInterface;
 use Leonidas\Contracts\System\Model\Page\PageInterface;
-use Leonidas\Contracts\System\Model\Page\PageRepositoryInterface;
+use Leonidas\Contracts\Util\AutoInvokerInterface;
 use Leonidas\Library\System\Model\Abstracts\AllAccessGrantedTrait;
 use Leonidas\Library\System\Model\Abstracts\Post\FilterablePostModelTrait;
 use Leonidas\Library\System\Model\Abstracts\Post\HierarchicalPostModelTrait;
@@ -39,21 +40,23 @@ class Page implements PageInterface
 
     public function __construct(
         WP_Post $post,
-        PageRepositoryInterface $pageRepository,
-        AuthorRepositoryInterface $authorRepository,
-        CommentRepositoryInterface $commentRepository
+        AutoInvokerInterface $autoInvoker,
+        ?PageInterface $parent = null,
+        ?PageCollectionInterface $children = null,
+        ?AuthorInterface $author = null,
+        ?CommentCollectionInterface $comments = null
     ) {
         $this->assertPostType($post, 'page');
 
         $this->post = $post;
-        $this->pageRepository = $pageRepository;
-        $this->authorRepository = $authorRepository;
-        $this->commentRepository = $commentRepository;
+        $this->autoInvoker = $autoInvoker;
+
+        $parent && $this->parent = $parent;
+        $children && $this->children = $children;
+        $author && $this->author = $author;
+        $comments && $this->comments = $comments;
 
         $this->getAccessProvider = new PageTemplateTags($this, $post);
-        $this->setAccessProvider = new PageSetAccessProvider(
-            $this,
-            $this->pageRepository
-        );
+        $this->setAccessProvider = new PageSetAccessProvider($this, $autoInvoker);
     }
 }

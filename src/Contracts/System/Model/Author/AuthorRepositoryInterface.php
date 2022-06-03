@@ -8,11 +8,13 @@ interface AuthorRepositoryInterface extends FungibleRepositoryInterface
 {
     public function select(int $id): ?AuthorInterface;
 
-    public function selectByNicename(string $slug): ?AuthorInterface;
+    public function selectNicename(string $slug): ?AuthorInterface;
 
-    public function selectByEmail(string $email): ?AuthorInterface;
+    public function selectEmail(string $email): ?AuthorInterface;
 
-    public function selectByLogin(string $login): ?AuthorInterface;
+    public function selectLogin(string $login): ?AuthorInterface;
+
+    public function whereIds(int ...$ids): AuthorCollectionInterface;
 
     public function all(): AuthorCollectionInterface;
 

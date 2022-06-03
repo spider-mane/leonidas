@@ -2,6 +2,7 @@
 
 namespace Leonidas\Library\System\Model\Category;
 
+use Leonidas\Contracts\System\Model\Category\CategoryCollectionInterface;
 use Leonidas\Contracts\System\Model\Category\CategoryInterface;
 use Leonidas\Contracts\System\Model\Category\CategoryRepositoryInterface;
 use Leonidas\Contracts\System\Model\Post\PostInterface;
@@ -17,9 +18,14 @@ class CategoryRepository extends AbstractTermEntityRepository implements Categor
         return $this->manager->select($id);
     }
 
-    public function selectBySlug(string $slug): ?CategoryInterface
+    public function selectSlug(string $slug): ?CategoryInterface
     {
-        return $this->manager->selectBySlug($slug);
+        return $this->manager->selectSlug($slug);
+    }
+
+    public function whereIds(int ...$ids): CategoryCollectionInterface
+    {
+        return $this->manager->whereIds(...$ids);
     }
 
     public function whereObjectId(int $id): CategoryCollection
@@ -27,12 +33,12 @@ class CategoryRepository extends AbstractTermEntityRepository implements Categor
         return $this->manager->whereObjectIds($id);
     }
 
-    public function withPost(PostInterface $post): CategoryCollection
+    public function wherePost(PostInterface $post): CategoryCollection
     {
         return $this->manager->whereObjectIds($post->getId());
     }
 
-    public function withParent(CategoryInterface $parent): CategoryCollection
+    public function whereParent(CategoryInterface $parent): CategoryCollection
     {
         return $this->manager->whereParentId($parent->getId());
     }

@@ -31,9 +31,19 @@ class TermEntityManager implements TermEntityManagerInterface
         $this->collectionFactory = $collectionFactory;
     }
 
-    public function select(int $id): object
+    public function select(int $id): ?object
     {
-        return $this->convertEntity(get_term($id, $this->taxonomy, OBJECT));
+        return $this->single(['include' => [$id]]);
+    }
+
+    public function selectTermTaxonomyId(int $ttId): ?object
+    {
+        return $this->single(['term_taxonomy_id' => $ttId]);
+    }
+
+    public function selectSlug(string $name): ?object
+    {
+        return $this->single(['slug' => $name]);
     }
 
     public function whereIds(int ...$ids): object
@@ -41,28 +51,9 @@ class TermEntityManager implements TermEntityManagerInterface
         return $this->query(['include' => $ids]);
     }
 
-    public function selectByTermTaxonomyId(int $ttId): object
+    public function whereTermTaxonomyIds(int ...$ttIds): object
     {
-        return $this->convertEntity(
-            get_term_by(
-                'term_taxonomy_id',
-                $ttId,
-                $this->taxonomy,
-                OBJECT
-            )
-        );
-    }
-
-    public function whereTermTaxonomyIds(int ...$ttId): object
-    {
-        return $this->query(['term_taxonomy_id' => $ttId]);
-    }
-
-    public function selectBySlug(string $name): object
-    {
-        return $this->convertEntity(
-            get_term_by('slug', $name, $this->taxonomy, OBJECT)
-        );
+        return $this->query(['term_taxonomy_id' => $ttIds]);
     }
 
     public function whereSlugs(string ...$names): object
@@ -90,11 +81,24 @@ class TermEntityManager implements TermEntityManagerInterface
         return $this->query([]);
     }
 
+    /**
+     * @link https://developer.wordpress.org/reference/classes/wp_term_query/__construct/
+     */
     public function query(array $args): object
     {
-        return $this->gerCollectionFromQuery(
-            new WP_Term_Query($this->normalizeQueryArgs($args))
-        );
+        return $this->gerCollectionFromQuery($this->getQuery($args));
+    }
+
+    public function single(array $args): ?object
+    {
+        $terms = $this->getQuery($args)->get_terms();
+
+        return $terms ? $this->convertEntity($terms[0]) : null;
+    }
+
+    public function fetch(int $id): ?object
+    {
+        return $this->resolveFound(get_term($id, $this->taxonomy, OBJECT));
     }
 
     public function spawn(array $data): object
@@ -131,7 +135,12 @@ class TermEntityManager implements TermEntityManagerInterface
         );
     }
 
-    public function gerCollectionFromQuery(WP_Term_Query $query): object
+    protected function getQuery(array $args): WP_Term_Query
+    {
+        return new WP_Term_Query($this->normalizeQueryArgs($args));
+    }
+
+    protected function gerCollectionFromQuery(WP_Term_Query $query): object
     {
         return $this->createCollection(...$query->get_terms());
     }
@@ -153,6 +162,11 @@ class TermEntityManager implements TermEntityManagerInterface
                 ? $data['parent']
                 : 0,
         ] + $data;
+    }
+
+    protected function resolveFound($result): ?object
+    {
+        return $result instanceof WP_Term ? $this->convertEntity($result) : null;
     }
 
     protected function convertEntity(WP_Term $term): object

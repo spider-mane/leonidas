@@ -2,24 +2,17 @@
 
 namespace Leonidas\Library\System\Model\Tag;
 
-use Leonidas\Contracts\System\Model\Post\PostRepositoryInterface;
 use Leonidas\Contracts\System\Model\Tag\TagInterface;
 use Leonidas\Contracts\System\Schema\Term\TermConverterInterface;
+use Leonidas\Library\System\Model\Abstracts\AbstractModelConverter;
 use Leonidas\Library\System\Schema\Exceptions\UnexpectedEntityException;
 use WP_Term;
 
-class TagConverter implements TermConverterInterface
+class TagConverter extends AbstractModelConverter implements TermConverterInterface
 {
-    protected PostRepositoryInterface $postRepository;
-
-    public function __construct(PostRepositoryInterface $postRepository)
-    {
-        $this->postRepository = $postRepository;
-    }
-
     public function convert(WP_Term $term): Tag
     {
-        return new Tag($term, $this->postRepository);
+        return new Tag($term, $this->autoInvoker);
     }
 
     public function revert(object $entity): WP_Term

@@ -20,10 +20,10 @@ return [
 
     'modules' => [
 
-        # Framework modules
+        # Framework
 
-        # Plugin modules
-        Leonidas\Plugin\Module\AdminAssets::class,
+        # Plugin
+        \Leonidas\Plugin\Module\AdminAssets::class,
 
     ],
 
@@ -31,15 +31,20 @@ return [
 
     'providers' => [
 
-        # Framework providers
-        Leonidas\Framework\Provider\League\AdminNoticeRepositoryServiceProvider::class,
-        Leonidas\Framework\Provider\League\GuzzleServerRequestServiceProvider::class,
-        Leonidas\Framework\Provider\League\TransientsChannelServiceProvider::class,
-        Leonidas\Framework\Provider\League\TwigViewServiceProvider::class,
+        # Framework
+        \Leonidas\Framework\Provider\League\AdminNoticeRepositoryServiceProvider::class,
+        \Leonidas\Framework\Provider\League\AutoInvokerServiceProvider::class,
+        \Leonidas\Framework\Provider\League\GuzzleServerRequestServiceProvider::class,
+        \Leonidas\Framework\Provider\League\TransientsChannelServiceProvider::class,
+        \Leonidas\Framework\Provider\League\TwigViewServiceProvider::class,
 
-        # Plugin providers
+        # Plugin
 
     ],
 
-    'bootstrap' => [],
+    'bootstrap' => [
+
+        # Framework
+        \Leonidas\Framework\Bootstrap\RegisterModelServices::class,
+    ],
 ];

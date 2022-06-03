@@ -10,7 +10,7 @@ interface PageRepositoryInterface extends SoftDeletingRepositoryInterface
 
     public function whereIds(int ...$ids): PageCollectionInterface;
 
-    public function selectByName(string $name): ?PageInterface;
+    public function selectName(string $name): ?PageInterface;
 
     public function whereNames(string ...$names): PageCollectionInterface;
 

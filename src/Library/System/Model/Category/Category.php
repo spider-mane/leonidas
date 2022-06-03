@@ -7,6 +7,7 @@ use Leonidas\Contracts\System\Model\Category\CategoryInterface;
 use Leonidas\Contracts\System\Model\Category\CategoryRepositoryInterface;
 use Leonidas\Contracts\System\Model\Post\PostCollectionInterface;
 use Leonidas\Contracts\System\Model\Post\PostRepositoryInterface;
+use Leonidas\Contracts\Util\AutoInvokerInterface;
 use Leonidas\Library\System\Model\Abstracts\AllAccessGrantedTrait;
 use Leonidas\Library\System\Model\Abstracts\LazyLoadableRelationshipsTrait;
 use Leonidas\Library\System\Model\Abstracts\Term\HierarchicalTermTrait;
@@ -28,23 +29,24 @@ class Category implements CategoryInterface
 
     protected CategoryCollectionInterface $children;
 
-    protected PostRepositoryInterface $postRepository;
-
-    protected CategoryRepositoryInterface $categoryRepository;
-
     public function __construct(
         WP_Term $term,
-        PostRepositoryInterface $postRepository,
-        CategoryRepositoryInterface $categoryRepository
+        AutoInvokerInterface $autoInvoker,
+        ?PostCollectionInterface $posts = null,
+        ?CategoryInterface $parent = null,
+        ?CategoryCollectionInterface $children = null
     ) {
         $this->assertTaxonomy($term, 'category');
 
         $this->term = $term;
-        $this->postRepository = $postRepository;
-        $this->categoryRepository = $categoryRepository;
+        $this->autoInvoker = $autoInvoker;
+
+        $posts && $this->posts = $posts;
+        $parent && $this->parent = $parent;
+        $children && $this->children = $children;
 
         $this->getAccessProvider = new CategoryGetAccessProvider($this);
-        $this->setAccessProvider = new CategorySetAccessProvider($this);
+        $this->setAccessProvider = new CategorySetAccessProvider($this, $autoInvoker);
     }
 
     public function getDescription(): string
@@ -61,7 +63,9 @@ class Category implements CategoryInterface
 
     public function getPosts(): PostCollectionInterface
     {
-        return $this->lazyLoadable('posts');
+        return $this->lazyLoadable('posts', fn (
+            PostRepositoryInterface $posts
+        ) => $posts->whereCategory($this));
     }
 
     public function setPosts(PostCollectionInterface $posts): CategoryInterface
@@ -73,7 +77,9 @@ class Category implements CategoryInterface
 
     public function getParent(): ?CategoryInterface
     {
-        return $this->lazyLoadableNullable('parent');
+        return $this->lazyLoadableNullable('parent', fn (
+            CategoryRepositoryInterface $categories
+        ) => $categories->select($this->getParentId()));
     }
 
     public function setParent(?CategoryInterface $parent): CategoryInterface
@@ -85,21 +91,8 @@ class Category implements CategoryInterface
 
     public function getChildren(): CategoryCollectionInterface
     {
-        return $this->lazyLoadable('children');
-    }
-
-    protected function getPostsFromRepository(): PostCollectionInterface
-    {
-        return $this->postRepository->withCategory($this);
-    }
-
-    protected function getParentFromRepository(): ?CategoryInterface
-    {
-        return $this->categoryRepository->select($this->getParentId());
-    }
-
-    protected function getChildrenFromRepository(): CategoryCollectionInterface
-    {
-        return $this->categoryRepository->withParent($this);
+        return $this->lazyLoadable('children', fn (
+            CategoryRepositoryInterface $categories
+        ) => $categories->whereParent($this));
     }
 }

@@ -13,8 +13,6 @@ trait CommentablePostModelTrait
 
     protected CommentCollectionInterface $comments;
 
-    protected CommentRepositoryInterface $commentRepository;
-
     public function getCommentStatus(): string
     {
         return $this->post->comment_status;
@@ -27,11 +25,8 @@ trait CommentablePostModelTrait
 
     public function getComments(): CommentCollectionInterface
     {
-        return $this->lazyLoadable('comments');
-    }
-
-    protected function getCommentsFromRepository(): CommentCollectionInterface
-    {
-        return $this->commentRepository->forPostAndApproved($this);
+        return $this->lazyLoadable('comments', fn (
+            CommentRepositoryInterface $comments
+        ) => $comments->whereApprovedOnPost($this));
     }
 }

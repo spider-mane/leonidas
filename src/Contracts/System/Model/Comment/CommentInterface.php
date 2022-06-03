@@ -6,9 +6,10 @@ use DateTimeInterface;
 use Leonidas\Contracts\System\Model\HierarchicalInterface;
 use Leonidas\Contracts\System\Model\Post\PostInterface;
 use Leonidas\Contracts\System\Model\User\UserInterface;
+use Stringable;
 use WP_Comment;
 
-interface CommentInterface extends HierarchicalInterface
+interface CommentInterface extends HierarchicalInterface, Stringable
 {
     public function getId(): int;
 

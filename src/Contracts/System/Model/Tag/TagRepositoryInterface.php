@@ -7,13 +7,15 @@ use Leonidas\Contracts\System\Model\Post\PostInterface;
 
 interface TagRepositoryInterface extends FungibleRepositoryInterface
 {
-    public function select(int $id): TagInterface;
+    public function select(int $id): ?TagInterface;
 
-    public function selectBySlug(string $slug): TagInterface;
+    public function selectSlug(string $slug): ?TagInterface;
 
-    public function withObjectId(int $id): TagCollectionInterface;
+    public function whereIds(int ...$ids): TagCollectionInterface;
 
-    public function withPost(PostInterface $post): TagCollectionInterface;
+    public function whereObjectId(int $id): TagCollectionInterface;
+
+    public function wherePost(PostInterface $post): TagCollectionInterface;
 
     public function all(): TagCollectionInterface;
 

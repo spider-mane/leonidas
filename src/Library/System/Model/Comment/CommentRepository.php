@@ -26,17 +26,22 @@ class CommentRepository implements CommentRepositoryInterface
         return $this->manager->select($id);
     }
 
-    public function forPostAndApproved(PostModelInterface $post): CommentCollectionInterface
+    public function whereApprovedOnPost(PostModelInterface $post): CommentCollectionInterface
     {
-        return $this->manager->wherePostAndStatus($post->getId(), 'approved');
+        return $this->manager->whereApprovedOnPost($post->getId());
     }
 
-    public function withParent(CommentInterface $comment): CommentCollectionInterface
+    public function whereIds(int ...$ids): CommentCollectionInterface
+    {
+        return $this->manager->whereIds(...$ids);
+    }
+
+    public function whereParent(CommentInterface $comment): CommentCollectionInterface
     {
         return $this->manager->whereParentIds($comment->getId());
     }
 
-    public function withChild(CommentInterface $comment): ?CommentInterface
+    public function whereChild(CommentInterface $comment): ?CommentInterface
     {
         return $this->manager->select($comment->getParentId());
     }

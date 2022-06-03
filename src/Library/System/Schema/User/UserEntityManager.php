@@ -31,29 +31,29 @@ class UserEntityManager implements UserEntityManagerInterface
         $this->collectionFactory = $collectionFactory;
     }
 
-    public function select(int $id): object
+    public function select(int $id): ?object
     {
-        return $this->convertEntity(get_user_by('ID', $id));
+        return $this->single(['include' => [$id]]);
+    }
+
+    public function selectLogin(string $login): ?object
+    {
+        return $this->single(['login' => $login]);
+    }
+
+    public function selectEmail(string $email): ?object
+    {
+        return $this->single(['search_columns' => ['user_email' => $email]]);
+    }
+
+    public function selectNicename(string $nicename): ?object
+    {
+        return $this->single(['nicename' => $nicename]);
     }
 
     public function whereIds(int ...$ids): object
     {
         return $this->query(['include' => $ids]);
-    }
-
-    public function selectByLogin(string $login): object
-    {
-        return $this->convertEntity(get_user_by('login', $login));
-    }
-
-    public function selectByEmail(string $email): object
-    {
-        return $this->convertEntity(get_user_by('email', $email));
-    }
-
-    public function selectByNicename(string $nicename): object
-    {
-        return $this->convertEntity(get_user_by('nicename', $nicename));
     }
 
     public function whereBlogId(int $blogId): object
@@ -66,11 +66,19 @@ class UserEntityManager implements UserEntityManagerInterface
         return $this->query([]);
     }
 
+    /**
+     * @link https://developer.wordpress.org/reference/classes/WP_User_Query/prepare_query/
+     */
     public function query(array $args): object
     {
-        return $this->getCollectionFromQuery(
-            new WP_User_Query($this->normalizeQueryArgs($args))
-        );
+        return $this->getCollectionFromQuery($this->getQuery($args));
+    }
+
+    public function single(array $args): ?object
+    {
+        $user = $this->getQuery($args)->get_results();
+
+        return $user ? $this->convertEntity($user[0]) : null;
     }
 
     public function spawn(array $data): object
@@ -100,6 +108,11 @@ class UserEntityManager implements UserEntityManagerInterface
         wp_delete_user($id, $reassign);
     }
 
+    protected function getQuery(array $args): WP_User_Query
+    {
+        return new WP_User_Query($this->normalizeQueryArgs($args));
+    }
+
     protected function getCollectionFromQuery(WP_User_Query $query): object
     {
         return $this->createCollection(...$query->get_results());
@@ -108,7 +121,7 @@ class UserEntityManager implements UserEntityManagerInterface
     protected function normalizeQueryArgs(array $args): array
     {
         return [
-            'role' => $this->role,
+            // 'role' => $this->role,
             'fields' => 'all',
         ] + $args;
     }
@@ -119,6 +132,11 @@ class UserEntityManager implements UserEntityManagerInterface
             'ID' => $id,
             'role' => $this->role,
         ] + $data;
+    }
+
+    protected function resolveFound($result): ?object
+    {
+        return $result instanceof WP_User ? $this->convertEntity($result) : null;
     }
 
     protected function convertEntity(WP_User $user): object

@@ -6,7 +6,6 @@ use Leonidas\Contracts\System\Model\User\UserCollectionInterface;
 use Leonidas\Contracts\System\Model\User\UserInterface;
 use Leonidas\Library\System\Model\Abstracts\AbstractModelCollection;
 use Leonidas\Library\System\Model\Abstracts\PoweredByModelCollectionKernelTrait;
-use WP_User;
 
 class UserCollection extends AbstractModelCollection implements UserCollectionInterface
 {
@@ -16,7 +15,7 @@ class UserCollection extends AbstractModelCollection implements UserCollectionIn
 
     protected const COLLECTION_IS_MAP = true;
 
-    public function __construct(WP_User ...$users)
+    public function __construct(UserInterface ...$users)
     {
         $this->initKernel($users);
     }

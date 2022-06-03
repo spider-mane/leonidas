@@ -11,7 +11,7 @@ class ImageCollection extends AbstractImageCollection implements ImageCollection
 {
     use PoweredByModelCollectionKernelTrait;
 
-    protected const MODEL_IDENTIFIER = 'name';
+    protected const MODEL_IDENTIFIER = 'title';
 
     protected const COLLECTION_IS_MAP = true;
 

@@ -6,7 +6,6 @@ use Leonidas\Contracts\System\Model\Author\AuthorCollectionInterface;
 use Leonidas\Contracts\System\Model\Author\AuthorInterface;
 use Leonidas\Library\System\Model\Abstracts\AbstractModelCollection;
 use Leonidas\Library\System\Model\Abstracts\PoweredByModelCollectionKernelTrait;
-use WP_User;
 
 class AuthorCollection extends AbstractModelCollection implements AuthorCollectionInterface
 {
@@ -16,7 +15,7 @@ class AuthorCollection extends AbstractModelCollection implements AuthorCollecti
 
     protected const COLLECTION_IS_MAP = true;
 
-    public function __construct(WP_User ...$users)
+    public function __construct(AuthorInterface ...$users)
     {
         $this->initKernel($users);
     }

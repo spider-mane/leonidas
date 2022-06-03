@@ -3,23 +3,16 @@
 namespace Leonidas\Library\System\Model\Author;
 
 use Leonidas\Contracts\System\Model\Author\AuthorInterface;
-use Leonidas\Contracts\System\Model\Post\PostRepositoryInterface;
 use Leonidas\Contracts\System\Schema\User\UserConverterInterface;
+use Leonidas\Library\System\Model\Abstracts\AbstractModelConverter;
 use Leonidas\Library\System\Schema\Exceptions\UnexpectedEntityException;
 use WP_User;
 
-class AuthorConverter implements UserConverterInterface
+class AuthorConverter extends AbstractModelConverter implements UserConverterInterface
 {
-    protected PostRepositoryInterface $postRepository;
-
-    public function __construct(PostRepositoryInterface $postRepository)
-    {
-        $this->postRepository = $postRepository;
-    }
-
     public function convert(WP_User $user): Author
     {
-        return new Author($user, $this->postRepository);
+        return new Author($user, $this->autoInvoker);
     }
 
     public function revert(object $entity): WP_User

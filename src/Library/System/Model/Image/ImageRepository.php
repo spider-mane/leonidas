@@ -9,7 +9,7 @@ use Leonidas\Library\System\Model\Abstracts\Post\AbstractPostEntityRepository;
 
 class ImageRepository extends AbstractPostEntityRepository implements ImageRepositoryInterface
 {
-    public function select(int $id): ImageInterface
+    public function select(int $id): ?ImageInterface
     {
         return $this->manager->select($id);
     }

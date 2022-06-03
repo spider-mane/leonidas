@@ -13,20 +13,15 @@ trait AuthoredPostModelTrait
 
     protected AuthorInterface $author;
 
-    protected AuthorRepositoryInterface $authorRepository;
-
     public function getAuthor(): AuthorInterface
     {
-        return $this->lazyLoadable('author');
+        return $this->lazyLoadable('author', fn (
+            AuthorRepositoryInterface $authors
+        ) => $authors->select($this->getAuthorId()));
     }
 
     public function getAuthorId(): int
     {
         return (int) $this->post->post_author;
-    }
-
-    protected function getAuthorFromRepository(): AuthorInterface
-    {
-        return $this->authorRepository->select($this->getAuthorId());
     }
 }

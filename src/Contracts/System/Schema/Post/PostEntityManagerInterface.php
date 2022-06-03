@@ -8,9 +8,7 @@ interface PostEntityManagerInterface extends SoftDeletingEntityManagerInterface
 {
     public const DATE_FORMAT = 'Y-m-d H:i:s';
 
-    public function whereIds(int ...$ids): object;
-
-    public function selectByName(string $name): object;
+    public function selectName(string $name): ?object;
 
     public function whereNames(string ...$names): object;
 
@@ -24,5 +22,5 @@ interface PostEntityManagerInterface extends SoftDeletingEntityManagerInterface
 
     public function whereTaxQuery(array $args): object;
 
-    public function withTerm(string $taxonomy, int $termId): object;
+    public function whereTerm(string $taxonomy, int $termId): object;
 }

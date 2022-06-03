@@ -36,6 +36,7 @@ class PostQueryKernel extends CollectionKernel implements CollectionKernelInterf
         $this->query = $query;
         $this->items = &$query->posts;
         $this->generator = $generator;
+        $this->converter = $converter;
 
         $this->jsonSerializer = $jsonSerializer ?? new BasicJsonSerializer();
         $this->operationProvider = $operationProvider ?? new Operations();
@@ -49,6 +50,16 @@ class PostQueryKernel extends CollectionKernel implements CollectionKernelInterf
             $comparator,
             $this->archive,
         );
+    }
+
+    public function values(): array
+    {
+        return array_values($this->toArray());
+    }
+
+    public function toArray(): array
+    {
+        return array_map([$this->converter, 'convert'], $this->items);
     }
 
     public function getIterator(): Traversable

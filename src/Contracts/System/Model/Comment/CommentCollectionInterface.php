@@ -8,6 +8,8 @@ interface CommentCollectionInterface extends ModelCollectionInterface
 {
     public function getById(int $id): CommentInterface;
 
+    public function first(): ?CommentInterface;
+
     public function add(CommentInterface $comment): void;
 
     public function collect(CommentInterface ...$comments): void;

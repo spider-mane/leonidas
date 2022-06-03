@@ -6,13 +6,11 @@ use Leonidas\Contracts\System\Schema\EntityManagerInterface;
 
 interface TermEntityManagerInterface extends EntityManagerInterface
 {
-    public function whereIds(int ...$ids): object;
+    public function selectTermTaxonomyId(int $ttId): ?object;
 
-    public function selectByTermTaxonomyId(int $ttId): object;
+    public function whereTermTaxonomyIds(int ...$ttIds): object;
 
-    public function whereTermTaxonomyIds(int ...$ttId): object;
-
-    public function selectBySlug(string $slug): object;
+    public function selectSlug(string $slug): ?object;
 
     public function whereSlugs(string ...$slugs): object;
 

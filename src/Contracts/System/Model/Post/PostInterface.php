@@ -16,6 +16,7 @@ use Leonidas\Contracts\System\Model\Post\Status\PostStatusInterface;
 use Leonidas\Contracts\System\Model\RestrictableInterface;
 use Leonidas\Contracts\System\Model\Tag\TagCollectionInterface;
 use Leonidas\Contracts\System\Model\Tag\TagInterface;
+use Stringable;
 
 interface PostInterface extends
     FilterableInterface,
@@ -26,7 +27,8 @@ interface PostInterface extends
     CommentableInterface,
     RestrictableInterface,
     MimeInterface,
-    MutableDatableInterface
+    MutableDatableInterface,
+    Stringable
 {
     public function getExcerpt(): string;
 

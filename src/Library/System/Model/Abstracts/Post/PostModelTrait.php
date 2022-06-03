@@ -38,7 +38,9 @@ trait PostModelTrait
 
     public function getPostType(): PostTypeInterface
     {
-        return $this->lazyLoadable('postType');
+        return $this->postType ??= AdaptedPostType::fromName(
+            $this->post->post_type
+        );
     }
 
     public function getGuid(): LinkInterface
@@ -54,10 +56,5 @@ trait PostModelTrait
     public function getPageTemplate(): string
     {
         return $this->post->page_template;
-    }
-
-    protected function getPostTypeFromRepository(): PostTypeInterface
-    {
-        return AdaptedPostType::fromName($this->post->post_type);
     }
 }

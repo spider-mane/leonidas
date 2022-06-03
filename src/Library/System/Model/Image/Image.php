@@ -2,9 +2,10 @@
 
 namespace Leonidas\Library\System\Model\Image;
 
-use Leonidas\Contracts\System\Model\Author\AuthorRepositoryInterface;
-use Leonidas\Contracts\System\Model\Comment\CommentRepositoryInterface;
+use Leonidas\Contracts\System\Model\Author\AuthorInterface;
+use Leonidas\Contracts\System\Model\Comment\CommentCollectionInterface;
 use Leonidas\Contracts\System\Model\Image\ImageInterface;
+use Leonidas\Contracts\Util\AutoInvokerInterface;
 use Leonidas\Library\System\Model\Abstracts\AllAccessGrantedTrait;
 use Leonidas\Library\System\Model\Abstracts\LazyLoadableRelationshipsTrait;
 use Leonidas\Library\System\Model\Abstracts\Post\FilterablePostModelTrait;
@@ -36,14 +37,17 @@ class Image implements ImageInterface
 
     public function __construct(
         WP_Post $post,
-        AuthorRepositoryInterface $authorRepository,
-        CommentRepositoryInterface $commentRepository
+        AutoInvokerInterface $autoInvoker,
+        ?AuthorInterface $author = null,
+        ?CommentCollectionInterface $comments = null
     ) {
         $this->assertPostType($post, 'attachment');
 
         $this->post = $post;
-        $this->authorRepository = $authorRepository;
-        $this->commentRepository = $commentRepository;
+        $this->autoInvoker = $autoInvoker;
+
+        $author && $this->author = $author;
+        $comments && $this->comments = $comments;
 
         $this->getAccessProvider = new ImageTemplateTags($this, $post);
         $this->setAccessProvider = new ImageSetAccessProvider($this);

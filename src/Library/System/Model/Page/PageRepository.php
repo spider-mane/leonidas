@@ -23,9 +23,9 @@ class PageRepository extends AbstractPostEntityRepository implements PageReposit
         return $this->manager->whereIds(...$ids);
     }
 
-    public function selectByName(string $name): ?PageInterface
+    public function selectName(string $name): ?PageInterface
     {
-        return $this->manager->selectByName($name);
+        return $this->manager->selectName($name);
     }
 
     public function whereNames(string ...$names): PageCollectionInterface

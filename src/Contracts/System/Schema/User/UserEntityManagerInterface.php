@@ -8,13 +8,11 @@ interface UserEntityManagerInterface extends EntityManagerInterface
 {
     public const DATE_FORMAT = 'Y-m-d H:i:s';
 
-    public function whereIds(int ...$ids): object;
+    public function selectLogin(string $login): ?object;
 
-    public function selectByLogin(string $login): object;
+    public function selectEmail(string $email): ?object;
 
-    public function selectByEmail(string $email): object;
-
-    public function selectByNicename(string $nicename): object;
+    public function selectNicename(string $nicename): ?object;
 
     public function whereBlogId(int $blogId): object;
 }

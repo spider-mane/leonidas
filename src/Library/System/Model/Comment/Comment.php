@@ -11,6 +11,7 @@ use Leonidas\Contracts\System\Model\Post\PostInterface;
 use Leonidas\Contracts\System\Model\Post\PostRepositoryInterface;
 use Leonidas\Contracts\System\Model\User\UserInterface;
 use Leonidas\Contracts\System\Model\User\UserRepositoryInterface;
+use Leonidas\Contracts\Util\AutoInvokerInterface;
 use Leonidas\Library\System\Model\Abstracts\AllAccessGrantedTrait;
 use Leonidas\Library\System\Model\Abstracts\Comment\MappedToWpCommentTrait;
 use Leonidas\Library\System\Model\Abstracts\LazyLoadableRelationshipsTrait;
@@ -30,25 +31,29 @@ class Comment implements CommentInterface
 
     protected ?UserInterface $user;
 
-    protected CommentRepositoryInterface $commentRepository;
-
-    protected PostRepositoryInterface $postRepository;
-
-    protected UserRepositoryInterface $userRepository;
-
     public function __construct(
         WP_Comment $comment,
-        CommentRepositoryInterface $commentRepository,
-        PostRepositoryInterface $postRepository,
-        UserRepositoryInterface $userRepository
+        AutoInvokerInterface $autoInvoker,
+        ?CommentInterface $parent = null,
+        ?CommentCollectionInterface $children = null,
+        ?PostInterface $post = null,
+        ?UserInterface $user = null
     ) {
         $this->comment = $comment;
-        $this->commentRepository = $commentRepository;
-        $this->postRepository = $postRepository;
-        $this->userRepository = $userRepository;
+        $this->autoInvoker = $autoInvoker;
+
+        $parent && $this->parent = $parent;
+        $children && $this->children = $children;
+        $post && $this->post = $post;
+        $user && $this->user = $user;
 
         $this->getAccessProvider = new CommentGetAccessProvider($this);
         $this->setAccessProvider = new CommentSetAccessProvider($this);
+    }
+
+    public function __toString(): string
+    {
+        return $this->getContent();
     }
 
     public function getId(): int
@@ -86,11 +91,6 @@ class Comment implements CommentInterface
         return $this->comment->comment_agent;
     }
 
-    public function getUser(): ?UserInterface
-    {
-        return $this->lazyLoadableNullable('user');
-    }
-
     public function getUserId(): int
     {
         return (int) $this->comment->user_id;
@@ -116,24 +116,37 @@ class Comment implements CommentInterface
         return (int) $this->comment->comment_karma;
     }
 
-    public function getParent(): ?CommentInterface
-    {
-        return $this->lazyLoadableNullable('parent');
-    }
-
     public function getParentId(): int
     {
         return (int) $this->comment->comment_parent;
     }
 
+    public function getUser(): ?UserInterface
+    {
+        return $this->lazyLoadableNullable('user', fn (
+            UserRepositoryInterface $users
+        ) => $users->select($this->getUserId()));
+    }
+
+    public function getParent(): ?CommentInterface
+    {
+        return $this->lazyLoadableNullable('parent', fn (
+            CommentRepositoryInterface $comments
+        ) => $comments->select($this->getParentId()));
+    }
+
     public function getChildren(): CommentCollectionInterface
     {
-        return $this->lazyLoadable('children');
+        return $this->lazyLoadable('children', fn (
+            CommentRepositoryInterface $comments
+        ) => $comments->whereParent($this));
     }
 
     public function getPost(): PostInterface
     {
-        return $this->lazyLoadable('post');
+        return $this->lazyLoadable('post', fn (
+            PostRepositoryInterface $posts
+        ) => $posts->select($this->getPostId()));
     }
 
     public function getPostId(): int
@@ -149,25 +162,5 @@ class Comment implements CommentInterface
     public function getType(): string
     {
         return $this->comment->comment_type;
-    }
-
-    protected function getPostFromRepository(): PostInterface
-    {
-        return $this->postRepository->select($this->getPostId());
-    }
-
-    public function getParentFromRepository(): ?CommentInterface
-    {
-        return $this->commentRepository->select($this->getParentId());
-    }
-
-    protected function getChildrenFromRepository(): CommentCollectionInterface
-    {
-        return $this->commentRepository->withParent($this);
-    }
-
-    protected function getUserFromRepository(): ?UserInterface
-    {
-        return $this->userRepository->select($this->getUserId());
     }
 }

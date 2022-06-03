@@ -17,9 +17,13 @@ abstract class TestCase extends PHPUnitTestCase
     use MockeryTrait;
     use ProphecyTrait;
 
+    protected string $root;
+
     protected function setUp(): void
     {
         parent::setUp();
+
+        $this->root = dirname(__DIR__, 2);
 
         $this->initFaker();
     }

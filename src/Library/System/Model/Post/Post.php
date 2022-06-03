@@ -2,11 +2,12 @@
 
 namespace Leonidas\Library\System\Model\Post;
 
-use Leonidas\Contracts\System\Model\Author\AuthorRepositoryInterface;
-use Leonidas\Contracts\System\Model\Category\CategoryRepositoryInterface;
-use Leonidas\Contracts\System\Model\Comment\CommentRepositoryInterface;
+use Leonidas\Contracts\System\Model\Author\AuthorInterface;
+use Leonidas\Contracts\System\Model\Category\CategoryCollectionInterface;
+use Leonidas\Contracts\System\Model\Comment\CommentCollectionInterface;
 use Leonidas\Contracts\System\Model\Post\PostInterface;
-use Leonidas\Contracts\System\Model\Tag\TagRepositoryInterface;
+use Leonidas\Contracts\System\Model\Tag\TagCollectionInterface;
+use Leonidas\Contracts\Util\AutoInvokerInterface;
 use Leonidas\Library\System\Model\Abstracts\AllAccessGrantedTrait;
 use Leonidas\Library\System\Model\Abstracts\Post\FilterablePostModelTrait;
 use Leonidas\Library\System\Model\Abstracts\Post\MimePostModelTrait;
@@ -40,18 +41,21 @@ class Post implements PostInterface
 
     public function __construct(
         WP_Post $post,
-        AuthorRepositoryInterface $authorRepository,
-        TagRepositoryInterface $tagRepository,
-        CategoryRepositoryInterface $categoryRepository,
-        CommentRepositoryInterface $commentRepository
+        AutoInvokerInterface $autoInvoker,
+        ?AuthorInterface $author = null,
+        ?TagCollectionInterface $tags = null,
+        ?CategoryCollectionInterface $categories = null,
+        ?CommentCollectionInterface $comments = null
     ) {
         $this->assertPostType($post, 'post');
 
         $this->post = $post;
-        $this->authorRepository = $authorRepository;
-        $this->tagRepository = $tagRepository;
-        $this->categoryRepository = $categoryRepository;
-        $this->commentRepository = $commentRepository;
+        $this->autoInvoker = $autoInvoker;
+
+        $author && $this->author = $author;
+        $tags && $this->tags = $tags;
+        $categories && $this->categories = $categories;
+        $comments && $this->comments = $comments;
 
         $this->getAccessProvider = new PostTemplateTags($this, $post);
         $this->setAccessProvider = new PostSetAccessProvider($this);
@@ -59,6 +63,6 @@ class Post implements PostInterface
 
     public function __toString(): string
     {
-        return $this->content; // @phpstan-ignore-line
+        return $this->getContent();
     }
 }
