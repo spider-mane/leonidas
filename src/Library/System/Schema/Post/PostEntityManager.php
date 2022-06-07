@@ -5,6 +5,8 @@ namespace Leonidas\Library\System\Schema\Post;
 use Leonidas\Contracts\System\Schema\EntityCollectionFactoryInterface;
 use Leonidas\Contracts\System\Schema\Post\PostConverterInterface;
 use Leonidas\Contracts\System\Schema\Post\PostEntityManagerInterface;
+use Leonidas\Contracts\System\Schema\Post\QueryContextResolverInterface;
+use Leonidas\Contracts\System\Schema\Post\QueryFactoryInterface;
 use Leonidas\Library\System\Schema\Abstracts\NoCommitmentsTrait;
 use Leonidas\Library\System\Schema\Abstracts\ThrowsExceptionOnWpErrorTrait;
 use WP_Post;
@@ -21,14 +23,25 @@ class PostEntityManager implements PostEntityManagerInterface
 
     protected EntityCollectionFactoryInterface $collectionFactory;
 
+    protected ?QueryFactoryInterface $queryFactory = null;
+
+    protected ?QueryContextResolverInterface $context = null;
+
     public function __construct(
         string $type,
         PostConverterInterface $postConverter,
-        EntityCollectionFactoryInterface $collectionFactory
+        EntityCollectionFactoryInterface $collectionFactory,
+        ?QueryFactoryInterface $queryFactory = null,
+        ?QueryContextResolverInterface $queryContextResolver = null
     ) {
         $this->type = $type;
         $this->entityConverter = $postConverter;
         $this->collectionFactory = $collectionFactory;
+
+        if ($queryFactory) {
+            $this->queryFactory = $queryFactory;
+            $this->context = $queryContextResolver ?? new QueryContextResolver();
+        }
     }
 
     public function select(int $id): ?object
@@ -154,11 +167,6 @@ class PostEntityManager implements PostEntityManagerInterface
         return new WP_Query($this->normalizeQueryArgs($args));
     }
 
-    protected function getCollectionFromQuery(WP_Query $query): object
-    {
-        return $this->createCollection(...$query->get_posts());
-    }
-
     protected function normalizeQueryArgs($args): array
     {
         return [
@@ -188,6 +196,23 @@ class PostEntityManager implements PostEntityManagerInterface
     protected function convertEntity(WP_Post $post): object
     {
         return $this->entityConverter->convert($post);
+    }
+
+    protected function getCollectionFromQuery(WP_Query $query): object
+    {
+        return $this->isQueryContext()
+            ? $this->createQuery($query)
+            : $this->createCollection(...$query->get_posts());
+    }
+
+    protected function isQueryContext(): bool
+    {
+        return $this->context && $this->context->isQueryContext();
+    }
+
+    protected function createQuery(WP_Query $query): object
+    {
+        return $this->queryFactory->createQuery($query);
     }
 
     protected function createCollection(WP_Post ...$posts): object

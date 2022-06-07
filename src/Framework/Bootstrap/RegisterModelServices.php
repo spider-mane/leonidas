@@ -42,9 +42,7 @@ use Leonidas\Library\System\Model\User\UserConverter;
 use Leonidas\Library\System\Model\User\UserRepository;
 use Leonidas\Library\System\Schema\Comment\CommentEntityManager;
 use Leonidas\Library\System\Schema\Post\AttachmentEntityManager;
-use Leonidas\Library\System\Schema\Post\AttachmentEntityQueryManager;
 use Leonidas\Library\System\Schema\Post\PostEntityManager;
-use Leonidas\Library\System\Schema\Post\PostEntityQueryManager;
 use Leonidas\Library\System\Schema\Term\TermEntityManager;
 use Leonidas\Library\System\Schema\User\UserEntityManager;
 use Panamax\Contracts\ServiceContainerInterface;
@@ -76,11 +74,6 @@ class RegisterModelServices implements ExtensionBootProcessInterface
         }
     }
 
-    protected function isQueryContext(): bool
-    {
-        return isset($GLOBALS['wp_query']->query);
-    }
-
     protected function post(): void
     {
         $this->container->share(PostConverter::class, fn () => new PostConverter(
@@ -88,18 +81,12 @@ class RegisterModelServices implements ExtensionBootProcessInterface
         ));
 
         $this->container->share(PostRepositoryInterface::class, function () {
-            $type = 'post';
-            $converter = $this->extension->get(PostConverter::class);
-
-            if ($this->isQueryContext()) {
-                $collection = new PostQueryFactory($converter);
-                $manager = new PostEntityQueryManager($type, $converter, $collection);
-            } else {
-                $collection = new PostCollectionFactory();
-                $manager = new PostEntityManager($type, $converter, $collection);
-            }
-
-            return new PostRepository($manager);
+            return new PostRepository(new PostEntityManager(
+                'post',
+                $converter = $this->extension->get(PostConverter::class),
+                new PostCollectionFactory(),
+                new PostQueryFactory($converter)
+            ));
         });
     }
 
@@ -110,18 +97,12 @@ class RegisterModelServices implements ExtensionBootProcessInterface
         ));
 
         $this->container->share(PageRepositoryInterface::class, function () {
-            $type = 'page';
-            $converter = $this->extension->get(PageConverter::class);
-
-            if ($this->isQueryContext()) {
-                $collection = new PageQueryFactory($converter);
-                $manager = new PostEntityQueryManager($type, $converter, $collection);
-            } else {
-                $collection = new PageCollectionFactory();
-                $manager = new PostEntityManager($type, $converter, $collection);
-            }
-
-            return new PageRepository($manager);
+            return new PageRepository(new PostEntityManager(
+                'page',
+                $converter = $this->extension->get(PageConverter::class),
+                new PageCollectionFactory(),
+                new PageQueryFactory($converter)
+            ));
         });
     }
 
@@ -132,18 +113,12 @@ class RegisterModelServices implements ExtensionBootProcessInterface
         ));
 
         $this->container->share(ImageRepositoryInterface::class, function () {
-            $type = 'attachment';
-            $converter = $this->extension->get(ImageConverter::class);
-
-            if ($this->isQueryContext()) {
-                $collection = new ImageQueryFactory($converter);
-                $manager = new AttachmentEntityQueryManager($type, $converter, $collection);
-            } else {
-                $collection = new ImageCollectionFactory();
-                $manager = new AttachmentEntityManager($type, $converter, $collection);
-            }
-
-            return new ImageRepository($manager);
+            return new ImageRepository(new AttachmentEntityManager(
+                'attachment',
+                $converter = $this->extension->get(ImageConverter::class),
+                new ImageCollectionFactory(),
+                new ImageQueryFactory($converter)
+            ));
         });
     }
 
