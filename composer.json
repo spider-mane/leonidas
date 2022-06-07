@@ -110,6 +110,7 @@
     "wp-cli/wp-cli-bundle": "@stable",
     "wpackagist-plugin/classic-editor": "@stable",
     "wpackagist-plugin/disable-gutenberg": "@stable",
+    "wpackagist-plugin/fakerpress": "@stable",
     "wpackagist-plugin/wp-native-php-sessions": "@stable",
     "wpackagist-theme/twentytwentytwo": "@stable"
   },

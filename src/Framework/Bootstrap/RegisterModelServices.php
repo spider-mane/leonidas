@@ -41,6 +41,8 @@ use Leonidas\Library\System\Model\User\UserCollectionFactory;
 use Leonidas\Library\System\Model\User\UserConverter;
 use Leonidas\Library\System\Model\User\UserRepository;
 use Leonidas\Library\System\Schema\Comment\CommentEntityManager;
+use Leonidas\Library\System\Schema\Post\AttachmentEntityManager;
+use Leonidas\Library\System\Schema\Post\AttachmentEntityQueryManager;
 use Leonidas\Library\System\Schema\Post\PostEntityManager;
 use Leonidas\Library\System\Schema\Post\PostEntityQueryManager;
 use Leonidas\Library\System\Schema\Term\TermEntityManager;
@@ -69,9 +71,14 @@ class RegisterModelServices implements ExtensionBootProcessInterface
         $this->extension = $extension;
         $this->container = $container;
 
-        foreach (static::MODELS as $type) {
-            $this->$type();
+        foreach (static::MODELS as $model) {
+            $this->$model();
         }
+    }
+
+    protected function isQueryContext(): bool
+    {
+        return isset($GLOBALS['wp_query']->query);
     }
 
     protected function post(): void
@@ -84,12 +91,12 @@ class RegisterModelServices implements ExtensionBootProcessInterface
             $type = 'post';
             $converter = $this->extension->get(PostConverter::class);
 
-            if (is_admin()) {
-                $collection = new PostCollectionFactory();
-                $manager = new PostEntityManager($type, $converter, $collection);
-            } else {
+            if ($this->isQueryContext()) {
                 $collection = new PostQueryFactory($converter);
                 $manager = new PostEntityQueryManager($type, $converter, $collection);
+            } else {
+                $collection = new PostCollectionFactory();
+                $manager = new PostEntityManager($type, $converter, $collection);
             }
 
             return new PostRepository($manager);
@@ -106,12 +113,12 @@ class RegisterModelServices implements ExtensionBootProcessInterface
             $type = 'page';
             $converter = $this->extension->get(PageConverter::class);
 
-            if (is_admin()) {
-                $collection = new PageCollectionFactory();
-                $manager = new PostEntityManager($type, $converter, $collection);
-            } else {
+            if ($this->isQueryContext()) {
                 $collection = new PageQueryFactory($converter);
                 $manager = new PostEntityQueryManager($type, $converter, $collection);
+            } else {
+                $collection = new PageCollectionFactory();
+                $manager = new PostEntityManager($type, $converter, $collection);
             }
 
             return new PageRepository($manager);
@@ -128,12 +135,12 @@ class RegisterModelServices implements ExtensionBootProcessInterface
             $type = 'attachment';
             $converter = $this->extension->get(ImageConverter::class);
 
-            if (is_admin()) {
-                $collection = new ImageCollectionFactory();
-                $manager = new PostEntityManager($type, $converter, $collection);
-            } else {
+            if ($this->isQueryContext()) {
                 $collection = new ImageQueryFactory($converter);
-                $manager = new PostEntityQueryManager($type, $converter, $collection);
+                $manager = new AttachmentEntityQueryManager($type, $converter, $collection);
+            } else {
+                $collection = new ImageCollectionFactory();
+                $manager = new AttachmentEntityManager($type, $converter, $collection);
             }
 
             return new ImageRepository($manager);

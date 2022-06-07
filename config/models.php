@@ -5,5 +5,5 @@ return [
     'post' => [
         'converter' => [],
         'repository' => [],
-    ]
+    ],
 ];

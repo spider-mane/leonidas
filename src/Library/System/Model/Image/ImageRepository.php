@@ -5,9 +5,10 @@ namespace Leonidas\Library\System\Model\Image;
 use Leonidas\Contracts\System\Model\Image\ImageCollectionInterface;
 use Leonidas\Contracts\System\Model\Image\ImageInterface;
 use Leonidas\Contracts\System\Model\Image\ImageRepositoryInterface;
-use Leonidas\Library\System\Model\Abstracts\Post\AbstractPostEntityRepository;
+use Leonidas\Contracts\System\Model\Post\PostInterface;
+use Leonidas\Library\System\Model\Abstracts\Attachment\AbstractAttachmentEntityRepository;
 
-class ImageRepository extends AbstractPostEntityRepository implements ImageRepositoryInterface
+class ImageRepository extends AbstractAttachmentEntityRepository implements ImageRepositoryInterface
 {
     public function select(int $id): ?ImageInterface
     {
@@ -17,6 +18,11 @@ class ImageRepository extends AbstractPostEntityRepository implements ImageRepos
     public function whereIds(int ...$ids): ImageCollectionInterface
     {
         return $this->manager->whereIds(...$ids);
+    }
+
+    public function whereAttachedToPost(PostInterface $post): ImageCollectionInterface
+    {
+        return $this->manager->whereAttachedToPost($post->getId());
     }
 
     public function query(array $args): ImageCollectionInterface

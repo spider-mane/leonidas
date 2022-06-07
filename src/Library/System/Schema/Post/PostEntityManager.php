@@ -164,7 +164,7 @@ class PostEntityManager implements PostEntityManagerInterface
         return [
             'post_type' => $this->type,
         ] + $args + [
-            'post_status' => ['publish', 'inherit'],
+            'post_status' => 'publish',
             'posts_per_page' => -1,
         ];
     }
@@ -178,6 +178,11 @@ class PostEntityManager implements PostEntityManagerInterface
                 ? $data['post_parent']
                 : 0,
         ] + $data;
+    }
+
+    protected function resolveFound($result): ?object
+    {
+        return $result instanceof WP_Post ? $this->convertEntity($result) : null;
     }
 
     protected function convertEntity(WP_Post $post): object

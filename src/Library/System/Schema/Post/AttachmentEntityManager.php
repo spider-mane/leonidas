@@ -2,10 +2,19 @@
 
 namespace Leonidas\Library\System\Schema\Post;
 
-use Leonidas\Contracts\System\Schema\Post\AttachmentPostEntityManagerInterface;
+use Leonidas\Contracts\System\Schema\Post\AttachmentEntityManagerInterface;
 
-class AttachmentPostEntityManager extends PostEntityManager implements AttachmentPostEntityManagerInterface
+class AttachmentEntityManager extends PostEntityManager implements AttachmentEntityManagerInterface
 {
+    public function whereAttachedToPost(int $id): object
+    {
+        return $this->query([
+            'post_parent' => $id,
+            'orderby' => 'menu_order',
+            'order' => 'ASC',
+        ]);
+    }
+
     public function update(int $id, array $data): void
     {
         $viewData = $data['view_data']
@@ -17,6 +26,13 @@ class AttachmentPostEntityManager extends PostEntityManager implements Attachmen
         if ($viewData) {
             wp_update_attachment_metadata($id, $viewData);
         }
+    }
+
+    protected function normalizeQueryArgs($args): array
+    {
+        return parent::normalizeQueryArgs($args + [
+            'post_status' => 'inherit',
+        ]);
     }
 
     protected function normalizeDataForEntry(array $data, int $id = 0): array

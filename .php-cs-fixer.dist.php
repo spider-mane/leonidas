@@ -4,9 +4,8 @@ use PhpCsFixer\Config;
 use PhpCsFixer\Finder;
 
 $finder = Finder::create()
-  ->in(['src', 'boot', 'tests', '.playground'])
-  ->exclude(['assets', 'bin', 'build', 'config', 'vendor', 'wordpress'])
-  ->append(['rector.php'])
+  ->append(['wp-config.php', 'rector.php', basename(__FILE__)])
+  ->in(['src', 'bin', 'boot', 'config', 'tests', '.playground'])
   ->name('*.php')
   ->ignoreDotFiles(true)
   ->ignoreVCS(true);
@@ -35,7 +34,7 @@ return (new Config('leonidas'))
     'fully_qualified_strict_types' => true,
     'function_typehint_space' => true,
     'global_namespace_import' => [
-      'import_classes' => true
+      'import_classes' => true,
     ],
     'lambda_not_used_import' => true,
     'method_argument_space' => [
@@ -50,7 +49,7 @@ return (new Config('leonidas'))
     'object_operator_without_whitespace' => true,
     'ordered_imports' => [
       'sort_algorithm' => 'alpha',
-      'imports_order' => ['class', 'function', 'const']
+      'imports_order' => ['class', 'function', 'const'],
     ],
     'phpdoc_scalar' => [
       'types' => ['boolean', 'callback', 'double', 'integer', 'real', 'str'],

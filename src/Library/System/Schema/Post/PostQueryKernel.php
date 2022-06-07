@@ -3,8 +3,8 @@
 namespace Leonidas\Library\System\Schema\Post;
 
 use Closure;
-use Leonidas\Contracts\System\Schema\Post\PostConversionArchiveInterface;
 use Leonidas\Contracts\System\Schema\Post\PostConverterInterface;
+use Leonidas\Library\System\Schema\Post\Abstracts\ManagesPostConversionsTrait;
 use Traversable;
 use WebTheory\Collection\Contracts\CollectionKernelInterface;
 use WebTheory\Collection\Contracts\JsonSerializerInterface;
@@ -18,11 +18,9 @@ use WP_Query;
 
 class PostQueryKernel extends CollectionKernel implements CollectionKernelInterface
 {
+    use ManagesPostConversionsTrait;
+
     protected WP_Query $query;
-
-    protected PostConverterInterface $converter;
-
-    protected PostConversionArchiveInterface $archive;
 
     public function __construct(
         WP_Query $query,
@@ -59,7 +57,7 @@ class PostQueryKernel extends CollectionKernel implements CollectionKernelInterf
 
     public function toArray(): array
     {
-        return array_map([$this->converter, 'convert'], $this->items);
+        return array_map([$this, 'getConvertedPost'], $this->items);
     }
 
     public function getIterator(): Traversable
@@ -69,6 +67,16 @@ class PostQueryKernel extends CollectionKernel implements CollectionKernelInterf
             $this->converter,
             $this->archive
         );
+    }
+
+    public function first(): object
+    {
+        return $this->getConvertedPost(parent::first());
+    }
+
+    public function last(): object
+    {
+        return $this->getConvertedPost(parent::last());
     }
 
     public function count(): int
