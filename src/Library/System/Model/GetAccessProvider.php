@@ -11,42 +11,49 @@ class GetAccessProvider implements GetAccessProviderInterface
 {
     use ConvertsCaseTrait;
 
-    protected object $instance;
+    protected Closure $enclosure;
 
     protected array $getters = [];
 
     public function __construct(object $instance, array $getters = [])
     {
-        $this->instance = $instance;
+        $this->enclosure = fn () => $instance;
         $this->getters = $getters;
         $this->caseConverter = new CaseConverter();
     }
 
     public function get(string $property)
     {
+        $instance = $this->releaseInstance();
+
         if ($getter = $this->getters[$property] ?? false) {
             return $getter instanceof Closure
                 ? $getter()
-                : $this->instance->$getter();
+                : $instance->$getter();
         }
 
         $getter = $this->prefixPascal('get', $property);
 
-        if (is_callable([$this->instance, $getter])) {
+        if (is_callable([$instance, $getter])) {
             $this->getters[$property] = $getter;
 
-            return $this->instance->$getter();
+            return $instance->$getter();
         }
 
-        $this->triggerNotice($property);
+        $this->triggerNotice($property, $instance);
     }
 
-    protected function triggerNotice(string $property): void
+    protected function releaseInstance(): object
+    {
+        return ($this->enclosure)();
+    }
+
+    protected function triggerNotice(string $property, object $instance): void
     {
         trigger_error(
             sprintf(
                 "Undefined property: %s::%s",
-                get_class($this->instance),
+                get_class($instance),
                 $property
             ),
             E_USER_NOTICE

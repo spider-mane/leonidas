@@ -11,33 +11,40 @@ class SetAccessProvider implements SetAccessProviderInterface
 {
     use ConvertsCaseTrait;
 
-    protected object $instance;
+    protected Closure $enclosure;
 
     protected array $setters = [];
 
     public function __construct(object $instance, array $setters = [])
     {
-        $this->instance = $instance;
+        $this->enclosure = fn () => $instance;
         $this->setters = $setters;
         $this->caseConverter = new CaseConverter();
     }
 
     public function set(string $property, $value): void
     {
+        $instance = $this->releaseInstance();
+
         if ($setter = $this->setters[$property] ?? null) {
             $setter instanceof Closure
                 ? $setter($value)
-                : $this->instance->$setter($value);
+                : $instance->$setter($value);
 
             return;
         }
 
         $setter = $this->prefixPascal('set', $property);
 
-        if (is_callable([$this->instance, $setter])) {
+        if (is_callable([$instance, $setter])) {
             $this->setters[$property] = $setter;
 
-            $this->instance->$setter($value);
+            $instance->$setter($value);
         }
+    }
+
+    protected function releaseInstance(): object
+    {
+        return ($this->enclosure)();
     }
 }

@@ -31,13 +31,6 @@ class AutoInvoker implements AutoInvokerInterface
         $this->aliases = $aliases;
     }
 
-    public function __debugInfo(): AutoInvoker
-    {
-        unset($this->container);
-
-        return $this;
-    }
-
     public function invoke($function)
     {
         if ($this->isMethod($function)) {
