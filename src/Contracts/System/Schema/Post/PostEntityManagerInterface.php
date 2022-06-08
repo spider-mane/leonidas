@@ -23,4 +23,8 @@ interface PostEntityManagerInterface extends SoftDeletingEntityManagerInterface
     public function whereTaxQuery(array $args): object;
 
     public function whereTerm(string $taxonomy, int $termId): object;
+
+    public function whereMetaQuery(array $args): object;
+
+    public function whereMeta(string $key, string $operator, $value): object;
 }

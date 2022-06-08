@@ -12,7 +12,7 @@ trait ManagesPostConversionsTrait
 {
     protected PostConverterInterface $converter;
 
-    protected PostConversionArchiveInterface $archive;
+    protected PostConversionArchiveInterface $conversionArchive;
 
     protected function resolveArchive(?PostConversionArchiveInterface $archive): PostConversionArchiveInterface
     {
@@ -32,21 +32,31 @@ trait ManagesPostConversionsTrait
         return new PostConversionArchive();
     }
 
-    protected function getConvertedPost(WP_Post $post): object
+    protected function convertPosts(WP_Post ...$posts): array
     {
-        if (!$this->archive->hasRecordOf($post)) {
-            $this->archive->archive($post, $this->converter->convert($post));
-        }
-
-        return $this->archive->getConversion($post);
+        return array_map([$this, 'getConvertedPost'], $posts);
     }
 
-    protected function getRevertedPost(object $post): WP_Post
+    protected function getConvertedPost(WP_Post $post): object
     {
-        if (!$this->archive->hasRecordOf($post)) {
-            $this->archive->archive($post, $this->converter->revert($post));
+        if (!$this->conversionArchive->hasRecordOf($post)) {
+            $this->conversionArchive->archive($post, $this->converter->convert($post));
         }
 
-        return $this->archive->getReversion($post);
+        return $this->conversionArchive->getConversion($post);
+    }
+
+    protected function revertPosts(object ...$models): array
+    {
+        return array_map([$this, 'getRevertedPost'], $models);
+    }
+
+    protected function getRevertedPost(object $model): WP_Post
+    {
+        if (!$this->conversionArchive->hasRecordOf($model)) {
+            $this->conversionArchive->archive($model, $this->converter->revert($model));
+        }
+
+        return $this->conversionArchive->getReversion($model);
     }
 }

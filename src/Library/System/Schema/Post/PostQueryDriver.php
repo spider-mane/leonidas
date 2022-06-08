@@ -9,7 +9,6 @@ use WebTheory\Collection\Access\Abstracts\AbstractArrayDriver;
 use WebTheory\Collection\Access\Abstracts\RejectsDuplicateObjectsTrait;
 use WebTheory\Collection\Contracts\ArrayDriverInterface;
 use WebTheory\Collection\Contracts\ObjectComparatorInterface;
-use WP_Post;
 use WP_Query;
 
 class PostQueryDriver extends AbstractArrayDriver implements ArrayDriverInterface
@@ -19,8 +18,6 @@ class PostQueryDriver extends AbstractArrayDriver implements ArrayDriverInterfac
 
     protected WP_Query $query;
 
-    protected ObjectComparatorInterface $comparator;
-
     public function __construct(
         WP_Query $query,
         PostConverterInterface $converter,
@@ -29,45 +26,49 @@ class PostQueryDriver extends AbstractArrayDriver implements ArrayDriverInterfac
     ) {
         $this->query = $query;
         $this->converter = $converter;
-        $this->comparator = $comparator;
-        $this->archive = $this->resolveArchive($archive);
+        $this->objectComparator = $comparator;
+        $this->conversionArchive = $archive ?? new PostConversionArchive();
     }
 
-    public function fetch(array $array, $item)
+    protected function append(array &$array, object $item): void
     {
-        return $this->getConvertedPost(parent::fetch($array, $item));
-    }
-
-    protected function append(array &$array, object $item, $offset = null): void
-    {
-        $array[] = $this->getRevertedPost($item);
+        $array[] = $item;
+        $this->query->posts[] = $this->getRevertedPost($item);
 
         $this->query->post_count++;
     }
 
     protected function maybeRemoveItem(array &$array, $item): bool
     {
+        $object = $array[$item] ?? null;
         $removed = parent::maybeRemoveItem($array, $item);
 
         if ($removed) {
-            $this->query->post_count--;
+            $this->removeCorrespondingQueryPost($object);
         }
 
         return $removed;
     }
 
-    protected function arrayContainsObject(array $array, object $object): bool
+    protected function deleteObjectIfLocated(array &$array, object $object): bool
     {
-        return parent::arrayContainsObject(
-            $array,
-            $this->getResolvedObject($object)
-        );
+        $removed = parent::deleteObjectIfLocated($array, $object);
+
+        if ($removed) {
+            $this->removeCorrespondingQueryPost($object);
+        }
+
+        return $removed;
     }
 
-    protected function getResolvedObject(object $object): object
+    protected function removeCorrespondingQueryPost(object $item): void
     {
-        return !$object instanceof WP_Post
-            ? $this->getRevertedPost($object)
-            : $object;
+        $post = $this->getRevertedPost($item);
+        $index = array_search($post, $this->query->posts);
+
+        if (false !== $index) {
+            unset($this->query->posts[$index]);
+            $this->query->post_count--;
+        }
     }
 }

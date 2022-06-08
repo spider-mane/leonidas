@@ -22,7 +22,7 @@ class PostQueryIterator implements Iterator, Countable
     ) {
         $this->query = $query;
         $this->converter = $converter;
-        $this->archive = $archive;
+        $this->conversionArchive = $archive;
     }
 
     protected function loopStarted(): bool

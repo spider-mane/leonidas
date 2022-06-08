@@ -6,10 +6,17 @@ use Closure;
 use Leonidas\Contracts\System\Schema\Post\PostConverterInterface;
 use Leonidas\Library\System\Schema\Post\Abstracts\ManagesPostConversionsTrait;
 use Traversable;
+use WebTheory\Collection\Comparison\CollectionComparator;
+use WebTheory\Collection\Contracts\ArrayDriverInterface;
 use WebTheory\Collection\Contracts\CollectionKernelInterface;
 use WebTheory\Collection\Contracts\JsonSerializerInterface;
 use WebTheory\Collection\Contracts\ObjectComparatorInterface;
 use WebTheory\Collection\Contracts\OperationProviderInterface;
+use WebTheory\Collection\Fusion\Collection\FusionSelection;
+use WebTheory\Collection\Fusion\Contrast;
+use WebTheory\Collection\Fusion\Diff;
+use WebTheory\Collection\Fusion\Intersection;
+use WebTheory\Collection\Fusion\Merger;
 use WebTheory\Collection\Json\BasicJsonSerializer;
 use WebTheory\Collection\Kernel\CollectionKernel;
 use WebTheory\Collection\Query\Operation\Operations;
@@ -22,61 +29,48 @@ class PostQueryKernel extends CollectionKernel implements CollectionKernelInterf
 
     protected WP_Query $query;
 
+    protected ObjectComparatorInterface $objectComparator;
+
     public function __construct(
         WP_Query $query,
         PostConverterInterface $converter,
-        ObjectComparatorInterface $comparator,
+        ObjectComparatorInterface $objectComparator,
         Closure $generator,
         array $accessors = [],
         ?JsonSerializerInterface $jsonSerializer = null,
         ?OperationProviderInterface $operationProvider = null
     ) {
         $this->query = $query;
-        $this->items = &$query->posts;
         $this->generator = $generator;
         $this->converter = $converter;
+        $this->objectComparator = $objectComparator;
+
+        $this->conversionArchive = new PostConversionArchive();
+        $this->propertyResolver = new PropertyResolver($accessors);
+        $this->collectionComparator = new CollectionComparator($objectComparator);
 
         $this->jsonSerializer = $jsonSerializer ?? new BasicJsonSerializer();
         $this->operationProvider = $operationProvider ?? new Operations();
 
-        $this->archive = new PostConversionArchive();
-        $this->propertyResolver = new PropertyResolver($accessors);
+        $this->driver = $this->createQueryDriver($query);
 
-        $this->driver = new PostQueryDriver(
-            $query,
-            $converter,
-            $comparator,
-            $this->archive,
-        );
+        $this->fusions = new FusionSelection([
+            'contrast' => new Contrast($objectComparator),
+            'diff' => new Diff($objectComparator),
+            'intersect' => new Intersection($objectComparator),
+            'merge' => new Merger(),
+        ]);
+
+        $this->items = $this->convertPosts(...$query->posts);
     }
 
-    public function values(): array
+    public function __debugInfo()
     {
-        return array_values($this->toArray());
-    }
-
-    public function toArray(): array
-    {
-        return array_map([$this, 'getConvertedPost'], $this->items);
-    }
-
-    public function getIterator(): Traversable
-    {
-        return new PostQueryIterator(
-            $this->query,
-            $this->converter,
-            $this->archive
-        );
-    }
-
-    public function first(): object
-    {
-        return $this->getConvertedPost(parent::first());
-    }
-
-    public function last(): object
-    {
-        return $this->getConvertedPost(parent::last());
+        return [
+            'post' => $this->query->post,
+            'posts' => $this->query->posts,
+            'post_count' => $this->query->post_count,
+        ];
     }
 
     public function count(): int
@@ -84,22 +78,40 @@ class PostQueryKernel extends CollectionKernel implements CollectionKernelInterf
         return $this->query->post_count;
     }
 
-    protected function spawnWith(CollectionKernel $clone): object
+    public function getIterator(): Traversable
     {
-        /** @var self $clone */
-        $clone->query = clone $this->query;
-        $clone->query->posts = $clone->items;
-        $clone->query->post_count = $clone->count();
-        $clone->items = &$clone->query->posts;
+        return new PostQueryIterator(
+            $this->query,
+            $this->converter,
+            $this->conversionArchive
+        );
+    }
 
-        return parent::spawnWith($clone);
+    protected function createQueryDriver(WP_Query $query): ArrayDriverInterface
+    {
+        return new PostQueryDriver(
+            $query,
+            $this->converter,
+            $this->objectComparator,
+            $this->conversionArchive,
+        );
     }
 
     protected function spawnFrom(array $items): object
     {
         $clone = clone $this;
 
-        $clone->items = $items;
+        $clone->query = clone $this->query;
+        $clone->query->posts = [];
+        $clone->query->post_count = 0;
+
+        $clone->driver = $this->createQueryDriver($clone->query);
+
+        $clone->items = [];
+        $clone->collect($items);
+
+        $clone->query->post = reset($clone->query->posts);
+        $clone->query->current_post = -1;
 
         return $this->spawnWith($clone);
     }

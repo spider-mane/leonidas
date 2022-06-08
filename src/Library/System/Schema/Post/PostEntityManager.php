@@ -25,14 +25,14 @@ class PostEntityManager implements PostEntityManagerInterface
 
     protected ?QueryFactoryInterface $queryFactory = null;
 
-    protected ?QueryContextResolverInterface $context = null;
+    protected QueryContextResolverInterface $contextResolver;
 
     public function __construct(
         string $type,
         PostConverterInterface $postConverter,
         EntityCollectionFactoryInterface $collectionFactory,
         ?QueryFactoryInterface $queryFactory = null,
-        ?QueryContextResolverInterface $queryContextResolver = null
+        ?QueryContextResolverInterface $contextResolver = null
     ) {
         $this->type = $type;
         $this->entityConverter = $postConverter;
@@ -40,7 +40,7 @@ class PostEntityManager implements PostEntityManagerInterface
 
         if ($queryFactory) {
             $this->queryFactory = $queryFactory;
-            $this->context = $queryContextResolver ?? new QueryContextResolver();
+            $this->contextResolver = $contextResolver ?? new QueryContextResolver();
         }
     }
 
@@ -102,6 +102,23 @@ class PostEntityManager implements PostEntityManagerInterface
                     'terms' => $termId,
                 ],
             ],
+        ]);
+    }
+
+    /**
+     * @link https://developer.wordpress.org/reference/classes/wp_meta_query/__construct/
+     */
+    public function whereMetaQuery(array $args): object
+    {
+        return $this->query(['meta_query' => $args]);
+    }
+
+    public function whereMeta(string $key, string $operator, $value): object
+    {
+        return $this->query([
+            'meta_key' => $key,
+            'meta_value' => $value,
+            'meta_compare' => $operator,
         ]);
     }
 
@@ -207,7 +224,8 @@ class PostEntityManager implements PostEntityManagerInterface
 
     protected function isQueryContext(): bool
     {
-        return $this->context && $this->context->isQueryContext();
+        return isset($this->queryFactory)
+            && $this->contextResolver->isQueryContext();
     }
 
     protected function createQuery(WP_Query $query): object

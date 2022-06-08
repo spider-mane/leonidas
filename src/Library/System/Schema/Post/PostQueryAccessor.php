@@ -22,7 +22,7 @@ class PostQueryAccessor implements ArrayAccess, Countable
     ) {
         $this->query = $query;
         $this->converter = $converter;
-        $this->archive = $this->resolveArchive($archive);
+        $this->conversionArchive = $archive ?? new PostConversionArchive();
     }
 
     public function offsetExists($offset): bool
