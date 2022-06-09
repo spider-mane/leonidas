@@ -15,13 +15,14 @@ return [
         'autoescape' => false,
     ],
 
-    'functions' => [
-        'do_meta_boxes' => 'do_meta_boxes',
-        'do_settings_sections' => 'do_settings_sections',
-        'settings_errors' => 'settings_errors',
-        'settings_fields' => 'settings_fields',
-        'submit_button' => 'submit_button',
+    'extensions' => [
+        \Leonidas\Library\Core\View\Twig\AdminFunctionsExtension::class,
+        \Leonidas\Library\Core\View\Twig\PrettyDebugExtension::class,
+        \Leonidas\Library\Core\View\Twig\SkyHooksExtension::class,
+        \Leonidas\Library\Core\View\Twig\StringHelperExtension::class,
     ],
+
+    'functions' => [],
 
     'filters' => [],
 

@@ -40,7 +40,7 @@ class TwigProvider extends AbstractServiceFactory implements ServiceFactoryInter
         $env = new Environment($loader, $args['options']);
 
         foreach (static::ADDITIONS as $addition) {
-            if (!empty($values = $args[$addition])) {
+            if (!empty($values = $args[$addition] ?? [])) {
                 $this->{$this->prefixPascal('add', $addition)}($env, $values);
             }
         }
