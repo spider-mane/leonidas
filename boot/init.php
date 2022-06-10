@@ -12,13 +12,9 @@ $root = dirname(__DIR__, 1);
  *
  *
  */
-if (!file_exists($autoload = "$root/vendor/autoload.php")) {
-    throw new RuntimeException(
-        "Autoloader not found. Don't forget to run `composer install` in the console."
-    );
+if (file_exists($autoload = "$root/vendor/autoload.php")) {
+    require_once $autoload;
 }
-
-require_once $autoload;
 
 /**
  *==========================================================================
