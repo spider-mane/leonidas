@@ -129,7 +129,7 @@
     }
   },
   "bin": [
-    "bin/hoplite"
+    "hoplite"
   ],
   "scripts": {
     "analyze": "vendor/bin/phpstan analyze",
