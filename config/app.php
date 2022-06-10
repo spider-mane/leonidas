@@ -1,20 +1,20 @@
 <?php
 
-use function Leonidas\Plugin\header;
+use function Leonidas\Plugin\plugin_header;
 
 return [
 
-    'name' => header('name'),
+    'name' => plugin_header('name'),
 
-    'version' => header('version'),
+    'version' => plugin_header('version'),
 
-    'slug' => header('textdomain'),
+    'slug' => plugin_header('textdomain'),
 
     'prefix' => 'leon',
 
     'type' => 'plugin',
 
-    'description' => header('description'),
+    'description' => plugin_header('description'),
 
     'dev' => defined('LEONIDAS_DEVELOPMENT'),
 
