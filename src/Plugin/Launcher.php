@@ -2,152 +2,36 @@
 
 namespace Leonidas\Plugin;
 
-use Leonidas\Contracts\Extension\ExtensionBootProcessInterface;
-use Leonidas\Contracts\Extension\WpExtensionInterface;
-use Leonidas\Framework\Exception\InvalidCallToPluginMethodException;
-use Leonidas\Framework\ModuleInitializer;
+use Leonidas\Contracts\Extension\ExtensionLoaderInterface;
+use Leonidas\Framework\ExtensionLoader;
 use Leonidas\Framework\Plugin\Plugin;
-use Leonidas\Framework\WpExtension;
-use Leonidas\Library\Core\Access\_Facade;
-use Panamax\Contracts\BootableProviderContainerInterface;
-use Panamax\Contracts\ContainerAdapterInterface;
-use Panamax\Contracts\ProviderContainerInterface;
-use Panamax\Contracts\ServiceContainerInterface;
-use Panamax\Contracts\ServiceCreatorInterface;
-use WebTheory\Config\Config;
-use WebTheory\Config\Interfaces\ConfigInterface;
 
 final class Launcher
 {
-    private string $file;
+    private ExtensionLoaderInterface $loader;
 
-    private string $path;
+    private static self $instance;
 
-    private string $url;
-
-    private ConfigInterface $config;
-
-    private ServiceContainerInterface $container;
-
-    private WpExtensionInterface $extension;
-
-    private static Launcher $instance;
-
-    private function __construct(string $file, string $path, string $url)
+    private function __construct(string $path, string $url)
     {
-        $this->file = $file;
-        $this->path = $path;
-        $this->url = $url;
-        $this->config = $this->defineConfig();
-        $this->container = $this->defineContainer();
-        $this->extension = $this->defineExtension();
-    }
-
-    protected function defineConfig(): ConfigInterface
-    {
-        return new Config($this->path . '/config');
-    }
-
-    private function defineContainer(): ServiceContainerInterface
-    {
-        return require $this->path . '/boot/container.php';
-    }
-
-    private function defineExtension(): WpExtensionInterface
-    {
-        $app = $this->config->get('app');
-
-        if ($this->container instanceof ContainerAdapterInterface) {
-            $container = $this->container->getAdaptedContainer();
-        }
-
-        return WpExtension::create([
-            'name' => $app['name'],
-            'version' => $app['version'],
-            'slug' => $app['slug'],
-            'prefix' => $app['prefix'],
-            'description' => $app['description'],
-            'file' => $this->file,
-            'path' => $this->path,
-            'url' => $this->url,
-            'type' => $app['type'],
-            'container' => $container ?? $this->container,
-            'dev' => $app['dev'],
-        ]);
+        $this->loader = new ExtensionLoader($path, $url);
     }
 
     private function bootstrap(): void
     {
-        $this
-            ->bindServicesToContainer()
-            ->bindContainerToBaseFacade()
-            ->initializeModules()
-            ->loadBootProcesses()
-            ->maybeBootProviders()
-            ->launchLeonidas()
-            ->declareExtensionLoaded();
+        $this->launch()->loadExtension()->declareExtensionLoaded();
     }
 
-    private function bindServicesToContainer(): self
+    private function launch(): self
     {
-        $container = $this->container;
-
-        $container->share('root', $this->path);
-        $container->share('config', $this->config);
-
-        if ($container instanceof ProviderContainerInterface) {
-            $container->addServiceProviders(
-                $this->config->get('app.providers', [])
-            );
-        }
-
-        if ($container instanceof ServiceCreatorInterface) {
-            $container->createServices($this->config->get('app.services', []));
-        }
+        $this->loader->bootstrap();
 
         return $this;
     }
 
-    private function bindContainerToBaseFacade(): self
+    private function loadExtension(): self
     {
-        _Facade::_setFacadeContainer($this->container);
-
-        return $this;
-    }
-
-    private function initializeModules(): self
-    {
-        (new ModuleInitializer(
-            $this->extension,
-            $this->config->get('app.modules', [])
-        ))->init();
-
-        return $this;
-    }
-
-    private function maybeBootProviders(): self
-    {
-        if ($this->container instanceof BootableProviderContainerInterface) {
-            $this->container->bootServiceProviders();
-        }
-
-        return $this;
-    }
-
-    private function loadBootProcesses(): self
-    {
-        foreach ($this->config->get('app.bootstrap', []) as $bootProcess) {
-            /** @var ExtensionBootProcessInterface $bootProcess */
-            $bootProcess = new $bootProcess();
-            $bootProcess->boot($this->extension, $this->container);
-        }
-
-        return $this;
-    }
-
-    private function launchLeonidas(): self
-    {
-        Leonidas::launch($this->extension);
+        Leonidas::init($this->loader->getExtension());
 
         return $this;
     }
@@ -159,36 +43,20 @@ final class Launcher
 
     public static function init(string $base): void
     {
-        if (!self::isLoaded()) {
-            self::reallyInit($base);
-        } else {
-            throw self::invalidCallException(__METHOD__);
-        }
+        !isset(self::$instance)
+            ? self::load($base)
+            : self::$instance->loader->error();
     }
 
-    private static function isLoaded(): bool
-    {
-        return isset(self::$instance);
-    }
-
-    private static function reallyInit(string $base): void
+    private static function load(string $base): void
     {
         define('LEONIDAS_PLUGIN_HEADERS', Plugin::headers($base));
 
         self::$instance = new self(
-            $base,
             Plugin::path($base),
             Plugin::url($base),
         );
 
         self::$instance->bootstrap();
-    }
-
-    private static function invalidCallException(callable $method): InvalidCallToPluginMethodException
-    {
-        return new InvalidCallToPluginMethodException(
-            self::$instance->extension->getName(),
-            $method
-        );
     }
 }

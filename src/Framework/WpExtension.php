@@ -3,7 +3,6 @@
 namespace Leonidas\Framework;
 
 use Leonidas\Contracts\Extension\WpExtensionInterface;
-use Leonidas\Enum\Extension\ExtensionType;
 use Psr\Container\ContainerInterface;
 
 class WpExtension implements WpExtensionInterface
@@ -17,8 +16,6 @@ class WpExtension implements WpExtensionInterface
     protected string $prefix;
 
     protected string $description;
-
-    protected string $file;
 
     protected string $path;
 
@@ -36,7 +33,6 @@ class WpExtension implements WpExtensionInterface
         string $slug,
         string $prefix,
         string $description,
-        string $file,
         string $path,
         string $url,
         string $type,
@@ -48,7 +44,6 @@ class WpExtension implements WpExtensionInterface
         $this->slug = $slug;
         $this->prefix = $prefix;
         $this->description = $description;
-        $this->file = $file;
         $this->path = $path;
         $this->url = $url;
         $this->type = $type;
@@ -213,13 +208,12 @@ class WpExtension implements WpExtensionInterface
         return new static(
             $args['name'],
             $args['version'],
-            $args['slug'] ?? $args['textdomain'],
+            $args['textdomain'] ?? $args['slug'],
             $args['prefix'],
             $args['description'],
-            $args['file'],
             $args['path'],
             $args['url'],
-            ExtensionType::from($args['type']),
+            $args['type'],
             $args['container'],
             $args['dev'] ?? false,
         );

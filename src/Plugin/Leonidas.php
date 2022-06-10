@@ -3,7 +3,7 @@
 namespace Leonidas\Plugin;
 
 use Leonidas\Contracts\Extension\WpExtensionInterface;
-use Leonidas\Framework\Exception\InvalidCallToPluginMethodException;
+use Leonidas\Framework\Exception\PluginInitiationException;
 
 final class Leonidas
 {
@@ -16,18 +16,13 @@ final class Leonidas
         $this->base = $base;
     }
 
-    public static function launch(WpExtensionInterface $base): void
+    public static function init(WpExtensionInterface $base): void
     {
-        if (!self::isLoaded()) {
+        if (!isset(self::$instance)) {
             self::create($base);
         } else {
             self::throwInvalidCallException(__METHOD__);
         }
-    }
-
-    private static function isLoaded(): bool
-    {
-        return isset(self::$instance) && (self::$instance instanceof self);
     }
 
     private static function create(WpExtensionInterface $base): void
@@ -35,9 +30,9 @@ final class Leonidas
         self::$instance = new self($base);
     }
 
-    private static function throwInvalidCallException(callable $method): void
+    private static function throwInvalidCallException(string $method): void
     {
-        throw new InvalidCallToPluginMethodException(
+        throw new PluginInitiationException(
             self::$instance->base->getName(),
             $method
         );

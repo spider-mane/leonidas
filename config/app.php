@@ -44,7 +44,10 @@ return [
 
     'bootstrap' => [
 
-        # Framework
+        \Leonidas\Framework\Bootstrap\BindContainerToFacades::class,
         \Leonidas\Framework\Bootstrap\RegisterModelServices::class,
+
     ],
+
+    'facade' => \Leonidas\Library\Core\Access\_Facade::class,
 ];
