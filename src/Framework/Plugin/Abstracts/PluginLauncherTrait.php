@@ -13,14 +13,10 @@ trait PluginLauncherTrait
 
     public static function init(string $base): void
     {
-        if (!self::isLoaded()) {
-            self::reallyInit($base);
-        } else {
-            throw self::invalidCallException(__METHOD__);
-        }
+        !self::isLoaded() ? self::load($base) : self::error(__METHOD__);
     }
 
-    private static function reallyInit(string $base): void
+    private static function load(string $base): void
     {
         define(static::headers(), Plugin::headers($base));
 
@@ -32,7 +28,7 @@ trait PluginLauncherTrait
         self::$instance->bootstrap();
     }
 
-    private static function invalidCallException(callable $method): PluginInitiationException
+    private static function error(string $method): PluginInitiationException
     {
         return new PluginInitiationException(
             self::$instance->extension->getName(),
@@ -42,6 +38,6 @@ trait PluginLauncherTrait
 
     private static function headers(): string
     {
-        throw new RuntimeException(static::class . ' must implement headers()');
+        throw new RuntimeException(static::class . ' must implement headers method');
     }
 }
