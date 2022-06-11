@@ -19,7 +19,7 @@ final class Launcher
 
     private function bootstrap(): void
     {
-        $this->launch()->loadExtension()->declareExtensionLoaded();
+        $this->launch()->initPlugin()->declarePluginLoaded();
     }
 
     private function launch(): self
@@ -29,16 +29,16 @@ final class Launcher
         return $this;
     }
 
-    private function loadExtension(): self
+    private function initPlugin(): self
     {
         Leonidas::init($this->loader->getExtension());
 
         return $this;
     }
 
-    private function declareExtensionLoaded(): void
+    private function declarePluginLoaded(): void
     {
-        do_action('leonidas_loaded');
+        do_action('leonidas/loaded');
     }
 
     public static function init(string $base): void
