@@ -4,9 +4,9 @@ namespace Leonidas\Framework\Provider\League;
 
 class TwigFlexViewServiceProvider extends TwigViewServiceProvider
 {
-    protected function factoryArgs(): ?array
+    protected function args(): ?array
     {
-        $config = $this->getConfig('twig');
+        $config = $this->getConfig('twig', []);
 
         return array_merge(
             $config['@global'] ?? [],

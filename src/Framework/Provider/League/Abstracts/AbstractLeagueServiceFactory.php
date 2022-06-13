@@ -1,6 +1,6 @@
 <?php
 
-namespace Leonidas\Framework\Provider\League;
+namespace Leonidas\Framework\Provider\League\Abstracts;
 
 use Panamax\Traits\UsesServiceFactoryTrait;
 

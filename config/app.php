@@ -23,7 +23,7 @@ return [
         # Framework
 
         # Plugin
-        \Leonidas\Plugin\Module\AdminAssets::class,
+        Leonidas\Plugin\Module\AdminAssets::class,
 
     ],
 
@@ -32,11 +32,11 @@ return [
     'providers' => [
 
         # Framework
-        \Leonidas\Framework\Provider\League\AdminNoticeRepositoryServiceProvider::class,
-        \Leonidas\Framework\Provider\League\AutoInvokerServiceProvider::class,
-        \Leonidas\Framework\Provider\League\GuzzleServerRequestServiceProvider::class,
-        \Leonidas\Framework\Provider\League\TransientsChannelServiceProvider::class,
-        \Leonidas\Framework\Provider\League\TwigViewServiceProvider::class,
+        Leonidas\Framework\Provider\League\AdminNoticeRepositoryServiceProvider::class,
+        Leonidas\Framework\Provider\League\AutoInvokerServiceProvider::class,
+        Leonidas\Framework\Provider\League\GuzzleServerRequestServiceProvider::class,
+        Leonidas\Framework\Provider\League\TransientsChannelServiceProvider::class,
+        Leonidas\Framework\Provider\League\TwigViewServiceProvider::class,
 
         # Plugin
 
@@ -44,10 +44,10 @@ return [
 
     'bootstrap' => [
 
-        \Leonidas\Framework\Bootstrap\BindContainerToFacades::class,
-        \Leonidas\Framework\Bootstrap\RegisterModelServices::class,
+        Leonidas\Framework\Bootstrap\BindContainerToFacades::class,
+        Leonidas\Framework\Bootstrap\RegisterModelServices::class,
 
     ],
 
-    'facade' => \Leonidas\Library\Core\Access\_Facade::class,
+    'facade' => Leonidas\Library\Core\Access\_Facade::class,
 ];

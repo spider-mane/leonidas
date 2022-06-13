@@ -2,6 +2,8 @@
 
 use WebTheory\Config\Interfaces\ConfigInterface;
 
+$root = dirname(__DIR__, 2);
+
 ob_start();
 
 /** @var ConfigInterface $config */
@@ -35,6 +37,7 @@ define('SAVEQUERIES', true);
  */
 define('AUTOMATIC_UPDATER_DISABLED', true);
 define('WP_AUTO_UPDATE_CORE', false);
+define('DISALLOW_FILE_MODS', true);
 
 /**
  *==========================================================================

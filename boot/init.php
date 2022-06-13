@@ -37,7 +37,7 @@ array_map(function ($path) use ($root) {
  * launcher.
  *
  */
-array_map(function ($path) use ($root) {
+array_map(function ($path) {
     require __DIR__ . "/{$path}.php";
 }, ['constants',]);
 
@@ -53,7 +53,7 @@ if (defined('LEONIDAS_DEVELOPMENT') && LEONIDAS_DEVELOPMENT) {
 
     // development bootstrapping
     if (file_exists($development = __DIR__ . '/development')) {
-        array_map(function ($path) use ($development, $root) {
+        array_map(function ($path) use ($development) {
             require "{$development}/{$path}.php";
         }, ['loaded']);
     }

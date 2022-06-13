@@ -16,10 +16,10 @@ return [
     ],
 
     'extensions' => [
-        \Leonidas\Library\Core\View\Twig\AdminFunctionsExtension::class,
-        \Leonidas\Library\Core\View\Twig\PrettyDebugExtension::class,
-        \Leonidas\Library\Core\View\Twig\SkyHooksExtension::class,
-        \Leonidas\Library\Core\View\Twig\StringHelperExtension::class,
+        Leonidas\Library\Core\View\Twig\AdminFunctionsExtension::class,
+        Leonidas\Library\Core\View\Twig\PrettyDebugExtension::class,
+        Leonidas\Library\Core\View\Twig\SkyHooksExtension::class,
+        Leonidas\Library\Core\View\Twig\StringHelperExtension::class,
     ],
 
     'functions' => [],

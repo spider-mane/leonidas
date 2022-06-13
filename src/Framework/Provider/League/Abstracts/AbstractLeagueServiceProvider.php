@@ -1,6 +1,6 @@
 <?php
 
-namespace Leonidas\Framework\Provider\League;
+namespace Leonidas\Framework\Provider\League\Abstracts;
 
 use Leonidas\Framework\Provider\Abstracts\ExtensionAwareTrait;
 use Panamax\Providers\League\AbstractLeagueServiceProvider as PanamaxAbstractLeagueServiceProvider;

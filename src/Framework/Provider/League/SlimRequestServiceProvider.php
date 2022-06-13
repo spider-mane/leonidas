@@ -2,23 +2,24 @@
 
 namespace Leonidas\Framework\Provider\League;
 
+use Leonidas\Framework\Provider\League\Abstracts\AbstractLeagueServiceFactory;
 use Leonidas\Framework\Provider\SlimRequestProvider;
 use Panamax\Contracts\ServiceFactoryInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 class SlimRequestServiceProvider extends AbstractLeagueServiceFactory
 {
-    protected function serviceId(): string
+    protected function id(): string
     {
-        return ServerRequestInterface::class;
+        return 'server_request';
     }
 
-    protected function serviceTags(): array
+    protected function types(): array
     {
-        return ['server_request'];
+        return [ServerRequestInterface::class];
     }
 
-    protected function serviceFactory(): ServiceFactoryInterface
+    protected function factory(): ServiceFactoryInterface
     {
         return new SlimRequestProvider();
     }

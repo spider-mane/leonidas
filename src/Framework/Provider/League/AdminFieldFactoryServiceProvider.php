@@ -4,17 +4,22 @@ namespace Leonidas\Framework\Provider\League;
 
 class AdminFieldFactoryServiceProvider extends FieldFactoryServiceProvider
 {
-    protected function serviceId(): string
+    protected function id(): string
     {
-        return 'admin_field_factory';
+        return 'fields.admin';
     }
 
-    protected function serviceTags(): array
+    protected function types(): array
     {
         return [];
     }
 
-    protected function factoryArgs(): ?array
+    protected function aliases(): array
+    {
+        return [];
+    }
+
+    protected function args(): ?array
     {
         return $this->getConfig('admin.fields');
     }

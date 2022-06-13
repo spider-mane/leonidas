@@ -2,30 +2,30 @@
 
 namespace Leonidas\Framework\Provider\League;
 
-use League\Container\ServiceProvider\ServiceProviderInterface;
 use Leonidas\Contracts\Util\AutoInvokerInterface;
 use Leonidas\Framework\Provider\AutoInvokerProvider;
+use Leonidas\Framework\Provider\League\Abstracts\AbstractLeagueServiceFactory;
 use Panamax\Contracts\ServiceFactoryInterface;
 
-class AutoInvokerServiceProvider extends AbstractLeagueServiceFactory implements ServiceProviderInterface
+class AutoInvokerServiceProvider extends AbstractLeagueServiceFactory
 {
-    protected function serviceId(): string
+    protected function id(): string
     {
-        return AutoInvokerInterface::class;
+        return 'invoker';
     }
 
-    protected function serviceTags(): array
+    protected function types(): array
     {
-        return ['auto_invoker', 'autowire'];
+        return [AutoInvokerInterface::class];
     }
 
-    protected function serviceFactory(): ServiceFactoryInterface
+    protected function factory(): ServiceFactoryInterface
     {
         return new AutoInvokerProvider();
     }
 
-    protected function factoryArgs(): ?array
+    protected function args(): ?array
     {
-        return $this->getConfig('container.aliases', []);
+        return $this->getConfig('container.alias', []);
     }
 }

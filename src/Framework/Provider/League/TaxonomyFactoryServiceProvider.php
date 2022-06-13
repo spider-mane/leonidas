@@ -2,28 +2,29 @@
 
 namespace Leonidas\Framework\Provider\League;
 
+use Leonidas\Framework\Provider\League\Abstracts\AbstractLeagueServiceFactory;
 use Leonidas\Framework\Provider\TaxonomyProvider;
 use Leonidas\Library\System\Model\Taxonomy\TaxonomyFactory;
 use Panamax\Contracts\ServiceFactoryInterface;
 
 class TaxonomyFactoryServiceProvider extends AbstractLeagueServiceFactory
 {
-    protected function serviceId(): string
+    protected function id(): string
     {
-        return TaxonomyFactory::class;
+        return 'taxonomy_factory';
     }
 
-    protected function serviceTags(): array
+    protected function types(): array
     {
-        return ['taxonomy_factory'];
+        return [TaxonomyFactory::class];
     }
 
-    protected function serviceFactory(): ServiceFactoryInterface
+    protected function factory(): ServiceFactoryInterface
     {
         return new TaxonomyProvider();
     }
 
-    protected function factoryArgs(): ?array
+    protected function args(): ?array
     {
         return [
             'prefix' => $this->getConfig('app.prefix'),

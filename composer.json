@@ -102,6 +102,7 @@
     "symfony/var-dumper": "^5.4",
     "symfony/var-exporter": "^5.4",
     "szepeviktor/phpstan-wordpress": "^1.1",
+    "twig/cache-extra": "^3.4",
     "vimeo/psalm": "^4.23",
     "vlucas/phpdotenv": "^5.4",
     "webtheory/exterminate": "@stable",
@@ -172,7 +173,8 @@
       "composer install",
       "cp -n .env.example .env",
       "bin/build-paths",
-      "bin/make-playground"
+      "bin/make-playground",
+      "@wp:init"
     ],
     "test:all": [
       "@test:unit",
@@ -189,9 +191,6 @@
       "@wp db export",
       "@wp db clean --yes",
       "@wp core install"
-    ],
-    "post-install-cmd": [
-      "@env"
     ]
   },
   "config": {

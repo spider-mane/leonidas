@@ -2,28 +2,34 @@
 
 namespace Leonidas\Framework\Provider\League;
 
+use Leonidas\Framework\Provider\League\Abstracts\AbstractLeagueServiceFactory;
 use Leonidas\Framework\Provider\PhoneNumberUtilProvider;
 use libphonenumber\PhoneNumberUtil;
 use Panamax\Contracts\ServiceFactoryInterface;
 
 class PhoneNumberUtilServiceProvider extends AbstractLeagueServiceFactory
 {
-    protected function serviceId(): string
+    protected function id(): string
     {
-        return PhoneNumberUtil::class;
+        return 'phone';
     }
 
-    protected function serviceTags(): array
+    protected function types(): array
     {
-        return ['phone', 'phone_util', 'phoneUtil'];
+        return [PhoneNumberUtil::class];
     }
 
-    protected function serviceFactory(): ServiceFactoryInterface
+    protected function aliases(): array
+    {
+        return ['phone_util', 'phoneUtil'];
+    }
+
+    protected function factory(): ServiceFactoryInterface
     {
         return new PhoneNumberUtilProvider();
     }
 
-    protected function factoryArgs(): ?array
+    protected function args(): ?array
     {
         return $this->getConfig('phone.util');
     }

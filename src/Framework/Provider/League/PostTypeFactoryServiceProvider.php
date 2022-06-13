@@ -2,28 +2,29 @@
 
 namespace Leonidas\Framework\Provider\League;
 
+use Leonidas\Framework\Provider\League\Abstracts\AbstractLeagueServiceFactory;
 use Leonidas\Framework\Provider\PostTypeProvider;
 use Leonidas\Library\System\Model\PostType\PostTypeFactory;
 use Panamax\Contracts\ServiceFactoryInterface;
 
 class PostTypeFactoryServiceProvider extends AbstractLeagueServiceFactory
 {
-    protected function serviceId(): string
+    protected function id(): string
     {
-        return PostTypeFactory::class;
+        return 'post_type_factory';
     }
 
-    protected function serviceTags(): array
+    protected function types(): array
     {
-        return ['post_type_factory'];
+        return [PostTypeFactory::class];
     }
 
-    protected function serviceFactory(): ServiceFactoryInterface
+    protected function factory(): ServiceFactoryInterface
     {
         return new PostTypeProvider();
     }
 
-    protected function factoryArgs(): ?array
+    protected function args(): ?array
     {
         return [
             'prefix' => $this->getConfig('app.prefix'),

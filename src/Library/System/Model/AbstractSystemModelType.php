@@ -65,7 +65,7 @@ abstract class AbstractSystemModelType implements BaseSystemModelTypeInterface
     public function __construct(
         string $name,
         string $pluralLabel,
-        string $singularLabel,
+        ?string $singularLabel = null,
         string $description = '',
         array $labels = [],
         bool $isPublic = false,
