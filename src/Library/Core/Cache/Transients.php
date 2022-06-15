@@ -27,7 +27,7 @@ class Transients implements CacheInterface
         return false;
     }
 
-    public function getMultiple($keys, $default = null)
+    public function getMultiple($keys, $default = null): iterable
     {
         $values = [];
 

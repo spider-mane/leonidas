@@ -30,7 +30,7 @@ class PostQueryDriver extends AbstractArrayDriver implements ArrayDriverInterfac
         $this->conversionArchive = $archive ?? new PostConversionArchive();
     }
 
-    protected function append(array &$array, object $item): void
+    protected function append(array &$array, object $item, $offset = null): void
     {
         $array[] = $item;
         $this->query->posts[] = $this->getRevertedPost($item);

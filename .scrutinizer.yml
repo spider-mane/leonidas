@@ -12,7 +12,8 @@ build:
       - php bin/build-paths
   tests:
     override:
-      - vendor/bin/phpstan analyze
+      - command: vendor/bin/phpstan analyze --no-progress --memory-limit 512M
+        idle_timeout: 1200
       - command: vendor/bin/phpunit
         coverage:
           file: build/phpunit/coverage/coverage.clover.xml
@@ -33,6 +34,13 @@ build:
     php-8.1:
       environment:
         php: 8.1
+      tests:
+        override:
+          # skipping static analysis because wordpress has code not compatible with php81
+          - command: vendor/bin/phpunit
+            coverage:
+              file: build/phpunit/coverage/coverage.clover.xml
+              format: clover
 
 checks:
   php: true

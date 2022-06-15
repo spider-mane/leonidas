@@ -27,14 +27,14 @@ class ObjectCacheGroup implements CacheInterface
         return wp_cache_set($key, $value, $this->group, $ttl);
     }
 
-    public function delete($key)
+    public function delete($key): bool
     {
         $this->removeKey($key);
 
         return wp_cache_delete($key, $this->group);
     }
 
-    public function clear()
+    public function clear(): bool
     {
         foreach (array_unique($this->keys) as $key) {
             $this->delete($key);
@@ -43,7 +43,7 @@ class ObjectCacheGroup implements CacheInterface
         return true;
     }
 
-    public function getMultiple($keys, $default = null)
+    public function getMultiple($keys, $default = null): iterable
     {
         $values = [];
 
@@ -54,7 +54,7 @@ class ObjectCacheGroup implements CacheInterface
         return $values;
     }
 
-    public function setMultiple($values, $ttl = null)
+    public function setMultiple($values, $ttl = null): bool
     {
         foreach ($values as $key => $value) {
             $this->set($key, $value, $ttl);
@@ -63,7 +63,7 @@ class ObjectCacheGroup implements CacheInterface
         return true;
     }
 
-    public function deleteMultiple($keys)
+    public function deleteMultiple($keys): bool
     {
         foreach ($keys as $key) {
             $this->delete($key);

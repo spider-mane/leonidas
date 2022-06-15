@@ -23,12 +23,12 @@ class WebPage implements LinkInterface
         return ['text/html'];
     }
 
-    public function getAttributes()
+    public function getAttributes(): array
     {
         return [];
     }
 
-    public function isTemplated()
+    public function isTemplated(): bool
     {
         return false;
     }
