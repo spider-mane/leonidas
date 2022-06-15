@@ -13,12 +13,12 @@ class PhoneNumberUtilProvider extends AbstractServiceFactory implements ServiceF
 {
     public function create(ContainerInterface $container, array $args = []): PhoneNumberUtil
     {
-        $metadataLoader = $this->getNullable(
+        $metadataLoader = $this->fetch(
             MetadataLoaderInterface::class,
             $container,
         );
 
-        $metadataSource = $this->getNullable(
+        $metadataSource = $this->fetch(
             MetadataSourceInterface::class,
             $container,
         );

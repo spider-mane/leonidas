@@ -6,8 +6,12 @@
 /.playground
 /.playground.php
 /build/
+/cache/
 /dist/
 /logs/
+/storage/cache/
+/storage/logs/
+/storage/temp/
 /temp/
 captainhook.config.json
 cghooks.lock

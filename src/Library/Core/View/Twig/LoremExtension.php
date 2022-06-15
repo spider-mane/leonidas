@@ -16,8 +16,8 @@ class LoremExtension extends AbstractExtension implements ExtensionInterface
         ];
     }
 
-    public function lorem(int $count, string $what = 'words', bool $tags = false)
+    public function lorem()
     {
-        return (new LoremIpsum())->$what($count, $tags, false);
+        return new LoremIpsum();
     }
 }

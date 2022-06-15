@@ -45,7 +45,7 @@ class SymfonyMailerProvider extends AbstractServiceFactory implements ServiceFac
 
     protected function getMessageBus(ContainerInterface $container, array $args = []): ?MessageBusInterface
     {
-        return $this->getNullable(
+        return $this->fetch(
             $args['$message_bus'] ?? MessageBusInterface::class,
             $container
         );
@@ -53,7 +53,7 @@ class SymfonyMailerProvider extends AbstractServiceFactory implements ServiceFac
 
     protected function getEventDispatcher(ContainerInterface $container, array $args = []): ?EventDispatcherInterface
     {
-        return $this->getNullable(
+        return $this->fetch(
             $args['$event_dispatcher'] ?? EventDispatcherInterface::class,
             $container
         );
@@ -61,7 +61,7 @@ class SymfonyMailerProvider extends AbstractServiceFactory implements ServiceFac
 
     protected function getStream(ContainerInterface $container, array $args = []): ?AbstractStream
     {
-        return $this->getNullable(
+        return $this->fetch(
             $args['$stream'] ?? AbstractStream::class,
             $container
         );
@@ -69,7 +69,7 @@ class SymfonyMailerProvider extends AbstractServiceFactory implements ServiceFac
 
     protected function getLogger(ContainerInterface $container, array $args = []): ?LoggerInterface
     {
-        return $this->getNullable(
+        return $this->fetch(
             $args['$logger'] ?? LoggerInterface::class,
             $container
         );

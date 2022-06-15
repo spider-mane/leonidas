@@ -18,6 +18,10 @@ class AdminFunctionsExtension extends AbstractExtension implements ExtensionInte
 
     public function getFunctions()
     {
+        if (!is_admin()) {
+            return [];
+        }
+
         return array_map(
             fn ($function) => new TwigFunction($function, $function),
             self::FUNCTIONS

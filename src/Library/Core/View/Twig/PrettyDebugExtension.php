@@ -14,7 +14,6 @@ class PrettyDebugExtension extends AbstractExtension implements ExtensionInterfa
     public function getFunctions()
     {
         $options = [
-            'is_safe' => $this->isHtmlSafeDumpOutput() ? ['html'] : [],
             'needs_context' => true,
             'needs_environment' => true,
             'is_variadic' => true,
@@ -34,17 +33,6 @@ class PrettyDebugExtension extends AbstractExtension implements ExtensionInterfa
     public function dd(Environment $env, $context, ...$vars)
     {
         return $this->call('dd', $env, $context, ...$vars);
-    }
-
-    protected function isHtmlSafeDumpOutput()
-    {
-        return extension_loaded('xdebug')
-            // false means that it was not set (and the default is on) or it explicitly enabled
-            && (false === ini_get('xdebug.overload_var_dump') || ini_get('xdebug.overload_var_dump'))
-            // false means that it was not set (and the default is on) or it explicitly enabled
-            // xdebug.overload_var_dump produces HTML only when html_errors is also enabled
-            && (false === ini_get('html_errors') || ini_get('html_errors'))
-            || 'cli' === PHP_SAPI;
     }
 
     protected function call(callable $function, Environment $env, $context, ...$vars)
