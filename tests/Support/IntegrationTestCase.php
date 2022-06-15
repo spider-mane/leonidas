@@ -4,15 +4,34 @@ declare(strict_types=1);
 
 namespace Tests\Support;
 
-abstract class IntegrationTestCase extends TestCase
+use Tests\Support\Concerns\FakerTrait;
+use Tests\Support\Concerns\HelperTrait;
+use Tests\Support\Concerns\MockeryTrait;
+use Tests\Support\Concerns\ProphecyTrait;
+use WebTheory\WpTest\WpLoadedTestCase;
+
+abstract class UnitTestCase extends WpLoadedTestCase
 {
-    protected function setUp(): void
+    use FakerTrait;
+    use HelperTrait;
+    use MockeryTrait;
+    use ProphecyTrait;
+
+    protected string $root;
+
+    public function setUp(): void
     {
         parent::setUp();
+
+        $this->root = dirname(__DIR__, 2);
+
+        $this->initFaker();
     }
 
-    protected function tearDown(): void
+    public function tearDown(): void
     {
         parent::tearDown();
+
+        $this->closeMockery();
     }
 }
