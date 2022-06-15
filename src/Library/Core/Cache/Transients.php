@@ -4,7 +4,7 @@ namespace Leonidas\Library\Core\Cache;
 
 use Psr\SimpleCache\CacheInterface;
 
-class TransientsConnection implements CacheInterface
+class Transients implements CacheInterface
 {
     public function get($key, $default = null)
     {

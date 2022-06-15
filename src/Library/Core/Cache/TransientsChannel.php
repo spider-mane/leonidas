@@ -4,7 +4,7 @@ namespace Leonidas\Library\Core\Cache;
 
 use Psr\SimpleCache\CacheInterface;
 
-class TransientsChannel extends TransientsConnection implements CacheInterface
+class TransientsChannel extends Transients implements CacheInterface
 {
     protected string $channel;
 
