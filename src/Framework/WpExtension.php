@@ -3,6 +3,8 @@
 namespace Leonidas\Framework;
 
 use Leonidas\Contracts\Extension\WpExtensionInterface;
+use Leonidas\Framework\Plugin\Plugin;
+use Leonidas\Framework\Theme\Theme;
 use Psr\Container\ContainerInterface;
 
 class WpExtension implements WpExtensionInterface
@@ -27,79 +29,56 @@ class WpExtension implements WpExtensionInterface
 
     protected bool $isInDev;
 
-    public function __construct(
-        string $name,
-        string $version,
-        string $slug,
-        string $prefix,
-        string $description,
-        string $path,
-        string $url,
-        string $type,
-        ContainerInterface $container,
-        bool $isInDev
-    ) {
-        $this->name = $name;
-        $this->version = $version;
-        $this->slug = $slug;
-        $this->prefix = $prefix;
-        $this->description = $description;
+    public function __construct(string $type, string $path, string $url, ContainerInterface $container)
+    {
+        $this->type = $type;
         $this->path = $path;
         $this->url = $url;
-        $this->type = $type;
         $this->container = $container;
-        $this->isInDev = $isInDev;
     }
 
     /**
-     * Get the value of name
-     *
-     * @return string
+     * {@inheritDoc}
      */
     public function getName(): string
     {
-        return $this->name;
+        return $this->name ??= $this->config('app.name');
     }
 
     /**
-     * Get the value of version
-     *
-     * @return string
+     * {@inheritDoc}
      */
     public function getVersion(): string
     {
-        return $this->version;
-    }
-
-    public function getSlug(): string
-    {
-        return $this->slug;
+        return $this->version  ??= $this->config('app.version');
     }
 
     /**
-     * Get the value of prefix
-     *
-     * @return string
+     * {@inheritDoc}
+     */
+    public function getSlug(): string
+    {
+        return $this->slug ??= $this->config('app.slug');
+    }
+
+    /**
+     * {@inheritDoc}
      */
     public function getPrefix(): string
     {
-        return $this->prefix;
+        return $this->prefix ??= $this->config('app.prefix');
     }
 
     /**
-     * Get the value of description
-     *
-     * @return string
+     * {@inheritDoc}
      */
     public function getDescription(): string
     {
-        return $this->description;
+        return $this->description ??= $this->config('app.description');
     }
 
     /**
-     * Get the value of path
-     *
-     * @return string
+     * {@inheritDoc}
      */
     public function getPath(): string
     {
@@ -107,9 +86,7 @@ class WpExtension implements WpExtensionInterface
     }
 
     /**
-     * Get the value of url
-     *
-     * @return string
+     * {@inheritDoc}
      */
     public function getUrl(): string
     {
@@ -117,7 +94,7 @@ class WpExtension implements WpExtensionInterface
     }
 
     /**
-     * @return string
+     * {@inheritDoc}
      */
     public function getType(): string
     {
@@ -129,7 +106,7 @@ class WpExtension implements WpExtensionInterface
      */
     public function isInDev(): bool
     {
-        return $this->isInDev;
+        return $this->isInDev ??= $this->config('app.dev');
     }
 
     /**
@@ -146,6 +123,26 @@ class WpExtension implements WpExtensionInterface
     public function has(string $id): bool
     {
         return $this->container->has($id);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function header(string $header): ?string
+    {
+        switch ($this->getType()) {
+            case 'plugin':
+                $headers = Plugin::headers(static::absPath('/plugin.php'));
+
+                break;
+
+            case 'theme':
+                $headers = Theme::headers(static::absPath('/style.css'));
+
+                break;
+        }
+
+        return $headers[$header] ?? null;
     }
 
     /**
@@ -206,16 +203,10 @@ class WpExtension implements WpExtensionInterface
     public static function create(array $args): WpExtension
     {
         return new static(
-            $args['name'],
-            $args['version'],
-            $args['textdomain'] ?? $args['slug'],
-            $args['prefix'],
-            $args['description'],
+            $args['type'],
             $args['path'],
             $args['url'],
-            $args['type'],
             $args['container'],
-            $args['dev'] ?? false,
         );
     }
 }

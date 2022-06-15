@@ -14,29 +14,29 @@ final class Launcher
 
     private function __construct(string $path, string $url)
     {
-        $this->loader = new ExtensionLoader($path, $url);
+        $this->loader = new ExtensionLoader('plugin', $path, $url);
     }
 
-    private function bootstrap(): void
+    private function launch(): void
     {
-        $this->launch()->initPlugin()->declarePluginLoaded();
+        $this->initiate()->boot()->broadcast();
     }
 
-    private function launch(): self
-    {
-        $this->loader->bootstrap();
-
-        return $this;
-    }
-
-    private function initPlugin(): self
+    private function initiate(): self
     {
         Leonidas::init($this->loader->getExtension());
 
         return $this;
     }
 
-    private function declarePluginLoaded(): void
+    private function boot(): self
+    {
+        $this->loader->bootstrap();
+
+        return $this;
+    }
+
+    private function broadcast(): void
     {
         do_action('leonidas/loaded');
     }
@@ -50,13 +50,11 @@ final class Launcher
 
     private static function load(string $base): void
     {
-        define('LEONIDAS_PLUGIN_HEADERS', Plugin::headers($base));
-
         self::$instance = new self(
             Plugin::path($base),
             Plugin::url($base),
         );
 
-        self::$instance->bootstrap();
+        self::$instance->launch();
     }
 }

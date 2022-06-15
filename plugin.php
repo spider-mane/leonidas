@@ -6,7 +6,7 @@
  * file that was distributed with this source code.
  *
  * @package leonidas/leonidas
- * @version 0.16.0
+ * @version 0.18.0
  * @license GPL-3.0-or-later
  * @copyright Copyright (C) 2021 Chris Williams, All rights reserved.
  * @link https://github.com/spider-mane/leonidas
@@ -16,7 +16,7 @@
  * Plugin Name: Leonidas
  * Plugin URI: https://github.com/spider-mane/leonidas
  * Description: Development framework that helps developers create plugins and themes by simplifying some of the more common and complex tasks.
- * Version: 0.16.0
+ * Version: 0.18.0
  * Requires at least: 5.0
  * Requires PHP: 7.3
  * Author: Chris Williams

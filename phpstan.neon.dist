@@ -16,7 +16,6 @@ parameters:
     - boot/constants.php
 
   ignoreErrors:
-    - '#^Constant LEONIDAS_PLUGIN_HEADERS not found.$#'
     - '#^Access to an undefined property WP_Taxonomy\:\:\$options.$#'
     - '#^Access to an undefined property Wp_Error|WP_Taxonomy\:\:\$options.$#'
     - '#^Access to an undefined property WP_Post_Type\:\:\$options.$#'

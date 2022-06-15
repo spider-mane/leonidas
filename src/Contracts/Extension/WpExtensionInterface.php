@@ -43,6 +43,11 @@ interface WpExtensionInterface extends ContainerInterface
     public function getUrl(): string;
 
     /**
+     * Get the value of a header from the extension's main file
+     */
+    public function header(string $header): ?string;
+
+    /**
      * Get a configuration or option from the database value
      */
     public function config(string $key, $default = null);

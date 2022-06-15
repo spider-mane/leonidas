@@ -2,6 +2,6 @@
 
 namespace Leonidas\Framework\Exception;
 
-class ThemeInitiationException extends AbstractExtensionInitiationException
+class ThemeInitiationException extends ExtensionInitiationException
 {
 }

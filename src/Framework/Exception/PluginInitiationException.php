@@ -2,6 +2,6 @@
 
 namespace Leonidas\Framework\Exception;
 
-class PluginInitiationException extends AbstractExtensionInitiationException
+class PluginInitiationException extends ExtensionInitiationException
 {
 }

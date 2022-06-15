@@ -5,6 +5,7 @@ namespace Leonidas\Framework;
 use Leonidas\Contracts\Extension\ExtensionBootProcessInterface;
 use Leonidas\Contracts\Extension\ExtensionLoaderInterface;
 use Leonidas\Contracts\Extension\WpExtensionInterface;
+use Leonidas\Framework\Exception\ExtensionInitiationException;
 use Leonidas\Framework\Exception\PluginInitiationException;
 use Leonidas\Framework\Exception\ThemeInitiationException;
 use Panamax\Contracts\BootableProviderContainerInterface;
@@ -17,28 +18,25 @@ use WebTheory\Config\Interfaces\ConfigInterface;
 
 class ExtensionLoader implements ExtensionLoaderInterface
 {
+    protected string $type;
+
     protected string $path;
 
     protected string $url;
 
     protected ServiceContainerInterface $container;
 
-    protected ConfigInterface $config;
-
     protected WpExtensionInterface $extension;
 
-    public function __construct(string $path, string $url)
+    protected ConfigInterface $config;
+
+    public function __construct(string $type, string $path, string $url)
     {
+        $this->type = $type;
         $this->path = $path;
         $this->url = $url;
-        $this->config = $this->defineConfig();
         $this->container = $this->defineContainer();
         $this->extension = $this->defineExtension();
-    }
-
-    public function getConfig(): ConfigInterface
-    {
-        return $this->config;
     }
 
     public function getContainer(): ServiceContainerInterface
@@ -54,10 +52,11 @@ class ExtensionLoader implements ExtensionLoaderInterface
     public function bootstrap(): void
     {
         $this
+            ->initiateConfig()
             ->bindServicesToContainer()
-            ->initializeModules()
             ->loadBootProcesses()
-            ->maybeBootProviders();
+            ->maybeBootProviders()
+            ->initializeModules();
     }
 
     public function error(): void
@@ -67,23 +66,15 @@ class ExtensionLoader implements ExtensionLoaderInterface
         $method = $caller['class'] . $caller['type'] . $caller['function'];
 
         switch ($this->extension->getType()) {
-            case 'theme':
-                throw new ThemeInitiationException(
-                    $this->extension->getName(),
-                    $method
-                );
-
             case 'plugin':
-                throw new PluginInitiationException(
-                    $this->extension->getName(),
-                    $method
-                );
-        }
-    }
+                throw new PluginInitiationException($this->extension, $method);
 
-    protected function defineConfig(): ConfigInterface
-    {
-        return new Config($this->path . '/config');
+            case 'theme':
+                throw new ThemeInitiationException($this->extension, $method);
+
+            default:
+                throw new ExtensionInitiationException($this->extension, $method);
+        }
     }
 
     protected function defineContainer(): ServiceContainerInterface
@@ -93,24 +84,18 @@ class ExtensionLoader implements ExtensionLoaderInterface
 
     protected function defineExtension(): WpExtensionInterface
     {
-        $data = $this->config->get('app');
+        $container = $this->container instanceof ContainerAdapterInterface
+            ? $this->container->getAdaptedContainer()
+            : $this->container;
 
-        if ($this->container instanceof ContainerAdapterInterface) {
-            $container = $this->container->getAdaptedContainer();
-        }
+        return new WpExtension($this->type, $this->path, $this->url, $container);
+    }
 
-        return WpExtension::create([
-            'name' => $data['name'],
-            'version' => $data['version'],
-            'slug' => $data['slug'],
-            'prefix' => $data['prefix'],
-            'description' => $data['description'],
-            'path' => $this->path,
-            'url' => $this->url,
-            'type' => $data['type'],
-            'container' => $container ?? $this->container,
-            'dev' => $data['dev'],
-        ]);
+    protected function initiateConfig(): ExtensionLoader
+    {
+        $this->config = new Config($this->path . '/config');
+
+        return $this;
     }
 
     protected function bindServicesToContainer(): ExtensionLoader
@@ -118,6 +103,7 @@ class ExtensionLoader implements ExtensionLoaderInterface
         $container = $this->container;
 
         $container->share('root', $this->path);
+        $container->share('url', $this->url);
         $container->share('config', $this->config);
 
         if ($container instanceof ProviderContainerInterface) {
@@ -129,16 +115,6 @@ class ExtensionLoader implements ExtensionLoaderInterface
         if ($container instanceof ServiceCreatorInterface) {
             $container->createServices($this->config->get('app.services', []));
         }
-
-        return $this;
-    }
-
-    protected function initializeModules(): ExtensionLoader
-    {
-        (new ModuleInitializer(
-            $this->extension,
-            $this->config->get('app.modules', [])
-        ))->init();
 
         return $this;
     }
@@ -159,6 +135,16 @@ class ExtensionLoader implements ExtensionLoaderInterface
         if ($this->container instanceof BootableProviderContainerInterface) {
             $this->container->bootServiceProviders();
         }
+
+        return $this;
+    }
+
+    protected function initializeModules(): ExtensionLoader
+    {
+        (new ModuleInitializer(
+            $this->extension,
+            $this->config->get('app.modules', [])
+        ))->init();
 
         return $this;
     }

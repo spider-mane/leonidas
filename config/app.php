@@ -6,15 +6,13 @@ return [
 
     'name' => plugin_header('name'),
 
-    'version' => plugin_header('version'),
-
     'slug' => plugin_header('textdomain'),
 
-    'prefix' => 'leon',
-
-    'type' => 'plugin',
+    'version' => plugin_header('version'),
 
     'description' => plugin_header('description'),
+
+    'prefix' => 'leon',
 
     'dev' => defined('LEONIDAS_DEVELOPMENT'),
 
@@ -26,8 +24,6 @@ return [
         Leonidas\Plugin\Module\AdminAssets::class,
 
     ],
-
-    'services' => [],
 
     'providers' => [
 

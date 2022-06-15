@@ -2,9 +2,9 @@
 
 namespace Leonidas\Plugin;
 
-use Leonidas\Framework\Abstracts\ExtensionMasterClassTrait;
+use Leonidas\Framework\Plugin\Abstracts\PluginMasterClassTrait;
 
 final class Leonidas
 {
-    use ExtensionMasterClassTrait;
+    use PluginMasterClassTrait;
 }
