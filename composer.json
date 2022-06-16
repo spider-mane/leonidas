@@ -102,6 +102,7 @@
     "szepeviktor/phpstan-wordpress": "^1.1",
     "theseer/tokenizer": "^1.2",
     "twig/cache-extra": "^3.4",
+    "twig/inky-extra": "^3.4",
     "vimeo/psalm": "^4.23",
     "vlucas/phpdotenv": "^5.4",
     "webtheory/exterminate": "@stable",

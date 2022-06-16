@@ -15,6 +15,8 @@ class WpExtension implements WpExtensionInterface
 
     protected string $slug;
 
+    protected string $namespace;
+
     protected string $prefix;
 
     protected string $description;
@@ -59,6 +61,14 @@ class WpExtension implements WpExtensionInterface
     public function getSlug(): string
     {
         return $this->slug ??= $this->config('app.slug');
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getNamespace(): string
+    {
+        return $this->namespace ??= $this->config('app.namespace');
     }
 
     /**
@@ -188,9 +198,33 @@ class WpExtension implements WpExtensionInterface
     /**
      * {@inheritDoc}
      */
+    public function namespace(string $value, string $separator = '/'): string
+    {
+        return $this->getNamespace() . $separator . $value;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function prefix(string $value, string $separator = '_'): string
     {
         return $this->getPrefix() . $separator . $value;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function doAction(string $event, ...$data): void
+    {
+        do_action($this->namespace($event, '/'), ...$data);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function applyFilters(string $attribute, $value, ...$data): void
+    {
+        apply_filters($this->namespace($attribute, '/'), $value, ...$data);
     }
 
     /**

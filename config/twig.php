@@ -8,7 +8,11 @@ return [
 
     'root' => abspath(),
 
-    'paths' => ['views'],
+    'paths' => [
+
+        'views',
+
+    ],
 
     'options' => [
 

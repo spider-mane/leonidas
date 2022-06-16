@@ -22,8 +22,15 @@ interface WpExtensionInterface extends ContainerInterface
     public function getSlug(): string;
 
     /**
+     * Return the declared namespace for use in certain code contexts such as
+     * hook names.
+     */
+    public function getNamespace(): string;
+
+    /**
      * Return a short prefix for use in prefixing values that may be globally
-     * accessible and/or collide with other values
+     * accessible and/or collide with other values. Examples include meta keys,
+     * form input names, etc.
      */
     public function getPrefix(): string;
 
@@ -76,7 +83,27 @@ interface WpExtensionInterface extends ContainerInterface
      * Return a string that includes the extension prefix followed by the passed
      * delimiter followed by the passed value.
      */
-    public function prefix(string $value, string $separator): string;
+    public function namespace(string $value, string $separator = '/'): string;
+
+    /**
+     * Return a string that includes the extension prefix followed by the passed
+     * delimiter followed by the passed value.
+     */
+    public function prefix(string $value, string $separator = '_'): string;
+
+    /**
+     * broadcasts a namespaced action event.
+     *
+     * @experimental
+     */
+    public function doAction(string $event, ...$data): void;
+
+    /**
+     * broadcasts a namespaced filter event.
+     *
+     * @experimental
+     */
+    public function applyFilters(string $attribute, $value, ...$data): void;
 
     /**
      * Determine whether or not the extension is in its development environment

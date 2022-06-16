@@ -12,15 +12,14 @@ return [
 
     'description' => plugin_header('description'),
 
+    'namespace' => 'leonidas',
+
     'prefix' => 'leon',
 
     'dev' => defined('LEONIDAS_DEVELOPMENT'),
 
     'modules' => [
 
-        # Framework
-
-        # Plugin
         Leonidas\Plugin\Module\AdminAssets::class,
 
     ],

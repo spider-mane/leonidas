@@ -3,6 +3,7 @@
 namespace Leonidas\Plugin;
 
 use Leonidas\Contracts\Extension\ExtensionLoaderInterface;
+use Leonidas\Contracts\Extension\WpExtensionInterface;
 use Leonidas\Framework\ExtensionLoader;
 use Leonidas\Framework\Plugin\Plugin;
 
@@ -10,11 +11,14 @@ final class Launcher
 {
     private ExtensionLoaderInterface $loader;
 
+    private WpExtensionInterface $extension;
+
     private static self $instance;
 
     private function __construct(string $path, string $url)
     {
         $this->loader = new ExtensionLoader('plugin', $path, $url);
+        $this->extension = $this->loader->getExtension();
     }
 
     private function launch(): void
@@ -24,7 +28,7 @@ final class Launcher
 
     private function initiate(): self
     {
-        Leonidas::init($this->loader->getExtension());
+        Leonidas::init($this->extension);
 
         return $this;
     }
@@ -38,7 +42,7 @@ final class Launcher
 
     private function broadcast(): void
     {
-        do_action('leonidas/loaded');
+        $this->extension->doAction('loaded');
     }
 
     public static function init(string $base): void
