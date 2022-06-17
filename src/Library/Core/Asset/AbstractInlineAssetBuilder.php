@@ -17,6 +17,9 @@ abstract class AbstractInlineAssetBuilder
         $this->handle = $handle;
     }
 
+    /**
+     * @return $this
+     */
     public function handle(string $handle): AbstractInlineAssetBuilder
     {
         $this->handle = $handle;
@@ -29,6 +32,9 @@ abstract class AbstractInlineAssetBuilder
         return $this->handle;
     }
 
+    /**
+     * @return $this
+     */
     public function code(string $code): AbstractInlineAssetBuilder
     {
         $this->code = $code;
@@ -41,6 +47,9 @@ abstract class AbstractInlineAssetBuilder
         return $this->code;
     }
 
+    /**
+     * @return $this
+     */
     public function policy(?ServerRequestPolicyInterface $policy): AbstractInlineAssetBuilder
     {
         $this->policy = $policy;

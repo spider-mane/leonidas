@@ -61,7 +61,7 @@ abstract class AbstractAssetBuilder
      *
      * @return $this
      */
-    public function handle(string $handle)
+    public function handle(string $handle): AbstractAssetBuilder
     {
         $this->handle = $handle;
 
@@ -75,7 +75,7 @@ abstract class AbstractAssetBuilder
      *
      * @return $this
      */
-    public function src($src)
+    public function src($src): AbstractAssetBuilder
     {
         $this->src = $src;
 
@@ -89,7 +89,7 @@ abstract class AbstractAssetBuilder
      *
      * @return $this
      */
-    public function dependencies(string ...$dependencies)
+    public function dependencies(string ...$dependencies): AbstractAssetBuilder
     {
         $this->dependencies = $dependencies;
 
@@ -103,7 +103,7 @@ abstract class AbstractAssetBuilder
      *
      * @return $this
      */
-    public function version($version)
+    public function version($version): AbstractAssetBuilder
     {
         $this->version = $version;
 
@@ -117,7 +117,7 @@ abstract class AbstractAssetBuilder
      *
      * @return $this
      */
-    public function policy(?ServerRequestPolicyInterface $policy)
+    public function policy(?ServerRequestPolicyInterface $policy): AbstractAssetBuilder
     {
         $this->policy = $policy;
 
@@ -131,7 +131,7 @@ abstract class AbstractAssetBuilder
      *
      * @return $this
      */
-    public function attributes(?array $attributes)
+    public function attributes(?array $attributes): AbstractAssetBuilder
     {
         $this->attributes = $attributes;
 
@@ -145,7 +145,7 @@ abstract class AbstractAssetBuilder
      *
      * @return $this
      */
-    public function crossorigin(?string $crossorigin)
+    public function crossorigin(?string $crossorigin): AbstractAssetBuilder
     {
         $this->crossorigin = $crossorigin;
 
@@ -159,7 +159,7 @@ abstract class AbstractAssetBuilder
      *
      * @return $this
      */
-    public function enqueue(bool $shouldBeEnqueued)
+    public function enqueue(bool $shouldBeEnqueued): AbstractAssetBuilder
     {
         $this->shouldBeEnqueued = $shouldBeEnqueued;
 

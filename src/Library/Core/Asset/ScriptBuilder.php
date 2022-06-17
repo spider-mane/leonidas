@@ -49,56 +49,80 @@ class ScriptBuilder extends AbstractAssetBuilder
      */
     protected $type;
 
-    public function inFooter(?bool $shouldLoadInFooter)
+    /**
+     * @return $this
+     */
+    public function inFooter(?bool $shouldLoadInFooter): ScriptBuilder
     {
         $this->shouldLoadInFooter = $shouldLoadInFooter;
 
         return $this;
     }
 
-    public function async(bool $isAsync)
+    /**
+     * @return $this
+     */
+    public function async(bool $isAsync): ScriptBuilder
     {
         $this->isAsync = $isAsync;
 
         return $this;
     }
 
-    public function deferred(bool $isDeferred)
+    /**
+     * @return $this
+     */
+    public function deferred(bool $isDeferred): ScriptBuilder
     {
         $this->isDeferred = $isDeferred;
 
         return $this;
     }
 
-    public function integrity(string $integrity)
+    /**
+     * @return $this
+     */
+    public function integrity(string $integrity): ScriptBuilder
     {
         $this->integrity = $integrity;
 
         return $this;
     }
 
-    public function nomodule(bool $isNoModule)
+    /**
+     * @return $this
+     */
+    public function nomodule(bool $isNoModule): ScriptBuilder
     {
         $this->isNoModule = $isNoModule;
 
         return $this;
     }
 
-    public function nonce(string $nonce)
+    /**
+     * @return $this
+     */
+    public function nonce(string $nonce): ScriptBuilder
     {
         $this->nonce = $nonce;
 
         return $this;
     }
 
-    public function referrerpolicy(string $referrerPolicy)
+    /**
+     * @return $this
+     */
+    public function referrerpolicy(string $referrerPolicy): ScriptBuilder
     {
         $this->referrerPolicy = $referrerPolicy;
 
         return $this;
     }
 
-    public function type(string $type)
+    /**
+     * @return $this
+     */
+    public function type(string $type): ScriptBuilder
     {
         $this->type = $type;
 

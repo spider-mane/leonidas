@@ -9,6 +9,9 @@ class InlineScriptBuilder extends AbstractInlineAssetBuilder implements InlineSc
 {
     protected string $position;
 
+    /**
+     * @return $this
+     */
     public function position(string $position): InlineScriptBuilder
     {
         $this->position = $position;
