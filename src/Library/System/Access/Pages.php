@@ -6,6 +6,8 @@ use Leonidas\Contracts\System\Model\Page\PageCollectionInterface;
 use Leonidas\Contracts\System\Model\Page\PageInterface;
 use Leonidas\Contracts\System\Model\Page\PageRepositoryInterface;
 use Leonidas\Library\Core\Access\_Facade;
+use Leonidas\Library\System\Model\Page\PageQuery;
+use Leonidas\Library\System\Model\Page\PageQueryFactory;
 
 /**
  * @method static ?PageInterface select(int $id)
@@ -24,6 +26,16 @@ use Leonidas\Library\Core\Access\_Facade;
  */
 class Pages extends _Facade
 {
+    public static function fromQuery(): PageQuery
+    {
+        return static::getQueryFactory()->createQuery($GLOBALS['wp_query']);
+    }
+
+    protected static function getQueryFactory(): PageQueryFactory
+    {
+        return static::$container->get(PageQueryFactory::class);
+    }
+
     protected static function _getFacadeAccessor()
     {
         return PageRepositoryInterface::class;

@@ -10,6 +10,8 @@ use Leonidas\Contracts\System\Model\Post\PostRepositoryInterface;
 use Leonidas\Contracts\System\Model\Post\Status\PostStatusInterface;
 use Leonidas\Contracts\System\Model\Tag\TagInterface;
 use Leonidas\Library\Core\Access\_Facade;
+use Leonidas\Library\System\Model\Post\PostQuery;
+use Leonidas\Library\System\Model\Post\PostQueryFactory;
 
 /**
  * @method static ?PostInterface select(int $id)
@@ -33,6 +35,16 @@ use Leonidas\Library\Core\Access\_Facade;
  */
 class Posts extends _Facade
 {
+    public static function fromQuery(): PostQuery
+    {
+        return static::getQueryFactory()->createQuery($GLOBALS['wp_query']);
+    }
+
+    protected static function getQueryFactory(): PostQueryFactory
+    {
+        return static::$container->get(PostQueryFactory::class);
+    }
+
     protected static function _getFacadeAccessor()
     {
         return PostRepositoryInterface::class;

@@ -80,12 +80,16 @@ class RegisterModelServices implements ExtensionBootProcessInterface
             $this->extension->get(AutoInvokerInterface::class)
         ));
 
+        $this->container->share(PostQueryFactory::class, fn () => new PostQueryFactory(
+            $this->extension->get(PostConverter::class),
+        ));
+
         $this->container->share(PostRepositoryInterface::class, function () {
             return new PostRepository(new PostEntityManager(
                 'post',
-                $converter = $this->extension->get(PostConverter::class),
+                $this->extension->get(PostConverter::class),
                 new PostCollectionFactory(),
-                new PostQueryFactory($converter)
+                $this->extension->get(PostQueryFactory::class),
             ));
         });
     }
@@ -96,12 +100,16 @@ class RegisterModelServices implements ExtensionBootProcessInterface
             $this->extension->get(AutoInvokerInterface::class)
         ));
 
+        $this->container->share(PageQueryFactory::class, fn () => new PageQueryFactory(
+            $this->extension->get(PageConverter::class),
+        ));
+
         $this->container->share(PageRepositoryInterface::class, function () {
             return new PageRepository(new PostEntityManager(
                 'page',
-                $converter = $this->extension->get(PageConverter::class),
+                $this->extension->get(PageConverter::class),
                 new PageCollectionFactory(),
-                new PageQueryFactory($converter)
+                $this->extension->get(PageQueryFactory::class),
             ));
         });
     }
@@ -112,12 +120,16 @@ class RegisterModelServices implements ExtensionBootProcessInterface
             $this->extension->get(AutoInvokerInterface::class)
         ));
 
+        $this->container->share(ImageQueryFactory::class, fn () => new ImageQueryFactory(
+            $this->extension->get(ImageConverter::class),
+        ));
+
         $this->container->share(ImageRepositoryInterface::class, function () {
             return new ImageRepository(new AttachmentEntityManager(
                 'attachment',
-                $converter = $this->extension->get(ImageConverter::class),
+                $this->extension->get(ImageConverter::class),
                 new ImageCollectionFactory(),
-                new ImageQueryFactory($converter)
+                $this->extension->get(ImageQueryFactory::class),
             ));
         });
     }
