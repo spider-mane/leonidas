@@ -2,6 +2,7 @@
 
 namespace Leonidas\Library\Core\View\Twig;
 
+use Leonidas\Library\Core\Util\OutputBuffer;
 use Twig\Extension\AbstractExtension;
 use Twig\Extension\ExtensionInterface;
 use Twig\TwigFunction;
@@ -107,7 +108,6 @@ class TemplateTagsExtension extends AbstractExtension implements ExtensionInterf
         'get_avatar',
         'next_comments_link',
         'paginate_comments_links',
-        'permalink_comments_rss',
         'previous_comments_link',
         'wp_list_comments',
     ];
@@ -200,7 +200,7 @@ class TemplateTagsExtension extends AbstractExtension implements ExtensionInterf
 
     public function getFunctions()
     {
-        return array_map(fn ($tag) => new TwigFunction($tag, $tag), [
+        $tags = [
             ...static::GENERAL,
             ...static::AUTHOR,
             ...static::BOOKMARK,
@@ -210,6 +210,12 @@ class TemplateTagsExtension extends AbstractExtension implements ExtensionInterf
             ...static::POST,
             ...static::POST_THUMBNAIL,
             ...static::NAVIGATION_MENU,
-        ]);
+        ];
+
+        foreach ($tags as $index => $tag) {
+            $tags[$index] = new TwigFunction($tag, OutputBuffer::wrap($tag));
+        }
+
+        return $tags;
     }
 }

@@ -2,39 +2,65 @@
 
 namespace Leonidas\Library\Core\Util;
 
+use Closure;
+
 class OutputBuffer
 {
-    public static function wrap(callable $callback): string
+    public static function call(callable $function, ...$args): string
     {
         ob_start();
 
-        $callback();
+        $function(...$args);
 
         return ob_get_clean();
     }
 
-    public static function call(callable $function, ...$args): string
+    public static function wrap(callable $function): Closure
     {
-        return static::wrap(fn () => $function(...$args));
+        return fn () => static::call($function, ...func_get_args());
     }
 
-    public static function require(string $file, array $data): string
+    public static function require(string $file, ?array $data = null): string
     {
-        return static::wrap(fn () => require $file);
+        return static::call(function () use ($file, $data) {
+            if (!isset($data)) {
+                unset($data);
+            }
+
+            require $file;
+        });
     }
 
-    public static function requireOnce(string $file, array $data): string
+    public static function requireOnce(string $file, ?array $data = null): string
     {
-        return static::wrap(fn () => require_once $file);
+        return static::call(function () use ($file, $data) {
+            if (!isset($data)) {
+                unset($data);
+            }
+
+            require_once $file;
+        });
     }
 
-    public static function include(string $file, array $data): string
+    public static function include(string $file, ?array $data = null): string
     {
-        return static::wrap(fn () => include $file);
+        return static::call(function () use ($file, $data) {
+            if (!isset($data)) {
+                unset($data);
+            }
+
+            include $file;
+        });
     }
 
-    public static function includeOnce(string $file, array $data): string
+    public static function includeOnce(string $file, ?array $data = null): string
     {
-        return static::wrap(fn () => include_once $file);
+        return static::call(function () use ($file, $data) {
+            if (!isset($data)) {
+                unset($data);
+            }
+
+            include_once $file;
+        });
     }
 }
