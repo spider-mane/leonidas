@@ -1,8 +1,9 @@
 <?php
 
-namespace Leonidas\Console\Command;
+namespace Leonidas\Console\Command\Make;
 
 use Jawira\CaseConverter\CaseConverter;
+use Leonidas\Console\Command\HopliteCommand;
 use Leonidas\Library\Core\Abstracts\ConvertsCaseTrait;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -10,7 +11,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class MakeHookCommand extends Hoplite
+class HookCommand extends HopliteCommand
 {
     use ConvertsCaseTrait;
 

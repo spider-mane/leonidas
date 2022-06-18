@@ -4,11 +4,11 @@ use PhpCsFixer\Config;
 use PhpCsFixer\Finder;
 
 $finder = Finder::create()
-  ->append(['wp-config.php', 'rector.php', basename(__FILE__)])
   ->in(['src', 'bin', 'boot', 'config', 'tests', '.playground'])
   ->name('*.php')
   ->ignoreDotFiles(true)
-  ->ignoreVCS(true);
+  ->ignoreVCS(true)
+  ->append([basename(__FILE__), 'hoplite', 'wp-config.php', 'rector.php']);
 
 return (new Config('leonidas'))
   ->setCacheFile(__DIR__ . '/build/php-cs-fixer/.cache')

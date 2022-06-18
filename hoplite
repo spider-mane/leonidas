@@ -1,15 +1,8 @@
 #!/usr/bin/env php
 <?php
 
-require dirname(__DIR__) . '/vendor/autoload.php';
+require __DIR__ . '/boot/development/setup.php';
 
-use Leonidas\Console\Command\MakeHookCommand;
-use Symfony\Component\Console\Application;
+use Leonidas\Console\Hoplite;
 
-$app = new Application();
-
-array_map(fn (string $command) => $app->add(new $command), [
-  MakeHookCommand::class,
-]);
-
-$app->run();
+Hoplite::init();
