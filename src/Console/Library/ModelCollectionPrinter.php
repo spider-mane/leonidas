@@ -4,18 +4,13 @@ namespace Leonidas\Console\Library;
 
 use Leonidas\Library\System\Model\Abstracts\AbstractModelCollection;
 use Leonidas\Library\System\Model\Abstracts\PoweredByModelCollectionKernelTrait;
-use Nette\PhpGenerator\PhpFile;
-use Nette\PhpGenerator\PsrPrinter;
+use Nette\PhpGenerator\PhpNamespace;
 
-class ModelCollectionPrinter
+class ModelCollectionPrinter extends AbstractClassPrinter
 {
+    public const CORE = 'kernel';
+
     public const SIGNATURES = [
-        // 'getById' => [
-        //     'take' => 'int $id',
-        //     'give' => '@model',
-        //     'call' => 'firstWhere',
-        //     'pass' => "'id', '=', \$id",
-        // ],
         'get' => [
             'take' => 'int $id',
             'give' => '@model',
@@ -42,22 +37,22 @@ class ModelCollectionPrinter
             'pass' => '$id',
         ],
         'merge' => [
-            'take' => '@self ...@plural',
+            'take' => '@type ...@plural',
             'give' => '@self',
             'pass' => '...$this->expose(...@plural)',
         ],
         'diff' => [
-            'take' => '@self ...@plural',
+            'take' => '@type ...@plural',
             'give' => '@self',
             'pass' => '...$this->expose(...@plural)',
         ],
         'contrast' => [
-            'take' => '@self ...@plural',
+            'take' => '@type ...@plural',
             'give' => '@self',
             'pass' => '...$this->expose(...@plural)',
         ],
         'intersect' => [
-            'take' => '@self ...@plural',
+            'take' => '@type ...@plural',
             'give' => '@self',
             'pass' => '...$this->expose(...@plural)',
         ],
@@ -84,139 +79,117 @@ class ModelCollectionPrinter
 
     protected string $plural;
 
-    protected string $namespace;
-
-    protected string $class;
-
     protected string $type;
 
-    public function __construct(string $model, string $single, string $plural, string $namespace, string $class, string $type)
-    {
+    public function __construct(
+        string $model,
+        string $single,
+        string $plural,
+        string $namespace,
+        string $class,
+        string $type
+    ) {
+        parent::__construct($namespace, $class);
+
         $this->model = $model;
         $this->single = $single;
         $this->plural = $plural;
-        $this->namespace = $namespace;
-        $this->class = $class;
         $this->type = $type;
     }
 
-    public function print(): string
+    public function printCollection(): string
     {
-        $signatures = static::SIGNATURES;
+        return $this->print(function (PhpNamespace $namespace) {
+            $base = AbstractModelCollection::class;
+            $util = PoweredByModelCollectionKernelTrait::class;
 
-        $base = AbstractModelCollection::class;
-        $util = PoweredByModelCollectionKernelTrait::class;
+            $this->buildDefaultNamespace($namespace)
+                ->addUse($base)
+                ->addUse($util);
 
-        $printer = new PsrPrinter();
-        $file = new PhpFile();
-        $file->setStrictTypes(true);
+            $class = $namespace->addClass($this->class)
+                ->setExtends($base)
+                ->addImplement($this->type);
 
-        $namespace = $file->addNamespace($this->namespace)
-            ->addUse($base)
-            ->addUse($util)
-            ->addUse($this->type)
-            ->addUse($this->model);
+            $class->addTrait($util);
+            $class->addConstant('MODEL_IDENTIFIER', 'id')->setProtected();
+            $class->addConstant('COLLECTION_IS_MAP', true)->setProtected();
 
-        $class = $namespace->addClass($this->class)
-            ->addExtend($base)
-            ->addTrait($util)
-            ->addImplement($this->type);
+            $constructor = $class->addMethod('__construct')->setVariadic(true);
 
-        $class->addConstant('MODEL_IDENTIFIER', 'id')->setProtected();
-        $class->addConstant('COLLECTION_IS_MAP', true)->setProtected();
+            $constructor->addParameter($this->plural)->setType($this->model);
+            $constructor->setBody(sprintf('$this->initKernel($%s);', $this->plural));
 
-        foreach ($signatures as $method => $signature) {
-            $call = $signature['call'] ?? $method;
+            return $class;
+        });
+    }
 
-            $pass = str_replace(
-                ['@single', '@plural'],
-                ['$' . $this->single, '$' . $this->plural],
-                $signature['pass'] ?? ''
-            );
+    public function printAbstractCollection(): string
+    {
+        return $this->print(function (PhpNamespace $namespace) {
+            $base = AbstractModelCollection::class;
 
-            switch ($give = $signature['give'] ?? 'void') {
-                case '@model':
-                case '$this':
-                    $return = $this->model;
+            $this->buildDefaultNamespace($namespace)->addUse($base);
 
-                    break;
+            $class = $namespace->addClass($this->class)
+                ->setAbstract(true)
+                ->setExtends($base)
+                ->addImplement($this->type);
 
-                case '@self':
-                    $return = $this->namespace . '\\' . $this->class;
+            return $class;
+        });
+    }
 
-                    break;
+    public function printCollectionTrait(): string
+    {
+        return $this->print(function (PhpNamespace $namespace) {
+            return $this->buildDefaultNamespace($namespace)
+                ->addTrait($this->class);
+        });
+    }
 
-                default:
-                    $return = $give;
+    public function printCollectionInterface(): string
+    {
+        return $this->print(function (PhpNamespace $namespace) {
+            return $this->buildDefaultNamespace($namespace)
+                ->addInterface($this->class);
+        });
+    }
 
-                    break;
-            }
+    protected function buildDefaultNamespace(PhpNamespace $namespace): PhpNamespace
+    {
+        return $namespace->addUse($this->type)->addUse($this->model);
+    }
 
-            $body = 'return $this->kernel->' . $call . '(' . $pass . ');';
+    protected function getMethodPassReplacements(): array
+    {
+        return [
+            ['@single', '@plural'],
+            ['$' . $this->single, '$' . $this->plural],
+        ];
+    }
 
-            if ('void' === $give) {
-                $body = str_replace('return ', '', $body);
-            }
+    protected function getMethodGiveReplacements(): array
+    {
+        return [
+            ['@model', '@self'],
+            [$this->model, $this->getClassFqn()],
+        ];
+    }
 
-            $method = $class->addMethod($method)
-                ->setReturnType($return)
-                ->setBody($body);
+    protected function getParameterTypeReplacements(): array
+    {
+        return [
+            ['@model', '@type'],
+            [$this->model, $this->type],
+        ];
+    }
 
-            $params = ($take = $signature['take'] ?? false)
-                ? explode(', ', $take)
-                : [];
-
-            foreach ($params as $param) {
-                $parts = explode(' ', $param);
-
-                $type = str_replace(
-                    ['@model', '@self', '*'],
-                    [$this->model, $this->type, ''],
-                    $parts[0]
-                );
-
-                $sym = ['$', '?', '&', '...'];
-                $map = array_pad([], count($sym), '');
-
-                $name = str_replace(
-                    ['@single', '@plural', ...$sym],
-                    [$this->single, $this->plural, ...$map],
-                    $parts[1]
-                );
-
-                if ('' === $name) {
-                    dd($method, $parts);
-                }
-
-                $method->setVariadic(str_contains($parts[1], '...'));
-
-                $parameter = $method->addParameter($name)
-                    ->setType($type)
-                    ->setNullable(str_contains($parts[1], '?'))
-                    ->setReference(str_contains($parts[1], '&'));
-
-                if ($default = $parts[3] ?? false) {
-                    if ('null' === $default) {
-                        $default = null;
-                    } elseif ('true' === $default) {
-                        $default = true;
-                    } elseif ('false' === $default) {
-                        $default = false;
-                    } elseif (is_numeric($default)) {
-                        $default = (int) $default;
-                    } else {
-                        $default = trim($default, '\'"');
-                    }
-
-                    $parameter->setDefaultValue($default);
-                }
-            }
-
-            if ($give && '$this' === $give) {
-                $method->addComment('@return ' . '$this');
-            }
-        }
-
-        return $printer->printFile($file);
+    protected function getParameterNameReplacements(): array
+    {
+        return [
+            ['@single', '@plural'],
+            [$this->single, $this->plural],
+        ];
     }
 }

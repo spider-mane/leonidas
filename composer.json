@@ -25,7 +25,7 @@
     "league/container": "^4.2",
     "myclabs/php-enum": "^1.8",
     "nesbot/carbon": "^2.54",
-    "nette/php-generator": "^3.6",
+    "nette/php-generator": "^3.6 || ^4.0",
     "panamax/panamax": "@stable",
     "psr/cache": "^1.0 || ^2.0 || ^3.0",
     "psr/container": "^1.0 || ^2.0",

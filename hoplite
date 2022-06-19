@@ -1,8 +1,10 @@
 #!/usr/bin/env php
 <?php
 
-require __DIR__ . '/boot/development/setup.php';
-
 use Leonidas\Console\Hoplite;
+use WebTheory\Config\Interfaces\ConfigInterface;
 
-Hoplite::init();
+/** @var ConfigInterface */
+$config = require __DIR__ . '/boot/development/setup.php';
+
+Hoplite::init($config->get('console.commands', []));
