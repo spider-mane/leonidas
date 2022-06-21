@@ -1,14 +1,15 @@
 <?php
 
-namespace Leonidas\Console\Library;
+namespace Leonidas\Console\Library\Abstracts;
 
 use Closure;
-use Composer\Composer;
 use Composer\InstalledVersions;
+use Leonidas\Console\Library\PsrPrinterFactory;
 use Nette\PhpGenerator\ClassType;
 use Nette\PhpGenerator\InterfaceType;
 use Nette\PhpGenerator\Method;
 use Nette\PhpGenerator\PhpFile;
+use Nette\PhpGenerator\PhpNamespace;
 use Nette\PhpGenerator\Printer;
 use Nette\PhpGenerator\TraitType;
 
@@ -16,7 +17,7 @@ abstract class AbstractClassPrinter
 {
     public const CORE = 'core';
 
-    public const SIGNATURES = [];
+    protected const SIGNATURES = [];
 
     protected string $namespace;
 
@@ -28,15 +29,23 @@ abstract class AbstractClassPrinter
         $this->class = $class;
     }
 
+    public function printFile(): string
+    {
+        return $this->print(
+            fn (PhpNamespace $namespace) => $this->addMethods(
+                $this->setupClass($namespace),
+                $this->getNativeSignatures()
+            )
+        );
+    }
+
     protected function print(Closure $builder): string
     {
         $file = new PhpFile();
 
         $file->setStrictTypes(true);
 
-        $namespace = $file->addNamespace($this->namespace);
-
-        $this->addMethods($builder($namespace));
+        $builder($file->addNamespace($this->namespace));
 
         return $this->getPrinter()->printFile($file);
     }
@@ -46,18 +55,28 @@ abstract class AbstractClassPrinter
         $version = InstalledVersions::getVersion('nette/php-generator');
 
         return version_compare($version, '4.0', '>=')
-            ? new PsrPrinter80()
-            : new PsrPrinter74();
+            ? PsrPrinterFactory::compat4()
+            : PsrPrinterFactory::compat3();
+    }
+
+    protected function getNativeSignatures(): array
+    {
+        return static::SIGNATURES;
     }
 
     /**
      * @param ClassType|InterfaceType|TraitType $class
+     * @param array<string,array<string,string>> $signatures
+     *
+     * @return ClassType|InterfaceType|TraitType $class
      */
-    protected function addMethods($class): void
+    protected function addMethods($class, array $signatures)
     {
-        foreach (static::SIGNATURES as $method => $signature) {
+        foreach ($signatures as $method => $signature) {
             $this->addMethod($class, $method, $signature);
         }
+
+        return $class;
     }
 
     /**
@@ -178,4 +197,9 @@ abstract class AbstractClassPrinter
     {
         return [[], []];
     }
+
+    /**
+     * @return ClassType|TraitType|InterfaceType
+     */
+    abstract protected function setupClass(PhpNamespace $namespace);
 }

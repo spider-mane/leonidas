@@ -12,14 +12,24 @@ parameters:
     - config
     # - tests
 
+  excludePaths:
+    - src/Console/Library/PsrPrinterFactory.php
+
   bootstrapFiles:
     - boot/constants.php
 
   ignoreErrors:
-    - '#^Access to an undefined property WP_Taxonomy\:\:\$options.$#'
-    - '#^Access to an undefined property Wp_Error|WP_Taxonomy\:\:\$options.$#'
-    - '#^Access to an undefined property WP_Post_Type\:\:\$options.$#'
-    - '#^Access to an undefined property Wp_Error|WP_Post_Type\:\:\$options.$#'
+    - '#^Access to an undefined property WP_Taxonomy::\$options.$#'
+    - '#^Access to an undefined property Wp_Error|WP_Taxonomy::\$options.$#'
+    - '#^Access to an undefined property WP_Post_Type::\$options.$#'
+    - '#^Access to an undefined property Wp_Error|WP_Post_Type::\$options.$#'
+    # PhpGenerator Compat
+    - '#^Method [a-zA-Z0-9\\]+::[a-zA-Z0-9]+\(\) has invalid return type Nette\\PhpGenerator\\InterfaceType.$#'
+    - '#^Method [a-zA-Z0-9\\]+::[a-zA-Z0-9]+\(\) has invalid return type Nette\\PhpGenerator\\TraitType.$#'
+    - '#^Parameter \$[a-zA-Z0-9]+ of method [a-zA-Z0-9\\]+::[a-zA-Z0-9]+\(\) has invalid type Nette\\PhpGenerator\\InterfaceType.$#'
+    - '#^Parameter \$[a-zA-Z0-9]+ of method [a-zA-Z0-9\\]+::[a-zA-Z0-9]+\(\) has invalid type Nette\\PhpGenerator\\TraitType.$#'
+    - '#^Call to method [a-zA-Z0-9]+\(\) on an unknown class Nette\\PhpGenerator\\InterfaceType.$#'
+    - '#^Call to method [a-zA-Z0-9]+\(\) on an unknown class Nette\\PhpGenerator\\TraitType.$#'
     # General
     - '#^Unsafe usage of new static\(\).$#'
     - '#^Expression on left side of \?\? is not nullable.$#'

@@ -3,12 +3,8 @@
 namespace Leonidas\Console\Command\Make;
 
 use Leonidas\Console\Command\HopliteCommand;
-use Leonidas\Console\Library\ModelCollectionExtensionPrinter;
-use Leonidas\Console\Library\ModelCollectionPrinter;
-use Leonidas\Contracts\System\Model\Post\PostCollectionInterface;
+use Leonidas\Console\Library\ModelCollectionsFactory;
 use Leonidas\Contracts\System\Model\Post\PostInterface;
-use Leonidas\Library\System\Model\Post\Abstracts\AbstractPostCollection;
-use Leonidas\Library\System\Model\Post\PostCollection;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -25,59 +21,35 @@ class ModelCollectionCommand extends HopliteCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $collection = explode('\\', PostCollection::class);
-        $class = array_pop($collection);
-        $namespace = implode('\\', $collection);
+        $factory = ModelCollectionsFactory::build([
+            'model' => PostInterface::class,
+            'single' => 'post',
+            'plural' => 'posts',
+            'namespace' => 'Leonidas\Library\System\Model\Post',
+            'contracts' => 'Leonidas\Contracts\System\Model\Post',
+            'abstracts' => 'Leonidas\Library\System\Model\Post\Abstracts',
+            'type' => 'PostCollectionInterface',
+            'abstract' => 'AbstractPostCollection',
+            'collection' => 'PostCollection',
+            'query' => 'PostQuery',
+            'entity' => 'post',
+            'template' => 'post',
+        ]);
 
-        $model = PostInterface::class;
-        $single = 'post';
-        $plural = 'posts';
-        $implements = PostCollectionInterface::class;
+        $output = [
+            'interface' => $factory->getModelInterfacePrinter()->printFile(),
+            'abstract' => $factory->getAbstractCollectionPrinter()->printFile(),
+            'collection' => $factory->getChildCollectionPrinter()->printFile(),
+            'query' => $factory->getChildQueryPrinter()->printFile(),
+        ];
 
-        $printer = new ModelCollectionPrinter(
-            $model,
-            $single,
-            $plural,
-            $namespace,
-            $class,
-            $implements
-        );
+        foreach ($output as $class => $code) {
+            $file = getcwd() . '/.playground/factory/' . $class . '.php';
 
-        $file = $printer->printCollection();
-        $this->printPhp($file);
+            $this->printPhp($code);
 
-        $file = $printer->printCollectionTrait();
-        $this->printPhp($file);
-
-        $file = $printer->printAbstractCollection();
-        $this->printPhp($file);
-
-        $file = $printer->printCollectionInterface();
-        $this->printPhp($file);
-
-        $printer = new ModelCollectionExtensionPrinter(
-            AbstractPostCollection::class,
-            $model,
-            $single,
-            $plural,
-            $namespace,
-            $class,
-            $implements,
-            'post'
-        );
-
-        $file = $printer->printPostQuery();
-        $this->printPhp($file);
-
-        $file = $printer->printCollection();
-        $this->printPhp($file);
-
-        // exit;
-
-        file_put_contents(
-            '.playground/' . $class . '.php',
-            $file
-        );
+            file_put_contents($file, $code);
+        }
 
         exit;
     }
