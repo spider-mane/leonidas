@@ -2,8 +2,6 @@
 
 namespace Leonidas\Console\Library\Abstracts;
 
-use Closure;
-use Composer\InstalledVersions;
 use Leonidas\Console\Library\PsrPrinterFactory;
 use Nette\PhpGenerator\ClassType;
 use Nette\PhpGenerator\InterfaceType;
@@ -31,32 +29,25 @@ abstract class AbstractClassPrinter
 
     public function printFile(): string
     {
-        return $this->print(
-            fn (PhpNamespace $namespace) => $this->addMethods(
-                $this->setupClass($namespace),
-                $this->getNativeSignatures()
-            )
-        );
+        return $this->print($this->getNativeSignatures());
     }
 
-    protected function print(Closure $builder): string
+    protected function print(array $methods): string
     {
         $file = new PhpFile();
 
         $file->setStrictTypes(true);
 
-        $builder($file->addNamespace($this->namespace));
+        $class = $this->setupClass($file->addNamespace($this->namespace));
+
+        $this->finishClass($this->addMethods($class, $methods));
 
         return $this->getPrinter()->printFile($file);
     }
 
     protected function getPrinter(): Printer
     {
-        $version = InstalledVersions::getVersion('nette/php-generator');
-
-        return version_compare($version, '4.0', '>=')
-            ? PsrPrinterFactory::compat4()
-            : PsrPrinterFactory::compat3();
+        return PsrPrinterFactory::create();
     }
 
     protected function getNativeSignatures(): array
@@ -196,6 +187,14 @@ abstract class AbstractClassPrinter
     protected function getParameterNameReplacements(): array
     {
         return [[], []];
+    }
+
+    /**
+     * @param ClassType|InterfaceType|TraitType $class
+     */
+    protected function finishClass($class): void
+    {
+        //
     }
 
     /**

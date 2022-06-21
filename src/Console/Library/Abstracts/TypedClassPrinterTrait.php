@@ -2,10 +2,6 @@
 
 namespace Leonidas\Console\Library\Abstracts;
 
-use Leonidas\Console\Library\ClassType;
-use Leonidas\Console\Library\InterfaceType;
-use Leonidas\Console\Library\TraitType;
-use Nette\PhpGenerator\PhpNamespace;
 use ReflectionClass;
 
 trait TypedClassPrinterTrait
@@ -14,12 +10,7 @@ trait TypedClassPrinterTrait
 
     public function printFromType(): string
     {
-        return $this->print(
-            fn (PhpNamespace $namespace) => $this->addMethods(
-                $this->setupClass($namespace),
-                $this->getSignaturesFromType()
-            )
-        );
+        return $this->print($this->getSignaturesFromType());
     }
 
     protected function getSignaturesFromType(): array
@@ -39,10 +30,7 @@ trait TypedClassPrinterTrait
         return $signatures;
     }
 
-    /**
-     * @return ClassType|TraitType|InterfaceType
-     */
-    abstract protected function setupClass(PhpNamespace $namespace);
+    abstract protected function print(array $methods): string;
 
     abstract protected function getNativeSignatures(): array;
 }
