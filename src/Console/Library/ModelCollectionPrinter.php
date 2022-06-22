@@ -9,7 +9,7 @@ use Nette\PhpGenerator\PhpNamespace;
 
 class ModelCollectionPrinter extends AbstractCompleteModelCollectionPrinter
 {
-    protected function setupClass(PhpNamespace $namespace)
+    protected function setupClass(PhpNamespace $namespace): object
     {
         $base = AbstractModelCollection::class;
         $util = PoweredByModelCollectionKernelTrait::class;

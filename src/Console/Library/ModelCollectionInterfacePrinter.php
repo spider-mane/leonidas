@@ -7,7 +7,7 @@ use Nette\PhpGenerator\PhpNamespace;
 
 class ModelCollectionInterfacePrinter extends AbstractModelCollectionPrinter
 {
-    protected function setupClass(PhpNamespace $namespace)
+    protected function setupClass(PhpNamespace $namespace): object
     {
         return $namespace->addUse($this->model)->addInterface($this->class);
     }

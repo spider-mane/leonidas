@@ -9,7 +9,7 @@ use Nette\PhpGenerator\PhpNamespace;
 
 class ModelRepositoryInterfacePrinter extends AbstractModelRepositoryPrinter
 {
-    protected function setupClass(PhpNamespace $namespace)
+    protected function setupClass(PhpNamespace $namespace): object
     {
         $interface = $namespace
             ->addUse($this->model)

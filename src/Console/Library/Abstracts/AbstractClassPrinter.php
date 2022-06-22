@@ -199,5 +199,5 @@ abstract class AbstractClassPrinter
     /**
      * @return ClassType|TraitType|InterfaceType
      */
-    abstract protected function setupClass(PhpNamespace $namespace);
+    abstract protected function setupClass(PhpNamespace $namespace): object;
 }

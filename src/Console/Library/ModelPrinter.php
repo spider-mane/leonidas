@@ -129,7 +129,7 @@ class ModelPrinter extends AbstractTypedClassPrinter
         $this->template = $template;
     }
 
-    protected function setupClass(PhpNamespace $namespace)
+    protected function setupClass(PhpNamespace $namespace): object
     {
         $accessTrait = AllAccessGrantedTrait::class;
         $lazyLoadTrait = LazyLoadableRelationshipsTrait::class;

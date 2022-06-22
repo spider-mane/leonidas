@@ -50,7 +50,7 @@ class ModelRepositoryPrinter extends AbstractModelRepositoryPrinter
         $this->type = $type;
     }
 
-    protected function setupClass(PhpNamespace $namespace)
+    protected function setupClass(PhpNamespace $namespace): object
     {
         return $namespace
             ->addUse($this->model)

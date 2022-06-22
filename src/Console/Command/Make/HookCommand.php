@@ -44,7 +44,7 @@ class HookCommand extends HopliteCommand
         $type = $input->getArgument('type');
         $converted = $this->convert($tag)->toPascal();
 
-        $parts = explode('/', $config['hook']['path']);
+        $parts = explode('/', $config['make']['hook']['path']);
         $root = array_shift($parts);
         $namespace = implode('\\', $parts);
         $dir = $root . DIRECTORY_SEPARATOR . implode(DIRECTORY_SEPARATOR, array_slice($parts, 1));

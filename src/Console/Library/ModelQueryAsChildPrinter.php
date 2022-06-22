@@ -102,7 +102,7 @@ class ModelQueryAsChildPrinter extends AbstractClassPrinter
         $this->template = $template;
     }
 
-    protected function setupClass(PhpNamespace $namespace)
+    protected function setupClass(PhpNamespace $namespace): object
     {
         $engine = static::ENGINES[$this->template];
         $converter = static::CONVERTERS[$this->template];

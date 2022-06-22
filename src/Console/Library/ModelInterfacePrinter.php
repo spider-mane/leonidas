@@ -64,7 +64,7 @@ class ModelInterfacePrinter extends AbstractClassPrinter
         $this->template = $template;
     }
 
-    protected function setupClass(PhpNamespace $namespace)
+    protected function setupClass(PhpNamespace $namespace): object
     {
         $interface = $namespace->addInterface($this->class);
 

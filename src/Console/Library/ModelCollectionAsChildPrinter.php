@@ -38,7 +38,7 @@ class ModelCollectionAsChildPrinter extends AbstractClassPrinter
         $this->type = $type;
     }
 
-    protected function setupClass(PhpNamespace $namespace)
+    protected function setupClass(PhpNamespace $namespace): object
     {
         $util = PoweredByModelCollectionKernelTrait::class;
 
