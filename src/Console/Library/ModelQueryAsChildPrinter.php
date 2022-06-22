@@ -23,31 +23,45 @@ class ModelQueryAsChildPrinter extends AbstractClassPrinter
 
     public const QUERIES = [
         'post' => WP_Query::class,
+        'post:h' => WP_Query::class,
+        'attachment' => WP_Query::class,
         // 'term' => WP_Term_Query::class,
+        // 'term:h' => WP_Term_Query::class,
         // 'user' => WP_User_Query::class,
         // 'comment' => WP_Comment_Query::class,
     ];
 
     public const ENGINES = [
         'post' => PoweredByModelQueryKernelTrait::class,
+        'post:h' => PoweredByModelQueryKernelTrait::class,
+        'attachment' => PoweredByModelQueryKernelTrait::class,
     ];
 
     public const CONVERTERS = [
         'post' => PostConverterInterface::class,
+        'post:h' => PostConverterInterface::class,
+        'attachment' => PostConverterInterface::class,
         // 'term' => TermConverterInterface::class,
+        // 'term:h' => TermConverterInterface::class,
         // 'user' => UserConverterInterface::class,
         // 'comment' => CommentConverterInterface::class,
     ];
 
     public const VALIDATORS = [
         'post' => ValidatesPostTypeTrait::class,
+        'post:h' => ValidatesPostTypeTrait::class,
+        'attachment' => ValidatesPostTypeTrait::class,
         // 'term' => ValidatesTaxonomyTrait::class,
+        // 'term:h' => ValidatesTaxonomyTrait::class,
         // 'user' => ValidatesRoleTrait::class,
     ];
 
     public const ASSERTIONS = [
         'post' => '$this->assertPostTypeOnQuery($query, ?);',
+        'post:h' => '$this->assertPostTypeOnQuery($query, ?);',
+        'attachment' => '$this->assertPostTypeOnQuery($query, ?);',
         // 'term' => '$this->assertTaxonomyOnQuery($query, ?);',
+        // 'term:h' => '$this->assertTaxonomyOnQuery($query, ?);',
         // 'user' => '$this->assertRoleOnQuery($query, ?);',
         // 'comment' => '$this->assertCommentTypeOnQuery($query, ?);',
     ];
@@ -91,9 +105,10 @@ class ModelQueryAsChildPrinter extends AbstractClassPrinter
     protected function setupClass(PhpNamespace $namespace)
     {
         $engine = static::ENGINES[$this->template];
-        $validator = static::VALIDATORS[$this->template];
         $converter = static::CONVERTERS[$this->template];
         $query = static::QUERIES[$this->template];
+        $validator = static::VALIDATORS[$this->template];
+        $assertion = static::ASSERTIONS[$this->template];
 
         $namespace
             ->addUse($this->type)
@@ -114,10 +129,7 @@ class ModelQueryAsChildPrinter extends AbstractClassPrinter
 
         $constructor->addParameter('query')->setType($query);
         $constructor->addParameter('converter')->setType($converter);
-        $constructor->addBody(
-            static::ASSERTIONS[$this->template],
-            [$this->entity]
-        );
+        $constructor->addBody($assertion, [$this->entity]);
         $constructor->addBody('$this->initKernel($query, $converter);');
 
         return $class;

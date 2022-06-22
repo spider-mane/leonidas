@@ -19,8 +19,6 @@ class Tag implements TagInterface
     use MutableTermModelTrait;
     use ValidatesTaxonomyTrait;
 
-    protected WP_Term $term;
-
     protected PostCollectionInterface $posts;
 
     public function __construct(

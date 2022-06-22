@@ -4,6 +4,8 @@ namespace Leonidas\Console\Command\Make;
 
 use Leonidas\Console\Command\HopliteCommand;
 use Leonidas\Console\Library\ModelCollectionsFactory;
+use Leonidas\Console\Library\ModelInterfacePrinter;
+use Leonidas\Console\Library\ModelPrinter;
 use Leonidas\Console\Library\ModelRepositoryInterfacePrinter;
 use Leonidas\Console\Library\ModelRepositoryPrinter;
 use Leonidas\Contracts\System\Model\Post\PostCollectionInterface;
@@ -24,13 +26,44 @@ class ModelCollectionCommand extends HopliteCommand
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $this->testCollection();
-        $this->testRepository();
+        $this->runTests();
 
         return 0;
     }
 
-    protected function testRepository(): void
+    protected function runTests(): void
+    {
+        $playground = getcwd() . '/.playground/factory';
+
+        $this->testCollection($playground);
+        $this->testRepository($playground);
+        $this->testModel($playground);
+    }
+
+    protected function testModel(string $playground): void
+    {
+        $interface = new ModelInterfacePrinter(
+            $contracts = 'Leonidas\Contracts\System\Model\Post',
+            $type = 'PostInterface',
+            $template = 'attachment'
+        );
+
+        $class = new ModelPrinter(
+            'Leonidas\Library\System\Model\Post',
+            'Post',
+            $contracts . '\\' . $type,
+            'test',
+            $template
+        );
+
+        $this->printPhp($interface = $interface->printFile());
+        file_put_contents($playground . '/model-interface.php', $interface);
+
+        $this->printPhp($class = $class->printFromType());
+        file_put_contents($playground . '/model-class.php', $class);
+    }
+
+    protected function testRepository(string $playground): void
     {
         $interface = new ModelRepositoryInterfacePrinter(
             $model = PostInterface::class,
@@ -54,15 +87,13 @@ class ModelCollectionCommand extends HopliteCommand
         );
 
         $this->printPhp($interface = $interface->printFile());
+        file_put_contents($playground . '/repository-interface.php', $interface);
+
         $this->printPhp($class = $class->printFile());
-
-        $location = getcwd() . '/.playground/factory';
-
-        file_put_contents($location . '/repository-interface.php', $interface);
-        file_put_contents($location . '/repository-class.php', $class);
+        file_put_contents($playground . '/repository-class.php', $class);
     }
 
-    protected function testCollection(): void
+    protected function testCollection(string $playground): void
     {
         $factory = ModelCollectionsFactory::build([
             'model' => PostInterface::class,
@@ -87,7 +118,7 @@ class ModelCollectionCommand extends HopliteCommand
         ];
 
         foreach ($output as $class => $code) {
-            $file = getcwd() . '/.playground/factory/collection-' . $class . '.php';
+            $file = $playground . '/collection-' . $class . '.php';
 
             $this->printPhp($code);
 

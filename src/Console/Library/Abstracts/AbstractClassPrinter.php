@@ -29,18 +29,21 @@ abstract class AbstractClassPrinter
 
     public function printFile(): string
     {
-        return $this->print($this->getNativeSignatures());
+        return $this->print($this->getDefaultSignatures());
     }
 
     protected function print(array $methods): string
     {
         $file = new PhpFile();
+        $namespace = $file->addNamespace($this->namespace);
+        $class = $this->setupClass($namespace);
 
-        $file->setStrictTypes(true);
+        if (!$class->isInterface()) {
+            $file->setStrictTypes(true);
+        }
 
-        $class = $this->setupClass($file->addNamespace($this->namespace));
-
-        $this->finishClass($this->addMethods($class, $methods));
+        $this->addMethods($class, $methods);
+        $this->finishClass($class);
 
         return $this->getPrinter()->printFile($file);
     }
@@ -50,7 +53,7 @@ abstract class AbstractClassPrinter
         return PsrPrinterFactory::create();
     }
 
-    protected function getNativeSignatures(): array
+    protected function getDefaultSignatures(): array
     {
         return static::SIGNATURES;
     }
@@ -58,16 +61,12 @@ abstract class AbstractClassPrinter
     /**
      * @param ClassType|InterfaceType|TraitType $class
      * @param array<string,array<string,string>> $signatures
-     *
-     * @return ClassType|InterfaceType|TraitType $class
      */
-    protected function addMethods($class, array $signatures)
+    protected function addMethods($class, array $signatures): void
     {
         foreach ($signatures as $method => $signature) {
             $this->addMethod($class, $method, $signature);
         }
-
-        return $class;
     }
 
     /**
@@ -88,8 +87,8 @@ abstract class AbstractClassPrinter
         );
 
         $method = $class->addMethod($name)
-            ->setReturnNullable(str_contains($give, '?'))
-            ->setReturnReference(str_contains($give, '&'))
+            ->setReturnNullable(str_starts_with($give, '?'))
+            ->setReturnReference(str_starts_with($give, '&'))
             ->setReturnType($return)
             ->setPublic();
 
@@ -150,11 +149,11 @@ abstract class AbstractClassPrinter
             $parts[1]
         );
 
-        $method->setVariadic(str_contains($parts[1], '...'));
+        $method->setVariadic(str_starts_with($parts[1], '...'));
 
         $parameter = $method->addParameter($name)
-            ->setNullable(str_contains($parts[1], '?'))
-            ->setReference(str_contains($parts[1], '&'))
+            ->setNullable(str_starts_with($parts[1], '?'))
+            ->setReference(str_starts_with($parts[1], '&'))
             ->setType($type);
 
         if ($default = $parts[3] ?? false) {

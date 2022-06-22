@@ -17,8 +17,10 @@ class ModelRepositoryPrinter extends AbstractModelRepositoryPrinter
 
     public const ABSTRACTS = [
         'post' => AbstractPostEntityRepository::class,
+        'post:h' => AbstractPostEntityRepository::class,
         'attachment' => AbstractAttachmentEntityRepository::class,
         'term' => AbstractTermEntityRepository::class,
+        'term:h' => AbstractTermEntityRepository::class,
         'user' => AbstractUserModelRepository::class,
         'comment' => AbstractCommentModelRepositoryInterface::class,
     ];

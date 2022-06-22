@@ -63,6 +63,6 @@ class Post implements PostInterface
 
     public function __toString(): string
     {
-        return $this->getContent();
+        return $this->getAccessProvider->get('content');
     }
 }
