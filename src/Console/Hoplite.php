@@ -3,13 +3,13 @@
 namespace Leonidas\Console;
 
 use Leonidas\Console\Command\Make\HookCommand;
-use Leonidas\Console\Command\Make\ModelCollectionCommand;
+use Leonidas\Console\Command\Make\ModelCommand;
 use Symfony\Component\Console\Application;
 
 class Hoplite
 {
     public const COMMANDS = [
-        ModelCollectionCommand::class,
+        ModelCommand::class,
         HookCommand::class,
     ];
 

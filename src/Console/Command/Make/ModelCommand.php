@@ -6,20 +6,23 @@ use Leonidas\Console\Command\HopliteCommand;
 use Leonidas\Console\Library\ModelCollectionFactoryPrinter;
 use Leonidas\Console\Library\ModelCollectionsFactory;
 use Leonidas\Console\Library\ModelConverterPrinter;
+use Leonidas\Console\Library\ModelGetAccessProviderPrinter;
 use Leonidas\Console\Library\ModelInterfacePrinter;
 use Leonidas\Console\Library\ModelPrinter;
 use Leonidas\Console\Library\ModelQueryFactoryPrinter;
 use Leonidas\Console\Library\ModelRepositoryInterfacePrinter;
 use Leonidas\Console\Library\ModelRepositoryPrinter;
+use Leonidas\Console\Library\ModelSetAccessProviderPrinter;
+use Leonidas\Console\Library\ModelTemplateTagsProviderPrinter;
 use Leonidas\Contracts\System\Model\Post\PostCollectionInterface;
 use Leonidas\Contracts\System\Model\Post\PostInterface;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class ModelCollectionCommand extends HopliteCommand
+class ModelCommand extends HopliteCommand
 {
-    protected static $defaultName = 'make:model-collection';
+    protected static $defaultName = 'make:model';
 
     protected function configure()
     {
@@ -46,6 +49,47 @@ class ModelCollectionCommand extends HopliteCommand
         $this->testRepository($playground);
         $this->testModel($playground);
         $this->testFactories($playground);
+        $this->testAccessProviders($playground);
+    }
+
+    protected function testAccessProviders(string $playground): void
+    {
+        $namespace = 'Leonidas\Library\System\Model\Post';
+        $model = 'Leonidas\Contracts\System\Model\Post\PostInterface';
+
+        $get = new ModelGetAccessProviderPrinter(
+            $namespace,
+            $getter = 'PostGetAccessProvider',
+            $model,
+            'post',
+            false
+        );
+
+        $set = new ModelSetAccessProviderPrinter(
+            $namespace,
+            'PostGetAccessProvider',
+            $model,
+            'post',
+            true
+        );
+
+        $tag = new ModelTemplateTagsProviderPrinter(
+            $namespace,
+            'PostTemplateTags',
+            $model,
+            'post',
+            $namespace . '\\' . $getter,
+            'post'
+        );
+
+        $this->printPhp($get = $get->printFile());
+        file_put_contents($playground . '/access-get.php', $get);
+
+        $this->printPhp($set = $set->printFile());
+        file_put_contents($playground . '/access-set.php', $set);
+
+        $this->printPhp($tag = $tag->printFile());
+        file_put_contents($playground . '/access-tag.php', $tag);
     }
 
     protected function testFactories(string $playground): void
