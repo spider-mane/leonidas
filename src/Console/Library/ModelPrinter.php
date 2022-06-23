@@ -168,7 +168,7 @@ class ModelPrinter extends AbstractTypedClassPrinter
         $constructor->addBody('$this->autoInvoker = $autoInvoker;' . "\n");
 
         $getAccessTemplate = $this->isPostTemplate()
-            ? '$this->getAccessProvider = new %sTemplateTags($this, $%s);'
+            ? '$this->getAccessProvider = new %sTagAccessProvider($this, $%s);'
             : '$this->getAccessProvider = new %sGetAccessProvider($this);';
 
         $constructor->addBody(sprintf($getAccessTemplate, $this->class, $core));

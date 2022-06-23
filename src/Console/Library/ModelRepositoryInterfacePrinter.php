@@ -18,12 +18,14 @@ class ModelRepositoryInterfacePrinter extends AbstractModelRepositoryPrinter
 
         switch ($this->template) {
             case 'post':
+            case 'post:h':
             case 'attachment':
                 $base = SoftDeletingRepositoryInterface::class;
 
                 break;
 
             case 'term':
+            case 'term:h':
             case 'user':
             case 'comment':
             default:

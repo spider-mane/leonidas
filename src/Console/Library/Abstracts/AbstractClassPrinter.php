@@ -27,6 +27,16 @@ abstract class AbstractClassPrinter
         $this->class = $class;
     }
 
+    public function getNamespace(): string
+    {
+        return $this->namespace;
+    }
+
+    public function getClass(): string
+    {
+        return $this->class;
+    }
+
     public function printFile(): string
     {
         return $this->print($this->getDefaultSignatures());

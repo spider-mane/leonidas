@@ -3,19 +3,7 @@
 namespace Leonidas\Console\Command\Make;
 
 use Leonidas\Console\Command\HopliteCommand;
-use Leonidas\Console\Library\ModelCollectionFactoryPrinter;
-use Leonidas\Console\Library\ModelCollectionsFactory;
-use Leonidas\Console\Library\ModelConverterPrinter;
-use Leonidas\Console\Library\ModelGetAccessProviderPrinter;
-use Leonidas\Console\Library\ModelInterfacePrinter;
-use Leonidas\Console\Library\ModelPrinter;
-use Leonidas\Console\Library\ModelQueryFactoryPrinter;
-use Leonidas\Console\Library\ModelRepositoryInterfacePrinter;
-use Leonidas\Console\Library\ModelRepositoryPrinter;
-use Leonidas\Console\Library\ModelSetAccessProviderPrinter;
-use Leonidas\Console\Library\ModelTemplateTagsProviderPrinter;
-use Leonidas\Contracts\System\Model\Post\PostCollectionInterface;
-use Leonidas\Contracts\System\Model\Post\PostInterface;
+use Leonidas\Console\Library\ModelComponentFactory;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -34,181 +22,122 @@ class ModelCommand extends HopliteCommand
     {
         $this->runTests();
 
-        return 0;
+        return self::SUCCESS;
     }
 
     protected function runTests(): void
     {
-        $playground = getcwd() . '/.playground/model';
+        // $config = $this->config('make.model');
+        $playground = $this->external('/.playground/model');
 
-        if (!is_dir($playground)) {
-            mkdir($playground, 0777, true);
+        if ($this->filesystem->exists($playground)) {
+            $this->filesystem->remove($playground);
         }
 
-        $this->testCollection($playground);
-        $this->testRepository($playground);
-        $this->testModel($playground);
-        $this->testFactories($playground);
-        $this->testAccessProviders($playground);
-    }
+        $this->filesystem->mkdir($playground, 0777);
 
-    protected function testAccessProviders(string $playground): void
-    {
-        $namespace = 'Leonidas\Library\System\Model\Post';
-        $model = 'Leonidas\Contracts\System\Model\Post\PostInterface';
-
-        $get = new ModelGetAccessProviderPrinter(
-            $namespace,
-            $getter = 'PostGetAccessProvider',
-            $model,
-            'post',
-            false
-        );
-
-        $set = new ModelSetAccessProviderPrinter(
-            $namespace,
-            'PostGetAccessProvider',
-            $model,
-            'post',
-            true
-        );
-
-        $tag = new ModelTemplateTagsProviderPrinter(
-            $namespace,
-            'PostTemplateTags',
-            $model,
-            'post',
-            $namespace . '\\' . $getter,
-            'post'
-        );
-
-        $this->printPhp($get = $get->printFile());
-        file_put_contents($playground . '/access-get.php', $get);
-
-        $this->printPhp($set = $set->printFile());
-        file_put_contents($playground . '/access-set.php', $set);
-
-        $this->printPhp($tag = $tag->printFile());
-        file_put_contents($playground . '/access-tag.php', $tag);
-    }
-
-    protected function testFactories(string $playground): void
-    {
-        $namespace = 'Leonidas\Library\System\Model\Post';
-
-        $collection = new ModelCollectionFactoryPrinter(
-            $namespace,
-            'PostCollectionFactory',
-            $namespace . '\\' . 'PostCollection'
-        );
-
-        $query = new ModelQueryFactoryPrinter(
-            $namespace,
-            'PostQueryFactory',
-            $namespace . '\\' . 'PostQuery',
-            'post'
-        );
-
-        $model = new ModelConverterPrinter(
-            $namespace,
-            'PostConverter',
-            'Leonidas\Library\System\Model\Post\Post',
-            'Leonidas\Contracts\System\Model\Post\PostInterface',
-            'user'
-        );
-
-        $this->printPhp($collection = $collection->printFile());
-        file_put_contents($playground . '/factory-collection.php', $collection);
-
-        $this->printPhp($query = $query->printFile());
-        file_put_contents($playground . '/factory-query.php', $query);
-
-        $this->printPhp($model = $model->printFile());
-        file_put_contents($playground . '/factory-model.php', $model);
-    }
-
-    protected function testModel(string $playground): void
-    {
-        $interface = new ModelInterfacePrinter(
-            $contracts = 'Leonidas\Contracts\System\Model\Post',
-            $type = 'PostInterface',
-            $template = 'attachment'
-        );
-
-        $class = new ModelPrinter(
-            'Leonidas\Library\System\Model\Post',
-            'Post',
-            $contracts . '\\' . $type,
-            'test',
-            $template
-        );
-
-        $this->printPhp($interface = $interface->printFile());
-        file_put_contents($playground . '/model-interface.php', $interface);
-
-        $this->printPhp($class = $class->printFromType());
-        file_put_contents($playground . '/model-class.php', $class);
-    }
-
-    protected function testRepository(string $playground): void
-    {
-        $interface = new ModelRepositoryInterfacePrinter(
-            $model = PostInterface::class,
-            $collection = PostCollectionInterface::class,
-            $single = 'post',
-            $plural = 'posts',
-            $contracts = 'Leonidas\Contracts\System\Model\Post',
-            $type = 'PostRepositoryInterface',
-            $template = 'post'
-        );
-
-        $class = new ModelRepositoryPrinter(
-            $model,
-            $collection,
-            $single,
-            $plural,
-            'Leonidas\Library\System\Model\Post',
-            'PostRepository',
-            $contracts . '\\' . $type,
-            $template
-        );
-
-        $this->printPhp($interface = $interface->printFile());
-        file_put_contents($playground . '/repository-interface.php', $interface);
-
-        $this->printPhp($class = $class->printFile());
-        file_put_contents($playground . '/repository-class.php', $class);
-    }
-
-    protected function testCollection(string $playground): void
-    {
-        $factory = ModelCollectionsFactory::build([
-            'model' => PostInterface::class,
-            'single' => 'post',
-            'plural' => 'posts',
-            'namespace' => 'Leonidas\Library\System\Model\Post',
-            'contracts' => 'Leonidas\Contracts\System\Model\Post',
-            'abstracts' => 'Leonidas\Library\System\Model\Post\Abstracts',
-            'type' => 'PostCollectionInterface',
-            'abstract' => 'AbstractPostCollection',
-            'collection' => 'PostCollection',
-            'query' => 'PostQuery',
-            'entity' => 'post',
+        $factory = ModelComponentFactory::build([
+            'model' => 'test_model',
+            'namespace' => 'Leonidas\Library\System\Model\Test',
+            'contracts' => 'Leonidas\Contracts\System\Model\Test',
+            'abstracts' => 'Leonidas\Library\System\Model\Test\Abstracts',
+            'entity' => 'leon_test',
+            'single' => 'test',
+            'plural' => 'tests',
             'template' => 'post',
         ]);
 
-        $output = [
-            'interface' => $factory->getModelInterfacePrinter()->printFile(),
-            'abstract' => $factory->getAbstractCollectionPrinter()->printFile(),
-            'collection' => $factory->getChildCollectionPrinter()->printFile(),
-            'query' => $factory->getChildQueryPrinter()->printFile(),
-        ];
+        $this->testCollection($playground, $factory);
+        $this->testRepository($playground, $factory);
+        $this->testModel($playground, $factory);
+        $this->testFactories($playground, $factory);
+        $this->testAccessProviders($playground, $factory);
+    }
 
-        foreach ($output as $class => $code) {
-            $file = $playground . '/collection-' . $class . '.php';
+    protected function testAccessProviders(string $playground, ModelComponentFactory $factory): void
+    {
+        $get = $factory->getGetAccessProviderPrinter();
+        $set = $factory->getSetAccessProviderPrinter();
 
-            $this->printPhp($code);
-            file_put_contents($file, $code);
+        $this->printPhp($get = $get->printFile());
+        $this->writeFile($playground . '/access-get.php', $get);
+
+        $this->printPhp($set = $set->printFile());
+        $this->writeFile($playground . '/access-set.php', $set);
+
+        if ($factory->isPostTemplate()) {
+            $tag = $factory->getTagAccessProviderPrinter();
+
+            $this->printPhp($tag = $tag->printFile());
+            $this->writeFile($playground . '/access-tag.php', $tag);
         }
+    }
+
+    protected function testFactories(string $playground, ModelComponentFactory $factory): void
+    {
+        $model = $factory->getModelConverterPrinter();
+        $collection = $factory->getCollectionFactoryPrinter();
+
+        $this->printPhp($model = $model->printFile());
+        $this->writeFile($playground . '/factory-model.php', $model);
+
+        $this->printPhp($collection = $collection->printFile());
+        $this->writeFile($playground . '/factory-collection.php', $collection);
+
+        if ($factory->isPostTemplate()) {
+            $query = $factory->getQueryFactoryPrinter();
+
+            $this->printPhp($query = $query->printFile());
+            $this->writeFile($playground . '/factory-query.php', $query);
+        }
+    }
+
+    protected function testModel(string $playground, ModelComponentFactory $factory): void
+    {
+        $interface = $factory->getModelInterfacePrinter();
+        $class = $factory->getModelPrinter();
+
+        $this->printPhp($interface = $interface->printFile());
+        $this->writeFile($playground . '/model-interface.php', $interface);
+
+        $this->printPhp($class = $class->printFile());
+        $this->writeFile($playground . '/model-class.php', $class);
+    }
+
+    protected function testRepository(string $playground, ModelComponentFactory $factory): void
+    {
+        $interface = $factory->getRepositoryInterfacePrinter();
+        $class = $factory->getRepositoryPrinter();
+
+        $this->printPhp($interface = $interface->printFile());
+        $this->writeFile($playground . '/repository-interface.php', $interface);
+
+        $this->printPhp($class = $class->printFile());
+        $this->writeFile($playground . '/repository-class.php', $class);
+    }
+
+    protected function testCollection(string $playground, ModelComponentFactory $factory): void
+    {
+        $interface = $factory->getCollectionInterfacePrinter();
+
+        $this->printPhp($interface = $interface->printFile());
+        $this->writeFile($playground . '/collection-interface.php', $interface);
+
+        if ($factory->isPostTemplate()) {
+            $abstract = $factory->getAbstractCollectionPrinter();
+            $collection = $factory->getChildCollectionPrinter();
+            $query = $factory->getChildQueryPrinter();
+
+            $this->printPhp($abstract = $abstract->printFile());
+            $this->writeFile($playground . '/collection-abstract.php', $abstract);
+
+            $this->printPhp($query = $query->printFile());
+            $this->writeFile($playground . '/collection-query.php', $query);
+        } else {
+            $collection = $factory->getCollectionPrinter();
+        }
+
+        $this->printPhp($collection = $collection->printFile());
+        $this->writeFile($playground . '/collection-collection.php', $collection);
     }
 }

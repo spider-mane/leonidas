@@ -1,3 +1,5 @@
+abstract_dir: true
+
 make:
   hook:
     path: src/Leonidas/Hooks
