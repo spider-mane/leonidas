@@ -8,6 +8,7 @@ use Noodlehaus\Config;
 use PHP_Parallel_Lint\PhpConsoleColor\ConsoleColor;
 use PHP_Parallel_Lint\PhpConsoleHighlighter\Highlighter;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Filesystem\Filesystem;
 
 abstract class HopliteCommand extends Command
@@ -16,6 +17,8 @@ abstract class HopliteCommand extends Command
 
     protected Config $config;
 
+    protected Config $composerConfig;
+
     protected Filesystem $filesystem;
 
     protected Highlighter $highlighter;
@@ -23,6 +26,7 @@ abstract class HopliteCommand extends Command
     public function __construct(string $name = null)
     {
         $this->config = new Config($this->external('/hoplite.yml'));
+        $this->composerConfig = new Config($this->external('/composer.json'));
         $this->filesystem = new Filesystem();
         $this->highlighter = new Highlighter(new ConsoleColor());
         $this->caseConverter = new CaseConverter();
@@ -33,6 +37,43 @@ abstract class HopliteCommand extends Command
     protected function config(string $key, $default = null)
     {
         return $this->config->get($key, $default);
+    }
+
+    protected function composer(string $key, $default = null)
+    {
+        return $this->composerConfig->get($key, $default);
+    }
+
+    protected function getNamespaceFromPath(string $path): string
+    {
+        // todo: match completely
+        $namespaces = array_flip($this->composer('autoload.psr-4'));
+        $parts = explode('/', $path);
+        $entry = array_shift($parts);
+        $base = $namespaces[$entry . '/'];
+
+        return $base . implode('\\', $parts);
+    }
+
+    protected function getPathFromNamespace(string $namespace): string
+    {
+        // todo: match completely
+        $namespaces = $this->composer('autoload.psr-4');
+        $parts = explode('\\', $namespace);
+        $entry = array_shift($parts);
+        $base = $namespaces[$entry . '\\'];
+
+        return $base . implode('/', $parts);
+    }
+
+    protected function fallbackArgument(InputInterface $input, string $option, string $configKey, $default = null)
+    {
+        return $input->getArgument($option) ?? $this->config($configKey, $default);
+    }
+
+    protected function fallbackOption(InputInterface $input, string $option, string $configKey, $default = null)
+    {
+        return $input->getOption($option) ?? $this->config($configKey, $default);
     }
 
     protected function internal(string $path = ''): string

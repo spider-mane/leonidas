@@ -6,6 +6,7 @@ use Leonidas\Console\Command\HopliteCommand;
 use Leonidas\Console\Library\ModelComponentFactory;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class ModelCommand extends HopliteCommand
@@ -14,37 +15,61 @@ class ModelCommand extends HopliteCommand
 
     protected function configure()
     {
-        // $this
-        //     ->addArgument('model', InputArgument::REQUIRED);
+        $this
+            ->addArgument('component', InputArgument::OPTIONAL, 'The component set to generate')
+            ->addOption('model', 'm', InputOption::VALUE_REQUIRED, '')
+            ->addOption('entity', 'e', InputOption::VALUE_REQUIRED, '')
+            ->addOption('single', 's', InputOption::VALUE_REQUIRED, '')
+            ->addOption('plural', 'p', InputOption::VALUE_REQUIRED, '')
+            ->addOption('template', 't', InputOption::VALUE_OPTIONAL, '')
+            ->addOption('namespace', 'l', InputOption::VALUE_OPTIONAL, '')
+            ->addOption('contracts', 'c', InputOption::VALUE_OPTIONAL, '')
+            ->addOption('abstracts', 'a', InputOption::VALUE_OPTIONAL, '')
+            ->addOption('replace', 'r', InputOption::VALUE_OPTIONAL, '');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $this->runTests();
+        $this->runTests($input, $output);
 
         return self::SUCCESS;
     }
 
-    protected function runTests(): void
+    protected function runTests(InputInterface $input, OutputInterface $output): void
     {
-        // $config = $this->config('make.model');
         $playground = $this->external('/.playground/model');
 
         if ($this->filesystem->exists($playground)) {
             $this->filesystem->remove($playground);
         }
 
-        $this->filesystem->mkdir($playground, 0777);
+        $this->filesystem->mkdir($playground);
+
+        $model = $input->getOption('model');
+        $entity = $input->getOption('entity');
+        $single = $input->getOption('single');
+        $plural = $input->getOption('plural');
+        $template = $input->getOption('template') ?? 'post';
+
+        $namespace = $this->getNamespaceFromPath(
+            $this->fallbackOption($input, 'namespace', 'make.model.namespace')
+        );
+        $contracts = $this->getNamespaceFromPath(
+            $this->fallbackOption($input, 'contracts', 'make.model.contracts')
+        );
+        $abstracts = $this->config('abstract_dir', true)
+            ? $namespace . '\\Abstracts'
+            : $namespace;
 
         $factory = ModelComponentFactory::build([
-            'model' => 'test_model',
-            'namespace' => 'Leonidas\Library\System\Model\Test',
-            'contracts' => 'Leonidas\Contracts\System\Model\Test',
-            'abstracts' => 'Leonidas\Library\System\Model\Test\Abstracts',
-            'entity' => 'leon_test',
-            'single' => 'test',
-            'plural' => 'tests',
-            'template' => 'post',
+            'model' => $model,
+            'namespace' => $namespace,
+            'contracts' => $contracts,
+            'abstracts' => $abstracts,
+            'entity' => $entity,
+            'single' => $single,
+            'plural' => $plural,
+            'template' => $template,
         ]);
 
         $this->testCollection($playground, $factory);

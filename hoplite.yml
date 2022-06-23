@@ -5,8 +5,8 @@ make:
     path: src/Leonidas/Hooks
 
   model:
-    interfaces: src/Contracts/System/Model
-    classes: src/Library/System/Model
+    contracts: src/Contracts/System/Model
+    namespace: src/Library/System/Model
 
 util:
   method:
