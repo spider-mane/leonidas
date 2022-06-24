@@ -10,6 +10,26 @@ use Symfony\Component\Console\Input\InputOption;
 
 class ModelCommand extends HopliteCommand
 {
+    protected const CORE_FILE_METHODS = [
+        'makeModelFiles',
+        'makeCollectionFiles',
+        'makeRepositoryFiles',
+    ];
+
+    protected const SUPPORT_FILE_METHODS = [
+        'makeFactoryFiles',
+        'makeAccessProviderFiles',
+    ];
+
+    protected const VALID_TEMPLATES = [
+        'post',
+        'post:h',
+        'attachment',
+        'term',
+        'term:h',
+        'user',
+    ];
+
     protected static $defaultName = 'make:model';
 
     protected function configure()
@@ -24,8 +44,8 @@ class ModelCommand extends HopliteCommand
             ->addOption('abstracts', 'a', InputOption::VALUE_OPTIONAL, '')
             ->addOption('template', 't', InputOption::VALUE_REQUIRED, '', 'post')
             ->addOption('components', 'p', InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY, 'The component set to generate')
-            ->addOption('only-interface', 'o', InputOption::VALUE_NONE, 'Generate interfaces only')
-            ->addOption('from-interface', 'f', InputOption::VALUE_NONE, 'Generate classes using interfaces as guide')
+            ->addOption('design', 'd', InputOption::VALUE_NONE, 'Generate interfaces only')
+            ->addOption('build', 'b', InputOption::VALUE_NONE, 'Generate classes using interfaces as guide')
             ->addOption('replace', 'r', InputOption::VALUE_OPTIONAL, '');
     }
 
@@ -36,7 +56,7 @@ class ModelCommand extends HopliteCommand
         if ($this->isValidTemplate($template)) {
             $status = $this->makeFiles($template);
         } else {
-            $this->output->error("Template \"{$template}\" is not valid");
+            $this->output->error("Value \"{$template}\" is not an accepted value for template");
 
             $status = self::FAILURE;
         }
@@ -46,43 +66,40 @@ class ModelCommand extends HopliteCommand
 
     protected function isValidTemplate(string $template): bool
     {
-        return in_array($template, [
-            'post',
-            'post:h',
-            'attachment',
-            'term',
-            'term:h',
-            'user',
-        ]);
-    }
-
-    protected function setupTestDir(string $dir): void
-    {
-        if ($this->filesystem->exists($dir)) {
-            // $this->filesystem->remove($playground);
-        } else {
-            $this->filesystem->mkdir($dir);
-        }
-
-        foreach (new DirectoryIterator($dir) as $file) {
-            if (!$file->isFile()) {
-                continue;
-            }
-
-            if (!str_ends_with($file->getBasename(), '-interface.php')) {
-                $this->filesystem->remove($file->getPathname());
-            } else {
-                require $file->getPathname();
-            }
-        }
+        return in_array($template, static::VALID_TEMPLATES);
     }
 
     protected function makeFiles(string $template): int
     {
-        $playground = $this->external('/.playground/model');
+        $factory = $this->getComponentFactory($template);
+        $action = $this->resolveRequestedAction();
+        $paths = $this->getOutputPaths();
 
-        $this->setupTestDir($playground);
+        foreach (static::CORE_FILE_METHODS as $method) {
+            $status = $this->$method($factory, $action, $paths);
 
+            if (self::SUCCESS !== $status) {
+                return $status;
+            }
+        }
+
+        if ('interfaces' !== $action) {
+            foreach (static::SUPPORT_FILE_METHODS as $method) {
+                $status = $this->$method($factory, $paths);
+
+                if (self::SUCCESS !== $status) {
+                    return $status;
+                }
+            }
+        }
+
+        $this->output->success("Successfully created model files");
+
+        return self::SUCCESS;
+    }
+
+    protected function getComponentFactory(string $template): ModelComponentFactory
+    {
         $model = $this->input->getArgument('model');
         $entity = $this->input->getArgument('entity');
         $single = $this->input->getArgument('single');
@@ -113,74 +130,84 @@ class ModelCommand extends HopliteCommand
             'template' => $template,
         ]);
 
-        if ($this->input->getOption('only-interface')) {
-            $build = 'interfaces';
-        } elseif ($this->input->getOption('from-interface')) {
-            $build = 'classes';
-        } else {
-            $build = 'complete';
-        }
-
-        $typed = [
-            'makeModelFiles',
-            'makeCollectionFiles',
-            'makeRepositoryFiles',
-        ];
-
-        foreach ($typed as $method) {
-            $status = $this->$method($playground, $factory, $build);
-
-            if (self::SUCCESS !== $status) {
-                return $status;
-            }
-        }
-
-        $support = [
-            'makeFactoryFiles',
-            'makeAccessProviderFiles',
-        ];
-
-        if ('interfaces' !== $build) {
-            foreach ($support as $method) {
-                $status = $this->$method($playground, $factory);
-
-                if (self::SUCCESS !== $status) {
-                    return $status;
-                }
-            }
-        }
-
-        return self::SUCCESS;
+        return $factory;
     }
 
-    protected function makeModelFiles(string $playground, ModelComponentFactory $factory, string $build): int
+    protected function resolveRequestedAction(): string
+    {
+        if ($this->input->getOption('design')) {
+            return 'interfaces';
+        } elseif ($this->input->getOption('build')) {
+            return 'classes';
+        } else {
+            return 'complete';
+        }
+    }
+
+    protected function getOutputPaths(): array
+    {
+        $playground = $this->setupTestDir();
+
+        return [
+            'interfaces' => $playground,
+            'abstracts' => $playground,
+            'classes' => $playground,
+        ];
+    }
+
+    protected function setupTestDir(): string
+    {
+        $playground = $this->external('/.playground/model');
+
+        if ($this->filesystem->exists($playground)) {
+            // $this->filesystem->remove($playground);
+        } else {
+            $this->filesystem->mkdir($playground);
+        }
+
+        foreach (new DirectoryIterator($playground) as $file) {
+            if (!$file->isFile()) {
+                continue;
+            }
+
+            if (!str_ends_with($file->getBasename(), 'Interface.php')) {
+                $this->filesystem->remove($file->getPathname());
+            } else {
+                require $file->getPathname();
+            }
+        }
+
+        return $playground;
+    }
+
+    protected function makeModelFiles(ModelComponentFactory $factory, string $action, array $paths): int
     {
         $interface = $factory->getModelInterfacePrinter();
         $class = $factory->getModelPrinter();
 
-        if ('interfaces' === $build || 'complete' === $build) {
-            $this->printPhp($output = $interface->printFile());
-            $this->writeFile($playground . '/model-interface.php', $output);
-        } elseif ('classes' === $build) {
+        $interfaceFile = $this->phpFile($paths['interfaces'], $interface->getClass());
+        $classFile = $this->phpFile($paths['classes'], $class->getClass());
+
+        if ('interfaces' === $action || 'complete' === $action) {
+            $this->writeFile($interfaceFile, $interface->printFile());
+        } elseif ('classes' === $action) {
             if (!interface_exists($interfaceFqn = $interface->getClassFqn())) {
                 $this->output->error("Interface {$interfaceFqn} does not exist");
 
                 return self::INVALID;
             }
 
-            $this->printPhp($output = $class->printFromType());
-            $this->writeFile($playground . '/model-class.php', $output);
+            $this->writeFile($classFile, $class->printFromType());
         }
 
-        if ('complete' === $build) {
-            $this->printPhp($class = $class->printFile());
-            $this->writeFile($playground . '/model-class.php', $class);
+        if ('complete' === $action) {
+            $this->writeFile($classFile, $class->printFile());
         }
 
         return self::SUCCESS;
     }
 
-    protected function makeCollectionFiles(string $playground, ModelComponentFactory $factory, string $build): int
+    protected function makeCollectionFiles(ModelComponentFactory $factory, string $action, array $paths): int
     {
         $isPost = $factory->isPostTemplate();
 
@@ -191,10 +218,14 @@ class ModelCommand extends HopliteCommand
         $abstract = $factory->getAbstractCollectionPrinter();
         $query = $factory->getChildQueryPrinter();
 
-        if ('interfaces' === $build || 'complete' === $build) {
-            $this->printPhp($output = $interface->printFile());
-            $this->writeFile($playground . '/collection-interface.php', $output);
-        } elseif ('classes' === $build) {
+        $interfaceFile = $this->phpFile($paths['interfaces'], $interface->getClass());
+        $collectionFile = $this->phpFile($paths['classes'], $collection->getClass());
+        $abstractFile = $this->phpFile($paths['abstracts'], $abstract->getClass());
+        $queryFile = $this->phpFile($paths['classes'], $query->getClass());
+
+        if ('interfaces' === $action || 'complete' === $action) {
+            $this->writeFile($interfaceFile, $interface->printFile());
+        } elseif ('classes' === $action) {
             if (!interface_exists($interface->getClassFqn())) {
                 $this->output->error("Interface {$interface->getClassFqn()} does not exist");
 
@@ -202,100 +233,90 @@ class ModelCommand extends HopliteCommand
             }
 
             if ($isPost) {
-                $this->printPhp($output = $abstract->printFromType());
-                $this->writeFile($playground . '/collection-abstract.php', $output);
-
-                $this->printPhp($output = $collection->printFile());
-                $this->writeFile($playground . '/collection-class.php', $output);
-
-                $this->printPhp($output = $query->printFile());
-                $this->writeFile($playground . '/collection-query.php', $output);
+                $this->writeFile($abstractFile, $abstract->printFromType());
+                $this->writeFile($collectionFile, $collection->printFile());
+                $this->writeFile($queryFile, $query->printFile());
             } else {
-                $this->printPhp($output = $collection->printFromType());
-                $this->writeFile($playground . '/collection-class.php', $output);
+                $this->writeFile($collectionFile, $collection->printFromType());
             }
         }
 
-        if ('complete' === $build) {
-            $this->printPhp($output = $collection->printFile());
-            $this->writeFile($playground . '/collection-class.php', $output);
+        if ('complete' === $action) {
+            $this->writeFile($collectionFile, $collection->printFile());
 
             if ($isPost) {
-                $this->printPhp($output = $abstract->printFile());
-                $this->writeFile($playground . '/collection-abstract.php', $output);
-
-                $this->printPhp($output = $query->printFile());
-                $this->writeFile($playground . '/collection-query.php', $output);
+                $this->writeFile($abstractFile, $abstract->printFile());
+                $this->writeFile($queryFile, $query->printFile());
             }
         }
 
         return self::SUCCESS;
     }
 
-    protected function makeRepositoryFiles(string $playground, ModelComponentFactory $factory, string $build): int
+    protected function makeRepositoryFiles(ModelComponentFactory $factory, string $action, array $paths): int
     {
         $interface = $factory->getRepositoryInterfacePrinter();
         $class = $factory->getRepositoryPrinter();
 
-        if ('interfaces' === $build || 'complete' === $build) {
-            $this->printPhp($interface = $interface->printFile());
-            $this->writeFile($playground . '/repository-interface.php', $interface);
-        } elseif ('classes' === $build) {
+        $interfaceFile = $this->phpFile($paths['interfaces'], $interface->getClass());
+        $classFile = $this->phpFile($paths['classes'], $class->getClass());
+
+        if ('interfaces' === $action || 'complete' === $action) {
+            $this->writeFile($interfaceFile, $interface->printFile());
+        } elseif ('classes' === $action) {
             if (!interface_exists($interfaceFqn = $interface->getClassFqn())) {
                 $this->output->error("Interface {$interfaceFqn} does not exist");
 
                 return self::INVALID;
             }
 
-            $this->printPhp($class = $class->printFromType());
-            $this->writeFile($playground . '/repository-class.php', $class);
+            $this->writeFile($classFile, $class->printFromType());
         }
 
-        if ('complete' === $build) {
-            $this->printPhp($class = $class->printFile());
-            $this->writeFile($playground . '/repository-class.php', $class);
+        if ('complete' === $action) {
+            $this->writeFile($classFile, $class->printFile());
         }
 
         return self::SUCCESS;
     }
 
-    protected function makeFactoryFiles(string $playground, ModelComponentFactory $factory): int
+    protected function makeFactoryFiles(ModelComponentFactory $factory, array $paths): int
     {
         $model = $factory->getModelConverterPrinter();
         $collection = $factory->getCollectionFactoryPrinter();
 
-        $this->printPhp($model = $model->printFile());
-        $this->writeFile($playground . '/factory-model.php', $model);
+        $modelFile = $this->phpFile($paths['classes'], $model->getClass());
+        $collectionFile = $this->phpFile($paths['classes'], $collection->getClass());
 
-        $this->printPhp($collection = $collection->printFile());
-        $this->writeFile($playground . '/factory-collection.php', $collection);
+        $this->writeFile($modelFile, $model->printFile());
+        $this->writeFile($collectionFile, $collection->printFile());
 
         if ($factory->isPostTemplate()) {
             $query = $factory->getQueryFactoryPrinter();
+            $queryFile = $this->phpFile($paths['classes'], $query->getClass());
 
-            $this->printPhp($query = $query->printFile());
-            $this->writeFile($playground . '/factory-query.php', $query);
+            $this->writeFile($queryFile, $query->printFile());
         }
 
         return self::SUCCESS;
     }
 
-    protected function makeAccessProviderFiles(string $playground, ModelComponentFactory $factory): int
+    protected function makeAccessProviderFiles(ModelComponentFactory $factory, array $paths): int
     {
         $get = $factory->getGetAccessProviderPrinter();
         $set = $factory->getSetAccessProviderPrinter();
 
-        $this->printPhp($get = $get->printFile());
-        $this->writeFile($playground . '/access-get.php', $get);
+        $getFile = $this->phpFile($paths['classes'], $get->getClass());
+        $setFile = $this->phpFile($paths['classes'], $set->getClass());
 
-        $this->printPhp($set = $set->printFile());
-        $this->writeFile($playground . '/access-set.php', $set);
+        $this->writeFile($getFile, $get->printFile());
+        $this->writeFile($setFile, $set->printFile());
 
         if ($factory->isPostTemplate()) {
             $tag = $factory->getTagAccessProviderPrinter();
+            $tagFile = $this->phpFile($paths['classes'], $tag->getClass());
 
-            $this->printPhp($tag = $tag->printFile());
-            $this->writeFile($playground . '/access-tag.php', $tag);
+            $this->writeFile($tagFile, $tag->printFile());
         }
 
         return self::SUCCESS;

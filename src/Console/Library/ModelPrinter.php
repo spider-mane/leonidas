@@ -158,11 +158,12 @@ class ModelPrinter extends AbstractTypedClassPrinter
         }
 
         $constructor = $class->addMethod('__construct')->setPublic();
+        $constraint = $this->template === 'attachment' ? 'attachment' : $this->entity;
 
         $constructor->addParameter($core)->setType($template);
         $constructor->addParameter('autoInvoker')->setType($invoker);
 
-        $constructor->addBody(sprintf($assertion, $core, $this->entity) . "\n");
+        $constructor->addBody(sprintf($assertion, $core, $constraint) . "\n");
         $constructor->addBody(sprintf('$this->%s = $%s;', $core, $core));
         $constructor->addBody('$this->autoInvoker = $autoInvoker;' . "\n");
 
@@ -187,20 +188,22 @@ class ModelPrinter extends AbstractTypedClassPrinter
     protected function getResolvedPartials(): array
     {
         $partials = [];
+        $map = [];
 
-        foreach ($traits = static::PARTIALS[$this->template] as $partial) {
+        foreach (static::PARTIALS[$this->template] as $contract => $partial) {
             if (str_starts_with($partial, '@')) {
-                $partials = array_merge(
-                    static::PARTIALS[substr($partial, 1)],
-                    $partials
-                );
+                $inherit = static::PARTIALS[substr($partial, 1)];
+
+                $partials = [...array_values($inherit), ...$partials];
+                $map = $map + array_flip($inherit);
             } else {
                 $partials[] = $partial;
+                $map[$partial] = $contract;
             }
         }
 
         return $this->isDoingTypeMatch()
-            ? $this->matchTraitsToType($partials, array_flip($traits))
+            ? $this->matchTraitsToType($partials, $map)
             : $partials;
     }
 }

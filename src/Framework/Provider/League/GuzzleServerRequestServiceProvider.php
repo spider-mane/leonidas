@@ -23,4 +23,9 @@ class GuzzleServerRequestServiceProvider extends AbstractLeagueServiceFactory
     {
         return new GuzzleServerRequestProvider();
     }
+
+    protected function shared(): ?bool
+    {
+        return false;
+    }
 }

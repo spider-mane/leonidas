@@ -126,10 +126,11 @@ class ModelQueryAsChildPrinter extends AbstractClassPrinter
         $class->addTrait($engine);
 
         $constructor = $class->addMethod('__construct');
+        $constraint = $this->template === 'attachment' ? 'attachment' : $this->entity;
 
         $constructor->addParameter('query')->setType($query);
         $constructor->addParameter('converter')->setType($converter);
-        $constructor->addBody($assertion, [$this->entity]);
+        $constructor->addBody($assertion, [$constraint]);
         $constructor->addBody('$this->initKernel($query, $converter);');
 
         return $class;

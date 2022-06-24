@@ -82,10 +82,9 @@ class ModelInterfacePrinter extends AbstractClassPrinter
 
         foreach (static::PARTIALS[$this->template] as $partial) {
             if (str_starts_with($partial, '@')) {
-                $partials = array_merge(
-                    static::PARTIALS[substr($partial, 1)],
-                    $partials
-                );
+                $inherit = static::PARTIALS[substr($partial, 1)];
+
+                $partials = [...array_values($inherit), ...$partials];
             } else {
                 $partials[] = $partial;
             }

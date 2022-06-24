@@ -124,5 +124,25 @@ abstract class HopliteCommand extends Command
         $this->filesystem->dumpFile($path, $content);
     }
 
+    protected function writePhpFile(string $path, string $name, string $content): void
+    {
+        $this->writeFile($this->phpFile($path, $name), $content);
+    }
+
+    protected function writePhpFileRel(string $path, string $name, string $content): void
+    {
+        $this->writeFile($this->phpFileRel($path, $name), $content);
+    }
+
+    protected function phpFile(string $path, string $name): string
+    {
+        return $path . DIRECTORY_SEPARATOR . $name . '.php';
+    }
+
+    protected function phpFileRel(string $path, string $name): string
+    {
+        return $this->phpFile($this->external(DIRECTORY_SEPARATOR . $path), $name);
+    }
+
     abstract protected function handle(): int;
 }
