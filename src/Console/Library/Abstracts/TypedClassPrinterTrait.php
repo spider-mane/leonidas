@@ -38,6 +38,16 @@ trait TypedClassPrinterTrait
         return $signatures;
     }
 
+    protected function matchTraitsToType(array $traits, array $map)
+    {
+        $extensions = array_values(class_implements($this->type));
+
+        return array_filter(
+            $traits,
+            fn ($partial) => in_array($map[$partial], $extensions)
+        );
+    }
+
     protected function isDoingTypeMatch(): bool
     {
         return $this->isDoingTypeMatch;

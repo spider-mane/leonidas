@@ -4,9 +4,7 @@ namespace Leonidas\Console\Command\Make;
 
 use Leonidas\Console\Command\HopliteCommand;
 use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Output\OutputInterface;
 
 class HookCommand extends HopliteCommand
 {
@@ -24,10 +22,10 @@ class HookCommand extends HopliteCommand
             ->addOption('path', 'p', InputOption::VALUE_OPTIONAL);
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output): int
+    protected function handle(): int
     {
-        $tag = $input->getArgument('tag');
-        $type = $input->getArgument('type');
+        $tag = $this->input->getArgument('tag');
+        $type = $this->input->getArgument('type');
         $converted = $this->convert($tag)->toPascal();
 
         $parts = explode('/', $this->config('make.hook.path'));

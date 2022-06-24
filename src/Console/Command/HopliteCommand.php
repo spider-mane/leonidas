@@ -9,6 +9,8 @@ use PHP_Parallel_Lint\PhpConsoleColor\ConsoleColor;
 use PHP_Parallel_Lint\PhpConsoleHighlighter\Highlighter;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Filesystem\Filesystem;
 
 abstract class HopliteCommand extends Command
@@ -16,6 +18,10 @@ abstract class HopliteCommand extends Command
     use ConvertsCaseTrait;
 
     protected Config $config;
+
+    protected InputInterface $input;
+
+    protected SymfonyStyle $output;
 
     protected Config $composerConfig;
 
@@ -32,6 +38,19 @@ abstract class HopliteCommand extends Command
         $this->caseConverter = new CaseConverter();
 
         parent::__construct($name);
+    }
+
+    public function run(InputInterface $input, OutputInterface $output)
+    {
+        $this->input = $input;
+        $this->output = new SymfonyStyle($input, $output);
+
+        return parent::run($this->input, $this->output);
+    }
+
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
+        return $this->handle();
     }
 
     protected function config(string $key, $default = null)
@@ -66,14 +85,23 @@ abstract class HopliteCommand extends Command
         return $base . implode('/', $parts);
     }
 
-    protected function fallbackArgument(InputInterface $input, string $option, string $configKey, $default = null)
+    protected function resolveAbstractNamespace(string $namespace): string
     {
-        return $input->getArgument($option) ?? $this->config($configKey, $default);
+        return $this->config('abstract_dir', true)
+            ? $namespace . '\\Abstracts'
+            : $namespace;
     }
 
-    protected function fallbackOption(InputInterface $input, string $option, string $configKey, $default = null)
+    protected function configuredArgument(string $option, string $configKey, $default = null)
     {
-        return $input->getOption($option) ?? $this->config($configKey, $default);
+        return $this->input->getArgument($option)
+            ?? $this->config($configKey, $default);
+    }
+
+    protected function configuredOption(string $option, string $configKey, $default = null)
+    {
+        return $this->input->getOption($option)
+            ?? $this->config($configKey, $default);
     }
 
     protected function internal(string $path = ''): string
@@ -95,4 +123,6 @@ abstract class HopliteCommand extends Command
     {
         $this->filesystem->dumpFile($path, $content);
     }
+
+    abstract protected function handle(): int;
 }

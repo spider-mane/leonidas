@@ -15,7 +15,7 @@ class Hoplite
 
     public static function init(array $commands = []): void
     {
-        $app = new Application('hoplite', '0.1.0');
+        $app = new Application('Hoplite', '0.1.0');
 
         array_map(
             fn (string $command) => $app->add(new $command()),

@@ -58,22 +58,22 @@ class ModelComponentFactory
         string $contracts,
         string $abstracts,
         string $entity,
-        ?string $single,
-        ?string $plural = null,
+        string $single,
+        string $plural,
         ?string $template = null
     ) {
         $this->namespace = $namespace;
         $this->contracts = $contracts;
         $this->abstracts = $abstracts;
         $this->entity = $entity;
-        $this->single = $single;
 
-        $this->plural = $plural ?: $this->single;
         $this->template = $template ?? 'post';
 
-        $model = $this->convert($model)->toPascal();
+        $this->single = $this->convert($single)->toCamel();
+        $this->plural = $this->convert($plural)->toCamel();
 
-        $this->model = $model;
+        $model = $this->model = $this->convert($model)->toPascal();
+
         $this->modelInterface = $model . 'Interface';
         $this->collectionInterface = $model . 'CollectionInterface';
         $this->abstractCollection = 'Abstract' . $model . 'Collection';
@@ -310,7 +310,7 @@ class ModelComponentFactory
         return $this->namespace . '\\' . $class;
     }
 
-    public static function build(array $args = []): ModelComponentFactory
+    public static function build(array $args): ModelComponentFactory
     {
         return new static(
             $args['model'],
@@ -318,8 +318,8 @@ class ModelComponentFactory
             $args['contracts'],
             $args['abstracts'],
             $args['entity'],
-            $args['single'] ?? null,
-            $args['plural'] ?? null,
+            $args['single'],
+            $args['plural'],
             $args['template'] ?? null
         );
     }

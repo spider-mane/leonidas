@@ -37,6 +37,11 @@ abstract class AbstractClassPrinter
         return $this->class;
     }
 
+    public function getClassFqn(): string
+    {
+        return $this->namespace . '\\' . $this->class;
+    }
+
     public function printFile(): string
     {
         return $this->print($this->getDefaultSignatures());
@@ -117,11 +122,6 @@ abstract class AbstractClassPrinter
         if ('$this' === $give) {
             $method->addComment('@return ' . '$this');
         }
-    }
-
-    protected function getClassFqn(): string
-    {
-        return $this->namespace . '\\' . $this->class;
     }
 
     protected function getMethodPassReplacements(): array

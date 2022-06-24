@@ -35,7 +35,6 @@ use Leonidas\Library\System\Model\Abstracts\Term\ValidatesTaxonomyTrait;
 use Leonidas\Library\System\Model\Abstracts\User\MutableUserModelTrait;
 use Leonidas\Library\System\Model\Abstracts\User\ValidatesRoleTrait;
 use Nette\PhpGenerator\PhpNamespace;
-use ReflectionClass;
 use WP_Comment;
 use WP_Post;
 use WP_Term;
@@ -189,7 +188,7 @@ class ModelPrinter extends AbstractTypedClassPrinter
     {
         $partials = [];
 
-        foreach (static::PARTIALS[$this->template] as $partial) {
+        foreach ($traits = static::PARTIALS[$this->template] as $partial) {
             if (str_starts_with($partial, '@')) {
                 $partials = array_merge(
                     static::PARTIALS[substr($partial, 1)],
@@ -200,17 +199,8 @@ class ModelPrinter extends AbstractTypedClassPrinter
             }
         }
 
-        if ($this->isDoingTypeMatch()) {
-            $reflection = new ReflectionClass($this->type);
-            $extensions = $reflection->getInterfaceNames();
-
-            $partials = array_filter(
-                $partials,
-                fn ($contract) => in_array($contract, $extensions),
-                ARRAY_FILTER_USE_KEY
-            );
-        }
-
-        return $partials;
+        return $this->isDoingTypeMatch()
+            ? $this->matchTraitsToType($partials, array_flip($traits))
+            : $partials;
     }
 }
