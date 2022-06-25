@@ -63,6 +63,8 @@ class ModelQueryFactoryPrinter extends AbstractClassPrinter
 
         $class->addImplement($base);
 
+        $class->addProperty('converter')->setProtected()->setType($converter);
+
         $class->addMethod('__construct')
             ->setPublic()
             ->addBody('$this->converter = $converter;')

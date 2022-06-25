@@ -71,9 +71,13 @@ class ModelCommand extends HopliteCommand
 
     protected function makeFiles(string $template): int
     {
-        $factory = $this->getComponentFactory($template);
+        $model = $this->convert($this->input->getArgument('model'))->toPascal();
+        $namespace = $this->configurableOption('namespace', 'make.model.namespace');
+        $contracts = $this->configurableOption('contracts', 'make.model.contracts');
+
+        $factory = $this->getComponentFactory($model, $namespace, $contracts, $template);
+        $paths = $this->getOutputPaths($model, $namespace, $contracts);
         $action = $this->resolveRequestedAction();
-        $paths = $this->getOutputPaths();
 
         foreach (static::CORE_FILE_METHODS as $method) {
             $status = $this->$method($factory, $action, $paths);
@@ -98,25 +102,18 @@ class ModelCommand extends HopliteCommand
         return self::SUCCESS;
     }
 
-    protected function getComponentFactory(string $template): ModelComponentFactory
-    {
-        $model = $this->input->getArgument('model');
+    protected function getComponentFactory(
+        string $model,
+        string $namespace,
+        string $contracts,
+        string $template
+    ): ModelComponentFactory {
         $entity = $this->input->getArgument('entity');
         $single = $this->input->getArgument('single');
         $plural = $this->input->getArgument('plural');
 
-        $model = $this->convert($model)->toPascal();
-
-        $namespace = $this->getNamespaceFromPath($this->configuredOption(
-            'namespace',
-            'make.model.namespace'
-        )) . '\\' . $model;
-
-        $contracts = $this->getNamespaceFromPath($this->configuredOption(
-            'contracts',
-            'make.model.contracts'
-        )) . '\\' . $model;
-
+        $namespace = $this->getNamespaceFromPath($namespace) . '\\' . $model;
+        $contracts = $this->getNamespaceFromPath($contracts) . '\\' . $model;
         $abstracts = $this->resolveAbstractNamespace($namespace);
 
         $factory = ModelComponentFactory::build([
@@ -133,6 +130,15 @@ class ModelCommand extends HopliteCommand
         return $factory;
     }
 
+    protected function getOutputPaths(string $model, string $namespace, string $contracts): array
+    {
+        return [
+            'interfaces' => $contracts . DIRECTORY_SEPARATOR . $model,
+            'classes' => $namespace = $namespace . DIRECTORY_SEPARATOR . $model,
+            'abstracts' => $this->resolveAbstractDir($namespace),
+        ];
+    }
+
     protected function resolveRequestedAction(): string
     {
         if ($this->input->getOption('design')) {
@@ -144,18 +150,7 @@ class ModelCommand extends HopliteCommand
         }
     }
 
-    protected function getOutputPaths(): array
-    {
-        $playground = $this->setupTestDir();
-
-        return [
-            'interfaces' => $playground,
-            'abstracts' => $playground,
-            'classes' => $playground,
-        ];
-    }
-
-    protected function setupTestDir(): string
+    protected function setupTestDir(): array
     {
         $playground = $this->external('/.playground/model');
 
@@ -177,7 +172,11 @@ class ModelCommand extends HopliteCommand
             }
         }
 
-        return $playground;
+        return [
+            'interfaces' => $playground,
+            'classes' => $playground,
+            'abstracts' => $playground,
+        ];
     }
 
     protected function makeModelFiles(ModelComponentFactory $factory, string $action, array $paths): int

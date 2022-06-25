@@ -92,13 +92,20 @@ abstract class HopliteCommand extends Command
             : $namespace;
     }
 
-    protected function configuredArgument(string $option, string $configKey, $default = null)
+    protected function resolveAbstractDir(string $dir): string
+    {
+        return $this->config('abstract_dir', true)
+            ? $dir . DIRECTORY_SEPARATOR . 'Abstracts'
+            : $dir;
+    }
+
+    protected function configurableArgument(string $option, string $configKey, $default = null)
     {
         return $this->input->getArgument($option)
             ?? $this->config($configKey, $default);
     }
 
-    protected function configuredOption(string $option, string $configKey, $default = null)
+    protected function configurableOption(string $option, string $configKey, $default = null)
     {
         return $this->input->getOption($option)
             ?? $this->config($configKey, $default);
