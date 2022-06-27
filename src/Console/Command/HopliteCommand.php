@@ -7,6 +7,7 @@ use Leonidas\Library\Core\Abstracts\ConvertsCaseTrait;
 use Noodlehaus\Config;
 use PHP_Parallel_Lint\PhpConsoleColor\ConsoleColor;
 use PHP_Parallel_Lint\PhpConsoleHighlighter\Highlighter;
+use RuntimeException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -63,26 +64,20 @@ abstract class HopliteCommand extends Command
         return $this->composerConfig->get($key, $default);
     }
 
-    protected function getNamespaceFromPath(string $path): string
+    protected function pathToNamespace(string $path, string $extra = ''): string
     {
-        // todo: match completely
-        $namespaces = array_flip($this->composer('autoload.psr-4'));
-        $parts = explode('/', $path);
-        $entry = array_shift($parts);
-        $base = $namespaces[$entry . '/'];
+        foreach ($this->composer('autoload.psr-4') as $namespace => $dir) {
+            if (str_starts_with($path, $dir)) {
+                $local = str_replace([$dir, '/'], ['', '\\'], $path);
+                $extra = $extra ? '\\' . $extra : '';
 
-        return $base . implode('\\', $parts);
-    }
+                return $namespace . $local . $extra;
+            }
+        }
 
-    protected function getPathFromNamespace(string $namespace): string
-    {
-        // todo: match completely
-        $namespaces = $this->composer('autoload.psr-4');
-        $parts = explode('\\', $namespace);
-        $entry = array_shift($parts);
-        $base = $namespaces[$entry . '\\'];
-
-        return $base . implode('/', $parts);
+        throw new RuntimeException(
+            'Could not find namespace in composer.json that corresponds with path: ' . $path
+        );
     }
 
     protected function resolveAbstractNamespace(string $namespace): string

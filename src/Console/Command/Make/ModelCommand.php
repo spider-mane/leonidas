@@ -112,11 +112,11 @@ class ModelCommand extends HopliteCommand
         $single = $this->input->getArgument('single');
         $plural = $this->input->getArgument('plural');
 
-        $namespace = $this->getNamespaceFromPath($namespace) . '\\' . $model;
-        $contracts = $this->getNamespaceFromPath($contracts) . '\\' . $model;
+        $namespace = $this->pathToNamespace($namespace, $model);
+        $contracts = $this->pathToNamespace($contracts, $model);
         $abstracts = $this->resolveAbstractNamespace($namespace);
 
-        $factory = ModelComponentFactory::build([
+        return ModelComponentFactory::build([
             'model' => $model,
             'namespace' => $namespace,
             'contracts' => $contracts,
@@ -126,8 +126,6 @@ class ModelCommand extends HopliteCommand
             'plural' => $plural,
             'template' => $template,
         ]);
-
-        return $factory;
     }
 
     protected function getOutputPaths(string $model, string $namespace, string $contracts): array
@@ -170,6 +168,12 @@ class ModelCommand extends HopliteCommand
             } else {
                 require $file->getPathname();
             }
+        }
+
+        foreach (['Contracts', 'Library'] as $namespace) {
+            $this->filesystem->remove(
+                $this->external('/src/' . $namespace . '/System/Model/Test')
+            );
         }
 
         return [
