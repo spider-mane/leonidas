@@ -11,14 +11,14 @@ use Symfony\Component\Console\Input\InputOption;
 class ModelCommand extends HopliteCommand
 {
     protected const CORE_FILE_METHODS = [
-        'makeModelFiles',
-        'makeCollectionFiles',
-        'makeRepositoryFiles',
+        'model' => 'makeModelFiles',
+        'collection' => 'makeCollectionFiles',
+        'repository' => 'makeRepositoryFiles',
     ];
 
     protected const SUPPORT_FILE_METHODS = [
-        'makeFactoryFiles',
-        'makeAccessProviderFiles',
+        'factories' => 'makeFactoryFiles',
+        'access' => 'makeAccessProviderFiles',
     ];
 
     protected const VALID_TEMPLATES = [
@@ -39,14 +39,14 @@ class ModelCommand extends HopliteCommand
             ->addArgument('entity', InputArgument::REQUIRED, '')
             ->addArgument('single', InputArgument::REQUIRED, '')
             ->addArgument('plural', InputArgument::REQUIRED, '')
-            ->addOption('namespace', 'l', InputOption::VALUE_OPTIONAL, '')
+            ->addArgument('components', InputArgument::OPTIONAL | InputArgument::IS_ARRAY, '')
+            ->addOption('namespace', 's', InputOption::VALUE_OPTIONAL, '')
             ->addOption('contracts', 'c', InputOption::VALUE_OPTIONAL, '')
-            ->addOption('abstracts', 'a', InputOption::VALUE_OPTIONAL, '')
+            ->addOption('abstracts', 'a', InputOption::VALUE_NONE, '')
             ->addOption('template', 't', InputOption::VALUE_REQUIRED, '', 'post')
-            ->addOption('components', 'p', InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY, 'The component set to generate')
             ->addOption('design', 'd', InputOption::VALUE_NONE, 'Generate interfaces only')
             ->addOption('build', 'b', InputOption::VALUE_NONE, 'Generate classes using interfaces as guide')
-            ->addOption('replace', 'r', InputOption::VALUE_OPTIONAL, '');
+            ->addOption('replace', 'r', InputOption::VALUE_NONE, '');
     }
 
     protected function handle(): int
@@ -79,7 +79,7 @@ class ModelCommand extends HopliteCommand
         $paths = $this->getOutputPaths($model, $namespace, $contracts);
         $action = $this->resolveRequestedAction();
 
-        foreach (static::CORE_FILE_METHODS as $method) {
+        foreach ($this->resolveComponents('core') as $method) {
             $status = $this->$method($factory, $action, $paths);
 
             if (self::SUCCESS !== $status) {
@@ -88,7 +88,7 @@ class ModelCommand extends HopliteCommand
         }
 
         if ('interfaces' !== $action) {
-            foreach (static::SUPPORT_FILE_METHODS as $method) {
+            foreach ($this->resolveComponents('support') as $method) {
                 $status = $this->$method($factory, $paths);
 
                 if (self::SUCCESS !== $status) {
@@ -100,6 +100,23 @@ class ModelCommand extends HopliteCommand
         $this->output->success("Successfully created model files");
 
         return self::SUCCESS;
+    }
+
+    protected function resolveComponents(string $set): array
+    {
+        $set = constant(
+            sprintf('%s::%s_FILE_METHODS', static::class, strtoupper($set))
+        );
+
+        if (!$components = $this->input->getArgument('components')) {
+            return $set;
+        }
+
+        return array_filter(
+            $set,
+            fn ($method) => in_array($method, $components),
+            ARRAY_FILTER_USE_KEY
+        );
     }
 
     protected function getComponentFactory(
@@ -153,21 +170,21 @@ class ModelCommand extends HopliteCommand
         $playground = $this->external('/.playground/model');
 
         if ($this->filesystem->exists($playground)) {
-            // $this->filesystem->remove($playground);
+            foreach (new DirectoryIterator($playground) as $file) {
+                if (!$file->isFile()) {
+                    continue;
+                }
+
+                if (!str_ends_with($file->getBasename(), 'Interface.php')) {
+                    $this->filesystem->remove($file->getPathname());
+                } else {
+                    require $file->getPathname();
+                }
+            }
+
+            $this->filesystem->remove($playground);
         } else {
             $this->filesystem->mkdir($playground);
-        }
-
-        foreach (new DirectoryIterator($playground) as $file) {
-            if (!$file->isFile()) {
-                continue;
-            }
-
-            if (!str_ends_with($file->getBasename(), 'Interface.php')) {
-                $this->filesystem->remove($file->getPathname());
-            } else {
-                require $file->getPathname();
-            }
         }
 
         foreach (['Contracts', 'Library'] as $namespace) {
