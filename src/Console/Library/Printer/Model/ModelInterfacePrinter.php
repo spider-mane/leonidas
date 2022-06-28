@@ -1,8 +1,8 @@
 <?php
 
-namespace Leonidas\Console\Library;
+namespace Leonidas\Console\Library\Printer\Model;
 
-use Leonidas\Console\Library\Abstracts\AbstractClassPrinter;
+use Leonidas\Console\Library\Printer\Model\Abstracts\AbstractClassPrinter;
 use Leonidas\Contracts\System\Model\CommentableInterface;
 use Leonidas\Contracts\System\Model\FilterableInterface;
 use Leonidas\Contracts\System\Model\HierarchicalInterface;

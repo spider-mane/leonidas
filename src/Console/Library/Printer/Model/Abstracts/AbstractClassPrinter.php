@@ -1,8 +1,8 @@
 <?php
 
-namespace Leonidas\Console\Library\Abstracts;
+namespace Leonidas\Console\Library\Printer\Model\Abstracts;
 
-use Leonidas\Console\Library\PsrPrinterFactory;
+use Leonidas\Console\Library\Printer\Model\PsrPrinterFactory;
 use Nette\PhpGenerator\ClassType;
 use Nette\PhpGenerator\InterfaceType;
 use Nette\PhpGenerator\Method;

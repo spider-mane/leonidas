@@ -1,6 +1,6 @@
 <?php
 
-namespace Leonidas\Console\Library\Abstracts;
+namespace Leonidas\Console\Library\Printer\Model\Abstracts;
 
 abstract class AbstractModelCollectionPrinter extends AbstractClassPrinter
 {
@@ -32,10 +32,21 @@ abstract class AbstractModelCollectionPrinter extends AbstractClassPrinter
             'take' => 'int $id',
             'pass' => '$id',
         ],
-        'merge' => [
-            'take' => '@type ...@plural',
+        'has' => [
+            'take' => 'int $id',
+            'give' => 'bool',
+            'call' => 'contains',
+            'pass' => '$id',
+        ],
+        'filter' => [
+            'take' => 'callable $callback',
             'give' => '@self',
-            'pass' => '...$this->expose(...$@plural)',
+            'pass' => '$callback',
+        ],
+        'matches' => [
+            'take' => '@type @plural',
+            'give' => 'bool',
+            'pass' => '$@plural->toArray()',
         ],
         'diff' => [
             'take' => '@type ...@plural',
@@ -52,10 +63,10 @@ abstract class AbstractModelCollectionPrinter extends AbstractClassPrinter
             'give' => '@self',
             'pass' => '...$this->expose(...$@plural)',
         ],
-        'filter' => [
-            'take' => 'callable $callback',
+        'merge' => [
+            'take' => '@type ...@plural',
             'give' => '@self',
-            'pass' => '$callback',
+            'pass' => '...$this->expose(...$@plural)',
         ],
         'sortBy' => [
             'take' => 'string $property, string $order = \'asc\'',
@@ -66,6 +77,11 @@ abstract class AbstractModelCollectionPrinter extends AbstractClassPrinter
             'take' => 'array $map, string $property, string $order = \'asc\'',
             'give' => '@self',
             'pass' => '$map, $property, $order',
+        ],
+        'sortCustom' => [
+            'take' => 'callable $callback, string $order = \'asc\'',
+            'give' => '@self',
+            'pass' => '$callback, $order',
         ],
     ];
 

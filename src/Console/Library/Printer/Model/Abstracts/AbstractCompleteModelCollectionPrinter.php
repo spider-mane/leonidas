@@ -1,6 +1,6 @@
 <?php
 
-namespace Leonidas\Console\Library\Abstracts;
+namespace Leonidas\Console\Library\Printer\Model\Abstracts;
 
 use Nette\PhpGenerator\PhpNamespace;
 

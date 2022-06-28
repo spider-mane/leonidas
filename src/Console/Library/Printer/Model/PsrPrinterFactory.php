@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Leonidas\Console\Library;
+namespace Leonidas\Console\Library\Printer\Model;
 
 use Composer\InstalledVersions;
 use Nette\PhpGenerator\Printer;

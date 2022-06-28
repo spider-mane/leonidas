@@ -1,8 +1,8 @@
 <?php
 
-namespace Leonidas\Console\Library;
+namespace Leonidas\Console\Library\Printer\Model;
 
-use Leonidas\Console\Library\Abstracts\AbstractModelRepositoryPrinter;
+use Leonidas\Console\Library\Printer\Model\Abstracts\AbstractModelRepositoryPrinter;
 use Leonidas\Contracts\System\Model\FungibleRepositoryInterface;
 use Leonidas\Contracts\System\Model\SoftDeletingRepositoryInterface;
 use Nette\PhpGenerator\PhpNamespace;

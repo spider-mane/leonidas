@@ -1,9 +1,9 @@
 <?php
 
-namespace Leonidas\Console\Library;
+namespace Leonidas\Console\Library\Printer\Model;
 
-use Leonidas\Console\Library\Abstracts\AbstractModelRepositoryPrinter;
-use Leonidas\Console\Library\Abstracts\TypedClassPrinterTrait;
+use Leonidas\Console\Library\Printer\Model\Abstracts\AbstractModelRepositoryPrinter;
+use Leonidas\Console\Library\Printer\Model\Abstracts\TypedClassPrinterTrait;
 use Leonidas\Library\System\Model\Abstracts\Attachment\AbstractAttachmentEntityRepository;
 use Leonidas\Library\System\Model\Abstracts\Post\AbstractPostEntityRepository;
 use Leonidas\Library\System\Model\Abstracts\Term\AbstractCommentModelRepositoryInterface;

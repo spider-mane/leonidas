@@ -13,7 +13,7 @@ parameters:
     # - tests
 
   excludePaths:
-    - src/Console/Library/PsrPrinterFactory.php
+    - src/Console/Library/Printer/Model/PsrPrinterFactory.php
 
   bootstrapFiles:
     - boot/constants.php

@@ -4,7 +4,7 @@ namespace Leonidas\Console\Command\Make;
 
 use DirectoryIterator;
 use Leonidas\Console\Command\HopliteCommand;
-use Leonidas\Console\Library\ModelComponentFactory;
+use Leonidas\Console\Library\Printer\Model\ModelComponentFactory;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 

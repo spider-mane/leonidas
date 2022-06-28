@@ -1,8 +1,8 @@
 <?php
 
-namespace Leonidas\Console\Library;
+namespace Leonidas\Console\Library\Printer\Model;
 
-use Leonidas\Console\Library\Abstracts\AbstractModelCollectionPrinter;
+use Leonidas\Console\Library\Printer\Model\Abstracts\AbstractModelCollectionPrinter;
 use Leonidas\Contracts\System\Model\ModelCollectionInterface;
 use Nette\PhpGenerator\PhpNamespace;
 
