@@ -8,6 +8,8 @@ use Traversable;
 
 interface ObjectCollectionInterface extends Traversable, Countable, JsonSerializable
 {
+    public function hasItems(): bool;
+
     public function values(): array;
 
     public function toArray(): array;

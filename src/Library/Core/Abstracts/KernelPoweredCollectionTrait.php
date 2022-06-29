@@ -10,6 +10,11 @@ trait KernelPoweredCollectionTrait
 {
     protected CollectionKernelInterface $kernel;
 
+    public function hasItems(): bool
+    {
+        return $this->kernel->hasItems();
+    }
+
     public function count(): int
     {
         return $this->kernel->count();
