@@ -23,8 +23,8 @@ class ModelCollectionPrinter extends AbstractCompleteModelCollectionPrinter
             ->addImplement($this->type);
 
         $class->addTrait($util);
-        $class->addConstant('MODEL_IDENTIFIER', 'id')->setProtected();
-        $class->addConstant('COLLECTION_IS_MAP', true)->setProtected();
+        // $class->addConstant('MODEL_IDENTIFIER', 'id')->setProtected();
+        // $class->addConstant('COLLECTION_IS_MAP', true)->setProtected();
 
         $constructor = $class->addMethod('__construct')->setVariadic(true);
 

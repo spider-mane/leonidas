@@ -18,9 +18,9 @@ trait PoweredByModelCollectionKernelTrait
         return new CollectionKernel(
             $models,
             Closure::fromCallable([$this, 'spawn']),
-            ClassConst::optional($this, 'MODEL_IDENTIFIER', 'id'),
+            ClassConst::optional($this, 'MODEL_IDENTIFIER', null),
             ClassConst::optional($this, 'MODEL_PROPERTY_ACCESSORS', []),
-            ClassConst::optional($this, 'COLLECTION_IS_MAP', true)
+            ClassConst::optional($this, 'COLLECTION_IS_MAP', false)
         );
     }
 }
