@@ -10,6 +10,15 @@ use Symfony\Component\Console\Input\InputOption;
 
 class ModelCommand extends HopliteCommand
 {
+    public const VALID_TEMPLATES = [
+        'post',
+        'post:h',
+        'attachment',
+        'term',
+        'term:h',
+        'user',
+    ];
+
     protected const CORE_FILE_METHODS = [
         'model' => 'makeModelFiles',
         'collection' => 'makeCollectionFiles',
@@ -19,15 +28,6 @@ class ModelCommand extends HopliteCommand
     protected const SUPPORT_FILE_METHODS = [
         'factories' => 'makeFactoryFiles',
         'access' => 'makeAccessProviderFiles',
-    ];
-
-    protected const VALID_TEMPLATES = [
-        'post',
-        'post:h',
-        'attachment',
-        'term',
-        'term:h',
-        'user',
     ];
 
     protected static $defaultName = 'make:model';
@@ -154,17 +154,6 @@ class ModelCommand extends HopliteCommand
         ];
     }
 
-    protected function resolveRequestedAction(): string
-    {
-        if ($this->input->getOption('design')) {
-            return 'interfaces';
-        } elseif ($this->input->getOption('build')) {
-            return 'classes';
-        } else {
-            return 'complete';
-        }
-    }
-
     protected function setupTestDir(): array
     {
         $playground = $this->external('/.playground/model');
@@ -182,7 +171,7 @@ class ModelCommand extends HopliteCommand
                 }
             }
 
-            $this->filesystem->remove($playground);
+            // $this->filesystem->remove($playground);
         } else {
             $this->filesystem->mkdir($playground);
         }
@@ -198,6 +187,17 @@ class ModelCommand extends HopliteCommand
             'classes' => $playground,
             'abstracts' => $playground,
         ];
+    }
+
+    protected function resolveRequestedAction(): string
+    {
+        if ($this->input->getOption('design')) {
+            return 'interfaces';
+        } elseif ($this->input->getOption('build')) {
+            return 'classes';
+        } else {
+            return 'complete';
+        }
     }
 
     protected function makeModelFiles(ModelComponentFactory $factory, string $action, array $paths): int

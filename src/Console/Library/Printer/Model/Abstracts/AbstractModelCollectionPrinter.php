@@ -7,46 +7,93 @@ abstract class AbstractModelCollectionPrinter extends AbstractClassPrinter
     public const CORE = 'kernel';
 
     public const SIGNATURES = [
-        'get' => [
-            'take' => 'int $id',
-            'give' => '@model',
-            'call' => 'fetch',
-            'pass' => '$id',
-        ],
-        'first' => [
-            'give' => '@model',
-        ],
-        'last' => [
-            'give' => '@model',
+        'collect' => [
+            'take' => '@model ...@plural',
+            'pass' => '$@plural',
         ],
         'add' => [
             'take' => '@model @single',
             'call' => 'insert',
             'pass' => '$@single',
         ],
-        'collect' => [
-            'take' => '@model ...@plural',
-            'pass' => '$@plural',
-        ],
-        'remove' => [
-            'take' => 'int $id',
-            'pass' => '$id',
-        ],
-        'has' => [
-            'take' => 'int $id',
+        'hasWithId' => [
+            'take' => 'int ...$id',
             'give' => 'bool',
-            'call' => 'contains',
-            'pass' => '$id',
+            'call' => 'hasWhere',
+            'pass' => '\'id\', \'in\', $id',
         ],
-        'filter' => [
-            'take' => 'callable $callback',
-            'give' => '@self',
-            'pass' => '$callback',
+        'hasWith' => [
+            'take' => 'string $property, ...$values',
+            'give' => 'bool',
+            'call' => 'hasWhere',
+            'pass' => '$property, \'in\', $values',
+        ],
+        'hasWhere' => [
+            'take' => 'string $property, string $operator, $value',
+            'give' => 'bool',
+            'pass' => '$property, $operator, $value',
         ],
         'matches' => [
             'take' => '@type @plural',
             'give' => 'bool',
             'pass' => '$@plural->toArray()',
+        ],
+        'getById' => [
+            'take' => 'int $id',
+            'give' => '?@model',
+            'call' => 'firstWhere',
+            'pass' => '\'id\', \'=\', $id',
+        ],
+        'getBy' => [
+            'take' => 'string $property, $value',
+            'give' => '?@model',
+            'call' => 'firstWhere',
+            'pass' => '$property, \'=\', $value',
+        ],
+        'firstWhere' => [
+            'take' => 'string $property, string $operator, $value',
+            'give' => '?@model',
+            'pass' => '$property, $operator, $value',
+        ],
+        'first' => [
+            'give' => '?@model',
+        ],
+        'last' => [
+            'give' => '?@model',
+        ],
+        'withId' => [
+            'take' => 'int ...$id',
+            'give' => '@self',
+            'call' => 'where',
+            'pass' => '\'id\', \'in\', $id',
+        ],
+        'withoutId' => [
+            'take' => 'int ...$id',
+            'give' => '@self',
+            'call' => 'where',
+            'pass' => '\'id\', \'not in\', $id',
+        ],
+        'with' => [
+            'take' => 'string $property, ...$values',
+            'give' => '@self',
+            'call' => 'where',
+            'pass' => '$property, \'in\', $values',
+        ],
+        'without' => [
+            'take' => 'string $property, ...$values',
+            'give' => '@self',
+            'call' => 'where',
+            'pass' => '$property, \'not in\', $values',
+        ],
+        'where' => [
+            'take' => 'string $property, string $operator, $value',
+            'give' => '@self',
+            'pass' => '$property, $operator, $value',
+        ],
+        'filter' => [
+            'take' => 'callable $callback',
+            'give' => '@self',
+            'pass' => '$callback',
         ],
         'diff' => [
             'take' => '@type ...@plural',

@@ -8,6 +8,54 @@ abstract class AbstractCompleteModelCollectionPrinter extends AbstractModelColle
 {
     use TypedClassPrinterTrait;
 
+    protected const TEMPLATES = [
+        'getBy*' => [
+            'give' => '?@model',
+            'call' => 'firstWhere',
+            'pass' => '#*, \'=\', $*',
+        ],
+        'hasWhere*Not' => [
+            'give' => 'bool',
+            'call' => 'hasWhere',
+            'pass' => '#*, \'!=\', $*',
+        ],
+        'hasWhere*' => [
+            'give' => 'bool',
+            'call' => 'hasWhere',
+            'pass' => '#*, \'=\', $*',
+        ],
+        'where*Not' => [
+            'give' => '@self',
+            'call' => 'where',
+            'pass' => '#*, \'!=\', $*',
+        ],
+        'where*' => [
+            'give' => '@self',
+            'call' => 'where',
+            'pass' => '#*, \'=\', $*',
+        ],
+        'hasWithout*' => [
+            'give' => 'bool',
+            'call' => 'hasWhere',
+            'pass' => '#*, \'not in\', $*',
+        ],
+        'hasWith*' => [
+            'give' => 'bool',
+            'call' => 'hasWhere',
+            'pass' => '#*, \'in\', $*',
+        ],
+        'without*' => [
+            'give' => '@self',
+            'call' => 'where',
+            'pass' => '#*, \'not in\', $*',
+        ],
+        'with*' => [
+            'give' => '@self',
+            'call' => 'where',
+            'pass' => '#*, \'in\', $*',
+        ],
+    ];
+
     public function __construct(
         string $model,
         string $single,
@@ -24,6 +72,11 @@ abstract class AbstractCompleteModelCollectionPrinter extends AbstractModelColle
     protected function buildDefaultNamespace(PhpNamespace $namespace): PhpNamespace
     {
         return $namespace->addUse($this->type)->addUse($this->model);
+    }
+
+    protected function getMethodTemplates(): array
+    {
+        return static::TEMPLATES;
     }
 
     protected function getParameterTypeReplacements(): array

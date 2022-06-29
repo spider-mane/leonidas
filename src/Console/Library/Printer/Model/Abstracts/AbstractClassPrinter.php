@@ -21,6 +21,8 @@ abstract class AbstractClassPrinter
 
     protected string $class;
 
+    private array $imports = [];
+
     public function __construct(string $namespace, string $class)
     {
         $this->namespace = $namespace;
@@ -60,7 +62,16 @@ abstract class AbstractClassPrinter
         $this->addMethods($class, $methods);
         $this->finishClass($class);
 
+        array_map([$namespace, 'addUse'], $this->imports);
+
+        $this->imports = [];
+
         return $this->getPrinter()->printFile($file);
+    }
+
+    protected function addImport(string $import): void
+    {
+        $this->imports[] = $import;
     }
 
     protected function getPrinter(): Printer
@@ -89,19 +100,23 @@ abstract class AbstractClassPrinter
      */
     protected function addMethod($class, string $name, array $signature): void
     {
+        $take = $signature['take'] ?? '';
+        $give = $signature['give'] ?? 'void';
         $call = $signature['call'] ?? $name;
+        $pass = $signature['pass'] ?? '';
 
         $swap = $this->getMethodPassReplacements();
-        $pass = str_replace($swap[0], $swap[1], $signature['pass'] ?? '');
+        $pass = str_replace($swap[0], $swap[1], $pass);
 
         $swap = $this->getMethodGiveReplacements();
         $return = str_replace(
             [...$swap[0], ...$strip = ['?', '&'], '$this'],
             [...$swap[1], ...$this->mapSymbols($strip), $this->getClassFqn()],
-            $give = $signature['give'] ?? 'void'
+            $give
         );
 
         $method = $class->addMethod($name)
+            ->setVariadic(str_contains($take, '...'))
             ->setReturnNullable(str_starts_with($give, '?'))
             ->setReturnReference(str_starts_with($give, '&'))
             ->setReturnType($return)
@@ -143,30 +158,32 @@ abstract class AbstractClassPrinter
 
     protected function addParameter(Method $method, string $param): void
     {
-        $parts = explode(' ', $param);
-
-        $swap = $this->getParameterTypeReplacements();
-        $type = str_replace(
-            [...$swap[0], ...$strip = ['*']],
-            [...$swap[1], ...$this->mapSymbols($strip)],
-            $parts[0]
-        );
+        $parts = $this->getParameterParts($param);
 
         $swap = $this->getParameterNameReplacements();
         $name = str_replace(
             [...$swap[0], ...$strip = ['$', '?', '&', '...']],
             [...$swap[1], ...$this->mapSymbols($strip)],
-            $parts[1]
+            $base = $parts['name']
         );
 
-        $method->setVariadic(str_starts_with($parts[1], '...'));
-
         $parameter = $method->addParameter($name)
-            ->setNullable(str_starts_with($parts[1], '?'))
-            ->setReference(str_starts_with($parts[1], '&'))
-            ->setType($type);
+            ->setReference(str_starts_with($base, '&'));
 
-        if ($default = $parts[3] ?? false) {
+        if ($parts['has_type']) {
+            $swap = $this->getParameterTypeReplacements();
+            $type = str_replace(
+                [...$swap[0], ...$strip = ['*']],
+                [...$swap[1], ...$this->mapSymbols($strip)],
+                $base = $parts['type']
+            );
+
+            $parameter->setType($type)->setNullable(str_starts_with($base, '?'));
+        }
+
+        if ($parts['has_default']) {
+            $default = $parts['default'];
+
             if ('null' === $default) {
                 $default = null;
             } elseif ('true' === $default) {
@@ -180,6 +197,47 @@ abstract class AbstractClassPrinter
             }
 
             $parameter->setDefaultValue($default);
+        }
+    }
+
+    protected function getParameterParts(string $param): array
+    {
+        $param = preg_replace('/\s/', ' ', trim($param));
+        $parts = array_pad(explode(' ', $param), 4, '');
+
+        switch ($param) {
+            case sprintf('%s %s = %s', $parts[0], $parts[1], $parts[3]):
+                return [
+                    'has_type' => true,
+                    'has_default' => true,
+                    'type' => $parts[0],
+                    'name' => $parts[1],
+                    'default' => $parts[3],
+                ];
+
+            case sprintf('%s %s', $parts[0], $parts[1]):
+                return [
+                    'has_type' => true,
+                    'has_default' => false,
+                    'type' => $parts[0],
+                    'name' => $parts[1],
+                ];
+
+            case sprintf('%s = %s', $parts[0], $parts[1]):
+                return [
+                    'has_type' => false,
+                    'has_default' => true,
+                    'name' => $parts[0],
+                    'default' => $parts[1],
+                ];
+
+            case sprintf('%s', $parts[0]):
+            default:
+                return [
+                    'has_type' => false,
+                    'has_default' => false,
+                    'name' => $parts[0],
+                ];
         }
     }
 
