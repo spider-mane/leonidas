@@ -1,6 +1,6 @@
 <?php
 
-namespace Leonidas\Library\System\Model\Abstracts\Term;
+namespace Leonidas\Library\System\Model\Abstracts\Comment;
 
 use Leonidas\Contracts\System\Schema\Comment\CommentEntityManagerInterface;
 

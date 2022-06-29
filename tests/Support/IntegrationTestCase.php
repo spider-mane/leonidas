@@ -10,7 +10,7 @@ use Tests\Support\Concerns\MockeryTrait;
 use Tests\Support\Concerns\ProphecyTrait;
 use WebTheory\WpTest\WpLoadedTestCase;
 
-abstract class UnitTestCase extends WpLoadedTestCase
+abstract class IntegrationTestCase extends WpLoadedTestCase
 {
     use FakerTrait;
     use HelperTrait;
