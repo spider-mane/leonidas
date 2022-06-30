@@ -121,19 +121,23 @@ abstract class HopliteCommand extends Command
         echo $this->highlighter->getWholeFile($code);
     }
 
-    protected function writeFile(string $path, string $content): void
+    protected function writeFile(string $path, string $content, bool $replace = false): void
     {
-        $this->filesystem->dumpFile($path, $content);
+        if (!$this->filesystem->exists($path) || $replace) {
+            $this->filesystem->dumpFile($path, $content);
+        } else {
+            $this->output->text("File $path already exists");
+        }
     }
 
-    protected function writePhpFile(string $path, string $name, string $content): void
+    protected function writePhpFile(string $path, string $name, string $content, bool $replace = false): void
     {
-        $this->writeFile($this->phpFile($path, $name), $content);
+        $this->writeFile($this->phpFile($path, $name), $content, $replace);
     }
 
-    protected function writePhpFileRel(string $path, string $name, string $content): void
+    protected function writePhpFileRel(string $path, string $name, string $content, bool $replace = false): void
     {
-        $this->writeFile($this->phpFileRel($path, $name), $content);
+        $this->writeFile($this->phpFileRel($path, $name), $content, $replace);
     }
 
     protected function phpFile(string $path, string $name): string

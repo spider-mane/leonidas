@@ -79,8 +79,10 @@ class ModelCommand extends HopliteCommand
         $paths = $this->getOutputPaths($model, $namespace, $contracts);
         $action = $this->resolveRequestedAction();
 
+        $replace = $this->input->getOption('replace');
+
         foreach ($this->resolveComponents('core') as $method) {
-            $status = $this->$method($factory, $action, $paths);
+            $status = $this->$method($factory, $action, $paths, $replace);
 
             if (self::SUCCESS !== $status) {
                 return $status;
@@ -89,7 +91,7 @@ class ModelCommand extends HopliteCommand
 
         if ('interfaces' !== $action) {
             foreach ($this->resolveComponents('support') as $method) {
-                $status = $this->$method($factory, $paths);
+                $status = $this->$method($factory, $paths, $replace);
 
                 if (self::SUCCESS !== $status) {
                     return $status;
@@ -200,7 +202,7 @@ class ModelCommand extends HopliteCommand
         }
     }
 
-    protected function makeModelFiles(ModelComponentFactory $factory, string $action, array $paths): int
+    protected function makeModelFiles(ModelComponentFactory $factory, string $action, array $paths, bool $replace): int
     {
         $interface = $factory->getModelInterfacePrinter();
         $class = $factory->getModelPrinter();
@@ -209,7 +211,7 @@ class ModelCommand extends HopliteCommand
         $classFile = $this->phpFile($paths['classes'], $class->getClass());
 
         if ('interfaces' === $action || 'complete' === $action) {
-            $this->writeFile($interfaceFile, $interface->printFile());
+            $this->writeFile($interfaceFile, $interface->printFile(), $replace);
         } elseif ('classes' === $action) {
             if (!interface_exists($interfaceFqn = $interface->getClassFqn())) {
                 $this->output->error("Interface {$interfaceFqn} does not exist");
@@ -217,17 +219,17 @@ class ModelCommand extends HopliteCommand
                 return self::INVALID;
             }
 
-            $this->writeFile($classFile, $class->printFromType());
+            $this->writeFile($classFile, $class->printFromType(), $replace);
         }
 
         if ('complete' === $action) {
-            $this->writeFile($classFile, $class->printFile());
+            $this->writeFile($classFile, $class->printFile(), $replace);
         }
 
         return self::SUCCESS;
     }
 
-    protected function makeCollectionFiles(ModelComponentFactory $factory, string $action, array $paths): int
+    protected function makeCollectionFiles(ModelComponentFactory $factory, string $action, array $paths, bool $replace): int
     {
         $isPost = $factory->isPostTemplate();
 
@@ -244,7 +246,7 @@ class ModelCommand extends HopliteCommand
         $queryFile = $this->phpFile($paths['classes'], $query->getClass());
 
         if ('interfaces' === $action || 'complete' === $action) {
-            $this->writeFile($interfaceFile, $interface->printFile());
+            $this->writeFile($interfaceFile, $interface->printFile(), $replace);
         } elseif ('classes' === $action) {
             if (!interface_exists($interface->getClassFqn())) {
                 $this->output->error("Interface {$interface->getClassFqn()} does not exist");
@@ -253,27 +255,27 @@ class ModelCommand extends HopliteCommand
             }
 
             if ($isPost) {
-                $this->writeFile($abstractFile, $abstract->printFromType());
-                $this->writeFile($collectionFile, $collection->printFile());
-                $this->writeFile($queryFile, $query->printFile());
+                $this->writeFile($abstractFile, $abstract->printFromType(), $replace);
+                $this->writeFile($collectionFile, $collection->printFile(), $replace);
+                $this->writeFile($queryFile, $query->printFile(), $replace);
             } else {
-                $this->writeFile($collectionFile, $collection->printFromType());
+                $this->writeFile($collectionFile, $collection->printFromType(), $replace);
             }
         }
 
         if ('complete' === $action) {
-            $this->writeFile($collectionFile, $collection->printFile());
+            $this->writeFile($collectionFile, $collection->printFile(), $replace);
 
             if ($isPost) {
-                $this->writeFile($abstractFile, $abstract->printFile());
-                $this->writeFile($queryFile, $query->printFile());
+                $this->writeFile($abstractFile, $abstract->printFile(), $replace);
+                $this->writeFile($queryFile, $query->printFile(), $replace);
             }
         }
 
         return self::SUCCESS;
     }
 
-    protected function makeRepositoryFiles(ModelComponentFactory $factory, string $action, array $paths): int
+    protected function makeRepositoryFiles(ModelComponentFactory $factory, string $action, array $paths, bool $replace): int
     {
         $interface = $factory->getRepositoryInterfacePrinter();
         $class = $factory->getRepositoryPrinter();
@@ -282,7 +284,7 @@ class ModelCommand extends HopliteCommand
         $classFile = $this->phpFile($paths['classes'], $class->getClass());
 
         if ('interfaces' === $action || 'complete' === $action) {
-            $this->writeFile($interfaceFile, $interface->printFile());
+            $this->writeFile($interfaceFile, $interface->printFile(), $replace);
         } elseif ('classes' === $action) {
             if (!interface_exists($interfaceFqn = $interface->getClassFqn())) {
                 $this->output->error("Interface {$interfaceFqn} does not exist");
@@ -290,17 +292,17 @@ class ModelCommand extends HopliteCommand
                 return self::INVALID;
             }
 
-            $this->writeFile($classFile, $class->printFromType());
+            $this->writeFile($classFile, $class->printFromType(), $replace);
         }
 
         if ('complete' === $action) {
-            $this->writeFile($classFile, $class->printFile());
+            $this->writeFile($classFile, $class->printFile(), $replace);
         }
 
         return self::SUCCESS;
     }
 
-    protected function makeFactoryFiles(ModelComponentFactory $factory, array $paths): int
+    protected function makeFactoryFiles(ModelComponentFactory $factory, array $paths, bool $replace): int
     {
         $model = $factory->getModelConverterPrinter();
         $collection = $factory->getCollectionFactoryPrinter();
@@ -308,20 +310,20 @@ class ModelCommand extends HopliteCommand
         $modelFile = $this->phpFile($paths['classes'], $model->getClass());
         $collectionFile = $this->phpFile($paths['classes'], $collection->getClass());
 
-        $this->writeFile($modelFile, $model->printFile());
-        $this->writeFile($collectionFile, $collection->printFile());
+        $this->writeFile($modelFile, $model->printFile(), $replace);
+        $this->writeFile($collectionFile, $collection->printFile(), $replace);
 
         if ($factory->isPostTemplate()) {
             $query = $factory->getQueryFactoryPrinter();
             $queryFile = $this->phpFile($paths['classes'], $query->getClass());
 
-            $this->writeFile($queryFile, $query->printFile());
+            $this->writeFile($queryFile, $query->printFile(), $replace);
         }
 
         return self::SUCCESS;
     }
 
-    protected function makeAccessProviderFiles(ModelComponentFactory $factory, array $paths): int
+    protected function makeAccessProviderFiles(ModelComponentFactory $factory, array $paths, bool $replace): int
     {
         $get = $factory->getGetAccessProviderPrinter();
         $set = $factory->getSetAccessProviderPrinter();
@@ -329,14 +331,14 @@ class ModelCommand extends HopliteCommand
         $getFile = $this->phpFile($paths['classes'], $get->getClass());
         $setFile = $this->phpFile($paths['classes'], $set->getClass());
 
-        $this->writeFile($getFile, $get->printFile());
-        $this->writeFile($setFile, $set->printFile());
+        $this->writeFile($getFile, $get->printFile(), $replace);
+        $this->writeFile($setFile, $set->printFile(), $replace);
 
         if ($factory->isPostTemplate()) {
             $tag = $factory->getTagAccessProviderPrinter();
             $tagFile = $this->phpFile($paths['classes'], $tag->getClass());
 
-            $this->writeFile($tagFile, $tag->printFile());
+            $this->writeFile($tagFile, $tag->printFile(), $replace);
         }
 
         return self::SUCCESS;
