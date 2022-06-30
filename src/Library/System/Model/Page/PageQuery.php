@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Leonidas\Library\System\Model\Page;
 
 use Leonidas\Contracts\System\Model\Page\PageCollectionInterface;
@@ -11,8 +13,8 @@ use WP_Query;
 
 class PageQuery extends AbstractPageCollection implements PageCollectionInterface
 {
-    use PoweredByModelQueryKernelTrait;
     use ValidatesPostTypeTrait;
+    use PoweredByModelQueryKernelTrait;
 
     public function __construct(WP_Query $query, PostConverterInterface $converter)
     {

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Leonidas\Library\System\Model\Image;
 
 use Leonidas\Contracts\System\Model\Image\ImageCollectionInterface;
@@ -11,8 +13,8 @@ use WP_Query;
 
 class ImageQuery extends AbstractImageCollection implements ImageCollectionInterface
 {
-    use PoweredByModelQueryKernelTrait;
     use ValidatesPostTypeTrait;
+    use PoweredByModelQueryKernelTrait;
 
     public function __construct(WP_Query $query, PostConverterInterface $converter)
     {

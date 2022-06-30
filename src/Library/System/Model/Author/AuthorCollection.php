@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Leonidas\Library\System\Model\Author;
 
 use Leonidas\Contracts\System\Model\Author\AuthorCollectionInterface;
@@ -11,13 +13,39 @@ class AuthorCollection extends AbstractModelCollection implements AuthorCollecti
 {
     use PoweredByModelCollectionKernelTrait;
 
-    protected const MODEL_IDENTIFIER = 'login';
-
-    protected const COLLECTION_IS_MAP = true;
-
-    public function __construct(AuthorInterface ...$users)
+    public function __construct(AuthorInterface ...$authors)
     {
-        $this->initKernel($users);
+        $this->initKernel($authors);
+    }
+
+    public function collect(AuthorInterface ...$authors): void
+    {
+        $this->kernel->collect($authors);
+    }
+
+    public function add(AuthorInterface $author): void
+    {
+        $this->kernel->insert($author);
+    }
+
+    public function hasWithId(int ...$id): bool
+    {
+        return $this->kernel->hasWhere('id', 'in', $id);
+    }
+
+    public function hasWith(string $property, ...$values): bool
+    {
+        return $this->kernel->hasWhere($property, 'in', $values);
+    }
+
+    public function hasWhere(string $property, string $operator, $value): bool
+    {
+        return $this->kernel->hasWhere($property, $operator, $value);
+    }
+
+    public function matches(AuthorCollectionInterface $authors): bool
+    {
+        return $this->kernel->matches($authors->toArray());
     }
 
     public function getById(int $id): ?AuthorInterface
@@ -25,14 +53,14 @@ class AuthorCollection extends AbstractModelCollection implements AuthorCollecti
         return $this->kernel->firstWhere('id', '=', $id);
     }
 
-    public function getByLogin(string $login): ?AuthorInterface
-    {
-        return $this->kernel->fetch($login);
-    }
-
     public function getByEmail(string $email): ?AuthorInterface
     {
         return $this->kernel->firstWhere('email', '=', $email);
+    }
+
+    public function getByLogin(string $login): ?AuthorInterface
+    {
+        return $this->kernel->firstWhere('login', '=', $login);
     }
 
     public function getByNicename(string $nicename): ?AuthorInterface
@@ -40,28 +68,88 @@ class AuthorCollection extends AbstractModelCollection implements AuthorCollecti
         return $this->kernel->firstWhere('nicename', '=', $nicename);
     }
 
-    public function hasWithId(int $id): bool
+    public function getBy(string $property, $value): ?AuthorInterface
     {
-        return $this->kernel->hasWhere('id', '=', $id);
+        return $this->kernel->firstWhere($property, '=', $value);
     }
 
-    public function hasWithLogin(string $login): bool
+    public function firstWhere(string $property, string $operator, $value): ?AuthorInterface
     {
-        return $this->kernel->contains($login);
+        return $this->kernel->firstWhere($property, $operator, $value);
     }
 
-    public function hasWithEmail(string $email): bool
+    public function first(): ?AuthorInterface
     {
-        return $this->kernel->hasWhere('email', '=', $email);
+        return $this->kernel->first();
     }
 
-    public function add(AuthorInterface $user): void
+    public function last(): ?AuthorInterface
     {
-        $this->kernel->insert($user);
+        return $this->kernel->last();
     }
 
-    public function collect(AuthorInterface ...$users): void
+    public function withId(int ...$id): AuthorCollection
     {
-        $this->kernel->collect($users);
+        return $this->kernel->where('id', 'in', $id);
+    }
+
+    public function withoutId(int ...$id): AuthorCollection
+    {
+        return $this->kernel->where('id', 'not in', $id);
+    }
+
+    public function with(string $property, ...$values): AuthorCollection
+    {
+        return $this->kernel->where($property, 'in', $values);
+    }
+
+    public function without(string $property, ...$values): AuthorCollection
+    {
+        return $this->kernel->where($property, 'not in', $values);
+    }
+
+    public function where(string $property, string $operator, $value): AuthorCollection
+    {
+        return $this->kernel->where($property, $operator, $value);
+    }
+
+    public function filter(callable $callback): AuthorCollection
+    {
+        return $this->kernel->filter($callback);
+    }
+
+    public function diff(AuthorCollectionInterface ...$authors): AuthorCollection
+    {
+        return $this->kernel->diff(...$this->expose(...$authors));
+    }
+
+    public function contrast(AuthorCollectionInterface ...$authors): AuthorCollection
+    {
+        return $this->kernel->contrast(...$this->expose(...$authors));
+    }
+
+    public function intersect(AuthorCollectionInterface ...$authors): AuthorCollection
+    {
+        return $this->kernel->intersect(...$this->expose(...$authors));
+    }
+
+    public function merge(AuthorCollectionInterface ...$authors): AuthorCollection
+    {
+        return $this->kernel->merge(...$this->expose(...$authors));
+    }
+
+    public function sortBy(string $property, string $order = 'asc'): AuthorCollection
+    {
+        return $this->kernel->sortBy($property, $order);
+    }
+
+    public function sortMapped(array $map, string $property, string $order = 'asc'): AuthorCollection
+    {
+        return $this->kernel->sortMapped($map, $property, $order);
+    }
+
+    public function sortCustom(callable $callback, string $order = 'asc'): AuthorCollection
+    {
+        return $this->kernel->sortCustom($callback, $order);
     }
 }

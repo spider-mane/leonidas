@@ -54,6 +54,11 @@ abstract class AbstractCompleteModelCollectionPrinter extends AbstractModelColle
             'call' => 'where',
             'pass' => '#*, \'in\', $*',
         ],
+        'sortMappedBy*' => [
+            'give' => '@self',
+            'call' => 'sortMapped',
+            'pass' => '$map, #*, $order',
+        ],
     ];
 
     public function __construct(

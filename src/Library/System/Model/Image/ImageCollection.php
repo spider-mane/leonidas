@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Leonidas\Library\System\Model\Image;
 
 use Leonidas\Contracts\System\Model\Image\ImageCollectionInterface;
@@ -11,22 +13,8 @@ class ImageCollection extends AbstractImageCollection implements ImageCollection
 {
     use PoweredByModelCollectionKernelTrait;
 
-    protected const MODEL_IDENTIFIER = 'title';
-
-    protected const COLLECTION_IS_MAP = true;
-
     public function __construct(ImageInterface ...$images)
     {
         $this->initKernel($images);
-    }
-
-    public function getByName(string $name): ?ImageInterface
-    {
-        return $this->kernel->fetch($name);
-    }
-
-    public function hasWithName(string $name): bool
-    {
-        return $this->kernel->contains($name);
     }
 }

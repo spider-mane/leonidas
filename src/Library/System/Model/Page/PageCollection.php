@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Leonidas\Library\System\Model\Page;
 
 use Leonidas\Contracts\System\Model\Page\PageCollectionInterface;
@@ -11,22 +13,8 @@ class PageCollection extends AbstractPageCollection implements PageCollectionInt
 {
     use PoweredByModelCollectionKernelTrait;
 
-    protected const MODEL_IDENTIFIER = 'name';
-
-    protected const COLLECTION_IS_MAP = true;
-
     public function __construct(PageInterface ...$pages)
     {
         $this->initKernel($pages);
-    }
-
-    public function getByName(string $name): ?PageInterface
-    {
-        return $this->kernel->fetch($name);
-    }
-
-    public function hasWithName(string $name): bool
-    {
-        return $this->kernel->contains($name);
     }
 }

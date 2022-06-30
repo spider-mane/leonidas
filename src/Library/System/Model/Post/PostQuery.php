@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Leonidas\Library\System\Model\Post;
 
 use Leonidas\Contracts\System\Model\Post\PostCollectionInterface;
@@ -11,8 +13,8 @@ use WP_Query;
 
 class PostQuery extends AbstractPostCollection implements PostCollectionInterface
 {
-    use PoweredByModelQueryKernelTrait;
     use ValidatesPostTypeTrait;
+    use PoweredByModelQueryKernelTrait;
 
     public function __construct(WP_Query $query, PostConverterInterface $converter)
     {
