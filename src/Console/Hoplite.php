@@ -2,15 +2,15 @@
 
 namespace Leonidas\Console;
 
-use Leonidas\Console\Command\Make\HookCommand;
-use Leonidas\Console\Command\Make\ModelCommand;
+use Leonidas\Console\Command\MakeHookCommand;
+use Leonidas\Console\Command\MakeModelCommand;
 use Symfony\Component\Console\Application;
 
 class Hoplite
 {
     public const COMMANDS = [
-        ModelCommand::class,
-        HookCommand::class,
+        MakeModelCommand::class,
+        MakeHookCommand::class,
     ];
 
     public static function init(array $commands = []): void

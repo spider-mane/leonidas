@@ -1,12 +1,12 @@
 <?php
 
-namespace Leonidas\Console\Command\Make;
+namespace Leonidas\Console\Command;
 
-use Leonidas\Console\Command\HopliteCommand;
+use Leonidas\Console\Command\Abstracts\HopliteCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 
-class HookCommand extends HopliteCommand
+class MakeHookCommand extends HopliteCommand
 {
     protected const STUB_NAMESPACE = 'Leonidas\\Console\\Stubs\\Hook';
 

@@ -1,14 +1,14 @@
 <?php
 
-namespace Leonidas\Console\Command\Make;
+namespace Leonidas\Console\Command;
 
 use DirectoryIterator;
-use Leonidas\Console\Command\HopliteCommand;
+use Leonidas\Console\Command\Abstracts\HopliteCommand;
 use Leonidas\Console\Library\Printer\Model\ModelComponentFactory;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 
-class ModelCommand extends HopliteCommand
+class MakeModelCommand extends HopliteCommand
 {
     public const VALID_TEMPLATES = [
         'post',

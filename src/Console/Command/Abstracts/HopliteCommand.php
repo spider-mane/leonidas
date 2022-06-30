@@ -1,6 +1,6 @@
 <?php
 
-namespace Leonidas\Console\Command;
+namespace Leonidas\Console\Command\Abstracts;
 
 use Jawira\CaseConverter\CaseConverter;
 use Leonidas\Library\Core\Abstracts\ConvertsCaseTrait;
