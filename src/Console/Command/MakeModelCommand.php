@@ -6,13 +6,7 @@ use DirectoryIterator;
 use Leonidas\Console\Command\Abstracts\HopliteCommand;
 use Leonidas\Console\Library\Printer\Model\ModelComponentFactory;
 use Leonidas\Console\Library\Printer\Model\PsrPrinterFactory;
-use Leonidas\Contracts\Util\AutoInvokerInterface;
-use Leonidas\Library\System\Schema\Post\AttachmentEntityManager;
-use Leonidas\Library\System\Schema\Post\PostEntityManager;
-use Leonidas\Library\System\Schema\Term\TermEntityManager;
-use Leonidas\Library\System\Schema\User\UserEntityManager;
 use Nette\PhpGenerator\PhpFile;
-use ReflectionClass;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 
@@ -184,7 +178,7 @@ class MakeModelCommand extends HopliteCommand
                 }
 
                 if ($isInterface) {
-                    require $file->getPathname();
+                    // require $file->getPathname();
                 }
             }
 
@@ -366,98 +360,45 @@ class MakeModelCommand extends HopliteCommand
         return self::SUCCESS;
     }
 
-    public function updateRegistrationClass(ModelComponentFactory $factory, array $paths, bool $force): int
+    protected function updateRegistrationClass(ModelComponentFactory $factory, array $paths, bool $force): int
     {
-        $model = $factory->getModelConverterPrinter();
-        $collection = $factory->getCollectionFactoryPrinter();
-        $query = $factory->getQueryFactoryPrinter();
-        $repository = $factory->getRepositoryPrinter();
-        $iRepository = $factory->getRepositoryInterfacePrinter();
-
         $name = $factory->getSingle();
-        $entity = $factory->getEntity();
-        $managerFqn = [
-            'post' => PostEntityManager::class,
-            'post:h' => PostEntityManager::class,
-            'attachment' => AttachmentEntityManager::class,
-            'term' => TermEntityManager::class,
-            'term:h' => TermEntityManager::class,
-            'user' => UserEntityManager::class,
+        $model = $factory->getModelPrinter();
+        $schema = [
+            'post' => 'post',
+            'post:h' => 'post',
+            'attachment' => 'attachment',
+            'term' => 'term',
+            'term:h' => 'term',
+            'user' => 'user',
+            // 'comment' => 'comment',
         ][$factory->getTemplate()];
-        $manager = (new ReflectionClass($managerFqn))->getShortName();
-
-        $boilerplate = [
-            'post' => <<<PHP
-            \$this->container->share({$model->getClass()}::class, fn () => new {$model->getClass()}(
-                \$this->extension->get(AutoInvokerInterface::class)
-            ));
-
-            \$this->container->share({$query->getClass()}::class, fn () => new {$query->getClass()}(
-                \$this->extension->get({$model->getClass()}::class),
-            ));
-
-            \$this->container->share({$iRepository->getClass()}::class, function () {
-                return new {$repository->getClass()}(new {$manager}(
-                    '{$entity}',
-                    \$this->extension->get({$model->getClass()}::class),
-                    new {$collection->getClass()}(),
-                    \$this->extension->get({$query->getClass()}::class),
-                ));
-            });
-            PHP,
-            'default' => <<<PHP
-            \$this->container->share({$model->getClass()}::class, fn () => new {$model->getClass()}(
-                \$this->extension->get(AutoInvokerInterface::class)
-            ));
-
-            \$this->container->share({$iRepository->getClass()}::class, function () {
-                \$converter = \$this->extension->get({$model->getClass()}::class);
-                \$collection = new {$collection->getClass()}();
-                \$manager = new {$manager}('{$entity}', \$converter, \$collection);
-
-                return new {$repository->getClass()}(\$manager);
-            });
-            PHP
-        ][$factory->isPostTemplate() ? 'post' : 'default'];
 
         $registrar = $this->configurableOption('registration', 'make.model.registration');
-
-        $printer = PsrPrinterFactory::create();
         $file = PhpFile::fromCode(file_get_contents($registrar));
 
         $namespaces = $file->getNamespaces();
         $namespace = reset($namespaces);
 
-        $namespace
-            ->addUse(AutoInvokerInterface::class)
-            ->addUse($managerFqn)
-            ->addUse($model->getClassFqn())
-            ->addUse($collection->getClassFqn())
-            ->addUse($iRepository->getClassFqn())
-            ->addUse($repository->getClassFqn());
-
-        if ($factory->isPostTemplate()) {
-            $namespace->addUse($query->getClassFqn());
-        }
+        $namespace->addUse($model->getClassFqn());
 
         $classes = $namespace->getClasses();
         $class = reset($classes);
 
-        $constants = $class->getConstants();
-        $models = $constants['MODELS'];
-        $list = array_filter(explode(',', str_replace(
-            ["\n", '[', ']', ' ', '\'', '"'],
-            '',
-            $models->getValue()
-        )));
-
-        $models->setValue(array_unique([...$list, $name]));
-
-        $class->addMethod($name)
+        $class->addMethod($name . 'Services')
             ->setReturnType('void')
-            ->setBody($boilerplate);
+            ->setBody(sprintf(
+                "\$this->register(%s::class, '%s', '%s');",
+                $model->getClass(),
+                $factory->getEntity(),
+                $schema
+            ));
 
-        $this->writeFile($registrar, $printer->printFile($file), true);
+        $this->writeFile(
+            $registrar,
+            PsrPrinterFactory::create()->printFile($file),
+            true
+        );
 
         return self::SUCCESS;
     }
