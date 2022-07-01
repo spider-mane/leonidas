@@ -35,6 +35,7 @@
 /ISSUE_TEMPLATE.md            export-ignore
 /PULL_REQUEST_TEMPLATE.md     export-ignore
 /captainhook.json             export-ignore
+/hoplite                      export-ignore
 /phpbench.json*               export-ignore
 /rector.php                   export-ignore
 /wp-config.php                export-ignore

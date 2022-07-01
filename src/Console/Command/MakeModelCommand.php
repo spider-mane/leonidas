@@ -31,6 +31,7 @@ class MakeModelCommand extends HopliteCommand
         'factories' => 'makeFactoryFiles',
         'access' => 'makeAccessProviderFiles',
         'registration' => 'updateRegistrationClass',
+        'facade' => 'makeFacadeFiles',
     ];
 
     protected static $defaultName = 'make:model';
@@ -48,6 +49,7 @@ class MakeModelCommand extends HopliteCommand
             ->addOption('abstracts', 'a', InputOption::VALUE_NONE, '')
             ->addOption('template', 't', InputOption::VALUE_REQUIRED, '', 'post')
             ->addOption('registration', 'r', InputOption::VALUE_REQUIRED, '')
+            ->addOption('facade', 'x', InputOption::VALUE_REQUIRED, '')
             ->addOption('design', 'd', InputOption::VALUE_NONE, 'Generate interfaces only')
             ->addOption('build', 'b', InputOption::VALUE_NONE, 'Generate classes using interfaces as guide')
             ->addOption('force', 'f', InputOption::VALUE_NONE, '');
@@ -399,6 +401,63 @@ class MakeModelCommand extends HopliteCommand
             PsrPrinterFactory::create()->printFile($file),
             true
         );
+
+        return self::SUCCESS;
+    }
+
+    protected function makeFacadeFiles(ModelComponentFactory $factory, array $paths, bool $force): int
+    {
+        $baseFile = $this->configurableOption('facade', 'facade');
+        $parts = explode('/', $baseFile);
+        $base = str_replace('.php', '', array_pop($parts));
+        $facadeNamespace = $this->pathToNamespace(implode('/', $parts));
+        $baseFacade = $facadeNamespace . '\\' . $base;
+        $facade = $this->convert($factory->getPlural())->toPascal();
+        $facadeFile = $this->phpFile(implode('/', $parts), $facade);
+        $repository = $factory->getRepositoryInterfacePrinter();
+
+        $printer = PsrPrinterFactory::create();
+        $file = new PhpFile();
+
+        $namespace = $file->addNamespace($facadeNamespace);
+
+        $namespace->addUse($baseFacade)->addUse($repository->getClassFqn());
+
+        $class = $namespace->addClass($facade)->setExtends($baseFacade);
+
+        if ($factory->isPostTemplate()) {
+            $query = $factory->getChildQueryPrinter();
+            $queryFactory = $factory->getQueryFactoryPrinter();
+
+            $namespace
+                ->addUse($queryFactory->getClassFqn())
+                ->addUse($query->getClassFqn());
+
+            $class->addMethod('fromQuery')
+                ->setPublic()
+                ->setStatic(true)
+                ->setReturnType($query->getClassFqn())
+                ->setBody(
+                    'return static::getQueryFactory()->createQuery($GLOBALS[\'wp_query\']);'
+                );
+
+            $class->addMethod('getQueryFactory')
+                ->setProtected()
+                ->setStatic(true)
+                ->setReturnType($queryFactory->getClassFqn())
+                ->setBody(sprintf(
+                    'return static::$container->get(%s::class);',
+                    $queryFactory->getClass()
+                ));
+        }
+
+        $class->addMethod('_getFacadeAccessor')
+            ->setProtected()
+            ->setStatic(true)
+            ->setReturnType('string')
+            ->setBody('return ' . $repository->getClass() . '::class;');
+
+        $this->writeFile($facadeFile, $printer->printFile($file), $force);
 
         return self::SUCCESS;
     }

@@ -1,4 +1,5 @@
 /src/*/System/Model/Test/
+/src/Library/Core/Access/Tests.php
 
 # Wordpress
 /wordpress/

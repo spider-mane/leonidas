@@ -1,4 +1,5 @@
 abstract_dir: true
+facade: src/Library/Core/Access/_Facade.php
 
 make:
   hook:
@@ -11,7 +12,3 @@ make:
     # contracts: .playground/model
     # namespace: .playground/model
     registration: .playground/model/RegisterModelServices.php
-
-util:
-  method:
-    facade: Leonidas\Library\Core\Access\_Facade
