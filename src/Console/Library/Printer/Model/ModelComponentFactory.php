@@ -89,6 +89,26 @@ class ModelComponentFactory
         $this->tagAccessProvider = $model . 'TagAccessProvider';
     }
 
+    public function getEntity(): string
+    {
+        return $this->entity;
+    }
+
+    public function getSingle(): string
+    {
+        return $this->single;
+    }
+
+    public function getPlural(): string
+    {
+        return $this->plural;
+    }
+
+    public function getTemplate(): string
+    {
+        return $this->template;
+    }
+
     public function isPostTemplate(): bool
     {
         return in_array($this->template, ['post', 'post:h', 'attachment']);
