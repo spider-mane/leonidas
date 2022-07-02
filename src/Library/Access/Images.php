@@ -1,12 +1,11 @@
 <?php
 
-namespace Leonidas\Library\System\Access;
+namespace Leonidas\Library\Access;
 
 use Leonidas\Contracts\System\Model\Image\ImageCollectionInterface;
 use Leonidas\Contracts\System\Model\Image\ImageInterface;
 use Leonidas\Contracts\System\Model\Image\ImageRepositoryInterface;
 use Leonidas\Contracts\System\Model\Post\PostInterface;
-use Leonidas\Library\Core\Access\_Facade;
 use Leonidas\Library\System\Model\Image\ImageQuery;
 use Leonidas\Library\System\Model\Image\ImageQueryFactory;
 

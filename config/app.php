@@ -44,5 +44,5 @@ return [
 
     ],
 
-    'facade' => Leonidas\Library\Core\Access\_Facade::class,
+    'facade' => Leonidas\Library\Access\_Facade::class,
 ];

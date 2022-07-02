@@ -1,6 +1,6 @@
 <?php
 
-namespace Leonidas\Library\System\Access;
+namespace Leonidas\Library\Access;
 
 use Leonidas\Contracts\System\Model\Author\AuthorInterface;
 use Leonidas\Contracts\System\Model\Category\CategoryInterface;
@@ -9,7 +9,6 @@ use Leonidas\Contracts\System\Model\Post\PostInterface;
 use Leonidas\Contracts\System\Model\Post\PostRepositoryInterface;
 use Leonidas\Contracts\System\Model\Post\Status\PostStatusInterface;
 use Leonidas\Contracts\System\Model\Tag\TagInterface;
-use Leonidas\Library\Core\Access\_Facade;
 use Leonidas\Library\System\Model\Post\PostQuery;
 use Leonidas\Library\System\Model\Post\PostQueryFactory;
 

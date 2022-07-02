@@ -1,9 +1,8 @@
 <?php
 
-namespace Leonidas\Library\System\Access;
+namespace Leonidas\Library\Access;
 
 use Leonidas\Contracts\System\Model\Author\AuthorRepositoryInterface;
-use Leonidas\Library\Core\Access\_Facade;
 
 class Authors extends _Facade
 {

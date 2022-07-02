@@ -1,12 +1,11 @@
 <?php
 
-namespace Leonidas\Library\System\Access;
+namespace Leonidas\Library\Access;
 
 use Leonidas\Contracts\System\Model\Post\PostInterface;
 use Leonidas\Contracts\System\Model\Tag\TagCollectionInterface;
 use Leonidas\Contracts\System\Model\Tag\TagInterface;
 use Leonidas\Contracts\System\Model\Tag\TagRepositoryInterface;
-use Leonidas\Library\Core\Access\_Facade;
 
 /**
  * @method static ?TagInterface select(int $id)

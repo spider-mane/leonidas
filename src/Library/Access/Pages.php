@@ -1,11 +1,10 @@
 <?php
 
-namespace Leonidas\Library\System\Access;
+namespace Leonidas\Library\Access;
 
 use Leonidas\Contracts\System\Model\Page\PageCollectionInterface;
 use Leonidas\Contracts\System\Model\Page\PageInterface;
 use Leonidas\Contracts\System\Model\Page\PageRepositoryInterface;
-use Leonidas\Library\Core\Access\_Facade;
 use Leonidas\Library\System\Model\Page\PageQuery;
 use Leonidas\Library\System\Model\Page\PageQueryFactory;
 
