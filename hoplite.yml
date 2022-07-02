@@ -1,5 +1,5 @@
 abstract_dir: true
-facade: src/Library/Core/Access/_Facade.php
+facades: src/Library/Access
 
 make:
   hook:

@@ -6,6 +6,7 @@ namespace Leonidas\Console\Library\Printer\Model\Abstracts;
 
 use Leonidas\Library\Core\Abstracts\ConvertsCaseTrait;
 use ReflectionClass;
+use ReflectionFunctionAbstract;
 use ReflectionMethod;
 
 trait TypedClassPrinterTrait
@@ -57,7 +58,7 @@ trait TypedClassPrinterTrait
                     : '';
 
                 $signatures[$name] = [
-                    'take' => $this->convertParamsToTake($method),
+                    'take' => $this->stringifyParams($method),
                     'give' => $signature['give'] ?? null,
                     'call' => $signature['call'],
                     'pass' => $pass,
@@ -84,7 +85,7 @@ trait TypedClassPrinterTrait
         );
     }
 
-    protected function convertParamsToTake(ReflectionMethod $method): string
+    protected function stringifyParams(ReflectionFunctionAbstract $method): string
     {
         $params = $method->getParameters();
 
@@ -102,6 +103,7 @@ trait TypedClassPrinterTrait
 
                 if ($this->typeIsConstruct($type)) {
                     $this->addImport($type);
+                    $type = $this->getClassFromFqn($type);
                 }
 
                 $structure .= $type . ' ';
@@ -132,6 +134,13 @@ trait TypedClassPrinterTrait
         return class_exists($type)
             || interface_exists($type)
             || enum_exists($type);
+    }
+
+    protected function getClassFromFqn(string $fqn): string
+    {
+        $parts = explode('\\', $fqn);
+
+        return end($parts);
     }
 
     protected function matchTraitsToType(array $traits, array $map)

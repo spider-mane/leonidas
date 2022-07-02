@@ -19,6 +19,7 @@ class MakeModelCommand extends HopliteCommand
         'term',
         'term:h',
         'user',
+        // 'comment',
     ];
 
     protected const CORE_FILE_METHODS = [
@@ -30,8 +31,11 @@ class MakeModelCommand extends HopliteCommand
     protected const SUPPORT_FILE_METHODS = [
         'factories' => 'makeFactoryFiles',
         'access' => 'makeAccessProviderFiles',
-        'registration' => 'updateRegistrationClass',
         'facade' => 'makeFacadeFiles',
+    ];
+
+    protected const EXTRA_FILE_METHODS = [
+        'registration' => 'updateRegistrationClass',
     ];
 
     protected static $defaultName = 'make:model';
@@ -49,9 +53,10 @@ class MakeModelCommand extends HopliteCommand
             ->addOption('abstracts', 'a', InputOption::VALUE_NONE, '')
             ->addOption('template', 't', InputOption::VALUE_REQUIRED, '', 'post')
             ->addOption('registration', 'r', InputOption::VALUE_REQUIRED, '')
-            ->addOption('facade', 'x', InputOption::VALUE_REQUIRED, '')
+            ->addOption('facades', 'x', InputOption::VALUE_REQUIRED, '')
             ->addOption('design', 'd', InputOption::VALUE_NONE, 'Generate interfaces only')
             ->addOption('build', 'b', InputOption::VALUE_NONE, 'Generate classes using interfaces as guide')
+            ->addOption('omit', 'o', InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY, '')
             ->addOption('force', 'f', InputOption::VALUE_NONE, '');
     }
 
@@ -80,9 +85,10 @@ class MakeModelCommand extends HopliteCommand
         $model = $this->convert($this->input->getArgument('model'))->toPascal();
         $namespace = $this->configurableOption('namespace', 'make.model.namespace');
         $contracts = $this->configurableOption('contracts', 'make.model.contracts');
+        $facades = $this->configurableOption('facades', 'facades');
 
-        $factory = $this->getComponentFactory($model, $namespace, $contracts, $template);
-        $paths = $this->getOutputPaths($model, $namespace, $contracts);
+        $factory = $this->getComponentFactory($model, $namespace, $contracts, $facades, $template);
+        $paths = $this->getOutputPaths($model, $namespace, $contracts, $facades);
         $action = $this->resolveRequestedAction();
 
         $force = $this->input->getOption('force');
@@ -103,6 +109,14 @@ class MakeModelCommand extends HopliteCommand
                     return $status;
                 }
             }
+
+            foreach ($this->resolveComponents('extra') as $method) {
+                $status = $this->$method($factory, $force);
+
+                if (self::SUCCESS !== $status) {
+                    return $status;
+                }
+            }
         }
 
         $this->output->success("Successfully created model files");
@@ -116,21 +130,25 @@ class MakeModelCommand extends HopliteCommand
             sprintf('%s::%s_FILE_METHODS', static::class, strtoupper($set))
         );
 
-        if (!$components = $this->input->getArgument('components')) {
-            return $set;
+        $selected = $this->input->getArgument('components') ?: array_keys($set);
+        $omitted = $this->input->getOption('omit') ?? [];
+
+        $resolved = [];
+
+        foreach ($set as $component => $method) {
+            if (in_array($component, $selected) && !in_array($component, $omitted)) {
+                $resolved[] = $method;
+            }
         }
 
-        return array_filter(
-            $set,
-            fn ($method) => in_array($method, $components),
-            ARRAY_FILTER_USE_KEY
-        );
+        return $resolved;
     }
 
     protected function getComponentFactory(
         string $model,
         string $namespace,
         string $contracts,
+        string $facades,
         string $template
     ): ModelComponentFactory {
         $entity = $this->input->getArgument('entity');
@@ -140,12 +158,14 @@ class MakeModelCommand extends HopliteCommand
         $namespace = $this->pathToNamespace($namespace, $model);
         $contracts = $this->pathToNamespace($contracts, $model);
         $abstracts = $this->resolveAbstractNamespace($namespace);
+        $facades = $this->pathToNamespace($facades);
 
         return ModelComponentFactory::build([
             'model' => $model,
             'namespace' => $namespace,
             'contracts' => $contracts,
             'abstracts' => $abstracts,
+            'facade' => $facades,
             'entity' => $entity,
             'single' => $single,
             'plural' => $plural,
@@ -153,12 +173,13 @@ class MakeModelCommand extends HopliteCommand
         ]);
     }
 
-    protected function getOutputPaths(string $model, string $namespace, string $contracts): array
+    protected function getOutputPaths(string $model, string $namespace, string $contracts, string $facades): array
     {
         return [
             'interfaces' => $contracts . DIRECTORY_SEPARATOR . $model,
             'classes' => $namespace = $namespace . DIRECTORY_SEPARATOR . $model,
             'abstracts' => $this->resolveAbstractDir($namespace),
+            'facades' => $facades,
         ];
     }
 
@@ -176,11 +197,11 @@ class MakeModelCommand extends HopliteCommand
                 $isRegistrar = $file->getBasename() === 'RegisterModelServices.php';
 
                 if (!($isInterface || $isRegistrar)) {
-                    // $this->filesystem->remove($file->getPathname());
+                    $this->filesystem->remove($file->getPathname());
                 }
 
                 if ($isInterface) {
-                    // require $file->getPathname();
+                    require $file->getPathname();
                 }
             }
 
@@ -206,6 +227,7 @@ class MakeModelCommand extends HopliteCommand
             'interfaces' => $playground,
             'classes' => $playground,
             'abstracts' => $playground,
+            'facades' => $playground,
         ];
     }
 
@@ -362,7 +384,17 @@ class MakeModelCommand extends HopliteCommand
         return self::SUCCESS;
     }
 
-    protected function updateRegistrationClass(ModelComponentFactory $factory, array $paths, bool $force): int
+    protected function makeFacadeFiles(ModelComponentFactory $factory, array $paths, bool $force): int
+    {
+        $facade = $factory->getRepositoryFacadePrinter();
+        $facadeFile = $this->phpFile($paths['facades'], $facade->getClass());
+
+        $this->writeFile($facadeFile, $facade->printFromType(), $force);
+
+        return self::SUCCESS;
+    }
+
+    protected function updateRegistrationClass(ModelComponentFactory $factory, bool $force): int
     {
         $name = $factory->getSingle();
         $model = $factory->getModelPrinter();
@@ -401,63 +433,6 @@ class MakeModelCommand extends HopliteCommand
             PsrPrinterFactory::create()->printFile($file),
             true
         );
-
-        return self::SUCCESS;
-    }
-
-    protected function makeFacadeFiles(ModelComponentFactory $factory, array $paths, bool $force): int
-    {
-        $baseFile = $this->configurableOption('facade', 'facade');
-        $parts = explode('/', $baseFile);
-        $base = str_replace('.php', '', array_pop($parts));
-        $facadeNamespace = $this->pathToNamespace(implode('/', $parts));
-        $baseFacade = $facadeNamespace . '\\' . $base;
-        $facade = $this->convert($factory->getPlural())->toPascal();
-        $facadeFile = $this->phpFile(implode('/', $parts), $facade);
-        $repository = $factory->getRepositoryInterfacePrinter();
-
-        $printer = PsrPrinterFactory::create();
-        $file = new PhpFile();
-
-        $namespace = $file->addNamespace($facadeNamespace);
-
-        $namespace->addUse($baseFacade)->addUse($repository->getClassFqn());
-
-        $class = $namespace->addClass($facade)->setExtends($baseFacade);
-
-        if ($factory->isPostTemplate()) {
-            $query = $factory->getChildQueryPrinter();
-            $queryFactory = $factory->getQueryFactoryPrinter();
-
-            $namespace
-                ->addUse($queryFactory->getClassFqn())
-                ->addUse($query->getClassFqn());
-
-            $class->addMethod('fromQuery')
-                ->setPublic()
-                ->setStatic(true)
-                ->setReturnType($query->getClassFqn())
-                ->setBody(
-                    'return static::getQueryFactory()->createQuery($GLOBALS[\'wp_query\']);'
-                );
-
-            $class->addMethod('getQueryFactory')
-                ->setProtected()
-                ->setStatic(true)
-                ->setReturnType($queryFactory->getClassFqn())
-                ->setBody(sprintf(
-                    'return static::$container->get(%s::class);',
-                    $queryFactory->getClass()
-                ));
-        }
-
-        $class->addMethod('_getFacadeAccessor')
-            ->setProtected()
-            ->setStatic(true)
-            ->setReturnType('string')
-            ->setBody('return ' . $repository->getClass() . '::class;');
-
-        $this->writeFile($facadeFile, $printer->printFile($file), $force);
 
         return self::SUCCESS;
     }

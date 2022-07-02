@@ -18,9 +18,9 @@ abstract class AbstractModelRepositoryPrinter extends AbstractClassPrinter
             'pass' => '...$ids',
         ],
         'query' => [
-            'take' => 'array $query',
+            'take' => 'array $args',
             'give' => '@collection',
-            'pass' => '$query',
+            'pass' => '$args',
         ],
         'all' => [
             'give' => '@collection',

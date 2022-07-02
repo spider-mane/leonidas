@@ -52,11 +52,14 @@ class ModelComponentFactory
 
     protected string $tagAccessProvider;
 
+    protected string $facades;
+
     protected function __construct(
         string $model,
         string $namespace,
         string $contracts,
         string $abstracts,
+        string $facades,
         string $entity,
         string $single,
         string $plural,
@@ -65,6 +68,7 @@ class ModelComponentFactory
         $this->namespace = $namespace;
         $this->contracts = $contracts;
         $this->abstracts = $abstracts;
+        $this->facades = $facades;
         $this->entity = $entity;
 
         $this->template = $template ?? 'post';
@@ -303,6 +307,18 @@ class ModelComponentFactory
         );
     }
 
+    public function getRepositoryFacadePrinter(): ModelRepositoryFacadePrinter
+    {
+        return new ModelRepositoryFacadePrinter(
+            $this->convert($this->plural)->toPascal(),
+            $this->facades,
+            $this->getContractFqn($this->repositoryInterface),
+            $this->getClassFqn($this->queryFactory),
+            $this->getClassFqn($this->query),
+            $this->template
+        );
+    }
+
     protected function isDatableModel(): bool
     {
         return interface_exists($this->modelInterface)
@@ -337,6 +353,7 @@ class ModelComponentFactory
             $args['namespace'],
             $args['contracts'],
             $args['abstracts'],
+            $args['facade'],
             $args['entity'],
             $args['single'],
             $args['plural'],
