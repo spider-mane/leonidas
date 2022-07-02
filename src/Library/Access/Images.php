@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Leonidas\Library\Access;
 
 use Leonidas\Contracts\System\Model\Image\ImageCollectionInterface;
@@ -17,9 +19,9 @@ use Leonidas\Library\System\Model\Image\ImageQueryFactory;
  * @method static ImageCollectionInterface all()
  * @method static void insert(ImageInterface $image)
  * @method static void update(ImageInterface $image)
- * @method static void delete(int $id)
  * @method static void trash(int $id)
  * @method static void recover(int $id)
+ * @method static void delete(int $id)
  */
 class Images extends _Facade
 {
@@ -33,7 +35,7 @@ class Images extends _Facade
         return static::$container->get(ImageQueryFactory::class);
     }
 
-    protected static function _getFacadeAccessor()
+    protected static function _getFacadeAccessor(): string
     {
         return ImageRepositoryInterface::class;
     }

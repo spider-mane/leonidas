@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Leonidas\Library\Access;
 
 use Leonidas\Contracts\System\Model\Page\PageCollectionInterface;
@@ -19,9 +21,9 @@ use Leonidas\Library\System\Model\Page\PageQueryFactory;
  * @method static PageCollectionInterface all()
  * @method static void insert(PageInterface $post)
  * @method static void update(PageInterface $post)
- * @method static void delete(int $id)
  * @method static void trash(int $id)
  * @method static void recover(int $id)
+ * @method static void delete(int $id)
  */
 class Pages extends _Facade
 {
@@ -35,7 +37,7 @@ class Pages extends _Facade
         return static::$container->get(PageQueryFactory::class);
     }
 
-    protected static function _getFacadeAccessor()
+    protected static function _getFacadeAccessor(): string
     {
         return PageRepositoryInterface::class;
     }

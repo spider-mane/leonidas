@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Leonidas\Library\Access;
 
 use Leonidas\Contracts\System\Model\Post\PostInterface;
@@ -20,7 +22,7 @@ use Leonidas\Contracts\System\Model\Tag\TagRepositoryInterface;
  */
 class Tags extends _Facade
 {
-    protected static function _getFacadeAccessor()
+    protected static function _getFacadeAccessor(): string
     {
         return TagRepositoryInterface::class;
     }

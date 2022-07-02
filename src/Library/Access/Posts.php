@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Leonidas\Library\Access;
 
 use Leonidas\Contracts\System\Model\Author\AuthorInterface;
@@ -28,9 +30,9 @@ use Leonidas\Library\System\Model\Post\PostQueryFactory;
  * @method static PostInterface make(array $data)
  * @method static void insert(PostInterface $post)
  * @method static void update(PostInterface $post)
- * @method static void delete(int $id)
  * @method static void trash(int $id)
  * @method static void recover(int $id)
+ * @method static void delete(int $id)
  */
 class Posts extends _Facade
 {
@@ -44,7 +46,7 @@ class Posts extends _Facade
         return static::$container->get(PostQueryFactory::class);
     }
 
-    protected static function _getFacadeAccessor()
+    protected static function _getFacadeAccessor(): string
     {
         return PostRepositoryInterface::class;
     }
