@@ -353,7 +353,7 @@ class ModelComponentFactory
             $args['namespace'],
             $args['contracts'],
             $args['abstracts'],
-            $args['facade'],
+            $args['facades'],
             $args['entity'],
             $args['single'],
             $args['plural'],

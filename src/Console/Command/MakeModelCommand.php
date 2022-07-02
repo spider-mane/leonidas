@@ -165,7 +165,7 @@ class MakeModelCommand extends HopliteCommand
             'namespace' => $namespace,
             'contracts' => $contracts,
             'abstracts' => $abstracts,
-            'facade' => $facades,
+            'facades' => $facades,
             'entity' => $entity,
             'single' => $single,
             'plural' => $plural,
