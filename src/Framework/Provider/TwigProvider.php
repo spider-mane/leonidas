@@ -29,7 +29,7 @@ class TwigProvider extends AbstractServiceFactory implements ServiceFactoryInter
         $loader = $this->fetch($loaderService, $container)
             ?? $this->getDefaultLoader($args);
 
-        $env = new Environment($loader, $args['options']);
+        $env = new Environment($loader, $args['options'] ?? []);
 
         $env->addExtension(new ConfiguredExtension($args));
 

@@ -23,7 +23,7 @@ $config = new Config("$root/config/development");
 /**
  * Establish that plugin is in a development environment
  */
-define('LEONIDAS_DEVELOPMENT', env('LEONIDAS_DEVELOPMENT') ?? true);
+define($dev = 'LEONIDAS_DEVELOPMENT', env($dev) ?? true);
 
 /**
  * Initiate debug support
