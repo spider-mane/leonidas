@@ -48,12 +48,12 @@ class MakeModelCommand extends HopliteCommand
             ->addArgument('single', InputArgument::REQUIRED, '')
             ->addArgument('plural', InputArgument::REQUIRED, '')
             ->addArgument('components', InputArgument::OPTIONAL | InputArgument::IS_ARRAY, '')
-            ->addOption('namespace', 's', InputOption::VALUE_OPTIONAL, '')
-            ->addOption('contracts', 'c', InputOption::VALUE_OPTIONAL, '')
-            ->addOption('abstracts', 'a', InputOption::VALUE_NONE, '')
             ->addOption('template', 't', InputOption::VALUE_REQUIRED, '', 'post')
-            ->addOption('registration', 'r', InputOption::VALUE_REQUIRED, '')
+            ->addOption('namespace', 's', InputOption::VALUE_REQUIRED, '')
+            ->addOption('contracts', 'c', InputOption::VALUE_REQUIRED, '')
             ->addOption('facades', 'x', InputOption::VALUE_REQUIRED, '')
+            ->addOption('abstracts', 'a', InputOption::VALUE_NONE, '')
+            ->addOption('bootstrap', 'r', InputOption::VALUE_REQUIRED, '')
             ->addOption('design', 'd', InputOption::VALUE_NONE, 'Generate interfaces only')
             ->addOption('build', 'b', InputOption::VALUE_NONE, 'Generate classes using interfaces as guide')
             ->addOption('omit', 'o', InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY, '')
@@ -408,7 +408,7 @@ class MakeModelCommand extends HopliteCommand
             // 'comment' => 'comment',
         ][$factory->getTemplate()];
 
-        $registrar = $this->configurableOption('registration', 'make.model.registration');
+        $registrar = $this->configurableOption('bootstrap', 'make.model.bootstrap');
         $file = PhpFile::fromCode(file_get_contents($registrar));
 
         $namespaces = $file->getNamespaces();

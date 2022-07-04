@@ -8,7 +8,7 @@ make:
   model:
     contracts: src/Contracts/System/Model
     namespace: src/Library/System/Model
-    # registration: src/Framework/Bootstrap/RegisterModelServices.php
+    # bootstrap: src/Framework/Bootstrap/RegisterModelServices.php
     # contracts: .playground/model
     # namespace: .playground/model
-    registration: .playground/model/RegisterModelServices.php
+    bootstrap: .playground/model/RegisterModelServices.php
