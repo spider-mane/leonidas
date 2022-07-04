@@ -25,6 +25,53 @@ class PostQueryIterator implements Iterator, Countable
         $this->conversionArchive = $archive;
     }
 
+    public function current(): object
+    {
+        $this->maybeStartLoop();
+
+        return $this->getConvertedPost($GLOBALS['post']);
+    }
+
+    public function key(): int
+    {
+        return $this->query->current_post;
+    }
+
+    public function next(): void
+    {
+        $this->maybeStartLoop();
+
+        if (!$this->loopEnded()) {
+            $this->nextPost();
+        }
+    }
+
+    public function rewind(): void
+    {
+        $this->query->rewind_posts();
+    }
+
+    public function valid(): bool
+    {
+        if (!$valid = $this->query->have_posts()) {
+            $this->resetData();
+        }
+
+        return $valid;
+    }
+
+    public function count(): int
+    {
+        return count($this->query->posts);
+    }
+
+    protected function maybeStartLoop(): void
+    {
+        if (!$this->loopStarted()) {
+            $this->nextPost();
+        }
+    }
+
     protected function loopStarted(): bool
     {
         return $this->key() > -1;
@@ -35,45 +82,13 @@ class PostQueryIterator implements Iterator, Countable
         return $this->key() === $this->count() - 1;
     }
 
-    public function current()
+    protected function nextPost(): void
     {
-        if (!$this->loopStarted()) {
-            $this->query->the_post();
-        }
-
-        return $this->getConvertedPost($GLOBALS['post']);
-    }
-
-    public function next(): void
-    {
-        if (!$this->loopStarted()) {
-            $this->query->the_post();
-        }
-
         $this->query->the_post();
-
-        if ($this->loopEnded()) {
-            wp_reset_postdata();
-        }
     }
 
-    public function rewind(): void
+    protected function resetData(): void
     {
-        $this->query->rewind_posts();
-    }
-
-    public function key()
-    {
-        return $this->query->current_post;
-    }
-
-    public function valid(): bool
-    {
-        return $this->query->have_posts();
-    }
-
-    public function count(): int
-    {
-        return count($this->query->posts);
+        wp_reset_postdata();
     }
 }
