@@ -28,7 +28,9 @@ trait ValidatesPostTypeTrait
      */
     protected function assertPostTypeOnQuery(WP_Query $query, string $postType): self
     {
-        $actual = $query->get('post_type', null);
+        $actual = $query->get('post_type')
+            ?: $query->get_queried_object()->post_type
+            ?? $postType;
 
         if (is_array($actual) && count($actual) === 1) {
             $actual = $actual[0];
