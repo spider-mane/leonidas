@@ -2,12 +2,12 @@
 
 namespace Leonidas\Framework\Provider\League;
 
-use Leonidas\Contracts\Http\Form\FormHandlerRepositoryInterface;
-use Leonidas\Framework\Provider\FormHandlerRepositoryProvider;
+use Leonidas\Contracts\Http\Form\FormRepositoryInterface;
+use Leonidas\Framework\Provider\FormRepositoryProvider;
 use Leonidas\Framework\Provider\League\Abstracts\AbstractLeagueServiceFactory;
 use Panamax\Contracts\ServiceFactoryInterface;
 
-class FormHandlerRepositoryServiceProvider extends AbstractLeagueServiceFactory
+class FormRepositoryServiceProvider extends AbstractLeagueServiceFactory
 {
     protected function id(): string
     {
@@ -16,7 +16,7 @@ class FormHandlerRepositoryServiceProvider extends AbstractLeagueServiceFactory
 
     protected function types(): array
     {
-        return [FormHandlerRepositoryInterface::class];
+        return [FormRepositoryInterface::class];
     }
 
     protected function aliases(): array
@@ -26,6 +26,6 @@ class FormHandlerRepositoryServiceProvider extends AbstractLeagueServiceFactory
 
     protected function factory(): ServiceFactoryInterface
     {
-        return new FormHandlerRepositoryProvider();
+        return new FormRepositoryProvider();
     }
 }
