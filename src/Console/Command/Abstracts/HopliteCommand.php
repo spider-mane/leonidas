@@ -108,7 +108,7 @@ abstract class HopliteCommand extends Command
 
     protected function internal(string $path = ''): string
     {
-        return dirname(__DIR__, 1) . $path;
+        return dirname(__DIR__, 2) . $path;
     }
 
     protected function external(string $path = ''): string
