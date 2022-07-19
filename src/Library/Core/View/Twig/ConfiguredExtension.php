@@ -2,6 +2,8 @@
 
 namespace Leonidas\Library\Core\View\Twig;
 
+use RuntimeException;
+use Throwable;
 use Twig\Extension\ExtensionInterface;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
@@ -109,11 +111,19 @@ class ConfiguredExtension implements ExtensionInterface
         $options = [];
 
         if (is_array($callable) && !is_callable($callable)) {
-            $options = $callable['options'];
-            $callable = $callable['function'];
-        }
+            try {
+                $options = $callable['options'];
+                $callable = $callable['function'];
+            } catch (Throwable $e) {
+                if (str_contains($e->getMessage(), 'options')) {
+                    $m = "Definition for entry {$name} either missing \"options\" key or invalid callable was provided.";
 
-        if (is_int($name) && is_string($callable)) {
+                    throw new RuntimeException($m, 0, $e);
+                }
+
+                throw $e;
+            }
+        } elseif (is_int($name) && is_string($callable)) {
             $name = $callable;
         }
     }
