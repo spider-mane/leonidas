@@ -18,15 +18,33 @@ abstract class AbstractConfigurationExtension extends ConfiguredExtension
         ];
     }
 
-    abstract protected function tokenParsers(): array;
+    protected function tokenParsers(): array
+    {
+        return [];
+    }
 
-    abstract protected function nodeVisitors(): array;
+    protected function nodeVisitors(): array
+    {
+        return [];
+    }
 
-    abstract protected function filters(): array;
+    protected function filters(): array
+    {
+        return [];
+    }
 
-    abstract protected function tests(): array;
+    protected function tests(): array
+    {
+        return [];
+    }
 
-    abstract protected function functions(): array;
+    protected function functions(): array
+    {
+        return [];
+    }
 
-    abstract protected function operators(): array;
+    protected function operators(): array
+    {
+        return [];
+    }
 }
