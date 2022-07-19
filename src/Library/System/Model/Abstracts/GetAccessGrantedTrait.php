@@ -14,4 +14,13 @@ trait GetAccessGrantedTrait
     {
         return $this->getAccessProvider->get($name);
     }
+
+    public function __isset(string $name): bool
+    {
+        try {
+            $value = $this->__get($name);
+        } finally {
+            return isset($value);
+        }
+    }
 }
