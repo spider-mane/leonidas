@@ -3,21 +3,25 @@
 namespace Leonidas\Library\Core\View\Twig;
 
 use joshtronic\LoremIpsum;
+use Leonidas\Library\Core\Abstracts\ConvertsCaseTrait;
 use Twig\Extension\AbstractExtension;
 use Twig\Extension\ExtensionInterface;
 use Twig\TwigFunction;
 
 class LoremExtension extends AbstractExtension implements ExtensionInterface
 {
-    public function getFunctions()
-    {
-        return [
-            new TwigFunction('lorem', [$this, 'lorem']),
-        ];
-    }
+    use ConvertsCaseTrait;
 
-    public function lorem()
+    public function getFunctions(): array
     {
-        return new LoremIpsum();
+        $functions = [];
+
+        foreach (get_class_methods($lorem = new LoremIpsum()) as $method) {
+            $name = 'lorem_' . $this->convert($method)->toSnake();
+
+            $functions[] = new TwigFunction($name, [$lorem, $method]);
+        }
+
+        return $functions;
     }
 }
