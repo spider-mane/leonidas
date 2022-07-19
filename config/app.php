@@ -6,17 +6,17 @@ return [
 
     'name' => plugin_header('name'),
 
-    'slug' => plugin_header('textdomain'),
-
     'version' => plugin_header('version'),
 
     'description' => plugin_header('description'),
+
+    'slug' => plugin_header('textdomain'),
 
     'namespace' => 'leonidas',
 
     'prefix' => 'leon',
 
-    'dev' => defined('LEONIDAS_DEVELOPMENT'),
+    'dev' => constant('LEONIDAS_DEVELOPMENT') ?? false,
 
     'modules' => [
 

@@ -14,6 +14,7 @@ use Leonidas\Library\Core\Auth\CsrfFieldPrinter;
 use Leonidas\Library\Core\Auth\Nonce;
 use Leonidas\Library\Core\Http\Policy\CsrfCheck;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\SimpleCache\CacheInterface;
 use WebTheory\HttpPolicy\ServerRequestPolicyInterface;
 use WebTheory\Saveyour\Auth\FormShield;
 use WebTheory\Saveyour\Contracts\Auth\FormShieldInterface;
@@ -28,8 +29,10 @@ use WebTheory\Saveyour\Contracts\Report\ValidationReportInterface;
 use WebTheory\Saveyour\Contracts\Validation\ValidatorInterface;
 use WebTheory\Saveyour\Controller\Builder\FormFieldControllerBuilder;
 use WebTheory\Saveyour\Controller\FormSubmissionManager;
+use WebTheory\Saveyour\Data\SimpleCacheDataManager;
 use WebTheory\Saveyour\Field\Type\Hidden;
 use WebTheory\Saveyour\Processor\FailedValidationSimpleCache;
+use WebTheory\Saveyour\Processor\SimpleCacheSweeper;
 
 abstract class AbstractForm implements FormInterface
 {
@@ -42,12 +45,19 @@ abstract class AbstractForm implements FormInterface
 
     protected string $action;
 
+    /**
+     * Fields being handled for the current request
+     *
+     * @var array<string>
+     */
+    protected array $processing;
+
     protected WpExtensionInterface $extension;
 
     public function __construct(WpExtensionInterface $extension)
     {
         $this->extension = $extension;
-        $this->setProperties('handle', 'action');
+        $this->init('construct');
     }
 
     public function getHandle(): string
@@ -62,19 +72,27 @@ abstract class AbstractForm implements FormInterface
 
     public function build(ServerRequestInterface $request): array
     {
-        $this->setProperties('localizer');
+        $this->init('build');
+        $this->processing = $this->fields($request);
 
-        return [
+        $data = [
             'method' => $this->formMethod(),
             'action' => $this->formAction($request),
             'checks' => $this->formChecks($request),
             'fields' => $this->formFields($request),
             'errors' => $this->formErrors($request),
         ];
+
+        $this->resetStateProps();
+
+        return $data;
     }
 
     public function process(ServerRequestInterface $request): void
     {
+        $this->init('process');
+        $this->processing = $this->fields($request);
+
         $processed = $this->postProcess(
             $this->processor($request)->process($request),
             $request
@@ -98,7 +116,7 @@ abstract class AbstractForm implements FormInterface
     protected function processor(ServerRequestInterface $request): FormSubmissionManagerInterface
     {
         return new FormSubmissionManager(
-            $this->controllers($request),
+            $this->fieldControllers($request),
             $this->processes($request),
             $this->shield($request),
         );
@@ -107,15 +125,18 @@ abstract class AbstractForm implements FormInterface
     /**
      * @return array<FormFieldControllerInterface>
      */
-    protected function controllers(ServerRequestInterface $request): array
+    protected function fieldControllers(ServerRequestInterface $request): array
     {
-        $controllers = [];
-        $data = $this->data($request);
+        $data = $this->dataManagers($request);
         $validation = $this->validation($request);
         $formatting = $this->formatting($request);
 
-        foreach ($this->fieldData($request) as $field => $args) {
-            $controllers[] = FormFieldControllerBuilder::for($field)
+        $controllers = [];
+
+        foreach ($this->processing as $field) {
+            $name = $this->fieldKeyAsName($field);
+
+            $controllers[] = FormFieldControllerBuilder::for($name)
                 ->dataManager($data[$field] ?? null)
                 ->formatter($formatting[$field] ?? null)
                 ->validator($validation[$field] ?? null)
@@ -130,21 +151,29 @@ abstract class AbstractForm implements FormInterface
      */
     protected function formFields(ServerRequestInterface $request): array
     {
-        $fields = $this->fieldData($request);
-        $data = $this->data($request);
+        $attributes = $this->attributes($request);
+        $data = $this->dataManagers($request);
         $formatting = $this->formatting($request);
 
-        foreach ($fields as $field => &$definition) {
+        $controllers = [];
+
+        foreach ($this->processing as $field) {
             $name = $this->fieldKeyAsName($field);
+
             $controller = FormFieldControllerBuilder::for($name)
                 ->dataManager($data[$field] ?? null)
                 ->formatter($formatting[$field] ?? null)
                 ->get();
 
+            $definition = $attributes[$field] ?? [];
+
+            $definition['name'] = $name;
             $definition['value'] = $controller->getPresetValue($request);
+
+            $controllers[$field] = $definition;
         }
 
-        return $fields;
+        return $controllers;
     }
 
     /**
@@ -157,13 +186,12 @@ abstract class AbstractForm implements FormInterface
         $violations = $this->getCachedViolations($request);
 
         foreach ($violations as $field => $violations) {
+            $field = $this->fieldNameAsKey($field);
             $errors[$field] = [];
 
             foreach ($violations as $violation) {
-                $field = $this->fieldNameAsKey($field);
                 $message = $messages[$field][$violation];
-
-                $errors[$field][] = $this->translate($message);
+                $errors[$field][$violation] = $this->translate($message);
             }
         }
 
@@ -182,23 +210,37 @@ abstract class AbstractForm implements FormInterface
         return $violations;
     }
 
-    protected function failedValidationCacheKey(): string
-    {
-        return "form:{$this->handle}:errors";
-    }
-
     protected function fieldKeyAsName(string $key): string
     {
         return $this->prefix(str_replace('_', '-', $key), '-');
     }
 
+    protected function fieldKeysAsNames(array $keys): array
+    {
+        return array_map([$this, 'fieldKeyAsName'], $keys);
+    }
+
     protected function fieldNameAsKey(string $name): string
     {
-        return str_replace(
-            [$this->prefix('', '-'), '-'],
-            ['', '_'],
-            $name
-        );
+        $stripped = substr($name, strlen($this->extension->getPrefix()) + 1);
+
+        return str_replace('-', '_', $stripped);
+    }
+
+    protected function fieldNamesAsKeys(array $names): array
+    {
+        return array_map([$this, 'fieldNameAsKey'], $names);
+    }
+
+    protected function mappedResults(array $results): array
+    {
+        $mapped = [];
+
+        foreach ($results as $name => $value) {
+            $mapped[$this->fieldNameAsKey($name)] = $value;
+        }
+
+        return $mapped;
     }
 
     protected function formMethod(): string
@@ -222,13 +264,13 @@ abstract class AbstractForm implements FormInterface
     protected function checks(ServerRequestInterface $request): array
     {
         return [
-            $this->actionField(),
-            $this->refererField(),
-            $this->csrfTokenField(),
+            $this->actionFormCheck(),
+            $this->refererFormCheck(),
+            $this->csrfTokenFormCheck(),
         ];
     }
 
-    protected function actionField(): string
+    protected function actionFormCheck(): string
     {
         return (new Hidden())
             ->setName('action')
@@ -236,12 +278,12 @@ abstract class AbstractForm implements FormInterface
             ->toHtml();
     }
 
-    protected function refererField(): string
+    protected function refererFormCheck(): string
     {
         return wp_referer_field(false);
     }
 
-    protected function csrfTokenField(): string
+    protected function csrfTokenFormCheck(): string
     {
         return $this->csrfPrinter()->print($this->token());
     }
@@ -268,9 +310,7 @@ abstract class AbstractForm implements FormInterface
 
     protected function token(): CsrfManagerInterface
     {
-        $action = $this->getAction();
-
-        return new Nonce($action, $action, Nonce::EXP_12);
+        return new Nonce($action = $this->getAction(), $action, Nonce::EXP_12);
     }
 
     /**
@@ -279,16 +319,48 @@ abstract class AbstractForm implements FormInterface
     protected function processes(ServerRequestInterface $request): array
     {
         return [
-            $this->failedValidationPersister(),
+            $this->failedValidationCache(),
+            $this->transientFieldCacheCleaner($request),
         ];
     }
 
-    protected function failedValidationPersister(): FormDataProcessorInterface
+    protected function failedValidationCache(): FormDataProcessorInterface
     {
         return new FailedValidationSimpleCache(
             'cached_violations',
             $this->simpleCache(),
             $this->failedValidationCacheKey()
+        );
+    }
+
+    protected function transientFieldCacheCleaner(ServerRequestInterface $request): FormDataProcessorInterface
+    {
+        return new SimpleCacheSweeper(
+            'transient_fields',
+            $this->simpleCache(),
+            array_map([$this, 'transientFieldCacheKey'], $this->processing)
+        );
+    }
+
+    /**
+     * @return array<string,null|FieldDataManagerInterface>
+     */
+    protected function dataManagers(ServerRequestInterface $request): array
+    {
+        $managers = [];
+
+        foreach ($this->processing as $key) {
+            $managers[$key] = $this->transientDataManager($key);
+        }
+
+        return $managers;
+    }
+
+    protected function transientDataManager(string $key): FieldDataManagerInterface
+    {
+        return new SimpleCacheDataManager(
+            $this->getSimpleCache(),
+            $this->transientFieldCacheKey($key)
         );
     }
 
@@ -302,6 +374,11 @@ abstract class AbstractForm implements FormInterface
     protected function redirectDefault(): string
     {
         return wp_get_referer() ?: home_url();
+    }
+
+    protected function simpleCache(): CacheInterface
+    {
+        return $this->getService('transients_channel');
     }
 
     protected function csrfPrinter(): CsrfFieldPrinterInterface
@@ -319,12 +396,48 @@ abstract class AbstractForm implements FormInterface
         return $report;
     }
 
-    /**
-     * @return array<string,null|FieldDataManagerInterface>
-     */
-    protected function data(ServerRequestInterface $request): array
+    protected function resetStateProps(): void
     {
-        return [];
+        unset($this->processing);
+    }
+
+    protected function initiationContexts(): array
+    {
+        return [
+            'construct' => $this->constructInitiationContext(),
+            'build' => $this->buildInitiationContext(),
+            'process' => $this->processInitiationContext(),
+        ];
+    }
+
+    protected function cacheKey(string $sub): string
+    {
+        return "form:{$this->handle}:{$sub}";
+    }
+
+    protected function failedValidationCacheKey(): string
+    {
+        return $this->cacheKey('errors');
+    }
+
+    protected function transientFieldCacheKey(string $key): string
+    {
+        return $this->cacheKey("submitted.{$key}");
+    }
+
+    protected function constructInitiationContext(): array
+    {
+        return ['handle', 'action'];
+    }
+
+    protected function buildInitiationContext(): array
+    {
+        return ['simpleCache', 'localizer'];
+    }
+
+    protected function processInitiationContext(): array
+    {
+        return ['simpleCache'];
     }
 
     /**
@@ -343,14 +456,22 @@ abstract class AbstractForm implements FormInterface
         return [];
     }
 
+    protected function action(): string
+    {
+        return $this->prefix($this->getHandle(), '_');
+    }
+
     abstract protected function handle(): string;
 
-    abstract protected function action(): string;
+    /**
+     * @return array<string>
+     */
+    abstract protected function fields(ServerRequestInterface $request): array;
 
     /**
      * @return array<string,array<string,mixed>|FormFieldInterface>
      */
-    abstract protected function fieldData(ServerRequestInterface $request): array;
+    abstract protected function attributes(ServerRequestInterface $request): array;
 
     /**
      * @return array<string,array<string,string>>

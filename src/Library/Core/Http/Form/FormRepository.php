@@ -17,16 +17,16 @@ class FormRepository implements FormRepositoryInterface
         $handle = $form->getHandle();
         $action = $form->getAction();
 
-        if (!$this->alreadyHasFormWith($handle, $action)) {
-            $this->forms[$form->getHandle()] = $form;
-            $this->map[$form->getAction()] = $handle;
+        if ($this->alreadyHasFormWith($handle, $action)) {
+            throw new LogicException(sprintf(
+                "Form with handle \"%s\" and/or action \"%s\" already exists.",
+                $handle,
+                $action
+            ));
         }
 
-        throw new LogicException(sprintf(
-            "Form with handle \"%s\" and/or action \"%s\" already exists.",
-            $handle,
-            $action
-        ));
+        $this->forms[$form->getHandle()] = $form;
+        $this->map[$form->getAction()] = $handle;
     }
 
     public function fetch(string $handle): FormInterface

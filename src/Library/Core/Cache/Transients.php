@@ -8,7 +8,7 @@ class Transients implements CacheInterface
 {
     public function get($key, $default = null)
     {
-        return get_transient($key) ?? $default;
+        return get_transient($key) ?: $default;
     }
 
     public function set($key, $value, $ttl = null): bool
