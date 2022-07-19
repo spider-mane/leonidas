@@ -91,6 +91,9 @@ class ExtensionLoader implements ExtensionLoaderInterface
         return new WpExtension($this->type, $this->path, $this->url, $container);
     }
 
+    /**
+     * @return $this
+     */
     protected function initiateConfig(): ExtensionLoader
     {
         $this->config = new Config($this->path . '/config');
@@ -98,6 +101,9 @@ class ExtensionLoader implements ExtensionLoaderInterface
         return $this;
     }
 
+    /**
+     * @return $this
+     */
     protected function bindServicesToContainer(): ExtensionLoader
     {
         $container = $this->container;
@@ -119,6 +125,9 @@ class ExtensionLoader implements ExtensionLoaderInterface
         return $this;
     }
 
+    /**
+     * @return $this
+     */
     protected function loadBootProcesses(): ExtensionLoader
     {
         foreach ($this->config->get('app.bootstrap', []) as $bootProcess) {
@@ -130,6 +139,9 @@ class ExtensionLoader implements ExtensionLoaderInterface
         return $this;
     }
 
+    /**
+     * @return $this
+     */
     protected function maybeBootProviders(): ExtensionLoader
     {
         if ($this->container instanceof BootableProviderContainerInterface) {
@@ -139,6 +151,9 @@ class ExtensionLoader implements ExtensionLoaderInterface
         return $this;
     }
 
+    /**
+     * @return $this
+     */
     protected function initializeModules(): ExtensionLoader
     {
         (new ModuleInitializer(

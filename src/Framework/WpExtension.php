@@ -52,7 +52,7 @@ class WpExtension implements WpExtensionInterface
      */
     public function getVersion(): string
     {
-        return $this->version  ??= $this->config('app.version');
+        return $this->version ??= $this->config('app.version');
     }
 
     /**
