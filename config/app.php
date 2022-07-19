@@ -16,7 +16,7 @@ return [
 
     'prefix' => 'leon',
 
-    'dev' => constant('LEONIDAS_DEVELOPMENT') ?? false,
+    'dev' => defined('LEONIDAS_DEVELOPMENT'),
 
     'modules' => [
 
