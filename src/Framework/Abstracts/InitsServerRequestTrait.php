@@ -24,7 +24,7 @@ trait InitsServerRequestTrait
         $interface = ServerRequestInterface::class;
 
         return new RuntimeException(
-            "Instance of $interface could not be found. Make sure you provide an instance of $interface in your container."
+            "Instance of {$interface} could not be found. Make sure you provide an instance of {$interface} in your container."
         );
     }
 

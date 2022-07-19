@@ -9,20 +9,18 @@ trait TargetsWpEnqueueScriptsHook
     protected function targetWpEnqueueScriptsHook()
     {
         add_action(
-            'wp_enqueue_scripts',
-            $this->getWpEnqueueScriptsCallback(),
-            10,
+            "wp_enqueue_scripts",
+            Closure::fromCallable([$this, 'doWpEnqueueScriptsAction']),
+            $this->getWpEnqueueScriptsPriority(),
             PHP_INT_MAX
         );
 
         return $this;
     }
 
-    protected function getWpEnqueueScriptsCallback(): Closure
+    protected function getWpEnqueueScriptsPriority(): int
     {
-        return function () {
-            $this->doWpEnqueueScriptsAction();
-        };
+        return HOOK_DEFAULT_PRIORITY;
     }
 
     abstract protected function doWpEnqueueScriptsAction(): void;

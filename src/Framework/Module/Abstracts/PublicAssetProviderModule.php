@@ -22,7 +22,7 @@ abstract class PublicAssetProviderModule extends Module implements ModuleInterfa
         // $this->targetStyleLoaderTagHook();
     }
 
-    public function doWpEnqueueScriptsAction(): void
+    protected function doWpEnqueueScriptsAction(): void
     {
         $this->provisionAssets();
     }

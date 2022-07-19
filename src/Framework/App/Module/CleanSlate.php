@@ -2,63 +2,46 @@
 
 namespace Leonidas\Framework\App\Module;
 
-use Closure;
-use Leonidas\Contracts\Extension\ModuleInterface;
 use Leonidas\Framework\Module\Abstracts\Module;
+use Leonidas\Hooks\TargetsInitHook;
+use Leonidas\Hooks\TargetsWpDashboardSetupHook;
 use WP_Post;
 use WP_Post_Type;
 
-class CleanSlate extends Module implements ModuleInterface
+class CleanSlate extends Module
 {
+    use TargetsInitHook;
+    use TargetsWpDashboardSetupHook;
+
     public const CONFIG_ROOT = 'modules.clean_slate';
 
     public function hook(): void
     {
         $this->targetInitHook();
-        $this->targetClearDashboardHook();
+        $this->targetWpDashboardSetupHook();
     }
 
-    protected function targetInitHook()
-    {
-        add_action(
-            'init',
-            Closure::fromCallable([$this, 'doInitAction']),
-            PHP_INT_MAX,
-            PHP_INT_MAX
-        );
-    }
-
-    protected function targetClearDashboardHook()
-    {
-        add_action(
-            'wp_dashboard_setup',
-            Closure::fromCallable([$this, 'doClearDashboardAction']),
-            PHP_INT_MAX,
-            PHP_INT_MAX
-        );
-    }
-
-    protected function doClearDashboardAction(bool $network = false)
+    protected function doWpDashboardSetupAction(): void
     {
         if (true === $this->getConfig(static::CONFIG_ROOT . '.dashboard.clear')) {
-            $this->clearDashboard($network);
+            $this->clearDashboard();
         }
     }
 
-    protected function clearDashboard(bool $network)
+    protected function clearDashboard()
     {
         // use 'dashboard-network' as the second parameter to remove widgets from a network dashboard.
-        $network = $network === false ? '' : '-network';
+        // $network = $network === false ? '' : '-network';
 
-        remove_meta_box('dashboard_right_now', 'dashboard' . $network, 'normal');   // Right Now
-        remove_meta_box('dashboard_recent_comments', 'dashboard' . $network, 'normal'); // Recent Comments
-        remove_meta_box('dashboard_incoming_links', 'dashboard' . $network, 'normal');  // Incoming Links
-        remove_meta_box('dashboard_plugins', 'dashboard . $network', 'normal');   // Plugins
-        remove_meta_box('dashboard_quick_press', 'dashboard' . $network, 'side');  // Quick Press
-        remove_meta_box('dashboard_recent_drafts', 'dashboard' . $network, 'side');  // Recent Drafts
-        remove_meta_box('dashboard_primary', 'dashboard' . $network, 'side');   // WordPress blog
-        remove_meta_box('dashboard_secondary', 'dashboard' . $network, 'side');   // Other WordPress News
-        remove_meta_box('dashboard_activity', 'dashboard' . $network, 'normal');   // Activity
+        remove_meta_box('dashboard_right_now', 'dashboard', 'normal');   // Right Now
+        remove_meta_box('dashboard_recent_comments', 'dashboard', 'normal'); // Recent Comments
+        remove_meta_box('dashboard_incoming_links', 'dashboard', 'normal');  // Incoming Links
+        remove_meta_box('dashboard_plugins', 'dashboard', 'normal');   // Plugins
+        remove_meta_box('dashboard_quick_press', 'dashboard', 'side');  // Quick Press
+        remove_meta_box('dashboard_recent_drafts', 'dashboard', 'side');  // Recent Drafts
+        remove_meta_box('dashboard_primary', 'dashboard', 'side');   // WordPress blog
+        remove_meta_box('dashboard_secondary', 'dashboard', 'side');   // Other WordPress News
+        remove_meta_box('dashboard_activity', 'dashboard', 'normal');   // Activity
     }
 
     protected function doInitAction()
