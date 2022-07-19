@@ -11,17 +11,20 @@ class Theme
     ];
 
     public const HEADERS = [
-        'name' => 'Name',
-        'uri' => 'ThemeURI',
-        'description' => 'Description',
+        'name' => 'Theme Name',
+        'uri' => 'Theme URI',
         'author' => 'Author',
-        'author_uri' => 'AuthorURI',
+        'author_uri' => 'Author URI',
+        'description' => 'Description',
         'version' => 'Version',
-        'template' => 'Template',
-        'status' => 'Status',
+        'required_wp' => 'Requires at least',
+        'tested_wp' => 'Tested up to',
+        'required_php' => 'Requires PHP',
+        'license' => 'License',
+        'license_uri' => 'License URI',
+        'textdomain' => 'Text Domain',
         'tags' => 'Tags',
-        'title' => 'Name',
-        'author_name' => 'Author',
+        'domain_path' => 'Domain Path',
     ];
 
     public static function path(string $path = ''): string
