@@ -205,7 +205,7 @@ class MakeModelCommand extends HopliteCommand
                 }
             }
 
-            // $this->filesystem->remove($playground);
+        // $this->filesystem->remove($playground);
         } else {
             $this->filesystem->mkdir($playground);
         }

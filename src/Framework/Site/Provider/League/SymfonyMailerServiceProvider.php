@@ -1,9 +1,9 @@
 <?php
 
-namespace Leonidas\Framework\Provider\League;
+namespace Leonidas\Framework\Site\Provider\League;
 
 use Leonidas\Framework\Provider\League\Abstracts\AbstractLeagueServiceFactory;
-use Leonidas\Framework\Provider\SymfonyMailerProvider;
+use Leonidas\Framework\Site\Provider\SymfonyMailerProvider;
 use Panamax\Contracts\ServiceFactoryInterface;
 use Symfony\Component\Mailer\Mailer;
 

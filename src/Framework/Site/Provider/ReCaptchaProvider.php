@@ -1,6 +1,6 @@
 <?php
 
-namespace Leonidas\Framework\Provider;
+namespace Leonidas\Framework\Site\Provider;
 
 use Panamax\Factories\AbstractServiceFactory;
 use Psr\Container\ContainerInterface;
