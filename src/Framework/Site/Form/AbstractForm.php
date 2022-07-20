@@ -1,6 +1,6 @@
 <?php
 
-namespace Leonidas\Framework\Form;
+namespace Leonidas\Framework\Site\Form;
 
 use Leonidas\Contracts\Auth\CsrfFieldPrinterInterface;
 use Leonidas\Contracts\Auth\CsrfManagerInterface;

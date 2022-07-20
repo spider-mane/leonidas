@@ -16,10 +16,10 @@ class LinkManager extends Module
 
     protected function doInitAction(): void
     {
-        $enabled = $this->enabledTags();
+        $enabled = $this->enabledLinks();
 
-        foreach ($this->links() as $tag => $args) {
-            if (!in_array($tag, $enabled)) {
+        foreach ($this->links() as $link => $args) {
+            if (!in_array($link, $enabled)) {
                 $callback = $args[0];
                 $priority = $args[1] ?? HOOK_DEFAULT_PRIORITY;
 
@@ -40,7 +40,7 @@ class LinkManager extends Module
         ];
     }
 
-    protected function enabledTags(): array
+    protected function enabledLinks(): array
     {
         return $this->getConfig('view.links', []);
     }

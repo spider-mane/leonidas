@@ -1,6 +1,6 @@
 <?php
 
-namespace Leonidas\Framework\Form;
+namespace Leonidas\Framework\Site\Form;
 
 use Leonidas\Framework\Abstracts\UtilizesExtensionTrait;
 use ReCaptcha\ReCaptcha;

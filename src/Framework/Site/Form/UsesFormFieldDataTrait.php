@@ -1,6 +1,6 @@
 <?php
 
-namespace Leonidas\Framework\Form;
+namespace Leonidas\Framework\Site\Form;
 
 use Psr\Http\Message\ServerRequestInterface;
 use WebTheory\Saveyour\Contracts\Field\FormFieldInterface;
