@@ -4,8 +4,7 @@ namespace Leonidas\Plugin;
 
 use Leonidas\Contracts\Extension\ExtensionLoaderInterface;
 use Leonidas\Contracts\Extension\WpExtensionInterface;
-use Leonidas\Framework\ExtensionLoader;
-use Leonidas\Framework\Plugin\Plugin;
+use Leonidas\Framework\Plugin\PluginLoader;
 
 final class Launcher
 {
@@ -15,9 +14,9 @@ final class Launcher
 
     private static self $instance;
 
-    private function __construct(string $path, string $url)
+    private function __construct(string $base)
     {
-        $this->loader = new ExtensionLoader('plugin', $path, $url);
+        $this->loader = new PluginLoader($base);
         $this->extension = $this->loader->getExtension();
     }
 
@@ -54,11 +53,6 @@ final class Launcher
 
     private static function load(string $base): void
     {
-        self::$instance = new self(
-            Plugin::path($base),
-            Plugin::url($base),
-        );
-
-        self::$instance->launch();
+        (self::$instance = new self($base))->launch();
     }
 }

@@ -7,8 +7,8 @@ use Leonidas\Framework\ExtensionLoader;
 
 class ThemeLoader extends ExtensionLoader implements ExtensionLoaderInterface
 {
-    public function __construct(string $path, string $url)
+    public function __construct()
     {
-        parent::__construct('theme', $path, $url);
+        parent::__construct('theme', Theme::path(), Theme::url());
     }
 }

@@ -7,8 +7,8 @@ use Leonidas\Framework\ExtensionLoader;
 
 class PluginLoader extends ExtensionLoader implements ExtensionLoaderInterface
 {
-    public function __construct(string $path, string $url)
+    public function __construct(string $base)
     {
-        parent::__construct('plugin', $path, $url);
+        parent::__construct('plugin', Plugin::path($base), Plugin::url($base));
     }
 }
