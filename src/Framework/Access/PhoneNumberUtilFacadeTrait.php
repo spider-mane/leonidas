@@ -52,17 +52,22 @@ trait PhoneNumberUtilFacadeTrait
     public static function getNumberFormatUS(string $format): NumberFormat
     {
         $pattern = "(\\d{3})(\\d{3})(\\d{4})";
-        $formats = [
-            'raw' => "\$1\$2\$3",
-            'dot' => "\$1.\$2.\$3",
-            'dash' => "\$1-\$2-\$3",
-            'space' => "\$1 \$2 \$3",
-            'classic' => "(\$1) \$2-\$3",
-        ];
+        $formats = static::formatsUS();
 
         return (new NumberFormat())
             ->setPattern($pattern)
             ->setFormat($formats[$format]);
+    }
+
+    protected static function formatsUS(): array
+    {
+        return [
+            'raw' => "\$1\$2\$3",
+            'dots' => "\$1.\$2.\$3",
+            'dashes' => "\$1-\$2-\$3",
+            'spaces' => "\$1 \$2 \$3",
+            'classic' => "(\$1) \$2-\$3",
+        ];
     }
 
     protected static function _getFacadeAccessor()
