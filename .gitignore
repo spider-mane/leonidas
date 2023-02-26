@@ -28,6 +28,9 @@ docker/@local
 composer.lock
 /studio.json
 
+# Npm
+package-lock.json
+
 # Env
 *.env
 .env.*

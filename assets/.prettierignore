@@ -1,6 +1,9 @@
-.*
+# globs
 *.log
 *.lock
-node_modules
-build
-**/*.hbs
+
+# folders
+/build
+/dist
+
+# files

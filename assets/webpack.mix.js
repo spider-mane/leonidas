@@ -1,44 +1,122 @@
 const mix = require('laravel-mix');
-
-/**
- * Settings
- */
-mix
-  .setPublicPath('dist')
-  .setResourceRoot('src')
-  .browserSync('leonidas.test')
-  .sourceMaps(true, 'eval-source-map', 'source-map')
-  .version()
+const yargs = require('yargs');
+const argv = yargs(process.argv.slice(2))
   .options({
-    processCssUrls: false,
-    postCss: [require('tailwindcss')],
-  });
+    openBrowser: {type: 'boolean', default: false},
+  })
+  .parseSync();
 
-/**
- * Styles
- */
-mix.sass('src/scss/main.scss', 'css/leonidas.css', {
-  sassOptions: {
-    outputStyle: 'expanded',
-  },
-});
+const root = '..';
+const vendor = `${root}/vendor`;
+const src = 'src';
+const dist = 'dist';
 
-/**
- * Scripts
- */
 mix
-  .js('src/js/index.js', 'js/leonidas.js')
+
+  /**
+   *==========================================================================
+   * Output directory
+   *==========================================================================
+   *
+   *
+   *
+   */
+  .setPublicPath('dist')
+
+  /**
+   *==========================================================================
+   * Sourcemaps
+   *==========================================================================
+   *
+   *
+   *
+   */
+  .sourceMaps(true, 'eval-source-map', 'source-map')
+
+  /**
+   *==========================================================================
+   * Versioning
+   *==========================================================================
+   *
+   *
+   *
+   */
+  .version()
+
+  /**
+   *==========================================================================
+   * Browsersync
+   *==========================================================================
+   *
+   *
+   *
+   */
+  .browserSync({
+    proxy: 'leonidas.test',
+    open: argv.open ?? false,
+    notify: false,
+    logLevel: 'debug',
+    files: [
+      'dist/**/*.js',
+      'dist/**/*.css',
+      '../app/**/*.php',
+      '../boot/**/*.php',
+      '../theme/**/*.php',
+      '../config/**/*.php',
+      '../views/**/*.twig',
+    ],
+  })
+
+  /**
+   *==========================================================================
+   * Javascript
+   *==========================================================================
+   *
+   *
+   *
+   */
+  .js('src/js/index.js', 'dist/js/leonidas.js')
   // .autoload({jquery: ['$', 'window.jQuery']})
-  .extract();
+  .extract()
 
-/**
- * Direct Copies
- */
-mix
+  /**
+   *==========================================================================
+   * Typescript
+   *==========================================================================
+   *
+   *
+   *
+   */
+  // .ts('src/ts/index.ts', 'dist/js/leonidas.js')
+  // .autoload({jquery: ['$', 'window.jQuery']})
+  // .extract()
+
+  /**
+   *==========================================================================
+   * Sass
+   *==========================================================================
+   *
+   *
+   *
+   */
+  .sass('src/scss/main.scss', 'dist/css/leonidas.css', {
+    sassOptions: {
+      outputStyle: 'expanded',
+    },
+  })
+
+  /**
+   *==========================================================================
+   * Copies
+   *==========================================================================
+   *
+   *
+   *
+   */
   // saveyour
   .copy(
     ['../vendor/webtheory/saveyour/assets/dist/saveyour.js'],
-    'dist/lib/saveyour/',
+    'dist/lib/saveyour/'
   )
   // select2
   .copy(
@@ -46,7 +124,7 @@ mix
       './node_modules/select2/dist/css/select2.min.css',
       './node_modules/select2/dist/js/select2.full.min.js',
     ],
-    'dist/lib/select2/',
+    'dist/lib/select2/'
   )
   // choices
   .copy(
@@ -54,10 +132,38 @@ mix
       './node_modules/choices.js/public/assets/scripts/choices.min.js',
       './node_modules/choices.js/public/assets/styles/choices.min.css',
     ],
-    'dist/lib/choices/',
+    'dist/lib/choices/'
   )
   // trix
   .copy(
     ['./node_modules/trix/dist/trix.js', './node_modules/trix/dist/trix.css'],
-    'dist/lib/trix/',
-  );
+    'dist/lib/trix/'
+  )
+
+  /**
+   *==========================================================================
+   * Options
+   *==========================================================================
+   *
+   *
+   *
+   */
+  .options({
+    processCssUrls: false,
+    postCss: [require('tailwindcss')],
+    // imgLoaderOptions: {},
+  })
+
+  /**
+   *==========================================================================
+   * Webpack
+   *==========================================================================
+   *
+   *
+   *
+   */
+  .webpackConfig({
+    stats: {
+      children: true,
+    },
+  });

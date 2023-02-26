@@ -127,6 +127,9 @@ RUN curl -sSL https://cli.github.com/packages/githubcli-archive-keyring.gpg \
 RUN composer global config --no-plugins allow-plugins.franzl/studio true \
   && composer global require franzl/studio
 
+# Install global Node packages
+RUN npm i -g npm-check-updates
+
 # Configure Git
 ARG GIT_DEFAULT_BRANCH=master
 ARG GIT_USER
