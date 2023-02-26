@@ -1,0 +1,66 @@
+services:
+  app:
+    build:
+      target: app-interactive
+      args:
+        LANG: "${LANG}"
+        TZ:
+        UNMINIMIZE: true
+        GIT_DEFAULT_BRANCH: master
+        GIT_USER:
+        GIT_EMAIL:
+    environment:
+      TERM: "${TERM}"
+      WP_CLI_ALLOW_ROOT: 1
+      # ZSH_THEME: robbyrussell
+    volumes:
+      # Source
+      - ".:/var/www/html"
+      # Dependencies and builds
+      - "app-composer:/var/www/html/vendor"
+      - "app-wordpress:/var/www/html/wordpress"
+      - "app-npm:/var/www/html/assets/node_modules"
+      - "app-builds:/var/www/html/build"
+      - "app-asset-builds:/var/www/html/assets/build"
+      # Vscode server
+      - "vscode:/root/.vscode-server"
+
+  webserver:
+    ports:
+      - "${APP_PORT:-80}:${APP_PORT:-80}"
+    environment:
+      HOST_PORT: "${APP_PORT:-80}"
+    volumes:
+      - "./assets/dist:/var/www/html/assets/dist:ro"
+      - "app-wordpress:/var/www/html/wordpress:ro"
+
+  database:
+    ports:
+      - "${FORWARD_DB_PORT:-3306}:3306"
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: 1
+      TERM: "${TERM}"
+
+  cache:
+    ports:
+      - "${FORWARD_CACHE_PORT:-6379}:6379"
+    environment:
+      TERM: "${TERM}"
+
+  selenium:
+    environment:
+      TERM: "${TERM}"
+
+volumes:
+  vscode:
+    driver: local
+  app-composer:
+    driver: local
+  app-wordpress:
+    driver: local
+  app-npm:
+    driver: local
+  app-builds:
+    driver: local
+  app-asset-builds:
+    driver: local

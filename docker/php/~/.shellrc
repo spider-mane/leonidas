@@ -1,0 +1,13 @@
+GPG_TTY=$(tty)
+
+export GPG_TTY
+
+# Load aliases
+if [ -f ~/.shell_aliases ]; then
+  source ~/.shell_aliases
+fi
+
+# Load functions
+if [ -f ~/.shell_functions ]; then
+  source ~/.shell_functions
+fi

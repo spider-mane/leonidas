@@ -3,6 +3,7 @@
 
 use WebTheory\WpCliUtil\WpCliUtil;
 
+$plugin = 'leonidas';
 $root = dirname(__DIR__, 1);
 
 require_once $root . '/vendor/autoload.php';
@@ -17,13 +18,13 @@ $paths = [
 ];
 
 $wordpress = WpCliUtil::getInstallPath() ?? 'wordpress';
-$destination = "wp-content/" . $paths[$composer['type'] ?? 'wordpress-plugin'];
+$destination = $paths[$composer['type'] ?? 'wordpress-plugin'];
 
-$link = preg_replace(
-  '/\/+/',
-  DIRECTORY_SEPARATOR,
-  "$root/$wordpress/$destination/" . basename($root)
-);
+if (!file_exists($destination = "$root/$wordpress/wp-content/$destination")) {
+  mkdir($destination, 0777, true);
+}
+
+$link = preg_replace('/\/+/', DIRECTORY_SEPARATOR, "$destination/$plugin");
 
 shell_exec("rm -f $link");
 symlink($root, $link); // running this on windows requires administrator permissions

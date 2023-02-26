@@ -1,0 +1,49 @@
+server {
+  listen $LISTEN_ON_PORT default_server;
+  listen [::]:$LISTEN_ON_PORT default_server ipv6only=on;
+
+  server_name $SERVER_NAME;
+  root /var/www/html/wordpress;
+  index index.php;
+
+  location ~ \.php$ {
+    try_files $uri =404;
+
+    fastcgi_intercept_errors on;
+    fastcgi_split_path_info ^(.+\.php)(/.+)$;
+    fastcgi_pass app:9000;
+    fastcgi_index index.php;
+
+    include fastcgi_params;
+    fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+    fastcgi_param PATH_INFO $fastcgi_path_info;
+    fastcgi_param QUERY_STRING $query_string;
+    fastcgi_param REQUEST_METHOD $request_method;
+    fastcgi_param CONTENT_TYPE $content_type;
+    fastcgi_param CONTENT_LENGTH $content_length;
+  }
+
+  location / {
+    try_files $uri $uri/ /index.php$query_string;
+  }
+
+  location ~* \.(js|css|png|jpg|jpeg|gif|ico)$ {
+    expires max;
+    log_not_found off;
+  }
+
+  location = /favicon.ico {
+    log_not_found off;
+    access_log off;
+  }
+
+  location = /robots.txt {
+    allow all;
+    log_not_found off;
+    access_log off;
+  }
+
+  location ~ /\.ht {
+    deny all;
+  }
+}

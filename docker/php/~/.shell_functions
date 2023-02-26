@@ -1,0 +1,29 @@
+mkcd() {
+  mkdir -p "$1" && cd "$1"
+}
+
+push() {
+  mkdir -p "$1" && touch "$1/$2"
+}
+
+how() {
+  "$@" --help 2>&1 | bathelp
+}
+
+### SHELL SPECIFIC ###
+
+if [ -n "$ZSH_VERSION" ]; then
+  plugman() {
+    local FILE="README.md"
+    local PLUGIN="$ZSH/plugins/$1/$FILE"
+    local CUSTOM="$ZSH/custom/plugins/$1/$FILE"
+
+    if [[ -f $CUSTOM ]]; then
+      bat "$CUSTOM"
+    elif [[ -f $PLUGIN ]]; then
+      bat "$PLUGIN"
+    else
+      echo "Cannot find README for plugin \"$1\""
+    fi
+  }
+fi

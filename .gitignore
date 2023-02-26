@@ -1,9 +1,6 @@
 /src/*/System/Model/Test/
 /src/Library/Access/Tests*.php
 
-# Wordpress
-/wordpress/
-
 # Dev and CI builds
 *.cache
 /.playground
@@ -18,23 +15,35 @@
 /temp/
 captainhook.config.json
 cghooks.lock
+
+# Docker
 docker-compose.override.yml
+docker/@local
+
+# Wordpress
+/wordpress/
 
 # Composer
 /vendor/
 composer.lock
+/studio.json
 
 # Env
 *.env
 .env.*
-.*.env
 !.env.example
 
 # Editor/ IDE
 *.code-workspace
-.idea/
-.project/
-.vscode/
+.vscode/*
+!.vscode/extensions.json
+.idea
+.project
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
 
 # System files
 .DS_Store

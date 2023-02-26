@@ -1,0 +1,81 @@
+version: "3.8"
+name: leonidas
+services:
+  app:
+    build:
+      dockerfile: ./docker/php/Dockerfile
+      target: app
+      args:
+        PHP_VERSION: "8.0"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - app
+    environment:
+      COMPOSER_ENTRYPOINT_SCRIPT: setup
+      XDEBUG_CONFIG: "${APP_XDEBUG_CONFIG:-client_host=host.docker.internal}"
+      XDEBUG_MODE: "${APP_XDEBUG_MODE:-off}"
+    depends_on:
+      - database
+      - cache
+      - selenium
+
+  webserver:
+    build:
+      dockerfile: ./docker/nginx/Dockerfile
+    hostname: "${DOMAIN_NAME}"
+    extra_hosts:
+      - "host.docker.interal:host-gateway"
+    networks:
+      - app
+    environment:
+      SERVER_NAME: "${DOMAIN_NAME}"
+    depends_on:
+      - app
+
+  database:
+    image: "mysql/mysql-server:8.0"
+    networks:
+      - app
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-p${DB_PASSWORD}" ]
+      retries: 3
+      timeout: 5s
+    environment:
+      MYSQL_ROOT_PASSWORD: "${DB_PASSWORD}"
+      MYSQL_ROOT_HOST: "%"
+      MYSQL_DATABASE: "${DB_NAME}"
+      MYSQL_USER: "${DB_USER}"
+      MYSQL_PASSWORD: "${DB_PASSWORD}"
+    volumes:
+      - "database-data:/var/lib/mysql"
+
+  cache:
+    image: "redis:alpine"
+    volumes:
+      - "cache-data:/data"
+    networks:
+      - app
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      retries: 3
+      timeout: 5s
+
+  selenium:
+    image: "selenium/standalone-chrome"
+    networks:
+      - app
+    volumes:
+      - "/dev/shm:/dev/shm"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+networks:
+  app:
+    driver: bridge
+
+volumes:
+  database-data:
+    driver: local
+  cache-data:
+    driver: local

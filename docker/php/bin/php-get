@@ -1,0 +1,63 @@
+#!/usr/bin/env bash
+
+COMMANDS="install remove"
+COMMAND=
+
+VERSIONS="5.6 7.0 7.1 7.2 7.3 7.4 8.0 8.1 8.2"
+VERSION=
+
+# maybe display help
+if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ "$1" = "help" ] || [ ! "$1" ]; then
+  echo "Usage:"
+  echo "  $(basename "$0") install [php version] [packages...]"
+  echo "  $(basename "$0") remove [php version] [packages...]"
+
+  exit 0
+fi
+
+# check that valid command has been requested
+for cmd in $COMMANDS; do
+  if [ "$cmd" = "$1" ]; then
+    COMMAND="$1"
+    break
+  fi
+done
+
+if [ ! "$COMMAND" ]; then
+  echo "Invalid operation: $1. Supported commands are: ${COMMANDS// /, }."
+
+  exit 1
+fi
+
+# check that valid version has been specified
+for ver in $VERSIONS; do
+  if [ "$ver" = "$2" ]; then
+    VERSION="$2"
+    break
+  fi
+done
+
+if [ ! "$VERSION" ]; then
+  echo "Must specify a valid PHP version (one of: ${VERSIONS// /, }) to install for. \"$2\" was provided."
+
+  exit 1
+fi
+
+# check that packages have been listed
+if [ ! "$3" ]; then
+  echo "No PHP packages have been selected."
+
+  exit 1
+fi
+
+# generate package list
+for pkg in "${@:3}"; do
+  PACKAGES+="php$VERSION-$pkg "
+done
+
+# finally, run appropriate command
+if [ "$COMMAND" = 'install' ]; then
+  apt-get install -y $PACKAGES
+elif [ "$COMMAND" = 'remove' ]; then
+  apt-get remove -y $PACKAGES
+fi

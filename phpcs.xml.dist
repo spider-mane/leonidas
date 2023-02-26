@@ -4,8 +4,6 @@
   xsi:noNamespaceSchemaLocation="vendor/squizlabs/php_codesniffer/phpcs.xsd"
   name="Leonidas"
 >
-  <description>Leonidas coding standard</description>
-
   <!-- Paths -->
   <file>./src</file>
   <file>./tests</file>
@@ -16,14 +14,9 @@
   <arg name="colors"/>
 
   <!-- Config -->
-  <config name="ignore_warnings_on_exit"
-    value="1"/>
-
-  <config name="ignore_errors_on_exit"
-    value="1"/>
-
-  <config name="default_standard"
-    value="PSR12"/>
+  <config name="ignore_warnings_on_exit" value="1"/>
+  <config name="ignore_errors_on_exit" value="1"/>
+  <config name="default_standard" value="PSR12"/>
 
   <!-- Use the PSR12 Standard-->
   <rule ref="PSR12"/>
