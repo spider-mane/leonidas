@@ -2,8 +2,10 @@
 
 return [
 
-    'post' => [
-        'converter' => [],
-        'repository' => [],
-    ],
+    // 'post' => [
+    //     '@driver' => 'default',
+    //     'model' => Leonidas\Library\System\Model\Post\Post::class,
+    //     'schema' => 'post',
+    // ],
+
 ];

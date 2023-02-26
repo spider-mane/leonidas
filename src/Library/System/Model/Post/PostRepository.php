@@ -97,7 +97,7 @@ class PostRepository extends AbstractPostEntityRepository implements PostReposit
         return [
             'post_author' => $post->getAuthor()->getId(),
             'post_date' => $post->getDate()->format($dateFormat),
-            'post_date_gmt' => $post->getDate()->format($dateFormat),
+            'post_date_gmt' => $post->getDateGmt()->format($dateFormat),
             'post_content' => $post->getContent(),
             'post_title' => $post->getTitle(),
             'post_excerpt' => $post->getExcerpt(),

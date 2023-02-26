@@ -12,6 +12,7 @@ $root = dirname(__DIR__, 1);
  *
  *
  */
+
 if (file_exists($autoload = "$root/vendor/autoload.php")) {
     require_once $autoload;
 }
@@ -24,6 +25,7 @@ if (file_exists($autoload = "$root/vendor/autoload.php")) {
  * Load any files with function declarations.
  *
  */
+
 array_map(function ($path) use ($root) {
     require "{$root}/src/{$path}.php";
 }, ['Plugin/functions']);
@@ -37,9 +39,10 @@ array_map(function ($path) use ($root) {
  * launcher.
  *
  */
+
 array_map(function ($path) {
     require __DIR__ . "/{$path}.php";
-}, ['constants',]);
+}, ['constants']);
 
 /**
  *==========================================================================
@@ -49,8 +52,8 @@ array_map(function ($path) {
  * Load scripts to be used in development.
  *
  */
-if (defined('LEONIDAS_DEVELOPMENT') && LEONIDAS_DEVELOPMENT) {
 
+if (defined('LEONIDAS_DEVELOPMENT')) {
     // development bootstrapping
     if (file_exists($development = __DIR__ . '/development')) {
         array_map(function ($path) use ($development) {

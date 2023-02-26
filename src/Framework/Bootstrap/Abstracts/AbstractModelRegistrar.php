@@ -24,6 +24,12 @@ abstract class AbstractModelRegistrar implements ExtensionBootProcessInterface
         'comment' => CommentEntityManager::class,
     ];
 
+    protected const QUERY_TYPES = ['post', 'attachment'];
+
+    protected const MODEL_CONFIG = 'models';
+
+    protected const DEFAULT_SCHEMA = 'post';
+
     protected WpExtensionInterface $extension;
 
     protected ServiceContainerInterface $container;
@@ -33,14 +39,47 @@ abstract class AbstractModelRegistrar implements ExtensionBootProcessInterface
         $this->extension = $extension;
         $this->container = $container;
 
+        $this->bindModelServicesToContainer();
+    }
+
+    protected function bindModelServicesToContainer(): void
+    {
+        $this->registerFromConfig()->registerFromMethods();
+    }
+
+    /**
+     * @return $this
+     */
+    protected function registerFromConfig(): self
+    {
+        $models = $this->extension->config(static::MODEL_CONFIG, []);
+
+        foreach ($models as $entity => $args) {
+            $this->register(
+                $args['model'],
+                $entity,
+                $args['schema'] ?? static::DEFAULT_SCHEMA
+            );
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    protected function registerFromMethods(): self
+    {
         foreach (get_class_methods($this) as $method) {
             if (str_ends_with($method, 'Services')) {
                 $this->{$method}();
             }
         }
+
+        return $this;
     }
 
-    protected function register(string $model, string $entity, string $schema = 'post'): void
+    protected function register(string $model, string $entity, string $schema = self::DEFAULT_SCHEMA): void
     {
         $parts = explode('\\', $model);
         $base = array_pop($parts);
@@ -51,7 +90,9 @@ abstract class AbstractModelRegistrar implements ExtensionBootProcessInterface
         }
 
         $converter = $model . 'Converter';
-        $queryFactory = $model . 'QueryFactory';
+        $repository = $model . 'Repository';
+        $collectionFactory = $model . 'CollectionFactory';
+        $manager = static::ENTITY_MANAGERS[$schema];
         $repositoryInterface = sprintf(
             '%s\%s\%sRepositoryInterface',
             static::CONTRACTS ?: $namespace,
@@ -59,33 +100,31 @@ abstract class AbstractModelRegistrar implements ExtensionBootProcessInterface
             $base
         );
 
-        $collectionFactory = $model . 'CollectionFactory';
-        $repository = $model . 'Repository';
-        $manager = static::ENTITY_MANAGERS[$schema];
-
         $this->container->share($converter, fn () => new $converter(
             $this->extension->get(AutoInvokerInterface::class),
         ));
 
-        if (in_array($schema, ['post', 'attachment'])) {
+        if (in_array($schema, static::QUERY_TYPES)) {
+            $queryFactory = $model . 'QueryFactory';
+
             $this->container->share($queryFactory, fn () => new $queryFactory(
                 $this->extension->get($converter),
             ));
 
-            $repoCallback = fn () => new $repository(new $manager(
+            $repositoryFactory = fn () => new $repository(new $manager(
                 $entity,
                 $this->extension->get($converter),
                 new $collectionFactory(),
                 $this->extension->get($queryFactory),
             ));
         } else {
-            $repoCallback = fn () => new $repository(new $manager(
+            $repositoryFactory = fn () => new $repository(new $manager(
                 $entity,
                 $this->extension->get($converter),
                 new $collectionFactory(),
             ));
         }
 
-        $this->container->share($repositoryInterface, $repoCallback);
+        $this->container->share($repositoryInterface, $repositoryFactory);
     }
 }

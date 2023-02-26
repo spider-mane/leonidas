@@ -1,6 +1,6 @@
 <?php
 
-use WebTheory\WpTest\SkyHooks;
+use WebTheory\WpTest\Skyhooks\SkyHooks;
 
 $root = dirname(__DIR__, 2);
 
