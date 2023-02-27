@@ -11,40 +11,58 @@ trait FluentlySetsPropertiesTrait
 
     protected array $initiationContexts;
 
-    protected function maybeSet(string ...$properties): void
-    {
-        foreach ($properties as $property) {
-            if (!$this->propertyIsSet($property)) {
-                $this->setProperty($property);
-            }
-        }
-    }
-
-    protected function setProperties(string ...$properties): void
-    {
-        foreach ($properties as $property) {
-            $this->setProperty($property);
-        }
-    }
-
-    protected function setProperty(string $property): void
-    {
-        $this->{$property} = ([$this, $property])();
-    }
-
-    protected function getProperty(string $property): mixed
+    protected function get(string $property): mixed
     {
         return $this->{$property} ??= ([$this, $property])();
     }
 
-    protected function propertyIsSet(string $property): bool
+    /**
+     * @return $this
+     */
+    protected function set(string $property): static
+    {
+        $this->{$property} = ([$this, $property])();
+
+        return $this;
+    }
+
+    protected function isset(string $property): bool
     {
         return isset($this->{$property});
     }
 
-    protected function init(string $context): void
+    /**
+     * @return $this
+     */
+    protected function setList(string ...$properties): static
     {
-        $contexts = $this->getProperty('initiationContexts');
+        foreach ($properties as $property) {
+            $this->set($property);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    protected function maybeSet(string ...$properties): static
+    {
+        foreach ($properties as $property) {
+            if (!$this->isset($property)) {
+                $this->set($property);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    protected function init(string $context): static
+    {
+        $contexts = $this->get('initiationContexts');
         $resolved = $contexts[$context] ?? null;
 
         if (!isset($resolved)) {
@@ -60,6 +78,8 @@ trait FluentlySetsPropertiesTrait
         }
 
         $this->maybeSet(...(array) $resolved);
+
+        return $this;
     }
 
     /**

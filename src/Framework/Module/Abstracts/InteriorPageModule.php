@@ -13,6 +13,7 @@ use Leonidas\Hooks\TargetsAdminTitleHook;
 use Leonidas\Hooks\TargetsParentFileHook;
 use Leonidas\Hooks\TargetsSubmenuFileHook;
 use Leonidas\Library\Admin\Registrar\InteriorPageRegistrar;
+use Psr\Http\Message\ServerRequestInterface;
 
 abstract class InteriorPageModule extends Module implements ModuleInterface
 {
@@ -47,14 +48,12 @@ abstract class InteriorPageModule extends Module implements ModuleInterface
 
     protected function doAdminMenuAction(string $context): void
     {
-        $this->init('admin_menu');
-
-        $request = $this->getServerRequest()->withAttribute('context', $context);
-
-        $this->addInteriorPage();
+        $this->init('admin_menu')->addInteriorPage(
+            $this->getServerRequest()->withAttribute('context', $context)
+        );
     }
 
-    protected function addInteriorPage()
+    protected function addInteriorPage(ServerRequestInterface $request): void
     {
         $this->getInteriorPageRegistrar()->registerOne($this->getDefinition());
     }

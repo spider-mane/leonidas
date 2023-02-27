@@ -42,11 +42,9 @@ abstract class MenuPageModule extends Module implements ModuleInterface
 
     protected function doAdminMenuAction(string $context): void
     {
-        $this->init('admin_menu');
-
-        $request = $this->getServerRequest()->withAttribute('context', $context);
-
-        $this->addMenuPage($request);
+        $this->init('admin_menu')->addMenuPage(
+            $this->getServerRequest()->withAttribute('context', $context)
+        );
     }
 
     protected function addMenuPage(ServerRequestInterface $request): void

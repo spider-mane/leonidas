@@ -42,7 +42,7 @@ class Forms extends Module
 
     protected function doInitAction(): void
     {
-        $this->setProperty('repository');
+        $this->set('repository');
         $this->registerForms();
     }
 

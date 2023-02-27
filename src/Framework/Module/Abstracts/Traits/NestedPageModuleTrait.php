@@ -36,13 +36,13 @@ trait NestedPageModuleTrait
 
     protected function isMatchingSubmenuFile(string $submenuFile): bool
     {
-        return $this->propertyIsSet('definition')
+        return $this->isset('definition')
             && $this->getDefinition()->getMenuSlug() === $submenuFile;
     }
 
     protected function isMatchingParentFile(string $parentFile): bool
     {
-        return $this->propertyIsSet('definition')
+        return $this->isset('definition')
             && $this->getDefinition()->getParentSlug() === $parentFile;
     }
 

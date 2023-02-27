@@ -13,6 +13,7 @@ use Leonidas\Hooks\TargetsAdminTitleHook;
 use Leonidas\Hooks\TargetsParentFileHook;
 use Leonidas\Hooks\TargetsSubmenuFileHook;
 use Leonidas\Library\Admin\Registrar\FlexPageRegistrar;
+use Psr\Http\Message\ServerRequestInterface;
 
 abstract class FlexPageModule extends Module implements ModuleInterface
 {
@@ -47,14 +48,12 @@ abstract class FlexPageModule extends Module implements ModuleInterface
 
     protected function doAdminMenuAction(string $context): void
     {
-        $this->init('admin_menu');
-
-        $request = $this->getServerRequest()->withAttribute('context', $context);
-
-        $this->addFlexPage();
+        $this->init('admin_menu')->addFlexPage(
+            $this->getServerRequest()->withAttribute('context', $context)
+        );
     }
 
-    protected function addFlexPage()
+    protected function addFlexPage(ServerRequestInterface $request): void
     {
         $this->getFlexPageRegistrar()->registerOne($this->getDefinition());
     }
@@ -78,14 +77,14 @@ abstract class FlexPageModule extends Module implements ModuleInterface
 
     protected function isMatchingSubmenuFile(string $submenuFile): bool
     {
-        return $this->propertyIsSet('definition')
+        return $this->isset('definition')
             && $this->definitionIsNested()
             && $this->getDefinition()->getMenuSlug() === $submenuFile;
     }
 
     protected function isMatchingParentFile(string $parentFile): bool
     {
-        return $this->propertyIsSet('definition')
+        return $this->isset('definition')
             && $this->definitionIsNested()
             && $this->getDefinition()->getParentSlug() === $parentFile;
     }

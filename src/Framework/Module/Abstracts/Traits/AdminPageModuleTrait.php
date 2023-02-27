@@ -26,7 +26,7 @@ trait AdminPageModuleTrait
 
     protected function isMatchingAdminPage(string $title): bool
     {
-        return $this->propertyIsSet('definition')
+        return $this->isset('definition')
             && $this->getDefinition()->getPageTitle() !== $title;
     }
 

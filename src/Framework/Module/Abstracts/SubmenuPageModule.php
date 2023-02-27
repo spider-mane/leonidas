@@ -13,6 +13,7 @@ use Leonidas\Hooks\TargetsAdminTitleHook;
 use Leonidas\Hooks\TargetsParentFileHook;
 use Leonidas\Hooks\TargetsSubmenuFileHook;
 use Leonidas\Library\Admin\Registrar\SubmenuPageRegistrar;
+use Psr\Http\Message\ServerRequestInterface;
 
 abstract class SubmenuPageModule extends Module implements ModuleInterface
 {
@@ -47,14 +48,12 @@ abstract class SubmenuPageModule extends Module implements ModuleInterface
 
     protected function doAdminMenuAction(string $context): void
     {
-        $this->init('admin_menu');
-
-        $request = $this->getServerRequest()->withAttribute('context', $context);
-
-        $this->addSubmenuPage();
+        $this->init('admin_menu')->addSubmenuPage(
+            $this->getServerRequest()->withAttribute('context', $context)
+        );
     }
 
-    protected function addSubmenuPage()
+    protected function addSubmenuPage(ServerRequestInterface $request): void
     {
         $this->getSubmenuPageRegistrar()->registerOne($this->getDefinition());
     }

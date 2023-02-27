@@ -34,7 +34,7 @@ trait MustBeInitiatedTrait
 
     protected function initWith(string ...$properties): void
     {
-        $this->setProperties(...$properties);
+        $this->setList(...$properties);
 
         $this->isInitiated = true;
     }
