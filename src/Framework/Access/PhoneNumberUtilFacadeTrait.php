@@ -14,7 +14,7 @@ use libphonenumber\PhoneNumberUtil;
  */
 trait PhoneNumberUtilFacadeTrait
 {
-    public static function formatUs(string $phoneNumber, string $format = 'dash', $scheme = PhoneNumberFormat::NATIONAL): string
+    public static function formatUs(string $phoneNumber, string $format = 'dashes', $scheme = PhoneNumberFormat::NATIONAL): string
     {
         return static::formatByPattern(
             static::parse($phoneNumber, 'US'),
@@ -23,7 +23,7 @@ trait PhoneNumberUtilFacadeTrait
         );
     }
 
-    public static function formatNatUS(string $phoneNumber, string $format = 'dash')
+    public static function formatNatUS(string $phoneNumber, string $format = 'dashes')
     {
         return static::formatUs(
             $phoneNumber,
@@ -32,7 +32,7 @@ trait PhoneNumberUtilFacadeTrait
         );
     }
 
-    public static function formatIntlUS(string $phoneNumber, string $format = 'dash')
+    public static function formatIntlUS(string $phoneNumber, string $format = 'dashes')
     {
         return static::formatUs(
             $phoneNumber,
