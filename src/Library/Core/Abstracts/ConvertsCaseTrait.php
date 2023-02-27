@@ -25,4 +25,24 @@ trait ConvertsCaseTrait
     {
         return $this->prefixPascal($prefix, $source);
     }
+
+    protected function suffixPascal(string $suffix, string $source): string
+    {
+        return $this->convert($source)->toPascal() . $suffix;
+    }
+
+    protected function suffixStudly(string $suffix, string $source): string
+    {
+        return $this->suffixPascal($suffix, $source);
+    }
+
+    protected function prefixCamel(string $prefix, string $source): string
+    {
+        return $prefix . $this->convert($source)->toCamel();
+    }
+
+    protected function suffixCamel(string $suffix, string $source): string
+    {
+        return $this->convert($source)->toCamel() . $suffix;
+    }
 }
