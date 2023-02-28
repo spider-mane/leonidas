@@ -7,7 +7,7 @@ use Leonidas\Contracts\Auth\CsrfManagerInterface;
 use Leonidas\Contracts\Extension\WpExtensionInterface;
 use Leonidas\Contracts\Http\Form\FormInterface;
 use Leonidas\Framework\Abstracts\AccessesSimpleCacheTrait;
-use Leonidas\Framework\Abstracts\FluentlySetsPropertiesTrait;
+use Leonidas\Framework\Abstracts\MustBeInitiatedContextuallyTrait;
 use Leonidas\Framework\Abstracts\TranslatesTextTrait;
 use Leonidas\Framework\Abstracts\UtilizesExtensionTrait;
 use Leonidas\Library\Core\Auth\CsrfFieldPrinter;
@@ -37,9 +37,9 @@ use WebTheory\Saveyour\Processor\SimpleCacheSweeper;
 abstract class AbstractForm implements FormInterface
 {
     use AccessesSimpleCacheTrait;
-    use UtilizesExtensionTrait;
-    use FluentlySetsPropertiesTrait;
+    use MustBeInitiatedContextuallyTrait;
     use TranslatesTextTrait;
+    use UtilizesExtensionTrait;
 
     protected string $handle;
 
@@ -57,7 +57,7 @@ abstract class AbstractForm implements FormInterface
     public function __construct(WpExtensionInterface $extension)
     {
         $this->extension = $extension;
-        $this->init('construct');
+        $this->init('construction');
     }
 
     public function getHandle(): string
@@ -401,15 +401,6 @@ abstract class AbstractForm implements FormInterface
         unset($this->processing);
     }
 
-    protected function initiationContexts(): array
-    {
-        return [
-            'construct' => $this->constructInitiationContext(),
-            'build' => $this->buildInitiationContext(),
-            'process' => $this->processInitiationContext(),
-        ];
-    }
-
     protected function cacheKey(string $sub): string
     {
         return "form:{$this->handle}:{$sub}";
@@ -425,17 +416,17 @@ abstract class AbstractForm implements FormInterface
         return $this->cacheKey("submitted.{$key}");
     }
 
-    protected function constructInitiationContext(): array
+    protected function constructionRequiredProperties(): array
     {
         return ['handle', 'action'];
     }
 
-    protected function buildInitiationContext(): array
+    protected function buildRequiredProperties(): array
     {
         return ['simpleCache', 'localizer'];
     }
 
-    protected function processInitiationContext(): array
+    protected function processRequiredProperties(): array
     {
         return ['simpleCache'];
     }

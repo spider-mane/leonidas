@@ -5,17 +5,15 @@ namespace Leonidas\Framework\Module\Abstracts\Traits;
 use Leonidas\Contracts\Admin\Component\SettingsField\SettingsFieldCollectionInterface;
 use Leonidas\Contracts\Admin\Component\SettingsSection\SettingsSectionCollectionInterface;
 use Leonidas\Contracts\System\Setting\SettingCollectionInterface;
-use Leonidas\Framework\Abstracts\FluentlySetsPropertiesTrait;
-use Leonidas\Hooks\TargetsAdminInitHook;
+use Leonidas\Framework\Abstracts\MustBeInitiatedContextuallyTrait;
 
 trait HandlesSettingsApiTrait
 {
     use AbstractModuleTraitTrait;
-    use FluentlySetsPropertiesTrait;
     use HandlesSettingsFieldsTrait;
     use HandlesSettingsSectionsTrait;
     use HandlesSettingsTrait;
-    use TargetsAdminInitHook;
+    use MustBeInitiatedContextuallyTrait;
 
     protected SettingCollectionInterface $settings;
 
@@ -38,9 +36,9 @@ trait HandlesSettingsApiTrait
         return $this->settingsSections;
     }
 
-    protected function doAdminInitAction(): void
+    protected function registerSettingsApi(): void
     {
-        $this->init('admin_init');
+        $this->init('settings_api_registration');
 
         $request = $this->getServerRequest();
 
@@ -49,7 +47,7 @@ trait HandlesSettingsApiTrait
         $this->registerSettingsFields($request);
     }
 
-    protected function settingsApiAdminInitProperties(): array
+    protected function settingsApiRegistrationRequiredProperties(): array
     {
         return ['settings', 'settingsSections', 'settingsFields'];
     }

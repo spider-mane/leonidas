@@ -3,13 +3,13 @@
 namespace Leonidas\Framework\Module\Abstracts\Traits;
 
 use Leonidas\Contracts\Admin\Component\Page\BaseAdminPageInterface;
-use Leonidas\Framework\Abstracts\FluentlySetsPropertiesTrait;
+use Leonidas\Framework\Abstracts\MustBeInitiatedContextuallyTrait;
 use Psr\Http\Message\ServerRequestInterface;
 
 trait AdminPageModuleTrait
 {
     use AbstractModuleTraitTrait;
-    use FluentlySetsPropertiesTrait;
+    use MustBeInitiatedContextuallyTrait;
 
     protected function filterAdminTitle(string $adminTitle, string $title): string
     {

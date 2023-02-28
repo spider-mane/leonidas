@@ -6,7 +6,7 @@ use Closure;
 use Leonidas\Contracts\Admin\Component\Page\MenuPageInterface;
 use Leonidas\Contracts\Admin\Registrar\MenuPageRegistrarInterface;
 use Leonidas\Contracts\Extension\ModuleInterface;
-use Leonidas\Framework\Abstracts\FluentlySetsPropertiesTrait;
+use Leonidas\Framework\Abstracts\MustBeInitiatedContextuallyTrait;
 use Leonidas\Framework\Module\Abstracts\Traits\AdminPageModuleTrait;
 use Leonidas\Hooks\TargetsAdminMenuHook;
 use Leonidas\Hooks\TargetsAdminTitleHook;
@@ -16,7 +16,7 @@ use Psr\Http\Message\ServerRequestInterface;
 abstract class MenuPageModule extends Module implements ModuleInterface
 {
     use AdminPageModuleTrait;
-    use FluentlySetsPropertiesTrait;
+    use MustBeInitiatedContextuallyTrait;
     use TargetsAdminMenuHook;
     use TargetsAdminTitleHook;
 
@@ -57,13 +57,6 @@ abstract class MenuPageModule extends Module implements ModuleInterface
         $request = $this->getServerRequest()->withAttribute('args', $args);
 
         echo $this->renderAdminPage($request);
-    }
-
-    protected function initiationContexts(): array
-    {
-        return [
-            'admin_menu' => $this->adminMenuRequiredProperties(),
-        ];
     }
 
     protected function adminMenuRequiredProperties(): array

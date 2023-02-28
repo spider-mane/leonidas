@@ -11,6 +11,7 @@ use Leonidas\Contracts\Ui\Asset\ScriptPrinterInterface;
 use Leonidas\Contracts\Ui\Asset\StyleCollectionInterface;
 use Leonidas\Contracts\Ui\Asset\StyleLoaderInterface;
 use Leonidas\Contracts\Ui\Asset\StylePrinterInterface;
+use Leonidas\Framework\Abstracts\MustBeInitiatedContextuallyTrait;
 use Leonidas\Library\Core\Asset\ScriptLoader;
 use Leonidas\Library\Core\Asset\ScriptPrinter;
 use Leonidas\Library\Core\Asset\StyleLoader;
@@ -19,7 +20,7 @@ use Leonidas\Library\Core\Asset\StylePrinter;
 trait ProvisionsAssetsTrait
 {
     use AbstractModuleTraitTrait;
-    use MustBeInitiatedTrait;
+    use MustBeInitiatedContextuallyTrait;
 
     protected ScriptLoaderInterface $scriptLoader;
 
@@ -84,23 +85,6 @@ trait ProvisionsAssetsTrait
         return $this->scriptLocalizations;
     }
 
-    protected function initiationContexts(): array
-    {
-        return [
-            'default' => [
-                'scripts',
-                'inlineScripts',
-                'scriptLocalizations',
-                'styles',
-                'inlineStyles',
-                'scriptLoader',
-                'scriptPrinter',
-                'styleLoader',
-                'stylePrinter',
-            ],
-        ];
-    }
-
     protected function hasScripts(): bool
     {
         return ($scripts = $this->getScripts())
@@ -131,9 +115,24 @@ trait ProvisionsAssetsTrait
             && !empty($scriptLocalizations->getLocalizations());
     }
 
+    protected function assetRegistrationRequiredProperties(): array
+    {
+        return [
+            'scripts',
+            'inlineScripts',
+            'scriptLocalizations',
+            'styles',
+            'inlineStyles',
+            'scriptLoader',
+            'scriptPrinter',
+            'styleLoader',
+            'stylePrinter',
+        ];
+    }
+
     protected function provisionAssets(?string $hookSuffix = null): void
     {
-        $this->init('default');
+        $this->init('asset_registration');
 
         $request = $this->getServerRequest();
 

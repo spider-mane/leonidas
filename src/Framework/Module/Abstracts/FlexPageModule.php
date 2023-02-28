@@ -6,7 +6,7 @@ use Closure;
 use Leonidas\Contracts\Admin\Component\Page\FlexPageInterface;
 use Leonidas\Contracts\Admin\Registrar\FlexPageRegistrarInterface;
 use Leonidas\Contracts\Extension\ModuleInterface;
-use Leonidas\Framework\Abstracts\FluentlySetsPropertiesTrait;
+use Leonidas\Framework\Abstracts\MustBeInitiatedContextuallyTrait;
 use Leonidas\Framework\Module\Abstracts\Traits\NestedPageModuleTrait;
 use Leonidas\Hooks\TargetsAdminMenuHook;
 use Leonidas\Hooks\TargetsAdminTitleHook;
@@ -17,7 +17,7 @@ use Psr\Http\Message\ServerRequestInterface;
 
 abstract class FlexPageModule extends Module implements ModuleInterface
 {
-    use FluentlySetsPropertiesTrait;
+    use MustBeInitiatedContextuallyTrait;
     use NestedPageModuleTrait;
     use TargetsAdminMenuHook;
     use TargetsAdminTitleHook;
@@ -87,13 +87,6 @@ abstract class FlexPageModule extends Module implements ModuleInterface
         return $this->isset('definition')
             && $this->definitionIsNested()
             && $this->getDefinition()->getParentSlug() === $parentFile;
-    }
-
-    protected function initiationContexts(): array
-    {
-        return [
-            'admin_menu' => $this->adminMenuRequiredProperties(),
-        ];
     }
 
     protected function adminMenuRequiredProperties(): array

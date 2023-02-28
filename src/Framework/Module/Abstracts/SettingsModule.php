@@ -4,14 +4,14 @@ namespace Leonidas\Framework\Module\Abstracts;
 
 use Leonidas\Contracts\Extension\ModuleInterface;
 use Leonidas\Contracts\System\Setting\SettingCollectionInterface;
-use Leonidas\Framework\Abstracts\FluentlySetsPropertiesTrait;
+use Leonidas\Framework\Abstracts\MustBeInitiatedContextuallyTrait;
 use Leonidas\Framework\Module\Abstracts\Traits\HandlesSettingsTrait;
 use Leonidas\Hooks\TargetsAdminInitHook;
 
-abstract class SettingsModuleInterface extends Module implements ModuleInterface
+abstract class SettingsModule extends Module implements ModuleInterface
 {
-    use FluentlySetsPropertiesTrait;
     use HandlesSettingsTrait;
+    use MustBeInitiatedContextuallyTrait;
     use TargetsAdminInitHook;
 
     protected SettingCollectionInterface $settings;
@@ -33,14 +33,7 @@ abstract class SettingsModuleInterface extends Module implements ModuleInterface
         $this->registerSettings();
     }
 
-    protected function initiationContexts(): array
-    {
-        return [
-            'admin_init' => $this->adminInitRequirements(),
-        ];
-    }
-
-    protected function adminInitRequirements(): array
+    protected function adminInitRequiredProperties(): array
     {
         return ['settings'];
     }

@@ -4,7 +4,7 @@ namespace Leonidas\Framework\Module\Abstracts;
 
 use Leonidas\Contracts\Extension\ModuleInterface;
 use Leonidas\Contracts\Ui\Asset\ImageSizeCollectionInterface;
-use Leonidas\Framework\Module\Abstracts\Traits\MustBeInitiatedTrait;
+use Leonidas\Framework\Abstracts\MustBeInitiatedTrait;
 use Leonidas\Hooks\TargetsAfterSetupThemeHook;
 use Leonidas\Hooks\TargetsImageSizeNamesChooseHook;
 
@@ -29,7 +29,7 @@ abstract class ImageSizeProviderModule extends Module implements ModuleInterface
 
     protected function doAfterSetupThemeAction(): void
     {
-        $this->initWith('definitions');
+        $this->init('definitions');
 
         foreach ($this->getDefinitions()->getSizes() as $size) {
             add_image_size(
