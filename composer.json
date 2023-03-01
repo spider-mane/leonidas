@@ -144,7 +144,7 @@
     "hooks": "vendor/bin/captainhook",
     "hoplite": "bin/hoplite",
     "inspect": "vendor/bin/psalm",
-    "link": "bin/symlink-plugin",
+    "link": "bin/symlink-plugin leonidas",
     "namespace": "composer dump-autoload -o",
     "play": "php .playground/console.php",
     "refactor": "vendor/bin/rector process",

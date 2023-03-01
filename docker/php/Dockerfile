@@ -134,7 +134,8 @@ RUN npm i -g npm-check-updates
 ARG GIT_DEFAULT_BRANCH=master
 ARG GIT_USER
 ARG GIT_EMAIL
-RUN git config --global user.name "$GIT_USER" \
+RUN git config --global --add safe.directory "$APP" \
+  && git config --global user.name "$GIT_USER" \
   && git config --global user.email "$GIT_EMAIL" \
   && git config --global credential.credentialStore gpg \
   && git config --global core.pager delta \

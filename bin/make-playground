@@ -6,7 +6,7 @@
 ################################################################################
 
 $public = "wordpress";
-$uri = ".playground";
+$uri = "@playground";
 $contexts = ["boot", "plugin"];
 
 ################################################################################
@@ -26,9 +26,9 @@ require_once dirname(__DIR__) . '/tests/bootstrap.php';
  *==============================================================================
  *
  * This is a burner file for when you just need to explore what happens with
- * random bits code. To avoid having to comment out large sections of code, wrap
- * each example in a simple if statement. Set the condition to false to disable
- * and delete when no longer needed.
+ * random bits of code. To avoid having to comment out large sections of code,
+ * wrap each example in a simple if statement. Set the condition to false to
+ * disable and delete when no longer needed.
  *
  */
 
@@ -55,11 +55,11 @@ foreach (['browser', 'console', ...$contexts] as $context) {
     file_put_contents($file, $content);
   }
 
-  if ('browser' === $context && file_exists($publicDir = "$root/$publicDir")) {
+  if ('browser' === $context && file_exists($publicDir = "$root/$public")) {
     if (file_exists($link = "$publicDir/$uri.php")) {
       unlink($link);
     }
 
-    link($file, $link);
+    symlink($file, $link);
   }
 }

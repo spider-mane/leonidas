@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 
-if [ ! -f "$APP/vendor/autoload.php" ]; then
-  composer -d "$APP" "${COMPOSER_ENTRYPOINT_SCRIPT:-install}"
-fi
+composer -d "$APP" "${COMPOSER_ENTRYPOINT_SCRIPT:-install}"
 
 unset COMPOSER_ENTRYPOINT_SCRIPT
 
