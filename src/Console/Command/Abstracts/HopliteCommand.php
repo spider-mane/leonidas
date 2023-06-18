@@ -4,7 +4,6 @@ namespace Leonidas\Console\Command\Abstracts;
 
 use Jawira\CaseConverter\CaseConverter;
 use Leonidas\Library\Core\Abstracts\ConvertsCaseTrait;
-use Noodlehaus\Config;
 use PHP_Parallel_Lint\PhpConsoleColor\ConsoleColor;
 use PHP_Parallel_Lint\PhpConsoleHighlighter\Highlighter;
 use RuntimeException;
@@ -13,6 +12,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Filesystem\Filesystem;
+use WebTheory\Config\Config;
 
 abstract class HopliteCommand extends Command
 {

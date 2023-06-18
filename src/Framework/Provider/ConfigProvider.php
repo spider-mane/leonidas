@@ -2,7 +2,6 @@
 
 namespace Leonidas\Framework\Provider;
 
-use Noodlehaus\Parser\ParserInterface;
 use Panamax\Contracts\ServiceFactoryInterface;
 use Panamax\Factories\AbstractServiceFactory;
 use Psr\Container\ContainerInterface;
@@ -12,12 +11,6 @@ class ConfigProvider extends AbstractServiceFactory implements ServiceFactoryInt
 {
     public function create(ContainerInterface $container, array $args = []): Config
     {
-        $parserService = $args['$parser'] ?? ParserInterface::class;
-
-        $parser = $container->has($parserService)
-            ? $container->get($parserService)
-            : null;
-
-        return new Config($args['values'], $parser, $args['string'] ?? false);
+        return new Config($args['source'] ?? []);
     }
 }
