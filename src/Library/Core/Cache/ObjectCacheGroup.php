@@ -15,7 +15,7 @@ class ObjectCacheGroup implements CacheInterface
         $this->group = $group;
     }
 
-    public function get($key, $default = null)
+    public function get($key, $default = null): mixed
     {
         return wp_cache_get($key, $this->group) ?? $default;
     }

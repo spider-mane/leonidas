@@ -15,7 +15,7 @@ class TransientsChannel extends Transients implements CacheInterface
         $this->channel = $channel;
     }
 
-    public function get($key, $default = null)
+    public function get($key, $default = null): mixed
     {
         return parent::get($this->identifier($key), $default);
     }

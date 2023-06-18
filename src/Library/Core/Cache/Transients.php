@@ -6,7 +6,7 @@ use Psr\SimpleCache\CacheInterface;
 
 class Transients implements CacheInterface
 {
-    public function get($key, $default = null)
+    public function get($key, $default = null): mixed
     {
         return get_transient($key) ?: $default;
     }
