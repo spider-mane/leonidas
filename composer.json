@@ -110,8 +110,11 @@
     "vlucas/phpdotenv": "^5.4",
     "webtheory/context": "@dev",
     "webtheory/exterminate": "@dev",
+    "webtheory/path-builder": "@dev",
+    "webtheory/playground": "@dev",
     "webtheory/symfony-mailer-pack": "^0.1.0",
     "webtheory/wp-cli-util": "@dev",
+    "webtheory/wp-link": "@dev",
     "webtheory/wpunit": "@dev",
     "wp-cli/wp-cli-bundle": "@stable",
     "wpackagist-plugin/classic-editor": "@stable",
@@ -119,7 +122,7 @@
     "wpackagist-plugin/disable-gutenberg": "@stable",
     "wpackagist-plugin/fakerpress": "@stable",
     "wpackagist-plugin/wp-native-php-sessions": "@stable",
-    "wpackagist-theme/twentytwentytwo": "@stable"
+    "wpackagist-theme/twentytwentythree": "@stable"
   },
   "suggest": {
     "joshtronic/php-loremipsum": "generate lorem placeholder text"
@@ -144,9 +147,9 @@
     "hooks": "vendor/bin/captainhook",
     "hoplite": "bin/hoplite",
     "inspect": "vendor/bin/psalm",
-    "link": "bin/symlink-plugin leonidas",
+    "link": "vendor/bin/wp-link leonidas",
     "namespace": "composer dump-autoload -o",
-    "play": "php .playground/console.php",
+    "play": "php @playground/console.php",
     "refactor": "vendor/bin/rector process",
     "refactor:d": "@refactor --dry-run",
     "shell": "@wp shell",
@@ -174,8 +177,8 @@
     "setup": [
       "composer install",
       "cp -n .env.example .env",
-      "bin/build-paths",
-      "bin/make-playground",
+      "vendor/bin/build-paths",
+      "vendor/bin/make-playground",
       "@wp:init"
     ],
     "test:all": [
@@ -209,16 +212,6 @@
     }
   },
   "extra": {
-    "build-paths": {
-      "build": {
-        "php-cs-fixer": {},
-        "phpstan": {},
-        "phpunit": {},
-        "psalm": {},
-        "wordpress": {}
-      },
-      "logs": {}
-    },
     "installer-paths": {
       "wordpress/wp-content/plugins/{$name}": [
         "type:wordpress-plugin"
@@ -236,6 +229,25 @@
     "dropin-paths": {
       "wordpress/wp-content/": [],
       "wordpress/wp-content/mu-plugins": []
+    },
+    "build-paths": {
+      "build": {
+        "php-cs-fixer": {},
+        "phpstan": {},
+        "phpunit": {},
+        "psalm": {},
+        "wordpress": {}
+      },
+      "logs": {}
+    },
+    "playground": {
+      "contexts": [
+        "browser",
+        "runtime",
+        "loaded"
+      ],
+      "bootstrap": "tests/bootstrap.php",
+      "web-root": "wordpress"
     }
   }
 }

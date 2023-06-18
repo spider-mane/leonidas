@@ -19,7 +19,7 @@ class MakeModelCommandTest extends UnitTestCase
 
     protected function getTestDirname(): string
     {
-        return $this->getAbspath('/.playground/model');
+        return $this->getAbspath('/@playground/model');
     }
 
     protected function setupTestDir(): array

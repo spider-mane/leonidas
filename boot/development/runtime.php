@@ -39,12 +39,7 @@ define('AUTOMATIC_UPDATER_DISABLED', true);
 define('WP_AUTO_UPDATE_CORE', false);
 define('DISALLOW_FILE_MODS', true);
 
-/**
- *==========================================================================
- * Playground
- *==========================================================================
- *
- *
- *
- */
-require_once dirname(__DIR__, 2) . '/.playground/boot.php';
+# load playground
+if (file_exists($playground = "{$root}/@playground/runtime.php")) {
+    require_once $playground;
+}

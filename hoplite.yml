@@ -9,6 +9,6 @@ make:
     contracts: src/Contracts/System/Model
     namespace: src/Library/System/Model
     # bootstrap: src/Framework/Bootstrap/RegisterModelServices.php
-    # contracts: .playground/model
-    # namespace: .playground/model
-    bootstrap: .playground/model/RegisterModelServices.php
+    # contracts: "@playground/model"
+    # namespace: "@playground/model"
+    bootstrap: "@playground/model/RegisterModelServices.php"

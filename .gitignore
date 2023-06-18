@@ -1,10 +1,9 @@
 /src/*/System/Model/Test/
 /src/Library/Access/Tests*.php
 
-# Dev and CI builds
+# Local development files
 *.cache
-/.playground
-/.playground.php
+/@playground
 /build/
 /cache/
 /dist/
@@ -13,23 +12,21 @@
 /storage/logs/
 /storage/temp/
 /temp/
-captainhook.config.json
-cghooks.lock
-
-# Docker
-docker-compose.override.yml
-docker/@local
-
-# Wordpress
 /wordpress/
 
 # Composer
 /vendor/
 composer.lock
 /studio.json
+captainhook.config.json
+cghooks.lock
 
 # Npm
 package-lock.json
+
+# Docker
+docker-compose.override.yml
+docker/@local
 
 # Env
 *.env
@@ -38,8 +35,7 @@ package-lock.json
 
 # Editor/ IDE
 *.code-workspace
-.vscode/*
-!.vscode/extensions.json
+.vscode
 .idea
 .project
 *.suo

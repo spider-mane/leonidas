@@ -53,16 +53,11 @@ array_map(function ($path) {
  *
  */
 
-if (defined('LEONIDAS_DEVELOPMENT')) {
-    // development bootstrapping
-    if (file_exists($development = __DIR__ . '/development')) {
-        array_map(function ($path) use ($development) {
-            require "{$development}/{$path}.php";
-        }, ['loaded']);
-    }
-
-    // plugin playground
-    if (file_exists($playground = "{$root}/.playground/plugin.php")) {
-        require $playground;
-    }
+if (
+    defined('LEONIDAS_DEVELOPMENT')
+    && file_exists($development = __DIR__ . '/development')
+) {
+    array_map(function ($path) use ($development) {
+        require "{$development}/{$path}.php";
+    }, ['loaded']);
 }
