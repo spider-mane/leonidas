@@ -1,5 +1,4 @@
 version: "3.8"
-name: leonidas
 services:
   app:
     build:
@@ -23,13 +22,16 @@ services:
   webserver:
     build:
       dockerfile: ./docker/nginx/Dockerfile
-    hostname: "${DOMAIN_NAME}"
     extra_hosts:
       - "host.docker.interal:host-gateway"
     networks:
       - app
     environment:
-      SERVER_NAME: "${DOMAIN_NAME}"
+      SERVER_NAME: "${SERVER_NAME:-localhost}"
+      SERVER_PORT: "${SERVER_PORT:-80}"
+      APP_NAME: "app"
+      APP_PORT: 9000
+      WEB_ROOT: "/var/www/html/wordpress"
     depends_on:
       - app
 
@@ -48,12 +50,12 @@ services:
       MYSQL_USER: "${DB_USER}"
       MYSQL_PASSWORD: "${DB_PASSWORD}"
     volumes:
-      - "database-data:/var/lib/mysql"
+      - "database.data:/var/lib/mysql"
 
   cache:
     image: "redis:alpine"
     volumes:
-      - "cache-data:/data"
+      - "cache.data:/data"
     networks:
       - app
     healthcheck:
@@ -75,7 +77,7 @@ networks:
     driver: bridge
 
 volumes:
-  database-data:
+  database.data:
     driver: local
-  cache-data:
+  cache.data:
     driver: local

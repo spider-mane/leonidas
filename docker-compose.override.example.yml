@@ -1,0 +1,70 @@
+services:
+  app:
+    build:
+      target: app-interactive
+      args:
+        LANG: "${LANG}"
+        TZ:
+        UNMINIMIZE: yes
+        USER: "${USER}"
+        GIT_USER:
+        GIT_EMAIL:
+        GIT_DEFAULT_BRANCH: "master"
+        GIT_INSTALL_GCM: yes
+    environment:
+      COMPOSER_ENTRYPOINT_SCRIPT: "setup"
+      TERM: "${TERM}"
+      ZSH_THEME: "powerlevel10k/powerlevel10k"
+    volumes:
+      # Source
+      - ".:/var/www/html"
+      # Dependencies
+      - "app.composer:/var/www/html/vendor"
+      - "app.wordpress:/var/www/html/wordpress"
+      - "app.npm:/var/www/html/assets/node_modules"
+      # Build files
+      - "app.builds:/var/www/html/build"
+      - "app.logs:/var/www/html/logs"
+      - "app.asset-builds:/var/www/html/assets/build"
+      # Vscode server
+      - "vscode:/root/.vscode-server"
+
+  webserver:
+    ports:
+      - "${SERVER_PORT:-80}:${SERVER_PORT:-80}"
+    environment:
+      TERM: "${TERM}"
+    volumes:
+      - ".:/var/www/html:ro"
+      - "app.wordpress:/var/www/html/wordpress:ro"
+
+  database:
+    ports:
+      - "${DB_FORWARD_PORT:-3306}:3306"
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: 1
+      TERM: "${TERM}"
+
+  cache:
+    ports:
+      - "${CACHE_FORWARD_PORT:-6379}:6379"
+    environment:
+      TERM: "${TERM}"
+
+  selenium:
+    environment:
+      TERM: "${TERM}"
+
+volumes:
+  vscode:
+    driver: local
+  app.composer:
+    driver: local
+  app.wordpress:
+    driver: local
+  app.npm:
+    driver: local
+  app.builds:
+    driver: local
+  app.asset-builds:
+    driver: local

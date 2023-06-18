@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+boilerplate=(
+  .env.example
+  docker-compose.override.example.yml
+  studio.example.json
+)
+
+ROOT="$(dirname $(dirname $(realpath $0)))"
+
+for file in ${boilerplate[@]}; do
+  cp -n "${ROOT}/${file}" "${ROOT}/${file//.example/}"
+done

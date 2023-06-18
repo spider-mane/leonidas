@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+validate_shell_arg() {
+  SHELLS="sh bash zsh"
+  SHELL=
+
+  for option in $SHELLS; do
+    if [ "$option" = "$1" ]; then
+      SHELL="$1"
+      break
+    fi
+  done
+
+  if [ -z "$SHELL" ]; then
+    echo "Argument must be a valid shell. Available options are: ${SHELLS// /, }."
+    exit 1
+  fi
+}
+
+if [ -n "$1" ]; then
+  validate_shell_arg "$1"
+fi
+
+ROOT="$(dirname $(dirname $(realpath $0)))"
+SHELL="${SHELL:-zsh}"
+
+docker compose up -d && docker compose exec app "$SHELL" -il
