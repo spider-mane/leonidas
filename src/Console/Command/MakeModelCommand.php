@@ -2,10 +2,10 @@
 
 namespace Leonidas\Console\Command;
 
-use DirectoryIterator;
 use Leonidas\Console\Command\Abstracts\HopliteCommand;
 use Leonidas\Console\Library\Printer\Model\ModelComponentFactory;
 use Leonidas\Console\Library\Printer\Model\PsrPrinterFactory;
+use Nette\PhpGenerator\ClassType;
 use Nette\PhpGenerator\PhpFile;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
@@ -180,54 +180,6 @@ class MakeModelCommand extends HopliteCommand
             'classes' => $namespace = $namespace . DIRECTORY_SEPARATOR . $model,
             'abstracts' => $this->resolveAbstractDir($namespace),
             'facades' => $facades,
-        ];
-    }
-
-    protected function setupTestDir(): array
-    {
-        $playground = $this->external('/.playground/model');
-
-        if ($this->filesystem->exists($playground)) {
-            foreach (new DirectoryIterator($playground) as $file) {
-                if (!$file->isFile()) {
-                    continue;
-                }
-
-                $isInterface = str_ends_with($file->getBasename(), 'Interface.php');
-                $isRegistrar = $file->getBasename() === 'RegisterModelServices.php';
-
-                if (!($isInterface || $isRegistrar)) {
-                    $this->filesystem->remove($file->getPathname());
-                }
-
-                if ($isInterface) {
-                    require $file->getPathname();
-                }
-            }
-
-        // $this->filesystem->remove($playground);
-        } else {
-            $this->filesystem->mkdir($playground);
-        }
-
-        $registrar = 'RegisterModelServices.php';
-
-        $this->filesystem->copy(
-            $this->external("/src/Framework/Bootstrap/{$registrar}"),
-            "{$playground}/{$registrar}"
-        );
-
-        foreach (['Contracts', 'Library'] as $namespace) {
-            $this->filesystem->remove(
-                $this->external('/src/' . $namespace . '/System/Model/Test')
-            );
-        }
-
-        return [
-            'interfaces' => $playground,
-            'classes' => $playground,
-            'abstracts' => $playground,
-            'facades' => $playground,
         ];
     }
 
@@ -417,6 +369,7 @@ class MakeModelCommand extends HopliteCommand
         $namespace->addUse($model->getClassFqn());
 
         $classes = $namespace->getClasses();
+        /** @var ClassType $class */
         $class = reset($classes);
 
         $class->addMethod($name . 'Services')

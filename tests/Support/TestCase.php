@@ -34,4 +34,9 @@ abstract class TestCase extends PHPUnitTestCase
 
         $this->closeMockery();
     }
+
+    protected function getAbspath(string $path = ''): string
+    {
+        return $this->root . $path;
+    }
 }
