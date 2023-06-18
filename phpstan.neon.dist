@@ -23,6 +23,7 @@ parameters:
     - '#^Access to an undefined property Wp_Error|WP_Taxonomy::\$options.$#'
     - '#^Access to an undefined property WP_Post_Type::\$options.$#'
     - '#^Access to an undefined property Wp_Error|WP_Post_Type::\$options.$#'
+    - '#^Offset "\\000WP_Theme\\000headers" does not exist on array{update: bool}.$#'
     # PhpGenerator Compat
     - '#^Method [a-zA-Z0-9\\]+::[a-zA-Z0-9]+\(\) has invalid return type Nette\\PhpGenerator\\InterfaceType.$#'
     - '#^Method [a-zA-Z0-9\\]+::[a-zA-Z0-9]+\(\) has invalid return type Nette\\PhpGenerator\\TraitType.$#'

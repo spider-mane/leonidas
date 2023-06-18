@@ -28,7 +28,6 @@ class TermField extends AbstractAdminField implements TermFieldInterface
     protected function defineView(ServerRequestInterface $request): ViewInterface
     {
         switch ($request->getAttribute('context')) {
-
             case static::ADD_TERM_SCREEN:
                 $view = $this->getAddTermFieldView();
 
