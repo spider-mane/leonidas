@@ -6,7 +6,7 @@ use Twig\Environment;
 use Twig\Extension\AbstractExtension;
 use Twig\Extension\ExtensionInterface;
 use Twig\TwigFunction;
-use WebTheory\WpTest\SkyHooks;
+use WebTheory\WpTest\Skyhooks\SkyHooks;
 
 class SkyHooksExtension extends AbstractExtension implements ExtensionInterface
 {
