@@ -69,7 +69,7 @@ trait MustBeInitiatedContextuallyTrait
             $method = [$this, $this->suffixCamel('RequiredProperties', $context)];
 
             if (method_exists($this, $method[1]) && is_callable($method)) {
-                $resolved = $this->initiationContexts[$context] = $method();
+                $resolved = $method();
             } else {
                 $class = static::class;
 
