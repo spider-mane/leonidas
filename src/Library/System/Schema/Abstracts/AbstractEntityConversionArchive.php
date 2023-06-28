@@ -1,6 +1,6 @@
 <?php
 
-namespace Leonidas\Library\System\Schema;
+namespace Leonidas\Library\System\Schema\Abstracts;
 
 abstract class AbstractEntityConversionArchive
 {

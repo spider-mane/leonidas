@@ -3,7 +3,7 @@
 namespace Leonidas\Library\System\Schema\Comment;
 
 use Leonidas\Contracts\System\Schema\Comment\CommentConversionArchiveInterface;
-use Leonidas\Library\System\Schema\AbstractEntityConversionArchive;
+use Leonidas\Library\System\Schema\Abstracts\AbstractEntityConversionArchive;
 use WP_Comment;
 
 class CommentConversionArchive extends AbstractEntityConversionArchive implements CommentConversionArchiveInterface

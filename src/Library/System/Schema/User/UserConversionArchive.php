@@ -3,7 +3,7 @@
 namespace Leonidas\Library\System\Schema\User;
 
 use Leonidas\Contracts\System\Schema\User\UserConversionArchiveInterface;
-use Leonidas\Library\System\Schema\AbstractEntityConversionArchive;
+use Leonidas\Library\System\Schema\Abstracts\AbstractEntityConversionArchive;
 use WP_User;
 
 class UserConversionArchive extends AbstractEntityConversionArchive implements UserConversionArchiveInterface

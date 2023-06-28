@@ -3,7 +3,7 @@
 namespace Leonidas\Library\System\Schema\Term;
 
 use Leonidas\Contracts\System\Schema\Term\TermConversionArchiveInterface;
-use Leonidas\Library\System\Schema\AbstractEntityConversionArchive;
+use Leonidas\Library\System\Schema\Abstracts\AbstractEntityConversionArchive;
 use WP_Term;
 
 class TermConversionArchive extends AbstractEntityConversionArchive implements TermConversionArchiveInterface

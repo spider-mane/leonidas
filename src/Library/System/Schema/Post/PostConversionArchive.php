@@ -3,7 +3,7 @@
 namespace Leonidas\Library\System\Schema\Post;
 
 use Leonidas\Contracts\System\Schema\Post\PostConversionArchiveInterface;
-use Leonidas\Library\System\Schema\AbstractEntityConversionArchive;
+use Leonidas\Library\System\Schema\Abstracts\AbstractEntityConversionArchive;
 use WP_Post;
 
 class PostConversionArchive extends AbstractEntityConversionArchive implements PostConversionArchiveInterface
