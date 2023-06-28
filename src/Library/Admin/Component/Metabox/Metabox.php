@@ -2,13 +2,11 @@
 
 namespace Leonidas\Library\Admin\Component\Metabox;
 
+use Leonidas\Contracts\Admin\Component\Metabox\MetaboxCapsuleInterface;
 use Leonidas\Contracts\Admin\Component\Metabox\MetaboxInterface;
-use Leonidas\Contracts\Admin\Component\Metabox\MetaboxLayoutInterface;
 use Leonidas\Library\Admin\Abstracts\CanBeRestrictedTrait;
-use Leonidas\Library\Admin\Component\Metabox\Layout\SegmentedLayout;
 use Leonidas\Library\Core\Http\Policy\NoPolicy;
 use Psr\Http\Message\ServerRequestInterface;
-use WebTheory\HttpPolicy\ServerRequestPolicyInterface;
 use WP_Screen;
 
 class Metabox implements MetaboxInterface
@@ -20,27 +18,26 @@ class Metabox implements MetaboxInterface
     protected string $title;
 
     /**
-     * @var string|string[]|WP_Screen
+     * @var string|array<string>|WP_Screen
      */
-    protected $screen;
+    protected string|array|WP_Screen $screen;
 
     protected string $context = 'advanced';
 
     protected string $priority = 'default';
 
-    protected MetaboxLayoutInterface $layout;
-
     protected array $args;
+
+    protected MetaboxCapsuleInterface $capsule;
 
     public function __construct(
         string $id,
         string $title,
-        string $screen,
+        string|array|WP_Screen $screen,
         ?string $context = null,
         ?string $priority = null,
         array $args = [],
-        ?MetaboxLayoutInterface $layout = null,
-        ?ServerRequestPolicyInterface $policy = null
+        ?MetaboxCapsuleInterface $capsule = null
     ) {
         $this->id = $id;
         $this->title = $title;
@@ -48,84 +45,46 @@ class Metabox implements MetaboxInterface
         $this->context = $context ?? $this->context;
         $this->priority = $priority ?? $this->priority;
         $this->args = $args;
-        $this->layout = $layout;
+        $this->capsule = $capsule ?? new EmptyMetaboxCapsule();
 
-        $this->layout = $layout ?? new SegmentedLayout();
-        $this->policy = $policy ?? new NoPolicy();
+        $this->policy = $this->capsule->policy($this) ?? new NoPolicy();
     }
 
-    /**
-     * Get id
-     *
-     * @return string
-     */
     public function getId(): string
     {
         return $this->id;
     }
 
-    /**
-     * Get title
-     *
-     * @return string
-     */
     public function getTitle(): string
     {
         return $this->title;
     }
 
     /**
-     * Get screen
-     *
-     * @return string|string[]|WP_Screen
+     * @return string|array<string>|WP_Screen
      */
-    public function getScreen()
+    public function getScreen(): string|array|WP_Screen
     {
         return $this->screen;
     }
 
-    /**
-     * Get context
-     *
-     * @return string
-     */
     public function getContext(): string
     {
         return $this->context;
     }
 
-    /**
-     * Get priority
-     *
-     * @return string
-     */
     public function getPriority(): string
     {
         return $this->priority;
     }
 
-    /**
-     * Get args
-     *
-     * @return array
-     */
     public function getArgs(): array
     {
         return $this->args;
     }
 
-    /**
-     * Get layout
-     *
-     * @return MetaboxLayoutInterface
-     */
-    public function getLayout(): MetaboxLayoutInterface
-    {
-        return $this->layout;
-    }
-
     public function renderComponent(ServerRequestInterface $request): string
     {
-        return $this->layout->renderComponent($request);
+        return $this->capsule->layout($this)->renderComponent($request);
     }
 }

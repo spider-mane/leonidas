@@ -3,8 +3,7 @@
 namespace Leonidas\Library\Admin\Component\Metabox;
 
 use Leonidas\Contracts\Admin\Component\Metabox\MetaboxBuilderInterface;
-use Leonidas\Contracts\Admin\Component\Metabox\MetaboxLayoutInterface;
-use WebTheory\HttpPolicy\ServerRequestPolicyInterface;
+use Leonidas\Contracts\Admin\Component\Metabox\MetaboxCapsuleInterface;
 use WP_Screen;
 
 class MetaboxBuilder implements MetaboxBuilderInterface
@@ -14,9 +13,9 @@ class MetaboxBuilder implements MetaboxBuilderInterface
     protected string $title;
 
     /**
-     * @var string|string[]|WP_Screen
+     * @var string|array<string>|WP_Screen
      */
-    protected $screen;
+    protected string|array|WP_Screen $screen;
 
     protected ?string $context = 'advanced';
 
@@ -24,70 +23,58 @@ class MetaboxBuilder implements MetaboxBuilderInterface
 
     protected ?array $args = [];
 
-    protected MetaboxLayoutInterface $layout;
-
-    protected ServerRequestPolicyInterface $policy;
+    protected ?MetaboxCapsuleInterface $capsule;
 
     public function __construct(string $id)
     {
         $this->id = $id;
     }
 
-    public function id(string $id)
+    public function id(string $id): static
     {
         $this->id = $id;
 
         return $this;
     }
 
-    public function title(string $title)
+    public function title(string $title): static
     {
         $this->title = $title;
 
         return $this;
     }
 
-    /**
-     * @param string|string[]|WP_Screen $screen
-     */
-    public function screen($screen)
+    public function screen(string|array|WP_Screen $screen): static
     {
         $this->screen = $screen;
 
         return $this;
     }
 
-    public function context(?string $context)
+    public function context(?string $context): static
     {
         $this->context = $context;
 
         return $this;
     }
 
-    public function priority(?string $priority)
+    public function priority(?string $priority): static
     {
         $this->priority = $priority;
 
         return $this;
     }
 
-    public function args(?array $args)
+    public function args(?array $args): static
     {
         $this->args = $args;
 
         return $this;
     }
 
-    public function policy(ServerRequestPolicyInterface $policy)
+    public function capsule(?MetaboxCapsuleInterface $capsule): static
     {
-        $this->policy = $policy;
-
-        return $this;
-    }
-
-    public function layout(MetaboxLayoutInterface $layout)
-    {
-        $this->layout = $layout;
+        $this->capsule = $capsule;
 
         return $this;
     }
@@ -101,12 +88,11 @@ class MetaboxBuilder implements MetaboxBuilderInterface
             $this->context,
             $this->priority,
             $this->args,
-            $this->layout,
-            $this->policy
+            $this->capsule
         );
     }
 
-    public static function for(string $id)
+    public static function for(string $id): static
     {
         return new static($id);
     }

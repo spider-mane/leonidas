@@ -2,23 +2,46 @@
 
 namespace Leonidas\Contracts\Admin\Component\Metabox;
 
-use WebTheory\HttpPolicy\ServerRequestPolicyInterface;
+use WP_Screen;
 
 interface MetaboxBuilderInterface
 {
-    public function id(string $id);
+    /**
+     * @return $this
+     */
+    public function id(string $id): static;
 
-    public function title(string $title);
+    /**
+     * @return $this
+     */
+    public function title(string $title): static;
 
-    public function screen($screen);
+    /**
+     * @param string|array<string>|WP_Screen $screen
+     *
+     * @return $this
+     */
+    public function screen(string|array|WP_Screen $screen): static;
 
-    public function context(?string $context);
+    /**
+     * @return $this
+     */
+    public function context(?string $context): static;
 
-    public function priority(?string $priority);
+    /**
+     * @return $this
+     */
+    public function priority(?string $priority): static;
 
-    public function args(?array $args);
+    /**
+     * @return $this
+     */
+    public function args(?array $args): static;
 
-    public function layout(MetaboxLayoutInterface $layout);
+    /**
+     * @return $this
+     */
+    public function capsule(?MetaboxCapsuleInterface $capsule): static;
 
-    public function policy(ServerRequestPolicyInterface $policy);
+    public function get(): MetaboxInterface;
 }
