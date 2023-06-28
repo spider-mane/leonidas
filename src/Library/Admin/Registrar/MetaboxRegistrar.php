@@ -5,18 +5,23 @@ namespace Leonidas\Library\Admin\Registrar;
 use Leonidas\Contracts\Admin\Component\Metabox\MetaboxCollectionInterface;
 use Leonidas\Contracts\Admin\Component\Metabox\MetaboxInterface;
 use Leonidas\Contracts\Admin\Registrar\MetaboxRegistrarInterface;
-use Leonidas\Library\Admin\Registrar\Abstracts\AbstractRegistrar;
+use Leonidas\Library\Admin\Callback\MetaboxCallbackProviderInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
-class MetaboxRegistrar extends AbstractRegistrar implements MetaboxRegistrarInterface
+class MetaboxRegistrar implements MetaboxRegistrarInterface
 {
+    public function __construct(protected MetaboxCallbackProviderInterface $callbackProvider)
+    {
+        //
+    }
+
     public function registerOne(MetaboxInterface $metabox, ServerRequestInterface $request)
     {
         if ($metabox->shouldBeRendered($request)) {
             add_meta_box(
                 $metabox->getId(),
                 $metabox->getTitle(),
-                $this->getOutputLoader(),
+                $this->getRenderingCallback($metabox, $request),
                 $metabox->getScreen(),
                 $metabox->getContext(),
                 $metabox->getPriority(),
@@ -30,5 +35,10 @@ class MetaboxRegistrar extends AbstractRegistrar implements MetaboxRegistrarInte
         foreach ($metaboxes->getMetaboxes() as $metabox) {
             $this->registerOne($metabox, $request);
         }
+    }
+
+    protected function getRenderingCallback(MetaboxInterface $metabox, ServerRequestInterface $request): callable
+    {
+        return $this->callbackProvider->getRenderingCallback($metabox, $request);
     }
 }

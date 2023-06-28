@@ -11,6 +11,7 @@ use Leonidas\Framework\Module\Abstracts\Traits\HasExtraConstructionTrait;
 use Leonidas\Hooks\TargetsAddMetaBoxesXPostTypeHook;
 use Leonidas\Hooks\TargetsEditFormTopHook;
 use Leonidas\Hooks\TargetsSavePostXPostTypeHook;
+use Leonidas\Library\Admin\Callback\MetaboxCallbackProvider;
 use Leonidas\Library\Admin\Registrar\MetaboxRegistrar;
 use Leonidas\Library\Core\Auth\Nonce;
 use Leonidas\Library\Core\Http\Policy\CsrfCheck;
@@ -110,17 +111,6 @@ abstract class PostTypeMetaboxesModule extends Module implements ModuleInterface
         $this->postFormProcessing($this->form()->process($request), $request);
     }
 
-    protected function printMetabox(WP_Post $post, array $metabox): void
-    {
-        $request = $this->getServerRequest()
-            ->withAttribute('post', $post)
-            ->withAttribute('metabox', $metabox);
-
-        echo $this->getMetaboxCollection()
-            ->getMetabox($metabox['id'])
-            ->renderComponent($request);
-    }
-
     protected function form(): FormSubmissionManagerInterface
     {
         return new FormSubmissionManager(
@@ -159,7 +149,7 @@ abstract class PostTypeMetaboxesModule extends Module implements ModuleInterface
 
     protected function metaboxRegistrar(): MetaboxRegistrarInterface
     {
-        return new MetaboxRegistrar($this->callbackMethod('printMetabox'));
+        return new MetaboxRegistrar(new MetaboxCallbackProvider());
     }
 
     protected function allowAutosave(): bool
