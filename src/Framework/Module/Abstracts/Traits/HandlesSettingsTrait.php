@@ -2,9 +2,10 @@
 
 namespace Leonidas\Framework\Module\Abstracts\Traits;
 
-use Leonidas\Contracts\System\Setting\SettingCollectionInterface;
-use Leonidas\Contracts\System\Setting\SettingRegistrarInterface;
-use Leonidas\Library\System\Setting\SettingRegistrar;
+use Leonidas\Contracts\Admin\Processing\Setting\SettingCallbackProviderInterface;
+use Leonidas\Contracts\Admin\Processing\Setting\SettingCollectionInterface;
+use Leonidas\Contracts\Admin\Processing\Setting\SettingRegistrarInterface;
+use Leonidas\Library\Admin\Processing\Setting\SettingRegistrar;
 
 trait HandlesSettingsTrait
 {
@@ -15,8 +16,10 @@ trait HandlesSettingsTrait
 
     protected function settingRegistrar(): SettingRegistrarInterface
     {
-        return new SettingRegistrar();
+        return new SettingRegistrar($this->settingInputManager());
     }
+
+    abstract protected function settingInputManager(): SettingCallbackProviderInterface;
 
     abstract protected function getSettings(): SettingCollectionInterface;
 }

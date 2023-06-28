@@ -1,12 +1,19 @@
 <?php
 
-namespace Leonidas\Library\System\Setting;
+namespace Leonidas\Library\Admin\Processing\Setting;
 
-use Leonidas\Contracts\System\Setting\SettingInterface;
-use Leonidas\Contracts\System\Setting\SettingRegistrarInterface;
+use Leonidas\Contracts\Admin\Processing\Setting\SettingCallbackProviderInterface;
+use Leonidas\Contracts\Admin\Processing\Setting\SettingInterface;
+use Leonidas\Contracts\Admin\Processing\Setting\SettingRegistrarInterface;
 
 class SettingRegistrar implements SettingRegistrarInterface
 {
+    public function __construct(
+        protected SettingCallbackProviderInterface $callbackManager
+    ) {
+        //
+    }
+
     public function registerOne(SettingInterface $setting)
     {
         register_setting(
@@ -28,13 +35,16 @@ class SettingRegistrar implements SettingRegistrarInterface
         $args = [
             'type' => $setting->getType(),
             'description' => $setting->getDescription(),
-            'callback' => ($handler = $setting->getHandler())
-                ? [$handler, 'filterInput']
-                : null,
+            'callback' => $this->getProcessingCallback($setting),
             'show_in_rest' => $setting->getRestSchema(),
             'default' => $setting->getDefaultValue(),
         ] + (array) $setting->getExtraArgs();
 
         return array_filter($args, fn ($arg) => null !== $arg);
+    }
+
+    protected function getProcessingCallback(SettingInterface $setting): callable
+    {
+        return $this->callbackManager->getProcessingCallback($setting);
     }
 }

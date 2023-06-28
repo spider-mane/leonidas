@@ -1,6 +1,6 @@
 <?php
 
-namespace Leonidas\Contracts\System\Setting;
+namespace Leonidas\Contracts\Admin\Processing\Setting;
 
 interface SettingRegistrarInterface
 {

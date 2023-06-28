@@ -2,8 +2,8 @@
 
 namespace Leonidas\Framework\Module\Abstracts;
 
+use Leonidas\Contracts\Admin\Processing\Setting\SettingCollectionInterface;
 use Leonidas\Contracts\Extension\ModuleInterface;
-use Leonidas\Contracts\System\Setting\SettingCollectionInterface;
 use Leonidas\Framework\Abstracts\MustBeInitiatedContextuallyTrait;
 use Leonidas\Framework\Module\Abstracts\Traits\HandlesSettingsTrait;
 use Leonidas\Hooks\TargetsAdminInitHook;

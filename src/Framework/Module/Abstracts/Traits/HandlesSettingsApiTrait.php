@@ -4,7 +4,7 @@ namespace Leonidas\Framework\Module\Abstracts\Traits;
 
 use Leonidas\Contracts\Admin\Component\SettingsField\SettingsFieldCollectionInterface;
 use Leonidas\Contracts\Admin\Component\SettingsSection\SettingsSectionCollectionInterface;
-use Leonidas\Contracts\System\Setting\SettingCollectionInterface;
+use Leonidas\Contracts\Admin\Processing\Setting\SettingCollectionInterface;
 use Leonidas\Framework\Abstracts\MustBeInitiatedContextuallyTrait;
 
 trait HandlesSettingsApiTrait
