@@ -1,6 +1,6 @@
 <?php
 
-namespace Leonidas\Library\Admin\Callback;
+namespace Leonidas\Contracts\Admin\Callback;
 
 use Leonidas\Contracts\Admin\Component\Metabox\MetaboxInterface;
 use Psr\Http\Message\ServerRequestInterface;

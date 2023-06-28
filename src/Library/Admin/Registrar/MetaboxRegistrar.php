@@ -2,10 +2,10 @@
 
 namespace Leonidas\Library\Admin\Registrar;
 
+use Leonidas\Contracts\Admin\Callback\MetaboxCallbackProviderInterface;
 use Leonidas\Contracts\Admin\Component\Metabox\MetaboxCollectionInterface;
 use Leonidas\Contracts\Admin\Component\Metabox\MetaboxInterface;
 use Leonidas\Contracts\Admin\Registrar\MetaboxRegistrarInterface;
-use Leonidas\Library\Admin\Callback\MetaboxCallbackProviderInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 class MetaboxRegistrar implements MetaboxRegistrarInterface

@@ -2,6 +2,7 @@
 
 namespace Leonidas\Library\Admin\Callback;
 
+use Leonidas\Contracts\Admin\Callback\MetaboxCallbackProviderInterface;
 use Leonidas\Contracts\Admin\Component\Metabox\MetaboxInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use WP_Post;
