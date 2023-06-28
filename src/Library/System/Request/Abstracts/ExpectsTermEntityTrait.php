@@ -1,11 +1,11 @@
 <?php
 
-namespace Leonidas\Library\System\Schema\Abstracts;
+namespace Leonidas\Library\System\Request\Abstracts;
 
 use Psr\Http\Message\ServerRequestInterface;
 use WP_Term;
 
-trait ExpectsTermTrait
+trait ExpectsTermEntityTrait
 {
     protected function getTerm(ServerRequestInterface $request): ?WP_Term
     {

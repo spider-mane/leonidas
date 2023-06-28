@@ -1,11 +1,11 @@
 <?php
 
-namespace Leonidas\Library\System\Schema\Abstracts;
+namespace Leonidas\Library\System\Request\Abstracts;
 
 use Psr\Http\Message\ServerRequestInterface;
 use WP_Post;
 
-trait ExpectsPostTrait
+trait ExpectsPostEntityTrait
 {
     protected function getPost(ServerRequestInterface $request): ?WP_Post
     {

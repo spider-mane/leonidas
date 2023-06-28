@@ -2,14 +2,14 @@
 
 namespace Leonidas\Library\Admin\Field\Data;
 
-use Leonidas\Library\System\Schema\Abstracts\ExpectsPostTrait;
+use Leonidas\Library\System\Request\Abstracts\ExpectsPostEntityTrait;
 use Leonidas\Library\System\Schema\Term\TermCollection;
 use Psr\Http\Message\ServerRequestInterface;
 use WebTheory\Saveyour\Contracts\Data\FieldDataManagerInterface;
 
 class PostTermDataManager implements FieldDataManagerInterface
 {
-    use ExpectsPostTrait;
+    use ExpectsPostEntityTrait;
 
     protected string $taxonomy;
 

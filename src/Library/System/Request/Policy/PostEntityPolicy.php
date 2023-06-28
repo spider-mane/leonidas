@@ -1,14 +1,14 @@
 <?php
 
-namespace Leonidas\Library\System\Model\Post\Policies;
+namespace Leonidas\Library\System\Request\Policy;
 
-use Leonidas\Library\System\Schema\Abstracts\ExpectsPostTrait;
+use Leonidas\Library\System\Request\Abstracts\ExpectsPostEntityTrait;
 use Psr\Http\Message\ServerRequestInterface;
 use WebTheory\HttpPolicy\ServerRequestPolicyInterface;
 
-class PostPolicy implements ServerRequestPolicyInterface
+class PostEntityPolicy implements ServerRequestPolicyInterface
 {
-    use ExpectsPostTrait;
+    use ExpectsPostEntityTrait;
 
     /**
      * @var int[]
