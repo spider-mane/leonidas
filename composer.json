@@ -162,12 +162,9 @@
     "watch": "vendor/bin/phpunit-watcher watch",
     "wp": "vendor/bin/wp",
     "build": [
-      "@asset run build",
       "@namespace",
       "@style",
-      "@analyze",
-      "@inspect",
-      "@test"
+      "@analyze"
     ],
     "style": [
       "vendor/bin/php-cs-fixer fix --verbose",
