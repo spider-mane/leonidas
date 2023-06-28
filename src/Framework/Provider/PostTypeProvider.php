@@ -2,7 +2,7 @@
 
 namespace Leonidas\Framework\Provider;
 
-use Leonidas\Library\System\Model\PostType\PostTypeFactory;
+use Leonidas\Library\System\Configuration\PostType\PostTypeFactory;
 use Panamax\Contracts\ServiceFactoryInterface;
 use Panamax\Factories\AbstractServiceFactory;
 use Psr\Container\ContainerInterface;

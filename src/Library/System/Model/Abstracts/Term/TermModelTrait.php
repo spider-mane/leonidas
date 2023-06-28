@@ -2,8 +2,8 @@
 
 namespace Leonidas\Library\System\Model\Abstracts\Term;
 
-use Leonidas\Contracts\System\Model\Taxonomy\TaxonomyInterface;
-use Leonidas\Library\System\Model\Taxonomy\AdaptedTaxonomy;
+use Leonidas\Contracts\System\Configuration\Taxonomy\TaxonomyInterface;
+use Leonidas\Library\System\Configuration\Taxonomy\AdaptedTaxonomy;
 use WP_Term;
 
 trait TermModelTrait

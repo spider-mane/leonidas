@@ -2,7 +2,7 @@
 
 namespace Leonidas\Contracts\System\Model;
 
-use Leonidas\Contracts\System\Model\PostType\PostTypeInterface;
+use Leonidas\Contracts\System\Configuration\PostType\PostTypeInterface;
 use Psr\Link\LinkInterface;
 use WP_Post;
 

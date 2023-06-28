@@ -2,10 +2,10 @@
 
 namespace Leonidas\Library\System\Model\Abstracts\Post;
 
-use Leonidas\Contracts\System\Model\PostType\PostTypeInterface;
+use Leonidas\Contracts\System\Configuration\PostType\PostTypeInterface;
+use Leonidas\Library\System\Configuration\PostType\AdaptedPostType;
 use Leonidas\Library\System\Model\Abstracts\LazyLoadableRelationshipsTrait;
 use Leonidas\Library\System\Model\Link\WebPage;
-use Leonidas\Library\System\Model\PostType\AdaptedPostType;
 use Psr\Link\LinkInterface;
 use WP_Post;
 

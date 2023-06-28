@@ -2,7 +2,7 @@
 
 namespace Leonidas\Framework\Provider;
 
-use Leonidas\Library\System\Model\Taxonomy\TaxonomyFactory;
+use Leonidas\Library\System\Configuration\Taxonomy\TaxonomyFactory;
 use Panamax\Contracts\ServiceFactoryInterface;
 use Panamax\Factories\AbstractServiceFactory;
 use Psr\Container\ContainerInterface;

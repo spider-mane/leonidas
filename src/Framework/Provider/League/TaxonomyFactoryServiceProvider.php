@@ -4,7 +4,7 @@ namespace Leonidas\Framework\Provider\League;
 
 use Leonidas\Framework\Provider\League\Abstracts\AbstractLeagueServiceFactory;
 use Leonidas\Framework\Provider\TaxonomyProvider;
-use Leonidas\Library\System\Model\Taxonomy\TaxonomyFactory;
+use Leonidas\Library\System\Configuration\Taxonomy\TaxonomyFactory;
 use Panamax\Contracts\ServiceFactoryInterface;
 
 class TaxonomyFactoryServiceProvider extends AbstractLeagueServiceFactory

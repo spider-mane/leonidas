@@ -3,7 +3,7 @@
 namespace Leonidas\Contracts\System\Model;
 
 use Countable;
-use Leonidas\Contracts\System\Model\Taxonomy\TaxonomyInterface;
+use Leonidas\Contracts\System\Configuration\Taxonomy\TaxonomyInterface;
 use WP_Term;
 
 interface TermModelInterface extends EntityModelInterface, Countable
