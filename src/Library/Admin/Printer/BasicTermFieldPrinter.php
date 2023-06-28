@@ -8,6 +8,7 @@ use Leonidas\Contracts\Ui\ViewInterface;
 use Leonidas\Library\Admin\Component\TermField\View\AddTermFieldView;
 use Leonidas\Library\Admin\Component\TermField\View\EditTermFieldView;
 use Psr\Http\Message\ServerRequestInterface;
+use UnexpectedValueException;
 
 class BasicTermFieldPrinter implements TermFieldPrinterInterface
 {
@@ -41,18 +42,12 @@ class BasicTermFieldPrinter implements TermFieldPrinterInterface
 
     protected function defineView(ServerRequestInterface $request): ViewInterface
     {
-        switch ($request->getAttribute('context')) {
-            case static::ADD_TERM_SCREEN:
-                $view = new AddTermFieldView();
-
-                break;
-
-            case static::EDIT_TERM_SCREEN:
-                $view = new EditTermFieldView();
-
-                break;
-        }
-
-        return $view; // @phpstan-ignore-line
+        return match ($value = $request->getAttribute('context')) {
+            static::ADD_TERM_SCREEN => new AddTermFieldView(),
+            static::EDIT_TERM_SCREEN => new EditTermFieldView(),
+            default => throw new UnexpectedValueException(
+                "Unexpected value \"{$value}\" provided as context."
+            )
+        };
     }
 }

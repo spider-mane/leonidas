@@ -10,6 +10,7 @@ use Leonidas\Library\Admin\Component\Abstracts\AbstractAdminField;
 use Leonidas\Library\Admin\Component\TermField\View\AddTermFieldView;
 use Leonidas\Library\Admin\Component\TermField\View\EditTermFieldView;
 use Psr\Http\Message\ServerRequestInterface;
+use UnexpectedValueException;
 
 class TermField extends AbstractAdminField implements TermFieldInterface
 {
@@ -27,19 +28,13 @@ class TermField extends AbstractAdminField implements TermFieldInterface
 
     protected function defineView(ServerRequestInterface $request): ViewInterface
     {
-        switch ($request->getAttribute('context')) {
-            case static::ADD_TERM_SCREEN:
-                $view = $this->getAddTermFieldView();
-
-                break;
-
-            case static::EDIT_TERM_SCREEN:
-                $view = $this->getEditTermFieldView();
-
-                break;
-        }
-
-        return $view; // @phpstan-ignore-line
+        return match ($value = $request->getAttribute('context')) {
+            static::ADD_TERM_SCREEN => $this->getAddTermFieldView(),
+            static::EDIT_TERM_SCREEN => $this->getEditTermFieldView(),
+            default => throw new UnexpectedValueException(
+                "Unexpected value \"{$value}\" provided as context."
+            )
+        };
     }
 
     protected function getAddTermFieldView(): ViewInterface
