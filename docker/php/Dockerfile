@@ -57,4 +57,5 @@ RUN /trunk/provisions/github
 
 RUN npm install -g npm-check-updates
 
+RUN /trunk/setups/user
 RUN /trunk/actions/cleanup

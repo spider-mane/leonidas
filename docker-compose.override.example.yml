@@ -12,7 +12,6 @@ services:
         GIT_DEFAULT_BRANCH: "master"
         GIT_INSTALL_GCM: yes
     environment:
-      COMPOSER_ENTRYPOINT_SCRIPT: "setup"
       TERM: "${TERM}"
       ZSH_THEME: "powerlevel10k/powerlevel10k"
     volumes:

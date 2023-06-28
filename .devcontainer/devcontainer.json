@@ -7,5 +7,7 @@
   ],
   "service": "app",
   "workspaceFolder": "/var/www/html",
+  "remoteUser": "admin",
+  "postCreateCommand": "chown -R admin:admin /var/www/html",
   "shutdownAction": "none"
 }

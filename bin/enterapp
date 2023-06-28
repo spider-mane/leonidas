@@ -1,18 +1,20 @@
 #!/usr/bin/env bash
 
-validate_shell_arg() {
-  SHELLS="sh bash zsh"
-  SHELL=
+username="admin"
 
-  for option in $SHELLS; do
+validate_shell_arg() {
+  shells="sh bash zsh"
+  shell=
+
+  for option in $shells; do
     if [ "$option" = "$1" ]; then
-      SHELL="$1"
+      shell="$1"
       break
     fi
   done
 
-  if [ -z "$SHELL" ]; then
-    echo "Argument must be a valid shell. Available options are: ${SHELLS// /, }."
+  if [ -z "$shell" ]; then
+    echo "Argument must be a valid shell. Available options are: ${shells// /, }."
     exit 1
   fi
 }
@@ -21,7 +23,7 @@ if [ -n "$1" ]; then
   validate_shell_arg "$1"
 fi
 
-ROOT="$(dirname $(dirname $(realpath $0)))"
-SHELL="${SHELL:-zsh}"
+root="$(dirname $(dirname $(realpath $0)))"
+shell="${shell:-zsh}"
 
-docker compose up -d && docker compose exec app "$SHELL" -il
+docker compose up -d && docker compose exec -u "$username" app "$shell" -il

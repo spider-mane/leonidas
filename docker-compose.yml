@@ -11,7 +11,8 @@ services:
     networks:
       - app
     environment:
-      COMPOSER_ENTRYPOINT_SCRIPT: setup
+      HOST_UID: "${HOST_UID}"
+      HOST_GID: "${HOST_GID}"
       XDEBUG_CONFIG: "${APP_XDEBUG_CONFIG:-client_host=host.docker.internal}"
       XDEBUG_MODE: "${APP_XDEBUG_MODE:-off}"
     depends_on:
