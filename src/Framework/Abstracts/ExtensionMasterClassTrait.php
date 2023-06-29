@@ -36,9 +36,9 @@ trait ExtensionMasterClassTrait
         return $this->base->header($header);
     }
 
-    public static function instance(): self
+    public static function instance(): static
     {
-        return static::$instance;
+        return self::$instance;
     }
 
     public static function init(WpExtensionInterface $base): void
