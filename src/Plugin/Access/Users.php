@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Leonidas\Library\Access;
+namespace Leonidas\Plugin\Access;
 
 use Leonidas\Contracts\System\Model\User\UserCollectionInterface;
 use Leonidas\Contracts\System\Model\User\UserInterface;

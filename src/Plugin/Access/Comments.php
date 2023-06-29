@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Leonidas\Library\Access;
+namespace Leonidas\Plugin\Access;
 
 use Leonidas\Contracts\System\Model\Comment\CommentCollectionInterface;
 use Leonidas\Contracts\System\Model\Comment\CommentInterface;

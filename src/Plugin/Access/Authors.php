@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Leonidas\Library\Access;
+namespace Leonidas\Plugin\Access;
 
 use Leonidas\Contracts\System\Model\Author\AuthorCollectionInterface;
 use Leonidas\Contracts\System\Model\Author\AuthorInterface;

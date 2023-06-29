@@ -1,6 +1,6 @@
 <?php
 
-namespace Leonidas\Library\Access;
+namespace Leonidas\Plugin\Access;
 
 use Twig\Environment;
 
