@@ -2,66 +2,59 @@
 
 namespace Leonidas\Library\Admin\Registrar;
 
+use Leonidas\Contracts\Admin\Callback\AdminPageCallbackProviderInterface;
 use Leonidas\Contracts\Admin\Component\Page\FlexPageInterface;
 use Leonidas\Contracts\Admin\Registrar\FlexPageRegistrarInterface;
 use Leonidas\Contracts\Admin\Registrar\InteriorPageRegistrarInterface;
 use Leonidas\Contracts\Admin\Registrar\MenuPageRegistrarInterface;
 use Leonidas\Contracts\Admin\Registrar\SubmenuPageRegistrarInterface;
-use Leonidas\Library\Admin\Registrar\Abstracts\AbstractRegistrar;
+use Psr\Http\Message\ServerRequestInterface;
 
-class FlexPageRegistrar extends AbstractRegistrar implements FlexPageRegistrarInterface
+class FlexPageRegistrar implements FlexPageRegistrarInterface
 {
-    protected MenuPageRegistrarInterface $menuPageLoader;
+    protected MenuPageRegistrarInterface $menuPageRegistrar;
 
-    protected SubmenuPageRegistrarInterface $submenuPageLoader;
+    protected SubmenuPageRegistrarInterface $submenuPageRegistrar;
 
-    protected InteriorPageRegistrarInterface $interiorPageLoader;
+    protected InteriorPageRegistrarInterface $interiorPageRegistrar;
+
+    protected AdminPageCallbackProviderInterface $callbackProvider;
 
     public function __construct(
-        callable $outputLoader,
-        ?MenuPageRegistrarInterface $menuPageLoader = null,
-        ?SubmenuPageRegistrarInterface $submenuPageLoader = null,
-        ?InteriorPageRegistrarInterface $interiorPageLoader = null
+        AdminPageCallbackProviderInterface $callbackProvider,
+        ?MenuPageRegistrarInterface $menuPageRegistrar = null,
+        ?SubmenuPageRegistrarInterface $submenuPageRegistrar = null,
+        ?InteriorPageRegistrarInterface $interiorPageRegistrar = null,
     ) {
-        parent::__construct($outputLoader);
+        $this->callbackProvider = $callbackProvider;
 
-        $this->menuPageLoader = $menuPageLoader ?? $this->defaultMenuPageRegistrar();
-        $this->submenuPageLoader = $submenuPageLoader ?? $this->defaultSubmenuPageRegistrar();
-        $this->interiorPageLoader = $interiorPageLoader ?? $this->defaultInteriorPageRegistrar();
+        $this->menuPageRegistrar = $menuPageRegistrar ?? $this->defaultMenuPageRegistrar();
+        $this->submenuPageRegistrar = $submenuPageRegistrar ?? $this->defaultSubmenuPageRegistrar();
+        $this->interiorPageRegistrar = $interiorPageRegistrar ?? $this->defaultInteriorPageRegistrar();
     }
 
-    public function registerOne(FlexPageInterface $page)
+    public function registerOne(FlexPageInterface $page, ServerRequestInterface $request)
     {
-        $this->{$page->getContext()->value . "PageLoader"}->registerOne($page);
+        $this->{$page->getContext()->value . "PageRegistrar"}->registerOne($page);
     }
 
-    protected function getMenuPageRegistrar(): MenuPageRegistrarInterface
+    protected function getCallbackProvider(): AdminPageCallbackProviderInterface
     {
-        return $this->menuPageLoader;
-    }
-
-    protected function getSubMenuPageRegistrar(): SubmenuPageRegistrarInterface
-    {
-        return $this->submenuPageLoader;
-    }
-
-    protected function getInteriorPageRegistrar(): InteriorPageRegistrarInterface
-    {
-        return $this->interiorPageLoader;
+        return $this->callbackProvider;
     }
 
     protected function defaultMenuPageRegistrar(): MenuPageRegistrarInterface
     {
-        return new MenuPageRegistrar($this->getOutputLoader());
+        return new MenuPageRegistrar($this->getCallbackProvider());
     }
 
     protected function defaultSubmenuPageRegistrar(): SubmenuPageRegistrarInterface
     {
-        return new SubmenuPageRegistrar($this->getOutputLoader());
+        return new SubmenuPageRegistrar($this->getCallbackProvider());
     }
 
     protected function defaultInteriorPageRegistrar(): InteriorPageRegistrarInterface
     {
-        return new InteriorPageRegistrar($this->getOutputLoader());
+        return new InteriorPageRegistrar($this->getCallbackProvider());
     }
 }

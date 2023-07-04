@@ -4,11 +4,12 @@ namespace Leonidas\Library\Admin\Registrar;
 
 use Leonidas\Contracts\Admin\Component\Page\SubmenuPageInterface;
 use Leonidas\Contracts\Admin\Registrar\SubmenuPageRegistrarInterface;
-use Leonidas\Library\Admin\Registrar\Abstracts\AbstractRegistrar;
+use Leonidas\Library\Admin\Registrar\Abstracts\AbstractAdminPageRegistrar;
+use Psr\Http\Message\ServerRequestInterface;
 
-class SubmenuPageRegistrar extends AbstractRegistrar implements SubmenuPageRegistrarInterface
+class SubmenuPageRegistrar extends AbstractAdminPageRegistrar implements SubmenuPageRegistrarInterface
 {
-    public function registerOne(SubmenuPageInterface $page)
+    public function registerOne(SubmenuPageInterface $page, ServerRequestInterface $request)
     {
         add_submenu_page(
             $page->getParentSlug(),
@@ -16,7 +17,7 @@ class SubmenuPageRegistrar extends AbstractRegistrar implements SubmenuPageRegis
             $page->getMenuTitle(),
             $page->getCapability(),
             $page->getMenuSlug(),
-            $this->getOutputLoader()
+            $this->getRenderingCallback($page, $request)
         );
     }
 }

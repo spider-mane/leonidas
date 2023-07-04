@@ -2,7 +2,6 @@
 
 namespace Leonidas\Framework\Module\Abstracts;
 
-use Closure;
 use Leonidas\Contracts\Admin\Component\Page\MenuPageInterface;
 use Leonidas\Contracts\Admin\Registrar\MenuPageRegistrarInterface;
 use Leonidas\Contracts\Extension\ModuleInterface;
@@ -10,7 +9,6 @@ use Leonidas\Framework\Abstracts\MustBeInitiatedContextuallyTrait;
 use Leonidas\Framework\Module\Abstracts\Traits\AdminPageModuleTrait;
 use Leonidas\Hooks\TargetsAdminMenuHook;
 use Leonidas\Hooks\TargetsAdminTitleHook;
-use Leonidas\Library\Admin\Registrar\MenuPageRegistrar;
 use Psr\Http\Message\ServerRequestInterface;
 
 abstract class MenuPageModule extends Module implements ModuleInterface
@@ -49,14 +47,10 @@ abstract class MenuPageModule extends Module implements ModuleInterface
 
     protected function addMenuPage(ServerRequestInterface $request): void
     {
-        $this->getMenuPageRegistrar()->registerOne($this->definition);
-    }
-
-    protected function renderMenuPage(array $args): void
-    {
-        $request = $this->getServerRequest()->withAttribute('args', $args);
-
-        echo $this->renderAdminPage($request);
+        $this->getMenuPageRegistrar()->registerOne(
+            $this->getDefinition(),
+            $request
+        );
     }
 
     protected function adminMenuRequiredProperties(): array
@@ -64,12 +58,7 @@ abstract class MenuPageModule extends Module implements ModuleInterface
         return ['definition', 'menuPageLoader'];
     }
 
-    protected function menuPageRegistrar(): MenuPageRegistrarInterface
-    {
-        return new MenuPageRegistrar(
-            Closure::fromCallable([$this, 'renderMenuPage'])
-        );
-    }
+    abstract protected function menuPageRegistrar(): MenuPageRegistrarInterface;
 
     abstract protected function definition(): MenuPageInterface;
 }

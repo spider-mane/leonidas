@@ -4,11 +4,12 @@ namespace Leonidas\Library\Admin\Registrar;
 
 use Leonidas\Contracts\Admin\Component\Page\InteriorPageInterface;
 use Leonidas\Contracts\Admin\Registrar\InteriorPageRegistrarInterface;
-use Leonidas\Library\Admin\Registrar\Abstracts\AbstractRegistrar;
+use Leonidas\Library\Admin\Registrar\Abstracts\AbstractAdminPageRegistrar;
+use Psr\Http\Message\ServerRequestInterface;
 
-class InteriorPageRegistrar extends AbstractRegistrar implements InteriorPageRegistrarInterface
+class InteriorPageRegistrar extends AbstractAdminPageRegistrar implements InteriorPageRegistrarInterface
 {
-    public function registerOne(InteriorPageInterface $page)
+    public function registerOne(InteriorPageInterface $page, ServerRequestInterface $request)
     {
         add_submenu_page(
             $page->getParentSlug(),
@@ -16,7 +17,7 @@ class InteriorPageRegistrar extends AbstractRegistrar implements InteriorPageReg
             '',
             $page->getCapability(),
             $page->getMenuSlug(),
-            $this->getOutputLoader(),
+            $this->getRenderingCallback($page, $request),
         );
 
         remove_submenu_page($page->getParentSlug(), $page->getMenuSlug());

@@ -35,14 +35,5 @@ trait AdminPageModuleTrait
         return $this->getDefinition()->defineAdminTitle($request);
     }
 
-    protected function renderAdminPage(ServerRequestInterface $request): string
-    {
-        $definition = $this->getDefinition();
-
-        return $definition->shouldBeRendered($request)
-            ? $definition->renderComponent($request)
-            : $definition->getLoadErrorPage()->renderComponent($request);
-    }
-
     abstract protected function getDefinition(): BaseAdminPageInterface;
 }

@@ -2,7 +2,6 @@
 
 namespace Leonidas\Framework\Module\Abstracts;
 
-use Closure;
 use Leonidas\Contracts\Admin\Component\Page\SubmenuPageInterface;
 use Leonidas\Contracts\Admin\Registrar\SubmenuPageRegistrarInterface;
 use Leonidas\Contracts\Extension\ModuleInterface;
@@ -12,7 +11,6 @@ use Leonidas\Hooks\TargetsAdminMenuHook;
 use Leonidas\Hooks\TargetsAdminTitleHook;
 use Leonidas\Hooks\TargetsParentFileHook;
 use Leonidas\Hooks\TargetsSubmenuFileHook;
-use Leonidas\Library\Admin\Registrar\SubmenuPageRegistrar;
 use Psr\Http\Message\ServerRequestInterface;
 
 abstract class SubmenuPageModule extends Module implements ModuleInterface
@@ -55,14 +53,10 @@ abstract class SubmenuPageModule extends Module implements ModuleInterface
 
     protected function addSubmenuPage(ServerRequestInterface $request): void
     {
-        $this->getSubmenuPageRegistrar()->registerOne($this->getDefinition());
-    }
-
-    protected function renderSubmenuPage(array $args): void
-    {
-        $request = $this->getServerRequest()->withAttribute('args', $args);
-
-        echo $this->renderAdminPage($request);
+        $this->getSubmenuPageRegistrar()->registerOne(
+            $this->getDefinition(),
+            $request
+        );
     }
 
     protected function adminMenuRequiredProperties(): array
@@ -70,12 +64,7 @@ abstract class SubmenuPageModule extends Module implements ModuleInterface
         return ['definition', 'submenuPageLoader'];
     }
 
-    protected function submenuPageRegistrar(): SubmenuPageRegistrarInterface
-    {
-        return new SubmenuPageRegistrar(
-            Closure::fromCallable([$this, 'renderSubmenuPage'])
-        );
-    }
+    abstract protected function submenuPageRegistrar(): SubmenuPageRegistrarInterface;
 
     abstract protected function definition(): SubmenuPageInterface;
 }

@@ -4,26 +4,27 @@ namespace Leonidas\Library\Admin\Registrar;
 
 use Leonidas\Contracts\Admin\Component\Page\MenuPageInterface;
 use Leonidas\Contracts\Admin\Registrar\MenuPageRegistrarInterface;
-use Leonidas\Library\Admin\Registrar\Abstracts\AbstractRegistrar;
+use Leonidas\Library\Admin\Registrar\Abstracts\AbstractAdminPageRegistrar;
+use Psr\Http\Message\ServerRequestInterface;
 
-class MenuPageRegistrar extends AbstractRegistrar implements MenuPageRegistrarInterface
+class MenuPageRegistrar extends AbstractAdminPageRegistrar implements MenuPageRegistrarInterface
 {
-    public function registerOne(MenuPageInterface $page)
+    public function registerOne(MenuPageInterface $page, ServerRequestInterface $request)
     {
         add_menu_page(
             $page->getPageTitle(),
             $page->getMenuTitle(),
             $page->getCapability(),
             $page->getMenuSlug(),
-            $this->getOutputLoader(),
+            $callback = $this->getRenderingCallback($page, $request),
             $page->getIconUrl(),
             $page->getPosition()
         );
 
-        $this->maybeAddSubMenuLink($page);
+        $this->maybeAddSubMenuLink($page, $callback);
     }
 
-    protected function maybeAddSubMenuLink(MenuPageInterface $page)
+    protected function maybeAddSubMenuLink(MenuPageInterface $page, callable $callback)
     {
         if ($title = $page->getTitleInSubmenu()) {
             add_submenu_page(
@@ -32,7 +33,7 @@ class MenuPageRegistrar extends AbstractRegistrar implements MenuPageRegistrarIn
                 $title,
                 $page->getCapability(),
                 $page->getMenuSlug(),
-                $this->getOutputLoader(),
+                $callback,
                 PHP_INT_MIN
             );
         }

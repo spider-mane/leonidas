@@ -2,7 +2,6 @@
 
 namespace Leonidas\Framework\Module\Abstracts;
 
-use Closure;
 use Leonidas\Contracts\Admin\Component\Page\FlexPageInterface;
 use Leonidas\Contracts\Admin\Registrar\FlexPageRegistrarInterface;
 use Leonidas\Contracts\Extension\ModuleInterface;
@@ -12,7 +11,6 @@ use Leonidas\Hooks\TargetsAdminMenuHook;
 use Leonidas\Hooks\TargetsAdminTitleHook;
 use Leonidas\Hooks\TargetsParentFileHook;
 use Leonidas\Hooks\TargetsSubmenuFileHook;
-use Leonidas\Library\Admin\Registrar\FlexPageRegistrar;
 use Psr\Http\Message\ServerRequestInterface;
 
 abstract class FlexPageModule extends Module implements ModuleInterface
@@ -55,14 +53,10 @@ abstract class FlexPageModule extends Module implements ModuleInterface
 
     protected function addFlexPage(ServerRequestInterface $request): void
     {
-        $this->getFlexPageRegistrar()->registerOne($this->getDefinition());
-    }
-
-    protected function renderFlexPage(array $args): void
-    {
-        $request = $this->getServerRequest()->withAttribute('args', $args);
-
-        echo $this->renderAdminPage($request);
+        $this->getFlexPageRegistrar()->registerOne(
+            $this->getDefinition(),
+            $request
+        );
     }
 
     protected function getDefinitionContext(): string
@@ -94,12 +88,7 @@ abstract class FlexPageModule extends Module implements ModuleInterface
         return ['definition', 'flexPageLoader'];
     }
 
-    protected function flexPageRegistrar(): FlexPageRegistrarInterface
-    {
-        return new FlexPageRegistrar(
-            Closure::fromCallable([$this, 'renderFlexPage'])
-        );
-    }
+    abstract protected function flexPageRegistrar(): FlexPageRegistrarInterface;
 
     abstract protected function definition(): FlexPageInterface;
 }
