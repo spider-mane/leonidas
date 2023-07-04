@@ -44,6 +44,8 @@ services:
       test: [ "CMD", "mysqladmin", "ping", "-p${DB_PASSWORD}" ]
       retries: 3
       timeout: 5s
+      start_period: 5s
+      interval: 5s
     environment:
       MYSQL_ROOT_PASSWORD: "${DB_PASSWORD}"
       MYSQL_ROOT_HOST: "%"
@@ -63,6 +65,8 @@ services:
       test: [ "CMD", "redis-cli", "ping" ]
       retries: 3
       timeout: 5s
+      start_period: 5s
+      interval: 5s
 
   selenium:
     image: "selenium/standalone-chrome"

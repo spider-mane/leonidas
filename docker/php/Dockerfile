@@ -5,10 +5,10 @@ LABEL maintainer="Chris Williams"
 COPY --from=spidermane/trunk * /trunk
 
 ENV DEBIAN_FRONTEND=noninteractive
-ENV COMPOSER_ALLOW_SUPERUSER=1
-ENV WP_CLI_ALLOW_ROOT=1
 ENV APP=/var/www/html
+ENV TRUNK_USER=leonidas
 
+VOLUME [ "$APP" ]
 WORKDIR "$APP"
 
 ARG TZ="UTC"
@@ -18,6 +18,8 @@ RUN /trunk/setups/timezone
 ARG LANG="en_US.UTF-8"
 ENV LANG="$LANG"
 RUN /trunk/setups/language
+
+RUN /trunk/setups/user
 
 RUN /trunk/actions/install mysql-client
 
@@ -31,9 +33,9 @@ RUN /trunk/setups/entrypoint web
 RUN /trunk/provisions/supervisor --php-version "$PHP_VERSION"
 ENTRYPOINT [ "docker-entrypoint" ]
 
-EXPOSE 9000
-
 RUN /trunk/actions/cleanup
+
+EXPOSE 9000
 
 ### Build with interactive features ###
 FROM app as app-interactive
@@ -57,5 +59,7 @@ RUN /trunk/provisions/github
 
 RUN npm install -g npm-check-updates
 
-RUN /trunk/setups/user
+RUN /trunk/setups/healthcheck
+HEALTHCHECK CMD [ "docker-healthcheck" ] --interval=3s --timeout=3s
+
 RUN /trunk/actions/cleanup

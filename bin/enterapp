@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-username="admin"
+username="leonidas"
 
 validate_shell_arg() {
   shells="sh bash zsh"
@@ -26,4 +26,5 @@ fi
 root="$(dirname $(dirname $(realpath $0)))"
 shell="${shell:-zsh}"
 
-docker compose up -d && docker compose exec -u "$username" app "$shell" -il
+docker compose up -d --wait &&
+  docker compose exec -u "$username" app "$shell" -il
