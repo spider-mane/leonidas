@@ -12,4 +12,9 @@ final class Leonidas
     {
         return $this->base->get($service);
     }
+
+    public static function getService(string $service): object
+    {
+        return static::instance()->service($service);
+    }
 }

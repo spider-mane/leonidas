@@ -28,10 +28,15 @@ return [
 
         # Framework
         Leonidas\Framework\Provider\League\AdminNoticeRepositoryServiceProvider::class,
+        Leonidas\Framework\Provider\League\AdminPageCallbackProviderServiceProvider::class,
         Leonidas\Framework\Provider\League\AutoInvokerServiceProvider::class,
         Leonidas\Framework\Provider\League\DeferredOptionValueFactoryServiceProvider::class,
+        Leonidas\Framework\Provider\League\FlexPageRegistrarServiceProvider::class,
         Leonidas\Framework\Provider\League\GuzzleServerRequestServiceProvider::class,
+        Leonidas\Framework\Provider\League\InteriorPageRegistrarServiceProvider::class,
+        Leonidas\Framework\Provider\League\MenuPageRegistrarServiceProvider::class,
         Leonidas\Framework\Provider\League\OptionRepositoryServiceProvider::class,
+        Leonidas\Framework\Provider\League\SubmenuPageRegistrarServiceProvider::class,
         Leonidas\Framework\Provider\League\TransientsChannelServiceProvider::class,
         Leonidas\Framework\Provider\League\TwigViewServiceProvider::class,
 
