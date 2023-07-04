@@ -19,7 +19,7 @@ class SettingCallbackProvider implements SettingCallbackProviderInterface
 
     public function getProcessingCallback(SettingInterface $setting): callable
     {
-        return fn (mixed $input) => $this
+        return fn (mixed $input): mixed => $this
             ->createInputHandler($setting)
             ->handleInput($input);
     }

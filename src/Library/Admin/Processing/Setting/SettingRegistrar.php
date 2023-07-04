@@ -9,7 +9,7 @@ use Leonidas\Contracts\Admin\Processing\Setting\SettingRegistrarInterface;
 class SettingRegistrar implements SettingRegistrarInterface
 {
     public function __construct(
-        protected SettingCallbackProviderInterface $callbackManager
+        protected SettingCallbackProviderInterface $callbackProvider
     ) {
         //
     }
@@ -45,6 +45,6 @@ class SettingRegistrar implements SettingRegistrarInterface
 
     protected function getProcessingCallback(SettingInterface $setting): callable
     {
-        return $this->callbackManager->getProcessingCallback($setting);
+        return $this->callbackProvider->getProcessingCallback($setting);
     }
 }
