@@ -12,7 +12,7 @@ class SettingCallbackProvider implements SettingCallbackProviderInterface
 {
     public function __construct(
         protected OptionRepositoryInterface $optionRepository,
-        protected SettingNoticeInjector $noticeRegistrar
+        protected SettingNoticeInjector $noticeInjector
     ) {
         //
     }
@@ -32,7 +32,7 @@ class SettingCallbackProvider implements SettingCallbackProviderInterface
             new SettingValidationProcessor(
                 $setting,
                 $this->optionRepository,
-                $this->noticeRegistrar
+                $this->noticeInjector
             )
         );
     }
