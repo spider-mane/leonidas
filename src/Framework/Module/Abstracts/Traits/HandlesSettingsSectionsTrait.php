@@ -2,10 +2,8 @@
 
 namespace Leonidas\Framework\Module\Abstracts\Traits;
 
-use Closure;
 use Leonidas\Contracts\Admin\Component\SettingsSection\SettingsSectionCollectionInterface;
 use Leonidas\Contracts\Admin\Registrar\SettingsSectionRegistrarInterface;
-use Leonidas\Library\Admin\Registrar\SettingsSectionRegistrar;
 use Psr\Http\Message\ServerRequestInterface;
 
 trait HandlesSettingsSectionsTrait
@@ -20,21 +18,7 @@ trait HandlesSettingsSectionsTrait
         );
     }
 
-    protected function renderSettingsSection(array $section): void
-    {
-        $request = $this->getServerRequest()->withAttribute('section', $section);
-
-        echo $this->getSettingsSections()
-            ->get($section['id'])
-            ->renderComponent($request);
-    }
-
-    protected function settingsSectionRegistrar(): SettingsSectionRegistrarInterface
-    {
-        return new SettingsSectionRegistrar(
-            Closure::fromCallable([$this, 'renderSettingsSection'])
-        );
-    }
+    abstract protected function settingsSectionRegistrar(): SettingsSectionRegistrarInterface;
 
     abstract protected function getSettingsSections(): SettingsSectionCollectionInterface;
 }
