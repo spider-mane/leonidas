@@ -16,7 +16,11 @@ class SettingNoticeRepository implements SettingNoticeRepositoryInterface
     public function get(string $notice): ?SettingNoticeInterface
     {
         return ($data = $this->data->getNoticeData($notice))
-            ? new SettingNotice($data['id'], $data['message'], $data['type'])
+            ? new SettingNotice(
+                $data['id'],
+                $data['message'],
+                $data['type'] ?? null
+            )
             : null;
     }
 }
