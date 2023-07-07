@@ -129,7 +129,9 @@
   },
   "autoload": {
     "psr-4": {
-      "Leonidas\\": "src/"
+      "Leonidas\\": "src/",
+      "Example\\Plugin\\": "examples/plugin/app/",
+      "Example\\Theme\\": "examples/theme/app/"
     }
   },
   "autoload-dev": {
@@ -147,7 +149,7 @@
     "hooks": "vendor/bin/captainhook",
     "hoplite": "bin/hoplite",
     "inspect": "vendor/bin/psalm",
-    "link": "vendor/bin/wp-link leonidas",
+    "link": "vendor/bin/wp-link leonidas && php bin/link-examples",
     "namespace": "composer dump-autoload -o",
     "play": "php @playground/console.php",
     "refactor": "vendor/bin/rector process",

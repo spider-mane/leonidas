@@ -32,9 +32,6 @@ return [
     //     ]
     // ],
 
-    /**
-     *
-     */
     "wts_test_cpt" => [
 
         "can_export" => true,
@@ -69,9 +66,6 @@ return [
         ],
     ],
 
-    /**
-     *
-     */
     "wts_test_cpt_2" => [
 
         "can_export" => true,

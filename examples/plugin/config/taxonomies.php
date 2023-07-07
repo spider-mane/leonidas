@@ -2,9 +2,6 @@
 
 return [
 
-    /**
-     *
-     */
     'wts_test_tax' => [
 
         'hierarchical' => false,
@@ -35,9 +32,6 @@ return [
         ],
     ],
 
-    /**
-     *
-     */
     'wts_test_tax_2' => [
 
         'hierarchical' => true,

@@ -1,0 +1,16 @@
+#!/usr/bin/env php
+<?php
+
+$root = dirname(__DIR__);
+
+require "{$root}/vendor/autoload.php";
+
+$examples = "{$root}/examples";
+$wordpress = "{$root}/wordpress/wp-content";
+
+foreach (['plugin', 'theme'] as $type) {
+  symlink(
+    "{$examples}/{$type}",
+    "{$wordpress}/{$type}s/example-{$type}"
+  );
+}

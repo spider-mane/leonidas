@@ -4,7 +4,7 @@ use PhpCsFixer\Config;
 use PhpCsFixer\Finder;
 
 $finder = Finder::create()
-  ->in(['src', 'bin', 'boot', 'config', 'tests', '@playground'])
+  ->in(['src', 'bin', 'boot', 'config', 'tests', 'examples', '@playground'])
   ->name('*.php')
   ->ignoreDotFiles(true)
   ->ignoreVCS(true)

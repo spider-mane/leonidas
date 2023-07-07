@@ -28,7 +28,7 @@ if (file_exists($autoload = "$root/vendor/autoload.php")) {
 
 array_map(function ($path) use ($root) {
     require "{$root}/src/{$path}.php";
-}, ['Plugin/functions']);
+}, ['Plugin/functions', 'Plugin/Helper/helpers']);
 
 /**
  *==========================================================================
