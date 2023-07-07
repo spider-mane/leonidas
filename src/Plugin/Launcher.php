@@ -41,6 +41,12 @@ final class Launcher
 
     private function broadcast(): void
     {
+        /**
+         * @hook
+         *
+         * Leonidas is fully bootstrapped. Dependent plugins may safely initiate
+         * their own bootstrapping at this point.
+         */
         $this->extension->doAction('loaded');
     }
 
