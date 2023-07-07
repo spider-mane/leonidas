@@ -7,21 +7,24 @@
   <!-- Paths -->
   <file>./src</file>
   <file>./tests</file>
+  <file>./examples</file>
 
   <!-- Args -->
   <arg value="p"/>
   <arg value="s"/>
   <arg name="colors"/>
+  <arg name="basepath" value="."/>
 
   <!-- Config -->
   <config name="ignore_warnings_on_exit" value="1"/>
   <config name="ignore_errors_on_exit" value="1"/>
   <config name="default_standard" value="PSR12"/>
 
-  <!-- Use the PSR12 Standard-->
+  <!-- Rules -->
   <rule ref="PSR12"/>
+  <rule ref="Suin.Classes.PSR4"/>
 
-  <!-- Disable Squiz Standard -->
+  <!-- Disable default Squiz Standard -->
   <rule ref="Squiz">
     <exclude name="Squiz"/>
   </rule>
@@ -30,6 +33,8 @@
   <rule ref="PSR1.Methods.CamelCapsMethodName">
     <exclude-pattern>./tests/Suites</exclude-pattern>
   </rule>
+
+  <!-- Disable namespace check for templates -->
   <rule ref="PSR1.Classes.ClassDeclaration.MissingNamespace">
     <exclude-pattern>./src/Console/templates</exclude-pattern>
   </rule>

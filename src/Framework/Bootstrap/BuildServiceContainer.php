@@ -1,6 +1,6 @@
 <?php
 
-namespace Framework\Bootstrappers;
+namespace Leonidas\Framework\Bootstrap;
 
 use Leonidas\Contracts\Extension\ExtensionBootProcessInterface;
 use Leonidas\Contracts\Extension\WpExtensionInterface;

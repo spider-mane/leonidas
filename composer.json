@@ -91,6 +91,7 @@
     "slim/psr7": "^1.5",
     "slim/slim": "^4.7",
     "squizlabs/php_codesniffer": "^3.5",
+    "suin/phpcs-psr4-sniff": "^3.0",
     "symfony/asset": "^5.4",
     "symfony/error-handler": "^5.4",
     "symfony/finder": "^5.4",
@@ -150,7 +151,6 @@
     "hoplite": "bin/hoplite",
     "inspect": "vendor/bin/psalm",
     "link": "vendor/bin/wp-link leonidas && php bin/link-examples",
-    "namespace": "composer dump-autoload -o",
     "play": "php @playground/console.php",
     "refactor": "vendor/bin/rector process",
     "refactor:d": "@refactor --dry-run",
@@ -164,7 +164,6 @@
     "watch": "vendor/bin/phpunit-watcher watch",
     "wp": "vendor/bin/wp",
     "build": [
-      "@namespace",
       "@style",
       "@analyze"
     ],
@@ -205,9 +204,10 @@
     "allow-plugins": {
       "composer/installers": true,
       "composer/package-versions-deprecated": true,
+      "dealerdirect/phpcodesniffer-composer-installer": true,
       "koodimonni/composer-dropin-installer": true,
-      "phpstan/extension-installer": true,
-      "php-http/discovery": true
+      "php-http/discovery": true,
+      "phpstan/extension-installer": true
     }
   },
   "extra": {
