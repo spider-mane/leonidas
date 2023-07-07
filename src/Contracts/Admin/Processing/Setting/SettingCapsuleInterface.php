@@ -7,9 +7,23 @@ use WebTheory\Saveyour\Contracts\Validation\ValidatorInterface;
 
 interface SettingCapsuleInterface
 {
-    public function validator(SettingInterface $setting): ValidatorInterface;
+    public function name(): string;
 
-    public function formatter(SettingInterface $setting): InputFormatterInterface;
+    public function group(): string;
 
-    public function notice(string $event, SettingInterface $setting): ?SettingNoticeInterface;
+    public function type(): string;
+
+    public function description(): string;
+
+    public function default(): mixed;
+
+    public function rest(): bool|array|null;
+
+    public function extra(): ?array;
+
+    public function validator(): ValidatorInterface;
+
+    public function formatter(): InputFormatterInterface;
+
+    public function notices(): SettingNoticeRepositoryInterface;
 }

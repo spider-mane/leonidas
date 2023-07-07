@@ -9,7 +9,7 @@ use Psr\Http\Message\ServerRequestInterface;
 
 class MenuPageRegistrar extends AbstractAdminPageRegistrar implements MenuPageRegistrarInterface
 {
-    public function registerOne(MenuPageInterface $page, ServerRequestInterface $request)
+    public function registerOne(MenuPageInterface $page, ServerRequestInterface $request): void
     {
         add_menu_page(
             $page->getPageTitle(),
@@ -24,7 +24,7 @@ class MenuPageRegistrar extends AbstractAdminPageRegistrar implements MenuPageRe
         $this->maybeAddSubMenuLink($page, $callback);
     }
 
-    protected function maybeAddSubMenuLink(MenuPageInterface $page, callable $callback)
+    protected function maybeAddSubMenuLink(MenuPageInterface $page, callable $callback): void
     {
         if ($title = $page->getTitleInSubmenu()) {
             add_submenu_page(

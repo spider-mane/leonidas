@@ -3,7 +3,8 @@
 namespace Leonidas\Library\Admin\Component\Metabox;
 
 use Leonidas\Contracts\Admin\Component\Metabox\MetaboxBuilderInterface;
-use Leonidas\Contracts\Admin\Component\Metabox\MetaboxCapsuleInterface;
+use Leonidas\Contracts\Admin\Component\Metabox\MetaboxLayoutInterface;
+use WebTheory\HttpPolicy\ServerRequestPolicyInterface;
 use WP_Screen;
 
 class MetaboxBuilder implements MetaboxBuilderInterface
@@ -23,7 +24,9 @@ class MetaboxBuilder implements MetaboxBuilderInterface
 
     protected ?array $args = [];
 
-    protected ?MetaboxCapsuleInterface $capsule;
+    protected ?MetaboxLayoutInterface $layout;
+
+    protected ?ServerRequestPolicyInterface $policy;
 
     public function __construct(string $id)
     {
@@ -72,9 +75,16 @@ class MetaboxBuilder implements MetaboxBuilderInterface
         return $this;
     }
 
-    public function capsule(?MetaboxCapsuleInterface $capsule): static
+    public function layout(?MetaboxLayoutInterface $layout): static
     {
-        $this->capsule = $capsule;
+        $this->layout = $layout;
+
+        return $this;
+    }
+
+    public function policy(?ServerRequestPolicyInterface $policy): static
+    {
+        $this->policy = $policy;
 
         return $this;
     }
@@ -88,7 +98,7 @@ class MetaboxBuilder implements MetaboxBuilderInterface
             $this->context,
             $this->priority,
             $this->args,
-            $this->capsule
+            $this->layout
         );
     }
 

@@ -2,17 +2,20 @@
 
 namespace Leonidas\Contracts\Admin\Processing\Setting;
 
+use WebTheory\Saveyour\Contracts\Formatting\InputFormatterInterface;
+use WebTheory\Saveyour\Contracts\Validation\ValidatorInterface;
+
 interface SettingBuilderInterface
 {
     /**
      * @return $this
      */
-    public function optionGroup(string $optionGroup): static;
+    public function group(string $optionGroup): static;
 
     /**
      * @return $this
      */
-    public function optionName(string $optionName): static;
+    public function name(string $optionName): static;
 
     /**
      * @return $this
@@ -42,7 +45,17 @@ interface SettingBuilderInterface
     /**
      * @return $this
      */
-    public function capsule(SettingCapsuleInterface $capsule): static;
+    public function validator(?ValidatorInterface $validator): static;
+
+    /**
+     * @return $this
+     */
+    public function formatter(?InputFormatterInterface $formatter): static;
+
+    /**
+     * @return $this
+     */
+    public function notices(?SettingNoticeRepositoryInterface $notices): static;
 
     /**
      * @return SettingInterface

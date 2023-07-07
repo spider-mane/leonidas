@@ -12,9 +12,9 @@ interface MetaboxInterface extends AdminComponentInterface
     public function getTitle(): string;
 
     /**
-     * @return string|string[]|WP_Screen
+     * @return string|array<string>|WP_Screen
      */
-    public function getScreen();
+    public function getScreen(): string|array|WP_Screen;
 
     public function getContext(): string;
 

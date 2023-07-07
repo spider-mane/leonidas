@@ -2,11 +2,13 @@
 
 namespace Leonidas\Library\Admin\Component\Metabox;
 
-use Leonidas\Contracts\Admin\Component\Metabox\MetaboxCapsuleInterface;
 use Leonidas\Contracts\Admin\Component\Metabox\MetaboxInterface;
+use Leonidas\Contracts\Admin\Component\Metabox\MetaboxLayoutInterface;
 use Leonidas\Library\Admin\Abstracts\CanBeRestrictedTrait;
+use Leonidas\Library\Admin\Component\Metabox\Layout\SegmentedLayout;
 use Leonidas\Library\Core\Http\Policy\NoPolicy;
 use Psr\Http\Message\ServerRequestInterface;
+use WebTheory\HttpPolicy\ServerRequestPolicyInterface;
 use WP_Screen;
 
 class Metabox implements MetaboxInterface
@@ -28,7 +30,7 @@ class Metabox implements MetaboxInterface
 
     protected array $args;
 
-    protected MetaboxCapsuleInterface $capsule;
+    protected MetaboxLayoutInterface $layout;
 
     public function __construct(
         string $id,
@@ -37,7 +39,8 @@ class Metabox implements MetaboxInterface
         ?string $context = null,
         ?string $priority = null,
         array $args = [],
-        ?MetaboxCapsuleInterface $capsule = null
+        ?MetaboxLayoutInterface $layout = null,
+        ?ServerRequestPolicyInterface $policy = null
     ) {
         $this->id = $id;
         $this->title = $title;
@@ -45,9 +48,9 @@ class Metabox implements MetaboxInterface
         $this->context = $context ?? $this->context;
         $this->priority = $priority ?? $this->priority;
         $this->args = $args;
-        $this->capsule = $capsule ?? new EmptyMetaboxCapsule();
 
-        $this->policy = $this->capsule->policy($this) ?? new NoPolicy();
+        $this->layout = $layout ?? new SegmentedLayout();
+        $this->policy = $policy ?? new NoPolicy();
     }
 
     public function getId(): string
@@ -60,9 +63,6 @@ class Metabox implements MetaboxInterface
         return $this->title;
     }
 
-    /**
-     * @return string|array<string>|WP_Screen
-     */
     public function getScreen(): string|array|WP_Screen
     {
         return $this->screen;
@@ -85,6 +85,6 @@ class Metabox implements MetaboxInterface
 
     public function renderComponent(ServerRequestInterface $request): string
     {
-        return $this->capsule->layout($this)->renderComponent($request);
+        return $this->layout->renderComponent($request);
     }
 }

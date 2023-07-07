@@ -2,6 +2,7 @@
 
 namespace Leonidas\Contracts\Admin\Component\Metabox;
 
+use WebTheory\HttpPolicy\ServerRequestPolicyInterface;
 use WP_Screen;
 
 interface MetaboxBuilderInterface
@@ -41,7 +42,12 @@ interface MetaboxBuilderInterface
     /**
      * @return $this
      */
-    public function capsule(?MetaboxCapsuleInterface $capsule): static;
+    public function layout(?MetaboxLayoutInterface $layout): static;
+
+    /**
+     * @return $this
+     */
+    public function policy(?ServerRequestPolicyInterface $policy): static;
 
     public function get(): MetaboxInterface;
 }

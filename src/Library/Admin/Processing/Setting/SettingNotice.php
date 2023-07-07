@@ -9,12 +9,12 @@ class SettingNotice implements SettingNoticeInterface
     public function __construct(
         protected string $code,
         protected string $message,
-        protected string $type
+        protected ?string $type = null
     ) {
         //
     }
 
-    public function getCode(): string
+    public function getId(): string
     {
         return $this->code;
     }
@@ -24,7 +24,7 @@ class SettingNotice implements SettingNoticeInterface
         return $this->message;
     }
 
-    public function getType(): string
+    public function getType(): ?string
     {
         return $this->type;
     }

@@ -3,7 +3,9 @@
 namespace Leonidas\Library\Admin\Processing\Setting;
 
 use Leonidas\Contracts\Admin\Processing\Setting\SettingBuilderInterface;
-use Leonidas\Contracts\Admin\Processing\Setting\SettingCapsuleInterface;
+use Leonidas\Contracts\Admin\Processing\Setting\SettingNoticeRepositoryInterface;
+use WebTheory\Saveyour\Contracts\Formatting\InputFormatterInterface;
+use WebTheory\Saveyour\Contracts\Validation\ValidatorInterface;
 
 class SettingBuilder implements SettingBuilderInterface
 {
@@ -21,21 +23,25 @@ class SettingBuilder implements SettingBuilderInterface
 
     protected ?array $extraArgs = null;
 
-    protected SettingCapsuleInterface $capsule;
+    protected ?ValidatorInterface $validator;
+
+    protected ?InputFormatterInterface $formatter;
+
+    protected ?SettingNoticeRepositoryInterface $notices;
 
     public function __construct(string $optionName)
     {
         $this->optionName = $optionName;
     }
 
-    public function optionGroup(string $optionGroup): static
+    public function group(string $optionGroup): static
     {
         $this->optionGroup = $optionGroup;
 
         return $this;
     }
 
-    public function optionName(string $optionName): static
+    public function name(string $optionName): static
     {
         $this->optionName = $optionName;
 
@@ -77,9 +83,23 @@ class SettingBuilder implements SettingBuilderInterface
         return $this;
     }
 
-    public function capsule(SettingCapsuleInterface $capsule): static
+    public function validator(?ValidatorInterface $validator): static
     {
-        $this->capsule = $capsule;
+        $this->validator = $validator;
+
+        return $this;
+    }
+
+    public function formatter(?InputFormatterInterface $formatter): static
+    {
+        $this->formatter = $formatter;
+
+        return $this;
+    }
+
+    public function notices(?SettingNoticeRepositoryInterface $notices): static
+    {
+        $this->notices = $notices;
 
         return $this;
     }
@@ -94,7 +114,9 @@ class SettingBuilder implements SettingBuilderInterface
             $this->restSchema,
             $this->defaultValue,
             $this->extraArgs,
-            $this->capsule
+            $this->validator,
+            $this->formatter,
+            $this->notices
         );
     }
 

@@ -12,7 +12,7 @@ class SettingNoticeInjector implements SettingNoticeInjectorInterface
     {
         add_settings_error(
             $setting->getOptionName(),
-            $notice->getCode(),
+            $notice->getId(),
             $notice->getMessage(),
             $notice->getType()
         );

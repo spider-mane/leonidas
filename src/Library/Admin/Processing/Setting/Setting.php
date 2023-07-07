@@ -2,11 +2,13 @@
 
 namespace Leonidas\Library\Admin\Processing\Setting;
 
-use Leonidas\Contracts\Admin\Processing\Setting\SettingCapsuleInterface;
 use Leonidas\Contracts\Admin\Processing\Setting\SettingInterface;
 use Leonidas\Contracts\Admin\Processing\Setting\SettingNoticeInterface;
+use Leonidas\Contracts\Admin\Processing\Setting\SettingNoticeRepositoryInterface;
 use WebTheory\Saveyour\Contracts\Formatting\InputFormatterInterface;
 use WebTheory\Saveyour\Contracts\Validation\ValidatorInterface;
+use WebTheory\Saveyour\Formatting\LazyInputFormatter;
+use WebTheory\Saveyour\Validation\PermissiveValidator;
 
 class Setting implements SettingInterface
 {
@@ -24,7 +26,11 @@ class Setting implements SettingInterface
 
     protected ?array $extraArgs = null;
 
-    protected SettingCapsuleInterface $capsule;
+    protected ValidatorInterface $validator;
+
+    protected InputFormatterInterface $formatter;
+
+    protected SettingNoticeRepositoryInterface $notices;
 
     public function __construct(
         string $optionGroup,
@@ -34,17 +40,22 @@ class Setting implements SettingInterface
         bool|array $restSchema = null,
         mixed $defaultValue = null,
         ?array $extraArgs = null,
-        SettingCapsuleInterface $capsule
+        ?ValidatorInterface $validator = null,
+        ?InputFormatterInterface $formatter = null,
+        ?SettingNoticeRepositoryInterface $notices = null
     ) {
         $this->optionGroup = $optionGroup;
         $this->optionName = $optionName;
-        $this->capsule = $capsule;
 
         $type && $this->type = $type;
         $description && $this->description = $description;
         $restSchema && $this->restSchema = $restSchema;
         $defaultValue && $this->defaultValue = $defaultValue;
         $extraArgs && $this->extraArgs = $extraArgs;
+
+        $this->validator = $validator ?? new PermissiveValidator();
+        $this->formatter = $formatter ?? new LazyInputFormatter();
+        $this->notices = $notices ?? new EmptySettingNoticeRepository();
     }
 
     public function getOptionGroup(): string
@@ -84,16 +95,16 @@ class Setting implements SettingInterface
 
     public function getValidator(): ValidatorInterface
     {
-        return $this->capsule->validator($this);
+        return $this->validator;
     }
 
     public function getFormatter(): InputFormatterInterface
     {
-        return $this->capsule->formatter($this);
+        return $this->formatter;
     }
 
     public function getNoticeFor(string $event): ?SettingNoticeInterface
     {
-        return $this->capsule->notice($event, $this);
+        return $this->notices->get($event);
     }
 }
