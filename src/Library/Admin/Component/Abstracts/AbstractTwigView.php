@@ -19,6 +19,8 @@ abstract class AbstractTwigView implements ViewInterface
         StringHelperExtension::class,
     ];
 
+    protected const CACHE_DIR = '/var/cache/views/twig';
+
     private const DEPTH = 5;
 
     protected Environment $env;
@@ -45,7 +47,7 @@ abstract class AbstractTwigView implements ViewInterface
         $loader = new FilesystemLoader(['views'], $this->abspath());
         $env = new Environment($loader, [
             'autoescape' => false,
-            'cache' => $this->abspath('/storage/cache/views/twig'),
+            'cache' => $this->abspath(static::CACHE_DIR),
             'debug' => constant('LEONIDAS_DEVELOPMENT') ?? false,
         ]);
 

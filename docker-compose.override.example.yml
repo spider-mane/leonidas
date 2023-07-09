@@ -21,12 +21,8 @@ services:
       - "app.composer:/var/www/html/vendor"
       - "app.wordpress:/var/www/html/wordpress"
       - "app.npm:/var/www/html/assets/node_modules"
-      # Build files
-      - "app.builds:/var/www/html/build"
-      - "app.logs:/var/www/html/logs"
-      - "app.asset-builds:/var/www/html/assets/build"
       # Vscode server
-      - "vscode:/root/.vscode-server"
+      - "vscode:/home/leonidas/.vscode-server"
 
   webserver:
     ports:
@@ -62,8 +58,4 @@ volumes:
   app.wordpress:
     driver: local
   app.npm:
-    driver: local
-  app.builds:
-    driver: local
-  app.asset-builds:
     driver: local

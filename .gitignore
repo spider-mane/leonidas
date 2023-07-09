@@ -5,13 +5,8 @@
 *.cache
 /@playground
 /build/
-/cache/
 /dist/
-/logs/
-/storage/cache/
-/storage/logs/
-/storage/temp/
-/temp/
+/var/
 /wordpress/
 
 # Composer

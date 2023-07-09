@@ -2,9 +2,9 @@
   <div class="row py-{{ row_padding }}">
 
     {% if label is not null %}
-    <div class="col-{{ root_width }}">
-      <label class="" for="{{ field.getId() }}">{{ label }}</label>
-    </div>
+      <div class="col-{{ root_width }}">
+        <label class="" for="{{ field.getId() }}">{{ label }}</label>
+      </div>
     {% endif %}
 
     <div class="col">
@@ -12,10 +12,10 @@
     </div>
 
     {% if submit_button is not null %}
-    <div class="col-1">
-      {% set btn = submit_button %}
-      {{ submit_button(btn.text, btn.type, btn.name, btn.wrap, btn.attributes) }}
-    </div>
+      <div class="col-1">
+        {% set btn = submit_button %}
+        {{ submit_button(btn.text, btn.type, btn.name, btn.wrap, btn.attributes) }}
+      </div>
     {% endif %}
 
   </div>

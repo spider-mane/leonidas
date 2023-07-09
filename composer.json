@@ -237,7 +237,11 @@
         "psalm": {},
         "wordpress": {}
       },
-      "logs": {}
+      "var": {
+        "cache": {},
+        "logs": {},
+        "temp": {}
+      }
     },
     "playground": {
       "contexts": [

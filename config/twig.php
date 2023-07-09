@@ -17,7 +17,7 @@ return [
     'options' => [
 
         'autoescape' => false,
-        'cache' => abspath('/storage/cache/views/twig'),
+        'cache' => abspath('/var/cache/views/twig'),
         'debug' => Reflection::get('app.dev'),
 
     ],
