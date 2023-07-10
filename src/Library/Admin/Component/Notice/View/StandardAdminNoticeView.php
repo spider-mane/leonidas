@@ -11,12 +11,18 @@ class StandardAdminNoticeView implements ViewInterface
 
     public function render(array $data): string
     {
+        $id = $data['id'];
         $type = $data['type'];
         $message = $data['message'];
         $isDismissible = $data['is_dismissible'];
 
         $noticeAttr = [
-            'class' => ['notice', "notice-{$type}", $isDismissible ? 'is-dismissible' : null],
+            'id' => $id,
+            'class' => [
+                'notice',
+                "notice-{$type}",
+                $isDismissible ? 'is-dismissible' : null,
+            ],
         ];
 
         $noticeBody = $this->tag('p', [], htmlspecialchars($message));

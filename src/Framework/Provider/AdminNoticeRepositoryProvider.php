@@ -12,9 +12,6 @@ class AdminNoticeRepositoryProvider extends AbstractServiceFactory implements Se
 {
     public function create(ContainerInterface $container, array $args = []): AdminNoticeRepositoryInterface
     {
-        return new AdminNoticeRepository(
-            $args['channel'],
-            $container->get('cache_channel')
-        );
+        return new AdminNoticeRepository($container->get('cache_channel'));
     }
 }

@@ -2,9 +2,9 @@
 
 namespace Leonidas\Framework\Provider\League;
 
+use Leonidas\Contracts\Admin\Repository\AdminNoticeRepositoryInterface;
 use Leonidas\Framework\Provider\AdminNoticeRepositoryProvider;
 use Leonidas\Framework\Provider\League\Abstracts\AbstractLeagueServiceFactory;
-use Leonidas\Library\Admin\Repository\AdminNoticeRepository;
 use Panamax\Contracts\ServiceFactoryInterface;
 
 class AdminNoticeRepositoryServiceProvider extends AbstractLeagueServiceFactory
@@ -16,7 +16,7 @@ class AdminNoticeRepositoryServiceProvider extends AbstractLeagueServiceFactory
 
     protected function types(): array
     {
-        return [AdminNoticeRepository::class];
+        return [AdminNoticeRepositoryInterface::class];
     }
 
     protected function aliases(): array
@@ -27,10 +27,5 @@ class AdminNoticeRepositoryServiceProvider extends AbstractLeagueServiceFactory
     protected function factory(): ServiceFactoryInterface
     {
         return new AdminNoticeRepositoryProvider();
-    }
-
-    protected function args(): ?array
-    {
-        return $this->getConfig('admin.notices');
     }
 }

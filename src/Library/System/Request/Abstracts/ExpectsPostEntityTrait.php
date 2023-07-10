@@ -14,8 +14,6 @@ trait ExpectsPostEntityTrait
 
     protected function getPostId(ServerRequestInterface $request): ?int
     {
-        $post = $this->getPost($request);
-
-        return $post ? $post->ID : null;
+        return ($post = $this->getPost($request)) ? $post->ID : null;
     }
 }

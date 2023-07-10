@@ -78,7 +78,7 @@ abstract class EntityField implements ValidationProcessorInterface
         $alert = $this->alerts[$rule] ?? null;
 
         if ($alert) {
-            new StandardAdminNotice($alert);
+            // new StandardAdminNotice($alert['id'], $alert['message']);
         }
     }
 }

@@ -13,6 +13,7 @@ class StandardAdminNoticePrinter extends AbstractAdminNoticePrinter implements A
     public function print(AdminNoticeInterface $notice, ServerRequestInterface $request): string
     {
         return (new StandardAdminNoticeView())->render([
+            'id' => $notice->getId(),
             'type' => $notice->getType(),
             'message' => $notice->getMessage(),
             'is_dismissible' => $notice->isDismissible(),

@@ -14,8 +14,6 @@ trait ExpectsTermEntityTrait
 
     protected function getTermId(ServerRequestInterface $request): ?int
     {
-        $term = $this->getTerm($request);
-
-        return $term ? $term->term_id : null;
+        return ($term = $this->getTerm($request)) ? $term->term_id : null;
     }
 }

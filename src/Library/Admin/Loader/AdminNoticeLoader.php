@@ -2,6 +2,7 @@
 
 namespace Leonidas\Library\Admin\Loader;
 
+use Leonidas\Contracts\Admin\Component\Notice\AdminNoticeCollectionInterface;
 use Leonidas\Contracts\Admin\Loader\AdminNoticeLoaderInterface;
 use Leonidas\Contracts\Admin\Printer\AdminNoticePrinterInterface;
 use Leonidas\Contracts\Admin\Repository\AdminNoticeRepositoryInterface;
@@ -12,43 +13,49 @@ class AdminNoticeLoader implements AdminNoticeLoaderInterface
 {
     protected AdminNoticeRepositoryInterface $repository;
 
-    protected ?AdminNoticePrinterInterface $printer = null;
+    protected ?AdminNoticePrinterInterface $printer;
 
     public function __construct(AdminNoticeRepositoryInterface $repository, ?AdminNoticePrinterInterface $printer = null)
     {
         $this->repository = $repository;
-        $this->printer = $printer;
+        $this->printer = new DeferrableAdminNoticePrinter($printer);
     }
 
-    public function print(ServerRequestInterface $request): string
+    public function printAll(ServerRequestInterface $request): string
     {
-        $notices = $this->repository->all()
-            ->getForScreen($request->getAttribute('screen'))
-            ->getForUser($request->getAttribute('user'))
-            ->toArray();
-
-        if (!$notices) {
-            return '';
-        }
-
-        $printer = new DeferrableAdminNoticePrinter($this->printer);
-        $output = '';
-
-        foreach ($notices as $notice) {
-            $output .= $printer->print($notice, $request);
-
-            $this->repository->remove($notice->getId());
-        }
-
-        $this->repository->persist($request);
-
-        return $output;
+        return $this->printNotices($this->repository->all(), $request);
     }
 
     public function printOne(string $notice, ServerRequestInterface $request): string
     {
-        $printer = new DeferrableAdminNoticePrinter($this->printer);
+        return $this->printer->print(
+            $this->repository->get($notice),
+            $request
+        );
+    }
 
-        return $printer->print($this->repository->get($notice), $request);
+    public function printField(string $field, ServerRequestInterface $request): string
+    {
+        return $this->printNotices(
+            $this->repository->forField($field),
+            $request
+        );
+    }
+
+    protected function printNotices(AdminNoticeCollectionInterface $notices, ServerRequestInterface $request): string
+    {
+        $output = '';
+
+        if (!$notices->hasItems()) {
+            return $output;
+        }
+
+        foreach ($notices as $notice) {
+            if ($notice->shouldBeRendered($request)) {
+                $output .= $this->printer->print($notice, $request);
+            }
+        }
+
+        return $output;
     }
 }

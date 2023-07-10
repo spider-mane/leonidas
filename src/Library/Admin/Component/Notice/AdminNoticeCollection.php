@@ -4,65 +4,41 @@ namespace Leonidas\Library\Admin\Component\Notice;
 
 use Leonidas\Contracts\Admin\Component\Notice\AdminNoticeCollectionInterface;
 use Leonidas\Contracts\Admin\Component\Notice\AdminNoticeInterface;
+use Leonidas\Library\Core\Abstracts\AbstractObjectCollection;
 
-class AdminNoticeCollection implements AdminNoticeCollectionInterface
+class AdminNoticeCollection extends AbstractObjectCollection implements AdminNoticeCollectionInterface
 {
-    /**
-     * @var AdminNoticeInterface[]
-     */
-    protected array $notices = [];
+    protected const COLLECTION_IS_MAP = true;
+
+    protected const ENTRY_IDENTIFIER = 'id';
 
     public function __construct(AdminNoticeInterface ...$notices)
     {
-        $this->addMany(...$notices);
-    }
-
-    public function toArray(): array
-    {
-        return array_values($this->notices);
+        $this->initKernel($notices);
     }
 
     public function get(string $notice): AdminNoticeInterface
     {
-        return $this->notices[$notice];
+        return $this->kernel->fetch($notice);
     }
 
-    public function getForScreen(string $screen): AdminNoticeCollectionInterface
+    public function add(AdminNoticeInterface $notice): bool
     {
-        return new AdminNoticeCollection(
-            ...array_column($this->notices, 'screen', $screen)
-        );
+        return $this->kernel->insert($notice);
     }
 
-    public function getForUser(string $user): AdminNoticeCollectionInterface
+    public function batch(AdminNoticeInterface ...$notices)
     {
-        return new AdminNoticeCollection(
-            ...array_column($this->notices, 'user', $user)
-        );
-    }
-
-    public function add(AdminNoticeInterface $notice)
-    {
-        $this->notices[$notice->getId()] = $notice;
-    }
-
-    public function addMany(AdminNoticeInterface ...$notices)
-    {
-        array_map([$this, 'add'], $notices);
-    }
-
-    public function getMap(): array
-    {
-        return $this->notices;
+        $this->kernel->collect($notices);
     }
 
     public function has(string $notice): bool
     {
-        return isset($this->notices[$notice]);
+        return $this->kernel->contains($notice);
     }
 
-    public function remove(string $notice)
+    public function remove(string $notice): bool
     {
-        unset($this->notices[$notice]);
+        return $this->kernel->remove($notice);
     }
 }

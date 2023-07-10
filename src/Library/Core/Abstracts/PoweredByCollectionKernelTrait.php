@@ -11,14 +11,14 @@ trait PoweredByCollectionKernelTrait
 {
     use KernelPoweredCollectionTrait;
 
-    public function serialize(): string
+    public function __serialize(): array
     {
-        return serialize($this->toArray());
+        return $this->values();
     }
 
-    public function unserialize($serialized): void
+    public function __unserialize(array $data): void
     {
-        $this->kernel = $this->createKernel(unserialize($serialized));
+        $this->initKernel($data);
     }
 
     protected function initKernel(array $models)

@@ -2,29 +2,27 @@
 
 namespace Leonidas\Contracts\Admin\Component\Notice;
 
-interface AdminNoticeCollectionInterface
+use Leonidas\Contracts\Collection\ObjectCollectionInterface;
+
+interface AdminNoticeCollectionInterface extends ObjectCollectionInterface
 {
-    /**
-     * @return AdminNoticeInterface[]
-     */
-    public function toArray(): array;
+    public function add(AdminNoticeInterface $notice): bool;
+
+    public function batch(AdminNoticeInterface ...$notices);
 
     public function get(string $notice): AdminNoticeInterface;
 
-    public function getForScreen(string $screen): AdminNoticeCollectionInterface;
-
-    public function getForUser(string $user): AdminNoticeCollectionInterface;
-
-    public function add(AdminNoticeInterface $notice);
-
-    public function addMany(AdminNoticeInterface ...$notices);
-
     public function has(string $notice): bool;
 
-    public function remove(string $notice);
+    /**
+     * @return list<AdminNoticeInterface>
+     */
+    public function values(): array;
 
     /**
-     * @return AdminNoticeInterface[]
+     * @return array<string, AdminNoticeInterface>
      */
-    public function getMap(): array;
+    public function toArray(): array;
+
+    public function remove(string $notice): bool;
 }

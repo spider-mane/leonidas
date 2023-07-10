@@ -26,7 +26,7 @@ class TransientsChannelServiceProvider extends AbstractLeagueServiceFactory
     protected function args(): ?array
     {
         return [
-            'channel' => $this->getConfig('app.prefix'),
+            'channel' => $this->getConfig('app.namespace'),
         ];
     }
 }

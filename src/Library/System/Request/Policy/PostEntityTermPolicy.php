@@ -14,55 +14,17 @@ class PostEntityTermPolicy implements ServerRequestPolicyInterface
     protected string $taxonomy;
 
     /**
-     * @var array<int,int>
+     * @var array<int>
      */
-    protected array $terms = [];
+    protected array $terms;
 
-    protected bool $matchAll = false;
+    protected bool $matchAll;
 
-    public function __construct(string $taxonomy, int ...$terms)
+    public function __construct(string $taxonomy, bool $matchAll, int ...$terms)
     {
         $this->taxonomy = $taxonomy;
-        $this->terms = $terms;
-    }
-
-    /**
-     * Get the value of terms
-     *
-     * @return array
-     */
-    public function getTerms(): array
-    {
-        return $this->terms;
-    }
-
-    public function addTerm(int $term)
-    {
-        $this->terms[] = $term;
-    }
-
-    /**
-     * Get the value of matchAll
-     *
-     * @return bool
-     */
-    public function shouldMatchAll(): bool
-    {
-        return $this->matchAll;
-    }
-
-    /**
-     * Set the value of matchAll
-     *
-     * @param bool $matchAll
-     *
-     * @return $this
-     */
-    public function setMatchAll(bool $matchAll)
-    {
         $this->matchAll = $matchAll;
-
-        return $this;
+        $this->terms = $terms;
     }
 
     public function approvesRequest(ServerRequestInterface $request): bool

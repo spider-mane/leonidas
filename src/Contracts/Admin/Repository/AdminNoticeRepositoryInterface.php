@@ -8,34 +8,23 @@ use Psr\Http\Message\ServerRequestInterface;
 
 interface AdminNoticeRepositoryInterface
 {
-    public function all(): AdminNoticeCollectionInterface;
+    public function add(AdminNoticeInterface $notice);
+
+    public function batch(AdminNoticeInterface ...$notices);
+
+    public function collect(AdminNoticeCollectionInterface $collection);
 
     public function get(string $notice): AdminNoticeInterface;
 
-    public function getCollection(string ...$notices): AdminNoticeCollectionInterface;
+    public function select(string ...$notices): AdminNoticeCollectionInterface;
 
-    public function add(AdminNoticeInterface $notice);
+    public function forField(string $field): AdminNoticeCollectionInterface;
 
-    public function addMany(AdminNoticeInterface ...$notices);
-
-    public function addCollection(AdminNoticeCollectionInterface $collection);
-
-    public function remove(string $notices);
-
-    public function clear();
-
-    public function reset(AdminNoticeInterface ...$notices);
+    public function all(): AdminNoticeCollectionInterface;
 
     public function has(string $notice): bool;
 
+    public function remove(string $notices): void;
+
     public function persist(ServerRequestInterface $request): void;
-
-    /**
-     * @return AdminNoticeInterface[]
-     */
-    public function toArray(): array;
-
-    public function count(): int;
-
-    public function isEmpty(): bool;
 }

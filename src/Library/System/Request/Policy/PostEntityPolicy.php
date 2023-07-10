@@ -11,23 +11,13 @@ class PostEntityPolicy implements ServerRequestPolicyInterface
     use ExpectsPostEntityTrait;
 
     /**
-     * @var int[]
+     * @var array<int>
      */
-    protected array $posts = [];
+    protected array $posts;
 
     public function __construct(int ...$posts)
     {
         $this->posts = $posts;
-    }
-
-    /**
-     * Get the value of posts
-     *
-     * @return int[]
-     */
-    public function getPosts(): array
-    {
-        return $this->posts;
     }
 
     public function approvesRequest(ServerRequestInterface $request): bool

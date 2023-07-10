@@ -12,5 +12,10 @@ trait CreatesAdminNoticesTrait
         $this->adminNoticeRepository()->add($notice);
     }
 
-    abstract protected function adminNoticeRepository(): AdminNoticeRepositoryInterface;
+    protected function adminNoticeRepository(): AdminNoticeRepositoryInterface
+    {
+        return $this->getService(AdminNoticeRepositoryInterface::class);
+    }
+
+    abstract protected function getService(string $service);
 }
