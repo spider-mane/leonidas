@@ -5,7 +5,7 @@ namespace Leonidas\Framework\Capsule\Abstracts;
 use Leonidas\Contracts\Extension\WpExtensionInterface;
 use Leonidas\Framework\Abstracts\UtilizesExtensionTrait;
 
-abstract class AbstractCapsule
+abstract class Capsule
 {
     use UtilizesExtensionTrait;
 

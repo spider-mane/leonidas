@@ -2,7 +2,7 @@
 
 use Leonidas\Library\System\Configuration\Taxonomy\Option\MaintainMetaboxHierarchy;
 
-use function Leonidas\Plugin\plugin_header;
+use function Example\Plugin\plugin_header;
 
 return [
 
@@ -21,11 +21,12 @@ return [
     'dev' => true,
 
     'modules' => [
-        //
+        Example\Plugin\Modules\PostMetaboxes::class,
     ],
 
     'providers' => [
-        //
+        Leonidas\Framework\Provider\League\CsrfRepositoryServiceProvider::class,
+        Leonidas\Framework\Provider\League\GuzzleServerRequestServiceProvider::class,
     ],
 
     'data_managers' => [],

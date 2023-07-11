@@ -5,13 +5,13 @@ namespace Example\Plugin\Settings;
 use Faker\Factory;
 use Leonidas\Contracts\Admin\Processing\Setting\SettingCapsuleInterface;
 use Leonidas\Contracts\Admin\Processing\Setting\SettingNoticeRepositoryInterface;
-use Leonidas\Framework\Capsule\Abstracts\AbstractCapsule;
+use Leonidas\Framework\Capsule\Abstracts\Capsule;
 use WebTheory\Saveyour\Contracts\Formatting\InputFormatterInterface;
 use WebTheory\Saveyour\Contracts\Validation\ValidatorInterface;
 use WebTheory\Saveyour\Formatting\LazyDataFormatter;
 use WebTheory\Saveyour\Validation\PermissiveValidator;
 
-class CompanyName extends AbstractCapsule implements SettingCapsuleInterface
+class CompanyName extends Capsule implements SettingCapsuleInterface
 {
     protected ValidatorInterface $validator;
 
