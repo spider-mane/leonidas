@@ -12,7 +12,7 @@ trait LoadsCsrfFieldsTrait
         $repository = $this->getManagerRepository();
 
         foreach ($this->getRequiredManagerTags() as $manager) {
-            $manager = $repository->getManager($manager);
+            $manager = $repository->get($manager);
 
             $html .= $manager->renderField() . "\n";
         }

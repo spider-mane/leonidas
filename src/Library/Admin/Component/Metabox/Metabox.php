@@ -9,6 +9,9 @@ use Leonidas\Library\Admin\Component\Metabox\Layout\SegmentedLayout;
 use Leonidas\Library\Core\Http\Policy\NoPolicy;
 use Psr\Http\Message\ServerRequestInterface;
 use WebTheory\HttpPolicy\ServerRequestPolicyInterface;
+use WebTheory\Saveyour\Contracts\Controller\FormSubmissionManagerInterface;
+use WebTheory\Saveyour\Contracts\Report\ProcessedFormReportInterface;
+use WebTheory\Saveyour\Controller\FormSubmissionManager;
 use WP_Screen;
 
 class Metabox implements MetaboxInterface
@@ -32,6 +35,8 @@ class Metabox implements MetaboxInterface
 
     protected MetaboxLayoutInterface $layout;
 
+    protected FormSubmissionManagerInterface $inputManager;
+
     public function __construct(
         string $id,
         string $title,
@@ -40,7 +45,8 @@ class Metabox implements MetaboxInterface
         ?string $priority = null,
         array $args = [],
         ?MetaboxLayoutInterface $layout = null,
-        ?ServerRequestPolicyInterface $policy = null
+        ?ServerRequestPolicyInterface $policy = null,
+        ?FormSubmissionManagerInterface $inputManager = null
     ) {
         $this->id = $id;
         $this->title = $title;
@@ -51,6 +57,7 @@ class Metabox implements MetaboxInterface
 
         $this->layout = $layout ?? new SegmentedLayout();
         $this->policy = $policy ?? new NoPolicy();
+        $this->inputManager = $inputManager ?? new FormSubmissionManager([]);
     }
 
     public function getId(): string
@@ -86,5 +93,10 @@ class Metabox implements MetaboxInterface
     public function renderComponent(ServerRequestInterface $request): string
     {
         return $this->layout->renderComponent($request);
+    }
+
+    public function processInput(ServerRequestInterface $request): ?ProcessedFormReportInterface
+    {
+        return $this->inputManager->process($request);
     }
 }

@@ -11,6 +11,6 @@ class CsrfRepositoryProvider extends AbstractServiceFactory implements ServiceFa
 {
     public function create(ContainerInterface $container, array $args = []): CsrfManagerRepository
     {
-        return new CsrfManagerRepository();
+        return new CsrfManagerRepository($args['prefix']);
     }
 }

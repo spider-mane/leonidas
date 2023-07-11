@@ -5,52 +5,27 @@ namespace Leonidas\Framework\Module\Abstracts;
 use Leonidas\Contracts\Admin\Component\Metabox\MetaboxCollectionInterface;
 use Leonidas\Contracts\Admin\Registrar\MetaboxRegistrarInterface;
 use Leonidas\Contracts\Auth\CsrfManagerInterface;
+use Leonidas\Contracts\Auth\CsrfManagerRepositoryInterface;
 use Leonidas\Contracts\Extension\ModuleInterface;
 use Leonidas\Framework\Module\Abstracts\Traits\CreatesAdminNoticesTrait;
-use Leonidas\Framework\Module\Abstracts\Traits\HasExtraConstructionTrait;
 use Leonidas\Hooks\TargetsAddMetaBoxesXPostTypeHook;
 use Leonidas\Hooks\TargetsEditFormTopHook;
 use Leonidas\Hooks\TargetsSavePostXPostTypeHook;
-use Leonidas\Library\Admin\Callback\MetaboxCallbackProvider;
-use Leonidas\Library\Admin\Registrar\MetaboxRegistrar;
-use Leonidas\Library\Core\Auth\Nonce;
-use Leonidas\Library\Core\Http\Policy\CsrfCheck;
-use Leonidas\Library\Core\Http\Policy\NoAutosave;
-use Leonidas\Library\Core\Http\Policy\Permission\EditPost;
 use Psr\Http\Message\ServerRequestInterface;
-use WebTheory\Saveyour\Auth\FormShield;
-use WebTheory\Saveyour\Contracts\Auth\FormShieldInterface;
-use WebTheory\Saveyour\Contracts\Controller\FormFieldControllerInterface;
-use WebTheory\Saveyour\Contracts\Controller\FormSubmissionManagerInterface;
-use WebTheory\Saveyour\Contracts\Report\ProcessedFormReportInterface;
-use WebTheory\Saveyour\Controller\FormSubmissionManager;
 use WP_Post;
 
 abstract class PostTypeMetaboxesModule extends Module implements ModuleInterface
 {
     use CreatesAdminNoticesTrait;
-    use HasExtraConstructionTrait;
     use TargetsAddMetaBoxesXPostTypeHook;
     use TargetsEditFormTopHook;
     use TargetsSavePostXPostTypeHook;
 
     protected string $postType;
 
-    protected MetaboxCollectionInterface $metaboxCollection;
-
-    protected function afterConstruction(): void
-    {
-        $this->postType = $this->postType();
-    }
-
     protected function getPostType(): string
     {
-        return $this->postType;
-    }
-
-    protected function getMetaboxCollection(): MetaboxCollectionInterface
-    {
-        return $this->metaboxCollection;
+        return $this->postType ??= $this->postType();
     }
 
     public function hook(): void
@@ -72,7 +47,7 @@ abstract class PostTypeMetaboxesModule extends Module implements ModuleInterface
         if ($this->isMatchingPostType($post->post_type)) {
             $request = $this->getServerRequest()->withAttribute('post', $post);
 
-            echo $this->renderCsrfToken($request);
+            echo $this->renderCsrfField($request);
         }
     }
 
@@ -88,86 +63,42 @@ abstract class PostTypeMetaboxesModule extends Module implements ModuleInterface
 
     protected function isMatchingPostType(string $postType): bool
     {
-        return $this->postType === $postType;
-    }
-
-    protected function initMetaboxCollection(): MetaboxCollectionInterface
-    {
-        return $this->metaboxCollection = $this->metaboxes();
+        return $this->getPostType() === $postType;
     }
 
     protected function registerMetaboxes(ServerRequestInterface $request): void
     {
-        $this->metaboxRegistrar()->registerMany($this->initMetaboxCollection(), $request);
+        $this->metaboxRegistrar()->registerMany($this->metaboxes(), $request);
     }
 
-    protected function renderCsrfToken(ServerRequestInterface $request): ?string
+    protected function renderCsrfField(ServerRequestInterface $request): ?string
     {
-        return ($nonce = $this->token()) ? $nonce->renderField() : null;
+        return $this->token()->renderField();
     }
 
     protected function processSubmittedFormData(ServerRequestInterface $request): void
     {
-        $this->postFormProcessing($this->form()->process($request), $request);
-    }
-
-    protected function form(): FormSubmissionManagerInterface
-    {
-        return new FormSubmissionManager(
-            $this->formFields(),
-            [],
-            $this->formShield()
-        );
-    }
-
-    protected function formShield(): FormShieldInterface
-    {
-        $policies = ['user_cannot_edit' => new EditPost()];
-
-        if ($this->allowAutosave()) {
-            $policies['no_autosave'] = new NoAutosave();
+        foreach ($this->metaboxes()->getMetaboxes() as $metabox) {
+            $metabox->processInput($request);
         }
-
-        if ($token = $this->token()) {
-            $policies['invalid_request'] = new CsrfCheck($token);
-        }
-
-        return new FormShield($policies);
     }
 
     protected function token(): ?CsrfManagerInterface
     {
-        $prefix = $this->getExtension()->getPrefix();
-        $user = get_current_user();
-        $taxonomy = $this->getPostType();
-
-        $name = "{$prefix}_{$user}_update_{$taxonomy}_nonce";
-        $action = "{$prefix}_{$user}_update_{$taxonomy}";
-
-        return new Nonce($name, $action);
+        return $this->csrfRepository()->get("update_{$this->postType()}");
     }
 
     protected function metaboxRegistrar(): MetaboxRegistrarInterface
     {
-        return new MetaboxRegistrar(new MetaboxCallbackProvider());
+        return $this->getService(MetaboxRegistrarInterface::class);
     }
 
-    protected function allowAutosave(): bool
+    protected function csrfRepository(): CsrfManagerRepositoryInterface
     {
-        return false;
-    }
-
-    protected function postFormProcessing(ProcessedFormReportInterface $form, ServerRequestInterface $request): void
-    {
-        //
+        return $this->getService(CsrfManagerRepositoryInterface::class);
     }
 
     abstract protected function postType(): string;
 
     abstract protected function metaboxes(): MetaboxCollectionInterface;
-
-    /**
-     * @return FormFieldControllerInterface[]
-     */
-    abstract protected function formFields(): array;
 }

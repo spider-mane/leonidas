@@ -3,10 +3,11 @@
 namespace Leonidas\Contracts\Admin\Component\Capsule;
 
 use Leonidas\Contracts\Admin\Component\Metabox\MetaboxLayoutInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use WebTheory\HttpPolicy\ServerRequestPolicyInterface;
 use WP_Screen;
 
-interface MetaboxCapsuleInterface
+interface MetaboxCapsuleInterface extends FormProcessingCapsuleInterface
 {
     public function id(): string;
 
@@ -20,7 +21,7 @@ interface MetaboxCapsuleInterface
 
     public function args(): array;
 
-    public function layout(): MetaboxLayoutInterface;
+    public function layout(ServerRequestInterface $request): MetaboxLayoutInterface;
 
     public function policy(): ?ServerRequestPolicyInterface;
 }

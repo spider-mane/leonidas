@@ -5,6 +5,7 @@ namespace Leonidas\Library\Admin\Component\Metabox;
 use Leonidas\Contracts\Admin\Component\Metabox\MetaboxBuilderInterface;
 use Leonidas\Contracts\Admin\Component\Metabox\MetaboxLayoutInterface;
 use WebTheory\HttpPolicy\ServerRequestPolicyInterface;
+use WebTheory\Saveyour\Contracts\Controller\FormSubmissionManagerInterface;
 use WP_Screen;
 
 class MetaboxBuilder implements MetaboxBuilderInterface
@@ -27,6 +28,8 @@ class MetaboxBuilder implements MetaboxBuilderInterface
     protected ?MetaboxLayoutInterface $layout;
 
     protected ?ServerRequestPolicyInterface $policy;
+
+    protected ?FormSubmissionManagerInterface $inputManager;
 
     public function __construct(string $id)
     {
@@ -89,6 +92,13 @@ class MetaboxBuilder implements MetaboxBuilderInterface
         return $this;
     }
 
+    public function inputManager(?FormSubmissionManagerInterface $inputManager): static
+    {
+        $this->inputManager = $inputManager;
+
+        return $this;
+    }
+
     public function get(): Metabox
     {
         return new Metabox(
@@ -98,7 +108,9 @@ class MetaboxBuilder implements MetaboxBuilderInterface
             $this->context,
             $this->priority,
             $this->args,
-            $this->layout
+            $this->layout,
+            $this->policy,
+            $this->inputManager
         );
     }
 

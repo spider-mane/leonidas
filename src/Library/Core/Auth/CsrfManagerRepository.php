@@ -4,6 +4,7 @@ namespace Leonidas\Library\Core\Auth;
 
 use Leonidas\Contracts\Auth\CsrfManagerInterface;
 use Leonidas\Contracts\Auth\CsrfManagerRepositoryInterface;
+use RuntimeException;
 
 class CsrfManagerRepository implements CsrfManagerRepositoryInterface
 {
@@ -12,39 +13,34 @@ class CsrfManagerRepository implements CsrfManagerRepositoryInterface
      */
     protected array $managers = [];
 
-    public function __construct(CsrfManagerInterface ...$managers)
+    public function __construct(protected string $namespace)
     {
-        array_walk($managers, [$this, 'addManager']);
+        //
     }
 
-    /**
-     * @return array<CsrfManagerInterface>
-     */
-    public function getManagers(): array
+    public function add(CsrfManagerInterface $manager): void
     {
-        return $this->managers;
-    }
-
-    public function getManager(string $tag): ?CsrfManagerInterface
-    {
-        return $this->managers[$tag] ?? null;
-    }
-
-    public function getManagerSelection(string ...$tags): array
-    {
-        $managers = [];
-
-        foreach ($tags as $tag) {
-            $managers[] = $this->getManager($tag);
+        if (!array_key_exists($name = $manager->getName(), $this->managers)) {
+            $this->managers[$name] = $manager;
+        } else {
+            throw new RuntimeException(
+                "Manager with name \"$name\" is already present."
+            );
         }
-
-        return $managers;
     }
 
-    public function addManager(CsrfManagerInterface $manager)
+    public function get(string $tag): CsrfManagerInterface
     {
-        $this->managers[$manager->getName()] = $manager;
+        return $this->managers[$tag] ??= $this->createManager($tag);
+    }
 
-        return $this;
+    protected function createManager(string $tag): CsrfManagerInterface
+    {
+        $user = wp_get_current_user()->ID;
+
+        return new Nonce(
+            "{$this->namespace}_{$user}_{$tag}_nonce",
+            "{$this->namespace}_{$user}_{$tag}"
+        );
     }
 }

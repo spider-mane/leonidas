@@ -3,9 +3,10 @@
 namespace Leonidas\Contracts\Admin\Component\Metabox;
 
 use Leonidas\Contracts\Admin\Component\AdminComponentInterface;
+use Leonidas\Contracts\Admin\Component\InputProcessorInterface;
 use WP_Screen;
 
-interface MetaboxInterface extends AdminComponentInterface
+interface MetaboxInterface extends AdminComponentInterface, InputProcessorInterface
 {
     public function getId(): string;
 

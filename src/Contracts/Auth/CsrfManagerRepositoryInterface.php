@@ -4,15 +4,7 @@ namespace Leonidas\Contracts\Auth;
 
 interface CsrfManagerRepositoryInterface
 {
-    public function getManager(string $tag): ?CsrfManagerInterface;
+    public function add(CsrfManagerInterface $manager): void;
 
-    /**
-     * @return CsrfManagerInterface[]
-     */
-    public function getManagers(): array;
-
-    /**
-     * @return CsrfManagerInterface[]
-     */
-    public function getManagerSelection(string ...$tags): array;
+    public function get(string $tag): CsrfManagerInterface;
 }

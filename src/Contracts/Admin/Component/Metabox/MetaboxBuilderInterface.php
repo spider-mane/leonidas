@@ -3,6 +3,7 @@
 namespace Leonidas\Contracts\Admin\Component\Metabox;
 
 use WebTheory\HttpPolicy\ServerRequestPolicyInterface;
+use WebTheory\Saveyour\Contracts\Controller\FormSubmissionManagerInterface;
 use WP_Screen;
 
 interface MetaboxBuilderInterface
@@ -43,6 +44,11 @@ interface MetaboxBuilderInterface
      * @return $this
      */
     public function layout(?MetaboxLayoutInterface $layout): static;
+
+    /**
+     * @return $this
+     */
+    public function inputManager(?FormSubmissionManagerInterface $inputManager): static;
 
     /**
      * @return $this

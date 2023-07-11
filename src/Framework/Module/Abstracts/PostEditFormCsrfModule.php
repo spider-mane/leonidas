@@ -41,7 +41,7 @@ abstract class PostEditFormCsrfModule extends Module implements ModuleInterface
 
     protected function getCsrfField(): CsrfManagerInterface
     {
-        return $this->repository()->getManager($this->field());
+        return $this->repository()->get($this->field());
     }
 
     abstract protected function postTypes(): array;

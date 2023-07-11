@@ -6,6 +6,7 @@ use Leonidas\Contracts\Admin\Component\Capsule\MetaboxCapsuleInterface;
 use Leonidas\Contracts\Admin\Component\Metabox\MetaboxInterface;
 use Leonidas\Library\Admin\Abstracts\CanBeRestrictedTrait;
 use Psr\Http\Message\ServerRequestInterface;
+use WebTheory\Saveyour\Contracts\Report\ProcessedFormReportInterface;
 use WP_Screen;
 
 class MetaboxVessel implements MetaboxInterface
@@ -44,11 +45,16 @@ class MetaboxVessel implements MetaboxInterface
 
     public function getArgs(): array
     {
-        return $this->getArgs();
+        return $this->capsule->args();
     }
 
     public function renderComponent(ServerRequestInterface $request): string
     {
-        return $this->capsule->layout()->renderComponent($request);
+        return $this->capsule->layout($request)->renderComponent($request);
+    }
+
+    public function processInput(ServerRequestInterface $request): ?ProcessedFormReportInterface
+    {
+        return $this->capsule->processor($request)->process($request);
     }
 }

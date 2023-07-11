@@ -5,6 +5,7 @@ namespace Leonidas\Framework\Module\Abstracts;
 use Leonidas\Contracts\Admin\Component\TermField\TermFieldInterface;
 use Leonidas\Contracts\Admin\Printer\TermFieldPrinterInterface;
 use Leonidas\Contracts\Auth\CsrfManagerInterface;
+use Leonidas\Contracts\Auth\CsrfManagerRepositoryInterface;
 use Leonidas\Contracts\Extension\ModuleInterface;
 use Leonidas\Framework\Module\Abstracts\Traits\HasExtraConstructionTrait;
 use Leonidas\Hooks\TargetsCreatedXTaxonomyHook;
@@ -15,7 +16,6 @@ use Leonidas\Hooks\TargetsXTaxonomyEditFormFieldsHook;
 use Leonidas\Hooks\TargetsXTaxonomyTermEditFormTopHook;
 use Leonidas\Library\Admin\Printer\BasicTermFieldPrinter;
 use Leonidas\Library\Admin\Printer\DeferrableTermFieldPrinter;
-use Leonidas\Library\Core\Auth\Nonce;
 use Leonidas\Library\Core\Http\Policy\CsrfCheck;
 use Leonidas\Library\Core\Http\Policy\NoAutosave;
 use Leonidas\Library\Core\Http\Policy\Permission\EditTerm;
@@ -164,15 +164,15 @@ abstract class TaxonomyTermFieldsModule extends Module implements ModuleInterfac
 
     protected function token(): ?CsrfManagerInterface
     {
-        $prefix = $this->getExtension()->getPrefix();
-        $user = get_current_user();
         $taxonomy = $this->getTaxonomy();
         $context = $this->getScreenContext();
 
-        $name = "{$prefix}_{$user}_{$context}_{$taxonomy}_nonce";
-        $action = "{$prefix}_{$user}_{$context}_{$taxonomy}";
+        return $this->csrfRepository()->get("{$context}_{$taxonomy}");
+    }
 
-        return new Nonce($name, $action, Nonce::EXP_12);
+    protected function csrfRepository(): CsrfManagerRepositoryInterface
+    {
+        return $this->getService(CsrfManagerRepositoryInterface::class);
     }
 
     protected function printer(): ?TermFieldPrinterInterface
