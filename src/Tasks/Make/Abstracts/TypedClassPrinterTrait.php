@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Leonidas\Console\Library\Printer\Model\Abstracts;
+namespace Leonidas\Tasks\Make\Abstracts;
 
 use Leonidas\Library\Core\Abstracts\ConvertsCaseTrait;
 use ReflectionClass;

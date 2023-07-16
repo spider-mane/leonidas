@@ -1,8 +1,8 @@
 <?php
 
-namespace Leonidas\Console\Library\Printer\Model;
+namespace Leonidas\Tasks\Make\Model\Printer;
 
-use Leonidas\Console\Library\Printer\Model\Abstracts\AbstractTypedClassPrinter;
+use Leonidas\Tasks\Make\Abstracts\AbstractTypedClassPrinter;
 use Nette\PhpGenerator\ClassType;
 use Nette\PhpGenerator\PhpNamespace;
 use ReflectionMethod;

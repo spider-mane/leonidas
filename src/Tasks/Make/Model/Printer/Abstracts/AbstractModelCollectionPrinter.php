@@ -1,6 +1,8 @@
 <?php
 
-namespace Leonidas\Console\Library\Printer\Model\Abstracts;
+namespace Leonidas\Tasks\Make\Model\Printer\Abstracts;
+
+use Leonidas\Tasks\Make\Abstracts\AbstractClassPrinter;
 
 abstract class AbstractModelCollectionPrinter extends AbstractClassPrinter
 {

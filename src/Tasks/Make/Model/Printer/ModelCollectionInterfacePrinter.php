@@ -1,9 +1,9 @@
 <?php
 
-namespace Leonidas\Console\Library\Printer\Model;
+namespace Leonidas\Tasks\Make\Model\Printer;
 
-use Leonidas\Console\Library\Printer\Model\Abstracts\AbstractModelCollectionPrinter;
 use Leonidas\Contracts\System\Model\ModelCollectionInterface;
+use Leonidas\Tasks\Make\Model\Printer\Abstracts\AbstractModelCollectionPrinter;
 use Nette\PhpGenerator\PhpNamespace;
 
 class ModelCollectionInterfacePrinter extends AbstractModelCollectionPrinter

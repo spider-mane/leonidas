@@ -1,10 +1,10 @@
 <?php
 
-namespace Leonidas\Console\Library\Printer\Model;
+namespace Leonidas\Tasks\Make\Model\Printer;
 
-use Leonidas\Console\Library\Printer\Model\Abstracts\AbstractModelRepositoryPrinter;
 use Leonidas\Contracts\System\Model\FungibleRepositoryInterface;
 use Leonidas\Contracts\System\Model\SoftDeletingRepositoryInterface;
+use Leonidas\Tasks\Make\Model\Printer\Abstracts\AbstractModelRepositoryPrinter;
 use Nette\PhpGenerator\PhpNamespace;
 
 class ModelRepositoryInterfacePrinter extends AbstractModelRepositoryPrinter

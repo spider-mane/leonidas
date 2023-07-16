@@ -1,8 +1,7 @@
 <?php
 
-namespace Leonidas\Console\Library\Printer\Model;
+namespace Leonidas\Tasks\Make\Model\Printer;
 
-use Leonidas\Console\Library\Printer\Model\Abstracts\AbstractTypedClassPrinter;
 use Leonidas\Contracts\System\Model\CommentableInterface;
 use Leonidas\Contracts\System\Model\FilterableInterface;
 use Leonidas\Contracts\System\Model\HierarchicalInterface;
@@ -34,6 +33,7 @@ use Leonidas\Library\System\Model\Abstracts\Term\MutableTermModelTrait;
 use Leonidas\Library\System\Model\Abstracts\Term\ValidatesTaxonomyTrait;
 use Leonidas\Library\System\Model\Abstracts\User\MutableUserModelTrait;
 use Leonidas\Library\System\Model\Abstracts\User\ValidatesRoleTrait;
+use Leonidas\Tasks\Make\Abstracts\AbstractTypedClassPrinter;
 use Nette\PhpGenerator\PhpNamespace;
 use WP_Comment;
 use WP_Post;

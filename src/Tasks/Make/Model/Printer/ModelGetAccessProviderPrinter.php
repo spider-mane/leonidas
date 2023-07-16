@@ -1,11 +1,11 @@
 <?php
 
-namespace Leonidas\Console\Library\Printer\Model;
+namespace Leonidas\Tasks\Make\Model\Printer;
 
-use Leonidas\Console\Library\Printer\Model\Abstracts\AbstractClassPrinter;
 use Leonidas\Contracts\System\Model\GetAccessProviderInterface;
 use Leonidas\Library\System\Model\Abstracts\DatableAccessProviderTrait;
 use Leonidas\Library\System\Model\GetAccessProvider;
+use Leonidas\Tasks\Make\Abstracts\AbstractClassPrinter;
 use Nette\PhpGenerator\PhpNamespace;
 
 class ModelGetAccessProviderPrinter extends AbstractClassPrinter

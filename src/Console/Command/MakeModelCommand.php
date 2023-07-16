@@ -3,8 +3,8 @@
 namespace Leonidas\Console\Command;
 
 use Leonidas\Console\Command\Abstracts\HopliteCommand;
-use Leonidas\Console\Library\Printer\Model\ModelComponentFactory;
-use Leonidas\Console\Library\Printer\Model\PsrPrinterFactory;
+use Leonidas\Tasks\Make\Model\Printer\ModelComponentFactory;
+use Leonidas\Tasks\Make\PsrPrinterFactory;
 use Nette\PhpGenerator\ClassType;
 use Nette\PhpGenerator\PhpFile;
 use Symfony\Component\Console\Input\InputArgument;

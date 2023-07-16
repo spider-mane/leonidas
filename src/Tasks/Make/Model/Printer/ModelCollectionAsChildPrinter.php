@@ -1,9 +1,9 @@
 <?php
 
-namespace Leonidas\Console\Library\Printer\Model;
+namespace Leonidas\Tasks\Make\Model\Printer;
 
-use Leonidas\Console\Library\Printer\Model\Abstracts\AbstractClassPrinter;
 use Leonidas\Library\System\Model\Abstracts\PoweredByModelCollectionKernelTrait;
+use Leonidas\Tasks\Make\Abstracts\AbstractClassPrinter;
 use Nette\PhpGenerator\PhpNamespace;
 
 class ModelCollectionAsChildPrinter extends AbstractClassPrinter

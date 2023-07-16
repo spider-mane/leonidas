@@ -8,13 +8,11 @@ parameters:
 
   paths:
     - src
+    - bin
     - boot
     - config
+    - tests
     - examples
-    # - tests
-
-  excludePaths:
-    - src/Console/Library/Printer/Model/PsrPrinterFactory.php
 
   bootstrapFiles:
     - boot/constants.php

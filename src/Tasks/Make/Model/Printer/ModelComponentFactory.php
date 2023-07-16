@@ -1,6 +1,6 @@
 <?php
 
-namespace Leonidas\Console\Library\Printer\Model;
+namespace Leonidas\Tasks\Make\Model\Printer;
 
 use Leonidas\Contracts\System\Model\DatableInterface;
 use Leonidas\Contracts\System\Model\MutableDatableInterface;

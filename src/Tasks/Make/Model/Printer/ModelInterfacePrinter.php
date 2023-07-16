@@ -1,8 +1,7 @@
 <?php
 
-namespace Leonidas\Console\Library\Printer\Model;
+namespace Leonidas\Tasks\Make\Model\Printer;
 
-use Leonidas\Console\Library\Printer\Model\Abstracts\AbstractClassPrinter;
 use Leonidas\Contracts\System\Model\CommentableInterface;
 use Leonidas\Contracts\System\Model\FilterableInterface;
 use Leonidas\Contracts\System\Model\HierarchicalInterface;
@@ -15,6 +14,7 @@ use Leonidas\Contracts\System\Model\MutableTermModelInterface;
 use Leonidas\Contracts\System\Model\MutableUserModelInterface;
 use Leonidas\Contracts\System\Model\PingableInterface;
 use Leonidas\Contracts\System\Model\RestrictableInterface;
+use Leonidas\Tasks\Make\Abstracts\AbstractClassPrinter;
 use Nette\PhpGenerator\PhpNamespace;
 use Stringable;
 

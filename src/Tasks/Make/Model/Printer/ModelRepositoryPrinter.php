@@ -1,14 +1,14 @@
 <?php
 
-namespace Leonidas\Console\Library\Printer\Model;
+namespace Leonidas\Tasks\Make\Model\Printer;
 
-use Leonidas\Console\Library\Printer\Model\Abstracts\AbstractModelRepositoryPrinter;
-use Leonidas\Console\Library\Printer\Model\Abstracts\TypedClassPrinterTrait;
 use Leonidas\Library\System\Model\Abstracts\Attachment\AbstractAttachmentEntityRepository;
 use Leonidas\Library\System\Model\Abstracts\Comment\AbstractCommentModelRepositoryInterface;
 use Leonidas\Library\System\Model\Abstracts\Post\AbstractPostEntityRepository;
 use Leonidas\Library\System\Model\Abstracts\Term\AbstractTermEntityRepository;
 use Leonidas\Library\System\Model\Abstracts\User\AbstractUserModelRepository;
+use Leonidas\Tasks\Make\Abstracts\TypedClassPrinterTrait;
+use Leonidas\Tasks\Make\Model\Printer\Abstracts\AbstractModelRepositoryPrinter;
 use Nette\PhpGenerator\PhpNamespace;
 
 class ModelRepositoryPrinter extends AbstractModelRepositoryPrinter

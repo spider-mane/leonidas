@@ -1,13 +1,13 @@
 <?php
 
-namespace Leonidas\Console\Library\Printer\Model;
+namespace Leonidas\Tasks\Make\Model\Printer;
 
-use Leonidas\Console\Library\Printer\Model\Abstracts\AbstractClassPrinter;
 use Leonidas\Contracts\System\Schema\Comment\CommentConverterInterface;
 use Leonidas\Contracts\System\Schema\Post\PostConverterInterface;
 use Leonidas\Contracts\System\Schema\Post\QueryFactoryInterface;
 use Leonidas\Contracts\System\Schema\Term\TermConverterInterface;
 use Leonidas\Contracts\System\Schema\User\UserConverterInterface;
+use Leonidas\Tasks\Make\Abstracts\AbstractClassPrinter;
 use Nette\PhpGenerator\PhpNamespace;
 use WP_Comment_Query;
 use WP_Query;
