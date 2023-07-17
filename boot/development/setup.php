@@ -1,36 +1,20 @@
 <?php
 
-use Dotenv\Dotenv;
-use WebTheory\Config\Config;
-use WebTheory\Exterminate\Exterminator;
+use WebTheory\Config\Interfaces\ConfigInterface;
 
-use function Env\env;
+use function WebTheory\WpCliUtil\maybe_define_abspath;
 
-$root = dirname(__DIR__, 2);
-
-require_once "$root/vendor/autoload.php";
-
-/**
- * Capture environment variables from .env
- */
-Dotenv::createUnsafeImmutable($root)->load();
+// load dev boot scripts
+foreach (['init', 'constants'] as $file) {
+    require_once __DIR__ . "/{$file}.php";
+}
 
 /**
- * Get development configuration
+ * @var string $root
+ * @var ConfigInterface $config
  */
-$config = new Config("$root/config/development");
 
-/**
- * Establish that plugin is in a development environment
- */
-define($dev = 'LEONIDAS_DEVELOPMENT', env($dev) ?? true);
+maybe_define_abspath($root);
 
-/**
- * Initiate debug support
- */
-Exterminator::debug($config->get('debug'));
-
-/**
- * Return development configuration
- */
-return $config;
+// create playground entrypoint
+play('runtime');

@@ -2,4 +2,4 @@
 
 $root = dirname(__DIR__);
 
-require_once "{$root}/boot/development/setup.php";
+require_once "{$root}/boot/development/init.php";

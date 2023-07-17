@@ -4,60 +4,27 @@ defined('ABSPATH') || exit;
 
 $root = dirname(__DIR__, 1);
 
-/**
- *==========================================================================
- * Composer autoloader
- *==========================================================================
- *
- *
- *
- */
-
-if (file_exists($autoload = "$root/vendor/autoload.php")) {
+// Require autoloader if installed as composer package
+if (file_exists($autoload = "{$root}/vendor/autoload.php")) {
     require_once $autoload;
 }
 
-/**
- *==========================================================================
- * Functions
- *==========================================================================
- *
- * Load any files with function declarations.
- *
- */
+// Load individual bootstrap scripts
+$scripts = [
+    'constants',
+];
 
-array_map(function ($path) use ($root) {
-    require "{$root}/src/{$path}.php";
-}, ['Plugin/functions', 'Plugin/Helper/helpers']);
+foreach ($scripts as $script) {
+    require __DIR__ . "/{$script}.php";
+}
 
-/**
- *==========================================================================
- * Bootstrap
- *==========================================================================
- *
- * Load any additional boot scripts that should run before initiating the
- * launcher.
- *
- */
+// Load functions
+array_map(fn ($path) => require "{$root}/src/{$path}.php", [
+    'Plugin/functions',
+    'Plugin/Helper/helpers',
+]);
 
-array_map(function ($path) {
-    require __DIR__ . "/{$path}.php";
-}, ['constants']);
-
-/**
- *==========================================================================
- * Development
- *==========================================================================
- *
- * Load scripts to be used in development.
- *
- */
-
-if (
-    defined('LEONIDAS_DEVELOPMENT')
-    && file_exists($development = __DIR__ . '/development')
-) {
-    array_map(function ($path) use ($development) {
-        require "{$development}/{$path}.php";
-    }, ['loaded']);
+// Conditionally load development entrypoint
+if (defined('LEONIDAS_DEVELOPMENT')) {
+    require __DIR__ . '/development/loaded.php';
 }

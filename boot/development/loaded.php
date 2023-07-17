@@ -2,12 +2,12 @@
 
 use WebTheory\WpTest\Skyhooks\SkyHooks;
 
-$root = dirname(__DIR__, 2);
+/**
+ * @var string $root
+ */
 
 // init skyhooks
 SkyHooks::init();
 
-// load playground
-if (file_exists($playground = "{$root}/@playground/loaded.php")) {
-    require $playground;
-}
+// create playground entrypoint
+play('loaded');

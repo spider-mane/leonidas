@@ -1,7 +1,7 @@
 <?php
 
+// phpcs:disable
 defined('ABSPATH') || exit;
-
-$root = dirname(__DIR__, 1);
+// phpcs:enable
 
 define('HOOK_DEFAULT_PRIORITY', 10);

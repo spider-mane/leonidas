@@ -6,6 +6,9 @@
 >
   <!-- Paths -->
   <file>./src</file>
+  <file>./bin</file>
+  <file>./boot</file>
+  <file>./config</file>
   <file>./tests</file>
   <file>./examples</file>
 
@@ -13,7 +16,10 @@
   <arg value="p"/>
   <arg value="s"/>
   <arg name="colors"/>
+  <arg name="cache" value="build/phpcs/.cache"/>
   <arg name="basepath" value="."/>
+  <!-- <arg name="parallel" value="20"/> -->
+  <arg name="extensions" value="php"/>
 
   <!-- Config -->
   <config name="ignore_warnings_on_exit" value="1"/>
