@@ -44,7 +44,7 @@ class CleanSlate extends Module
         remove_meta_box('dashboard_activity', 'dashboard', 'normal');   // Activity
     }
 
-    protected function doInitAction()
+    protected function doInitAction(): void
     {
         if ($unregister = $this->getConfig(static::CONFIG_ROOT . '.post_type.unregister')) {
             $this->unregisterBuiltInPostType((array) $unregister);
@@ -80,7 +80,7 @@ class CleanSlate extends Module
 
         $post = $wp_post_types['post'];
 
-        $post->label = $args['label'] ?? "Blog";
+        $post->label = $args['admin']['label'] ?? "Blog";
 
         // convert "post" in all labels to "blog post"
         $labels = $post->labels;
@@ -89,19 +89,19 @@ class CleanSlate extends Module
             $upper = "/Post/";
             $lower = "/post/";
 
-            if (preg_match($upper, $value)) {
+            if ($value && preg_match($upper, $value)) {
                 $labels->$label = preg_replace($upper, "Blog Post", $value);
-            } elseif (preg_match($lower, $value)) {
+            } elseif ($value && preg_match($lower, $value)) {
                 $labels->$label = preg_replace($lower, "blog post", $value);
             }
         }
 
         // $labels->name = "Blog";
-        $labels->menu_name = $args['labels']['menu_name'] ?? "Blog";
+        $labels->menu_name = $args['admin']['labels']['menu_name'] ?? "Blog";
 
         $post->description = $args['description'] ?? 'Site blog';
-        $post->menu_position = $args['position'] ?? 9;
-        $post->menu_icon = $args['menu_icon'] ?? 'dashicons-welcome-write-blog';
+        $post->menu_position = $args['admin']['position'] ?? 9;
+        $post->menu_icon = $args['admin']['menu_icon'] ?? 'dashicons-welcome-write-blog';
 
         $supports = [
             'trackbacks',
