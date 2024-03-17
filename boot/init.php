@@ -4,27 +4,23 @@ defined('ABSPATH') || exit;
 
 $root = dirname(__DIR__, 1);
 
-// Require autoloader if installed as composer package
+/**
+ * Composer autoloader
+ */
 if (file_exists($autoload = "{$root}/vendor/autoload.php")) {
     require_once $autoload;
 }
 
-// Load individual bootstrap scripts
-$scripts = [
-    'constants',
-];
-
-foreach ($scripts as $script) {
-    require __DIR__ . "/{$script}.php";
-}
-
-// Load functions
-array_map(fn ($path) => require "{$root}/src/{$path}.php", [
-    'Plugin/functions',
-    'Plugin/Helper/helpers',
+/**
+ * Scripts to load before initiating Launcher
+ */
+array_map(fn ($path) => require __DIR__ . '/' . $path . '.php', [
+    'functions',
 ]);
 
-// Conditionally load development entrypoint
-if (defined('LEONIDAS_DEVELOPMENT')) {
+/**
+ * Dev scripts
+ */
+if (defined($dev = 'LEONIDAS_DEVELOPMENT') && constant($dev)) {
     require __DIR__ . '/development/loaded.php';
 }

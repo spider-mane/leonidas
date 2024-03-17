@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-username="leonidas"
+readonly root="$(dirname $(dirname $(realpath $0)))"
+readonly username="leonidas"
 
 validate_shell_arg() {
   shells="sh bash zsh"
@@ -23,7 +24,6 @@ if [ -n "$1" ]; then
   validate_shell_arg "$1"
 fi
 
-root="$(dirname $(dirname $(realpath $0)))"
 shell="${shell:-zsh}"
 
 docker compose up -d --wait &&

@@ -7,11 +7,11 @@ use WP_Post_Type;
 
 class AdaptedPostType implements PostTypeInterface
 {
-    protected WP_Post_Type $postType;
-
-    public function __construct(WP_Post_Type $postType)
-    {
-        $this->postType = $postType;
+    public function __construct(
+        protected WP_Post_Type $postType,
+        protected array $options = []
+    ) {
+        //
     }
 
     public function getName(): string
@@ -186,7 +186,7 @@ class AdaptedPostType implements PostTypeInterface
 
     public function getOptions(): array
     {
-        return $this->postType->options ?? [];
+        return $this->options;
     }
 
     public function isHierarchical(): bool
@@ -201,6 +201,6 @@ class AdaptedPostType implements PostTypeInterface
 
     public static function fromName(string $name): PostTypeInterface
     {
-        return new self(get_post_type_object($name));
+        return new static(get_post_type_object($name));
     }
 }

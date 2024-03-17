@@ -17,7 +17,7 @@ trait FakerTrait
     protected function initFaker(): void
     {
         $this->fake = $this->createFaker();
-        $this->unique = $this->fake->unique();
+        $this->unique = $this->fake->unique(); // @phpstan-ignore-line
     }
 
     protected function createFaker(): Generator

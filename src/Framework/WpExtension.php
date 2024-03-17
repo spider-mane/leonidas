@@ -5,6 +5,7 @@ namespace Leonidas\Framework;
 use Leonidas\Contracts\Extension\WpExtensionInterface;
 use Leonidas\Framework\Plugin\Plugin;
 use Leonidas\Framework\Theme\Theme;
+use LogicException;
 use Psr\Container\ContainerInterface;
 
 class WpExtension implements WpExtensionInterface
@@ -140,17 +141,13 @@ class WpExtension implements WpExtensionInterface
      */
     public function header(string $header): ?string
     {
-        switch ($this->getType()) {
-            case 'plugin':
-                $headers = Plugin::headers(static::absPath('/plugin.php'));
-
-                break;
-
-            case 'theme':
-                $headers = Theme::headers(static::absPath('/style.css'));
-
-                break;
-        }
+        $headers = match ($this->getType()) {
+            'plugin' => Plugin::headers($this->absPath('/plugin.php')),
+            'theme' => Theme::headers($this->absPath('/style.css')),
+            default => throw new LogicException(
+                "header must either be 'theme' or 'plugin'"
+            )
+        };
 
         return $headers[$header] ?? null;
     }
@@ -176,7 +173,7 @@ class WpExtension implements WpExtensionInterface
      */
     public function relPath(?string $file = null): ?string
     {
-        return null;
+        return basename($this->getPath()) . $file;
     }
 
     /**

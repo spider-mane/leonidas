@@ -1,7 +1,10 @@
 {
   "private": true,
   "scripts": {
-    "build": "npm run mix:prod && npm run tailwind",
+    "build": "npm run lint && npm run test && npm run mix:prod",
+    "debug.sass:admin": "sass src/admin/scss/main.scss build/sass/admin/main.scss",
+    "debug.sass:editor": "sass src/editor/scss/main.scss build/sass/editor/main.scss",
+    "debug.sass:theme": "sass src/theme/scss/main.scss build/sass/theme/main.scss",
     "lint": "",
     "test": "",
     "mix": "mix",

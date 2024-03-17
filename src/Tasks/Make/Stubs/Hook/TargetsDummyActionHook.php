@@ -1,6 +1,6 @@
 <?php
 
-namespace Leonidas\Console\Stubs\Hook;
+namespace Leonidas\Tasks\Make\Stubs\Hook;
 
 use Closure;
 
@@ -20,7 +20,7 @@ trait TargetsDummyActionHook
 
     protected function getDummyActionPriority(): int
     {
-        return HOOK_DEFAULT_PRIORITY;
+        return 10;
     }
 
     abstract protected function doDummyActionAction(): void;

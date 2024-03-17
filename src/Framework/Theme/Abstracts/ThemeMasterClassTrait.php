@@ -9,8 +9,8 @@ trait ThemeMasterClassTrait
 {
     use ExtensionMasterClassTrait;
 
-    private static function error(string $method): void
+    private static function initError(string $method): ThemeInitiationException
     {
-        throw new ThemeInitiationException(self::$instance->base, $method);
+        return new ThemeInitiationException(self::$instance->base, $method);
     }
 }

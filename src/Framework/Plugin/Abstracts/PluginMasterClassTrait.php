@@ -9,8 +9,8 @@ trait PluginMasterClassTrait
 {
     use ExtensionMasterClassTrait;
 
-    private static function error(string $method): void
+    private static function initError(string $method): PluginInitiationException
     {
-        throw new PluginInitiationException(self::$instance->base, $method);
+        return new PluginInitiationException(self::$instance->base, $method);
     }
 }

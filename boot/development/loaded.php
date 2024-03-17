@@ -9,5 +9,10 @@ use WebTheory\WpTest\Skyhooks\SkyHooks;
 // init skyhooks
 SkyHooks::init();
 
-// create playground entrypoint
-play('loaded');
+// create playground entrypoints
+play('init', ['root' => $root]);
+
+add_action('leonidas/loaded', fn ($extension) => play('loaded', [
+    'root' => $root,
+    'extension' => $extension,
+]));

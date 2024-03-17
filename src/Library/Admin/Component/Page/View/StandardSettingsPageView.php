@@ -7,5 +7,5 @@ use Leonidas\Library\Admin\Component\Abstracts\AbstractTwigView;
 
 class StandardSettingsPageView extends AbstractTwigView implements ViewInterface
 {
-    protected string $template = 'page/layouts/settings-page.twig';
+    protected string $view = 'page.layouts.settings-page';
 }

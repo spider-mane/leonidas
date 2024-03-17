@@ -13,21 +13,30 @@ class PhoneNumberUtilProvider extends AbstractServiceFactory implements ServiceF
 {
     public function create(ContainerInterface $container, array $args = []): PhoneNumberUtil
     {
-        $metadataLoader = $this->fetch(
-            MetadataLoaderInterface::class,
-            $container,
-        );
+        $util = $this->getUtilProxy();
 
-        $metadataSource = $this->fetch(
-            MetadataSourceInterface::class,
-            $container,
-        );
-
-        return PhoneNumberUtil::getInstance(
-            $args['base_file_location'] ?? PhoneNumberUtil::META_DATA_FILE_PREFIX,
+        return $util::getInstance(
+            $args['base_file_location'] ?? null,
             $args['country_calling_code_to_region_code_map'] ?? null,
-            $metadataLoader,
-            $metadataSource
+            $this->fetch(MetadataLoaderInterface::class, $container),
+            $this->fetch(MetadataSourceInterface::class, $container)
         );
+    }
+
+    protected function getUtilProxy(): PhoneNumberUtil
+    {
+        return new class () extends PhoneNumberUtil {
+            public function __construct(
+                ?MetadataSourceInterface $metadataSource = null,
+                $countryCallingCodeToRegionCodeMap = null
+            ) {
+                if ($metadataSource) {
+                    parent::__construct(
+                        $metadataSource,
+                        $countryCallingCodeToRegionCodeMap
+                    );
+                }
+            }
+        };
     }
 }

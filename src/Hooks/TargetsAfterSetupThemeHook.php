@@ -20,7 +20,7 @@ trait TargetsAfterSetupThemeHook
 
     protected function getAfterSetupThemePriority(): int
     {
-        return HOOK_DEFAULT_PRIORITY;
+        return 10;
     }
 
     abstract protected function doAfterSetupThemeAction(): void;

@@ -7,22 +7,22 @@ use Leonidas\Library\System\Configuration\Abstracts\AbstractSystemModelTypeBuild
 
 class PostTypeBuilder extends AbstractSystemModelTypeBuilder implements PostTypeBuilderInterface
 {
-    protected ?bool $excludeFromSearch;
+    protected ?bool $excludeFromSearch = null;
 
-    protected ?bool $showInAdminBar;
+    protected ?bool $showInAdminBar = null;
 
-    protected ?bool $showInMenu;
+    protected ?bool $showInMenu = null;
 
-    protected ?int $menuPosition;
+    protected ?int $menuPosition = null;
 
-    protected ?string $menuIcon;
+    protected ?string $menuIcon = null;
 
     /**
      * @var null|string|array
      */
     protected $capabilityType;
 
-    protected ?bool $mapMetaCap;
+    protected ?bool $mapMetaCap = null;
 
     /**
      * @var null|bool|array
@@ -34,18 +34,18 @@ class PostTypeBuilder extends AbstractSystemModelTypeBuilder implements PostType
      */
     protected $registerMetaBoxCb;
 
-    protected ?array $taxonomies;
+    protected ?array $taxonomies = null;
 
     /**
      * @var null|bool|string
      */
     protected $archive;
 
-    protected ?bool $canExport;
+    protected ?bool $canExport = null;
 
-    protected ?bool $deleteWithUser;
+    protected ?bool $deleteWithUser = null;
 
-    protected ?array $template;
+    protected ?array $template = null;
 
     /**
      * @var null|false|string

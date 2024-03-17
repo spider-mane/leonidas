@@ -107,21 +107,29 @@ class PostType extends AbstractSystemModelType implements PostTypeInterface
             $options
         );
 
-        $this->menuPosition = $menuPosition;
-        $this->menuIcon = $menuIcon;
-        $this->allowsMetaCapMapping = $allowsMetaCapMapping;
-        $this->capabilityType = $capabilityType;
-        $this->supports = $supports;
-        $this->registerMetaBoxCb = $registerMetaBoxCb;
+        // model
         $this->taxonomies = $taxonomies;
-        $this->archive = $archive;
+
+        // system
+        $this->capabilityType = $capabilityType;
         $this->canBeExported = $canBeExported;
         $this->isDeletedWithUser = $isDeletedWithUser;
+        $this->allowsMetaCapMapping = $allowsMetaCapMapping;
+
+        // public
+        $this->archive = $archive;
+        $this->isExcludedFromSearch = $isExcludedFromSearch ?? !$this->isPublic;
+
+        // admin
+        $this->menuPosition = $menuPosition;
+        $this->menuIcon = $menuIcon;
+        $this->supports = $supports;
+        $this->registerMetaBoxCb = $registerMetaBoxCb;
+        $this->isAllowedInAdminBar = $isAllowedInAdminBar ?? $this->displayedInMenu;
+
+        // editor
         $this->template = $template;
         $this->templateLock = $templateLock;
-
-        $this->isExcludedFromSearch = $isExcludedFromSearch ?? $this->isPublic;
-        $this->isAllowedInAdminBar = $isAllowedInAdminBar ?? $this->displayedInMenu;
     }
 
     public function isExcludedFromSearch(): bool
@@ -134,7 +142,7 @@ class PostType extends AbstractSystemModelType implements PostTypeInterface
         return $this->isAllowedInAdminBar;
     }
 
-    public function getMenuPosition(): int
+    public function getMenuPosition(): ?int
     {
         return $this->menuPosition;
     }
@@ -204,6 +212,7 @@ class PostType extends AbstractSystemModelType implements PostTypeInterface
         return [
             'name' => $pluralUpper,
             'singular_name' => $singleUpper,
+            'add_new' => "Add New {$singleUpper}",
             'add_new_item' => "Add New {$singleUpper}",
             'edit_item' => "Edit {$singleUpper}",
             'new_item' => "New {$singleUpper}",
@@ -226,6 +235,8 @@ class PostType extends AbstractSystemModelType implements PostTypeInterface
             'item_reverted_to_draft' => "{$singleUpper} reverted to draft",
             'item_scheduled' => "{$singleUpper} scheduled",
             'item_updated' => "{$singleUpper} updated",
+            'item_link' => "{$singleUpper} Link",
+            'item_link_description' => "A link to a {$singleLower}.",
         ];
     }
 }

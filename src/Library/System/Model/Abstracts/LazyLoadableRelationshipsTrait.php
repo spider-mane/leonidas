@@ -15,7 +15,7 @@ trait LazyLoadableRelationshipsTrait
 
         $loaded ??= [];
 
-        if (!$loaded[$property] ?? false) {
+        if (!isset($loaded[$property])) {
             $loaded[$property] = true;
 
             return $this->lazyLoadable($property, $callback);

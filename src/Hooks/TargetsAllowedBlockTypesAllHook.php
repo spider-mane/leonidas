@@ -21,7 +21,7 @@ trait TargetsAllowedBlockTypesAllHook
 
     protected function getAllowedBlockTypesAllPriority(): int
     {
-        return HOOK_DEFAULT_PRIORITY;
+        return 10;
     }
 
     /**

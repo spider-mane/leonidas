@@ -7,15 +7,15 @@ use Leonidas\Library\System\Configuration\Abstracts\AbstractSystemModelTypeBuild
 
 class TaxonomyBuilder extends AbstractSystemModelTypeBuilder implements TaxonomyBuilderInterface
 {
-    protected array $objectTypes;
+    protected array $objectTypes = [];
 
-    protected ?bool $showTagCloud;
+    protected ?bool $showTagCloud = null;
 
-    protected ?bool $showInQuickEdit;
+    protected ?bool $showInQuickEdit = null;
 
-    protected ?bool $showAdminColumn;
+    protected ?bool $showAdminColumn = null;
 
-    protected ?bool $showInMenu;
+    protected ?bool $showInMenu = null;
 
     /**
      * @var null|bool|callable
@@ -37,7 +37,7 @@ class TaxonomyBuilder extends AbstractSystemModelTypeBuilder implements Taxonomy
      */
     protected $defaultTerm;
 
-    protected ?bool $shouldBeSorted;
+    protected ?bool $shouldBeSorted = null;
 
     /**
      * @return null|array

@@ -4,6 +4,7 @@ namespace Leonidas\Framework\Abstracts;
 
 use Leonidas\Contracts\Extension\WpExtensionInterface;
 use Leonidas\Framework\Exception\ExtensionInitiationException;
+use RuntimeException;
 
 trait ExtensionMasterClassTrait
 {
@@ -38,12 +39,14 @@ trait ExtensionMasterClassTrait
 
     public static function instance(): static
     {
-        return self::$instance;
+        return self::$instance ?? throw self::accessError(__METHOD__);
     }
 
     public static function init(WpExtensionInterface $base): void
     {
-        !isset(self::$instance) ? self::load($base) : self::error(__METHOD__);
+        !isset(self::$instance)
+            ? self::load($base)
+            : throw self::initError(__METHOD__);
     }
 
     private static function load(WpExtensionInterface $base): void
@@ -51,8 +54,15 @@ trait ExtensionMasterClassTrait
         self::$instance = new self($base);
     }
 
-    private static function error(string $method): void
+    private static function initError(string $method): ExtensionInitiationException
     {
-        throw new ExtensionInitiationException(self::$instance->base, $method);
+        return new ExtensionInitiationException(self::$instance->base, $method);
+    }
+
+    private static function accessError(string $method): RuntimeException
+    {
+        return new RuntimeException(
+            "Invalid call to {$method}. Instance has not been initiated."
+        );
     }
 }

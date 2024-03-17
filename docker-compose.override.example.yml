@@ -11,27 +11,28 @@ services:
         GIT_EMAIL:
         GIT_DEFAULT_BRANCH: "master"
         GIT_INSTALL_GCM: yes
+    ports:
+      - "${BROWSERSYNC_PORT:-3000}:${BROWSERSYNC_PORT:-3000}"
+      - "${BROWSERSYNC_UI_PORT:-3001}:${BROWSERSYNC_UI_PORT:-3001}"
     environment:
       TERM: "${TERM}"
       ZSH_THEME: "powerlevel10k/powerlevel10k"
     volumes:
       # Source
       - ".:/var/www/html"
-      # Dependencies
-      - "app.composer:/var/www/html/vendor"
-      - "app.wordpress:/var/www/html/wordpress"
-      - "app.npm:/var/www/html/assets/node_modules"
+      # Credentials
+      - "~/.config/composer/auth.json:/home/leonidas/.config/composer/auth.json"
       # Vscode server
       - "vscode:/home/leonidas/.vscode-server"
 
   webserver:
-    ports:
-      - "${SERVER_PORT:-80}:${SERVER_PORT:-80}"
+    networks:
+      - nginx-proxy
     environment:
       TERM: "${TERM}"
+      VIRTUAL_HOST: "${SERVER_NAME}"
     volumes:
       - ".:/var/www/html:ro"
-      - "app.wordpress:/var/www/html/wordpress:ro"
 
   database:
     ports:
@@ -50,12 +51,10 @@ services:
     environment:
       TERM: "${TERM}"
 
+networks:
+  nginx-proxy:
+    external: true
+
 volumes:
   vscode:
-    driver: local
-  app.composer:
-    driver: local
-  app.wordpress:
-    driver: local
-  app.npm:
     driver: local

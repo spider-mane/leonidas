@@ -20,7 +20,7 @@ trait TargetsWpDashboardSetupHook
 
     protected function getWpDashboardSetupPriority(): int
     {
-        return HOOK_DEFAULT_PRIORITY;
+        return 10;
     }
 
     abstract protected function doWpDashboardSetupAction(): void;

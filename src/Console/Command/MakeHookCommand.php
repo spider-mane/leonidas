@@ -8,7 +8,7 @@ use Symfony\Component\Console\Input\InputOption;
 
 class MakeHookCommand extends HopliteCommand
 {
-    protected const STUB_NAMESPACE = 'Leonidas\\Console\\Stubs\\Hook';
+    protected const STUB_NAMESPACE = 'Leonidas\\Tasks\\Make\\Stubs\\Hook';
 
     protected static $defaultName = 'make:hook';
 
@@ -63,6 +63,8 @@ class MakeHookCommand extends HopliteCommand
 
     protected function getTemplateFile(string $type): string
     {
-        return $this->internal('/Stubs/Hook/TargetsDummy' . ucfirst($type) . 'Hook.php');
+        return $this->external(
+            '/src/Tasks/Make/Stubs/Hook/TargetsDummy' . ucfirst($type) . 'Hook.php'
+        );
     }
 }

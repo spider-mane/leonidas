@@ -4,9 +4,9 @@ namespace Leonidas\Library\Admin\Field\Factory;
 
 use WebTheory\Saveyour\Contracts\Factory\FieldDataManagerResolverFactoryInterface;
 use WebTheory\Saveyour\Contracts\Factory\FormFieldResolverFactoryInterface;
-use WebTheory\Saveyour\Factory\SimpleFieldFactory;
+use WebTheory\Saveyour\Factory\FieldFactory;
 
-class Field extends SimpleFieldFactory
+class Field extends FieldFactory
 {
     protected function defineFormFieldFactory(array $options): FormFieldResolverFactoryInterface
     {

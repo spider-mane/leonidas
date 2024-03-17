@@ -32,13 +32,10 @@ class EmojiDisabler extends Module
         remove_filter('comment_text_rss', 'wp_staticize_emoji');
         remove_filter('wp_mail', 'wp_staticize_emoji_for_email');
 
-        add_filter(
-            'tiny_mce_plugins',
-            Closure::fromCallable([$this, 'disableEmojisTinymce'])
-        );
+        add_filter('tiny_mce_plugins', $this->disableEmojisTinymce(...));
         add_filter(
             'wp_resource_hints',
-            Closure::fromCallable([$this, 'disableEmojisRemoveDnsPrefetch']),
+            $this->disableEmojisRemoveDnsPrefetch(...),
             10,
             2
         );

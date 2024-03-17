@@ -9,8 +9,12 @@ $examples = "{$root}/examples";
 $wordpress = "{$root}/wordpress/wp-content";
 
 foreach (['plugin', 'theme'] as $type) {
-  symlink(
-    "{$examples}/{$type}",
-    "{$wordpress}/{$type}s/example-{$type}"
-  );
+  $target = "{$examples}/{$type}";
+  $link = "{$wordpress}/{$type}s/example-{$type}";
+
+  if (file_exists($link)) {
+    unlink($link);
+  }
+
+  symlink($target, $link);
 }

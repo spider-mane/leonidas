@@ -21,7 +21,7 @@ trait TargetsCurrentScreenHook
 
     protected function getCurrentScreenPriority(): int
     {
-        return HOOK_DEFAULT_PRIORITY;
+        return 10;
     }
 
     abstract protected function doCurrentScreenAction(WP_Screen $screen): void;

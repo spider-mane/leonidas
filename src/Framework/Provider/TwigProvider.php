@@ -5,9 +5,12 @@ declare(strict_types=1);
 namespace Leonidas\Framework\Provider;
 
 use Leonidas\Library\Core\Abstracts\ConvertsCaseTrait;
+use Leonidas\Library\Core\View\Twig\ComponentAttributeBag;
 use Leonidas\Library\Core\View\Twig\ConfiguredExtension;
+use Leonidas\Library\Core\View\Twig\ViewLoader;
 use Panamax\Contracts\ServiceFactoryInterface;
 use Panamax\Factories\AbstractServiceFactory;
+use Performing\TwigComponents\Configuration;
 use Psr\Container\ContainerInterface;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
@@ -32,6 +35,7 @@ class TwigProvider extends AbstractServiceFactory implements ServiceFactoryInter
         $env = new Environment($loader, $args['options'] ?? []);
 
         $env->addExtension(new ConfiguredExtension($args));
+        $this->configureComponents($env, $args['components'] ?? []);
 
         foreach (static::ADDITIONS as $addition) {
             if (!empty($values = $args[$addition] ?? [])) {
@@ -43,6 +47,19 @@ class TwigProvider extends AbstractServiceFactory implements ServiceFactoryInter
     }
 
     protected function getDefaultLoader(array $args): LoaderInterface
+    {
+        return new ViewLoader(
+            $this->getBaseLoader($args),
+            $args['views'] ?? '',
+            $args['namespace'] ?? ViewLoader::DEFAULT_NAMESPACE,
+            $args['extension'] ?? ViewLoader::DEFAULT_EXTENSION
+        );
+    }
+
+    /**
+     * @return FilesystemLoader
+     */
+    protected function getBaseLoader(array $args): LoaderInterface
     {
         if (!array_is_list($paths = $args['paths'])) {
             $main = FilesystemLoader::MAIN_NAMESPACE;
@@ -83,5 +100,25 @@ class TwigProvider extends AbstractServiceFactory implements ServiceFactoryInter
         foreach ($runtimeLoaders as $loader) {
             $env->addRuntimeLoader(new $loader());
         }
+    }
+
+    protected function configureComponents(Environment $env, array $args): void
+    {
+        class_alias(
+            \Leonidas\Library\Core\View\Twig\ComponentAttributeBag::class,
+            \Performing\TwigComponents\View\ComponentAttributeBag::class,
+            true
+        );
+
+        $config = Configuration::make($env)
+            ->setTemplatesPath($args['path'] ?? 'components')
+            ->useTemplatesExtension(false)
+            ->useCustomTags();
+
+        if (true === ($args['use_global'] ?? false)) {
+            $config->useGlobalContext();
+        }
+
+        $config->setup();
     }
 }

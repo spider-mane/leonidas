@@ -1,6 +1,11 @@
 parameters:
 	ignoreErrors:
 		-
+			message: "#^Offset \"\\\\000WP_Theme\\\\000headers\" does not exist on array\\{update\\: bool\\}\\.$#"
+			count: 1
+			path: src/Framework/Theme/Theme.php
+
+		-
 			message: "#^Call to an undefined method Leonidas\\\\Contracts\\\\Admin\\\\Component\\\\Metabox\\\\MetaboxComponentInterface\\:\\:addContent\\(\\)\\.$#"
 			count: 1
 			path: src/Library/Admin/Component/Metabox/Element/Fieldset.php
@@ -16,11 +21,11 @@ parameters:
 			path: src/Library/Admin/Component/Metabox/Element/Fieldset.php
 
 		-
-			message: "#^Parameter \\#5 \\$context of function add_meta_box expects 'advanced'\\|'normal'\\|'side', string given\\.$#"
+			message: "#^Expression on left side of \\?\\? is not nullable\\.$#"
 			count: 1
-			path: src/Library/Admin/Registrar/MetaboxRegistrar.php
+			path: src/Library/Admin/Component/Metabox/Element/Fieldset.php
 
 		-
-			message: "#^Parameter \\#6 \\$priority of function add_meta_box expects 'core'\\|'default'\\|'high'\\|'low', string given\\.$#"
+			message: "#^Expression on left side of \\?\\? is not nullable\\.$#"
 			count: 1
-			path: src/Library/Admin/Registrar/MetaboxRegistrar.php
+			path: src/Library/System/Configuration/Taxonomy/AdaptedTaxonomy.php

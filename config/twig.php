@@ -1,8 +1,7 @@
 <?php
 
-use WebTheory\Config\Deferred\Reflection;
-
-use function Leonidas\Plugin\abspath;
+use function Leonidas\Plugin\Functions\Config\abspath;
+use function WebTheory\Config\reflect;
 
 return [
 
@@ -18,7 +17,7 @@ return [
 
         'autoescape' => false,
         'cache' => abspath('/var/cache/views/twig'),
-        'debug' => Reflection::get('app.dev'),
+        'debug' => reflect('app.dev'),
 
     ],
 

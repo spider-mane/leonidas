@@ -7,18 +7,18 @@ use Twig\Environment;
 
 class TwigView implements ViewInterface
 {
-    protected string $template;
-
     protected Environment $environment;
 
-    public function __construct(Environment $environment, string $template)
+    protected string $view;
+
+    public function __construct(Environment $environment, string $view)
     {
         $this->environment = $environment;
-        $this->template = $template;
+        $this->view = $view;
     }
 
     public function render(array $context = []): string
     {
-        return $this->environment->render($this->template, $context);
+        return $this->environment->render($this->view, $context);
     }
 }

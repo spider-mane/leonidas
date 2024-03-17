@@ -3,6 +3,7 @@
 namespace Example\Plugin;
 
 use Leonidas\Contracts\Extension\WpExtensionInterface;
+use Leonidas\Framework\Exception\PluginInitiationException;
 use Leonidas\Framework\Plugin\PluginLoader;
 
 final class Launcher
@@ -42,15 +43,23 @@ final class Launcher
     {
         !isset(self::$instance)
             ? self::load($base)
-            : self::$instance->loader->error();
+            : self::error(__FUNCTION__);
     }
 
     private static function load(string $base): void
     {
-        $load = fn () => (self::$instance = new self($base))->launch();
+        $init = fn () => (self::$instance = new self($base))->launch();
 
         did_action($hook = 'leonidas/loaded')
-            ? $load()
-            : add_action($hook, $load);
+            ? $init()
+            : add_action($hook, $init);
+    }
+
+    private static function error(string $method): void
+    {
+        throw new PluginInitiationException(
+            self::$instance->extension,
+            $method
+        );
     }
 }
