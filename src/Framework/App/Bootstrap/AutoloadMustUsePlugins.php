@@ -1,18 +1,18 @@
 <?php
 
-namespace Leonidas\Framework\Bootstrap;
+namespace Leonidas\Framework\App\Bootstrap;
 
 use Leonidas\Contracts\Extension\ExtensionBootProcessInterface;
 use Leonidas\Contracts\Extension\WpExtensionInterface;
-use Panamax\Contracts\BootableProviderContainerInterface;
 use Panamax\Contracts\ServiceContainerInterface;
+use Roots\Bedrock\Autoloader;
 
-class BootServiceProviders implements ExtensionBootProcessInterface
+class AutoloadMustUsePlugins implements ExtensionBootProcessInterface
 {
     public function boot(WpExtensionInterface $extension, ServiceContainerInterface $container): void
     {
-        if ($container instanceof BootableProviderContainerInterface) {
-            $container->bootServiceProviders();
+        if (is_blog_installed()) {
+            new Autoloader();
         }
     }
 }

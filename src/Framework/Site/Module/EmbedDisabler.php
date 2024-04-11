@@ -2,7 +2,6 @@
 
 namespace Leonidas\Framework\Site\Module;
 
-use Closure;
 use Leonidas\Framework\Module\Abstracts\Module;
 use Leonidas\Hooks\TargetsInitHook;
 
@@ -39,10 +38,10 @@ class EmbedDisabler extends Module
 
         // Remove oEmbed-specific JavaScript from the front-end and back-end.
         remove_action('wp_head', 'wp_oembed_add_host_js');
-        add_filter('tiny_mce_plugins', Closure::fromCallable([$this, 'disableEmbedsTinyMcePlugin']));
+        add_filter('tiny_mce_plugins', $this->disableEmbedsTinyMcePlugin(...));
 
         // Remove all embeds rewrite rules.
-        add_filter('rewrite_rules_array', Closure::fromCallable([$this, 'disableEmbedsRewrites']));
+        add_filter('rewrite_rules_array', $this->disableEmbedsRewrites(...));
 
         // Remove filter of the oEmbed result before any HTTP requests are made.
         remove_filter('pre_oembed_result', 'wp_filter_pre_oembed_result', 10);
