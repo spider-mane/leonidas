@@ -21,7 +21,7 @@ trait TargetsRegisteredPostTypeHook
 
     protected function getRegisteredPostTypePriority(): int
     {
-        return HOOK_DEFAULT_PRIORITY;
+        return 10;
     }
 
     abstract protected function doRegisteredPostTypeAction(string $postType, WP_Post_Type $postTypeObject): void;

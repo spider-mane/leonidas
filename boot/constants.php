@@ -1,7 +1,11 @@
 <?php
 
+use Leonidas\Contracts\Extension\WpExtensionInterface;
+
 // phpcs:disable
 defined('ABSPATH') || exit;
 // phpcs:enable
 
-define('HOOK_DEFAULT_PRIORITY', 10);
+/**
+ * @var WpExtensionInterface $extension
+ */

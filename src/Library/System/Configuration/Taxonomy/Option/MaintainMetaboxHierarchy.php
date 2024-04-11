@@ -30,7 +30,7 @@ class MaintainMetaboxHierarchy implements TaxonomyOptionHandlerInterface
         add_filter(
             'wp_terms_checklist_args',
             Closure::fromCallable([$this, 'filterWpTermsChecklistArgs']),
-            HOOK_DEFAULT_PRIORITY,
+            10,
             PHP_INT_MAX
         );
     }

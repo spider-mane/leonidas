@@ -20,7 +20,7 @@ trait TargetsWpBodyOpenHook
 
     protected function getWpBodyOpenPriority(): int
     {
-        return HOOK_DEFAULT_PRIORITY;
+        return 10;
     }
 
     abstract protected function doWpBodyOpenAction(): void;

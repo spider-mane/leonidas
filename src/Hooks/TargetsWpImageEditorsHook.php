@@ -20,7 +20,7 @@ trait TargetsWpImageEditorsHook
 
     protected function getWpImageEditorsPriority(): int
     {
-        return HOOK_DEFAULT_PRIORITY;
+        return 10;
     }
 
     abstract protected function filterWpImageEditors(array $imageEditors): array;

@@ -20,7 +20,7 @@ trait TargetsWpAjaxNoprivXActionHook
 
     protected function getWpAjaxNoprivXActionPriority(): int
     {
-        return HOOK_DEFAULT_PRIORITY;
+        return 10;
     }
 
     abstract protected function getAction(): string;

@@ -20,7 +20,7 @@ trait TargetsWpEnqueueScriptsHook
 
     protected function getWpEnqueueScriptsPriority(): int
     {
-        return HOOK_DEFAULT_PRIORITY;
+        return 10;
     }
 
     abstract protected function doWpEnqueueScriptsAction(): void;

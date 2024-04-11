@@ -20,7 +20,7 @@ trait TargetsScriptLoaderTagHook
 
     protected function getScriptLoaderTagPriority(): int
     {
-        return HOOK_DEFAULT_PRIORITY;
+        return 10;
     }
 
     abstract protected function filterScriptLoaderTag(string $tag, string $handle, string $src): string;

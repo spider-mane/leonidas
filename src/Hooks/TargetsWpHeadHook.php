@@ -20,7 +20,7 @@ trait TargetsWpHeadHook
 
     protected function getWpHeadPriority(): int
     {
-        return HOOK_DEFAULT_PRIORITY;
+        return 10;
     }
 
     abstract protected function doWpHeadAction(): void;

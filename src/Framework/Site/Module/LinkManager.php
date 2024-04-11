@@ -21,7 +21,7 @@ class LinkManager extends Module
         foreach ($this->links() as $link => $args) {
             if (!in_array($link, $enabled)) {
                 $callback = $args[0];
-                $priority = $args[1] ?? HOOK_DEFAULT_PRIORITY;
+                $priority = $args[1] ?? 10;
 
                 remove_action('wp_head', $callback, $priority);
             }

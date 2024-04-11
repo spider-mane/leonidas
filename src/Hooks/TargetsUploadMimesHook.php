@@ -21,7 +21,7 @@ trait TargetsUploadMimesHook
 
     protected function getUploadMimesPriority(): int
     {
-        return HOOK_DEFAULT_PRIORITY;
+        return 10;
     }
 
     /**
