@@ -5,17 +5,21 @@ declare(strict_types=1);
 namespace Tests\Support;
 
 use PHPUnit\Framework\TestCase as PHPUnitTestCase;
-use Tests\Support\Concerns\FakerTrait;
-use Tests\Support\Concerns\HelperTrait;
-use Tests\Support\Concerns\MockeryTrait;
-use Tests\Support\Concerns\ProphecyTrait;
+use WebTheory\UnitUtils\Concerns\AssertionsTrait;
+use WebTheory\UnitUtils\Concerns\FakeGeneratorTrait;
+use WebTheory\UnitUtils\Concerns\FormattedDataSetsTrait;
+use WebTheory\UnitUtils\Concerns\MockeryTrait;
+use WebTheory\UnitUtils\Concerns\ProphecyTrait;
+use WebTheory\UnitUtils\Concerns\SystemTrait;
 
 abstract class TestCase extends PHPUnitTestCase
 {
-    use FakerTrait;
-    use HelperTrait;
+    use AssertionsTrait;
+    use FakeGeneratorTrait;
+    use FormattedDataSetsTrait;
     use MockeryTrait;
     use ProphecyTrait;
+    use SystemTrait;
 
     protected string $root;
 
