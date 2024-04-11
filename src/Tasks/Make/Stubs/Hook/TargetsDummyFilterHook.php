@@ -1,8 +1,6 @@
 <?php
 
-namespace Leonidas\Console\Stubs\Hook;
-
-use Closure;
+namespace Leonidas\Tasks\Make\Stubs\Hook;
 
 trait TargetsDummyFilterHook
 {
@@ -10,7 +8,7 @@ trait TargetsDummyFilterHook
     {
         add_filter(
             "dummy_filter",
-            Closure::fromCallable([$this, 'filterDummyFilter']),
+            $this->filterDummyFilter(...),
             $this->getDummyFilterPriority(),
             PHP_INT_MAX
         );
@@ -20,7 +18,7 @@ trait TargetsDummyFilterHook
 
     protected function getDummyFilterPriority(): int
     {
-        return HOOK_DEFAULT_PRIORITY;
+        return 10;
     }
 
     abstract protected function filterDummyFilter();

@@ -1,8 +1,6 @@
 <?php
 
-namespace Leonidas\Console\Stubs\Hook;
-
-use Closure;
+namespace Leonidas\Tasks\Make\Stubs\Hook;
 
 trait TargetsDummyActionHook
 {
@@ -10,7 +8,7 @@ trait TargetsDummyActionHook
     {
         add_action(
             "dummy_action",
-            Closure::fromCallable([$this, 'doDummyActionAction']),
+            $this->doDummyActionAction(...),
             $this->getDummyActionPriority(),
             PHP_INT_MAX
         );
@@ -20,7 +18,7 @@ trait TargetsDummyActionHook
 
     protected function getDummyActionPriority(): int
     {
-        return HOOK_DEFAULT_PRIORITY;
+        return 10;
     }
 
     abstract protected function doDummyActionAction(): void;
