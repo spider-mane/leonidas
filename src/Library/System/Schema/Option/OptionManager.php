@@ -6,9 +6,9 @@ use Leonidas\Contracts\System\Schema\Option\OptionManagerInterface;
 
 class OptionManager implements OptionManagerInterface
 {
-    public function add(string $option, mixed $value): void
+    public function add(string $option, mixed $value): bool
     {
-        add_option($option, $value);
+        return add_option($option, $value);
     }
 
     public function get(string $option, mixed $default = null): mixed
@@ -16,13 +16,13 @@ class OptionManager implements OptionManagerInterface
         return get_option($option, $default);
     }
 
-    public function update(string $option, mixed $value): void
+    public function update(string $option, mixed $value): bool
     {
-        update_option($option, $value);
+        return update_option($option, $value);
     }
 
-    public function delete(string $option): void
+    public function delete(string $option): bool
     {
-        delete_option($option);
+        return delete_option($option);
     }
 }

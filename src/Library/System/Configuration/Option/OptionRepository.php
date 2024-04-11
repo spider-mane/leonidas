@@ -19,18 +19,18 @@ class OptionRepository implements OptionRepositoryInterface
         return $this->manager->get($option, $default);
     }
 
-    public function add(string $option, mixed $value): void
+    public function add(string $option, mixed $value): bool
     {
-        $this->manager->add($option, $value);
+        return $this->manager->add($option, $value);
     }
 
-    public function update(string $option, mixed $value): void
+    public function update(string $option, mixed $value): bool
     {
-        $this->manager->update($option, $value);
+        return $this->manager->update($option, $value);
     }
 
-    public function delete(string $option): void
+    public function delete(string $option): bool
     {
-        $this->manager->delete($option);
+        return $this->manager->delete($option);
     }
 }
