@@ -94,15 +94,19 @@ class Taxonomy extends AbstractSystemModelType implements TaxonomyInterface
             $options
         );
 
+        // system
         $this->objectTypes = $objectTypes;
-        $this->canHaveAdminColumn = $canHaveAdminColumn;
-        $this->metaBoxCb = $metaBoxCb;
-        $this->metaBoxSanitizeCb = $metaBoxSanitizeCb;
         $this->updateCountCallback = $updateCountCallback;
         $this->defaultTerm = $defaultTerm;
         $this->shouldBeSorted = $shouldBeSorted;
 
+        // public
         $this->isAllowedInTagCloud = $isAllowedInTagCloud ?? $this->isAllowedInUi;
+
+        // admin
+        $this->canHaveAdminColumn = $canHaveAdminColumn;
+        $this->metaBoxCb = $metaBoxCb;
+        $this->metaBoxSanitizeCb = $metaBoxSanitizeCb;
         $this->isAllowedInQuickEdit = $isAllowedInQuickEdit ?? $this->isAllowedInUi;
     }
 

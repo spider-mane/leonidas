@@ -83,26 +83,36 @@ abstract class AbstractSystemModelType implements BaseSystemModelTypeInterface
         $restControllerClass = false,
         array $options = []
     ) {
+        // model
         $this->name = $name;
-        $this->pluralLabel = $pluralLabel;
         $this->description = $description;
-        $this->labels = $labels + $this->defaultLabels();
-        $this->isPublic = $isPublic;
+
+        // system
         $this->isHierarchical = $isHierarchical;
         $this->capabilities = $capabilities;
-        $this->rewrite = $rewrite;
-        $this->queryVar = $queryVar;
+
+        // REST
         $this->isAllowedInRest = $isAllowedInRest;
         $this->restBase = $restBase;
         $this->restNamespace = $restNamespace;
         $this->restControllerClass = $restControllerClass;
-        $this->options = $options;
 
-        $this->singularLabel = $singularLabel ?? $this->pluralLabel;
+        // public
+        $this->isPublic = $isPublic;
         $this->isPubliclyQueryable = $isPubliclyQueryable ?? $this->isPublic;
+        $this->queryVar = $queryVar;
+        $this->isAllowedInNavMenus = $isAllowedInNavMenus ?? $this->isPublic;
+        $this->rewrite = $rewrite;
+
+        // admin
         $this->isAllowedInUi = $isAllowedInUi ?? $this->isPublic;
         $this->displayedInMenu = $displayedInMenu ?? $this->isAllowedInUi;
-        $this->isAllowedInNavMenus = $isAllowedInNavMenus ?? $this->isPublic;
+        $this->pluralLabel = $pluralLabel;
+        $this->singularLabel = $singularLabel ?? $this->pluralLabel;
+        $this->labels = $labels + $this->defaultLabels();
+
+        // misc
+        $this->options = $options;
     }
 
     public function getName(): string

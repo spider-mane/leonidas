@@ -10,26 +10,26 @@ abstract class AbstractSystemModelTypeBuilder implements BaseSystemModelTypeBuil
 
     protected string $pluralLabel;
 
-    protected ?string $singularLabel;
+    protected ?string $singularLabel = null;
 
-    protected ?string $description;
+    protected ?string $description = null;
 
-    protected ?array $labels;
+    protected ?array $labels = null;
 
-    protected ?bool $isPublic;
+    protected ?bool $isPublic = null;
 
-    protected ?bool $hierarchical;
+    protected ?bool $hierarchical = null;
 
-    protected ?bool $publiclyQueryable;
+    protected ?bool $publiclyQueryable = null;
 
-    protected ?bool $isAllowedInUi;
+    protected ?bool $isAllowedInUi = null;
 
     /**
      * @var null|bool|string
      */
     protected $displayedInMenu;
 
-    protected ?bool $isAllowedInNavMenus;
+    protected ?bool $isAllowedInNavMenus = null;
 
     protected array $capabilities;
 
@@ -43,7 +43,7 @@ abstract class AbstractSystemModelTypeBuilder implements BaseSystemModelTypeBuil
      */
     protected $queryVar;
 
-    protected ?bool $isAllowedInRest;
+    protected ?bool $isAllowedInRest = null;
 
     /**
      * @var null|bool|string
@@ -60,7 +60,7 @@ abstract class AbstractSystemModelTypeBuilder implements BaseSystemModelTypeBuil
      */
     protected $restControllerClass;
 
-    protected ?array $options;
+    protected ?array $options = null;
 
     public function __construct(?string $name = null)
     {
