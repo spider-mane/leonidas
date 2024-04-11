@@ -1,16 +1,16 @@
 <?php
 
-use function Leonidas\Plugin\plugin_header;
+use function Leonidas\Plugin\Functions\Config\info;
 
 return [
 
-    'name' => plugin_header('name'),
+    'name' => info('name'),
 
-    'version' => plugin_header('version'),
+    'version' => info('version'),
 
-    'description' => plugin_header('description'),
+    'description' => info('description'),
 
-    'slug' => plugin_header('textdomain'),
+    'slug' => info('textdomain'),
 
     'namespace' => 'leonidas',
 
@@ -22,6 +22,7 @@ return [
 
         # Framework
         Leonidas\Framework\Module\AdminScreenNoticesHandler::class,
+        Leonidas\Framework\Module\PolyRelatablePostTypeParity::class,
 
         # Plugin
         Leonidas\Plugin\Module\AdminAssets::class,
@@ -41,6 +42,9 @@ return [
         Leonidas\Framework\Provider\League\MenuPageRegistrarServiceProvider::class,
         Leonidas\Framework\Provider\League\MetaboxRegistrarServiceProvider::class,
         Leonidas\Framework\Provider\League\OptionRepositoryServiceProvider::class,
+        Leonidas\Framework\Provider\League\PolyRelatablePostTypeRegistrarServiceProvider::class,
+        Leonidas\Framework\Provider\League\PolyRelatablePostTypeRepositoryServiceProvider::class,
+        Leonidas\Framework\Provider\League\RelatablePostKeysServiceProvider::class,
         Leonidas\Framework\Provider\League\SettingRegistrarServiceProvider::class,
         Leonidas\Framework\Provider\League\SettingsFieldRegistrarServiceProvider::class,
         Leonidas\Framework\Provider\League\SettingsSectionRegistrarServiceProvider::class,
@@ -50,12 +54,4 @@ return [
 
     ],
 
-    'bootstrap' => [
-
-        Leonidas\Framework\Bootstrap\BindContainerToFacades::class,
-        Leonidas\Framework\Bootstrap\RegisterModelServices::class,
-
-    ],
-
-    'facade' => Leonidas\Plugin\Access\_Facade::class,
 ];

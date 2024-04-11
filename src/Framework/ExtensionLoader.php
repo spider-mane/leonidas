@@ -5,19 +5,26 @@ namespace Leonidas\Framework;
 use Leonidas\Contracts\Extension\ExtensionBootProcessInterface;
 use Leonidas\Contracts\Extension\ExtensionLoaderInterface;
 use Leonidas\Contracts\Extension\WpExtensionInterface;
-use Leonidas\Framework\Exception\ExtensionInitiationException;
-use Leonidas\Framework\Exception\PluginInitiationException;
-use Leonidas\Framework\Exception\ThemeInitiationException;
-use Panamax\Contracts\BootableProviderContainerInterface;
+use Leonidas\Framework\Bootstrap\BootServiceProviders;
+use Leonidas\Framework\Bootstrap\BuildServiceContainer;
+use Leonidas\Framework\Bootstrap\InitializeModules;
 use Panamax\Contracts\ContainerAdapterInterface;
-use Panamax\Contracts\ProviderContainerInterface;
 use Panamax\Contracts\ServiceContainerInterface;
-use Panamax\Contracts\ServiceCreatorInterface;
+use Psr\Container\ContainerInterface;
 use WebTheory\Config\Config;
 use WebTheory\Config\Interfaces\ConfigInterface;
 
 class ExtensionLoader implements ExtensionLoaderInterface
 {
+    /**
+     * @var list<class-string<ExtensionBootProcessInterface>>
+     */
+    public const BOOTSTRAP = [
+        BuildServiceContainer::class,
+        BootServiceProviders::class,
+        InitializeModules::class,
+    ];
+
     protected string $type;
 
     protected string $path;
@@ -37,6 +44,7 @@ class ExtensionLoader implements ExtensionLoaderInterface
         $this->url = $url;
         $this->container = $this->defineContainer();
         $this->extension = $this->defineExtension();
+        $this->config = $this->defineConfig();
     }
 
     public function getContainer(): ServiceContainerInterface
@@ -52,75 +60,63 @@ class ExtensionLoader implements ExtensionLoaderInterface
     public function bootstrap(): void
     {
         $this
-            ->initiateConfig()
             ->bindServicesToContainer()
-            ->loadBootProcesses()
-            ->maybeBootProviders()
-            ->initializeModules();
-    }
-
-    public function error(): void
-    {
-        $backtrace = debug_backtrace();
-        $caller = $backtrace[1];
-        $method = $caller['class'] . $caller['type'] . $caller['function'];
-
-        switch ($this->extension->getType()) {
-            case 'plugin':
-                throw new PluginInitiationException($this->extension, $method);
-
-            case 'theme':
-                throw new ThemeInitiationException($this->extension, $method);
-
-            default:
-                throw new ExtensionInitiationException($this->extension, $method);
-        }
+            ->initBootClasses()
+            ->requireExtraScripts();
     }
 
     protected function defineContainer(): ServiceContainerInterface
     {
-        return require $this->path . '/boot/container.php';
+        return (static function (self $self) {
+            $root = $self->path;
+
+            $__script = $root . '/' . $self->getContainerScript();
+
+            unset($self);
+
+            return require $__script;
+        })($this);
+    }
+
+    protected function getContainerScript(): string
+    {
+        return 'boot/container.php';
     }
 
     protected function defineExtension(): WpExtensionInterface
     {
-        $container = $this->container instanceof ContainerAdapterInterface
-            ? $this->container->getAdaptedContainer()
-            : $this->container;
+        $container = $this->resolveExtensionContainer();
 
         return new WpExtension($this->type, $this->path, $this->url, $container);
     }
 
-    /**
-     * @return $this
-     */
-    protected function initiateConfig(): ExtensionLoader
+    protected function resolveExtensionContainer(): ContainerInterface
     {
-        $this->config = new Config($this->path . '/config');
+        return $this->container instanceof ContainerAdapterInterface
+            ? $this->container->getAdaptedContainer()
+            : $this->container;
+    }
 
-        return $this;
+    protected function defineConfig(): ConfigInterface
+    {
+        return new Config($this->path . $this->getConfigPath());
+    }
+
+    protected function getConfigPath(): string
+    {
+        return '/config';
     }
 
     /**
      * @return $this
      */
-    protected function bindServicesToContainer(): ExtensionLoader
+    protected function bindServicesToContainer(): static
     {
         $container = $this->container;
 
-        $container->share('root', $this->path);
-        $container->share('url', $this->url);
         $container->share('config', $this->config);
-
-        if ($container instanceof ProviderContainerInterface) {
-            $container->addServiceProviders(
-                $this->config->get('app.providers', [])
-            );
-        }
-
-        if ($container instanceof ServiceCreatorInterface) {
-            $container->createServices($this->config->get('app.services', []));
-        }
+        $container->share('root', fn () => $this->extension->absPath());
+        $container->share('url', fn () => $this->extension->getUrl());
 
         return $this;
     }
@@ -128,39 +124,42 @@ class ExtensionLoader implements ExtensionLoaderInterface
     /**
      * @return $this
      */
-    protected function loadBootProcesses(): ExtensionLoader
+    protected function requireExtraScripts(): static
     {
-        foreach ($this->config->get('app.bootstrap', []) as $bootProcess) {
-            /** @var ExtensionBootProcessInterface $bootProcess */
-            $bootProcess = new $bootProcess();
-            $bootProcess->boot($this->extension, $this->container);
-        }
+        $extension = $this->getExtension();
+        $__scripts = $this->getBootScriptDir();
+
+        array_map(static function ($__script) use ($extension, $__scripts) {
+            require $extension->absPath("/{$__scripts}/{$__script}.php");
+        }, $extension->config('boot.scripts', []));
 
         return $this;
+    }
+
+    protected function getBootScriptDir(): string
+    {
+        return 'boot';
     }
 
     /**
      * @return $this
      */
-    protected function maybeBootProviders(): ExtensionLoader
+    protected function initBootClasses(): static
     {
-        if ($this->container instanceof BootableProviderContainerInterface) {
-            $this->container->bootServiceProviders();
-        }
+        $this->runBootProcesses(
+            [...static::BOOTSTRAP, ...$this->config->get('boot.classes', [])]
+        );
 
         return $this;
     }
 
     /**
-     * @return $this
+     * @param array<class-string<ExtensionBootProcessInterface>> $processes
      */
-    protected function initializeModules(): ExtensionLoader
+    protected function runBootProcesses(array $processes): void
     {
-        (new ModuleInitializer(
-            $this->extension,
-            $this->config->get('app.modules', [])
-        ))->init();
-
-        return $this;
+        foreach (array_unique($processes) as $process) {
+            (new $process())->boot($this->extension, $this->container);
+        }
     }
 }
