@@ -7,58 +7,62 @@ use Leonidas\Library\Core\View\Twig\AdminFunctionsExtension;
 use Leonidas\Library\Core\View\Twig\PrettyDebugExtension;
 use Leonidas\Library\Core\View\Twig\SkyHooksExtension;
 use Leonidas\Library\Core\View\Twig\StringHelperExtension;
+use Leonidas\Library\Core\View\Twig\ViewLoader;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
 abstract class AbstractTwigView implements ViewInterface
 {
-    protected const EXTENSIONS = [
-        PrettyDebugExtension::class,
+    private const DEPTH = 5;
+
+    private const CACHE_DIR = '/var/cache/views/twig';
+
+    private const EXTENSIONS = [
         AdminFunctionsExtension::class,
+        PrettyDebugExtension::class,
         SkyHooksExtension::class,
         StringHelperExtension::class,
     ];
 
-    protected const CACHE_DIR = '/var/cache/views/twig';
+    protected string $view;
 
-    private const DEPTH = 5;
+    private static Environment $env;
 
-    protected Environment $env;
-
-    protected string $template;
-
-    public function render(array $context = []): string
+    final public function render(array $context = []): string
     {
-        return $this->getEnv()->render($this->getTemplate(), $context);
+        return $this->getEnv()->render($this->getView(), $context);
     }
 
-    protected function getEnv(): Environment
+    private function getView(): string
     {
-        return $this->env ??= $this->buildEnv();
+        return $this->view;
     }
 
-    protected function getTemplate(): string
+    private function getEnv(): Environment
     {
-        return $this->template;
+        return self::$env ??= $this->buildEnv();
     }
 
-    protected function buildEnv(): Environment
+    private function buildEnv(): Environment
     {
-        $loader = new FilesystemLoader(['views'], $this->abspath());
+        $loader = new ViewLoader(
+            new FilesystemLoader(['views'], $this->abspath())
+        );
+
         $env = new Environment($loader, [
             'autoescape' => false,
-            'cache' => $this->abspath(static::CACHE_DIR),
+            'cache' => $this->abspath(self::CACHE_DIR),
             'debug' => constant('LEONIDAS_DEVELOPMENT') ?? false,
         ]);
 
-        foreach (static::EXTENSIONS as $extension) {
+        foreach (self::EXTENSIONS as $extension) {
             $env->addExtension(new $extension());
         }
 
         return $env;
     }
 
-    protected function abspath(string $sub = ''): string
+    private function abspath(string $sub = ''): string
     {
         return dirname(__DIR__, self::DEPTH) . $sub;
     }

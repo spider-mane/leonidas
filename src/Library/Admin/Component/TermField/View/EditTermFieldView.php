@@ -7,5 +7,5 @@ use Leonidas\Library\Admin\Component\Abstracts\AbstractTwigView;
 
 class EditTermFieldView extends AbstractTwigView implements ViewInterface
 {
-    protected string $template = 'screens/term/components/edit-field.twig';
+    protected string $view = 'screens.term.components.edit-field';
 }

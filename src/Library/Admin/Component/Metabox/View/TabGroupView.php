@@ -7,5 +7,5 @@ use Leonidas\Library\Admin\Component\Abstracts\AbstractTwigView;
 
 class TabGroupView extends AbstractTwigView implements ViewInterface
 {
-    protected string $template = 'metabox/components/tab-group.twig';
+    protected string $view = 'metabox.components.tab-group';
 }
