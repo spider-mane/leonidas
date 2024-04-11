@@ -19,17 +19,19 @@ class RegisterModelServices extends AbstractModelRegistrar implements ExtensionB
 
     protected function postServices(): void
     {
-        $this->register(Post::class, 'post');
+        $this->register(Post::class, 'post', 'post');
     }
 
     protected function pageServices(): void
     {
-        $this->register(Page::class, 'page');
+        $this->register(Page::class, 'page', 'post');
     }
 
     protected function imageServices(): void
     {
-        $this->register(Image::class, 'attachment', 'attachment');
+        $this->register(Image::class, 'attachment', 'attachment', [
+            '_wp_attachment_image_alt' => 'meta',
+        ]);
     }
 
     protected function tagServices(): void

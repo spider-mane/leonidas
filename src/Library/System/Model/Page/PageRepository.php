@@ -13,6 +13,11 @@ class PageRepository extends AbstractPostEntityRepository implements PageReposit
 {
     use HierarchicalModelRepositoryTrait;
 
+    public function fromGlobalQuery(): PageQuery
+    {
+        return $this->manager->fromGlobalQuery();
+    }
+
     public function select(int $id): ?PageInterface
     {
         return $this->manager->select($id);
@@ -88,18 +93,6 @@ class PageRepository extends AbstractPostEntityRepository implements PageReposit
             'post_mime_type' => $page->getMimeType(),
             'menu_order' => $page->getMenuOrder(),
             'guid' => $page->getGuid()->getHref(),
-            'tax_input' => $this->extractTaxInput($page),
-            'meta_input' => $this->extractMetaInput($page),
         ];
-    }
-
-    protected function extractTaxInput(PageInterface $page): array
-    {
-        return [];
-    }
-
-    protected function extractMetaInput(PageInterface $page): array
-    {
-        return [];
     }
 }

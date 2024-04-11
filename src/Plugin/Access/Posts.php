@@ -12,9 +12,9 @@ use Leonidas\Contracts\System\Model\Post\PostRepositoryInterface;
 use Leonidas\Contracts\System\Model\Post\Status\PostStatusInterface;
 use Leonidas\Contracts\System\Model\Tag\TagInterface;
 use Leonidas\Library\System\Model\Post\PostQuery;
-use Leonidas\Library\System\Model\Post\PostQueryFactory;
 
 /**
+ * @method static PostQuery fromGlobalQuery()
  * @method static ?PostInterface select(int $id)
  * @method static ?PostInterface selectName(string $name)
  * @method static PostCollectionInterface whereIds(int ...$ids)
@@ -36,16 +36,6 @@ use Leonidas\Library\System\Model\Post\PostQueryFactory;
  */
 class Posts extends _Facade
 {
-    public static function fromQuery(): PostQuery
-    {
-        return static::getQueryFactory()->createQuery($GLOBALS['wp_query']);
-    }
-
-    protected static function getQueryFactory(): PostQueryFactory
-    {
-        return static::$container->get(PostQueryFactory::class);
-    }
-
     protected static function _getFacadeAccessor(): string
     {
         return PostRepositoryInterface::class;

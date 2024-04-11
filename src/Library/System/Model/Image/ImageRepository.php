@@ -10,6 +10,11 @@ use Leonidas\Library\System\Model\Abstracts\Attachment\AbstractAttachmentEntityR
 
 class ImageRepository extends AbstractAttachmentEntityRepository implements ImageRepositoryInterface
 {
+    public function fromGlobalQuery(): ImageCollectionInterface
+    {
+        return $this->manager->fromGlobalQuery();
+    }
+
     public function select(int $id): ?ImageInterface
     {
         return $this->manager->select($id);
@@ -69,20 +74,7 @@ class ImageRepository extends AbstractAttachmentEntityRepository implements Imag
             'post_mime_type' => $image->getMimeType(),
             'menu_order' => $image->getMenuOrder(),
             'guid' => $image->getGuid()->getHref(),
-            'tax_input' => $this->extractTaxInput($image),
-            'meta_input' => $this->extractMetaInput($image),
+            '_wp_attachment_image_alt' => $image->getAlt(),
         ];
-    }
-
-    protected function extractMetaInput(ImageInterface $post): array
-    {
-        return [
-            '_wp_attachment_image_alt' => $post->getAlt(),
-        ];
-    }
-
-    protected function extractTaxInput(ImageInterface $post): array
-    {
-        return [];
     }
 }

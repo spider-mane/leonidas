@@ -13,6 +13,11 @@ use Leonidas\Library\System\Model\Abstracts\Post\AbstractPostEntityRepository;
 
 class PostRepository extends AbstractPostEntityRepository implements PostRepositoryInterface
 {
+    public function fromGlobalQuery(): PostQuery
+    {
+        return $this->manager->fromGlobalQuery();
+    }
+
     public function select(int $id): ?PostInterface
     {
         return $this->manager->select($id);
@@ -55,12 +60,12 @@ class PostRepository extends AbstractPostEntityRepository implements PostReposit
 
     public function whereTag(TagInterface $tag): PostCollectionInterface
     {
-        return $this->manager->whereTerm('tag', $tag->getId());
+        return $this->manager->whereHasTermsById('tag', $tag->getId());
     }
 
     public function whereCategory(CategoryInterface $category): PostCollectionInterface
     {
-        return $this->manager->whereTerm('category', $category->getId());
+        return $this->manager->whereHasTermsById('category', $category->getId());
     }
 
     public function query(array $args): PostCollectionInterface
@@ -115,18 +120,6 @@ class PostRepository extends AbstractPostEntityRepository implements PostReposit
             'guid' => $post->getGuid()->getHref(),
             'post_category' => $post->getCategories()->extract('id'),
             'tags_input' => $post->getTags()->extract('id'),
-            'tax_input' => $this->extractTaxInput($post),
-            'meta_input' => $this->extractMetaInput($post),
         ];
-    }
-
-    protected function extractTaxInput(PostInterface $post): array
-    {
-        return [];
-    }
-
-    protected function extractMetaInput(PostInterface $post): array
-    {
-        return [];
     }
 }

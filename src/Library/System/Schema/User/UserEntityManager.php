@@ -24,7 +24,8 @@ class UserEntityManager implements UserEntityManagerInterface
     public function __construct(
         string $role,
         UserConverterInterface $userConverter,
-        EntityCollectionFactoryInterface $collectionFactory
+        EntityCollectionFactoryInterface $collectionFactory,
+        protected $entryMap = []
     ) {
         $this->role = $role;
         $this->entityConverter = $userConverter;

@@ -6,6 +6,8 @@ use Leonidas\Contracts\System\Model\SoftDeletingRepositoryInterface;
 
 interface PageRepositoryInterface extends SoftDeletingRepositoryInterface
 {
+    public function fromGlobalQuery(): PageCollectionInterface;
+
     public function select(int $id): ?PageInterface;
 
     public function whereIds(int ...$ids): PageCollectionInterface;

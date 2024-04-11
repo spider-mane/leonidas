@@ -7,6 +7,8 @@ use Leonidas\Contracts\System\Model\SoftDeletingRepositoryInterface;
 
 interface ImageRepositoryInterface extends SoftDeletingRepositoryInterface
 {
+    public function fromGlobalQuery(): ImageCollectionInterface;
+
     public function select(int $id): ?ImageInterface;
 
     public function whereIds(int ...$ids): ImageCollectionInterface;

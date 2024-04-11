@@ -8,9 +8,9 @@ use Leonidas\Contracts\System\Model\Page\PageCollectionInterface;
 use Leonidas\Contracts\System\Model\Page\PageInterface;
 use Leonidas\Contracts\System\Model\Page\PageRepositoryInterface;
 use Leonidas\Library\System\Model\Page\PageQuery;
-use Leonidas\Library\System\Model\Page\PageQueryFactory;
 
 /**
+ * @method static PageQuery fromGlobalQuery()
  * @method static ?PageInterface select(int $id)
  * @method static PageCollectionInterface whereIds(int ...$ids)
  * @method static ?PageInterface selectName(string $name)
@@ -27,16 +27,6 @@ use Leonidas\Library\System\Model\Page\PageQueryFactory;
  */
 class Pages extends _Facade
 {
-    public static function fromQuery(): PageQuery
-    {
-        return static::getQueryFactory()->createQuery($GLOBALS['wp_query']);
-    }
-
-    protected static function getQueryFactory(): PageQueryFactory
-    {
-        return static::$container->get(PageQueryFactory::class);
-    }
-
     protected static function _getFacadeAccessor(): string
     {
         return PageRepositoryInterface::class;

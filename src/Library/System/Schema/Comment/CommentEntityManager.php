@@ -24,7 +24,8 @@ class CommentEntityManager implements CommentEntityManagerInterface
     public function __construct(
         string $type,
         CommentConverterInterface $commentConverter,
-        EntityCollectionFactoryInterface $collectionFactory
+        EntityCollectionFactoryInterface $collectionFactory,
+        protected $entryMap = []
     ) {
         $this->type = $type;
         $this->entityConverter = $commentConverter;

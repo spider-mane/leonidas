@@ -24,7 +24,8 @@ class TermEntityManager implements TermEntityManagerInterface
     public function __construct(
         string $taxonomy,
         TermConverterInterface $termConverter,
-        EntityCollectionFactoryInterface $collectionFactory
+        EntityCollectionFactoryInterface $collectionFactory,
+        protected $entryMap = []
     ) {
         $this->taxonomy = $taxonomy;
         $this->entityConverter = $termConverter;

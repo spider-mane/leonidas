@@ -10,6 +10,8 @@ use Leonidas\Contracts\System\Model\Tag\TagInterface;
 
 interface PostRepositoryInterface extends SoftDeletingRepositoryInterface
 {
+    public function fromGlobalQuery(): PostCollectionInterface;
+
     public function select(int $id): ?PostInterface;
 
     public function selectName(string $name): ?PostInterface;
