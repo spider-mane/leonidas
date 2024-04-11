@@ -16,9 +16,9 @@
  * Plugin Name: Leonidas
  * Plugin URI: https://github.com/spider-mane/leonidas
  * Description: Development framework that helps developers create plugins and themes by simplifying some of the more common and complex tasks.
- * Version: 0.18.0
- * Requires at least: 6.1
- * Requires PHP: 8.0
+ * Version: 0.23.0
+ * Requires at least: 6.3
+ * Requires PHP: 8.1
  * Author: Chris Williams
  * Author URI: https://github.com/spider-mane
  * License: GPL-3.0-or-later

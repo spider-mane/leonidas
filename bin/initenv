@@ -3,7 +3,7 @@
 boilerplate=(
   .env.example
   docker-compose.override.example.yml
-  studio.example.json
+  pathagist.example.json
 )
 
 ROOT="$(dirname $(dirname $(realpath $0)))"
