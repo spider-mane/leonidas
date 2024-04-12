@@ -11,8 +11,8 @@ trim_trailing_whitespace = true
 [*.php]
 indent_size = 4
 
-[.*.php]
-indent_size = 2
+[*.{html,twig,blade.php,phtml}]
+insert_final_newline = false
 
 [*.md]
 trim_trailing_whitespace = false
