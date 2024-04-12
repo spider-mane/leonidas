@@ -4,8 +4,8 @@ namespace Leonidas\Framework\Provider\League;
 
 use Leonidas\Framework\Provider\FieldFactoryProvider;
 use Leonidas\Framework\Provider\League\Abstracts\AbstractLeagueServiceFactory;
-use Leonidas\Library\Admin\Field\Factory\Field;
 use Panamax\Contracts\ServiceFactoryInterface;
+use WebTheory\Saveyour\Factory\FieldFactory;
 
 class FieldFactoryServiceProvider extends AbstractLeagueServiceFactory
 {
@@ -16,7 +16,7 @@ class FieldFactoryServiceProvider extends AbstractLeagueServiceFactory
 
     protected function types(): array
     {
-        return [Field::class];
+        return [FieldFactory::class];
     }
 
     protected function factory(): ServiceFactoryInterface
