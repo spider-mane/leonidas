@@ -10,6 +10,7 @@ use Leonidas\Contracts\System\Model\MutableAuthoredInterface;
 use Leonidas\Contracts\System\Model\MutableContentInterface;
 use Leonidas\Contracts\System\Model\MutableDatableInterface;
 use Leonidas\Contracts\System\Model\MutablePostModelInterface;
+use Leonidas\Contracts\System\Model\MutableTitledInterface;
 use Leonidas\Contracts\System\Model\Page\Status\PageStatusInterface;
 use Leonidas\Contracts\System\Model\PingableInterface;
 use Leonidas\Contracts\System\Model\RestrictableInterface;
@@ -24,7 +25,8 @@ interface PageInterface extends
     RestrictableInterface,
     MimeInterface,
     MutableDatableInterface,
-    HierarchicalInterface
+    HierarchicalInterface,
+    MutableTitledInterface
 {
     public function getParent(): ?PageInterface;
 

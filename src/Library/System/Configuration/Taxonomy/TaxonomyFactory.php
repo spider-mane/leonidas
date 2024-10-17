@@ -5,9 +5,9 @@ namespace Leonidas\Library\System\Configuration\Taxonomy;
 use Jawira\CaseConverter\CaseConverter;
 use Leonidas\Contracts\System\Configuration\Taxonomy\TaxonomyBuilderInterface;
 use Leonidas\Contracts\System\Configuration\Taxonomy\TaxonomyFactoryInterface;
-use Leonidas\Library\System\Configuration\Abstracts\AbstractSystemModelTypeFactory;
+use Leonidas\Library\System\Configuration\Abstracts\AbstractModelConfigurationFactory;
 
-class TaxonomyFactory extends AbstractSystemModelTypeFactory implements TaxonomyFactoryInterface
+class TaxonomyFactory extends AbstractModelConfigurationFactory implements TaxonomyFactoryInterface
 {
     public function create(string $name, array $args): Taxonomy
     {
@@ -24,11 +24,8 @@ class TaxonomyFactory extends AbstractSystemModelTypeFactory implements Taxonomy
 
     public function build(string $name, array $args): TaxonomyBuilder
     {
-        $builder = new TaxonomyBuilder();
+        $builder = new TaxonomyBuilder($this->prefix($name));
         $converter = new CaseConverter();
-
-        $builder->name($this->prefix($name));
-        $builder->objectTypes(...$args['object_types']);
 
         foreach ($this->parseArgs($args) as $arg => $val) {
             $method = $converter->convert($arg)->toCamel();

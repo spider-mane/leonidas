@@ -136,25 +136,22 @@ class ComponentAttributeBag implements ArrayAccess, IteratorAggregate
     /**
      * Merge additional attributes / values into the attribute bag.
      *
-     * @param array $attributeDefaults
+     * @param array $extra
      * @return static
      */
-    public function merge(array $attributeDefaults = [])
+    public function merge(array $extra = [])
     {
         $attributes = $this->getAttributes();
 
-        foreach ($attributeDefaults as $key => $value) {
+        foreach ($extra as $key => $value) {
             if (!array_key_exists($key, $attributes)) {
                 $attributes[$key] = '';
             }
         }
 
         foreach ($attributes as $key => $value) {
-            $attributes[$key] = trim($value . ' ' . ($attributeDefaults[$key] ?? ''));
-
-            // $default = $attributeDefaults[$key] ?? '';
-
-            // $attributes[$key] = is_string($default) ? trim($value . ' ' . $default) : $default
+            // $attributes[$key] = trim($value . ' ' . ($extra[$key] ?? ''));
+            $attributes[$key] = trim(($extra[$key] ?? '') . ' ' . $value);
         }
 
         return new static($attributes);

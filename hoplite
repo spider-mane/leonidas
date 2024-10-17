@@ -2,9 +2,30 @@
 <?php
 
 use Leonidas\Console\Hoplite;
+use Leonidas\Framework\DevLoader;
+use Symfony\Component\Console\Input\ArgvInput;
+use Symfony\Component\Console\Output\ConsoleOutput;
 use WebTheory\Config\Interfaces\ConfigInterface;
 
-/** @var ConfigInterface */
-$config = require __DIR__ . '/boot/development/setup.php';
+require __DIR__ . '/boot/development/setup.php';
 
-Hoplite::init($config->get('console.commands', []));
+// exit(42);
+
+$loader = new DevLoader(__DIR__);
+
+$loader->bootstrap();
+
+dd($loader->getExtension());
+
+$kernel = new Kernel($loader->getExtension());
+
+$status = $kernel->handle($input = new ArgvInput(), new ConsoleOutput());
+
+$kernel->terminate($input, $status);
+
+exit($status);
+
+// /** @var ConfigInterface */
+// $config = require __DIR__ . '/boot/development/setup.php';
+
+// Hoplite::init($config->get('console.commands', []));

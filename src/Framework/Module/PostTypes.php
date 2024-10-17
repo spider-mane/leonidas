@@ -9,14 +9,39 @@ use Leonidas\Library\System\Configuration\PostType\PostTypeFactory;
 
 class PostTypes extends PostTypeRegistrationModule
 {
+    protected array $postTypeData;
+
     protected function postTypes(): array
     {
-        return $this->factory()->createMany($this->getPostTypeResource());
+        return $this->factory()->createMany($this->getPostTypeConfig());
     }
 
-    protected function getPostTypeResource(): array
+    protected function postTypeOverrides(): array
     {
-        return $this->getConfig($this->postTypeResourceKey());
+        return $this->factory()->createMany($this->getPostTypeOverrideConfig());
+    }
+
+    protected function getPostTypeConfig(): array
+    {
+        $config = $this->getPostTypeData();
+
+        unset($config['@override']);
+
+        return $config;
+    }
+
+    protected function getPostTypeOverrideConfig(): array
+    {
+        $config = $this->getPostTypeData();
+
+        return $config['@override'];
+    }
+
+    protected function getPostTypeData(): array
+    {
+        return $this->postTypeData ?? $this->getConfig(
+            $this->postTypeConfigKey()
+        );
     }
 
     protected function factory(): PostTypeFactoryInterface
@@ -33,7 +58,7 @@ class PostTypes extends PostTypeRegistrationModule
             : null;
     }
 
-    protected function postTypeResourceKey(): string
+    protected function postTypeConfigKey(): string
     {
         return 'post_types';
     }

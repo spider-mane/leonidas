@@ -1,6 +1,5 @@
-<div class="leonidas-wrap">
+<div class="@leonidas">
   <div class="row py-{{ row_padding }}">
-
     {% if label is not null %}
       <div class="col-{{ root_width }}">
         <label class="" for="{{ field.getId() }}">{{ label }}</label>
@@ -17,6 +16,5 @@
         {{ submit_button(btn.text, btn.type, btn.name, btn.wrap, btn.attributes) }}
       </div>
     {% endif %}
-
   </div>
 </div>

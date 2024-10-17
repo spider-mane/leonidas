@@ -46,13 +46,22 @@ class CleanSlate extends Module
 
     protected function doInitAction(): void
     {
-        if ($unregister = $this->getConfig(static::CONFIG_ROOT . '.post_type.unregister')) {
+        if ($unregister = $this->getConfig('post_type.unregister')) {
             $this->unregisterBuiltInPostType((array) $unregister);
         }
 
-        if ($blog = $this->getConfig(static::CONFIG_ROOT . '.blog')) {
+        if ($blog = $this->getConfig('blog')) {
             $this->setPostsAsBlog((array) $blog);
         }
+
+        if (true === $this->getConfig('blank_pages')) {
+            $this->makePagesBlank();
+        }
+    }
+
+    protected function getConfig(string $key, $default = null)
+    {
+        return parent::getConfig(static::CONFIG_ROOT . '.' . $key, $default);
     }
 
     /**
@@ -112,5 +121,10 @@ class CleanSlate extends Module
         foreach ($supports as $support) {
             remove_post_type_support('post', $support);
         }
+    }
+
+    protected function makePagesBlank()
+    {
+        remove_post_type_support('page', 'editor');
     }
 }

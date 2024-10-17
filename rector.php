@@ -11,44 +11,71 @@ use Rector\Php74\Rector\Closure\ClosureToArrowFunctionRector;
 use Rector\Php74\Rector\LNumber\AddLiteralSeparatorToNumberRector;
 use Rector\Php74\Rector\Property\RestoreDefaultNullToNullableTypePropertyRector;
 use Rector\Php74\Rector\Property\TypedPropertyRector;
+use Rector\Php80\Rector\Class_\ClassPropertyAssignToConstructorPromotionRector;
+use Rector\Php80\Rector\FunctionLike\MixedTypeRector;
+use Rector\Php81\Rector\Array_\FirstClassCallableRector;
+use Rector\Php81\Rector\Class_\MyCLabsClassToEnumRector;
+use Rector\Php81\Rector\ClassMethod\NewInInitializerRector;
+use Rector\Php81\Rector\FuncCall\NullToStrictStringFuncCallArgRector;
+use Rector\Php81\Rector\MethodCall\MyCLabsMethodCallToEnumConstRector;
+use Rector\Php81\Rector\Property\ReadOnlyPropertyRector;
 use Rector\Set\ValueObject\LevelSetList;
 use Rector\Transform\Rector\ClassMethod\ReturnTypeWillChangeRector;
 
-return static function (RectorConfig $config): void {
+return RectorConfig::configure()
     # Options
-    $config->importNames();
-    $config->importShortClasses();
+    // ->withImportNames()
 
     # Paths
-    $config->paths([
+    ->withPaths([
         __DIR__ . '/src',
         __DIR__ . '/tests',
-    ]);
+    ])
+
+    ->withRules([
+        // MyCLabsClassToEnumRector::class,
+        // MyCLabsMethodCallToEnumConstRector::class,
+        FirstClassCallableRector::class,
+    ])
 
     # Sets
-    $config->sets([LevelSetList::UP_TO_PHP_74]);
+    // ->withSets([LevelSetList::UP_TO_PHP_81])
 
-    # Disabled
-    $config->skip([
-        # From PHP
-        AddDefaultValueForUndefinedVariableRector::class,
-        AddLiteralSeparatorToNumberRector::class,
+    # Disable
+    ->withSkip([
+        # PHP 8.1
+        NewInInitializerRector::class,
+        NullToStrictStringFuncCallArgRector::class,
+        ReadOnlyPropertyRector::class,
+        ClassPropertyAssignToConstructorPromotionRector::class,
+
+        # PHP 8.0
+        MixedTypeRector::class,
+
+        # PHP 7.4
+        // AddLiteralSeparatorToNumberRector::class,
         ClosureToArrowFunctionRector::class,
-        CountOnNullRector::class,
         RestoreDefaultNullToNullableTypePropertyRector::class,
+
+        # PHP 7.1
+        // CountOnNullRector::class,
+
+        # PHP 7.0
         ThisCallOnStaticMethodToStaticCallRector::class,
-    ]);
+
+        # PHP 5.6
+        // AddDefaultValueForUndefinedVariableRector::class,
+    ])
 
     # PHP
-    $config->ruleWithConfiguration(TypedPropertyRector::class, [
-        TypedPropertyRector::INLINE_PUBLIC => true,
-    ]);
+    // ->withConfiguredRule(TypedPropertyRector::class, [
+    //     TypedPropertyRector::INLINE_PUBLIC => true,
+    // ])
 
     # Coding Style
-    $config->rule(AddArrayDefaultToArrayPropertyRector::class);
+    // ->withRules([AddArrayDefaultToArrayPropertyRector::class])
 
     # Transform
-    $config->ruleWithConfiguration(ReturnTypeWillChangeRector::class, [
+    ->withConfiguredRule(ReturnTypeWillChangeRector::class, [
         // methods
     ]);
-};

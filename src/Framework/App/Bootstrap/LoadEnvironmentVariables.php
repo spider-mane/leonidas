@@ -16,7 +16,7 @@ class LoadEnvironmentVariables implements ExtensionBootProcessInterface
     {
         Env::$options |= Env::USE_ENV_ARRAY;
 
-        $env = Dotenv::createMutable($extension->absPath());
+        $env = Dotenv::createImmutable($extension->absPath());
 
         $env->load();
 

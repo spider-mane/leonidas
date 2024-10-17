@@ -20,7 +20,7 @@ class PageRepository extends AbstractPostEntityRepository implements PageReposit
 
     public function select(int $id): ?PageInterface
     {
-        return $this->manager->select($id);
+        return $this->manager->byId($id);
     }
 
     public function whereIds(int ...$ids): PageCollectionInterface
@@ -30,7 +30,7 @@ class PageRepository extends AbstractPostEntityRepository implements PageReposit
 
     public function selectName(string $name): ?PageInterface
     {
-        return $this->manager->selectName($name);
+        return $this->manager->byName($name);
     }
 
     public function whereNames(string ...$names): PageCollectionInterface
@@ -40,12 +40,12 @@ class PageRepository extends AbstractPostEntityRepository implements PageReposit
 
     public function whereParent(?PageInterface $parent): PageCollectionInterface
     {
-        return $this->manager->whereParentId($parent->getId());
+        return $this->manager->whereParent($parent->getId());
     }
 
     public function whereParentId(int $parentId): PageCollectionInterface
     {
-        return $this->manager->whereParentId($parentId);
+        return $this->manager->whereParent($parentId);
     }
 
     public function query(array $args): PageCollectionInterface

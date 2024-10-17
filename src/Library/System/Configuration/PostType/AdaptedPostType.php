@@ -184,7 +184,7 @@ class AdaptedPostType implements PostTypeInterface
         return $this->postType->show_in_menu;
     }
 
-    public function getOptions(): array
+    public function getExtra(): array
     {
         return $this->options;
     }

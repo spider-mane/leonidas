@@ -17,6 +17,7 @@ use Leonidas\Library\System\Model\Abstracts\Post\MutableContentPostModelTrait;
 use Leonidas\Library\System\Model\Abstracts\Post\MutableDatablePostModelTrait;
 use Leonidas\Library\System\Model\Abstracts\Post\MutablePingablePostModelTrait;
 use Leonidas\Library\System\Model\Abstracts\Post\MutablePostModelTrait;
+use Leonidas\Library\System\Model\Abstracts\Post\MutableTitledTrait;
 use Leonidas\Library\System\Model\Abstracts\Post\PolymorphicPostModelTrait;
 use Leonidas\Library\System\Model\Abstracts\Post\RestrictablePostModelTrait;
 use Leonidas\Library\System\Model\Abstracts\Post\ValidatesPostTypeTrait;
@@ -35,6 +36,7 @@ class Post implements PostInterface
     use MutablePingablePostModelTrait;
     use MutablePostModelTrait;
     use MutablePostTrait;
+    use MutableTitledTrait;
     use PolymorphicPostModelTrait;
     use RestrictablePostModelTrait;
     use ValidatesPostTypeTrait;

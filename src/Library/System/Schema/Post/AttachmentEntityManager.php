@@ -2,46 +2,83 @@
 
 namespace Leonidas\Library\System\Schema\Post;
 
+use Leonidas\Contracts\System\Schema\EntityCollectionFactoryInterface;
 use Leonidas\Contracts\System\Schema\Post\AttachmentEntityManagerInterface;
+use Leonidas\Contracts\System\Schema\Post\PostConverterInterface;
+use Leonidas\Contracts\System\Schema\Post\QueryContextResolverInterface;
+use Leonidas\Contracts\System\Schema\Post\QueryFactoryInterface;
+use Leonidas\Contracts\System\Schema\Post\RelatablePostKeyInterface;
 
 class AttachmentEntityManager extends PostEntityManager implements AttachmentEntityManagerInterface
 {
-    public function whereAttachedToPost(int $id): object
-    {
-        return $this->query([
-            'post_parent' => $id,
-            'orderby' => 'menu_order',
-            'order' => 'ASC',
-        ]);
+    public function __construct(
+        protected readonly string $mimeType,
+        PostConverterInterface $postConverter,
+        EntityCollectionFactoryInterface $collectionFactory,
+        RelatablePostKeyInterface $keyResolver,
+        ?QueryFactoryInterface $queryFactory = null,
+        ?QueryContextResolverInterface $contextResolver = null,
+        array $entryMap = []
+    ) {
+        parent::__construct(
+            'attachment',
+            $postConverter,
+            $collectionFactory,
+            $keyResolver,
+            $queryFactory,
+            $contextResolver,
+            $entryMap
+        );
     }
 
-    public function update(int $id, array $data): void
+    public function byAttachedToPost(int $id): ?object
     {
-        $viewData = $data['view_data']
-            ?? $data['meta_input']['_wp_attachment_metadata']
-            ?? [];
+        return $this->single(['post_parent' => $id]);
+    }
 
-        parent::update($id, $data);
+    public function whereAttachedToPost(int $id): object
+    {
+        return $this->query(['post_parent' => $id]);
+    }
 
-        if ($viewData) {
-            wp_update_attachment_metadata($id, $viewData);
+    protected function getInputSpecialKeys(): array
+    {
+        return [
+            'file' => null,
+            'metadata' => null,
+        ] + parent::getInputSpecialKeys();
+    }
+
+    protected function doInputActions(int $id, array $data): void
+    {
+        if ($file = $data['file']) {
+            update_attached_file($id, $file);
         }
+
+        if ($metadata = $data['metadata']) {
+            wp_update_attachment_metadata($id, $metadata);
+        }
+
+        parent::doInputActions($id, $data);
+    }
+
+    protected function getDefaultEntries(): array
+    {
+        return [
+            'file' => 'meta:_wp_attached_file',
+            'alt' => 'meta:_wp_attachment_image_alt',
+            'metadata' => 'meta:_wp_attachment_metadata',
+        ] + parent::getDefaultEntries();
     }
 
     protected function normalizeQueryArgs($args): array
     {
-        return parent::normalizeQueryArgs($args + [
+        return [
+            'post_mime_type' => $this->mimeType,
+        ] + parent::normalizeQueryArgs($args) + [
             'post_status' => 'inherit',
-        ]);
-    }
-
-    protected function normalizeDataForEntry(array $data, int $id = 0): array
-    {
-        unset(
-            $data['view_data'],
-            $data['meta_input']['_wp_attachment_metadata']
-        );
-
-        return parent::normalizeDataForEntry($data, $id);
+            'orderby' => 'menu_order',
+            'order' => 'ASC',
+        ];
     }
 }

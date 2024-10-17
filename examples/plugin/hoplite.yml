@@ -1,0 +1,11 @@
+abstract_dir: true
+facades: app/Access
+
+make:
+  hook:
+    path: app/Hooks
+
+  model:
+    contracts: app/Contracts/Models
+    namespace: app/Models
+    bootstrap: app/Bootstrap/RegisterModelServices.php

@@ -11,12 +11,16 @@ class Taxonomies extends TaxonomyRegistrationModule
 {
     protected function taxonomies(): array
     {
-        return $this->factory()->createMany($this->getTaxonomyResource());
+        return $this->factory()->createMany($this->getTaxonomyConfig());
     }
 
-    protected function getTaxonomyResource(): array
+    protected function getTaxonomyConfig(): array
     {
-        return $this->getConfig($this->taxonomyResourceKey());
+        $config = $this->getConfig($this->taxonomyConfigKey());
+
+        unset($config['@override']);
+
+        return $config;
     }
 
     protected function factory(): TaxonomyFactoryInterface
@@ -33,7 +37,7 @@ class Taxonomies extends TaxonomyRegistrationModule
             : null;
     }
 
-    protected function taxonomyResourceKey(): string
+    protected function taxonomyConfigKey(): string
     {
         return 'taxonomies';
     }

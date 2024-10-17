@@ -1,0 +1,5 @@
+@use 'sass:meta';
+
+.\@leonidas {
+  @include meta.load-css('main');
+}

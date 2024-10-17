@@ -29,7 +29,7 @@ class AdminNoticeInjector extends AbstractFormDataProcessor implements FormDataP
     {
         foreach ($results as $field => $result) {
             foreach ($result->ruleViolations() as $violation) {
-                if ($data = $this->getData($violation) ?? false) {
+                if ($data = $this->getData($violation)) {
                     $this->repository->add(new StandardAdminNotice(
                         $data['id'],
                         $data['message'],
@@ -45,9 +45,9 @@ class AdminNoticeInjector extends AbstractFormDataProcessor implements FormDataP
         return null;
     }
 
-    protected function getData(string $key): array
+    protected function getData(string $key): array|false
     {
-        return $this->data[$key];
+        return $this->data[$key] ?? false;
     }
 
     protected function getNoticePolicy(): ServerRequestPolicyInterface

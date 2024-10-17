@@ -2,7 +2,7 @@
 
 namespace Leonidas\Framework\Provider;
 
-use Leonidas\Library\System\Schema\Post\RelatablePostKeys;
+use Leonidas\Library\System\Schema\Post\BasicRelatablePostKeys;
 use Panamax\Contracts\ServiceFactoryInterface;
 use Panamax\Factories\AbstractServiceFactory;
 use Psr\Container\ContainerInterface;
@@ -11,6 +11,6 @@ class RelatablePostKeyProvider extends AbstractServiceFactory implements Service
 {
     public function create(ContainerInterface $container, array $args = [])
     {
-        return new RelatablePostKeys($args['prefix'] ?? 'post:');
+        return new BasicRelatablePostKeys();
     }
 }

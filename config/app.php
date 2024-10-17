@@ -22,7 +22,6 @@ return [
 
         # Framework
         Leonidas\Framework\Module\AdminScreenNoticesHandler::class,
-        Leonidas\Framework\Module\PolyRelatablePostTypeParity::class,
 
         # Plugin
         Leonidas\Plugin\Module\AdminAssets::class,
@@ -42,8 +41,6 @@ return [
         Leonidas\Framework\Provider\League\MenuPageRegistrarServiceProvider::class,
         Leonidas\Framework\Provider\League\MetaboxRegistrarServiceProvider::class,
         Leonidas\Framework\Provider\League\OptionRepositoryServiceProvider::class,
-        Leonidas\Framework\Provider\League\PolyRelatablePostTypeRegistrarServiceProvider::class,
-        Leonidas\Framework\Provider\League\PolyRelatablePostTypeRepositoryServiceProvider::class,
         Leonidas\Framework\Provider\League\RelatablePostKeysServiceProvider::class,
         Leonidas\Framework\Provider\League\SettingRegistrarServiceProvider::class,
         Leonidas\Framework\Provider\League\SettingsFieldRegistrarServiceProvider::class,

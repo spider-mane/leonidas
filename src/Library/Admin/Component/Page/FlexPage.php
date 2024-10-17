@@ -27,9 +27,9 @@ class FlexPage extends MenuPage implements FlexPageInterface
         int $position,
         AdminPageLayoutInterface $layout,
         LoadErrorPageInterface $loadErrorPage,
-        ?string $iconUrl,
+        ?string $iconUrl = null,
         ?string $capability = null,
-        ?string $titleInSubmenu,
+        ?string $titleInSubmenu = null,
         ?AdminTitleResolverInterface $adminTitleResolver = null,
         ?ParentFileResolverInterface $parentFileResolver = null,
         ?SubmenuFileResolverInterface $subMenuFileResolver = null

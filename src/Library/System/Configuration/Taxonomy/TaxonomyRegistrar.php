@@ -5,9 +5,9 @@ namespace Leonidas\Library\System\Configuration\Taxonomy;
 use Leonidas\Contracts\System\Configuration\Taxonomy\TaxonomyInterface;
 use Leonidas\Contracts\System\Configuration\Taxonomy\TaxonomyOptionHandlerCollectionInterface;
 use Leonidas\Contracts\System\Configuration\Taxonomy\TaxonomyRegistrarInterface;
-use Leonidas\Library\System\Configuration\Abstracts\AbstractSystemModelTypeRegistrar;
+use Leonidas\Library\System\Configuration\Abstracts\AbstractModelConfigurationRegistrar;
 
-class TaxonomyRegistrar extends AbstractSystemModelTypeRegistrar implements TaxonomyRegistrarInterface
+class TaxonomyRegistrar extends AbstractModelConfigurationRegistrar implements TaxonomyRegistrarInterface
 {
     protected ?TaxonomyOptionHandlerCollectionInterface $optionHandlers = null;
 
@@ -28,7 +28,7 @@ class TaxonomyRegistrar extends AbstractSystemModelTypeRegistrar implements Taxo
             register_taxonomy_for_object_type($name, $type);
         }
 
-        $registered->options = $taxonomy->getOptions();
+        $registered->extra = $taxonomy->getExtra();
 
         if (isset($this->optionHandlers)) {
             $this->registerOptions($taxonomy);
@@ -45,15 +45,21 @@ class TaxonomyRegistrar extends AbstractSystemModelTypeRegistrar implements Taxo
     protected function getArgs(TaxonomyInterface $taxonomy)
     {
         $args = [
+            // core
+            "default_term" => $taxonomy->getDefaultTerm(),
+            "update_count_callback" => $taxonomy->getUpdateCountCallback(),
+            "sort" => $taxonomy->shouldBeSorted(),
+            "args" => $taxonomy->getArgs(),
+
+            // web
             "show_tagcloud" => $taxonomy->isAllowedInTagCloud(),
+
+            // admin
+            "show_in_menu" => $taxonomy->isAllowedInMenu(),
             "show_in_quick_edit" => $taxonomy->isAllowedInQuickEdit(),
             "show_admin_column" => $taxonomy->canHaveAdminColumn(),
             "meta_box_cb" => $taxonomy->getMetaBoxCb(),
             "meta_box_sanitize_cb" => $taxonomy->getMetaBoxSanitizeCb(),
-            "update_count_callback" => $taxonomy->getUpdateCountCallback(),
-            "default_term" => $taxonomy->getDefaultTerm(),
-            "sort" => $taxonomy->shouldBeSorted(),
-            "args" => $taxonomy->getArgs(),
         ] + $this->getBaseArgs($taxonomy);
 
         return array_filter($args, fn ($arg) => $arg !== null);
@@ -61,7 +67,7 @@ class TaxonomyRegistrar extends AbstractSystemModelTypeRegistrar implements Taxo
 
     protected function registerOptions(TaxonomyInterface $taxonomy)
     {
-        foreach ($taxonomy->getOptions() as $option => $value) {
+        foreach ($taxonomy->getExtra() as $option => $value) {
             if ($this->optionHandlers->has($option)) {
                 $this->optionHandlers->get($option)->handle($taxonomy, $value);
             }

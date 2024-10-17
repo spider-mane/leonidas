@@ -14,6 +14,11 @@ class GuzzleServerRequestServiceProvider extends AbstractLeagueServiceFactory
         return 'server_request';
     }
 
+    protected function aliases(): array
+    {
+        return ['serverRequest'];
+    }
+
     protected function types(): array
     {
         return [ServerRequestInterface::class];

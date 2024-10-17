@@ -3,7 +3,7 @@
 
 # Local development files
 *.cache
-/@playground
+/@playground*
 /build/
 /dist/
 /var/

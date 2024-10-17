@@ -20,7 +20,7 @@ class PostRepository extends AbstractPostEntityRepository implements PostReposit
 
     public function select(int $id): ?PostInterface
     {
-        return $this->manager->select($id);
+        return $this->manager->byId($id);
     }
 
     public function whereIds(int ...$ids): PostCollectionInterface
@@ -30,7 +30,7 @@ class PostRepository extends AbstractPostEntityRepository implements PostReposit
 
     public function selectName(string $name): ?PostInterface
     {
-        return $this->manager->selectName($name);
+        return $this->manager->byName($name);
     }
 
     public function whereNames(string ...$names): PostCollectionInterface

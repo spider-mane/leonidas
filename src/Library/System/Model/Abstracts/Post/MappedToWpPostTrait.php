@@ -18,7 +18,7 @@ trait MappedToWpPostTrait
         $this->post->{$key} = $value;
     }
 
-    protected function mirror(string $local, $localVal, string $mapped, $mappedVal): void
+    protected function mirror(string $local, mixed $localVal, string $mapped, mixed $mappedVal): void
     {
         $this->{$local} = $localVal;
         $this->post->{$mapped} = $mappedVal;

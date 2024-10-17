@@ -52,7 +52,7 @@ abstract class AbstractTwigView implements ViewInterface
         $env = new Environment($loader, [
             'autoescape' => false,
             'cache' => $this->abspath(self::CACHE_DIR),
-            'debug' => constant('LEONIDAS_DEVELOPMENT') ?? false,
+            'debug' => $this->isDevEnv(),
         ]);
 
         foreach (self::EXTENSIONS as $extension) {
@@ -65,5 +65,10 @@ abstract class AbstractTwigView implements ViewInterface
     private function abspath(string $sub = ''): string
     {
         return dirname(__DIR__, self::DEPTH) . $sub;
+    }
+
+    private function isDevEnv(): bool
+    {
+        return defined($check = 'LEONIDAS_DEVELOPMENT') && constant($check);
     }
 }

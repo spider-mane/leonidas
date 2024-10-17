@@ -19,6 +19,7 @@ use WebTheory\Collection\Fusion\Intersection;
 use WebTheory\Collection\Fusion\Merger;
 use WebTheory\Collection\Json\BasicJsonSerializer;
 use WebTheory\Collection\Kernel\CollectionKernel;
+use WebTheory\Collection\Pointer\PointerController;
 use WebTheory\Collection\Query\Operation\Operations;
 use WebTheory\Collection\Resolution\PropertyResolver;
 use WP_Query;
@@ -45,6 +46,7 @@ class PostQueryKernel extends CollectionKernel implements CollectionKernelInterf
         $this->converter = $converter;
         $this->objectComparator = $objectComparator;
 
+        $this->pointer = new PointerController();
         $this->conversionArchive = new PostConversionArchive();
         $this->propertyResolver = new PropertyResolver($accessors);
         $this->collectionComparator = new CollectionComparator($objectComparator);

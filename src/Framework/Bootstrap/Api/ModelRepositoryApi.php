@@ -23,6 +23,7 @@ class ModelRepositoryApi
 {
     public function __construct(
         protected ServiceContainerInterface $container,
+        protected string $models,
         protected string $contracts = ''
     ) {
         //
@@ -30,27 +31,59 @@ class ModelRepositoryApi
 
     public function register(string $model, string $name, string $schema, array $entries = []): void
     {
+        $model = $this->resolveModelBase($model);
+
         $this->container->share(
             $this->getRepositoryType($model),
-            $this->getModelRepositoryFactory($model, $name, $schema, $entries)
+            $this->getRepositoryFactory(
+                $model,
+                $name,
+                $schema,
+                $entries,
+            )
         );
     }
 
-    protected function getModelRepositoryFactory(string $model, string $name, string $schema, array $entries): Closure
+    public function registerPost(string $model, string $name, array $entries = []): void
+    {
+        $this->register($model, $name, 'post', $entries);
+    }
+
+    public function registerAttachment(string $model, string $type, array $entries = []): void
+    {
+        $this->register($model, $type, 'attachment', $entries);
+    }
+
+    public function registerTerm(string $model, string $name, array $entries = []): void
+    {
+        $this->register($model, $name, 'term', $entries);
+    }
+
+    public function registerUser(string $model, string $name, array $entries = []): void
+    {
+        $this->register($model, $name, 'user', $entries);
+    }
+
+    public function registerComment(string $model, string $name, array $entries = []): void
+    {
+        $this->register($model, $name, 'comment', $entries);
+    }
+
+    protected function getRepositoryFactory(string $model, string $name, string $schema, array $entries): Closure
     {
         return match ($schema) {
-            'post' => $this->postModelRepository($model, $name, $entries),
-            'attachment' => $this->attachmentModelRepository($model, $name, $entries),
-            'term' => $this->termModelRepository($model, $name, $entries),
-            'user' => $this->userModelRepository($model, $name, $entries),
-            'comment' => $this->commentModelRepository($model, $name, $entries),
+            'post' => $this->postRepository($model, $name, $entries),
+            'attachment' => $this->attachmentRepository($model, $name, $entries),
+            'term' => $this->termRepository($model, $name, $entries),
+            'user' => $this->userRepository($model, $name, $entries),
+            'comment' => $this->commentRepository($model, $name, $entries),
             default => throw new UnexpectedValueException(
                 "Invalid schema: \"{$schema}\""
             )
         };
     }
 
-    protected function postModelRepository(string $model, string $type, array $entries): Closure
+    protected function postRepository(string $model, string $type, array $entries): Closure
     {
         $repositoryClass = $this->getRepositoryClass($model);
         $modelType = $this->getModelType($model);
@@ -72,7 +105,7 @@ class ModelRepositoryApi
         ));
     }
 
-    protected function attachmentModelRepository(string $model, string $type, array $entries): Closure
+    protected function attachmentRepository(string $model, string $type, array $entries): Closure
     {
         $repositoryClass = $this->getRepositoryClass($model);
         $modelType = $this->getModelType($model);
@@ -94,7 +127,7 @@ class ModelRepositoryApi
         ));
     }
 
-    protected function termModelRepository(string $model, string $type, array $entries): Closure
+    protected function termRepository(string $model, string $type, array $entries): Closure
     {
         $repositoryClass = $this->getRepositoryClass($model);
         $modelType = $this->getModelType($model);
@@ -113,7 +146,7 @@ class ModelRepositoryApi
         ));
     }
 
-    protected function userModelRepository(string $model, string $type, array $entries): Closure
+    protected function userRepository(string $model, string $type, array $entries): Closure
     {
         $repositoryClass = $this->getRepositoryClass($model);
         $modelType = $this->getModelType($model);
@@ -127,7 +160,7 @@ class ModelRepositoryApi
         ));
     }
 
-    protected function commentModelRepository(string $model, string $type, array $entries): Closure
+    protected function commentRepository(string $model, string $type, array $entries): Closure
     {
         $repositoryClass = $this->getRepositoryClass($model);
         $modelType = $this->getModelType($model);
@@ -167,6 +200,11 @@ class ModelRepositoryApi
     protected function getModelType(string $model): string
     {
         return $this->getType($model);
+    }
+
+    protected function resolveModelBase(string $model): string
+    {
+        return "{$this->models}\\{$model}\\{$model}";
     }
 
     protected function getRepositoryClass(string $model): string

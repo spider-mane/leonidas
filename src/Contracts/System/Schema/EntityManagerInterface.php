@@ -4,7 +4,7 @@ namespace Leonidas\Contracts\System\Schema;
 
 interface EntityManagerInterface
 {
-    public function select(int $id): ?object;
+    public function byId(int $id): ?object;
 
     public function whereIds(int ...$ids): object;
 

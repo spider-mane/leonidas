@@ -17,7 +17,7 @@ class ImageRepository extends AbstractAttachmentEntityRepository implements Imag
 
     public function select(int $id): ?ImageInterface
     {
-        return $this->manager->select($id);
+        return $this->manager->byId($id);
     }
 
     public function whereIds(int ...$ids): ImageCollectionInterface

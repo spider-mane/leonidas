@@ -21,11 +21,17 @@ abstract class PostTypeRegistrationModule extends Module implements ModuleInterf
     protected function doInitAction(): void
     {
         $this->registerPostTypes();
+        // $this->overrideBuiltinPostTypes();
     }
 
     protected function registerPostTypes(): void
     {
         $this->postTypeRegistrar()->registerMany(...$this->postTypes());
+    }
+
+    protected function overrideBuiltinPostTypes(): void
+    {
+        $this->postTypeRegistrar()->overrideMany(...$this->postTypeOverrides());
     }
 
     protected function postTypeRegistrar(): PostTypeRegistrarInterface
@@ -39,7 +45,12 @@ abstract class PostTypeRegistrationModule extends Module implements ModuleInterf
     }
 
     /**
-     * @return PostTypeInterface[]
+     * @return list<PostTypeInterface>
      */
     abstract protected function postTypes(): array;
+
+    /**
+     * @return list<PostTypeInterface>
+     */
+    abstract protected function postTypeOverrides(): array;
 }

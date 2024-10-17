@@ -12,22 +12,22 @@ class AuthorRepository extends AbstractUserModelRepository implements AuthorRepo
 {
     public function select(int $id): ?AuthorInterface
     {
-        return $this->manager->select($id);
+        return $this->manager->byId($id);
     }
 
     public function selectNicename(string $slug): ?AuthorInterface
     {
-        return $this->manager->selectNicename($slug);
+        return $this->manager->byNicename($slug);
     }
 
     public function selectEmail(string $email): ?AuthorInterface
     {
-        return $this->manager->selectEmail($email);
+        return $this->manager->byEmail($email);
     }
 
     public function selectLogin(string $login): ?AuthorInterface
     {
-        return $this->manager->selectLogin($login);
+        return $this->manager->byLogin($login);
     }
 
     public function whereIds(int ...$ids): AuthorCollectionInterface

@@ -41,7 +41,7 @@ abstract class HopliteCommand extends Command
         parent::__construct($name);
     }
 
-    public function run(InputInterface $input, OutputInterface $output)
+    public function run(InputInterface $input, OutputInterface $output): int
     {
         $this->input = $input;
         $this->output = new SymfonyStyle($input, $output);

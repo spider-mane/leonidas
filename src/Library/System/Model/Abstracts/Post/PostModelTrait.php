@@ -31,11 +31,6 @@ trait PostModelTrait
         return $this->post->post_name;
     }
 
-    public function getTitle(): string
-    {
-        return $this->post->post_title;
-    }
-
     public function getPostType(): PostTypeInterface
     {
         return $this->postType ??= AdaptedPostType::fromName(

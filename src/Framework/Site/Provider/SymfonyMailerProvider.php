@@ -9,6 +9,8 @@ use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Mailer\Mailer;
 use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mailer\Transport\Smtp\EsmtpTransport;
+use Symfony\Component\Mailer\Transport\Smtp\EsmtpTransportFactory;
 use Symfony\Component\Mailer\Transport\Smtp\SmtpTransport;
 use Symfony\Component\Mailer\Transport\Smtp\Stream\AbstractStream;
 use Symfony\Component\Mailer\Transport\TransportInterface;
@@ -36,11 +38,21 @@ class SymfonyMailerProvider extends AbstractServiceFactory implements ServiceFac
 
     public function defaultTransport(ContainerInterface $container, array $args): TransportInterface
     {
-        return new SmtpTransport(
-            $this->getStream($container, $args),
+        $auth = $args['auth'];
+        $transport = new EsmtpTransport(
+            $args['host'],
+            $args['port'],
+            null,
             $this->getEventDispatcher($container, $args),
-            $this->getLogger($container, $args)
+            $this->getLogger($container, $args),
+            $this->getStream($container, $args),
+            $args['authenticators'] ?? null
         );
+
+        $transport->setUsername($auth['username']);
+        $transport->setPassword($auth['password']);
+
+        return $transport;
     }
 
     protected function getMessageBus(ContainerInterface $container, array $args = []): ?MessageBusInterface

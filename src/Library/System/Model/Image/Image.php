@@ -15,6 +15,7 @@ use Leonidas\Library\System\Model\Abstracts\Post\MutableCommentablePostModelTrai
 use Leonidas\Library\System\Model\Abstracts\Post\MutableDatablePostModelTrait;
 use Leonidas\Library\System\Model\Abstracts\Post\MutablePingablePostModelTrait;
 use Leonidas\Library\System\Model\Abstracts\Post\MutablePostModelTrait;
+use Leonidas\Library\System\Model\Abstracts\Post\MutableTitledTrait;
 use Leonidas\Library\System\Model\Abstracts\Post\PolymorphicPostModelTrait;
 use Leonidas\Library\System\Model\Abstracts\Post\RestrictablePostModelTrait;
 use Leonidas\Library\System\Model\Abstracts\Post\ValidatesPostTypeTrait;
@@ -23,14 +24,15 @@ use WP_Post;
 class Image implements ImageInterface
 {
     use AllAccessGrantedTrait;
-    use MutableAuthoredPostModelTrait;
     use FilterablePostModelTrait;
     use LazyLoadableRelationshipsTrait;
     use MimePostModelTrait;
+    use MutableAuthoredPostModelTrait;
     use MutableCommentablePostModelTrait;
     use MutableDatablePostModelTrait;
     use MutablePingablePostModelTrait;
     use MutablePostModelTrait;
+    use MutableTitledTrait;
     use PolymorphicPostModelTrait;
     use RestrictablePostModelTrait;
     use ValidatesPostTypeTrait;

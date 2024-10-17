@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Leonidas\Library\System\Schema\Post;
 
 use Leonidas\Contracts\System\Schema\EntityCollectionFactoryInterface;
@@ -9,6 +11,7 @@ use Leonidas\Contracts\System\Schema\Post\QueryContextResolverInterface;
 use Leonidas\Contracts\System\Schema\Post\QueryFactoryInterface;
 use Leonidas\Contracts\System\Schema\Post\RelatablePostKeyInterface;
 use Leonidas\Library\System\Schema\Abstracts\NoCommitmentsTrait;
+use Leonidas\Library\System\Schema\Abstracts\UsesIdsAsStringsTrait;
 use Leonidas\Library\System\Schema\Abstracts\ThrowsExceptionOnWpErrorTrait;
 use WP_Post;
 use WP_Query;
@@ -17,24 +20,26 @@ class PostEntityManager implements PostEntityManagerInterface
 {
     use NoCommitmentsTrait;
     use ThrowsExceptionOnWpErrorTrait;
+    use UsesIdsAsStringsTrait;
 
-    protected ?QueryFactoryInterface $queryFactory = null;
+    protected readonly QueryContextResolverInterface $contextResolver;
 
-    protected QueryContextResolverInterface $contextResolver;
+    protected readonly array $entryMap;
+
+    protected readonly array $insertionStrategies;
 
     public function __construct(
-        protected string $postType,
-        protected PostConverterInterface $postConverter,
-        protected EntityCollectionFactoryInterface $collectionFactory,
-        protected RelatablePostKeyInterface $keyResolver,
-        ?QueryFactoryInterface $queryFactory = null,
+        protected readonly string $postType,
+        protected readonly PostConverterInterface $postConverter,
+        protected readonly EntityCollectionFactoryInterface $collectionFactory,
+        protected readonly RelatablePostKeyInterface $keyResolver,
+        protected readonly ?QueryFactoryInterface $queryFactory = null,
         ?QueryContextResolverInterface $contextResolver = null,
-        protected array $entryMap = []
+        array $entryMap = []
     ) {
-        if ($queryFactory) {
-            $this->queryFactory = $queryFactory;
-            $this->contextResolver = $contextResolver ?? new QueryContextResolver();
-        }
+        $this->contextResolver = $contextResolver ?? new QueryContextResolver();
+        $this->entryMap = $this->getDefaultEntries() + $entryMap;
+        $this->insertionStrategies = $this->defineInsertionStrategies();
     }
 
     public function fromGlobalQuery(): ?object
@@ -42,19 +47,29 @@ class PostEntityManager implements PostEntityManagerInterface
         return $this->queryFactory?->createQuery($GLOBALS['wp_query']);
     }
 
-    public function select(int $id): ?object
+    public function fromHomeQuery(): object
     {
-        return $this->single(['post__in' => [$id]]);
+        return $this->fromGlobalQuery();
     }
 
-    public function selectName(string $name): ?object
+    public function fromPost(WP_Post $post): object
     {
-        return $this->single(['post_name__in' => [$name]]);
+        return $this->convertEntity($post);
+    }
+
+    public function byId(int $id): ?object
+    {
+        return $this->single(['p' => $id]);
     }
 
     public function whereIds(int ...$ids): object
     {
         return $this->query(['post__in' => $ids]);
+    }
+
+    public function byName(string $name): ?object
+    {
+        return $this->single(['name' => $name]);
     }
 
     public function whereNames(string ...$names): object
@@ -72,14 +87,58 @@ class PostEntityManager implements PostEntityManagerInterface
         return $this->query(['author' => $user, 'post_status' => $status]);
     }
 
-    public function whereParentId(int $parentId): object
+    public function whereUserDrafted(int $user): object
     {
-        return $this->query(['post_parent' => $parentId]);
+        return $this->whereUserAndStatus($user, 'draft');
+    }
+
+    public function whereUserPublished(int $user): object
+    {
+        return $this->whereUserAndStatus($user, 'published');
+    }
+
+    public function whereParent(int $parent): object
+    {
+        return $this->query(['post_parent' => $parent]);
+    }
+
+    public function byChild(int $child): ?object
+    {
+        return ($id = $this->getPostField($child, 'post_parent'))
+            ? $this->byId((int) $id)
+            : null;
     }
 
     public function whereStatus(string $status): object
     {
         return $this->query(['post_status' => $status]);
+    }
+
+    /**
+     * @link https://developer.wordpress.org/reference/classes/wp_meta_query/__construct/
+     */
+    public function byMetaQuery(array $query): ?object
+    {
+        return $this->single(['meta_query' => $query]);
+    }
+
+    public function byMetaClause(array $clause): ?object
+    {
+        return $this->byMetaQuery([$clause]);
+    }
+
+    public function byMeta(string $key, string $operator, string|array $value): ?object
+    {
+        return $this->byMetaClause([
+            'key' => $key,
+            'value' => $value,
+            'compare' => $operator,
+        ]);
+    }
+
+    public function byHasMeta(string $key, string $value): ?object
+    {
+        return $this->byMeta($key, '=', $value);
     }
 
     /**
@@ -152,52 +211,131 @@ class PostEntityManager implements PostEntityManagerInterface
         return $this->whereTermsById($taxonomy, 'IN', $id);
     }
 
-    public function whereConnectedPostQuery(array $query): object
+    public function byFeaturedMedia(int $mediaId): ?object
     {
-        return $this->whereMetaQuery($this->normalizeConnectedPostQuery($query));
+        return $this->byHasMeta('_thumbnail_id', $this->stringifyId($mediaId));
     }
 
-    public function whereConnectedPostClause(array $clause): object
+    public function whereFeaturedMedia(int $mediaId): object
     {
-        return $this->whereConnectedPostQuery([$clause]);
+        return $this->whereHasMeta(
+            '_thumbnail_id',
+            $this->stringifyId($mediaId)
+        );
     }
 
-    public function whereConnectedPost(string $postType, string $operator, int|array $id): object
+    public function byForOnePostQuery(array $query): ?object
     {
-        return $this->whereConnectedPostClause([
-            'post_type' => $postType,
+        return $this->byMetaQuery($this->normalizeHasPostQuery($query));
+    }
+
+    public function byForOnePostClause(array $clause): ?object
+    {
+        return $this->byForOnePostQuery([$clause]);
+    }
+
+    public function byForOnePostCondition(string $as, string $operator, int|array $id): ?object
+    {
+        return $this->byForOnePostClause([
+            'post_type' => $as,
             'post_id' => $id,
             'compare' => $operator,
         ]);
     }
 
-    public function whereHasConnectedPost(string $postType, int ...$id): object
+    public function byForOnePost(string $as, int $id): ?object
     {
-        return $this->whereConnectedPost($postType, 'IN', $id);
+        return $this->byForOnePostCondition($as, '=', $id);
     }
 
-    public function whereConnectedPostsQuery(array $query): object
+    public function whereForOnePostQuery(array $query): object
     {
-        return $this->whereTaxQuery($this->normalizeConnectedPostsQuery($query));
+        return $this->whereMetaQuery(
+            $this->normalizeHasPostQuery($query)
+        );
     }
 
-    public function whereConnectedPostsClause(array $clause): object
+    public function whereForOnePostClause(array $clause): object
     {
-        return $this->whereConnectedPostsQuery([$clause]);
+        return $this->whereForOnePostQuery([$clause]);
     }
 
-    public function whereConnectedPosts(string $postType, string $operator, int|array $id): object
+    public function whereForOnePostCondition(string $as, string $operator, int|array $id): object
     {
-        return $this->whereConnectedPostsClause([
-            'post_type' => $postType,
+        return $this->whereForOnePostClause([
+            'post_type' => $as,
             'post_id' => $id,
-            'operator' => $operator,
+            'compare' => $operator,
         ]);
     }
 
-    public function whereHasConnectedPosts(string $postType, int ...$id): object
+    public function whereForOnePost(string $as, int $id): object
     {
-        return $this->whereConnectedPosts($postType, 'IN', $id);
+        return $this->whereForOnePostCondition($as, '=', $id);
+    }
+
+    public function byForManyPostsQuery(array $query): ?object
+    {
+        return $this->byForOnePostQuery($query);
+    }
+
+    public function byForManyPostsClause(array $clause): ?object
+    {
+        return $this->byForOnePostClause($clause);
+    }
+
+    public function byForManyPostsCondition(string $as, string $operator, int|array $id): ?object
+    {
+        return $this->byForOnePostCondition($as, $operator, $id);
+    }
+
+    public function byForManyPosts(string $as, int $id): ?object
+    {
+        return $this->byForOnePost($as, $id);
+    }
+
+    public function whereForManyPostsQuery(array $query): object
+    {
+        return $this->whereForOnePostQuery($query);
+    }
+
+    public function whereForManyPostsClause(array $clause): object
+    {
+        return $this->whereForOnePostClause($clause);
+    }
+
+    public function whereForManyPostsCondition(string $as, string $operator, int|array $id): object
+    {
+        return $this->whereForOnePostCondition($as, $operator, $id);
+    }
+
+    public function whereForManyPosts(string $as, int $id): object
+    {
+        return $this->whereForOnePost($as, $id);
+    }
+
+    public function byHasOnePost(int $id, string $as = null): ?object
+    {
+        return ($resolved = $this->getReferencedOne($id))
+            ? $this->byId($resolved)
+            : null;
+    }
+
+    public function whereHasOnePost(int $id, string $as = null): object
+    {
+        return ($resolved = $this->getReferencedMany($id))
+            ? $this->whereIds(...$resolved)
+            : null;
+    }
+
+    public function byHasManyPosts(int $id, string $as = null): ?object
+    {
+        return $this->byHasOnePost($id);
+    }
+
+    public function whereHasManyPosts(int $id, string $as = null): object
+    {
+        return $this->whereHasOnePost($id);
     }
 
     public function all(): object
@@ -220,9 +358,9 @@ class PostEntityManager implements PostEntityManagerInterface
 
     public function single(array $args): ?object
     {
-        $posts = $this->getQuery($args)->get_posts();
-
-        return $posts ? $this->convertEntity($posts[0]) : null;
+        return ($posts = $this->getPosts($args))
+            ? $this->convertEntity(reset($posts))
+            : null;
     }
 
     /**
@@ -230,16 +368,37 @@ class PostEntityManager implements PostEntityManagerInterface
      */
     public function insert(array $data): void
     {
-        $this->throwExceptionIfWpError(
-            wp_insert_post($this->normalizeDataForEntry($data))
-        );
+        // $data = $this->normalizeDataForEntry($data);
+        // $polyInput = $this->extractPolyInput($data);
+
+        // $this->throwExceptionIfWpError($id = wp_insert_post($data));
+        // $this->processPolyMetaInput($id, $polyInput);
+
+        $extra = $this->extractArgsMapped($data, $this->getInputSpecialKeys());
+        $data = $this->normalizeDataForEntry($data);
+        $api = $this->extractArgsMapped($data, $this->getInputApiKeys());
+
+        $this->throwExceptionIfWpError($id = wp_insert_post($data));
+        $this->doInputActions($id, $api + $extra);
     }
 
+    /**
+     * @link https://developer.wordpress.org/reference/functions/wp_update_post/
+     */
     public function update(int $id, array $data): void
     {
-        $this->throwExceptionIfWpError(
-            wp_update_post($this->normalizeDataForEntry($data, $id))
-        );
+        // $data = $this->normalizeDataForEntry($data, $id);
+        // $polyInput = $this->extractPolyInput($data);
+
+        // $this->throwExceptionIfWpError(wp_update_post($data));
+        // $this->processPolyMetaInput($id, $polyInput);
+
+        $extra = $this->extractArgsMapped($data, $this->getInputSpecialKeys());
+        $data = $this->normalizeDataForEntry($data, $id);
+        $api = $this->extractArgsMapped($data, $this->getInputApiKeys());
+
+        $this->throwExceptionIfWpError(wp_update_post($data));
+        $this->doInputActions($id, $api + $extra);
     }
 
     public function delete(int $id): void
@@ -257,34 +416,79 @@ class PostEntityManager implements PostEntityManagerInterface
         wp_untrash_post($id);
     }
 
-    public function relatedPostTypeKey(string $postType): string
+    protected function getDefaultEntries(): array
     {
-        return $this->keyResolver->getPostTypeKey($postType);
+        return [
+            'thumbnail' => 'meta:_thumbnail_id',
+        ];
     }
 
-    public function relatedPostKey(string $postType): string
+    protected function relatedPostKey(string $as): string
     {
-        return $this->keyResolver->getPostKey($postType);
+        return $this->keyResolver->getPostKey($as);
     }
 
-    protected function stringify(int ...$ids): array
+    protected function referencedPostKey(?string $as = null): string
     {
-        return array_map(strval(...), $ids);
+        return $this->relatedPostKey($as ? $as : $this->postType);
+    }
+
+    protected function getReferencedOne(int $id, ?string $as = null): ?int
+    {
+        return ($value = $this->getPostMeta($id, $this->referencedPostKey($as)))
+            ? $this->normalizeId($value)
+            : null;
     }
 
     /**
-     * @param int|array<int> $id
-     *
-     * @return string|array<string>
+     * @return list<int>
      */
-    protected function stringifyMixed(int|array $id): string|array
+    protected function getReferencedMany(int $id, ?string $as = null): array
     {
-        return is_int($id) ? (string) $id : $this->stringify(...$id);
+        return $this->normalizeIds(
+            ...$this->getPostMetaSet($id, $this->referencedPostKey($as))
+        );
     }
 
     protected function getQuery(array $args): WP_Query
     {
         return new WP_Query($this->normalizeQueryArgs($args));
+    }
+
+    protected function getPosts(array $args): array
+    {
+        return $this->getQuery($this->normalizeQueryArgs($args))->posts;
+    }
+
+    protected function getPostField(int $id, string $field): string
+    {
+        return get_post_field($field, $id, 'raw');
+    }
+
+    protected function getPostMeta(int $id, string $key): ?string
+    {
+        return get_post_meta($id, $key, true) ?: null;
+    }
+
+    /**
+     * @return list<string>
+     */
+    protected function getPostMetaSet(int $id, string $key): array
+    {
+        return get_post_meta($id, $key, false) ?: [];
+    }
+
+    protected function normalizeDataForEntry(array $data, int $id = 0): array
+    {
+        $data = [
+            'ID' => $id,
+            'post_type' => $this->postType,
+            'post_parent' => is_post_type_hierarchical($this->postType)
+                ? $data['post_parent']
+                : 0,
+        ] + $data;
+
+        return $data + $this->normalizeMappedEntries($data);
     }
 
     protected function normalizeQueryArgs(array $args): array
@@ -294,12 +498,13 @@ class PostEntityManager implements PostEntityManagerInterface
         ] + $args + [
             'post_status' => 'publish',
             'posts_per_page' => -1,
+            // * Consider the following
             // 'orderby' => 'name',
             // 'order' => 'ASC',
         ];
     }
 
-    protected function normalizeConnectedPostQuery(array $query): array
+    protected function normalizeHasPostQuery(array $query): array
     {
         $relation = $this->extractClauseRelation($query);
 
@@ -315,20 +520,9 @@ class PostEntityManager implements PostEntityManagerInterface
         return $this->withClauseRelation($query, $relation);
     }
 
-    protected function normalizeConnectedPostsQuery(array $query): array
+    protected function extractPolyInput(array &$data): array
     {
-        $relation = $this->extractClauseRelation($query);
-
-        foreach ($query as &$clause) {
-            $clause = [
-                'field' => 'slug',
-                'include_children' => false,
-                'taxonomy' => $this->extractRelatedPostTypeKey($clause),
-                'terms' => $this->extractRelatedPost($clause),
-            ] + $clause;
-        }
-
-        return $this->withClauseRelation($query, $relation);
+        return $this->extractArg($data, 'poly_input', []);
     }
 
     protected function extractClauseRelation(array &$query): ?string
@@ -336,7 +530,7 @@ class PostEntityManager implements PostEntityManagerInterface
         return $this->extractArg($query, 'relation');
     }
 
-    protected function withClauseRelation(array $query, ?string $relation)
+    protected function withClauseRelation(array $query, ?string $relation): array
     {
         if ($relation) {
             $query['relation'] = $relation;
@@ -347,7 +541,7 @@ class PostEntityManager implements PostEntityManagerInterface
 
     protected function extractRelatedPostTypeKey(array &$clause): string
     {
-        return $this->relatedPostTypeKey(
+        return $this->relatedPostKey(
             $this->extractArg($clause, 'post_type')
         );
     }
@@ -362,7 +556,7 @@ class PostEntityManager implements PostEntityManagerInterface
      */
     protected function extractRelatedPost(array &$clause): string|array
     {
-        return $this->stringifyMixed($this->extractArg($clause, 'post_id'));
+        return $this->stringifyIdx($this->extractArg($clause, 'post_id'));
     }
 
     protected function extractArg(array &$args, string $key, mixed $default = null): mixed
@@ -374,31 +568,76 @@ class PostEntityManager implements PostEntityManagerInterface
         return $val;
     }
 
-    protected function normalizeDataForEntry(array $data, int $id = 0): array
+    protected function extractArgsMapped(array &$args, array $map): array
+    {
+        $extracted = [];
+
+        foreach ($map as $key => $default) {
+            $extracted[$key] = $this->extractArg($args, $key, $default);
+        }
+
+        return $extracted;
+    }
+
+    protected function getInputApiKeys(): array
     {
         return [
-            'ID' => $id,
-            'post_type' => $this->postType,
-            'post_parent' => is_post_type_hierarchical($this->postType)
-                ? $data['post_parent']
-                : 0,
-        ] + $this->normalizeMappedEntries($data);
+            'poly_input' => [],
+        ];
+    }
+
+    protected function getInputSpecialKeys(): array
+    {
+        return [
+            'thumbnail' => null
+        ];
+    }
+
+    protected function doInputActions(int $id, array $data): void
+    {
+        $this->processPolyMetaInput($id, $data['poly_input'] ?? []);
+    }
+
+    protected function processPolyMetaInput(int $id, array $input): void
+    {
+        foreach ($input as $key => $values) {
+            $values = is_array($values) ? $values : [$values];
+
+            foreach ($values as $value) {
+                update_post_meta($id, $key, $value);
+            }
+        }
+    }
+
+    protected function getInsertionStrategies(): array
+    {
+        return $this->insertionStrategies;
+    }
+
+    protected function defineInsertionStrategies(): array
+    {
+        return [
+            'meta' => $this->normalizeMetaMappedEntry(...),
+            'tax' => $this->normalizeTaxMappedEntry(...),
+            'poly' => $this->normalizePolyMappedEntry(...),
+            'has_one' => $this->normalizeHasOneMappedEntry(...),
+            'has_many' => $this->normalizeHasManyMappedEntry(...),
+            'for_one' => $this->normalizeForOneMappedEntry(...),
+            'for_many' => $this->normalizeForManyMappedEntry(...),
+        ];
     }
 
     protected function normalizeMappedEntries(array $data): array
     {
-        $methods = [
-            'meta' => $this->normalizeMetaMappedEntry(...),
-            'tax' => $this->normalizeTaxMappedEntry(...),
-            'one' => $this->normalizeOneMappedEntry(...),
-            'many' => $this->normalizeManyMappedEntry(...),
-        ];
+        $strategies = $this->getInsertionStrategies();
 
         foreach ($data as $prop => $val) {
-            $driver = $this->entryMap[$prop] ?? null;
+            $strategy = $this->entryMap[$prop] ?? null;
 
-            if (isset($driver)) {
-                $data = $methods[$driver]($data, $prop, $val);
+            if (isset($strategy)) {
+                $this->parsePropStrategy($prop, $strategy);
+
+                $data = $strategies[$strategy]($data, $prop, $val);
 
                 unset($data[$prop]);
 
@@ -407,6 +646,17 @@ class PostEntityManager implements PostEntityManagerInterface
         }
 
         return $data;
+    }
+
+    protected function parsePropStrategy(string &$prop, string &$strategy): void
+    {
+        $delim = ':';
+
+        if (str_contains($strategy, $delim)) {
+            $parts = explode($delim, $strategy, 2);
+            $prop = $parts[1];
+            $strategy = $parts[0];
+        }
     }
 
     protected function normalizeMetaMappedEntry(array $data, string $prop, mixed $val): array
@@ -423,41 +673,61 @@ class PostEntityManager implements PostEntityManagerInterface
         return $data;
     }
 
-    protected function normalizeOneMappedEntry(array $data, string $prop, mixed $val): array
+    protected function normalizePolyMappedEntry(array $data, string $prop, mixed $val): array
+    {
+        $data['poly_input'][$prop] = $val;
+
+        return $data;
+    }
+
+    protected function normalizeForOneMappedEntry(array $data, string $prop, mixed $val): array
     {
         return $this->normalizeMetaMappedEntry(
             $data,
             $this->relatedPostKey($prop),
-            (string) $val
+            $this->stringifyId($val)
         );
     }
 
-    protected function normalizeManyMappedEntry(array $data, string $prop, mixed $val): array
+    protected function normalizeForManyMappedEntry(array $data, string $prop, mixed $val): array
     {
-        return $this->normalizeTaxMappedEntry(
+        return $this->normalizePolyMappedEntry(
             $data,
-            $this->relatedPostTypeKey($prop),
-            $this->stringifyMixed($val)
+            $this->relatedPostKey($prop),
+            $this->stringifyIds($val)
         );
     }
 
-    protected function resolveFound($result): ?object
+    protected function normalizeHasOneMappedEntry(array $data, string $prop, mixed $val): array
     {
-        return $result instanceof WP_Post
-            ? $this->convertEntity($result)
-            : null;
+        $key = $this->referencedPostKey();
+
+        update_post_meta($val, $key, $this->stringifyId($data['ID']));
+
+        return $data;
     }
 
-    protected function convertEntity(WP_Post $post): object
+    protected function normalizeHasManyMappedEntry(array $data, string $prop, mixed $val): array
     {
-        return $this->postConverter->convert($post);
+        $key = $this->referencedPostKey();
+
+        foreach ($val as $post) {
+            update_post_meta($post, $key, $this->stringifyId($data['ID']));
+        };
+
+        return $data;
     }
 
     protected function getCollectionFromQuery(WP_Query $query): object
     {
         return $this->isQueryContext()
             ? $this->createQuery($query)
-            : $this->createCollection(...$query->get_posts());
+            : $this->createCollection(...$query->posts);
+    }
+
+    protected function convertEntity(WP_Post $post): object
+    {
+        return $this->postConverter->convert($post);
     }
 
     protected function isQueryContext(): bool

@@ -9,6 +9,7 @@ use Psr\Container\ContainerInterface;
 use ReflectionFunction;
 use ReflectionFunctionAbstract;
 use ReflectionMethod;
+use ReflectionNamedType;
 use ReflectionParameter;
 use Throwable;
 
@@ -113,7 +114,11 @@ class AutoInvoker implements AutoInvokerInterface
 
     protected function getMatchingService(ReflectionParameter $param): object
     {
-        $type = $param->getClass()->getName();
+        $type = $param->getType();
+
+        if ($type instanceof ReflectionNamedType) {
+            $type = $type->getName();
+        }
 
         return $this->container->get($this->aliases[$type] ?? $type);
     }
