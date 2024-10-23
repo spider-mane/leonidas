@@ -1,11 +1,26 @@
 const mix = require('laravel-mix');
 const yargs = require('yargs');
-const argv = yargs(process.argv.slice(2))
-  .options({
-    openBrowser: {type: 'boolean', default: false},
-  })
-  .parseSync();
+const dotenv = require('dotenv');
+const sass = require('sass-embedded');
+const dotenvExpand = require('dotenv-expand');
 
+// args
+let options = yargs(process.argv.slice(2))
+  .option('o', {alias: 'open-browser', type: 'boolean', default: false})
+  .option('n', {alias: 'notify', type: 'boolean', default: false});
+
+const argv = options.argv;
+
+// env
+dotenvExpand.expand(
+  dotenv.config({
+    path: '../.env',
+  })
+);
+
+const env = process.env;
+
+// config
 const root = '..';
 const vendor = `${root}/vendor`;
 const src = 'src';
@@ -52,9 +67,15 @@ mix
    *
    */
   .browserSync({
-    proxy: 'leonidas.test',
-    open: argv.open ?? false,
-    notify: false,
+    proxy: {
+      target: env.SERVER_NAME,
+      // ws: true,
+    },
+    host: env.HOST_IP_LOCAL ?? undefined,
+    port: env.BROWSERSYNC_PORT ?? undefined,
+    open: argv.openBrowser,
+    notify: argv.notify,
+    ghostMode: false,
     logLevel: 'debug',
     files: [
       'dist/**/*.js',
@@ -99,9 +120,11 @@ mix
    *
    *
    */
-  .sass('src/scss/main.scss', 'dist/css/leonidas.css', {
+  .sass('src/scss/scope.scss', 'dist/css/leonidas.css', {
     sassOptions: {
       outputStyle: 'expanded',
+      implementation: sass,
+      quietDeps: true,
     },
   })
 
@@ -136,7 +159,10 @@ mix
   )
   // trix
   .copy(
-    ['./node_modules/trix/dist/trix.js', './node_modules/trix/dist/trix.css'],
+    [
+      './node_modules/trix/dist/trix.esm.min.js',
+      './node_modules/trix/dist/trix.css',
+    ],
     'dist/lib/trix/'
   )
 
@@ -150,7 +176,7 @@ mix
    */
   .options({
     processCssUrls: false,
-    postCss: [require('tailwindcss')],
+    purifyCss: false,
     // imgLoaderOptions: {},
   })
 
@@ -165,5 +191,6 @@ mix
   .webpackConfig({
     stats: {
       children: true,
+      loggingDebug: ['sass-loader'],
     },
   });

@@ -1,13 +1,12 @@
 {
-    "/js/leonidas.js": "/js/leonidas.js?id=97fbc9aef8a473e39348",
-    "/js/manifest.js": "/js/manifest.js?id=ddbc633e5534bf3bc00d",
-    "/css/leonidas.css": "/css/leonidas.css?id=bc1c99d37130461659c3",
-    "/js/vendor.js": "/js/vendor.js?id=c372a6b15b42b55057bd",
-    "/lib/saveyour/saveyour.js": "/lib/saveyour/saveyour.js?id=2fc4ac74bf0fbf212ed4",
-    "/lib/select2/select2.min.css": "/lib/select2/select2.min.css?id=e71c39430469a3eea745",
-    "/lib/select2/select2.full.min.js": "/lib/select2/select2.full.min.js?id=6426dee270758cbf5787",
-    "/lib/choices/choices.min.js": "/lib/choices/choices.min.js?id=e93792a31219aba42041",
-    "/lib/choices/choices.min.css": "/lib/choices/choices.min.css?id=93785665fb083543fd77",
-    "/lib/trix/trix.js": "/lib/trix/trix.js?id=75018b527f5b16061fd1",
-    "/lib/trix/trix.css": "/lib/trix/trix.css?id=8dc8fb4d09a461c69952"
+    "/js/leonidas.js": "/js/leonidas.js?id=e776f4826e2608531db19bd36b52a423",
+    "/js/manifest.js": "/js/manifest.js?id=6437dd99a8314f48104d6478a9b6d871",
+    "/lib/saveyour/saveyour.js": "/lib/saveyour/saveyour.js?id=750bbc468229b878b042bfa71a7f45f5",
+    "/lib/select2/select2.min.css": "/lib/select2/select2.min.css?id=e71c39430469a3eea74514a2b48f6536",
+    "/lib/select2/select2.full.min.js": "/lib/select2/select2.full.min.js?id=6426dee270758cbf5787d67da63427ef",
+    "/lib/choices/choices.min.js": "/lib/choices/choices.min.js?id=f60b7b60a43b1f8ffd87756e4aefa7ac",
+    "/lib/choices/choices.min.css": "/lib/choices/choices.min.css?id=c39e073e6d2d49ff87d1594aa65f5e0e",
+    "/lib/trix/trix.esm.min.js": "/lib/trix/trix.esm.min.js?id=83fcdae548474eac529006e5ca85e210",
+    "/lib/trix/trix.css": "/lib/trix/trix.css?id=8876cc9287efb8f087b5c133bdaf9efa",
+    "/css/leonidas.css": "/css/leonidas.css?id=9f48ea789ac67125b20f12b5e7f980a9"
 }

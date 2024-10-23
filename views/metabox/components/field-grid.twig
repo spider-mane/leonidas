@@ -1,5 +1,4 @@
-<div class="leonidas-wrap">
-
+<div class="@leonidas">
   <div class="row pb-3">
     <div class="col-{{ row_root_width }}"></div>
 
@@ -10,16 +9,12 @@
   </div>
 
   {% for row, label in rows %}
-
   <div class="row py-{{ row_padding }}">
     <div class="col-2">{{ label }}</div>
 
     {% for col, info in columns %}
     <div class="col{{ col_width }}">{{ map[row][col] }}</div>
     {% endfor %}
-
   </div>
-
   {% endfor %}
-
 </div>

@@ -1,0 +1,54 @@
+@use '@csscore/csscore/src/scss/theme/schema' as *;
+
+// foundation
+@use '../config/foundation';
+$foundation: foundation.$config;
+
+// context
+@use '../config/view';
+$view: view.$config;
+
+@use '../config/states';
+$states: states.$config;
+
+// tokens
+@use '../config/vendors';
+$vendors: vendors.$config;
+
+@use '../config/assets';
+$assets: assets.$config;
+
+@use '../config/blueprint';
+$blueprint: blueprint.$config;
+
+@use '../config/palette';
+$palette: palette.$config;
+
+@use '../config/typography';
+$typography: typography.$config;
+
+@use '../config/features';
+$features: features.$config;
+
+@use '../config/variables';
+$variables: variables.$config;
+
+// elements
+@use '../config/reset';
+$reset: reset.$config;
+
+@use '../config/base';
+$base: base.$config;
+
+@use '../config/components';
+$components: components.$config;
+
+@use '../config/layouts';
+$layouts: layouts.$config;
+
+@use '../config/sections';
+$sections: sections.$config;
+
+// extra
+@use '../config/extra';
+$extra: extra.$config;
