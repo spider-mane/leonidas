@@ -14,14 +14,14 @@ class AdminNoticeRepositoryServiceProvider extends AbstractLeagueServiceFactory
         return 'admin_notices';
     }
 
-    protected function types(): array
-    {
-        return [AdminNoticeRepositoryInterface::class];
-    }
-
     protected function aliases(): array
     {
         return ['adminNotices'];
+    }
+
+    protected function types(): array
+    {
+        return [AdminNoticeRepositoryInterface::class];
     }
 
     protected function factory(): ServiceFactoryInterface

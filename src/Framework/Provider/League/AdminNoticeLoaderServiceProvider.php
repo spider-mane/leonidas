@@ -14,6 +14,11 @@ class AdminNoticeLoaderServiceProvider extends AbstractLeagueServiceFactory
         return 'admin_notice_loader';
     }
 
+    protected function aliases(): array
+    {
+        return ['adminNoticeLoader'];
+    }
+
     protected function types(): array
     {
         return [AdminNoticeLoaderInterface::class];
