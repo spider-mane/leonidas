@@ -8,6 +8,7 @@ use Leonidas\Contracts\System\Model\MimeInterface;
 use Leonidas\Contracts\System\Model\MutableAuthoredInterface;
 use Leonidas\Contracts\System\Model\MutableDatableInterface;
 use Leonidas\Contracts\System\Model\MutablePostModelInterface;
+use Leonidas\Contracts\System\Model\MutableTitledInterface;
 use Leonidas\Contracts\System\Model\PingableInterface;
 use Leonidas\Contracts\System\Model\RestrictableInterface;
 
@@ -19,12 +20,9 @@ interface ImageInterface extends
     CommentableInterface,
     RestrictableInterface,
     MimeInterface,
-    MutableDatableInterface
+    MutableDatableInterface,
+    MutableTitledInterface
 {
-    public function getTitle(): string;
-
-    public function setTitle(string $title): self;
-
     public function getAlt(): string;
 
     public function setAlt(string $alt): self;

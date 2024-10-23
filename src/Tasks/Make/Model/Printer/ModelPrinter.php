@@ -11,6 +11,7 @@ use Leonidas\Contracts\System\Model\MutableContentInterface;
 use Leonidas\Contracts\System\Model\MutableDatableInterface;
 use Leonidas\Contracts\System\Model\MutablePostModelInterface;
 use Leonidas\Contracts\System\Model\MutableTermModelInterface;
+use Leonidas\Contracts\System\Model\MutableTitledInterface;
 use Leonidas\Contracts\System\Model\MutableUserModelInterface;
 use Leonidas\Contracts\System\Model\PingableInterface;
 use Leonidas\Contracts\System\Model\RestrictableInterface;
@@ -26,6 +27,7 @@ use Leonidas\Library\System\Model\Abstracts\Post\MutableContentPostModelTrait;
 use Leonidas\Library\System\Model\Abstracts\Post\MutableDatablePostModelTrait;
 use Leonidas\Library\System\Model\Abstracts\Post\MutablePingablePostModelTrait;
 use Leonidas\Library\System\Model\Abstracts\Post\MutablePostModelTrait;
+use Leonidas\Library\System\Model\Abstracts\Post\MutableTitledTrait;
 use Leonidas\Library\System\Model\Abstracts\Post\RestrictablePostModelTrait;
 use Leonidas\Library\System\Model\Abstracts\Post\ValidatesPostTypeTrait;
 use Leonidas\Library\System\Model\Abstracts\Term\HierarchicalTermTrait;
@@ -81,15 +83,16 @@ class ModelPrinter extends AbstractTypedClassPrinter
 
     public const PARTIALS = [
         'post' => [
+            CommentableInterface::class => MutableCommentablePostModelTrait::class,
             FilterableInterface::class => FilterablePostModelTrait::class,
+            MimeInterface::class => MimePostModelTrait::class,
             MutableAuthoredInterface::class => MutableAuthoredPostModelTrait::class,
             MutableContentInterface::class => MutableContentPostModelTrait::class,
-            MutablePostModelInterface::class => MutablePostModelTrait::class,
-            PingableInterface::class => MutablePingablePostModelTrait::class,
-            CommentableInterface::class => MutableCommentablePostModelTrait::class,
-            RestrictableInterface::class => RestrictablePostModelTrait::class,
-            MimeInterface::class => MimePostModelTrait::class,
             MutableDatableInterface::class => MutableDatablePostModelTrait::class,
+            MutablePostModelInterface::class => MutablePostModelTrait::class,
+            MutableTitledInterface::class => MutableTitledTrait::class,
+            PingableInterface::class => MutablePingablePostModelTrait::class,
+            RestrictableInterface::class => RestrictablePostModelTrait::class,
         ],
         'post:h' => [
             '@post',

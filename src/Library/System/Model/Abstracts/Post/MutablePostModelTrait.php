@@ -15,13 +15,6 @@ trait MutablePostModelTrait
         return $this;
     }
 
-    public function setTitle(string $title): self
-    {
-        $this->post->post_title = $title;
-
-        return $this;
-    }
-
     public function setGuid(LinkInterface $guid): self
     {
         $this->post->guid = $guid->getHref();

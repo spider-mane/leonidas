@@ -17,6 +17,7 @@ use Leonidas\Library\System\Model\Abstracts\Post\MutableContentPostModelTrait;
 use Leonidas\Library\System\Model\Abstracts\Post\MutableDatablePostModelTrait;
 use Leonidas\Library\System\Model\Abstracts\Post\MutablePingablePostModelTrait;
 use Leonidas\Library\System\Model\Abstracts\Post\MutablePostModelTrait;
+use Leonidas\Library\System\Model\Abstracts\Post\MutableTitledTrait;
 use Leonidas\Library\System\Model\Abstracts\Post\RestrictablePostModelTrait;
 use Leonidas\Library\System\Model\Abstracts\Post\ValidatesPostTypeTrait;
 use Leonidas\Library\System\Model\Page\Abstracts\MutablePageTrait;
@@ -35,6 +36,7 @@ class Page implements PageInterface
     use MutablePageTrait;
     use MutablePingablePostModelTrait;
     use MutablePostModelTrait;
+    use MutableTitledTrait;
     use RestrictablePostModelTrait;
     use ValidatesPostTypeTrait;
 

@@ -11,6 +11,7 @@ use Leonidas\Contracts\System\Model\MutableContentInterface;
 use Leonidas\Contracts\System\Model\MutableDatableInterface;
 use Leonidas\Contracts\System\Model\MutablePostModelInterface;
 use Leonidas\Contracts\System\Model\MutableTermModelInterface;
+use Leonidas\Contracts\System\Model\MutableTitledInterface;
 use Leonidas\Contracts\System\Model\MutableUserModelInterface;
 use Leonidas\Contracts\System\Model\PingableInterface;
 use Leonidas\Contracts\System\Model\RestrictableInterface;
@@ -22,15 +23,16 @@ class ModelInterfacePrinter extends AbstractClassPrinter
 {
     protected const PARTIALS = [
         'post' => [
+            CommentableInterface::class,
             FilterableInterface::class,
+            MimeInterface::class,
             MutableAuthoredInterface::class,
             MutableContentInterface::class,
-            MutablePostModelInterface::class,
-            PingableInterface::class,
-            CommentableInterface::class,
-            RestrictableInterface::class,
-            MimeInterface::class,
             MutableDatableInterface::class,
+            MutablePostModelInterface::class,
+            MutableTitledInterface::class,
+            PingableInterface::class,
+            RestrictableInterface::class,
         ],
         'post:h' => [
             '@post',

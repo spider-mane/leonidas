@@ -8,9 +8,17 @@ trait MutableAuthoredPostModelTrait
 {
     use AuthoredPostModelTrait;
 
-    public function setAuthor(AuthorInterface $author): self
+    /**
+     * @return $this
+     */
+    public function setAuthor(AuthorInterface $author): static
     {
-        $this->mirror('author', $author, 'post_author', (string) $author->getId());
+        $this->mirror(
+            'author',
+            $author,
+            'post_author',
+            (string) $author->getId()
+        );
 
         return $this;
     }

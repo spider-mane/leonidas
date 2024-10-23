@@ -10,8 +10,6 @@ interface PostModelInterface extends EntityModelInterface
 {
     public function getName(): string;
 
-    public function getTitle(): string;
-
     public function getGuid(): LinkInterface;
 
     public function getMenuOrder(): int;
