@@ -15,8 +15,8 @@ class HtmlExtension extends AbstractExtension
         $functions = [
             'html_tag' => Html::tag(...),
             'html_attr' => Html::attributes(...),
-            'html_class' => fn ($value = []) => new Classlist($value),
-            'html_style' => fn ($value = []) => new Style($value),
+            'html_class' => fn ($value = []) => new Classlist($value ?? []),
+            'html_style' => fn ($value = []) => new Style($value ?? []),
         ];
 
         $twigFunctions = [];
