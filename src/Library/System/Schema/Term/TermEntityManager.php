@@ -32,7 +32,7 @@ class TermEntityManager implements TermEntityManagerInterface
         $this->collectionFactory = $collectionFactory;
     }
 
-    public function select(int $id): ?object
+    public function byId(int $id): ?object
     {
         return $this->single(['include' => [$id]]);
     }
@@ -62,14 +62,21 @@ class TermEntityManager implements TermEntityManagerInterface
         return $this->query(['slug' => $names]);
     }
 
-    public function whereParentId(int $parentId): object
+    public function whereParent(int $parentId): object
     {
         return $this->query(['parent' => $parentId]);
     }
 
-    public function whereChildOf(int $parentId): object
+    public function byChild(int $childId): ?object
     {
-        return $this->query(['child_of' => $parentId]);
+        return ($id = $this->getTermField($childId, 'parent'))
+            ? $this->byId((int) $id)
+            : null;
+    }
+
+    public function whereAncestor(int $ancestorId): object
+    {
+        return $this->query(['child_of' => $ancestorId]);
     }
 
     public function whereObjectIds(int ...$objects): object
@@ -92,9 +99,9 @@ class TermEntityManager implements TermEntityManagerInterface
 
     public function single(array $args): ?object
     {
-        $terms = $this->getQuery($args)->get_terms();
-
-        return $terms ? $this->convertEntity($terms[0]) : null;
+        return ($terms = $this->getTerms($args))
+            ? $this->convertEntity(reset($terms))
+            : null;
     }
 
     public function fetch(int $id): ?object
@@ -139,6 +146,16 @@ class TermEntityManager implements TermEntityManagerInterface
     protected function getQuery(array $args): WP_Term_Query
     {
         return new WP_Term_Query($this->normalizeQueryArgs($args));
+    }
+
+    protected function getTerms(array $args): array
+    {
+        return $this->getQuery($args)->terms;
+    }
+
+    protected function getTermField(int $id, string $field): ?string
+    {
+        return get_term_field($field, $id, $this->taxonomy, 'raw');
     }
 
     protected function gerCollectionFromQuery(WP_Term_Query $query): object

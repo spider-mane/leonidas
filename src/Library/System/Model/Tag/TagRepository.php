@@ -12,7 +12,7 @@ class TagRepository extends AbstractTermEntityRepository implements TagRepositor
 {
     public function select(int $id): ?TagInterface
     {
-        return $this->manager->select($id);
+        return $this->manager->byId($id);
     }
 
     public function selectSlug(string $slug): ?TagInterface

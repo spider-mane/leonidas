@@ -23,7 +23,7 @@ class CommentRepository implements CommentRepositoryInterface
 
     public function select(int $id): ?CommentInterface
     {
-        return $this->manager->select($id);
+        return $this->manager->byId($id);
     }
 
     public function whereApprovedOnPost(PostModelInterface $post): CommentCollectionInterface
@@ -43,7 +43,7 @@ class CommentRepository implements CommentRepositoryInterface
 
     public function whereChild(CommentInterface $comment): ?CommentInterface
     {
-        return $this->manager->select($comment->getParentId());
+        return $this->manager->byId($comment->getParentId());
     }
 
     public function all(): CommentCollectionInterface

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Leonidas\Library\System\Schema\User;
 
 use Leonidas\Contracts\System\Schema\EntityCollectionFactoryInterface;
@@ -32,24 +34,29 @@ class UserEntityManager implements UserEntityManagerInterface
         $this->collectionFactory = $collectionFactory;
     }
 
-    public function select(int $id): ?object
+    public function byId(int $id): ?object
     {
         return $this->single(['include' => [$id]]);
     }
 
-    public function selectLogin(string $login): ?object
+    public function byLogin(string $login): ?object
     {
         return $this->single(['login' => $login]);
     }
 
-    public function selectEmail(string $email): ?object
+    public function byEmail(string $email): ?object
     {
         return $this->single(['search_columns' => ['user_email' => $email]]);
     }
 
-    public function selectNicename(string $nicename): ?object
+    public function byNicename(string $nicename): ?object
     {
         return $this->single(['nicename' => $nicename]);
+    }
+
+    public function whereNicenames(string ...$nicenames): object
+    {
+        return $this->query(['nicename__in' => $nicenames]);
     }
 
     public function whereIds(int ...$ids): object
@@ -60,6 +67,23 @@ class UserEntityManager implements UserEntityManagerInterface
     public function whereBlogId(int $blogId): object
     {
         return $this->query(['blog_id' => $blogId]);
+    }
+
+    public function whereRoles(string ...$roles): object
+    {
+        return $this->query(['role__in' => $roles]);
+    }
+
+    public function whereAuthoredPostEntities(string ...$postTypes): object
+    {
+        return $this->query(['has_published_posts' => $postTypes]);
+    }
+
+    public function byPost(int $postId): ?object
+    {
+        return ($id = $this->getPostField('post_author', $postId))
+            ? $this->byId((int) $id)
+            : null;
     }
 
     public function all(): object
@@ -109,6 +133,11 @@ class UserEntityManager implements UserEntityManagerInterface
         wp_delete_user($id, $reassign);
     }
 
+    protected function getPostField(string $field, int $id): string
+    {
+        return get_post_field($field, $id, 'raw');
+    }
+
     protected function getQuery(array $args): WP_User_Query
     {
         return new WP_User_Query($this->normalizeQueryArgs($args));
@@ -122,7 +151,7 @@ class UserEntityManager implements UserEntityManagerInterface
     protected function normalizeQueryArgs(array $args): array
     {
         return [
-            // 'role' => $this->role,
+            'role' => $this->role,
             'fields' => 'all',
         ] + $args;
     }

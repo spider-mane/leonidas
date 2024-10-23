@@ -14,9 +14,11 @@ interface TermEntityManagerInterface extends EntityManagerInterface
 
     public function whereSlugs(string ...$slugs): object;
 
-    public function whereParentId(int $parentId): object;
+    public function whereParent(int $parentId): object;
 
-    public function whereChildOf(int $parentId): object;
+    public function byChild(int $childId): ?object;
+
+    public function whereAncestor(int $ancestorId): object;
 
     public function whereObjectIds(int ...$objects): object;
 }

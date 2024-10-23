@@ -32,7 +32,7 @@ class PolyRelatablePostType implements PolyRelatablePostTypeInterface
 
     public function getShadowTaxonomy(): string
     {
-        return $this->keys->getPostTypeKey($this->getMappedPostType());
+        return $this->keys->getPostKey($this->getMappedPostType());
     }
 
     public function getRelatedPostTypes(): array

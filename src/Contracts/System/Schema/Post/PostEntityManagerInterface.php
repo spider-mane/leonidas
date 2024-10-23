@@ -3,6 +3,7 @@
 namespace Leonidas\Contracts\System\Schema\Post;
 
 use Leonidas\Contracts\System\Schema\SoftDeletingEntityManagerInterface;
+use WP_Post;
 
 interface PostEntityManagerInterface extends SoftDeletingEntityManagerInterface
 {
@@ -10,7 +11,11 @@ interface PostEntityManagerInterface extends SoftDeletingEntityManagerInterface
 
     public function fromGlobalQuery(): ?object;
 
-    public function selectName(string $name): ?object;
+    public function fromHomeQuery(): object;
+
+    public function fromPost(WP_Post $post): object;
+
+    public function byName(string $name): ?object;
 
     public function whereNames(string ...$names): object;
 
@@ -18,9 +23,26 @@ interface PostEntityManagerInterface extends SoftDeletingEntityManagerInterface
 
     public function whereUserAndStatus(int $user, string $status): object;
 
-    public function whereParentId(int $parentId): object;
+    public function whereUserPublished(int $user): object;
+
+    public function whereUserDrafted(int $user): object;
+
+    public function whereParent(int $parent): object;
+
+    public function byChild(int $child): ?object;
 
     public function whereStatus(string $status): object;
+
+    public function byMetaQuery(array $query): ?object;
+
+    public function byMetaClause(array $clause): ?object;
+
+    /**
+     * @param string|array<string> $value
+     */
+    public function byMeta(string $key, string $operator, string|array $value): ?object;
+
+    public function byHasMeta(string $key, string $value): ?object;
 
     public function whereMetaQuery(array $query): object;
 
@@ -51,25 +73,95 @@ interface PostEntityManagerInterface extends SoftDeletingEntityManagerInterface
 
     public function whereHasTermsById(string $taxonomy, int ...$id): object;
 
-    public function whereConnectedPostQuery(array $query): object;
+    public function byFeaturedMedia(int $mediaId): ?object;
 
-    public function whereConnectedPostClause(array $clause): object;
-
-    /**
-     * @param int|array<int> $id
-     */
-    public function whereConnectedPost(string $postType, string $operator, int|array $id): object;
-
-    public function whereHasConnectedPost(string $postType, int ...$id): object;
-
-    public function whereConnectedPostsQuery(array $query): object;
-
-    public function whereConnectedPostsClause(array $clause): object;
+    public function whereFeaturedMedia(int $mediaId): object;
 
     /**
-     * @param int|array<int> $id
+     *  one to one
      */
-    public function whereConnectedPosts(string $postType, string $operator, int|array $id): object;
+    public function byForOnePostQuery(array $query): ?object;
 
-    public function whereHasConnectedPosts(string $postType, int ...$id): object;
+    public function byForOnePostClause(array $clause): ?object;
+
+    public function byForOnePostCondition(string $as, string $operator, int|array $id): ?object;
+
+    public function byForOnePost(string $as, int $id): ?object;
+
+    /**
+     *  one to many, one to one (aggregate value)
+     */
+    public function whereForOnePostQuery(array $query): object;
+
+    public function whereForOnePostClause(array $clause): object;
+
+    public function whereForOnePostCondition(string $as, string $operator, int|array $id): object;
+
+    public function whereForOnePost(string $as, int $id): object;
+
+    /**
+     *  one to many
+     */
+    public function byForManyPostsQuery(array $query): ?object;
+
+    public function byForManyPostsClause(array $clause): ?object;
+
+    public function byForManyPostsCondition(string $as, string $operator, int|array $id): ?object;
+
+    public function byForManyPosts(string $as, int $id): ?object;
+
+    /**
+     *  many to many, one to many
+     */
+    public function whereForManyPostsQuery(array $query): object;
+
+    public function whereForManyPostsClause(array $clause): object;
+
+    public function whereForManyPostsCondition(string $as, string $operator, int|array $id): object;
+
+    public function whereForManyPosts(string $as, int $id): object;
+
+    /**
+     *  one to one
+     */
+    // public function byForOnePostQuery(array $query): ?object;
+
+    // public function byForOnePostClause(array $clause): ?object;
+
+    // public function byForOnePostCondition(string $postType, string $operator, int|array $id): ?object;
+
+    public function byHasOnePost(int $id, string $as = null): ?object;
+
+    /**
+     *  one to one (aggregate value)
+     */
+    // public function whereForOnePostQuery(array $query): object;
+
+    // public function whereForOnePostClause(array $clause): object;
+
+    // public function whereForOnePostCondition(string $postType, string $operator, int|array $id): object;
+
+    public function whereHasOnePost(int $id, string $as = null): object;
+
+    /**
+     *  one to many, many to many
+     */
+    // public function byForManyPostsQuery(array $query): object;
+
+    // public function byForManyPostsClause(array $clause): object;
+
+    // public function byForManyPostsCondition(string $postType, string $operator, int|array $id): ?object;
+
+    public function byHasManyPosts(int $id, string $as = null): ?object;
+
+    /**
+     *  one to many, many to many
+     */
+    // public function whereForManyPostsQuery(array $query): object;
+
+    // public function whereForManyPostsClause(array $clause): object;
+
+    // public function whereForManyPostsCondition(string $postType, string $operator, int|array $id): object;
+
+    public function whereHasManyPosts(int $id, string $as = null): object;
 }

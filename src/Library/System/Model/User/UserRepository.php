@@ -12,22 +12,22 @@ class UserRepository extends AbstractUserModelRepository implements UserReposito
 {
     public function select(int $id): ?UserInterface
     {
-        return $this->manager->select($id);
+        return $this->manager->byId($id);
     }
 
     public function selectNicename(string $slug): ?UserInterface
     {
-        return $this->manager->selectNicename($slug);
+        return $this->manager->byNicename($slug);
     }
 
     public function selectEmail(string $email): ?UserInterface
     {
-        return $this->manager->selectEmail($email);
+        return $this->manager->byEmail($email);
     }
 
     public function selectLogin(string $login): ?UserInterface
     {
-        return $this->manager->selectLogin($login);
+        return $this->manager->byLogin($login);
     }
 
     public function whereIds(int ...$ids): UserCollectionInterface

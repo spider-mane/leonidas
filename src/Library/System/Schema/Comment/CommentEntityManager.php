@@ -32,7 +32,7 @@ class CommentEntityManager implements CommentEntityManagerInterface
         $this->collectionFactory = $collectionFactory;
     }
 
-    public function select(int $id): ?object
+    public function byId(int $id): ?object
     {
         return $this->single(['comment_in' => [$id]]);
     }

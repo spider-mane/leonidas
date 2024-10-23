@@ -15,7 +15,7 @@ class CategoryRepository extends AbstractTermEntityRepository implements Categor
 
     public function select(int $id): ?CategoryInterface
     {
-        return $this->manager->select($id);
+        return $this->manager->byId($id);
     }
 
     public function selectSlug(string $slug): ?CategoryInterface
@@ -40,7 +40,7 @@ class CategoryRepository extends AbstractTermEntityRepository implements Categor
 
     public function whereParent(CategoryInterface $parent): CategoryCollection
     {
-        return $this->manager->whereParentId($parent->getId());
+        return $this->manager->whereParent($parent->getId());
     }
 
     public function all(): CategoryCollection
