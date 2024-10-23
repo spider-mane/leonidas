@@ -9,11 +9,11 @@ use Panamax\Contracts\ServiceContainerInterface;
 
 abstract class AbstractModelRegistrar implements ExtensionBootProcessInterface
 {
+    protected const MODELS = '';
+
     protected const CONTRACTS = '';
 
     protected const MODEL_CONFIG = 'models';
-
-    protected const DEFAULT_SCHEMA = 'post';
 
     protected WpExtensionInterface $extension;
 
@@ -32,7 +32,11 @@ abstract class AbstractModelRegistrar implements ExtensionBootProcessInterface
 
     protected function getApi(): ModelRepositoryApi
     {
-        return new ModelRepositoryApi($this->container, static::CONTRACTS);
+        return new ModelRepositoryApi(
+            $this->container,
+            static::MODELS,
+            static::CONTRACTS
+        );
     }
 
     protected function bindModelServicesToContainer(): void
@@ -47,11 +51,11 @@ abstract class AbstractModelRegistrar implements ExtensionBootProcessInterface
     {
         $models = $this->extension->config(static::MODEL_CONFIG, []);
 
-        foreach ($models as $entity => $args) {
+        foreach ($models as $name => $args) {
             $this->register(
                 $args['model'],
-                $entity,
-                $args['schema'] ?? static::DEFAULT_SCHEMA,
+                $name,
+                $args['schema'],
                 $args['entries'] ?? [],
             );
         }
@@ -73,8 +77,33 @@ abstract class AbstractModelRegistrar implements ExtensionBootProcessInterface
         return $this;
     }
 
-    protected function register(string $model, string $entity, string $schema = self::DEFAULT_SCHEMA, array $entries = []): void
+    protected function register(string $model, string $name, string $schema, array $entries = []): void
     {
-        $this->api->register($model, $entity, $schema, $entries);
+        $this->api->register($model, $name, $schema, $entries);
+    }
+
+    public function registerPost(string $model, string $name, array $entries = []): void
+    {
+        $this->api->registerPost($model, $name, $entries);
+    }
+
+    protected function registerAttachment(string $model, string $mime, array $entries = []): void
+    {
+        $this->api->registerAttachment($model, $mime, $entries);
+    }
+
+    public function registerTerm(string $model, string $name, array $entries = []): void
+    {
+        $this->api->registerTerm($model, $name, $entries);
+    }
+
+    public function registerUser(string $model, string $name, array $entries = []): void
+    {
+        $this->api->registerUser($model, $name, $entries);
+    }
+
+    public function registerComment(string $model, string $name, array $entries = []): void
+    {
+        $this->api->registerComment($model, $name, $entries);
     }
 }

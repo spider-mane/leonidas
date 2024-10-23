@@ -17,6 +17,8 @@ class RegisterModelServices extends AbstractModelRegistrar implements ExtensionB
 {
     protected const CONTRACTS = 'Leonidas\Contracts\System\Model';
 
+    protected const MODELS = 'Leonidas\Library\System\Model';
+
     protected function postServices(): void
     {
         $this->register(Post::class, 'post', 'post');
@@ -29,9 +31,7 @@ class RegisterModelServices extends AbstractModelRegistrar implements ExtensionB
 
     protected function imageServices(): void
     {
-        $this->register(Image::class, 'attachment', 'attachment', [
-            '_wp_attachment_image_alt' => 'meta',
-        ]);
+        $this->register(Image::class, 'attachment', 'attachment', []);
     }
 
     protected function tagServices(): void
