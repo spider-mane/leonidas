@@ -2,35 +2,61 @@
 
 namespace Leonidas\Contracts\System\Configuration\Taxonomy;
 
-use Leonidas\Contracts\System\Model\BaseSystemModelTypeBuilderInterface;
+use Leonidas\Contracts\System\Configuration\ModelConfigurationBuilderInterface;
 
-interface TaxonomyBuilderInterface extends BaseSystemModelTypeBuilderInterface
+interface TaxonomyBuilderInterface extends ModelConfigurationBuilderInterface
 {
-    public function objectTypes(string ...$objectTypes): self;
-
-    public function showTagCloud(?bool $showInTagCloud): self;
-
-    public function showInQuickEdit(?bool $showInQuickEdit): self;
-
-    public function showAdminColumn(?bool $showAdminColumn): self;
+    /**
+     * @param list<string> $objectTypes
+     *
+     * @return $this
+     */
+    public function objectTypes(?array $objectTypes): static;
 
     /**
-     * @param null|bool|callable $metaBoxCb
+     * @return $this
      */
-    public function metaBoxCb($metaBoxCb): self;
-
-    public function metaBoxSanitizeCb(?callable $metaBoxSanitizeCb): self;
-
-    public function updateCountCallback(?callable $updateCountCallback): self;
+    public function showInTagCloud(?bool $showInTagCloud): static;
 
     /**
-     * @param null|string|array $defaultTerm
+     * @return $this
      */
-    public function defaultTerm($defaultTerm): self;
+    public function showInQuickEdit(?bool $showInQuickEdit): static;
 
-    public function sort(?bool $sort): self;
+    /**
+     * @return $this
+     */
+    public function showAdminColumn(?bool $showAdminColumn): static;
 
-    public function args(?array $args): self;
+    /**
+     * @return $this
+     */
+    public function metaBoxCb(null|bool|callable $metaBoxCb): static;
+
+    /**
+     * @return $this
+     */
+    public function metaBoxSanitizeCb(?callable $metaBoxSanitizeCb): static;
+
+    /**
+     * @return $this
+     */
+    public function updateCountCallback(?callable $updateCountCallback): static;
+
+    /**
+     * @return $this
+     */
+    public function defaultTerm(null|string|array $defaultTerm): static;
+
+    /**
+     * @return $this
+     */
+    public function sort(?bool $sort): static;
+
+    /**
+     * @return $this
+     */
+    public function args(?array $args): static;
 
     public function get(): TaxonomyInterface;
 }

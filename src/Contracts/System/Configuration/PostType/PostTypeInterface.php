@@ -2,47 +2,15 @@
 
 namespace Leonidas\Contracts\System\Configuration\PostType;
 
-use Leonidas\Contracts\System\Model\BaseSystemModelTypeInterface;
+use Leonidas\Contracts\System\Configuration\ModelConfigurationInterface;
 
-interface PostTypeInterface extends BaseSystemModelTypeInterface
+interface PostTypeInterface extends
+    ModelConfigurationInterface,
+    PostTypeInfoInterface,
+    PostTypeCoreConfigInterface,
+    PostTypePublicConfigInterface,
+    PostTypeRestConfigInterface,
+    PostTypeAdminConfigInterface
 {
-    public function isExcludedFromSearch(): bool;
-
-    public function isAllowedInAdminBar(): bool;
-
-    public function getMenuPosition(): ?int;
-
-    public function getMenuIcon(): ?string;
-
-    /**
-     * @return string|array
-     */
-    public function getCapabilityType();
-
-    public function allowsMetaCapMapping(): bool;
-
-    /**
-     * @return array|bool
-     */
-    public function getSupports();
-
-    public function getRegisterMetaBoxCb(): ?callable;
-
-    public function getTaxonomies(): array;
-
-    /**
-     * @return bool|string
-     */
-    public function getArchive();
-
-    public function canBeExported(): bool;
-
-    public function isDeletedWithUser(): ?bool;
-
-    public function getTemplate(): array;
-
-    /**
-     * @return false|string
-     */
-    public function getTemplateLock();
+    //
 }

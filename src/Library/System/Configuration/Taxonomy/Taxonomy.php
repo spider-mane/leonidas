@@ -2,45 +2,42 @@
 
 namespace Leonidas\Library\System\Configuration\Taxonomy;
 
+use Closure;
 use Leonidas\Contracts\System\Configuration\Taxonomy\TaxonomyInterface;
-use Leonidas\Library\System\Configuration\Abstracts\AbstractSystemModelType;
+use Leonidas\Library\System\Configuration\Abstracts\AbstractModelConfiguration;
 
-class Taxonomy extends AbstractSystemModelType implements TaxonomyInterface
+class Taxonomy extends AbstractModelConfiguration implements TaxonomyInterface
 {
-    protected array $objectTypes;
+    protected ?array $objectTypes;
 
-    protected bool $isAllowedInTagCloud;
-
-    protected bool $isAllowedInQuickEdit;
-
-    protected bool $canHaveAdminColumn;
-
-    /**
-     * @var bool|callable
-     */
-    protected $metaBoxCb;
+    protected null|string|array $defaultTerm;
 
     /**
      * @var null|callable
      */
-    protected $metaBoxSanitizeCb;
+    protected null|string|array|Closure $updateCountCallback;
+
+    protected ?bool $shouldBeSorted;
+
+    protected ?array $args;
+
+    protected ?bool $allowedInMenu;
+
+    protected ?bool $isAllowedInTagCloud;
+
+    protected ?bool $canHaveAdminColumn;
+
+    protected ?bool $isAllowedInQuickEdit;
+
+    /**
+     * @var null|bool|callable
+     */
+    protected null|bool|string|array|Closure $metaBoxCb;
 
     /**
      * @var null|callable
      */
-    protected $updateCountCallback;
-
-    /**
-     * @var null|string|array
-     */
-    protected $defaultTerm;
-
-    protected bool $shouldBeSorted;
-
-    /**
-     * @return null|array
-     */
-    protected $args;
+    protected null|string|array|Closure $metaBoxSanitizeCb;
 
     public function __construct(
         string $name,
@@ -49,28 +46,28 @@ class Taxonomy extends AbstractSystemModelType implements TaxonomyInterface
         ?string $singularLabel = null,
         string $description = '',
         array $labels = [],
-        bool $isPublic = false,
-        bool $isHierarchical = false,
+        bool $isPublic = null,
+        bool $isHierarchical = null,
         ?bool $isPubliclyQueryable = null,
         ?bool $isAllowedInUi = null,
-        $displayedInMenu = null,
+        $allowedInMenu = null,
         ?bool $isAllowedInNavMenus = null,
         array $capabilities = [],
         $rewrite = true,
         $queryVar = true,
-        bool $isAllowedInRest = false,
-        $restBase = false,
-        $restNamespace = false,
-        $restControllerClass = false,
+        bool $isAllowedInRest = null,
+        $restBase = null,
+        $restNamespace = null,
+        $restControllerClass = null,
         ?bool $isAllowedInTagCloud = null,
         ?bool $isAllowedInQuickEdit = null,
-        bool $canHaveAdminColumn = false,
+        bool $canHaveAdminColumn = null,
         $metaBoxCb = null,
         ?callable $metaBoxSanitizeCb = null,
         ?callable $updateCountCallback = null,
         $defaultTerm = null,
         $shouldBeSorted = null,
-        array $options = []
+        ?array $options = null
     ) {
         parent::__construct(
             $name,
@@ -82,7 +79,6 @@ class Taxonomy extends AbstractSystemModelType implements TaxonomyInterface
             $isHierarchical,
             $isPubliclyQueryable,
             $isAllowedInUi,
-            $displayedInMenu,
             $isAllowedInNavMenus,
             $capabilities,
             $rewrite,
@@ -104,40 +100,21 @@ class Taxonomy extends AbstractSystemModelType implements TaxonomyInterface
         $this->isAllowedInTagCloud = $isAllowedInTagCloud ?? $this->isAllowedInUi;
 
         // admin
+        $this->allowedInMenu = $allowedInMenu;
         $this->canHaveAdminColumn = $canHaveAdminColumn;
         $this->metaBoxCb = $metaBoxCb;
         $this->metaBoxSanitizeCb = $metaBoxSanitizeCb;
         $this->isAllowedInQuickEdit = $isAllowedInQuickEdit ?? $this->isAllowedInUi;
     }
 
-    public function getObjectTypes(): array
+    public function getObjectTypes(): ?array
     {
         return $this->objectTypes;
     }
 
-    public function isAllowedInTagCloud(): bool
+    public function getDefaultTerm(): null|string|array
     {
-        return $this->isAllowedInTagCloud;
-    }
-
-    public function isAllowedInQuickEdit(): bool
-    {
-        return $this->isAllowedInQuickEdit;
-    }
-
-    public function canHaveAdminColumn(): bool
-    {
-        return $this->canHaveAdminColumn;
-    }
-
-    public function getMetaBoxCb()
-    {
-        return $this->metaBoxCb;
-    }
-
-    public function getMetaBoxSanitizeCb(): ?callable
-    {
-        return $this->metaBoxSanitizeCb;
+        return $this->defaultTerm;
     }
 
     public function getUpdateCountCallback(): ?callable
@@ -145,19 +122,44 @@ class Taxonomy extends AbstractSystemModelType implements TaxonomyInterface
         return $this->updateCountCallback;
     }
 
-    public function getDefaultTerm()
-    {
-        return $this->defaultTerm;
-    }
-
-    public function shouldBeSorted(): bool
+    public function shouldBeSorted(): ?bool
     {
         return $this->shouldBeSorted;
     }
 
-    public function getArgs(): array
+    public function getArgs(): ?array
     {
         return $this->args;
+    }
+
+    public function isAllowedInTagCloud(): ?bool
+    {
+        return $this->isAllowedInTagCloud;
+    }
+
+    public function isAllowedInMenu(): ?bool
+    {
+        return $this->allowedInMenu;
+    }
+
+    public function canHaveAdminColumn(): ?bool
+    {
+        return $this->canHaveAdminColumn;
+    }
+
+    public function isAllowedInQuickEdit(): ?bool
+    {
+        return $this->isAllowedInQuickEdit;
+    }
+
+    public function getMetaBoxCb(): null|bool|callable
+    {
+        return $this->metaBoxCb;
+    }
+
+    public function getMetaBoxSanitizeCb(): ?callable
+    {
+        return $this->metaBoxSanitizeCb;
     }
 
     protected function defaultLabels(): array

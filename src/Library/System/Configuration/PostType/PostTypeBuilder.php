@@ -2,281 +2,171 @@
 
 namespace Leonidas\Library\System\Configuration\PostType;
 
+use Closure;
 use Leonidas\Contracts\System\Configuration\PostType\PostTypeBuilderInterface;
-use Leonidas\Library\System\Configuration\Abstracts\AbstractSystemModelTypeBuilder;
+use Leonidas\Library\System\Configuration\Abstracts\AbstractModelConfigurationBuilder;
 
-class PostTypeBuilder extends AbstractSystemModelTypeBuilder implements PostTypeBuilderInterface
+class PostTypeBuilder extends AbstractModelConfigurationBuilder implements PostTypeBuilderInterface
 {
-    protected ?bool $excludeFromSearch = null;
-
-    protected ?bool $showInAdminBar = null;
-
-    protected ?bool $showInMenu = null;
-
-    protected ?int $menuPosition = null;
-
-    protected ?string $menuIcon = null;
-
-    /**
-     * @var null|string|array
-     */
-    protected $capabilityType;
-
-    protected ?bool $mapMetaCap = null;
-
-    /**
-     * @var null|bool|array
-     */
-    protected $supports;
-
-    /**
-     * @var null|callable
-     */
-    protected $registerMetaBoxCb;
-
     protected ?array $taxonomies = null;
 
-    /**
-     * @var null|bool|string
-     */
-    protected $archive;
+    protected null|string|array $capabilityType = null;
+
+    protected ?bool $mapMetaCap = null;
 
     protected ?bool $canExport = null;
 
     protected ?bool $deleteWithUser = null;
 
-    protected ?array $template = null;
+    protected null|bool|string $archive = null;
+
+    protected ?bool $excludeFromSearch = null;
+
+    protected null|string|bool $autosaveRestControllerClass = null;
+
+    protected null|string|bool $revisionsRestControllerClass = null;
+
+    protected null|bool $allowsLateRouteRegistration = null;
+
+    protected ?bool $showInAdminBar = null;
+
+    protected null|bool|string $showInMenu = null;
+
+    protected ?int $menuPosition = null;
+
+    protected ?string $menuIcon = null;
+
+    protected null|bool|array $supports = null;
 
     /**
-     * @var null|false|string
+     * @var null|callable
      */
-    protected $templateLock;
+    protected null|string|array|Closure $registerMetaBoxCb = null;
 
-    public function name(string $name): self
-    {
-        $this->name = $name;
+    protected ?array $template = null;
 
-        return $this;
-    }
+    protected null|false|string $templateLock = null;
 
-    public function plural(string $pluralLabel): self
-    {
-        $this->pluralLabel = $pluralLabel;
-
-        return $this;
-    }
-
-    public function singular(?string $singularLabel): self
-    {
-        $this->singularLabel = $singularLabel;
-
-        return $this;
-    }
-
-    public function description(?string $description): self
-    {
-        $this->description = $description;
-
-        return $this;
-    }
-
-    public function labels(?array $labels): self
-    {
-        $this->labels = $labels;
-
-        return $this;
-    }
-
-    public function public(?bool $isPublic): self
-    {
-        $this->isPublic = $isPublic;
-
-        return $this;
-    }
-
-    public function hierarchical(?bool $hierarchical): self
-    {
-        $this->hierarchical = $hierarchical;
-
-        return $this;
-    }
-
-    public function publiclyQueryable(?bool $publiclyQueryable): self
-    {
-        $this->publiclyQueryable = $publiclyQueryable;
-
-        return $this;
-    }
-
-    public function showInUi(?bool $showInUi): self
-    {
-        $this->isAllowedInUi = $showInUi;
-
-        return $this;
-    }
-
-    public function showInMenu($showInMenu): self
-    {
-        $this->showInMenu = $showInMenu;
-
-        return $this;
-    }
-
-    public function showInNavMenus(?bool $showInNavMenu): self
-    {
-        $this->displayedInMenu = $showInNavMenu;
-
-        return $this;
-    }
-
-    public function capabilities(?array $capabilities): self
-    {
-        $this->capabilities = $capabilities;
-
-        return $this;
-    }
-
-    public function rewrite($rewrite): self
-    {
-        $this->rewrite = $rewrite;
-
-        return $this;
-    }
-
-    public function queryVar($queryVar): self
-    {
-        $this->queryVar = $queryVar;
-
-        return $this;
-    }
-
-    public function showInRest(?bool $showInRest): self
-    {
-        $this->isAllowedInRest = $showInRest;
-
-        return $this;
-    }
-
-    public function restBase($restBase): self
-    {
-        $this->restBase = $restBase;
-
-        return $this;
-    }
-
-    public function restNamespace($restNamespace): self
-    {
-        $this->restNamespace = $restNamespace;
-
-        return $this;
-    }
-
-    public function restControllerClass($restControllerClass): self
-    {
-        $this->restControllerClass = $restControllerClass;
-
-        return $this;
-    }
-
-    public function options(?array $extraArgs): self
-    {
-        $this->options = $extraArgs;
-
-        return $this;
-    }
-
-    public function excludeFromSearch(?bool $excludeFromSearch): self
-    {
-        $this->excludeFromSearch = $excludeFromSearch;
-
-        return $this;
-    }
-
-    public function showInAdminBar(?bool $showInAdminBar): self
-    {
-        $this->showInAdminBar = $showInAdminBar;
-
-        return $this;
-    }
-
-    public function menuPosition(?int $menuPosition): self
-    {
-        $this->menuPosition = $menuPosition;
-
-        return $this;
-    }
-
-    public function menuIcon(?string $menuIcon): self
-    {
-        $this->menuIcon = $menuIcon;
-
-        return $this;
-    }
-
-    public function capabilityType($capabilityType): self
-    {
-        $this->capabilityType = $capabilityType;
-
-        return $this;
-    }
-
-    public function mapMetaCap(?bool $mapMetaCap): self
-    {
-        $this->mapMetaCap = $mapMetaCap;
-
-        return $this;
-    }
-
-    public function supports($supports): self
-    {
-        $this->supports = $supports;
-
-        return $this;
-    }
-
-    public function registerMetaBoxCb(?callable $registerMetaBoxCb): self
-    {
-        $this->registerMetaBoxCb = $registerMetaBoxCb;
-
-        return $this;
-    }
-
-    public function taxonomies(?array $taxonomies): self
+    public function taxonomies(?array $taxonomies): static
     {
         $this->taxonomies = $taxonomies;
 
         return $this;
     }
 
-    public function hasArchive($archive): self
+    public function capabilityType(null|string|array $capabilityType): static
     {
-        $this->archive = $archive;
+        $this->capabilityType = $capabilityType;
 
         return $this;
     }
 
-    public function canExport(?bool $canExport): self
+    public function mapMetaCap(?bool $mapMetaCap): static
+    {
+        $this->mapMetaCap = $mapMetaCap;
+
+        return $this;
+    }
+
+    public function canExport(?bool $canExport): static
     {
         $this->canExport = $canExport;
 
         return $this;
     }
 
-    public function deleteWithUser(?bool $deleteWithUser): self
+    public function deleteWithUser(?bool $deleteWithUser): static
     {
         $this->deleteWithUser = $deleteWithUser;
 
         return $this;
     }
 
-    public function template(?array $template): self
+    public function hasArchive(null|bool|string $archive): static
+    {
+        $this->archive = $archive;
+
+        return $this;
+    }
+
+    public function excludeFromSearch(?bool $excludeFromSearch): static
+    {
+        $this->excludeFromSearch = $excludeFromSearch;
+
+        return $this;
+    }
+
+    public function autosaveRestControllerClass(null|bool|string $autosaveRestControllerClass): static
+    {
+        $this->autosaveRestControllerClass = $autosaveRestControllerClass;
+
+        return $this;
+    }
+
+    public function revisionsRestControllerClass(null|bool|string $revisionsRestControllerClass): static
+    {
+        $this->revisionsRestControllerClass = $revisionsRestControllerClass;
+
+        return $this;
+    }
+
+    public function allowsLateRouteRegistration(?bool $allowsLateRouteRegistration): static
+    {
+        $this->allowsLateRouteRegistration = $allowsLateRouteRegistration;
+
+        return $this;
+    }
+
+    public function showInMenu(null|bool|string $showInMenu): static
+    {
+        $this->showInMenu = $showInMenu;
+
+        return $this;
+    }
+
+    public function showInAdminBar(?bool $showInAdminBar): static
+    {
+        $this->showInAdminBar = $showInAdminBar;
+
+        return $this;
+    }
+
+    public function menuPosition(?int $menuPosition): static
+    {
+        $this->menuPosition = $menuPosition;
+
+        return $this;
+    }
+
+    public function menuIcon(?string $menuIcon): static
+    {
+        $this->menuIcon = $menuIcon;
+
+        return $this;
+    }
+
+    public function supports(null|bool|array $supports): static
+    {
+        $this->supports = $supports;
+
+        return $this;
+    }
+
+    public function registerMetaBoxCb(?callable $registerMetaBoxCb): static
+    {
+        $this->registerMetaBoxCb = $registerMetaBoxCb;
+
+        return $this;
+    }
+
+    public function template(?array $template): static
     {
         $this->template = $template;
 
         return $this;
     }
 
-    public function templateLock($templateLock): self
+    public function templateLock(null|false|string $templateLock): static
     {
         $this->templateLock = $templateLock;
 
@@ -289,41 +179,44 @@ class PostTypeBuilder extends AbstractSystemModelTypeBuilder implements PostType
             $this->name,
             $this->pluralLabel,
             $this->singularLabel,
-            $this->description ?? '',
-            $this->labels ?? [],
-            $this->isPublic ?? false,
-            $this->hierarchical ?? false,
+            $this->description,
+            $this->labels,
+            $this->isPublic,
+            $this->hierarchical,
             $this->publiclyQueryable,
             $this->isAllowedInUi,
             $this->displayedInMenu,
             $this->isAllowedInNavMenus,
-            $this->capabilities ?? [],
-            $this->rewrite ?? true,
-            $this->queryVar ?? true,
-            $this->isAllowedInRest ?? false,
-            $this->restBase ?? false,
-            $this->restNamespace ?? false,
-            $this->restControllerClass ?? false,
+            $this->capabilities,
+            $this->rewrite,
+            $this->queryVar,
+            $this->isAllowedInRest,
+            $this->restBase,
+            $this->restNamespace,
+            $this->restControllerClass,
+            $this->autosaveRestControllerClass,
+            $this->revisionsRestControllerClass,
+            $this->allowsLateRouteRegistration,
             $this->excludeFromSearch,
             $this->showInAdminBar,
             $this->menuPosition,
             $this->menuIcon,
-            $this->capabilityType ?? 'post',
-            $this->mapMetaCap ?? false,
-            $this->supports ?? [],
+            $this->capabilityType,
+            $this->mapMetaCap,
+            $this->supports,
             $this->registerMetaBoxCb,
-            $this->taxonomies ?? [],
-            $this->archive ?? false,
-            $this->canExport ?? true,
+            $this->taxonomies,
+            $this->archive,
+            $this->canExport,
             $this->deleteWithUser,
-            $this->template ?? [],
-            $this->templateLock ?? false,
-            $this->options ?? []
+            $this->template,
+            $this->templateLock,
+            $this->extra
         );
     }
 
-    public static function for(string $name): self
+    public static function for(string $name): static
     {
-        return new self($name);
+        return new static($name);
     }
 }

@@ -5,9 +5,9 @@ namespace Leonidas\Library\System\Configuration\PostType;
 use Jawira\CaseConverter\CaseConverter;
 use Leonidas\Contracts\System\Configuration\PostType\PostTypeBuilderInterface;
 use Leonidas\Contracts\System\Configuration\PostType\PostTypeFactoryInterface;
-use Leonidas\Library\System\Configuration\Abstracts\AbstractSystemModelTypeFactory;
+use Leonidas\Library\System\Configuration\Abstracts\AbstractModelConfigurationFactory;
 
-class PostTypeFactory extends AbstractSystemModelTypeFactory implements PostTypeFactoryInterface
+class PostTypeFactory extends AbstractModelConfigurationFactory implements PostTypeFactoryInterface
 {
     public function create(string $name, array $args): PostType
     {
@@ -24,10 +24,8 @@ class PostTypeFactory extends AbstractSystemModelTypeFactory implements PostType
 
     public function build(string $name, array $args): PostTypeBuilder
     {
-        $builder = new PostTypeBuilder();
+        $builder = new PostTypeBuilder($this->prefix($name));
         $converter = new CaseConverter();
-
-        $builder->name($this->prefix($name));
 
         foreach ($this->parseArgs($args) as $arg => $val) {
             $method = $converter->convert($arg)->toCamel();

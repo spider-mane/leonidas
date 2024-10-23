@@ -2,9 +2,9 @@
 
 namespace Leonidas\Contracts\System\Configuration\PostType;
 
-use Leonidas\Contracts\System\Model\BaseSystemModelTypeOptionHandlerInterface;
+use Leonidas\Contracts\System\Configuration\ModelConfigurationOptionHandlerInterface;
 
-interface PostTypeOptionHandlerInterface extends BaseSystemModelTypeOptionHandlerInterface
+interface PostTypeOptionHandlerInterface extends ModelConfigurationOptionHandlerInterface
 {
     public function handle(PostTypeInterface $postType, $value): void;
 }

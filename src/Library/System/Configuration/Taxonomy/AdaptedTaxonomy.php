@@ -224,7 +224,7 @@ class AdaptedTaxonomy implements TaxonomyInterface
         return $this->taxonomy->rest_namespace;
     }
 
-    public function getOptions(): array
+    public function getExtra(): array
     {
         return (array) $this->taxonomy->options ?? [];
     }

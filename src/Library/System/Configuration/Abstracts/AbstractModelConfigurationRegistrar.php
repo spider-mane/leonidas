@@ -2,10 +2,10 @@
 
 namespace Leonidas\Library\System\Configuration\Abstracts;
 
-use Leonidas\Contracts\System\Model\BaseSystemModelTypeInterface;
+use Leonidas\Contracts\System\Configuration\ModelConfigurationInterface;
 use UnexpectedValueException;
 
-abstract class AbstractSystemModelTypeRegistrar
+abstract class AbstractModelConfigurationRegistrar
 {
     protected function unregisteredOptionException(string $option): UnexpectedValueException
     {
@@ -14,24 +14,32 @@ abstract class AbstractSystemModelTypeRegistrar
         );
     }
 
-    protected function getBaseArgs(BaseSystemModelTypeInterface $type): array
+    protected function getBaseArgs(ModelConfigurationInterface $type): array
     {
         return [
-            'labels' => $type->getLabels(),
+            // info
             'description' => $type->getDescription(),
+
+            // core
+            'capabilities' => $type->getCapabilities(),
             'public' => $type->isPublic(),
             'hierarchical' => $type->isHierarchical(),
-            'publicly_queryable' => $type->isPubliclyQueryable(),
-            'show_ui' => $type->isAllowedInUi(),
-            'show_in_menu' => $type->getDisplayedInMenu(),
-            'show_in_nav_menus' => $type->isAllowedInNavMenus(),
-            'capabilities' => $type->getCapabilities(),
-            'rewrite' => $type->getRewrite(),
-            'query_var' => $type->getQueryVar(),
+
+            // REST
             'show_in_rest' => $type->isAllowedInRest(),
             'rest_base' => $type->getRestBase(),
             'rest_namespace' => $type->getRestNamespace(),
             'rest_controller_class' => $type->getRestControllerClass(),
+
+            // front
+            'publicly_queryable' => $type->isPubliclyQueryable(),
+            'query_var' => $type->getQueryVar(),
+            'rewrite' => $type->getRewrite(),
+
+            // admin
+            'labels' => $type->getLabels(),
+            'show_ui' => $type->isAllowedInUi(),
+            'show_in_nav_menus' => $type->isAllowedInNavMenus(),
         ];
     }
 }
