@@ -25,7 +25,7 @@
 
   <!-- Config -->
   <config name="ignore_warnings_on_exit" value="true"/>
-  <config name="testVersion" value="8.1-"/>
+  <config name="testVersion" value="8.2-"/>
 
   <!-- Rules -->
   <rule ref="PSR12"/>

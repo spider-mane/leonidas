@@ -17,17 +17,19 @@
   ],
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "conflict": {
+    "composer/composer": "<2.0"
+  },
   "require": {
-    "php": "^8.1",
+    "php": "^8.2",
     "guzzlehttp/psr7": "^2.1",
     "jawira/case-converter": "^3.4",
     "koriym/attributes": "^1.0",
-    "league/container": "^4.2",
-    "myclabs/php-enum": "^1.8",
+    "league/container": "4.2.0",
     "nesbot/carbon": "^2.54",
     "nette/php-generator": "^4.0",
     "panamax/panamax": "dev-master",
-    "performing/twig-components": "^0.5.3",
+    "performing/twig-components": "^0.6.0",
     "php-parallel-lint/php-console-highlighter": "^1.0",
     "phpdocumentor/reflection-docblock": "^5.3",
     "psr/cache": "^1.0 || ^2.0 || ^3.0",
@@ -42,7 +44,8 @@
     "psr/simple-cache": "^1.0 || ^2.0 || ^3.0",
     "symfony/console": "^5.4 || ^6.0",
     "symfony/filesystem": "^5.4 || ^6.0",
-    "symfony/polyfill-php82": "^1.23",
+    "symfony/polyfill-php83": "^1.31",
+    "symfony/polyfill-php84": "^1.31",
     "symfony/yaml": "^5.4",
     "twig/twig": "^2.4 || ^3.0",
     "webtheory/collection": "dev-master",
@@ -84,12 +87,13 @@
     "phpunit/phpunit": "^9.5",
     "phpunit/phpunit-selenium": "^9.0",
     "psy/psysh": "^0.11",
-    "rector/rector": "@stable",
+    "rector/rector": "^1.0",
     "respect/validation": "^2.2",
     "roave/security-advisories": "dev-latest",
     "roots/bedrock-autoloader": "^1.0",
     "slim/psr7": "^1.5",
     "slim/slim": "^4.7",
+    "smknstd/fakerphp-picsum-images": "^1.0",
     "squizlabs/php_codesniffer": "^3.5",
     "suin/phpcs-psr4-sniff": "^3.0",
     "symfony/asset": "^5.4 || ^6.0",
@@ -131,6 +135,7 @@
   "autoload": {
     "psr-4": {
       "Leonidas\\": "src/",
+      "Example\\App\\": "examples/app/app/",
       "Example\\Plugin\\": "examples/plugin/app/",
       "Example\\Theme\\": "examples/theme/app/"
     }
@@ -196,6 +201,7 @@
     ]
   },
   "config": {
+    "process-timeout": 0,
     "optimize-autoloader": false,
     "apcu-autoloader": false,
     "sort-packages": true,

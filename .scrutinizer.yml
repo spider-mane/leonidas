@@ -25,18 +25,18 @@ build:
         override:
           - vendor/bin/phpcs
           - php-scrutinizer-run --enable-security-analysis
-    php-7.4:
+    php-8.2:
       environment:
-        php: 7.4
-    php-8.0:
+        php: 8.2
+    php-8.3:
       environment:
-        php: 8.0
-    php-8.1:
+        php: 8.3
+    php-8.4:
       environment:
-        php: 8.1
+        php: 8.4
       tests:
         override:
-          # skipping static analysis because wordpress has code not compatible with php81
+          # skipping static analysis because wordpress has code not compatible with php84
           - command: vendor/bin/phpunit
             coverage:
               file: build/phpunit/coverage/coverage.clover.xml

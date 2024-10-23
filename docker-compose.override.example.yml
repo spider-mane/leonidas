@@ -1,22 +1,28 @@
+name: leonidas
+
 services:
   app:
     build:
-      target: app-interactive
+      target: app-workspace
       args:
-        LANG: "${LANG}"
-        TZ:
         UNMINIMIZE: yes
-        USER: "${USER}"
         GIT_USER:
         GIT_EMAIL:
         GIT_DEFAULT_BRANCH: "master"
         GIT_INSTALL_GCM: yes
+        LANG: "${LANG}"
+        TZ: "${TZ}"
+    healthcheck:
+      interval: 2s
+      timeout: 2s
+      start_period: 10s
+      retries: 5
     ports:
       - "${BROWSERSYNC_PORT:-3000}:${BROWSERSYNC_PORT:-3000}"
       - "${BROWSERSYNC_UI_PORT:-3001}:${BROWSERSYNC_UI_PORT:-3001}"
     environment:
-      TERM: "${TERM}"
       ZSH_THEME: "powerlevel10k/powerlevel10k"
+      TERM: "${TERM}"
     volumes:
       # Source
       - ".:/var/www/html"
@@ -26,11 +32,16 @@ services:
       - "vscode:/home/leonidas/.vscode-server"
 
   webserver:
+    build:
+      target: webserver-local
     networks:
       - nginx-proxy
+    hostname: "${SERVER_NAME}"
     environment:
-      TERM: "${TERM}"
       VIRTUAL_HOST: "${SERVER_NAME}"
+      LANG: "${LANG}"
+      TZ: "${TZ}"
+      TERM: "${TERM}"
     volumes:
       - ".:/var/www/html:ro"
 
@@ -47,7 +58,7 @@ services:
     environment:
       TERM: "${TERM}"
 
-  selenium:
+  browser:
     environment:
       TERM: "${TERM}"
 

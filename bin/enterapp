@@ -26,5 +26,5 @@ fi
 
 shell="${shell:-zsh}"
 
-docker compose up -d --wait &&
-  docker compose exec -u "$username" app "$shell" -il
+docker compose up --detach --no-recreate --wait &&
+  docker compose exec --user "$username" app "$shell" -il

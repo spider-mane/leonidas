@@ -1,4 +1,25 @@
-FROM nginx:latest
+FROM nginx:latest AS webserver
+
+COPY --from=spidermane/trunk * /trunk
+
+ENV DEBIAN_FRONTEND=noninteractive
+ENV SERVER_PORT=80
+
+RUN /trunk/extras/nginx
+
+RUN /trunk/actions/cleanup
+
+### INTERACTIVE ###
+FROM webserver AS webserver-shell
+
+COPY --from=spidermane/trunk * /trunk
+
+RUN /trunk/bundles/shell
+
+RUN /trunk/actions/cleanup
+
+### LOCAL ###
+FROM webserver-shell AS webserver-local
 
 COPY --from=spidermane/trunk * /trunk
 
@@ -10,11 +31,4 @@ ARG LANG="en_US.UTF-8"
 ENV LANG="$LANG"
 RUN /trunk/setups/language
 
-# nginx configurations
-RUN /trunk/extras/nginx
-
-# accessories
-RUN /trunk/bundles/shell
-
-# cleanup
 RUN /trunk/actions/cleanup
