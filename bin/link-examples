@@ -8,9 +8,15 @@ require "{$root}/vendor/autoload.php";
 $examples = "{$root}/examples";
 $wordpress = "{$root}/wordpress/wp-content";
 
-foreach (['plugin', 'theme'] as $type) {
-  $target = "{$examples}/{$type}";
-  $link = "{$wordpress}/{$type}s/example-{$type}";
+$paths = [
+  'app' => 'plugins',
+  'plugin' => 'plugins',
+  'theme' => 'themes',
+];
+
+foreach ($paths as $example => $path) {
+  $target = "{$examples}/{$example}";
+  $link = "{$wordpress}/{$path}/example-{$example}";
 
   if (file_exists($link)) {
     unlink($link);
