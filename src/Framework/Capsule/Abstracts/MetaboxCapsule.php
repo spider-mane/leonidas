@@ -106,4 +106,14 @@ abstract class MetaboxCapsule extends Capsule implements MetaboxCapsuleInterface
     {
         return [];
     }
+
+    protected function isGetRequest(ServerRequestInterface $request): bool
+    {
+        return 'GET' === $request->getMethod();
+    }
+
+    protected function isPostRequest(ServerRequestInterface $request): bool
+    {
+        return 'POST' === $request->getMethod();
+    }
 }
