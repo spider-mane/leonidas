@@ -1,1 +1,34 @@
-$config: ();
+$config: (
+  'family': (
+    '@default': 'text',
+
+    'title': (
+      'Helvetica Neue',
+      sans-serif,
+    ),
+
+    'text': (
+      -apple-system,
+      BlinkMacSystemFont,
+      'Segoe UI',
+      Roboto,
+      Oxygen-Sans,
+      Ubuntu,
+      Cantarell,
+      'Helvetica Neue',
+      sans-serif,
+    ),
+
+    'input': (
+      Consolas,
+      Monaco,
+      monospace,
+    ),
+
+    'code': (
+      Consolas,
+      Monaco,
+      monospace,
+    ),
+  ),
+);

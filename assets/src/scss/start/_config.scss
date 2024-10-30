@@ -40,6 +40,9 @@ $reset: reset.$config;
 @use '../config/base';
 $base: base.$config;
 
+@use '../config/utilities';
+$utilities: utilities.$config;
+
 @use '../config/components';
 $components: components.$config;
 
