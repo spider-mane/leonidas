@@ -1,12 +1,5 @@
 # Leonidas
 
-## A message to Russian 🇷🇺 people
-
-If you currently live in Russia, please read [this message][link:message-to-russia].
-
-[![Stand With Ukraine][banner:support-ukraine]][link:support-ukraine]
-
-[![Stand With Ukraine][badge:support-ukraine]][link:support-ukraine]
 [![Latest Version on Packagist][badge:packagist-version]][link:packagist-home]
 [![Required PHP Version][badge:packagist-php]][link:php]
 [![Build Status][badge:scrutinizer-build]][link:scrutinizer-build]
@@ -49,7 +42,7 @@ Please see [CONTRIBUTING][link:contributing] and [CODE_OF_CONDUCT][link:code-of-
 
 ## Security
 
-If you discover any security related issues, please email spider.mane.web@gmail.com instead of using the issue tracker.
+If you discover any security related issues, please email [spider.mane.web@gmail.com](spider.mane.web@gmail.com) instead of using the issue tracker.
 
 ## Credits
 
@@ -84,10 +77,3 @@ GNU General Public License. Please see [license file][link:license] for more inf
 [badge:scrutinizer-build]: https://img.shields.io/scrutinizer/build/g/spider-mane/leonidas.svg
 [badge:scrutinizer-coverage]: https://img.shields.io/scrutinizer/coverage/g/spider-mane/leonidas.svg
 [badge:scrutinizer-quality]: https://img.shields.io/scrutinizer/g/spider-mane/leonidas.svg
-
-<!-- Support Ukraine -->
-
-[badge:support-ukraine]: https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/badges/StandWithUkraine.svg
-[banner:support-ukraine]: https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/banner2-direct.svg
-[link:support-ukraine]: https://stand-with-ukraine.pp.ua
-[link:message-to-russia]: https://github.com/vshymanskyy/StandWithUkraine/blob/main/docs/ToRussianPeople.md

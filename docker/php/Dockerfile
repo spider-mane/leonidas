@@ -1,7 +1,5 @@
 FROM ubuntu:22.04 AS app
 
-LABEL maintainer="Chris Williams"
-
 EXPOSE 9000
 
 COPY --from=spidermane/trunk * /trunk
