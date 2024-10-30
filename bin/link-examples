@@ -5,22 +5,29 @@ $root = dirname(__DIR__);
 
 require "{$root}/vendor/autoload.php";
 
-$examples = "{$root}/examples";
-$wordpress = "{$root}/wordpress/wp-content";
+$exampleDir = "{$root}/examples";
+$wordpressDir = "{$root}/wordpress/wp-content";
 
-$paths = [
-  'app' => 'plugins',
-  'plugin' => 'plugins',
-  'theme' => 'themes',
+$examples = [
+  'mu-plugins' => ['app'],
+  'plugins' => ['plugin', 'content'],
+  'themes' => ['theme']
 ];
 
-foreach ($paths as $example => $path) {
-  $target = "{$examples}/{$example}";
-  $link = "{$wordpress}/{$path}/example-{$example}";
+foreach ($examples as $path => $example) {
+  foreach ($examples as $example) {
+    $target = "{$exampleDir}/{$example}";
+    $path = "{$wordpressDir}/{$path}";
+    $link = "{$path}/example-{$example}";
 
-  if (file_exists($link)) {
-    unlink($link);
+    if (!file_exists($path)) {
+      mkdir(directory: $path, recursive: true);
+    }
+
+    if (file_exists($link)) {
+      unlink($link);
+    }
+
+    symlink($target, $link);
   }
-
-  symlink($target, $link);
 }

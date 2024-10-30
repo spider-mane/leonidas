@@ -137,6 +137,7 @@
       "Leonidas\\": "src/",
       "Example\\App\\": "examples/app/app/",
       "Example\\Plugin\\": "examples/plugin/app/",
+      "Example\\Content\\": "examples/content/app/",
       "Example\\Theme\\": "examples/theme/app/"
     }
   },

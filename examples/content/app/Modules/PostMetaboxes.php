@@ -1,8 +1,7 @@
 <?php
 
-namespace Example\Plugin\Modules;
+namespace Example\Content\Modules;
 
-use Example\Plugin\Metaboxes\RandomStuff;
 use Leonidas\Framework\Module\Abstracts\PostTypeVesselMetaboxesModule;
 use Leonidas\Plugin\Module\Abstracts\LeonidasServices;
 
@@ -18,7 +17,7 @@ class PostMetaboxes extends PostTypeVesselMetaboxesModule
     protected function capsuleClasses(): array
     {
         return [
-            RandomStuff::class,
+            //
         ];
     }
 }
