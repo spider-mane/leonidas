@@ -21,6 +21,31 @@ trait UtilizesExtensionTrait
         return $this->getExtension()->prefix($value, $separator);
     }
 
+    protected function key(string $value = ''): string
+    {
+        return $this->prefix($value, '_');
+    }
+
+    protected function slug(string $value = ''): string
+    {
+        return $this->prefix($value, '-');
+    }
+
+    protected function scoped(string $value = ''): string
+    {
+        return $this->prefix($value, ':');
+    }
+
+    protected function scopedKey(string $value = ''): string
+    {
+        return $this->prefix($value, '__');
+    }
+
+    protected function scopedSlug(string $value = ''): string
+    {
+        return $this->prefix($value, '--');
+    }
+
     protected function hasService(string $service): bool
     {
         return $this->getExtension()->has($service);
