@@ -6,7 +6,7 @@ use Leonidas\Contracts\Admin\Component\Metabox\MetaboxComponentInterface;
 use Leonidas\Contracts\Ui\ViewInterface;
 use WebTheory\Html\Traits\ElementConstructorTrait;
 
-class MetaboxLayoutView implements ViewInterface
+class SegmentedLayoutView implements ViewInterface
 {
     use ElementConstructorTrait;
 
@@ -19,7 +19,7 @@ class MetaboxLayoutView implements ViewInterface
 
         $html = '';
         $html .= $data['auth_field'];
-        $html .= $this->open('div', ['class' => '@leonidas']);
+        $html .= $this->open('div', ['leonidas-base' => true]);
 
         $count = count($components);
 
