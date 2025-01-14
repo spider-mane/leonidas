@@ -29,7 +29,7 @@ class ImageEditors extends Module
 
     protected function shouldReplaceEditors(): bool
     {
-        return $this->getConfig('modules.image_editors.replace', true);
+        return $this->getConfig('modules.image_editors.replace', false);
     }
 
     /**
