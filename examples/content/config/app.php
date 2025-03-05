@@ -30,7 +30,7 @@ return [
         Example\Content\Modules\PageMetaboxes::class,
         Example\Content\Modules\PostMetaboxes::class,
         Example\Content\Modules\SectionMetaboxes::class,
-        Example\Content\Modules\StatementMetaboxes::class,
+        Example\Content\Modules\CopyMetaboxes::class,
     ],
 
     'providers' => [

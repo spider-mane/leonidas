@@ -6,11 +6,10 @@ $fake = Factory::create()->unique();
 
 return [
 
-    'statement' => [
+    'copy' => [
 
         '@info' => [
-            'plural' => 'Statements',
-            'singular' => 'Statement',
+            'plural' => 'Copy',
             'description' => 'Individual sales copy statements',
         ],
 

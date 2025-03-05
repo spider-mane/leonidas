@@ -1,35 +1,17 @@
-import MetaBox from './models/MetaBox';
-import * as metaBoxView from './views/metaBoxView';
-import {
-    elements,
-    jQueryElements,
-    wpPages
-} from "./views/base";
+import content from './modules/content';
 
-// window.elements = elements;
+const modules = {
+  init: [content],
+  dom: [],
+  load: [],
+};
 
-const state = {};
-window.state = state;
+modules.init.forEach(module => module());
 
-if (window.pagenow === wpPages.editPostLocation) {
+document.addEventListener('DOMContentLoaded', function () {
+  modules.dom.forEach(module => module());
+});
 
-    // Remove Platfrom url input from DOM and thusly POST
-    elements.platformUrlContainer.addEventListener('click', function (e) {
-        if (e.target.dataset.leonidasLocationPlatform) {
-            e.preventDefault();
-
-            let confirmationMessage = "Are you sure you want to remove this platform? If you save after removing it, the url associated with it for this location will be permanantly deleted.";
-
-            if (window.confirm(confirmationMessage)) {
-                document.getElementById(e.target.dataset.leonidasLocationPlatform).remove();
-            }
-        }
-    });
-
-    // Insert new Platform url input
-    elements.newPlatformButton.addEventListener('click', function (e) {
-        e.preventDefault();
-        metaBoxView.insertNewPlatformUrlInput();
-    });
-
-}
+window.addEventListener('load', function () {
+  modules.load.forEach(module => module());
+});

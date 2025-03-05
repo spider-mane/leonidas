@@ -7,8 +7,8 @@ const BrowserSyncPlugin = require('browser-sync-v3-webpack-plugin');
 
 // args
 let options = yargs(process.argv.slice(2))
-  .option('o', { alias: 'open-browser', type: 'boolean', default: false })
-  .option('n', { alias: 'notify', type: 'boolean', default: false });
+  .option('o', {alias: 'open-browser', type: 'boolean', default: false})
+  .option('n', {alias: 'notify', type: 'boolean', default: false});
 
 const argv = options.argv;
 
@@ -124,6 +124,18 @@ mix
 
   /**
    *==========================================================================
+   * Babel
+   *==========================================================================
+   *
+   *
+   *
+   */
+  .babelConfig({
+    presets: ['solid'],
+  })
+
+  /**
+   *==========================================================================
    * Sass
    *==========================================================================
    *
@@ -174,6 +186,11 @@ mix
       './node_modules/trix/dist/trix.css',
     ],
     'dist/lib/trix/'
+  )
+  // fancybox
+  .copy(
+    ['./node_modules/@fancyapps/ui/dist/fancybox/fancybox.css'],
+    'dist/lib/fancybox/'
   )
 
   /**

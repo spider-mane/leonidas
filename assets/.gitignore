@@ -3,7 +3,10 @@
 /build/
 
 # NPM/ Yarn
+.nlu.json
+.yarn
 node_modules/
-package-lock.json
 npm-debug.log
+package-lock.json
 yarn-error.log
+yarn.lock

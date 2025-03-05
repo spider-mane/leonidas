@@ -1,0 +1,7 @@
+.fancybox__container {
+  z-index: 160000;
+}
+
+@at-root :root {
+  --fancybox-zIndex: 160000;
+}

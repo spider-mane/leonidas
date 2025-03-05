@@ -1,5 +1,9 @@
 @use 'sass:meta';
 
+:root {
+  --fancybox-zIndex: 160000;
+}
+
 [leonidas-base] {
   @include meta.load-css('main');
 }

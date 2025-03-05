@@ -1,0 +1,100 @@
+@use '../../../app/css';
+@use '../../../app/theme';
+
+.copy-input-row {
+  @include theme.border(1px solid ('pale.300', 0.9));
+  @include theme.box-shadow(0 2px 6px 2px ('dark.200', 0.7));
+
+  padding: 1rem;
+
+  transition-property: box-shadow opacity;
+  transition-duration: 200ms;
+  transition-timing-function: ease-out;
+
+  &:not(.has-focus) {
+    @include theme.box-shadow(0 2px 4px ('dark.400', 0.8));
+
+    opacity: 0.7;
+  }
+
+  .text-input-row {
+    @include css.padding-y(0.25rem);
+
+    align-items: center;
+  }
+
+  .input-title {
+    @include theme.type-size('s');
+    @include theme.color('medium.700');
+  }
+
+  .text-input-partial {
+    @include theme.type-size('s');
+    @include theme.color('light.700');
+  }
+
+  .text-input {
+    @include theme.border-color('pale.500');
+
+    width: 100%;
+  }
+
+  .heading-input {
+    .text-input {
+      @include theme.type-size('3xl');
+    }
+  }
+
+  .media-input {
+    @include theme.bg-color('pale');
+
+    align-content: center;
+    justify-items: center;
+
+    width: 100%;
+    aspect-ratio: 1;
+
+    &:has(picture, video, img) {
+      @include theme.bg-color('pale.100', 0.5);
+    }
+  }
+
+  .media-container {
+    @include css.maximized-match(100%);
+    @include css.flex-column(null, center, center);
+
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 1;
+
+    picture,
+    video,
+    img {
+      @include css.object-nested();
+      @include css.max-match(100%);
+    }
+  }
+
+  .media-edit {
+    @include css.flex-row(8px);
+
+    position: absolute;
+    top: 8px;
+    right: 8px;
+  }
+
+  .select-media-link {
+    @include theme.type-size('m');
+    // @include theme.color('light.700');
+
+    // cursor: pointer;
+  }
+
+  textarea {
+    scrollbar-width: thin;
+  }
+
+  label {
+    cursor: pointer;
+  }
+}

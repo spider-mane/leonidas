@@ -1,0 +1,32 @@
+@use '../../../app/css';
+@use '../../../app/theme';
+
+.control-bar {
+  $border: 1px solid ('pale.300', 0.5);
+
+  @include theme.border-bottom($border);
+
+  z-index: 10;
+  width: 100%;
+
+  .control-bar-controls {
+    @include theme.bg-color('pale.300', 0.2);
+    @include theme.border-bottom($border);
+    @include css.abstract-height(48px);
+
+    // max-height: 48px;
+    padding: 4px;
+  }
+
+  .control-bar-segment {
+    @include css.flex-row(4px);
+  }
+
+  .control-bar-breadcrumbs {
+    @include css.flex-row(4px, null, center);
+    @include theme.type-size('lg');
+    @include css.abstract-height(1em);
+
+    padding: 4px;
+  }
+}

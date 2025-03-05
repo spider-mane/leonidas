@@ -2,6 +2,7 @@
 
 namespace Example\Content\Metaboxes;
 
+use Leonidas\Contracts\Admin\Component\Metabox\MetaboxComponentInterface;
 use Leonidas\Contracts\Admin\Component\Metabox\MetaboxFieldInterface;
 use Leonidas\Contracts\Admin\Component\Metabox\MetaboxLayoutInterface;
 use Leonidas\Framework\Capsule\Abstracts\MetaboxCapsule;
@@ -17,43 +18,44 @@ use WebTheory\Saveyour\Field\Type\Textarea;
 use WebTheory\Saveyour\Validation\RespectValidator;
 use WP_Screen;
 
-class StatementMetabox extends MetaboxCapsule
+class CopyMetabox extends MetaboxCapsule
 {
     use LeonidasServices;
 
     public function id(): string
     {
-        return $this->slug('statement');
+        return $this->slug('copy');
     }
 
     public function title(): string
     {
-        return 'Statement';
+        return 'Copy';
     }
 
     public function screen(): string|array|WP_Screen
     {
-        return $this->key('statement');
+        return $this->key('copy');
     }
 
     public function layout(ServerRequestInterface $request): MetaboxLayoutInterface
     {
-        return new SegmentedLayout(
-            $this->textField($request),
-            $this->mediaField($request),
-        );
+        return new SegmentedLayout(...$this->components($request));
     }
 
-    protected function formFields(ServerRequestInterface $request): array
+    /**
+     * @return list<MetaboxComponentInterface>
+     */
+    protected function components(ServerRequestInterface $request): array
     {
         return [
-            $this->textFormField($request),
+            $this->contentField($request),
+            $this->mediaField($request),
         ];
     }
 
-    protected function textField(ServerRequestInterface $request): MetaboxFieldInterface
+    protected function contentField(ServerRequestInterface $request): MetaboxFieldInterface
     {
-        return (new Field($this->textFormField($request)))
+        return (new Field($this->contentFormField($request)))
             ->setLabel('Text')
             ->setDescription('');
     }
@@ -65,10 +67,17 @@ class StatementMetabox extends MetaboxCapsule
             ->setDescription('');
     }
 
-    protected function textFormField(ServerRequestInterface $request): FormFieldControllerInterface
+    protected function formFields(ServerRequestInterface $request): array
     {
-        $var = $this->slug('statement-text');
-        $meta = $this->scoped('statement-text');
+        return [
+            $this->contentFormField($request),
+        ];
+    }
+
+    protected function contentFormField(ServerRequestInterface $request): FormFieldControllerInterface
+    {
+        $var = $this->slug('copy-text');
+        $meta = $this->scoped('copy-text');
 
         $builder = FormFieldControllerBuilder::for($var)->dataManager(
             new PostMetaFieldManager($meta)
@@ -87,8 +96,8 @@ class StatementMetabox extends MetaboxCapsule
 
     protected function mediaFormField(ServerRequestInterface $request): FormFieldControllerInterface
     {
-        $var = $this->slug('statement-media');
-        $meta = $this->scoped('statement-media');
+        $var = $this->slug('copy-media');
+        $meta = $this->scoped('copy-media');
 
         $builder = FormFieldControllerBuilder::for($var)->dataManager(
             new PostMetaFieldManager($meta)
@@ -109,7 +118,7 @@ class StatementMetabox extends MetaboxCapsule
     {
         return [
             'required' => [
-                'id' => 'statement',
+                'id' => 'copy',
                 'message' => 'Text is required',
                 'type' => 'error',
                 'dismissible' => false,

@@ -1,0 +1,82 @@
+@use '../../../app/css';
+@use '../../../app/theme';
+@use '@csscore/csscore/src/scss/utils/interact';
+
+.view-section {
+  // @include css.flex-col(8px);
+  @include css.flex-column(12px);
+  // @include css.pd-x(8px);
+  @include theme.border(1px solid ('pale.400', 0.8));
+  // @include theme.box-shadow(0 4px 8px ('dark.500', 0.7));
+
+  padding: 8px;
+  padding-bottom: 12px;
+
+  &:not(:has(.has-focus)) {
+    opacity: 0.7;
+  }
+
+  %text-input {
+    @include css.input-disguised();
+
+    width: 100%;
+  }
+
+  .section-info {
+    @include css.flex-column(8px);
+  }
+
+  .section-title {
+    @extend %text-input;
+    @include theme.type-size('6xl');
+  }
+
+  // .section-reference-container {
+  //   @include css.flex-row(4px, flex-start, center);
+
+  //   width: 100%;
+  // }
+
+  .section-reference {
+    @extend %text-input;
+    // @include theme.bg-color('pale.100', 0.9);
+
+    max-width: 16rem;
+    opacity: 0.9;
+  }
+
+  .section-description {
+    @extend %text-input;
+
+    text-overflow: ellipsis;
+    // white-space: nowrap;
+  }
+
+  .section-intro {
+    .copy-input-row {
+      @include theme.bg-color('pale.50', 0.5);
+    }
+  }
+
+  .section-details {
+    &-content {
+      @include css.flex-column(12px);
+    }
+  }
+
+  .section-detail {
+    // @include interact.draggable();
+
+    &.sortable-ghost {
+      @include theme.bg-color('sky.100', 0.5);
+    }
+
+    &.sortable-chosen {
+      // @include theme.bg-color('sky.100', 0.5);
+    }
+
+    &.sortable-drag {
+      @include theme.bg-color('sky.100', 0.5);
+    }
+  }
+}

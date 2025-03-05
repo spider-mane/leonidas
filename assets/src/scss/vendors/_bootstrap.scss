@@ -1,1 +1,8 @@
-@use 'bootstrap/scss/bootstrap-grid';
+@use '@csscore/csscore/src/scss/plugins/core/vars';
+
+@use 'bootstrap/scss/bootstrap-grid' with (
+  $prefix: vars.namespace(),
+  $enable-cssgrid: true,
+  $enable-rfs: false,
+  $enable-smooth-scroll: false
+);

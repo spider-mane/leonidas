@@ -1,1 +1,23 @@
-$config: ();
+@use '@csscore/csscore/src/scss/concepts/cmr';
+@use '@csscore/csscore/src/scss/theme/palette' as *;
+@use '@csscore/csscore/src/scss/theme/typography' as *;
+@use 'sass:meta' as *;
+
+$config: (
+  'scales': (
+    'type': 16px cmr.$minor-second,
+  ),
+
+  'functions': (
+    'type-size': get-function('type-size'),
+    'brush': get-function('brush'),
+  ),
+
+  'mixins': (
+    //
+  ),
+
+  'closures': (
+    //
+  ),
+);
